@@ -1,5 +1,6 @@
 from .common import InfoExtractor
 from ..utils import (
+    ExtractorError,
     clean_html,
     join_nonempty,
     parse_duration,
@@ -7,6 +8,7 @@ from ..utils import (
     traverse_obj,
     unified_strdate,
     unified_timestamp,
+    url_or_none,
     urlhandle_detect_ext,
 )
 
@@ -82,17 +84,25 @@ class GlobalPlayerLiveIE(GlobalPlayerBaseIE):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        station = self._get_page_props(url, video_id)['station']
-        stream_url = station['streamUrl']
+        meta = self._get_page_props(url, video_id)['station']
+        station_id = meta['id']
+        data = self._download_json(
+            f'https://bff-web-guacamole.musicradio.com/playables/{station_id}', video_id)
+        playback_url = traverse_obj(data, (
+            'playback', lambda _, v: v.get('canUse') == 'true', 'url', {url_or_none}), get_all=False)
+        if not playback_url:
+            raise ExtractorError('Unable to extract live stream URL', expected=True)
+        handle_redirect = self._request_webpage(playback_url, video_id)
+        stream_url = handle_redirect.url
 
         return {
-            'id': station['id'],
-            'display_id': join_nonempty('brandSlug', 'slug', from_dict=station) or station.get('legacyStationPrefix'),
+            'id': station_id,
+            'display_id': join_nonempty('brandSlug', 'slug', from_dict=meta) or meta.get('legacyStationPrefix'),
             'url': stream_url,
             'ext': self._request_ext(stream_url, video_id),
             'vcodec': 'none',
             'is_live': True,
-            **traverse_obj(station, {
+            **traverse_obj(meta, {
                 'title': (('name', 'brandName'), {str_or_none}),
                 'description': 'tagline',
                 'thumbnail': 'brandLogo',
