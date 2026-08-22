@@ -112,6 +112,8 @@ static-analysis = [
 test = [
     "pytest~=9.0",
     "pytest-rerunfailures~=16.0",
+    "pytest-cov~=7.0",
+    "coverage~=7.0",
 ]
 dev = [
     "pre-commit",
@@ -235,7 +237,22 @@ dependencies = [
 
 [tool.hatch.envs.hatch-test.scripts]
 run = "python -m devscripts.run_tests {args}"
-run-cov = "echo Code coverage not implemented && exit 1"
+run-cov = "python -m pytest -m \"not download\" --cov=yt_dlp --cov-report=term --cov-report=xml --cov-fail-under=95 {args}"
+
+[tool.coverage.run]
+source = ["yt_dlp"]
+branch = false
+relative_files = true
+
+[tool.coverage.report]
+show_missing = false
+skip_empty = true
+exclude_also = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "if typing.TYPE_CHECKING:",
+    "raise NotImplementedError",
+]
 
 [[tool.hatch.envs.hatch-test.matrix]]
 python = [
