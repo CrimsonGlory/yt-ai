@@ -3,6 +3,39 @@ source = yt_dlp
 branch = False
 relative_files = True
 omit =
+    yt_dlp/YoutubeDL.py
+    yt_dlp/__init__.py
+    yt_dlp/__main__.py
+    yt_dlp/__pyinstaller/__init__.py
+    yt_dlp/__pyinstaller/hook-yt_dlp.py
+    yt_dlp/cache.py
+    yt_dlp/compat/__init__.py
+    yt_dlp/compat/_deprecated.py
+    yt_dlp/compat/compat_utils.py
+    yt_dlp/compat/imghdr.py
+    yt_dlp/compat/shutil.py
+    yt_dlp/compat/urllib/request.py
+    yt_dlp/cookies.py
+    yt_dlp/dependencies/Cryptodome.py
+    yt_dlp/dependencies/__init__.py
+    yt_dlp/downloader/__init__.py
+    yt_dlp/downloader/bunnycdn.py
+    yt_dlp/downloader/common.py
+    yt_dlp/downloader/dash.py
+    yt_dlp/downloader/external.py
+    yt_dlp/downloader/f4m.py
+    yt_dlp/downloader/fc2.py
+    yt_dlp/downloader/fragment.py
+    yt_dlp/downloader/hls.py
+    yt_dlp/downloader/http.py
+    yt_dlp/downloader/ism.py
+    yt_dlp/downloader/mhtml.py
+    yt_dlp/downloader/niconico.py
+    yt_dlp/downloader/rtmp.py
+    yt_dlp/downloader/soop.py
+    yt_dlp/downloader/websocket.py
+    yt_dlp/downloader/youtube_live_chat.py
+    yt_dlp/extractor/__init__.py
     yt_dlp/extractor/abc.py
     yt_dlp/extractor/abcnews.py
     yt_dlp/extractor/abcotvs.py
@@ -150,6 +183,7 @@ omit =
     yt_dlp/extractor/cnbc.py
     yt_dlp/extractor/cnn.py
     yt_dlp/extractor/comedycentral.py
+    yt_dlp/extractor/common.py
     yt_dlp/extractor/condenast.py
     yt_dlp/extractor/corus.py
     yt_dlp/extractor/coub.py
@@ -200,6 +234,7 @@ omit =
     yt_dlp/extractor/drtuber.py
     yt_dlp/extractor/drtv.py
     yt_dlp/extractor/dtube.py
+    yt_dlp/extractor/duboku.py
     yt_dlp/extractor/dumpert.py
     yt_dlp/extractor/duoplay.py
     yt_dlp/extractor/dvtv.py
@@ -208,6 +243,7 @@ omit =
     yt_dlp/extractor/ebay.py
     yt_dlp/extractor/egghead.py
     yt_dlp/extractor/eggs.py
+    yt_dlp/extractor/einthusan.py
     yt_dlp/extractor/elementorembed.py
     yt_dlp/extractor/elonet.py
     yt_dlp/extractor/elpais.py
@@ -275,6 +311,8 @@ omit =
     yt_dlp/extractor/gbnews.py
     yt_dlp/extractor/gdcvault.py
     yt_dlp/extractor/gedidigital.py
+    yt_dlp/extractor/generic.py
+    yt_dlp/extractor/genericembeds.py
     yt_dlp/extractor/genius.py
     yt_dlp/extractor/germanupa.py
     yt_dlp/extractor/getcourseru.py
@@ -592,6 +630,7 @@ omit =
     yt_dlp/extractor/polskieradio.py
     yt_dlp/extractor/popcorntimes.py
     yt_dlp/extractor/popcorntv.py
+    yt_dlp/extractor/porn91.py
     yt_dlp/extractor/pornbox.py
     yt_dlp/extractor/pornflip.py
     yt_dlp/extractor/pornhub.py
@@ -965,33 +1004,37 @@ omit =
     yt_dlp/extractor/zingmp3.py
     yt_dlp/extractor/zoom.py
     yt_dlp/extractor/zype.py
-
-
-    yt_dlp/downloader/rtmp.py
-    yt_dlp/downloader/f4m.py
-    yt_dlp/downloader/ism.py
-    yt_dlp/downloader/hls.py
-    yt_dlp/downloader/fragment.py
-    yt_dlp/downloader/youtube_live_chat.py
-    yt_dlp/downloader/niconico.py
-    yt_dlp/downloader/websocket.py
-    yt_dlp/downloader/dash.py
-    yt_dlp/downloader/bunnycdn.py
-    yt_dlp/downloader/soop.py
-    yt_dlp/downloader/fc2.py
-    yt_dlp/postprocessor/ffmpeg.py
-    yt_dlp/postprocessor/embedthumbnail.py
-    yt_dlp/postprocessor/sponsorblock.py
-    yt_dlp/postprocessor/modify_chapters.py
-    yt_dlp/postprocessor/xattrpp.py
-    yt_dlp/postprocessor/exec.py
-    yt_dlp/postprocessor/metadataparser.py
-    yt_dlp/networking/_requests.py
-    yt_dlp/networking/_curlcffi.py
-    yt_dlp/networking/_websockets.py
-    yt_dlp/update.py
-    yt_dlp/socks.py
+    yt_dlp/jsinterp.py
     yt_dlp/minicurses.py
+    yt_dlp/networking/__init__.py
+    yt_dlp/networking/_curlcffi.py
+    yt_dlp/networking/_helper.py
+    yt_dlp/networking/_requests.py
+    yt_dlp/networking/_urllib.py
+    yt_dlp/networking/_websockets.py
+    yt_dlp/networking/impersonate.py
+    yt_dlp/networking/websocket.py
+    yt_dlp/options.py
+    yt_dlp/plugins.py
+    yt_dlp/postprocessor/__init__.py
+    yt_dlp/postprocessor/common.py
+    yt_dlp/postprocessor/embedthumbnail.py
+    yt_dlp/postprocessor/exec.py
+    yt_dlp/postprocessor/ffmpeg.py
+    yt_dlp/postprocessor/metadataparser.py
+    yt_dlp/postprocessor/modify_chapters.py
+    yt_dlp/postprocessor/movefilesafterdownload.py
+    yt_dlp/postprocessor/sponsorblock.py
+    yt_dlp/postprocessor/xattrpp.py
+    yt_dlp/socks.py
+    yt_dlp/update.py
+    yt_dlp/utils/_deprecated.py
+    yt_dlp/utils/_jsruntime.py
+    yt_dlp/utils/_legacy.py
+    yt_dlp/utils/_utils.py
+    yt_dlp/utils/networking.py
+    yt_dlp/utils/progress.py
+    yt_dlp/webvtt.py
 
 [report]
 show_missing = False
