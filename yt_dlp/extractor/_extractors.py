@@ -452,6 +452,7 @@ from .douyutv import (
     DouyuShowIE,
     DouyuTVIE,
 )
+from .doodstream import DoodStreamIE
 from .dplay import (
     TLCIE,
     AmHistoryChannelIE,
@@ -490,6 +491,10 @@ from .drtv import (
     DRTVSeriesIE,
 )
 from .dtube import DTubeIE
+from .duboku import (
+    DubokuIE,
+    DubokuPlaylistIE,
+)
 from .dumpert import DumpertIE
 from .duoplay import DuoplayIE
 from .dvtv import DVTVIE
@@ -507,6 +512,7 @@ from .eggs import (
     EggsArtistIE,
     EggsIE,
 )
+from .einthusan import EinthusanIE
 from .elementorembed import ElementorEmbedIE
 from .elonet import ElonetIE
 from .elpais import ElPaisIE
@@ -579,6 +585,7 @@ from .filmon import (
     FilmOnChannelIE,
     FilmOnIE,
 )
+from .filemoon import FilemoonIE
 from .filmweb import FilmwebIE
 from .firsttv import (
     FirstTVIE,
@@ -689,6 +696,7 @@ from .gmanetwork import GMANetworkVideoIE
 from .go import GoIE
 from .godresource import GodResourceIE
 from .godtube import GodTubeIE
+from .gofile import GofileIE
 from .golem import GolemIE
 from .goodgame import GoodGameIE
 from .googledrive import (
@@ -710,6 +718,7 @@ from .harpodeon import HarpodeonIE
 from .hbo import HBOIE
 from .hearthisat import HearThisAtIE
 from .heise import HeiseIE
+from .hentaistigma import HentaiStigmaIE
 from .hellporno import HellPornoIE
 from .hgtv import HGTVComShowIE
 from .hidive import HiDiveIE
@@ -850,6 +859,10 @@ from .jiosaavn import (
     JioSaavnSongIE,
 )
 from .joj import JojIE
+from .jable import (
+    JableIE,
+    JablePlaylistIE,
+)
 from .jove import JoveIE
 from .jstream import JStreamIE
 from .jtbc import (
@@ -1097,6 +1110,12 @@ from .murrtube import (
     MurrtubeUserIE,
 )
 from .museai import MuseAIIE
+from .musicdex import (
+    MusicdexAlbumIE,
+    MusicdexArtistIE,
+    MusicdexPlaylistIE,
+    MusicdexSongIE,
+)
 from .musescore import MuseScoreIE
 from .mux import MuxIE
 from .mx3 import (
@@ -1464,6 +1483,7 @@ from .pornhub import (
 )
 from .pornotube import PornotubeIE
 from .pornovoisines import PornoVoisinesIE
+from .porn91 import Porn91IE
 from .pornoxo import PornoXOIE
 from .pr0gramm import Pr0grammIE
 from .prankcast import (
@@ -1806,6 +1826,7 @@ from .spankbang import (
     SpankBangPlaylistIE,
 )
 from .spiegel import SpiegelIE
+from .streamsb import StreamsbIE
 from .sport5 import Sport5IE
 from .sportbox import SportBoxIE
 from .sportdeutschland import SportDeutschlandIE
@@ -1955,6 +1976,7 @@ from .thesun import TheSunIE
 from .theweatherchannel import TheWeatherChannelIE
 from .thisamericanlife import ThisAmericanLifeIE
 from .thisoldhouse import ThisOldHouseIE
+from .thisav import ThisAVIE
 from .thisvid import (
     ThisVidIE,
     ThisVidMemberIE,
@@ -2124,7 +2146,6 @@ from .unity import UnityIE
 from .unsupported import (
     KnownDRMIE,
     KnownLiabilityIE,
-    KnownPiracyIE,
 )
 from .uol import UOLIE
 from .uplynk import (
@@ -2314,7 +2335,9 @@ from .wykop import (
     WykopPostCommentIE,
     WykopPostIE,
 )
+from .xanimu import XanimuIE
 from .xboxclips import XboxClipsIE
+from .xfileshare import XFileShareIE
 from .xhamster import (
     XHamsterEmbedIE,
     XHamsterIE,
@@ -2378,6 +2401,8 @@ from .youporn import (
     YouPornTagIE,
     YouPornVideosIE,
 )
+from .yourporn import YourPornIE
+from .yourupload import YourUploadIE
 from .youtube import (
     YoutubeClipIE,
     YoutubeConsentRedirectIE,

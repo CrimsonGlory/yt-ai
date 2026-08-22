@@ -272,57 +272,6 @@ class KnownDRMIE(UnsupportedInfoExtractor):
             'unless you have evidence that the video is not DRM protected', expected=True)
 
 
-class KnownPiracyIE(UnsupportedInfoExtractor):
-    """Sites that have been deemed to be piracy
-
-    In order for this to not end up being a catalog of piracy sites,
-    only sites that were once supported should be added to this list
-    """
-
-    URLS = (
-        r'dood\.(?:to|watch|so|pm|wf|re)',
-        # Sites youtube-dl supports, but we won't
-        r'viewsb\.com',
-        r'filemoon\.sx',
-        r'hentai\.animestigma\.com',
-        r'thisav\.com',
-        r'gounlimited\.to',
-        r'highstream\.tv',
-        r'uqload\.com',
-        r'vedbam\.xyz',
-        r'vadbam\.net',
-        r'vidlo\.us',
-        r'wolfstream\.tv',
-        r'xvideosharing\.com',
-        r'(?:\w+\.)?viidshar\.com',
-        r'sxyprn\.com',
-        r'jable\.tv',
-        r'91porn\.com',
-        r'einthusan\.(?:tv|com|ca)',
-        r'yourupload\.com',
-        r'xanimu\.com',
-        r'musicdex\.org',
-        r'duboku\.io',
-        r'gofile\.io',
-    )
-
-    _TESTS = [{
-        'url': 'http://dood.to/e/5s1wmbdacezb',
-        'only_matching': True,
-    }, {
-        'url': 'https://thisav.com/en/terms',
-        'only_matching': True,
-    }, {
-        'url': 'https://gofile.io/d/',
-        'only_matching': True,
-    }]
-
-    def _real_extract(self, url):
-        raise ExtractorError(
-            f'This website is no longer supported since it has been determined to be primarily used for piracy.{LF}'
-            f'{self._downloader._format_err("DO NOT", self._downloader.Styles.ERROR)} open issues for it', expected=True)
-
-
 class KnownLiabilityIE(UnsupportedInfoExtractor):
     """Sites that would be a liability to the project if supported
 

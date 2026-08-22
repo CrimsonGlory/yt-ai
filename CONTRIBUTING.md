@@ -11,7 +11,7 @@
     - [Is anyone going to need the feature?](#is-anyone-going-to-need-the-feature)
     - [Is your question about yt-dlp?](#is-your-question-about-yt-dlp)
     - [Are you willing to share account details if needed?](#are-you-willing-to-share-account-details-if-needed)
-    - [Is the website primarily used for piracy](#is-the-website-primarily-used-for-piracy)
+    - [Does the site use DRM for all videos?](#does-the-site-use-drm-for-all-videos)
 - [DEVELOPER INSTRUCTIONS](#developer-instructions)
     - [Adding new feature or making overarching changes](#adding-new-feature-or-making-overarching-changes)
     - [Adding support for a new site](#adding-support-for-a-new-site)
@@ -128,9 +128,9 @@ While these steps won't necessarily ensure that no misuse of the account takes p
 - Change the password before sharing the account to something random.
 - Change the password after receiving the account back.
 
-### Is the website primarily used for piracy?
+### Does the site use DRM for all videos?
 
-We follow [youtube-dl's policy](https://github.com/ytdl-org/youtube-dl#can-you-add-support-for-this-anime-video-site-or-site-which-shows-current-movies-for-free) to not support services that is primarily used for infringing copyright. Additionally, it has been decided to not to support porn sites that specialize in fakes. We also cannot support any service that serves only [DRM protected content](https://en.wikipedia.org/wiki/Digital_rights_management).
+We cannot support any service that serves only [DRM protected content](https://en.wikipedia.org/wiki/Digital_rights_management).
 
 
 # DEVELOPER INSTRUCTIONS
@@ -194,9 +194,7 @@ The same applies for changes to the documentation, code style, or overarching ch
 
 ## Adding support for a new site
 
-If you want to add support for a new site, first of all **make sure** this site is **not dedicated to [copyright infringement](#is-the-website-primarily-used-for-piracy)**. yt-dlp does **not support** such sites thus pull requests adding support for them **will be rejected**.
-
-After you have ensured this site is distributing its content legally, you can follow this quick list (assuming your service is called `yourextractor`):
+If you want to add support for a new site, you can follow this quick list (assuming your service is called `yourextractor`):
 
 1. [Fork this repository](https://github.com/yt-dlp/yt-dlp/fork)
 1. Check out the source code with:

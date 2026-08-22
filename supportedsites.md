@@ -22,6 +22,7 @@ The only reliable way to check if a site is supported is to try it.
  - **4tube**
  - **56.com**
  - **7plus**
+ - **91porn**
  - **9c9media**
  - **9gag**: 9GAG
  - **9News**
@@ -341,6 +342,7 @@ The only reliable way to check if a site is supported is to try it.
  - **dlf:corpus**: DLF Multi-feed Archives
  - **dlive:stream**
  - **dlive:vod**
+ - **DoodStream**
  - **Douyin**
  - **DouyuShow**
  - **DouyuTV**: 斗鱼直播
@@ -356,6 +358,8 @@ The only reliable way to check if a site is supported is to try it.
  - **drtv:season**
  - **drtv:series**
  - **DTube**: (**Currently broken**)
+ - **duboku**: www.duboku.io
+ - **duboku:list**: www.duboku.io entire series
  - **Dumpert**
  - **Duoplay**
  - **dvtv**: http://video.aktualne.cz/
@@ -372,6 +376,7 @@ The only reliable way to check if a site is supported is to try it.
  - **EinsUndEinsTV**: [*1und1tv*](## "netrc machine")
  - **EinsUndEinsTVLive**: [*1und1tv*](## "netrc machine")
  - **EinsUndEinsTVRecordings**: [*1und1tv*](## "netrc machine")
+ - **Einthusan**
  - **ElementorEmbed**
  - **Elonet**
  - **ElPais**: El País
@@ -420,6 +425,7 @@ The only reliable way to check if a site is supported is to try it.
  - **fc2:live**
  - **Fczenit**
  - **Fifa**
+ - **filemoon**: filemoon.sx
  - **FilmArchiv**: FILMARCHIV ON
  - **filmon**
  - **filmon:channel**
@@ -503,6 +509,7 @@ The only reliable way to check if a site is supported is to try it.
  - **GoDiscovery**
  - **GodResource**
  - **GodTube**: (**Currently broken**)
+ - **Gofile**
  - **Golem**
  - **goodgame:stream**
  - **GoogleDrive**
@@ -519,6 +526,7 @@ The only reliable way to check if a site is supported is to try it.
  - **HearThisAt**
  - **Heise**
  - **HellPorno**
+ - **HentaiStigma**
  - **hetklokhuis**
  - **hgtv.com:show**
  - **HGTVDe**
@@ -600,6 +608,8 @@ The only reliable way to check if a site is supported is to try it.
  - **iwara:playlist**: [*iwara*](## "netrc machine")
  - **iwara:user**: [*iwara*](## "netrc machine")
  - **Ixigua**
+ - **Jable**
+ - **JablePlaylist**
  - **Jamendo**
  - **JamendoAlbum**
  - **JeuxVideo**: (**Currently broken**)
@@ -797,6 +807,10 @@ The only reliable way to check if a site is supported is to try it.
  - **MurrtubeUser**: Murrtube user profile (**Currently broken**)
  - **MuseAI**
  - **MuseScore**
+ - **MusicdexAlbum**
+ - **MusicdexArtist**
+ - **MusicdexPlaylist**
+ - **MusicdexSong**
  - **Mux**
  - **Mx3**
  - **Mx3Neo**
@@ -883,6 +897,7 @@ The only reliable way to check if a site is supported is to try it.
  - **nhl.com**
  - **nick.com**
  - **niconico**: [*niconico*](## "netrc machine") ニコニコ動画
+ - **niconico:channel**: [*niconico*](## "netrc machine")
  - **niconico:history**: NicoNico user history or likes. Requires cookies.
  - **niconico:live**: [*niconico*](## "netrc machine") ニコニコ生放送
  - **niconico:playlist**
@@ -1393,6 +1408,7 @@ The only reliable way to check if a site is supported is to try it.
  - **TheSun**
  - **TheWeatherChannel**
  - **ThisAmericanLife**
+ - **ThisAV**
  - **ThisOldHouse**: [*thisoldhouse*](## "netrc machine")
  - **ThisVid**
  - **ThisVidMember**
@@ -1542,6 +1558,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Vidyard**
  - **viewlift**
  - **viewlift:embed**
+ - **viewsb**: viewsb.com (StreamSB)
  - **Viidea**
  - **vimeo**: [*vimeo*](## "netrc machine")
  - **vimeo:album**: [*vimeo*](## "netrc machine")
@@ -1649,7 +1666,9 @@ The only reliable way to check if a site is supported is to try it.
  - **wykop:​dig:comment**
  - **wykop:post**
  - **wykop:​post:comment**
+ - **Xanimu**
  - **XboxClips**
+ - **XFileShare**: XFileShare based sites: Aparat, ClipWatching, GoUnlimited, GoVid, Highstream, HolaVid, Streamty, TheVideoBee, Uqload, Vadbam, Vedbam, VidBom, vidlo, VidLocker, VidShare, Viidshar, VUp, WolfStream, XVideoSharing
  - **XHamster**
  - **XHamsterEmbed**
  - **XHamsterUser**
@@ -1691,6 +1710,8 @@ The only reliable way to check if a site is supported is to try it.
  - **YouPornStar**: YouPorn Pornstar, with description, sorting and pagination
  - **YouPornTag**: YouPorn tag (porntags), with sorting, filtering and pagination
  - **YouPornVideos**: YouPorn video (browse) playlists, with sorting, filtering and pagination
+ - **YourPorn**
+ - **YourUpload**
  - **youtube**: [*youtube*](## "netrc machine") YouTube
  - **youtube:clip**: [*youtube*](## "netrc machine")
  - **youtube:favorites**: [*youtube*](## "netrc machine") YouTube liked videos; ":ytfav" keyword (requires cookies)
