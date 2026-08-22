@@ -17,7 +17,8 @@ pypi-files: AUTHORS Changelog.md LICENSE README.md README.txt supportedsites \
         completions completion-bash completion-fish completion-zsh \
         doc issuetemplates supportedsites ot offlinetest codetest test \
         tar pypi-files lazy-extractors install uninstall \
-        all-extra yt-dlp-extra current-ejs-version
+        all-extra yt-dlp-extra current-ejs-version \
+        docker-dev docker-dev-test
 
 .IGNORE: current-ejs-version
 .SILENT: current-ejs-version
@@ -238,3 +239,9 @@ yt-dlp-extra: current-ejs-version .ejs-$(EJS_VERSION) $(EJS_PY_FILES) $(EJS_JS_F
 current-ejs-version:
 	rm -rf .ejs-*
 	touch .ejs-$$($(PYTHON) -c 'import sys; sys.path = [""]; from yt_dlp_ejs import version; print(version)' 2>/dev/null)
+
+docker-dev:
+	docker compose -f docker/compose.yml build dev
+
+docker-dev-test:
+	docker compose -f docker/compose.yml run --rm test

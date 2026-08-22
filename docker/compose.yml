@@ -1,0 +1,25 @@
+# Dev workflow (not the release binary builder in bundle/docker).
+#   docker compose -f docker/compose.yml run --rm dev python -m yt_dlp --version
+#   docker compose -f docker/compose.yml run --rm test
+services:
+  dev:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    working_dir: /src
+    volumes:
+      - ..:/src
+    environment:
+      YTDLP_NO_LAZY_EXTRACTORS: "1"
+    command: ["python", "-m", "yt_dlp", "--version"]
+
+  test:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    working_dir: /src
+    volumes:
+      - ..:/src
+    environment:
+      YTDLP_NO_LAZY_EXTRACTORS: "1"
+    command: ["python", "-m", "pytest", "-m", "not download", "test/test_restored_sites.py", "-q"]
