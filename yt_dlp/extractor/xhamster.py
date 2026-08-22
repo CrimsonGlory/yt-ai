@@ -294,7 +294,10 @@ class XHamsterIE(InfoExtractor):
             formats = []
             format_urls = set()
             format_sizes = {}
-            sources = try_get(video, lambda x: x['sources'], dict) or {}
+            sources = (
+                try_get(video, lambda x: x['sources'], dict)
+                or try_get(initials, lambda x: x['downloadDropdownComponent']['sources'], dict)
+                or {})
             for format_id, formats_dict in sources.items():
                 if not isinstance(formats_dict, dict):
                     continue
@@ -625,7 +628,7 @@ class XHamsterUserIE(InfoExtractor):
                 video_id = XHamsterIE._match_id(video_url)
                 yield self.url_result(
                     video_url, ie=XHamsterIE.ie_key(), video_id=video_id)
-            mobj = re.search(r'<a[^>]+data-page=["\']next[^>]+>', page)
+            mobj = re.search(r'<a[^>]+rel=["\']next[^>]+>', page)
             if not mobj:
                 break
             next_page = extract_attributes(mobj.group(0))

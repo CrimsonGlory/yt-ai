@@ -46,7 +46,8 @@ class TedTalkIE(TedBaseIE):
         webpage = self._download_webpage(url, display_id)
         talk_info = self._search_nextjs_data(webpage, display_id)['props']['pageProps']['videoData']
         video_id = talk_info['id']
-        player_data = self._parse_json(talk_info.get('playerData'), video_id)
+        player_data = talk_info.get('videoPlayerData') or self._parse_json(
+            talk_info.get('playerData'), video_id, fatal=False) or {}
 
         http_url = None
         formats, subtitles = [], {}
