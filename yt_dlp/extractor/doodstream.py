@@ -1,12 +1,13 @@
 import random
 import string
 import time
+import urllib.parse
 
 from .common import InfoExtractor
 
 
 class DoodStreamIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?dood\.(?:to|watch|so|pm|wf|re)/[ed]/(?P<id>[a-z0-9]+)'
+    _VALID_URL = r'https?://(?:www\.)?(?:dood(?:stream)?\.(?:com|to|watch|so|pm|wf|re|la|li|ws)|playmogo\.com)/[ed]/(?P<id>[a-z0-9]+)'
     _TESTS = [{
         'url': 'http://dood.to/e/5s1wmbdacezb',
         'md5': '4568b83b31e13242b3f1ff96c55f0595',
@@ -49,11 +50,18 @@ class DoodStreamIE(InfoExtractor):
     }, {
         'url': 'https://dood.re/e/5s1wmbdacezb',
         'only_matching': True,
+    }, {
+        'url': 'https://doodstream.com/e/5s1wmbdacezb',
+        'only_matching': True,
+    }, {
+        'url': 'https://playmogo.com/e/5s1wmbdacezb',
+        'only_matching': True,
     }]
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        url = f'https://dood.to/e/{video_id}'
+        host = urllib.parse.urlparse(url).hostname or 'dood.to'
+        url = f'https://{host}/e/{video_id}'
         webpage = self._download_webpage(url, video_id)
 
         title = self._html_search_meta(
@@ -70,7 +78,7 @@ class DoodStreamIE(InfoExtractor):
 
         pass_md5 = self._html_search_regex(r'(/pass_md5.*?)\'', webpage, 'pass_md5')
         final_url = ''.join((
-            self._download_webpage(f'https://dood.to{pass_md5}', video_id, headers=headers),
+            self._download_webpage(f'https://{host}{pass_md5}', video_id, headers=headers),
             *(random.choice(string.ascii_letters + string.digits) for _ in range(10)),
             f'?token={token}&expiry={int(time.time() * 1000)}',
         ))

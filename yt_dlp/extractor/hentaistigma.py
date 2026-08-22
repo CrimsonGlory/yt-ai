@@ -1,4 +1,5 @@
 from .common import InfoExtractor
+from ..utils import urljoin
 
 
 class HentaiStigmaIE(InfoExtractor):
@@ -25,12 +26,14 @@ class HentaiStigmaIE(InfoExtractor):
         title = self._html_search_regex(
             r'<h2[^>]+class="posttitle"[^>]*><a[^>]*>([^<]+)</a>',
             webpage, 'title')
-        wrap_url = self._html_search_regex(
-            r'<iframe[^>]+src="([^"]+mp4)"', webpage, 'wrapper url')
+        wrap_url = urljoin(url, self._html_search_regex(
+            r'<iframe[^>]+src="([^"]+)"', webpage, 'wrapper url'))
         wrap_webpage = self._download_webpage(wrap_url, video_id)
 
         video_url = self._html_search_regex(
-            r'file\s*:\s*"([^"]+)"', wrap_webpage, 'video url')
+            (r'file\s*:\s*"([^"]+)"',
+             r'<source[^>]+src="([^"]+\.mp4[^"]*)"'),
+            wrap_webpage, 'video url')
 
         return {
             'id': video_id,

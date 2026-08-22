@@ -49,6 +49,8 @@ class ThisAVIE(InfoExtractor):
             else:
                 info_dict = self._extract_jwplayer_data(
                     webpage, video_id, require_title=False)
+        if isinstance(info_dict, list):
+            info_dict = info_dict[0] if info_dict else {}
         uploader = self._html_search_regex(
             r': <a href="http://www\.thisav\.com/user/[0-9]+/(?:[^"]+)">([^<]+)</a>',
             webpage, 'uploader name', fatal=False)
