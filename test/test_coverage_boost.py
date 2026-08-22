@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
 import io
-import json
 import os
 import sys
-import tempfile
 import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -16,10 +14,10 @@ from yt_dlp.extractor.generic import GenericIE
 from yt_dlp.extractor.videa import VideaIE
 from yt_dlp.extractor.yandexdisk import YandexDiskIE
 from yt_dlp.networking.common import Response
-from yt_dlp.utils import download_range_func, smuggle_url, unsmuggle_url
+from yt_dlp.utils import ExtractorError, download_range_func, unsmuggle_url
 from yt_dlp.utils import _legacy as legacy
 from yt_dlp.webvtt import _MatchParser, parse_fragment
-from yt_dlp.utils import ExtractorError
+
 
 
 class TestParseOptions(unittest.TestCase):
