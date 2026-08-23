@@ -6,6 +6,13 @@ class NFHSNetworkIE(InfoExtractor):
     IE_NAME = 'NFHSNetwork'
     _VALID_URL = r'https?://(?:www\.)?nfhsnetwork\.com/events/[\w-]+/(?P<id>(?:gam|evt|dd|)?[\w\d]{0,10})'
     _TESTS = [{
+        'url': 'https://www.nfhsnetwork.com/events/king-kekaulike-high-school-pukalani-hi/gamd023bd6e9e',
+        'info_dict': {
+            'id': 'gamd023bd6e9e',
+            'ext': 'mp4',
+            'title': r're:King Kekaulike vs Baldwin',
+        },
+    }, {
         # Auto-generated two-team sport (pixellot)
         'url': 'https://www.nfhsnetwork.com/events/rockford-high-school-rockford-mi/gamcf7e54cfbc',
         'info_dict': {

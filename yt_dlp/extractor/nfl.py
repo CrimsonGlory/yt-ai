@@ -201,6 +201,13 @@ class NFLIE(NFLBaseIE):
     IE_NAME = 'nfl.com'
     _VALID_URL = NFLBaseIE._VALID_URL_BASE + r'(?:videos?|listen|audio)/(?P<id>[^/#?&]+)'
     _TESTS = [{
+        'url': 'https://www.buffalobills.com/video/joe-brady-on-bills-preseason-win-over-the-browns',
+        'info_dict': {
+            'id': '2615113',
+            'ext': 'mp4',
+            'title': 'Joe Brady On Bills Preseason Win Over The Browns',
+        },
+    }, {
         'url': 'https://www.nfl.com/videos/baker-mayfield-s-game-changing-plays-from-3-td-game-week-14',
         'info_dict': {
             'id': '899441',

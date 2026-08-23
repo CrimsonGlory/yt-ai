@@ -262,6 +262,14 @@ class YahooSearchIE(SearchInfoExtractor):
     _MAX_RESULTS = 1000
     IE_NAME = 'yahoo:search'
     _SEARCH_KEY = 'yvsearch'
+    _TESTS = [{
+        'url': 'yvsearch1:never gonna give you up',
+        'info_dict': {
+            'id': 'never gonna give you up',
+            'title': 'never gonna give you up',
+        },
+        'playlist_count': 1,
+    }]
 
     def _search_results(self, query):
         for pagenum in itertools.count(0):

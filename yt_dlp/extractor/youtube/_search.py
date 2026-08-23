@@ -11,6 +11,13 @@ class YoutubeSearchIE(YoutubeTabBaseInfoExtractor, SearchInfoExtractor):
     _SEARCH_KEY = 'ytsearch'
     _SEARCH_PARAMS = 'EgIQAfABAQ=='  # Videos only
     _TESTS = [{
+        'url': 'ytsearch1:never gonna give you up',
+        'playlist_count': 1,
+        'info_dict': {
+            'id': 'never gonna give you up',
+            'title': 'never gonna give you up',
+        },
+    }, {
         'url': 'ytsearch5:youtube-dl test video',
         'playlist_count': 5,
         'info_dict': {

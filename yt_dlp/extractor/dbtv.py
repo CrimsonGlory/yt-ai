@@ -5,6 +5,13 @@ class DBTVIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?dagbladet\.no/video/(?:(?:embed|(?P<display_id>[^/]+))/)?(?P<id>[0-9A-Za-z_-]{11}|[a-zA-Z0-9]{8})'
     _EMBED_REGEX = [r'<iframe[^>]+src=(["\'])(?P<url>(?:https?:)?//(?:www\.)?dagbladet\.no/video/embed/(?:[0-9A-Za-z_-]{11}|[a-zA-Z0-9]{8}).*?)\1']
     _TESTS = [{
+        'url': 'https://www.dagbladet.no/video/spilte-pa-utseende-blond-og-sot/VSSkVQwl',
+        'info_dict': {
+            'id': 'VSSkVQwl',
+            'ext': 'mp4',
+            'title': 'Spilte på utseende: - Blond og søt',
+        },
+    }, {
         'url': 'https://www.dagbladet.no/video/PynxJnNWChE/',
         'md5': 'b8f850ba1860adbda668d367f9b77699',
         'info_dict': {

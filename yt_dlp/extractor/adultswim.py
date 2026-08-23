@@ -17,6 +17,13 @@ class AdultSwimIE(TurnerBaseIE):
     _VALID_URL = r'https?://(?:www\.)?adultswim\.com/videos/(?P<show_path>[^/?#]+)(?:/(?P<episode_path>[^/?#]+))?'
 
     _TESTS = [{
+        'url': 'https://www.adultswim.com/videos/12-oz-mouse/mee-ouse',
+        'info_dict': {
+            'id': 'AXMpt2aERs3h4hI_X4PD',
+            'ext': 'mp4',
+            'title': '12oz Mouse - Mee-Ouse',
+        },
+    }, {
         'url': 'http://adultswim.com/videos/rick-and-morty/pilot',
         'info_dict': {
             'id': 'rQxZvXQ4ROaSOqq-or2Mow',

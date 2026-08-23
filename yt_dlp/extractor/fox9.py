@@ -2,13 +2,24 @@ from .common import InfoExtractor
 
 
 class FOX9IE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?fox9\.com/video/(?P<id>\d+)'
+    _VALID_URL = r'https?://(?:www\.)?fox9\.com/video/(?P<id>[\w-]+)'
+    _WEB_FALLBACK = True
+    _TESTS = [{
+        'url': 'https://www.fox9.com/video/fmc-pukf45csk6a8vpgl',
+        'info_dict': {
+            'id': 'fmc-pukf45csk6a8vpgl',
+            'ext': 'mp4',
+            'title': r're:FOX 9 Good Day',
+        },
+    }]
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        return self.url_result(
-            'anvato:anvato_epfox_app_web_prod_b3373168e12f423f41504f207000188daf88251b:' + video_id,
-            'Anvato', video_id)
+        if video_id.isdigit():
+            return self.url_result(
+                'anvato:anvato_epfox_app_web_prod_b3373168e12f423f41504f207000188daf88251b:' + video_id,
+                'Anvato', video_id)
+        return self._extract_webpage_media(url)
 
 
 class FOX9NewsIE(InfoExtractor):

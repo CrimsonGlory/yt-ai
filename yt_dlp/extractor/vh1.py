@@ -5,6 +5,13 @@ class VH1IE(MTVServicesBaseIE):
     IE_NAME = 'vh1.com'
     _VALID_URL = r'https?://(?:www\.)?vh1\.com/(?:video-clips|episodes)/(?P<id>[\da-z]{6})'
     _TESTS = [{
+        'url': 'https://www.vh1.com/episodes/6f07zn',
+        'info_dict': {
+            'id': '1c7a7c33-e9e5-11eb-8774-70df2f866ace',
+            'ext': 'mp4',
+            'title': 'Homecoming',
+        },
+    }, {
         'url': 'https://www.vh1.com/episodes/d06ta1/barely-famous-barely-famous-season-1-ep-1',
         'info_dict': {
             'id': '4af4cf2c-a854-11e4-9596-0026b9414f30',

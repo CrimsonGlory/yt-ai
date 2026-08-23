@@ -4,6 +4,13 @@ from .mtv import MTVServicesBaseIE
 class BetIE(MTVServicesBaseIE):
     _VALID_URL = r'https?://(?:www\.)?bet\.com/(?:video-clips|episodes)/(?P<id>[\da-z]{6})'
     _TESTS = [{
+        'url': 'https://www.bet.com/episodes/btpfr3',
+        'info_dict': {
+            'id': 'ed23baf2-4d5a-11f1-81dd-120da68a3617',
+            'ext': 'mp4',
+            'title': 'No ID, No Entry',
+        },
+    }, {
         'url': 'https://www.bet.com/video-clips/w9mk7v',
         'info_dict': {
             'id': '3022d121-d191-43fd-b5fb-b2c26f335497',

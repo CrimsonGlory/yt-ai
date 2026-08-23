@@ -1318,6 +1318,13 @@ class SoundcloudSearchIE(SoundcloudBaseIE, SearchInfoExtractor):
     IE_DESC = 'Soundcloud search'
     _SEARCH_KEY = 'scsearch'
     _TESTS = [{
+        'url': 'scsearch1:lofi hip hop',
+        'info_dict': {
+            'id': 'lofi hip hop',
+            'title': 'lofi hip hop',
+        },
+        'playlist_count': 1,
+    }, {
         'url': 'scsearch15:post-avant jazzcore',
         'info_dict': {
             'id': 'post-avant jazzcore',

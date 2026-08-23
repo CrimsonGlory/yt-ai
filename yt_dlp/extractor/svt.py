@@ -128,6 +128,13 @@ class SVTPlayIE(SVTBaseIE):
                     )
                     '''
     _TESTS = [{
+        'url': 'https://www.svtplay.se/video/jqPPXq9/rapport/igar-19-30',
+        'info_dict': {
+            'id': 'jvvv237',
+            'ext': 'mp4',
+            'title': 'Igår 19:30',
+        },
+    }, {
         'url': 'https://www.svtplay.se/video/eXYgwZb/sverige-och-kriget/1-utbrottet',
         'md5': '2382036fd6f8c994856c323fe51c426e',
         'info_dict': {

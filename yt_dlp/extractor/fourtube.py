@@ -170,10 +170,20 @@ class FuxIE(FourTubeBaseIE):
 
 
 class PornTubeIE(FourTubeBaseIE):
-    _VALID_URL = r'https?://(?:(?P<kind>www|m)\.)?porntube\.com/(?:videos/(?P<display_id>[^/]+)_|embed/)(?P<id>\d+)'
+    _VALID_URL = (
+        r'https?://(?:(?P<kind>www|m)\.)?porntube\.com/(?:videos/(?P<display_id>[^/]+)_|embed/)(?P<id>\d+)'
+        r'|https?://(?:www\.)?porntube\.com/video/(?P<token>[\w-]+)/(?P<slug>[\w-]+)')
     _URL_TEMPLATE = 'https://www.porntube.com/videos/video_%s'
     _TKN_HOST = 'tkn.porntube.com'
+    _WEB_FALLBACK = True
     _TESTS = [{
+        'url': 'https://www.porntube.com/video/afoQEf5MRBujBwWF/alexa-chains-demands-a-massive-black-cock',
+        'info_dict': {
+            'id': 'alexa-chains-demands-a-massive-black-cock',
+            'ext': 'mp4',
+            'title': 'Alexa Chains Demands A Massive Black Cock',
+        },
+    }, {
         'url': 'https://www.porntube.com/videos/teen-couple-doing-anal_7089759',
         'info_dict': {
             'id': '7089759',
@@ -221,6 +231,10 @@ class PornTubeIE(FourTubeBaseIE):
 
     def _real_extract(self, url):
         mobj = self._match_valid_url(url)
+        if mobj.group('token'):
+            info = self._extract_webpage_media(url)
+            info['id'] = mobj.group('slug') or mobj.group('token')
+            return info
         video_id, display_id = mobj.group('id', 'display_id')
 
         webpage = self._download_webpage(url, display_id)

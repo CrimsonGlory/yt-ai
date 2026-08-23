@@ -9,6 +9,13 @@ class BioBioChileTVIE(InfoExtractor):
     _VALID_URL = r'https?://(?:tv|www)\.biobiochile\.cl/(?:notas|noticias)/(?:[^/]+/)+(?P<id>[^/]+)\.shtml'
 
     _TESTS = [{
+        'url': 'https://www.biobiochile.cl/noticias/sociedad/viral/2026/08/22/viralizan-polemico-directo-de-streamer-espanol-acosando-sexualmente-a-joven-japonesa.shtml',
+        'info_dict': {
+            'id': 'bWXNNp',
+            'ext': 'mp4',
+            'title': 'Viralizan polémico directo de streamer español acosando sexualmente a joven japonesa',
+        },
+    }, {
         'url': 'http://tv.biobiochile.cl/notas/2015/10/21/sobre-camaras-y-camarillas-parlamentarias.shtml',
         'md5': '26f51f03cf580265defefb4518faec09',
         'info_dict': {

@@ -142,6 +142,14 @@ class CBSNewsIE(CBSNewsBaseIE):
 
     _TESTS = [
         {
+            'url': 'https://www.cbsnews.com/news/cash-drop-videos-us-cities/',
+            'info_dict': {
+                'id': '5a98e52f-1903-4667-b737-782f3473cb89',
+                'ext': 'mp4',
+                'title': 'Wads of cash are being hidden across the U.S. Here\'s the backstory.',
+            },
+        },
+        {
             # 60 minutes
             'url': 'http://www.cbsnews.com/news/artificial-intelligence-positioned-to-be-a-game-changer/',
             'info_dict': {

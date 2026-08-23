@@ -67,6 +67,13 @@ class HSEShowIE(HSEShowBaseIE):
 class HSEProductIE(HSEShowBaseIE):
     _VALID_URL = r'https?://(?:www\.)?hse\.de/dpl/p/product/(?P<id>[0-9]+)'
     _TESTS = [{
+        'url': 'https://www.hse.de/dpl/p/product/489206?filter=',
+        'info_dict': {
+            'id': '489206',
+            'ext': 'mp4',
+            'title': 'Ring mit Tansanit AAAAA',
+        },
+    }, {
         'url': 'https://www.hse.de/dpl/p/product/408630',
         'info_dict': {
             'id': '408630',

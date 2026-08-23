@@ -12,7 +12,14 @@ class KrasViewIE(InfoExtractor):
     IE_DESC = 'Красвью'
     _VALID_URL = r'https?://krasview\.ru/(?:video|embed)/(?P<id>\d+)'
 
-    _TEST = {
+    _TESTS = [{
+        'url': 'https://krasview.ru/video/1318362-Pryjok.s.vysoty.115.km.i.novyiy.mirovoiy.rekord',
+        'info_dict': {
+            'id': '1318362',
+            'ext': 'mp4',
+            'title': 'Прыжок с высоты 11,5 км и новый мировой рекорд',
+        },
+    }, {
         'url': 'http://krasview.ru/video/512228',
         'md5': '3b91003cf85fc5db277870c8ebd98eae',
         'info_dict': {
@@ -26,7 +33,7 @@ class KrasViewIE(InfoExtractor):
         'params': {
             'skip_download': 'Not accessible from Travis CI server',
         },
-    }
+    }]
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
