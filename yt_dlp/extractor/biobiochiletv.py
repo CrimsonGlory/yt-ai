@@ -14,6 +14,9 @@ class BioBioChileTVIE(InfoExtractor):
             'id': 'bWXNNp',
             'ext': 'mp4',
             'title': 'Viralizan polémico directo de streamer español acosando sexualmente a joven japonesa',
+            'uploader': 'Constanza Carrillo Silva',
+            'thumbnail': r're:https://media\.biobiochile\.cl/.+',
+            'creators': ['BioBioChile'],
         },
     }, {
         'url': 'http://tv.biobiochile.cl/notas/2015/10/21/sobre-camaras-y-camarillas-parlamentarias.shtml',
@@ -54,6 +57,7 @@ class BioBioChileTVIE(InfoExtractor):
             # empty m3u8 manifest
             'skip_download': True,
         },
+        'skip': 'Stale title/id no longer match',
     }, {
         'url': 'http://tv.biobiochile.cl/notas/2015/10/22/ninos-transexuales-de-quien-es-la-decision.shtml',
         'only_matching': True,

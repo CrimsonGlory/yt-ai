@@ -72,6 +72,8 @@ class HSEProductIE(HSEShowBaseIE):
             'id': '489206',
             'ext': 'mp4',
             'title': 'Ring mit Tansanit AAAAA',
+            'uploader': 'Harry Ivens',
+            'thumbnail': r're:https://.+\.jpg',
         },
     }, {
         'url': 'https://www.hse.de/dpl/p/product/408630',
@@ -82,6 +84,7 @@ class HSEProductIE(HSEShowBaseIE):
             'uploader': 'Judith Williams',
         },
         'params': {'skip_download': 'm3u8'},
+        'skip': 'HTTP 404',
     }]
 
     def _real_extract(self, url):

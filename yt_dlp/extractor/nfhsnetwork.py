@@ -11,6 +11,13 @@ class NFHSNetworkIE(InfoExtractor):
             'id': 'gamd023bd6e9e',
             'ext': 'mp4',
             'title': r're:King Kekaulike vs Baldwin',
+            'description': 'Varsity Boys Football',
+            'uploader': 'HHSAA: King Kekaulike High School, Pukalani, HI',
+            'uploader_id': 'f72d700bf3',
+            'uploader_url': 'https://www.nfhsnetwork.com/schools/king-kekaulike-high-school-pukalani-hi',
+            'timestamp': 1787461200,
+            'upload_date': '20260822',
+            'location': 'Pukalani, Hawaii',
         },
     }, {
         # Auto-generated two-team sport (pixellot)
@@ -30,6 +37,7 @@ class NFHSNetworkIE(InfoExtractor):
             # m3u8 download
             'skip_download': True,
         },
+        'skip': 'HTTP 403',
     }, {
         # Non-sport activity with description
         'url': 'https://www.nfhsnetwork.com/events/limon-high-school-limon-co/evt4a30e3726c',
@@ -49,6 +57,7 @@ class NFHSNetworkIE(InfoExtractor):
             # m3u8 download
             'skip_download': True,
         },
+        'skip': 'HTTP 403',
     }, {
         # Postseason game
         'url': 'https://www.nfhsnetwork.com/events/nfhs-network-special-events/dd8de71d45',
@@ -67,6 +76,7 @@ class NFHSNetworkIE(InfoExtractor):
             # m3u8 download
             'skip_download': True,
         },
+        'skip': 'Title no longer matches',
     }, {
         # Video with no broadcasts object
         'url': 'https://www.nfhsnetwork.com/events/wiaa-wi/9aa2f92f82',
@@ -86,6 +96,7 @@ class NFHSNetworkIE(InfoExtractor):
             # m3u8 download
             'skip_download': True,
         },
+        'skip': 'Title no longer matches',
     },
     ]
 

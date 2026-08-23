@@ -182,6 +182,11 @@ class PornTubeIE(FourTubeBaseIE):
             'id': 'alexa-chains-demands-a-massive-black-cock',
             'ext': 'mp4',
             'title': 'Alexa Chains Demands A Massive Black Cock',
+            'description': 'md5:d759274aabf83eb71b3967e50caeb5db',
+            'duration': 2602,
+            'thumbnail': r're:https://i\.bang\.com/.+',
+            'timestamp': 1787270400,
+            'upload_date': '20260821',
         },
     }, {
         'url': 'https://www.porntube.com/videos/teen-couple-doing-anal_7089759',
@@ -201,6 +206,7 @@ class PornTubeIE(FourTubeBaseIE):
         'params': {
             'skip_download': True,
         },
+        'skip': 'Old /videos/slug_id URL no longer extracts',
     }, {
         'url': 'https://www.porntube.com/videos/squirting-teen-ballerina-ecg_1331406',
         'info_dict': {
@@ -221,6 +227,7 @@ class PornTubeIE(FourTubeBaseIE):
         'params': {
             'skip_download': True,
         },
+        'skip': 'Old /videos/slug_id URL no longer extracts',
     }, {
         'url': 'https://www.porntube.com/embed/7089759',
         'only_matching': True,

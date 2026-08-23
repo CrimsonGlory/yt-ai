@@ -22,6 +22,17 @@ class AdultSwimIE(TurnerBaseIE):
             'id': 'AXMpt2aERs3h4hI_X4PD',
             'ext': 'mp4',
             'title': '12oz Mouse - Mee-Ouse',
+            'description': 'Fellas, don\'t do this.',
+            'duration': 51.41801,
+            'thumbnail': r're:https://media\.cdn\.adultswim\.com/.+',
+            'chapters': [{'start_time': 0.0, 'end_time': 51.41801, 'title': '<Untitled Chapter 1>'}],
+            'series': '12oz Mouse',
+            'season': 'Season 1',
+            'season_number': 1,
+            'episode': 'Mee-Ouse',
+            'episode_number': 1,
+            'timestamp': 1594094400,
+            'upload_date': '20200707',
         },
     }, {
         'url': 'http://adultswim.com/videos/rick-and-morty/pilot',
@@ -38,6 +49,7 @@ class AdultSwimIE(TurnerBaseIE):
             'skip_download': True,
         },
         'expected_warnings': ['Unable to download f4m manifest'],
+        'skip': 'No video data returned',
     }, {
         'url': 'http://www.adultswim.com/videos/tim-and-eric-awesome-show-great-job/dr-steve-brule-for-your-wine/',
         'info_dict': {
@@ -68,6 +80,7 @@ class AdultSwimIE(TurnerBaseIE):
             'skip_download': True,
         },
         'expected_warnings': ['Unable to download f4m manifest'],
+        'skip': 'HTTP 403',
     }, {
         'url': 'http://www.adultswim.com/videos/attack-on-titan',
         'info_dict': {
@@ -76,6 +89,7 @@ class AdultSwimIE(TurnerBaseIE):
             'description': 'md5:41caa9416906d90711e31dc00cb7db7e',
         },
         'playlist_mincount': 12,
+        'skip': 'Extractor returns no show data',
     }, {
         'url': 'http://www.adultswim.com/videos/streams/williams-stream',
         'info_dict': {

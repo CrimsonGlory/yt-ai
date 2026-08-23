@@ -206,6 +206,10 @@ class NFLIE(NFLBaseIE):
             'id': '2615113',
             'ext': 'mp4',
             'title': 'Joe Brady On Bills Preseason Win Over The Browns',
+            'description': 'md5:09208243e0f01267bdb909b95a1c8013',
+            'duration': 413,
+            'thumbnail': r're:https://.+\.bif',
+            '_old_archive_ids': ['anvato 2615113'],
         },
     }, {
         'url': 'https://www.nfl.com/videos/baker-mayfield-s-game-changing-plays-from-3-td-game-week-14',
@@ -228,6 +232,7 @@ class NFLIE(NFLBaseIE):
             'description': 'md5:12ada8ee70e6762658c30e223e095075',
             'thumbnail': 'https://static.clubs.nfl.com/image/private/t_editorial_landscape_12_desktop/v1571153441/chiefs/rfljejccnyhhkpkfq855',
         },
+        'skip': 'HTTP 404',
     }, {
         'url': 'https://www.buffalobills.com/video/buffalo-bills-military-recognition-week-14',
         'only_matching': True,

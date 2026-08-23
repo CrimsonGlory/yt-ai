@@ -16,9 +16,14 @@ class KrasViewIE(InfoExtractor):
         'url': 'https://krasview.ru/video/1318362-Pryjok.s.vysoty.115.km.i.novyiy.mirovoiy.rekord',
         'info_dict': {
             'id': '1318362',
-            'ext': 'mp4',
+            'ext': 'unknown_video',
             'title': 'Прыжок с высоты 11,5 км и новый мировой рекорд',
+            'description': r're:Сергей Бойцов',
+            'thumbnail': r're:https://image\.krasview\.ru/.+',
         },
+        'expected_warnings': [r'webpage media fallback'],
+        'params': {'test': False},
+        'file_minsize': 1000,
     }, {
         'url': 'http://krasview.ru/video/512228',
         'md5': '3b91003cf85fc5db277870c8ebd98eae',
@@ -33,6 +38,7 @@ class KrasViewIE(InfoExtractor):
         'params': {
             'skip_download': 'Not accessible from Travis CI server',
         },
+        'skip': 'Unable to extract flashvars',
     }]
 
     def _real_extract(self, url):

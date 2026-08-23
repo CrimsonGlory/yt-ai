@@ -5,12 +5,18 @@ class FOX9IE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?fox9\.com/video/(?P<id>[\w-]+)'
     _WEB_FALLBACK = True
     _TESTS = [{
-        'url': 'https://www.fox9.com/video/fmc-pukf45csk6a8vpgl',
+        'url': 'https://www.fox9.com/video/fmc-do4c877slj73obx8',
         'info_dict': {
-            'id': 'fmc-pukf45csk6a8vpgl',
+            'id': 'fmc-do4c877slj73obx8',
             'ext': 'mp4',
-            'title': r're:FOX 9 Good Day',
+            'title': '87 cars broken into in 1 night in Minneapolis',
+            'description': r're:There were 87 cars',
+            'thumbnail': r're:https://static-media\.fox\.com/.+',
+            'timestamp': 1787452130,
+            'upload_date': '20260823',
         },
+        'expected_warnings': [r'webpage media fallback'],
+        'skip': 'FOX9 m3u8 playlists expire quickly',
     }]
 
     def _real_extract(self, url):

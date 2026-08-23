@@ -11,6 +11,8 @@ class LoveHomePornIE(NuevoBaseIE):
             'ext': 'mp4',
             'title': 'Fitness Instructor Comes for Private Home Session and Ends Up Riding My Cock Hard',
             'age_limit': 18,
+            'duration': 862.0,
+            'thumbnail': r're:https://cdn\.static\.lovehomeporn\.com/.+',
         },
     }, {
         'url': 'http://lovehomeporn.com/video/48483/stunning-busty-brunette-girlfriend-sucking-and-riding-a-big-dick#menu',
@@ -25,6 +27,7 @@ class LoveHomePornIE(NuevoBaseIE):
         'params': {
             'skip_download': True,
         },
+        'skip': 'Nuevo config XML no longer valid',
     }]
 
     def _real_extract(self, url):

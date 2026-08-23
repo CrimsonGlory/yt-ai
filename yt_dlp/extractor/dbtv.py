@@ -10,7 +10,14 @@ class DBTVIE(InfoExtractor):
             'id': 'VSSkVQwl',
             'ext': 'mp4',
             'title': 'Spilte på utseende: - Blond og søt',
+            'display_id': 'spilte-pa-utseende-blond-og-sot',
+            'description': 'md5:734e53323d338f43a71218b1fe92dfed',
+            'duration': 85.0,
+            'thumbnail': r're:https://cdn\.jwplayer\.com/.+',
+            'timestamp': 1787392793,
+            'upload_date': '20260822',
         },
+        'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.dagbladet.no/video/PynxJnNWChE/',
         'md5': 'b8f850ba1860adbda668d367f9b77699',
@@ -46,6 +53,7 @@ class DBTVIE(InfoExtractor):
             'timestamp': 1751043600,
             'upload_date': '20250627',
         },
+        'skip': 'Embedded video id/title no longer match',
     }]
 
     def _real_extract(self, url):

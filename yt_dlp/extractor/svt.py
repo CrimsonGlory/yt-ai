@@ -133,7 +133,16 @@ class SVTPlayIE(SVTBaseIE):
             'id': 'jvvv237',
             'ext': 'mp4',
             'title': 'Igår 19:30',
+            'description': r're:Skoldådet i Fagersta',
+            'age_limit': 0,
+            'duration': 1801,
+            'thumbnail': r're:https://www\.svtstatic\.se/.+',
+            'series': 'Rapport',
+            'episode': 'Igår 19:30',
+            'timestamp': 1787419800,
+            'upload_date': '20260822',
         },
+        'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.svtplay.se/video/eXYgwZb/sverige-och-kriget/1-utbrottet',
         'md5': '2382036fd6f8c994856c323fe51c426e',
@@ -154,6 +163,7 @@ class SVTPlayIE(SVTBaseIE):
         'params': {
             'skip_download': 'm3u8',
         },
+        'skip': 'HTTP 403',
     }, {
         'url': 'https://www.svtplay.se/video/30479064',
         'md5': '2382036fd6f8c994856c323fe51c426e',
@@ -199,6 +209,7 @@ class SVTPlayIE(SVTBaseIE):
             'skip_download': 'm3u8',
         },
         'expected_warnings': [r'Failed to download (?:MPD|m3u8)'],
+        'skip': 'Geo-restricted to Sweden',
     }, {
         'url': 'https://www.svtplay.se/video/jz2rYz7/anders-hansen-moter/james-fallon?info=visa',
         'info_dict': {

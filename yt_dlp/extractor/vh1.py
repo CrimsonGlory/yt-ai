@@ -9,8 +9,24 @@ class VH1IE(MTVServicesBaseIE):
         'info_dict': {
             'id': '1c7a7c33-e9e5-11eb-8774-70df2f866ace',
             'ext': 'mp4',
+            'display_id': '6f07zn',
             'title': 'Homecoming',
+            'description': 'md5:b13c36bdc7690d537603319f45ca2716',
+            'channel': 'VH1',
+            'duration': 2494.0,
+            'thumbnail': r're:https://images\.paramount\.tech/.+',
+            'series': 'Love & Hip Hop New York',
+            'season': 'Season 10',
+            'season_number': 10,
+            'episode': 'Episode 1',
+            'episode_number': 1,
+            'timestamp': 1784628000,
+            'upload_date': '20260721',
+            'release_timestamp': 1576497600,
+            'release_date': '20191216',
         },
+        'expected_warnings': [r'pycryptodomex'],
+        'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.vh1.com/episodes/d06ta1/barely-famous-barely-famous-season-1-ep-1',
         'info_dict': {
@@ -33,6 +49,7 @@ class VH1IE(MTVServicesBaseIE):
             'release_date': '20150318',
         },
         'params': {'skip_download': 'm3u8'},
+        'skip': 'HTTP 404',
     }, {
         'url': 'https://www.vh1.com/video-clips/ryzt2n/love-hip-hop-miami-love-hip-hop-miami-season-5-recap',
         'info_dict': {
@@ -54,4 +71,5 @@ class VH1IE(MTVServicesBaseIE):
             'release_date': '20241126',
         },
         'params': {'skip_download': 'm3u8'},
+        'skip': 'HTTP 404 / geo-restricted',
     }]

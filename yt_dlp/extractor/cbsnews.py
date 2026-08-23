@@ -147,6 +147,11 @@ class CBSNewsIE(CBSNewsBaseIE):
                 'id': '5a98e52f-1903-4667-b737-782f3473cb89',
                 'ext': 'mp4',
                 'title': 'Wads of cash are being hidden across the U.S. Here\'s the backstory.',
+                'description': '',
+                'duration': 97.0,
+                'thumbnail': r're:https://assets3\.cbsnewsstatic\.com/.+',
+                'timestamp': 1787341620,
+                'upload_date': '20260821',
             },
         },
         {
@@ -185,6 +190,7 @@ class CBSNewsIE(CBSNewsBaseIE):
             'params': {
                 'skip_download': 'm3u8',
             },
+            'skip': 'HTTP 406',
         },
         {
             # 48 hours
@@ -215,6 +221,7 @@ class CBSNewsIE(CBSNewsBaseIE):
             'params': {
                 'skip_download': 'm3u8',
             },
+            'skip': 'HTTP 406',
         },
     ]
 

@@ -8,8 +8,24 @@ class BetIE(MTVServicesBaseIE):
         'info_dict': {
             'id': 'ed23baf2-4d5a-11f1-81dd-120da68a3617',
             'ext': 'mp4',
+            'display_id': 'btpfr3',
             'title': 'No ID, No Entry',
+            'description': 'md5:00508e0e60ade9c9e1d1615f82708673',
+            'channel': 'BET',
+            'duration': 1080.0,
+            'thumbnail': r're:https://images\.paramount\.tech/.+',
+            'series': 'Lot Patrol',
+            'season': 'Season 1',
+            'season_number': 1,
+            'episode': 'Episode 1',
+            'episode_number': 1,
+            'timestamp': 1784530800,
+            'upload_date': '20260720',
+            'release_timestamp': 1782820800,
+            'release_date': '20260630',
         },
+        'expected_warnings': [r'pycryptodomex'],
+        'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.bet.com/video-clips/w9mk7v',
         'info_dict': {
@@ -28,6 +44,7 @@ class BetIE(MTVServicesBaseIE):
             'upload_date': '20250815',
         },
         'params': {'skip_download': 'm3u8'},
+        'skip': 'Extractor error (stitchedstream)',
     }, {
         'url': 'https://www.bet.com/episodes/nmce72/tyler-perry-s-sistas-heavy-is-the-crown-season-9-ep-5',
         'info_dict': {
