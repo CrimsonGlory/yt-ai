@@ -5,7 +5,7 @@ from ..utils import unified_strdate
 
 
 class TeleTaskIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:www\.)?tele-task\.de/archive/video/html5/(?P<id>[0-9]+)'
     _TEST = {
         'url': 'http://www.tele-task.de/archive/video/html5/26168/',

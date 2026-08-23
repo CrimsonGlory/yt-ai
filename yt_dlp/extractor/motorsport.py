@@ -4,7 +4,7 @@ from .common import InfoExtractor
 
 
 class MotorsportIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_DESC = 'motorsport.com'
     _VALID_URL = r'https?://(?:www\.)?motorsport\.com/[^/?#]+/video/(?:[^/?#]+/)(?P<id>[^/]+)/?(?:$|[?#])'
     _TEST = {

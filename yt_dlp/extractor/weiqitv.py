@@ -2,7 +2,7 @@ from .common import InfoExtractor
 
 
 class WeiqiTVIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_DESC = 'WQTV'
     _VALID_URL = r'https?://(?:www\.)?weiqitv\.com/index/video_play\?videoId=(?P<id>[A-Za-z0-9]+)'
 

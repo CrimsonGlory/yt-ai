@@ -6,8 +6,7 @@ from ..utils import (
 
 
 class GodTubeIE(InfoExtractor):
-    _WORKING = False
-    _VALID_URL = r'https?://(?:www\.)?godtube\.com/watch/\?v=(?P<id>[\da-zA-Z]+)'
+    _VALID_URL = r'https?://(?:www\.)?godtube\.com/(?:watch/\?v=|video/)(?P<id>[\da-zA-Z-]+)'
     _TESTS = [
         {
             'url': 'https://www.godtube.com/watch/?v=0C0CNNNU',
@@ -30,24 +29,45 @@ class GodTubeIE(InfoExtractor):
         video_id = mobj.group('id')
 
         config = self._download_xml(
-            f'http://www.godtube.com/resource/mediaplayer/{video_id.lower()}.xml',
-            video_id, 'Downloading player config XML')
+            f'https://www.godtube.com/resource/mediaplayer/{video_id.lower()}.xml',
+            video_id, 'Downloading player config XML', fatal=False)
 
-        video_url = config.find('file').text
-        uploader = config.find('author').text
-        timestamp = parse_iso8601(config.find('date').text)
-        duration = parse_duration(config.find('duration').text)
-        thumbnail = config.find('image').text
+        video_url = uploader = timestamp = duration = thumbnail = title = None
+        if config is not None:
+            video_url = getattr(config.find('file'), 'text', None)
+            uploader = getattr(config.find('author'), 'text', None)
+            timestamp = parse_iso8601(getattr(config.find('date'), 'text', None))
+            duration = parse_duration(getattr(config.find('duration'), 'text', None))
+            thumbnail = getattr(config.find('image'), 'text', None)
 
         media = self._download_xml(
-            f'http://www.godtube.com/media/xml/?v={video_id}', video_id, 'Downloading media XML')
+            f'https://www.godtube.com/media/xml/?v={video_id}', video_id,
+            'Downloading media XML', fatal=False)
+        if media is not None:
+            title = getattr(media.find('title'), 'text', None)
 
-        title = media.find('title').text
+        if not video_url:
+            webpage = self._download_webpage(url, video_id)
+            json_ld = self._search_json_ld(webpage, video_id, default={})
+            video_url = (
+                json_ld.get('url') or json_ld.get('contentUrl')
+                or self._og_search_video_url(webpage, default=None))
+            title = title or json_ld.get('title') or self._og_search_title(webpage, default=video_id)
+            thumbnail = thumbnail or self._og_search_thumbnail(webpage)
+            html5 = self._parse_html5_media_entries(url, webpage, video_id)
+            if html5 and not video_url:
+                return {
+                    **html5[0],
+                    'id': video_id,
+                    'title': title,
+                    'thumbnail': thumbnail,
+                    'uploader': uploader,
+                }
 
         return {
             'id': video_id,
             'url': video_url,
-            'title': title,
+            'title': title or video_id,
             'thumbnail': thumbnail,
             'timestamp': timestamp,
             'uploader': uploader,

@@ -2,7 +2,7 @@ from .common import InfoExtractor
 
 
 class SexuIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:www\.)?sexu\.com/(?P<id>\d+)'
     _TEST = {
         'url': 'http://sexu.com/961791/',

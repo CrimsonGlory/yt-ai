@@ -10,7 +10,7 @@ from ..utils import (
 
 
 class NozIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:www\.)?noz\.de/video/(?P<id>[0-9]+)/'
     _TESTS = [{
         'url': 'http://www.noz.de/video/25151/32-Deutschland-gewinnt-Badminton-Lnderspiel-in-Melle',

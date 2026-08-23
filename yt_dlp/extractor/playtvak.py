@@ -10,7 +10,7 @@ from ..utils import (
 
 
 class PlaytvakIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_DESC = 'Playtvak.cz, iDNES.cz and Lidovky.cz'
     _VALID_URL = r'https?://(?:.+?\.)?(?:playtvak|idnes|lidovky|metro)\.cz/.*\?(?:c|idvideo)=(?P<id>[^&]+)'
     _TESTS = [{

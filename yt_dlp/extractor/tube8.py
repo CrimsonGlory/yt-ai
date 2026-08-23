@@ -14,7 +14,7 @@ from ..utils import (
 
 
 class Tube8IE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:www\.)?tube8\.com/(?:[^/]+/)+(?P<display_id>[^/]+)/(?P<id>\d+)'
     _EMBED_REGEX = [r'<iframe[^>]+\bsrc=["\'](?P<url>(?:https?:)?//(?:www\.)?tube8\.com/embed/(?:[^/]+/)+\d+)']
     _TESTS = [{

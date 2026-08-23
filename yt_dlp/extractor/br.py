@@ -9,7 +9,7 @@ from ..utils import (
 
 
 class BRIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_DESC = 'Bayerischer Rundfunk'
     _VALID_URL = r'(?P<base_url>https?://(?:www\.)?br(?:-klassik)?\.de)/(?:[a-z0-9\-_]+/)+(?P<id>[a-z0-9\-_]+)\.html'
 

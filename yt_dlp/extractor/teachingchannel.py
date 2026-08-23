@@ -2,7 +2,7 @@ from .common import InfoExtractor
 
 
 class TeachingChannelIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:www\.)?teachingchannel\.org/videos?/(?P<id>[^/?&#]+)'
 
     _TEST = {

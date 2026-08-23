@@ -91,7 +91,7 @@ class MurrtubeIE(InfoExtractor):
 
 
 class MurrtubeUserIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_DESC = 'Murrtube user profile'
     _VALID_URL = r'https?://murrtube\.net/(?P<id>[^/]+)$'
     _TESTS = [{

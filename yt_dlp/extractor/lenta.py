@@ -2,7 +2,6 @@ from .common import InfoExtractor
 
 
 class LentaIE(InfoExtractor):
-    _WORKING = False
     _VALID_URL = r'https?://(?:www\.)?lenta\.ru/[^/]+/\d+/\d+/\d+/(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://lenta.ru/news/2018/03/22/savshenko_go/',
@@ -48,4 +47,18 @@ class LentaIE(InfoExtractor):
                 f'eagleplatform:lentaru.media.eagleplatform.com:{video_id}',
                 ie='EaglePlatform', video_id=video_id)
 
+        iframe = self._search_regex(
+            r'<iframe[^>]+src=["\']([^"\']+)["\']', webpage, 'iframe', default=None)
+        if iframe:
+            return self.url_result(iframe)
+        html5 = self._parse_html5_media_entries(url, webpage, display_id)
+        if html5:
+            info = html5[0]
+            info.update({
+                'id': display_id,
+                'title': self._og_search_title(webpage, default=display_id),
+                'thumbnail': info.get('thumbnail') or self._og_search_thumbnail(webpage),
+                'description': self._og_search_description(webpage),
+            })
+            return info
         return self.url_result(url, ie='Generic')

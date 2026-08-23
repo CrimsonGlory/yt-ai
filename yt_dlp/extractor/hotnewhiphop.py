@@ -6,7 +6,7 @@ from ..utils import ExtractorError, urlencode_postdata
 
 
 class HotNewHipHopIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:www\.)?hotnewhiphop\.com/.*\.(?P<id>.*)\.html'
     _TEST = {
         'url': 'http://www.hotnewhiphop.com/freddie-gibbs-lay-it-down-song.1435540.html',

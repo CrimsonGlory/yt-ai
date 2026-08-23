@@ -498,10 +498,7 @@ from .duboku import (
 from .dumpert import DumpertIE
 from .duoplay import DuoplayIE
 from .dvtv import DVTVIE
-from .dw import (
-    DWIE,
-    DWArticleIE,
-)
+from .dw import DWIE
 from .ebaumsworld import EbaumsWorldIE
 from .ebay import EbayIE
 from .egghead import (
@@ -551,6 +548,7 @@ from .ettutv import EttuTvIE
 from .europa import (
     EuropaIE,
     EuroParlWebstreamIE,
+    EuropeanCommissionIE,
 )
 from .europeantour import EuropeanTourIE
 from .eurosport import EurosportIE
@@ -1956,7 +1954,10 @@ from .tenplay import (
 )
 from .testurl import TestURLIE
 from .tf1 import TF1IE
-from .tfo import TFOIE
+from .tfo import (
+    TFOIE,
+    TFOSeriesIE,
+)
 from .thechosen import (
     TheChosenGroupIE,
     TheChosenIE,

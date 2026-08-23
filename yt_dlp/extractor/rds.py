@@ -7,7 +7,7 @@ from ..utils import (
 
 
 class RDSIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_DESC = 'RDS.ca'
     _VALID_URL = r'https?://(?:www\.)?rds\.ca/vid(?:[eé]|%C3%A9)os/(?:[^/]+/)*(?P<id>[^/]+)-\d+\.\d+'
 

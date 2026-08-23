@@ -3,8 +3,7 @@ from ..utils import ExtractorError, traverse_obj
 
 
 class ZeeNewsIE(InfoExtractor):
-    _WORKING = False
-    _ENABLED = None  # XXX: pass through to GenericIE
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://zeenews\.india\.com/[^#?]+/video/(?P<display_id>[^#/?]+)/(?P<id>\d+)'
     _TESTS = [
         {

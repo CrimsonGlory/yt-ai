@@ -630,7 +630,7 @@ class InstagramPlaylistBaseIE(InstagramBaseIE):
 
 
 class InstagramUserIE(InstagramPlaylistBaseIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:www\.)?instagram\.com/(?P<id>[^/]{2,})/?(?:$|[?#])'
     IE_DESC = 'Instagram user profile'
     IE_NAME = 'instagram:user'

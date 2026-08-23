@@ -95,7 +95,7 @@ class NBAWatchBaseIE(NBACVPBaseIE):
 
 
 class NBAWatchEmbedIE(NBAWatchBaseIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_NAME = 'nba:watch:embed'
     _VALID_URL = NBAWatchBaseIE._VALID_URL_BASE + r'embed\?.*?\bid=(?P<id>\d+)'
     _TESTS = [{
@@ -117,7 +117,7 @@ class NBAWatchEmbedIE(NBAWatchBaseIE):
 
 
 class NBAWatchIE(NBAWatchBaseIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_NAME = 'nba:watch'
     _VALID_URL = NBAWatchBaseIE._VALID_URL_BASE + r'(?:nba/)?video/(?P<id>.+?(?=/index\.html)|(?:[^/]+/)*[^/?#&]+)'
     _TESTS = [{
@@ -170,7 +170,7 @@ class NBAWatchIE(NBAWatchBaseIE):
 
 
 class NBAWatchCollectionIE(NBAWatchBaseIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_NAME = 'nba:watch:collection'
     _VALID_URL = NBAWatchBaseIE._VALID_URL_BASE + r'list/collection/(?P<id>[^/?#&]+)'
     _TESTS = [{
@@ -340,7 +340,7 @@ class NBABaseIE(NBACVPBaseIE):
 
 
 class NBAEmbedIE(NBABaseIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_NAME = 'nba:embed'
     _VALID_URL = r'https?://secure\.nba\.com/assets/amp/include/video/(?:topI|i)frame\.html\?.*?\bcontentId=(?P<id>[^?#&]+)'
     _TESTS = [{
@@ -363,7 +363,7 @@ class NBAEmbedIE(NBABaseIE):
 
 
 class NBAIE(NBABaseIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_NAME = 'nba'
     _VALID_URL = NBABaseIE._VALID_URL_BASE + f'(?!{NBABaseIE._CHANNEL_PATH_REGEX})video/(?P<id>(?:[^/]+/)*[^/?#&]+)'
     _TESTS = [{
@@ -391,7 +391,7 @@ class NBAIE(NBABaseIE):
 
 
 class NBAChannelIE(NBABaseIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_NAME = 'nba:channel'
     _VALID_URL = NBABaseIE._VALID_URL_BASE + f'(?:{NBABaseIE._CHANNEL_PATH_REGEX})/(?P<id>[^/?#&]+)'
     _TESTS = [{

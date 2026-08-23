@@ -32,7 +32,7 @@ class ViceBaseIE(InfoExtractor):
 
 
 class ViceIE(ViceBaseIE, AdobePassIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_NAME = 'vice'
     _VALID_URL = r'https?://(?:(?:video|vms)\.vice|(?:www\.)?vice(?:land|tv))\.com/(?P<locale>[^/]+)/(?:video/[^/]+|embed)/(?P<id>[\da-f]{24})'
     _EMBED_REGEX = [r'<iframe\b[^>]+\bsrc=["\'](?P<url>(?:https?:)?//video\.vice\.com/[^/]+/embed/[\da-f]{24})']
@@ -183,7 +183,7 @@ class ViceIE(ViceBaseIE, AdobePassIE):
 
 
 class ViceShowIE(ViceBaseIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_NAME = 'vice:show'
     _VALID_URL = r'https?://(?:video\.vice|(?:www\.)?vice(?:land|tv))\.com/(?P<locale>[^/]+)/show/(?P<id>[^/?#&]+)'
     _PAGE_SIZE = 25
@@ -224,7 +224,7 @@ class ViceShowIE(ViceBaseIE):
 
 
 class ViceArticleIE(ViceBaseIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_NAME = 'vice:article'
     _VALID_URL = r'https?://(?:www\.)?vice\.com/(?P<locale>[^/]+)/article/(?:[0-9a-z]{6}/)?(?P<id>[^?#]+)'
 

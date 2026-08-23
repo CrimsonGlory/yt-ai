@@ -9,7 +9,6 @@ from ..utils import (
 
 
 class VGTVIE(InfoExtractor):
-    _WORKING = False
     IE_DESC = 'VGTV, BTTV, FTV, Aftenposten and Aftonbladet'
     _GEO_BYPASS = False
 

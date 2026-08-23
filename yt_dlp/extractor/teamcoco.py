@@ -156,7 +156,7 @@ class TeamcocoIE(TeamcocoBaseIE):
 
 
 class ConanClassicIE(TeamcocoBaseIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:(?:www\.)?conanclassic|conan25\.teamcoco)\.com/(?P<id>([^/]+/)*[^/?#]+)'
     _TESTS = [{
         'url': 'https://conanclassic.com/video/ice-cube-kevin-hart-conan-share-lyft',

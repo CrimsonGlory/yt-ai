@@ -76,7 +76,7 @@ class CBSBaseIE(ThePlatformFeedIE):  # XXX: Do not subclass from concrete IE
 
 
 class CBSIE(CBSBaseIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'''(?x)
         (?:
             cbs:|

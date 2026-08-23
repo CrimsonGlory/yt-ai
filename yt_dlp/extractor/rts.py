@@ -12,9 +12,15 @@ from ..utils import (
 
 
 class RTSIE(SRGSSRIE):  # XXX: Do not subclass from concrete IE
-    _WORKING = False
     IE_DESC = 'RTS.ch'
-    _VALID_URL = r'rts:(?P<rts_id>\d+)|https?://(?:.+?\.)?rts\.ch/(?:[^/]+/){2,}(?P<id>[0-9]+)-(?P<display_id>.+?)\.html'
+    _VALID_URL = r'''(?x)
+        rts:(?P<rts_id>\d+)
+        |https?://(?:.+?\.)?rts\.ch/(?:[^/?#]+/)+
+        (?:
+            (?P<id>\d+)-(?P<display_id>[\w-]+)
+            |(?P<display_id2>[\w-]+)-(?P<id2>\d+)
+        )
+        \.html'''
 
     _TESTS = [
         {
@@ -114,8 +120,15 @@ class RTSIE(SRGSSRIE):  # XXX: Do not subclass from concrete IE
 
     def _real_extract(self, url):
         m = self._match_valid_url(url)
-        media_id = m.group('rts_id') or m.group('id')
-        display_id = m.group('display_id') or media_id
+        media_id = m.group('rts_id') or m.group('id') or m.group('id2')
+        display_id = m.group('display_id') or m.group('display_id2') or media_id
+
+        webpage = self._download_webpage(url, display_id, fatal=False) or ''
+        urn = self._search_regex(
+            r'urn:rts:(video|audio):(\d+)', webpage, 'media urn', default=None)
+        if urn:
+            media_type, urn_id = re.search(r'urn:rts:(video|audio):(\d+)', webpage).groups()
+            return self.url_result(f'srgssr:rts:{media_type}:{urn_id}', 'SRGSSR', urn_id)
 
         def download_json(internal_id):
             return self._download_json(

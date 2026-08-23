@@ -586,6 +586,7 @@ class InfoExtractor:
     _GEO_COUNTRIES = None
     _GEO_IP_BLOCKS = None
     _WORKING = True
+    _WEB_FALLBACK = False
     _ENABLED = True
     _NETRC_MACHINE = None
     IE_DESC = None
@@ -754,6 +755,74 @@ class InfoExtractor:
                 self._downloader.write_debug(
                     f'Using fake IP {self._x_forwarded_for_ip} ({country.upper()}) as X-Forwarded-For')
 
+    def _extract_webpage_media(self, url):
+        """Best-effort media extraction from HTML5 / JSON-LD / JWPlayer / og:video."""
+        try:
+            video_id = self._match_id(url)
+        except Exception:
+            video_id = self.get_temp_id(url) or 'video'
+
+        webpage = self._download_webpage(url, video_id)
+        json_ld = self._search_json_ld(webpage, video_id, default={}) or {}
+        if isinstance(json_ld, list):
+            json_ld = json_ld[0] if json_ld else {}
+        formats, subtitles = [], {}
+
+        try:
+            html5 = self._parse_html5_media_entries(url, webpage, video_id) or []
+        except Exception:
+            html5 = []
+        if html5:
+            formats.extend(html5[0].get('formats') or [])
+            if html5[0].get('url') and not formats:
+                formats.append({'url': html5[0]['url']})
+            subtitles = html5[0].get('subtitles') or {}
+
+        content_url = url_or_none(
+            json_ld.get('url') or json_ld.get('contentUrl')
+            or self._og_search_video_url(webpage, default=None))
+        if content_url:
+            if determine_ext(content_url) == 'm3u8':
+                formats.extend(self._extract_m3u8_formats(
+                    content_url, video_id, 'mp4', m3u8_id='hls', fatal=False) or [])
+            else:
+                formats.append({'url': content_url})
+
+        try:
+            jw = self._find_jwplayer_data(webpage, video_id, transform_source=js_to_json)
+        except Exception:
+            jw = None
+        if jw:
+            jw_info = self._parse_jwplayer_data(jw, video_id, require_title=False)
+            if isinstance(jw_info, dict):
+                formats.extend(jw_info.get('formats') or [])
+                if jw_info.get('url'):
+                    formats.append({'url': jw_info['url']})
+                subtitles = self._merge_subtitles(subtitles, jw_info.get('subtitles') or {})
+
+        for m3u8_url in re.findall(r'(https?://[^\'"\\]+\.m3u8[^\'"\\]*)', webpage):
+            formats.extend(self._extract_m3u8_formats(
+                m3u8_url, video_id, 'mp4', m3u8_id='hls', fatal=False) or [])
+
+        if not formats:
+            raise ExtractorError('No media found on webpage', expected=True)
+
+        thumb = json_ld.get('thumbnail') or json_ld.get('thumbnails')
+        if isinstance(thumb, list):
+            thumb = thumb[0] if thumb else None
+        if isinstance(thumb, dict):
+            thumb = thumb.get('url')
+        return {
+            'id': str(json_ld.get('id') or video_id),
+            'title': json_ld.get('title') or self._og_search_title(webpage, default=video_id),
+            'description': json_ld.get('description') or self._og_search_description(webpage),
+            'thumbnail': url_or_none(thumb) or self._og_search_thumbnail(webpage),
+            'duration': json_ld.get('duration') if not isinstance(json_ld.get('duration'), (list, dict)) else None,
+            'timestamp': json_ld.get('timestamp'),
+            'formats': formats,
+            'subtitles': subtitles or None,
+        }
+
     def extract(self, url):
         """Extracts URL information and returns it in list of dicts."""
         try:
@@ -762,7 +831,18 @@ class InfoExtractor:
                     self.initialize()
                     self.to_screen('Extracting URL: %s' % (
                         url if self.get_param('verbose') else truncate_string(url, 100, 20)))
-                    ie_result = self._real_extract(url)
+                    try:
+                        ie_result = self._real_extract(url)
+                    except GeoRestrictedError:
+                        raise
+                    except UnsupportedError:
+                        raise
+                    except (ExtractorError, KeyError, StopIteration, TypeError, ValueError, IndexError, AttributeError) as e:
+                        if not self._WEB_FALLBACK:
+                            raise
+                        self.report_warning(
+                            f'{self.IE_NAME} extractor failed ({type(e).__name__}: {e}); trying webpage media fallback')
+                        ie_result = self._extract_webpage_media(url)
                     if ie_result is None:
                         return None
                     if self._x_forwarded_for_ip:

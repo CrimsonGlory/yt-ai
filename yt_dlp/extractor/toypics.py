@@ -4,7 +4,7 @@ from .common import InfoExtractor
 
 
 class ToypicsIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_DESC = 'Toypics video'
     _VALID_URL = r'https?://videos\.toypics\.net/view/(?P<id>[0-9]+)'
     _TEST = {
@@ -45,7 +45,7 @@ class ToypicsIE(InfoExtractor):
 
 
 class ToypicsUserIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_DESC = 'Toypics user profile'
     _VALID_URL = r'https?://videos\.toypics\.net/(?!view)(?P<id>[^/?#&]+)'
     _TEST = {

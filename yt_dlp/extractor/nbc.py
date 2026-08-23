@@ -319,7 +319,7 @@ class NBCIE(NBCUniversalBaseIE):
 
 
 class NBCSportsVPlayerIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL_BASE = r'https?://(?:vplayer\.nbcsports\.com|(?:www\.)?nbcsports\.com/vplayer)/'
     _VALID_URL = _VALID_URL_BASE + r'(?:[^/]+/)+(?P<id>[0-9a-zA-Z_]+)'
     _EMBED_REGEX = [rf'(?:iframe[^>]+|var video|div[^>]+data-(?:mpx-)?)[sS]rc\s?=\s?"(?P<url>{_VALID_URL_BASE}[^\"]+)']
@@ -354,7 +354,7 @@ class NBCSportsVPlayerIE(InfoExtractor):
 
 
 class NBCSportsIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:www\.)?nbcsports\.com//?(?!vplayer/)(?:[^/]+/)+(?P<id>[0-9a-z-]+)'
 
     _TESTS = [{
@@ -399,7 +399,7 @@ class NBCSportsIE(InfoExtractor):
 
 
 class NBCSportsStreamIE(AdobePassIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://stream\.nbcsports\.com/.+?\bpid=(?P<id>\d+)'
     _TESTS = [{
         'url': 'http://stream.nbcsports.com/nbcsn/generic?pid=206559',
@@ -663,7 +663,7 @@ class NBCOlympicsIE(InfoExtractor):
 
 
 class NBCOlympicsStreamIE(AdobePassIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_NAME = 'nbcolympics:stream'
     _VALID_URL = r'https?://stream\.nbcolympics\.com/(?P<id>[0-9a-z-]+)'
     _TESTS = [{

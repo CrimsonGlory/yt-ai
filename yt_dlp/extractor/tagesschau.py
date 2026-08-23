@@ -12,8 +12,8 @@ from ..utils import (
 
 
 class TagesschauIE(InfoExtractor):
-    _WORKING = False
-    _VALID_URL = r'https?://(?:www\.)?tagesschau\.de/(?P<path>[^/]+/(?:[^/]+/)*?(?P<id>[^/#?]+?(?:-?[0-9]+)?))(?:~_?[^/#?]+?)?\.html'
+    _WEB_FALLBACK = True
+    _VALID_URL = r'https?://(?:www\.)?tagesschau\.de/(?P<path>(?:[^/?#]+/)+(?P<id>[^/#?]+))(?:~_?[^/#?]+?)?\.html'
 
     _TESTS = [{
         'url': 'http://www.tagesschau.de/multimedia/video/video-102143.html',
@@ -148,6 +148,37 @@ class TagesschauIE(InfoExtractor):
                 })
 
         if not entries:
+            # Newer ARD player embeds JSON with direct MP4 / HLS URLs
+            unescaped = webpage.replace('&quot;', '"').replace('\\/', '/')
+            media_urls = re.findall(
+                r'https://(?:tagesschau-progressive\.ard-mcdn\.de|adaptive\.tagesschau\.de)/[^"\\?]+(?:\.mp4|master\.m3u8)',
+                unescaped)
+            formats = []
+            seen = set()
+            height_map = {'webxxl': 1080, 'webxl': 720, 'webl': 540, 'webm': 360, 'webs': 240}
+            for media_url in media_urls:
+                if media_url in seen or 'download=true' in media_url:
+                    continue
+                seen.add(media_url)
+                if media_url.endswith('.m3u8') or 'master.m3u8' in media_url:
+                    formats.extend(self._extract_m3u8_formats(
+                        media_url, display_id, 'mp4', m3u8_id='hls', fatal=False) or [])
+                elif media_url.endswith('.mp4'):
+                    q = self._search_regex(r'\.(web(?:xxl|xl|l|m|s))\.', media_url, 'quality', default='')
+                    formats.append({
+                        'url': media_url,
+                        'ext': 'mp4',
+                        'height': height_map.get(q),
+                    })
+            if formats:
+                return {
+                    'id': display_id,
+                    'title': title or display_id,
+                    'thumbnail': self._og_search_thumbnail(webpage),
+                    'formats': formats,
+                    'timestamp': parse_iso8601(self._html_search_meta('date', webpage)),
+                    'description': self._og_search_description(webpage),
+                }
             raise UnsupportedError(url)
 
         if len(entries) > 1:

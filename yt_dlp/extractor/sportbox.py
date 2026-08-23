@@ -8,7 +8,7 @@ from ..utils import (
 
 
 class SportBoxIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:news\.sportbox|matchtv)\.ru/vdl/player(?:/[^/]+/|\?.*?\bn?id=)(?P<id>\d+)'
     _EMBED_REGEX = [r'<iframe[^>]+src="(?P<url>https?://(?:news\.sportbox|matchtv)\.ru/vdl/player[^"]+)"']
     _TESTS = [{

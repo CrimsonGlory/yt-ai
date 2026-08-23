@@ -3,8 +3,7 @@ from ..utils import int_or_none
 
 
 class R7IE(InfoExtractor):
-    _WORKING = False
-    _ENABLED = None  # XXX: pass through to GenericIE
+    _WEB_FALLBACK = True
     _VALID_URL = r'''(?x)
                         https?://
                         (?:
@@ -88,8 +87,7 @@ class R7IE(InfoExtractor):
 
 
 class R7ArticleIE(InfoExtractor):
-    _WORKING = False
-    _ENABLED = None  # XXX: pass through to GenericIE
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:[a-zA-Z]+)\.r7\.com/(?:[^/]+/)+[^/?#&]+-(?P<id>\d+)'
     _TEST = {
         'url': 'http://tv.r7.com/record-play/balanco-geral/videos/policiais-humilham-suspeito-a-beira-da-morte-morre-com-dignidade-16102015',

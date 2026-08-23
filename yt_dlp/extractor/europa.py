@@ -1,95 +1,128 @@
+import datetime
+
 from .common import InfoExtractor
 from ..utils import (
+    clean_html,
     int_or_none,
-    orderedSet,
-    parse_duration,
     parse_iso8601,
-    parse_qs,
-    qualities,
+    str_or_none,
     traverse_obj,
-    unified_strdate,
-    xpath_text,
+    url_or_none,
 )
 
 
 class EuropaIE(InfoExtractor):
-    _WORKING = False
-    _VALID_URL = r'https?://ec\.europa\.eu/avservices/(?:video/player|audio/audioDetails)\.cfm\?.*?\bref=(?P<id>[A-Za-z0-9-]+)'
+    _VALID_URL = r'https?://audiovisual\.ec\.europa\.eu/(?P<language>[^/]*)/video/(?P<id>[A-Za-z0-9-]+)'
+    _FORMATS = {
+        'lr': {'vcodec': 'h264', 'acodec': 'aac', 'height': 480},
+        'hdmp4': {'vcodec': 'h264', 'acodec': 'aac', 'height': 1080},
+        'h264': {'vcodec': 'h264', 'acodec': 'aac'},
+        'mp3': {'vcodec': 'none', 'acodec': 'mp3'},
+        'aac': {'vcodec': 'none', 'acodec': 'aac'},
+    }
     _TESTS = [{
-        'url': 'http://ec.europa.eu/avservices/video/player.cfm?ref=I107758',
-        'md5': '574f080699ddd1e19a675b0ddf010371',
+        'url': 'https://audiovisual.ec.europa.eu/en/video/I-107758',
+        'md5': '728cca2fd41d5aa7350cec1141fbe620',
         'info_dict': {
-            'id': 'I107758',
+            'id': 'I-107758',
             'ext': 'mp4',
-            'title': 'TRADE - Wikileaks on TTIP',
-            'description': 'NEW  LIVE EC Midday press briefing of 11/08/2015',
-            'thumbnail': r're:^https?://.*\.jpg$',
+            'title': 'TRADE - Wikileaks on TTIP:- Q&A',
+            'description': 'LIVE EC Midday press briefing of 11/08/2015',
+            'duration': 34.92,
+            'thumbnail': r're:https://vod\.prd\.commavservices\.eu/18/107758/THUMB_M_I107758INT1W\.jpg(\?.*)?',
+            'timestamp': 1439269680,
             'upload_date': '20150811',
-            'duration': 34,
+            'modified_timestamp': 1731858374,
+            'modified_date': '20241117',
             'view_count': int,
-            'formats': 'mincount:3',
         },
     }, {
-        'url': 'http://ec.europa.eu/avservices/video/player.cfm?sitelang=en&ref=I107786',
-        'only_matching': True,
+        'url': 'https://audiovisual.ec.europa.eu/en/video/I-107786',
+        'md5': '5ecf1eb72800573ed75a53fc06511967',
+        'info_dict': {
+            'id': 'I-107786',
+            'ext': 'mp4',
+            'title': 'Midday press briefing from 14/08/2015',
+            'description': 'md5:9ebb5df32a5203f3ad7b931bc8bcec47',
+            'thumbnail': r're:https://vod\.prd\.commavservices\.eu/06/107786/THUMB_M_I107786INT1W\.jpg(\?.*)?',
+            'timestamp': 1439528880,
+            'upload_date': '20150814',
+            'modified_timestamp': 1731858776,
+            'modified_date': '20241117',
+            'view_count': int,
+        },
     }, {
-        'url': 'http://ec.europa.eu/avservices/audio/audioDetails.cfm?ref=I-109295&sitelang=en',
-        'only_matching': True,
+        'url': 'https://audiovisual.ec.europa.eu/en/video/I-109295',
+        'md5': '3a6d560e0aff5633de4bb7cdc368ab72',
+        'info_dict': {
+            'id': 'I-109295',
+            'ext': 'mp4',
+            'title': 'md5:dfc882adaabf388999e20d3079ee5277',
+            'description': 'md5:67374bddab3fd2a8a319a92e1a286ad2',
+            'thumbnail': r're:https://vod\.prd\.commavservices\.eu/15/109295/THUMB_M_I109295INT1W_03\.jpg(\?.*)?',
+            'timestamp': 1443762600,
+            'upload_date': '20151002',
+            'modified_timestamp': 1731845416,
+            'modified_date': '20241117',
+            'view_count': int,
+        },
+    }, {
+        'url': 'https://audiovisual.ec.europa.eu/en/video/I-270061',
+        'md5': '5a10c7cc7b9f55fcbda6f0aa1ec72a66',
+        'info_dict': {
+            'id': 'I-270061',
+            'ext': 'mp4',
+            'title': 'JRC – Capacity Building in Evidence-Informed Policymaking – Final Conference',
+            'description': 'md5:fb28f76bd68b98ccc2d5e8b4bbdbe4e8',
+            'view_count': int,
+            'duration': 212.97,
+            'thumbnail': r're:https://api\.prd\.commavservices\.eu/thumbnail/I-270061/0195d78b-961e-7ef3-89f1-e95cf27f953f/640\.jpg(\?.*)?',
+            'timestamp': 1743051780,
+            'upload_date': '20250327',
+            'modified_timestamp': 1743079487,
+            'modified_date': '20250327',
+        },
     }]
 
     def _real_extract(self, url):
-        video_id = self._match_id(url)
-
-        playlist = self._download_xml(
-            f'http://ec.europa.eu/avservices/video/player/playlist.cfm?ID={video_id}', video_id)
-
-        def get_item(type_, preference):
-            items = {}
-            for item in playlist.findall(f'./info/{type_}/item'):
-                lang, label = xpath_text(item, 'lg', default=None), xpath_text(item, 'label', default=None)
-                if lang and label:
-                    items[lang] = label.strip()
-            for p in preference:
-                if items.get(p):
-                    return items[p]
-
-        query = parse_qs(url)
-        preferred_lang = query.get('sitelang', ('en', ))[0]
-
-        preferred_langs = orderedSet((preferred_lang, 'en', 'int'))
-
-        title = get_item('title', preferred_langs) or video_id
-        description = get_item('description', preferred_langs)
-        thumbnail = xpath_text(playlist, './info/thumburl', 'thumbnail')
-        upload_date = unified_strdate(xpath_text(playlist, './info/date', 'upload date'))
-        duration = parse_duration(xpath_text(playlist, './info/duration', 'duration'))
-        view_count = int_or_none(xpath_text(playlist, './info/views', 'views'))
-
-        language_preference = qualities(preferred_langs[::-1])
-
+        language, video_id = self._match_valid_url(url).group('language', 'id')
+        language = language.upper()
+        constants = self._download_webpage('https://audiovisual.ec.europa.eu/js/constants.js', video_id, 'Downloading constants')
+        api = self._search_regex(r'"urlLuceneServices":\s*"([^"]+)"', constants, 'urlLuceneServices',
+                                 'https://gfdwwnbuul.execute-api.eu-west-1.amazonaws.com/avsportal/') + 'avsportal'
+        media = self._download_json(api, video_id, 'Downloading media JSON', query={'ref': video_id})['response']['docs'][0]
+        info = traverse_obj(media, {
+            'id': ('ref', {str_or_none}),
+            'description': ('summary_json', (language, ...), {lambda s: s and s.strip()}, {clean_html}, any),
+            'title': ('titles_json', (language, ...), {lambda s: s and s.strip()}, {clean_html}, any),
+            'duration': ('duration', {lambda d: float(d) if d and d != '1' else None}),
+            'view_count': ('views', {int_or_none}),
+            'modified_timestamp': ('timestamp', {parse_iso8601}),
+            'timestamp': ('search_date', {parse_iso8601}),
+        })
         formats = []
-        for file_ in playlist.findall('./files/file'):
-            video_url = xpath_text(file_, './url')
-            if not video_url:
-                continue
-            lang = xpath_text(file_, './lg')
-            formats.append({
-                'url': video_url,
-                'format_id': lang,
-                'format_note': xpath_text(file_, './lglabel'),
-                'language_preference': language_preference(lang),
-            })
+        thumbnails = []
 
-        return {
-            'id': video_id,
-            'title': title,
-            'description': description,
-            'thumbnail': thumbnail,
-            'upload_date': upload_date,
-            'duration': duration,
-            'view_count': view_count,
-            'formats': formats,
-        }
+        for aspect, languages in traverse_obj(media, ('media_json', {dict.items})):
+            for l, codecs in dict.items(languages):
+                pref = 10 if l == language or l == 'INT' else -10
+                for c, u in traverse_obj(codecs, ({dict.items}, lambda _, v: url_or_none(v[1]))):
+                    c = c.lower()
+                    if c in ('thumb', 'image'):
+                        thumbnails.append({'id': f'{c}-{aspect}', 'url': u})
+                    elif c == 'hls':
+                        formats.extend(self._extract_m3u8_formats(u, video_id, ext='mp4'))
+                    else:
+                        codec, _, h = c.partition('_')
+                        formats.append({
+                            'url': u,
+                            'height': int_or_none(h),
+                            'language': l,
+                            'language_preference': pref,
+                            'format_id': f'{c}-{aspect}-{l}',
+                            **(self._FORMATS.get(codec) or {}),
+                        })
+        return {**info, 'formats': formats, 'thumbnails': thumbnails}
 
 
 class EuroParlWebstreamIE(InfoExtractor):
@@ -188,3 +221,110 @@ class EuroParlWebstreamIE(InfoExtractor):
             'release_timestamp': parse_iso8601(json_info.get('startDateTime')),
             'is_live': traverse_obj(webpage_nextjs, ('mediaItem', 'mediaSubType')) == 'Live',
         }
+
+
+class EuropeanCommissionIE(InfoExtractor):
+    _VALID_URL = r'https?://webcast\.ec\.europa\.eu/(?P<id>[^/?#&]+)'
+    QUALITIES = {
+        'low': {
+            'width': 426,
+            'height': 240,
+            'quality': 1,
+        },
+        'medium': {
+            'width': 854,
+            'height': 480,
+            'quality': 2,
+        },
+        'high': {
+            'width': 1280,
+            'height': 720,
+            'quality': 3,
+        },
+    }
+    _TESTS = [{
+        'url': 'https://webcast.ec.europa.eu/2nd-dma-enforcement-workshop-apple-update-on-first-year-of-dma-compliance-2025-06-30',
+        'md5': 'ba9eefc2bb245a95854d23b222697d1f',
+        'info_dict': {
+            'id': '2nd-dma-enforcement-workshop-apple-update-on-first-year-of-dma-compliance-2025-06-30',
+            'ext': 'mp4',
+            'title': '2nd DMA enforcement workshop: Apple - Update on first year of DMA compliance',
+            'release_date': '20250630',
+            'release_timestamp': 1751268600,
+        },
+    }, {
+        'url': 'https://webcast.ec.europa.eu/2nd-dma-enforcement-workshop-alphabet-update-on-first-year-of-dma-compliance-2025-07-01',
+        'md5': '5d5b1b4e6365ac51daa84d8920491af0',
+        'info_dict': {
+            'id': '2nd-dma-enforcement-workshop-alphabet-update-on-first-year-of-dma-compliance-2025-07-01',
+            'ext': 'mp4',
+            'title': '2nd DMA enforcement workshop: Alphabet - Update on first year of DMA compliance',
+            'release_date': '20250701',
+            'release_timestamp': 1751355000,
+        },
+    }, {
+        'url': 'https://webcast.ec.europa.eu/high-level-launch-of-the-young-citizens-assembly-on-pollinators-2025-09-27',
+        'info_dict': {
+            'id': 'high-level-launch-of-the-young-citizens-assembly-on-pollinators-2025-09-27',
+            'ext': 'mp4',
+            'title': r're:HIGH-LEVEL LAUNCH OF THE YOUNG CITIZENS ASSEMBLY ON POLLINATORS 2025-09-27',
+            'release_date': '20250927',
+            'release_timestamp': 1758983400,
+            'live_status': 'is_live',
+        },
+        'skip': 'live stream',
+    }]
+
+    def _real_extract(self, url):
+        video_id = self._match_id(url)
+        playlist_data = self._download_json(
+            'https://webcast.ec.europa.eu/session_playlist', video_id, 'Downloading session playlist JSON',
+            query={'reference': video_id})
+        session_data = self._download_json(
+            'https://webcast.ec.europa.eu/session_by_reference', video_id, 'Downloading session data',
+            query={'reference': video_id})['data']
+        formats = []
+        for playlist in traverse_obj(playlist_data, ('playlists', ..., 'playlist', ...)):
+            smil = traverse_obj(playlist, ('source', 'smil'))
+            if (isinstance(smil, str)):
+                formats.extend(self._extract_m3u8_formats(
+                    f'https://{playlist_data["server"]}/{playlist_data["application"]}/smil:{smil}/playlist.m3u8',
+                    video_id, m3u8_id='smil'))
+            else:
+                for lang, name in dict.items(smil or {}):
+                    if (lang == 'or'):
+                        formats.extend(self._extract_m3u8_formats(
+                            f'https://{playlist_data["server"]}/{playlist_data["application"]}/{name}/playlist.m3u8',
+                            video_id, m3u8_id='smil'))
+                    else:
+                        formats.append({**self._m3u8_meta_format(
+                            f'https://{playlist_data["server"]}/{playlist_data["application"]}/{name}/playlist.m3u8',
+                            'mp4', m3u8_id=f'smil-{lang}'), 'language': lang})
+            for quality, value in traverse_obj(playlist, ('source', 'qualities', {dict.items})):
+                if (isinstance(value, str)):
+                    formats.extend(self._extract_m3u8_formats(
+                        f'https://{playlist_data["server"]}/{playlist_data["application"]}/{value}/playlist.m3u8',
+                        video_id, m3u8_id=quality, quality=self.QUALITIES.get(quality, {}).get('quality')))
+                else:
+                    for lang, name in dict.items(value or {}):
+                        if (lang == 'or'):
+                            formats.extend(self._extract_m3u8_formats(
+                                f'https://{playlist_data["server"]}/{playlist_data["application"]}/{name}/playlist.m3u8',
+                                video_id, m3u8_id=quality, quality=self.QUALITIES.get(quality, {}).get('quality')))
+                        else:
+                            formats.append({**self._m3u8_meta_format(
+                                f'https://{playlist_data["server"]}/{playlist_data["application"]}/{name}/playlist.m3u8',
+                                'mp4', m3u8_id=f'{quality}-{lang}'), 'language': lang, **self.QUALITIES.get(quality, {})})
+        status = traverse_obj(session_data, ('channels', ..., 'status'), get_all=False)
+        if (status == 'planned'):
+            self.raise_no_formats('This live broadcast has not yet started', expected=True)
+
+        return {
+            'id': video_id,
+            'title': session_data.get('name'),
+            'description': session_data.get('description') or None,
+            'release_timestamp': parse_iso8601(session_data.get('startDateTime'), ' ', datetime.timedelta(hours=2)),
+            'formats': formats,
+            'live_status': 'is_live' if status == 'live' else 'is_upcoming' if status == 'planned' else None,
+        }
+

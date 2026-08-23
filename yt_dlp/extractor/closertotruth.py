@@ -4,7 +4,6 @@ from .common import InfoExtractor
 
 
 class CloserToTruthIE(InfoExtractor):
-    _WORKING = False
     _VALID_URL = r'https?://(?:www\.)?closertotruth\.com/(?:[^/]+/)*(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'http://closertotruth.com/series/solutions-the-mind-body-problem#video-3688',
@@ -47,12 +46,35 @@ class CloserToTruthIE(InfoExtractor):
         display_id = self._match_id(url)
 
         webpage = self._download_webpage(url, display_id)
+        title = self._html_extract_title(webpage, 'video title')
+
+        youtube_urls = re.findall(
+            r'(?:data-video(?:-id)?|video_url)\s*=\s*["\'](https?://(?:www\.)?youtube\.com/watch\?v=[\w-]+)',
+            webpage)
+        youtube_urls.extend(re.findall(
+            r'https?://(?:www\.)?youtube\.com/watch\?v=[\w-]+', webpage))
+        # Preserve order while unique-ing
+        seen = set()
+        yt_entries = []
+        for yt_url in youtube_urls:
+            if yt_url in seen:
+                continue
+            seen.add(yt_url)
+            yt_entries.append(self.url_result(yt_url, 'Youtube'))
+        if yt_entries:
+            if len(yt_entries) == 1:
+                return {
+                    '_type': 'url_transparent',
+                    'display_id': display_id,
+                    'url': yt_entries[0]['url'],
+                    'ie_key': 'Youtube',
+                    'title': title,
+                }
+            return self.playlist_result(yt_entries, display_id, title)
 
         partner_id = self._search_regex(
             r'<script[^>]+src=["\'].*?\b(?:partner_id|p)/(\d+)',
             webpage, 'kaltura partner_id')
-
-        title = self._html_extract_title(webpage, 'video title')
 
         select = self._search_regex(
             r'(?s)<select[^>]+id="select-version"[^>]*>(.+?)</select>',

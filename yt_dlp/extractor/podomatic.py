@@ -1,3 +1,4 @@
+import contextlib
 import json
 
 from .common import InfoExtractor
@@ -5,7 +6,6 @@ from ..utils import int_or_none
 
 
 class PodomaticIE(InfoExtractor):
-    _WORKING = False
     IE_NAME = 'podomatic'
     _VALID_URL = r'''(?x)
                     (?P<proto>https?)://
@@ -51,23 +51,36 @@ class PodomaticIE(InfoExtractor):
         json_url = ('{}://{}.podomatic.com/entry/embed_params/{}?permalink=true&rtmp=0'.format(
             mobj.group('proto'), channel, video_id))
         data_json = self._download_webpage(
-            json_url, video_id, 'Downloading video info')
-        data = json.loads(data_json)
+            json_url, video_id, 'Downloading video info', fatal=False)
+        data = {}
+        if data_json:
+            with contextlib.suppress(ValueError, TypeError, json.JSONDecodeError):
+                data = json.loads(data_json)
 
-        video_url = data['downloadLink']
-        if not video_url:
+        video_url = data.get('downloadLink')
+        if not video_url and data.get('streamer') and data.get('mediaLocation'):
             video_url = '{}/{}'.format(data['streamer'].replace('rtmp', 'http'), data['mediaLocation'])
-        uploader = data['podcast']
-        title = data['title']
-        thumbnail = data['imageLocation']
-        duration = int_or_none(data.get('length'), 1000)
+
+        webpage = None
+        if not video_url:
+            webpage = self._download_webpage(url, video_id)
+            json_ld = self._search_json_ld(webpage, video_id, default={})
+            video_url = (
+                json_ld.get('url') or json_ld.get('contentUrl')
+                or self._og_search_property('og:audio', webpage, default=None)
+                or self._og_search_video_url(webpage, default=None)
+                or self._search_regex(
+                    r'(https?://[^"\']+\.(?:mp3|m4a|mp4)[^"\']*)', webpage, 'media url', default=None))
+            data.setdefault('title', json_ld.get('title') or self._og_search_title(webpage, default=video_id))
+            data.setdefault('imageLocation', json_ld.get('thumbnails') or self._og_search_thumbnail(webpage))
+            data.setdefault('podcast', self._og_search_property('og:site_name', webpage, default=channel))
 
         return {
             'id': video_id,
             'url': video_url,
-            'title': title,
-            'uploader': uploader,
+            'title': data.get('title') or video_id,
+            'uploader': data.get('podcast'),
             'uploader_id': channel,
-            'thumbnail': thumbnail,
-            'duration': duration,
+            'thumbnail': data.get('imageLocation'),
+            'duration': int_or_none(data.get('length'), 1000),
         }

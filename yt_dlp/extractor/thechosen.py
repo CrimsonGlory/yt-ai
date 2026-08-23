@@ -98,7 +98,7 @@ class TheChosenIE(InfoExtractor):
 
 
 class TheChosenGroupIE(FrontroGroupBaseIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _CHANNEL_ID = '12884901895'
     _VIDEO_EXTRACTOR = TheChosenIE
     _VIDEO_URL_TMPL = 'https://watch.thechosen.tv/watch/%s'

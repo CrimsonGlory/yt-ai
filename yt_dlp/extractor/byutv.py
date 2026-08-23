@@ -5,11 +5,12 @@ from ..utils import (
     parse_duration,
     url_or_none,
 )
+from ..utils.traversal import traverse_obj
 
 
 class BYUtvIE(InfoExtractor):
-    _WORKING = False
-    _VALID_URL = r'https?://(?:www\.)?byutv\.org/(?:watch|player)/(?!event/)(?P<id>[0-9a-f-]+)(?:/(?P<display_id>[^/?#&]+))?'
+    _WEB_FALLBACK = True
+    _VALID_URL = r'https?://(?:www\.)?byutv\.org/(?:(?:watch|player)/(?!event/))?(?P<id>[0-9a-f-]{8,})(?:/(?P<display_id>[^/?#&]+))?'
     _TESTS = [{
         'url': 'http://www.byutv.org/watch/6587b9a3-89d2-42a6-a7f7-fd2f81840a7d/studio-c-season-5-episode-5',
         'info_dict': {
@@ -51,21 +52,22 @@ class BYUtvIE(InfoExtractor):
         video_id = mobj.group('id')
         display_id = mobj.group('display_id') or video_id
 
+        info = {}
+        formats = []
+        subtitles = {}
+
         video = self._download_json(
             'https://api.byutv.org/api3/catalog/getvideosforcontent',
-            display_id, query={
+            display_id, fatal=False, query={
                 'contentid': video_id,
                 'channel': 'byutv',
                 'x-byutv-context': 'web$US',
             }, headers={
                 'x-byutv-context': 'web$US',
                 'x-byutv-platformkey': 'xsaaw9c7y5',
-            })
+            }) or {}
 
-        info = {}
-        formats = []
-        subtitles = {}
-        for format_id, ep in video.items():
+        for format_id, ep in video.items() if isinstance(video, dict) else ():
             if not isinstance(ep, dict):
                 continue
             video_url = url_or_none(ep.get('videoUrl'))
@@ -93,6 +95,42 @@ class BYUtvIE(InfoExtractor):
                 'description': ep.get('description'),
                 'thumbnail': ep.get('imageThumbnail'),
                 'duration': parse_duration(ep.get('length')),
+            })
+
+        if not formats:
+            webpage = self._download_webpage(url, display_id)
+            json_ld = self._search_json_ld(webpage, display_id, default={})
+            if isinstance(json_ld, list):
+                json_ld = json_ld[0] if json_ld else {}
+            raw = json_ld.get('url') or json_ld.get('contentUrl')
+            if isinstance(raw, list):
+                raw = raw[0] if raw else None
+            if isinstance(raw, dict):
+                raw = raw.get('url') or raw.get('contentUrl')
+            content_url = url_or_none(raw)
+            if not content_url:
+                content_url = self._search_regex(
+                    r'(https?://[^"\']+\.m3u8[^"\']*)', webpage, 'm3u8', default=None)
+            if content_url:
+                ext = determine_ext(content_url)
+                if ext == 'm3u8':
+                    m3u8_fmts, m3u8_subs = self._extract_m3u8_formats_and_subtitles(
+                        content_url, video_id, 'mp4', m3u8_id='hls', fatal=False)
+                    formats.extend(m3u8_fmts)
+                    subtitles = self._merge_subtitles(subtitles, m3u8_subs)
+                else:
+                    formats.append({'url': content_url})
+            thumb = json_ld.get('thumbnail') or json_ld.get('thumbnails')
+            if isinstance(thumb, list):
+                thumb = thumb[0] if thumb else None
+            if isinstance(thumb, dict):
+                thumb = thumb.get('url')
+            info = merge_dicts(info, {
+                'title': json_ld.get('title') or self._og_search_title(webpage, default=None),
+                'description': json_ld.get('description') or self._og_search_description(webpage),
+                'thumbnail': url_or_none(thumb) or self._og_search_thumbnail(webpage),
+                'duration': json_ld.get('duration') or parse_duration(
+                    self._html_search_meta('duration', webpage, default=None)),
             })
 
         return merge_dicts(info, {

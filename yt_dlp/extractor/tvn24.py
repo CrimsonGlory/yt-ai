@@ -7,7 +7,7 @@ from ..utils import (
 
 
 class TVN24IE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:(?!eurosport)[^/]+\.)?tvn24(?:bis)?\.pl/(?:[^/?#]+/)*(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'http://www.tvn24.pl/wiadomosci-z-kraju,3/oredzie-artura-andrusa,702428.html',

@@ -9,7 +9,7 @@ from ..utils import (
 
 
 class UkColumnIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_NAME = 'ukcolumn'
     _VALID_URL = r'(?i)https?://(?:www\.)?ukcolumn\.org(/index\.php)?/(?:video|ukcolumn-news)/(?P<id>[-a-z0-9]+)'
 
@@ -51,6 +51,17 @@ class UkColumnIE(InfoExtractor):
         display_id = self._match_id(url)
         webpage = self._download_webpage(url, display_id)
 
+        odysee_url = self._search_regex(
+            r'(https?://odysee\.com/[^"\'&]+)', unescapeHTML(webpage),
+            'Odysee URL', default=None)
+        if odysee_url:
+            return {
+                '_type': 'url_transparent',
+                'title': self._og_search_title(webpage),
+                'url': odysee_url.replace('%3A', ':'),
+                'ie_key': 'LBRY',
+            }
+
         oembed_url = urljoin(url, unescapeHTML(self._search_regex(
             r'<iframe[^>]+src=(["\'])(?P<url>/media/oembed\?url=.+?)\1',
             webpage, 'OEmbed URL', group='url')))
@@ -61,6 +72,16 @@ class UkColumnIE(InfoExtractor):
         if not video_url:
             ie, video_url = VimeoIE, VimeoIE._extract_url(url, oembed_webpage)
         if not video_url:
+            odysee_url = self._search_regex(
+                r'(https?://odysee\.com/[^"\'&]+)', unescapeHTML(oembed_webpage),
+                'Odysee URL', default=None)
+            if odysee_url:
+                return {
+                    '_type': 'url_transparent',
+                    'title': self._og_search_title(webpage),
+                    'url': unescapeHTML(odysee_url),
+                    'ie_key': 'LBRY',
+                }
             raise ExtractorError('No embedded video found')
 
         return {

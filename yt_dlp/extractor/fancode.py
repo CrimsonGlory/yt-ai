@@ -3,7 +3,7 @@ from ..utils import ExtractorError, mimetype2ext, parse_iso8601, try_get
 
 
 class FancodeVodIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_NAME = 'fancode:vod'
 
     _VALID_URL = r'https?://(?:www\.)?fancode\.com/video/(?P<id>[0-9]+)\b'
@@ -120,7 +120,7 @@ class FancodeVodIE(InfoExtractor):
 
 
 class FancodeLiveIE(FancodeVodIE):  # XXX: Do not subclass from concrete IE
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_NAME = 'fancode:live'
 
     _VALID_URL = r'https?://(www\.)?fancode\.com/match/(?P<id>[0-9]+).+'

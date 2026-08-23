@@ -393,7 +393,7 @@ class LoomIE(InfoExtractor):
 
 
 class LoomFolderIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_NAME = 'loom:folder'
     _VALID_URL = r'https?://(?:www\.)?loom\.com/share/folder/(?P<id>[\da-f]{32})'
     _TESTS = [{

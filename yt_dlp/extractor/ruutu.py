@@ -18,7 +18,7 @@ from ..utils import (
 
 
 class RuutuIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'''(?x)
                     https?://
                         (?:

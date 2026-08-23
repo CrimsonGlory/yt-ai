@@ -8,7 +8,7 @@ from ..utils import (
 
 
 class DTubeIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:www\.)?d\.tube/(?:#!/)?v/(?P<uploader_id>[0-9a-z.-]+)/(?P<id>[0-9a-z]{8})'
     _TEST = {
         'url': 'https://d.tube/#!/v/broncnutz/x380jtr1',

@@ -9,15 +9,15 @@ from ..utils import (
 
 
 class TeacherTubeIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_NAME = 'teachertube'
     IE_DESC = 'teachertube.com videos'
 
-    _VALID_URL = r'https?://(?:www\.)?teachertube\.com/(viewVideo\.php\?video_id=|music\.php\?music_id=|video/(?:[\da-z-]+-)?|audio/)(?P<id>\d+)'
+    _VALID_URL = r'https?://(?:www\.)?teachertube\.com/(?:viewVideo\.php\?video_id=|music\.php\?music_id=|videos?/(?:[\da-z-]+-)?|audio/)(?P<id>\d+)'
 
     _TESTS = [{
         # flowplayer
-        'url': 'http://www.teachertube.com/viewVideo.php?video_id=339997',
+        'url': 'https://www.teachertube.com/videos/339997',
         'md5': 'f9434ef992fd65936d72999951ee254c',
         'info_dict': {
             'id': '339997',
@@ -52,7 +52,10 @@ class TeacherTubeIE(InfoExtractor):
         if error:
             raise ExtractorError(f'{self.IE_NAME} said: {error}', expected=True)
 
-        title = self._html_search_meta('title', webpage, 'title', fatal=True)
+        title = (
+            self._html_search_meta('title', webpage, 'title', default=None)
+            or self._og_search_title(webpage, default=None)
+            or self._html_extract_title(webpage, default=video_id))
         TITLE_SUFFIX = ' - TeacherTube'
         if title.endswith(TITLE_SUFFIX):
             title = title[:-len(TITLE_SUFFIX)].strip()
@@ -66,6 +69,8 @@ class TeacherTubeIE(InfoExtractor):
         media_urls = re.findall(r'data-contenturl="([^"]+)"', webpage)
         media_urls.extend(re.findall(r'var\s+filePath\s*=\s*"([^"]+)"', webpage))
         media_urls.extend(re.findall(r'\'file\'\s*:\s*["\']([^"\']+)["\'],', webpage))
+        media_urls.extend(re.findall(r'sourceMP4\.src\s*=\s*[\'"]([^\'"]+)', webpage))
+        media_urls.extend(re.findall(r'<source[^>]+src=["\']([^"\']+)', webpage))
 
         formats = [
             {
@@ -73,6 +78,11 @@ class TeacherTubeIE(InfoExtractor):
                 'quality': quality(determine_ext(media_url)),
             } for media_url in set(media_urls)
         ]
+        if not formats:
+            html5 = self._parse_html5_media_entries(url, webpage, video_id)
+            if html5:
+                formats = html5[0].get('formats') or (
+                    [{'url': html5[0]['url']}] if html5[0].get('url') else [])
 
         thumbnail = self._og_search_thumbnail(
             webpage, default=None) or self._html_search_meta(
@@ -88,7 +98,6 @@ class TeacherTubeIE(InfoExtractor):
 
 
 class TeacherTubeUserIE(InfoExtractor):
-    _WORKING = False
     IE_NAME = 'teachertube:user:collection'
     IE_DESC = 'teachertube.com user and collection videos'
 

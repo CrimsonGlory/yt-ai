@@ -134,7 +134,7 @@ class ParliamentLiveUKIE(RedBeeBaseIE):
 
 
 class RTBFIE(RedBeeBaseIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'''(?x)
         https?://(?:www\.)?rtbf\.be/
         (?:

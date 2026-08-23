@@ -3,19 +3,20 @@ from ..utils import (
     int_or_none,
     try_get,
 )
+from ..utils.traversal import traverse_obj
 
 
 class TwentyMinutenIE(InfoExtractor):
-    _WORKING = False
     IE_NAME = '20min'
     _VALID_URL = r'''(?x)
                     https?://
                         (?:www\.)?20min\.ch/
                         (?:
-                            videotv/*\?.*?\bvid=|
-                            videoplayer/videoplayer\.html\?.*?\bvideoId@
+                            videotv/*\?.*?\bvid=(?P<id>\d+)
+                            |videoplayer/videoplayer\.html\?.*?\bvideoId@(?P<id2>\d+)
+                            |video/(?:[^/?#]*-)?(?P<id3>\d+)
+                            |story/(?:[^/?#]*-)?(?P<id4>\d+)
                         )
-                        (?P<id>\d+)
                     '''
     _EMBED_REGEX = [r'<iframe[^>]+src=(["\'])(?P<url>(?:(?:https?:)?//)?(?:www\.)?20min\.ch/videoplayer/videoplayer.html\?.*?\bvideoId@\d+.*?)\1']
     _TESTS = [{
@@ -55,19 +56,47 @@ class TwentyMinutenIE(InfoExtractor):
     }]
 
     def _real_extract(self, url):
-        video_id = self._match_id(url)
+        m = self._match_valid_url(url)
+        video_id = m.group('id') or m.group('id2') or m.group('id3') or m.group('id4')
 
-        video = self._download_json(
-            f'http://api.20min.ch/video/{video_id}/show',
-            video_id)['content']
+        video = {}
+        api = self._download_json(
+            f'https://api.20min.ch/video/{video_id}/show',
+            video_id, fatal=False)
+        if isinstance(api, dict):
+            video = api.get('content') or api
 
-        title = video['title']
+        webpage = None
+        if not video.get('title'):
+            webpage = self._download_webpage(url, video_id)
+            nextjs = self._search_nextjs_data(webpage, video_id, default={})
+            video = video or traverse_obj(nextjs, ('props', 'pageProps', 'content')) or {}
+            if not video:
+                video = {
+                    'title': self._og_search_title(webpage, default=video_id),
+                    'lead': self._og_search_description(webpage),
+                    'thumbnail': self._og_search_thumbnail(webpage),
+                }
 
-        formats = [{
-            'format_id': format_id,
-            'url': f'http://podcast.20min-tv.ch/podcast/20min/{video_id}{p}.mp4',
-            'quality': quality,
-        } for quality, (format_id, p) in enumerate([('sd', ''), ('hd', 'h')])]
+        title = video.get('title') or video_id
+
+        formats = []
+        for quality, (format_id, p) in enumerate([('sd', ''), ('hd', 'h')]):
+            formats.append({
+                'format_id': format_id,
+                'url': f'https://podcast.20min-tv.ch/podcast/20min/{video_id}{p}.mp4',
+                'quality': quality,
+            })
+        if webpage is None:
+            webpage = self._download_webpage(url, video_id, fatal=False) or ''
+        og_video = self._og_search_video_url(webpage, default=None) if webpage else None
+        if og_video:
+            formats.append({'url': og_video, 'quality': 2})
+        m3u8_url = self._search_regex(
+            r'(https?://[^"\']+\.m3u8[^"\']*)', webpage or '', 'm3u8', default=None)
+        if m3u8_url:
+            formats.extend(self._extract_m3u8_formats(
+                m3u8_url, video_id, 'mp4', m3u8_id='hls', fatal=False) or [])
 
         description = video.get('lead')
         thumbnail = video.get('thumbnail')

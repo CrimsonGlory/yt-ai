@@ -3,7 +3,7 @@ from ..utils import int_or_none
 
 
 class KelbyOneIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://members\.kelbyone\.com/course/(?P<id>[^$&?#/]+)'
 
     _TESTS = [{

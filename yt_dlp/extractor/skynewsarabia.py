@@ -37,7 +37,7 @@ class SkyNewsArabiaBaseIE(InfoExtractor):
 
 
 class SkyNewsArabiaIE(SkyNewsArabiaBaseIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_NAME = 'skynewsarabia:video'
     _VALID_URL = r'https?://(?:www\.)?skynewsarabia\.com/web/video/(?P<id>[0-9]+)'
     _TEST = {
@@ -64,7 +64,7 @@ class SkyNewsArabiaIE(SkyNewsArabiaBaseIE):
 
 
 class SkyNewsArabiaArticleIE(SkyNewsArabiaBaseIE):
-    _WORKING = False
+    _WEB_FALLBACK = True
     IE_NAME = 'skynewsarabia:article'
     _VALID_URL = r'https?://(?:www\.)?skynewsarabia\.com/web/article/(?P<id>[0-9]+)'
     _TESTS = [{

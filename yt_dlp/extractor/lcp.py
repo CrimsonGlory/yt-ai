@@ -2,7 +2,7 @@ from .common import InfoExtractor
 
 
 class LcpPlayIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://play\.lcp\.fr/embed/(?P<id>[^/]+)/(?P<account_id>[^/]+)/[^/]+/[^/]+'
     _TESTS = [{
         'url': 'http://play.lcp.fr/embed/327336/131064/darkmatter/0',
@@ -21,7 +21,7 @@ class LcpPlayIE(InfoExtractor):
 
 
 class LcpIE(InfoExtractor):
-    _WORKING = False
+    _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:www\.)?lcp\.fr/(?:[^/]+/)*(?P<id>[^/]+)'
     _TESTS = [{
         # dailymotion live stream
