@@ -3,7 +3,9 @@ import re
 import urllib.parse
 
 from .common import InfoExtractor
+from ..networking import HEADRequest
 from ..utils import (
+    ExtractorError,
     int_or_none,
     join_nonempty,
     js_to_json,
@@ -167,30 +169,29 @@ class RadioFranceLiveIE(RadioFranceBaseIE):
 
     _TESTS = [{
         'url': 'https://www.radiofrance.fr/franceinter/',
-        'skip': 'video gone',
         'info_dict': {
             'id': 'franceinter',
             'title': str,
             'live_status': 'is_live',
-            'ext': 'aac',
+            'ext': 'm3u8',
         },
         'params': {
             'skip_download': 'Livestream',
         },
     }, {
         'url': 'https://www.radiofrance.fr/franceculture',
-        'skip': 'video gone',
         'info_dict': {
             'id': 'franceculture',
             'title': str,
             'live_status': 'is_live',
-            'ext': 'aac',
+            'ext': 'm3u8',
         },
         'params': {
             'skip_download': 'Livestream',
         },
     }, {
         'url': 'https://www.radiofrance.fr/mouv/radio-musique-kids-family',
+        'skip': 'Webradio stream no longer available',
         'info_dict': {
             'id': 'mouv-radio-musique-kids-family',
             'title': str,
@@ -202,6 +203,7 @@ class RadioFranceLiveIE(RadioFranceBaseIE):
         },
     }, {
         'url': 'https://www.radiofrance.fr/mouv/radio-rnb-soul',
+        'skip': 'Webradio stream no longer available',
         'info_dict': {
             'id': 'mouv-radio-rnb-soul',
             'title': str,
@@ -213,6 +215,7 @@ class RadioFranceLiveIE(RadioFranceBaseIE):
         },
     }, {
         'url': 'https://www.radiofrance.fr/mouv/radio-musique-mix',
+        'skip': 'Webradio stream no longer available',
         'info_dict': {
             'id': 'mouv-radio-musique-mix',
             'title': str,
@@ -228,7 +231,7 @@ class RadioFranceLiveIE(RadioFranceBaseIE):
             'id': 'fip-radio-rock',
             'title': str,
             'live_status': 'is_live',
-            'ext': 'aac',
+            'ext': 'm3u8',
         },
         'params': {
             'skip_download': 'Livestream',
@@ -238,32 +241,71 @@ class RadioFranceLiveIE(RadioFranceBaseIE):
         'only_matching': True,
     }]
 
+    # Public HLS slugs for webradios whose /api/live endpoint is gone.
+    _WEBRADIO_SLUGS = {
+        'radio-rock': 'fiprock',
+        'radio-jazz': 'fipjazz',
+        'radio-groove': 'fipgroove',
+        'radio-world': 'fipworld',
+        'radio-nouveautes': 'fipnouveautes',
+        'radio-reggae': 'fipreggae',
+        'radio-electro': 'fipelectro',
+        'radio-pop': 'fippop',
+        'radio-metal': 'fipmetal',
+        'radio-rnb-soul': 'mouvrnbsoul',
+        'radio-musique-kids-family': 'mouvkidsnfamily',
+        'radio-musique-mix': 'mouv100mix',
+    }
+
+    def _extract_public_live_formats(self, stream_slug, display_id):
+        formats, subtitles = [], {}
+        hls_candidates = (
+            f'https://stream.radiofrance.fr/{stream_slug}/{stream_slug}_hifi.m3u8?id=radiofrance',
+            f'https://stream.radiofrance.fr/{stream_slug}/{stream_slug}.m3u8?id=radiofrance',
+        )
+        for hls_url in hls_candidates:
+            urlh = self._request_webpage(
+                hls_url, display_id, note='Checking live HLS', fatal=False, expected_status=404)
+            if not urlh or urlh.status == 404:
+                continue
+            fmts, subs = self._extract_m3u8_formats_and_subtitles(hls_url, display_id, fatal=False)
+            formats.extend(fmts)
+            self._merge_subtitles(subs, target=subtitles)
+            if formats:
+                break
+        if not formats:
+            ice_url = f'https://icecast.radiofrance.fr/{stream_slug}-midfi.mp3'
+            urlh = self._request_webpage(
+                HEADRequest(ice_url), display_id, note='Checking Icecast stream',
+                fatal=False, expected_status=404)
+            if urlh and urlh.status != 404:
+                formats.append({
+                    'url': ice_url,
+                    'ext': 'mp3',
+                    'acodec': 'mp3',
+                    'vcodec': 'none',
+                })
+        if not formats:
+            raise ExtractorError('Unable to extract live stream', expected=True)
+        return formats, subtitles
+
     def _real_extract(self, url):
         station_id, substation_id = self._match_valid_url(url).group('id', 'substation_id')
+        display_id = join_nonempty(station_id, substation_id)
 
+        stream_slug = station_id
         if substation_id:
-            webpage = self._download_webpage(url, station_id)
-            api_response = self._extract_data_from_webpage(webpage, station_id, 'webRadioData')
-        else:
-            api_response = self._download_json(
-                f'https://www.radiofrance.fr/{station_id}/api/live', station_id)
+            stream_slug = self._WEBRADIO_SLUGS.get(substation_id) or (
+                station_id + substation_id.replace('radio-', '').replace('-', ''))
+        formats, subtitles = self._extract_public_live_formats(stream_slug, display_id)
 
-        formats, subtitles = [], {}
-        for media_source in traverse_obj(api_response, (('now', None), 'media', 'sources', lambda _, v: v['url'])):
-            if media_source.get('format') == 'hls':
-                fmts, subs = self._extract_m3u8_formats_and_subtitles(media_source['url'], station_id, fatal=False)
-                formats.extend(fmts)
-                self._merge_subtitles(subs, target=subtitles)
-            else:
-                formats.append({
-                    'url': media_source['url'],
-                    'abr': media_source.get('bitrate'),
-                })
+        webpage = self._download_webpage(
+            url, display_id, fatal=False, expected_status=404) or ''
+        title = self._og_search_title(webpage, default=None) if webpage else None
 
         return {
-            'id': join_nonempty(station_id, substation_id),
-            'title': traverse_obj(api_response, ('visual', 'legend')) or join_nonempty(
-                ('now', 'firstLine', 'title'), ('now', 'secondLine', 'title'), from_dict=api_response, delim=' - '),
+            'id': display_id,
+            'title': title or station_id,
             'formats': formats,
             'subtitles': subtitles,
             'is_live': True,
