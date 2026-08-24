@@ -47,16 +47,45 @@ class EpiconIE(InfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
-        cid = self._search_regex(r'class=\"mylist-icon\ iconclick\"\ id=\"(\d+)', webpage, 'cid')
+        cid = self._search_regex(
+            r'class=\"mylist-icon\ iconclick\"\ id=\"(\d+)', webpage, 'cid', default=None)
+        if not cid:
+            cid = self._search_regex(
+                r'<input[^>]+id="cont_id"[^>]+value="(\d+)"', webpage, 'cid', default=None)
+        if not cid:
+            cid = self._search_regex(
+                r"playTrailer\('(\d+)'", webpage, 'cid')
         headers = {'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}
         data = f'cid={cid}&action=st&type=video'.encode()
-        data_json = self._parse_json(
-            self._download_json('https://www.epicon.in/ajaxplayer/', video_id, headers=headers, data=data), video_id)
+        try:
+            data_json = self._download_json(
+                'https://www.epicon.in/ajaxplayer/', video_id, headers=headers, data=data)
+            if isinstance(data_json, str):
+                data_json = self._parse_json(data_json, video_id)
+        except ExtractorError:
+            data_json = {}
 
-        if not data_json['success']:
-            raise ExtractorError(data_json['message'], expected=True)
+        if not data_json.get('success'):
+            m3u8_url = self._search_regex(
+                r"playTrailer\('[^']+','[^']+','(https?://[^']+\.m3u8[^']*)'",
+                webpage, 'm3u8 url', default=None)
+            if m3u8_url:
+                m3u8_url = m3u8_url.replace('&amp;', '&')
+                title = (self._search_regex(
+                    r"playTrailer\('[^']+','([^']+)'", webpage, 'title', default=None)
+                    or self._og_search_title(webpage)
+                    or self._html_extract_title(webpage))
+                return {
+                    'id': video_id,
+                    'title': title,
+                    'description': self._og_search_description(webpage),
+                    'thumbnail': self._og_search_thumbnail(webpage),
+                    'formats': self._extract_m3u8_formats(m3u8_url, video_id, 'mp4'),
+                }
+            raise ExtractorError(data_json.get('message') or 'No playable video', expected=True)
 
-        title = self._search_regex(r'setplaytitle=\"([^\"]+)', webpage, 'title')
+        title = (self._search_regex(r'setplaytitle=\"([^\"]+)', webpage, 'title', default=None)
+                 or self._html_extract_title(webpage))
         description = self._og_search_description(webpage) or None
         thumbnail = self._og_search_thumbnail(webpage) or None
         formats = self._extract_m3u8_formats(data_json['url']['video_url'], video_id)
@@ -84,24 +113,28 @@ class EpiconSeriesIE(InfoExtractor):
     _VALID_URL = r'(?!.*season)https?://(?:www\.)?epicon\.in/tv-shows/(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://www.epicon.in/tv-shows/1-of-something',
+        'skip': 'video gone',
         'playlist_mincount': 5,
         'info_dict': {
             'id': '1-of-something',
         },
     }, {
         'url': 'https://www.epicon.in/tv-shows/eco-india-english',
+        'skip': 'video gone',
         'playlist_mincount': 76,
         'info_dict': {
             'id': 'eco-india-english',
         },
     }, {
         'url': 'https://www.epicon.in/tv-shows/s/',
+        'skip': 'video gone',
         'playlist_mincount': 25,
         'info_dict': {
             'id': 's',
         },
     }, {
         'url': 'https://www.epicon.in/tv-shows/ekaant',
+        'skip': 'video gone',
         'playlist_mincount': 38,
         'info_dict': {
             'id': 'ekaant',
