@@ -113,7 +113,11 @@ class TFOIE(TFOBaseIE):
         slug = urllib.parse.urlparse(url).path.rstrip('/').split('/')[-2]
         webpage = self._download_webpage(
             f'{self._BASE_URL}/regarder/{slug}/{video_id}', video_id)
-        nextjs_data = self._search_nextjs_data(webpage, video_id)
+        nextjs_data = self._search_nextjs_data(webpage, video_id, default=None)
+        if not nextjs_data:
+            nextjs_data = self._search_nextjs_v13_data(webpage, video_id, fatal=False)
+        if not isinstance(nextjs_data, dict) or 'props' not in nextjs_data:
+            raise ExtractorError('Unable to extract next.js data')
 
         build_id, locale = traverse_obj(nextjs_data, (('buildId', 'locale'), {str}, all))
         path = urllib.parse.urlparse(self._og_search_url(webpage)).path
@@ -191,6 +195,7 @@ class TFOSeriesIE(TFOBaseIE):
         'playlist_count': 44,
     }, {
         'url': 'https://www.tfo.org/serie/chacun-son-ile/saison-2/002981471',
+        'skip': 'video gone',
         'info_dict': {
             'id': '002981471',
             'title': 'Chacun son île | Saison 2',
