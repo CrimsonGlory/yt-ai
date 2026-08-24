@@ -93,6 +93,12 @@ class WeVidiIE(InfoExtractor):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
 
+        yt_id = self._search_regex(
+            r'(?:youtube\.com/embed/|youtube\.com/watch\?v=|youtu\.be/)([\w-]{11})',
+            webpage, 'youtube id', default=None)
+        if yt_id and 'WVPlayer(' not in webpage:
+            return self.url_result(f'https://www.youtube.com/watch?v={yt_id}', ie='Youtube', video_id=yt_id)
+
         wvplayer_props = self._search_json(
             r'WVPlayer\(', webpage, 'player', video_id,
             transform_source=lambda x: js_to_json(x.replace('||', '}')))
