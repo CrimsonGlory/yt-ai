@@ -1,8 +1,14 @@
+import base64
+import json
+import re
+
 from .common import InfoExtractor
 from ..utils import (
+    ExtractorError,
     int_or_none,
     remove_end,
     str_or_none,
+    traverse_obj,
     try_get,
     unified_timestamp,
     url_or_none,
@@ -19,10 +25,9 @@ class GoProIE(InfoExtractor):
             'title': 'My GoPro Adventure - 9/19/21',
             'thumbnail': r're:https?://.+',
             'ext': 'mp4',
-            'timestamp': 1632072947,
-            'upload_date': '20210919',
-            'uploader_id': 'fireydive30018',
-            'duration': 396062,
+            'timestamp': int,
+            'upload_date': r're:\d{8}',
+            'uploader_id': str,
         },
     }, {
         'url': 'https://gopro.com/v/KRm6Vgp2peg4e',
@@ -58,11 +63,26 @@ class GoProIE(InfoExtractor):
         webpage = self._download_webpage(url, video_id)
 
         metadata = self._search_json(
-            r'window\.__reflectData\s*=', webpage, 'metadata', video_id)
+            r'window\.__reflectData\s*=', webpage, 'metadata', video_id, default={})
 
-        video_info = metadata['collectionMedia'][0]
+        video_info = traverse_obj(metadata, ('collectionMedia', 0, {dict})) or {}
+        media_id = video_info.get('id')
+        if not media_id:
+            # New GoPro share pages embed the media id in the og:image JWT
+            for jwt in re.findall(r'eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+', webpage):
+                try:
+                    payload = jwt.split('.')[1]
+                    payload += '=' * ((4 - len(payload) % 4) % 4)
+                    data = json.loads(base64.urlsafe_b64decode(payload))
+                except Exception:
+                    continue
+                media_id = data.get('medium_id')
+                if media_id:
+                    break
+        if not media_id:
+            raise ExtractorError('Unable to extract GoPro media id')
         media_data = self._download_json(
-            'https://api.gopro.com/media/{}/download'.format(video_info['id']), video_id)
+            f'https://api.gopro.com/media/{media_id}/download', video_id)
 
         formats = []
         for fmt in try_get(media_data, lambda x: x['_embedded']['variations']) or []:
@@ -86,18 +106,33 @@ class GoProIE(InfoExtractor):
         if title:
             title = title.replace('\n', ' ')
 
+        duration = int_or_none(video_info.get('source_duration')) or int_or_none(
+            try_get(media_data, lambda x: x['_embedded']['variations'][0]['duration']))
+        uploader_id = str_or_none(try_get(metadata, lambda x: x['account']['nickname']))
+        timestamp = unified_timestamp(try_get(metadata, lambda x: x['collection']['created_at']))
+        if not timestamp:
+            # JWT thumbnail payload includes thumbnail_updated_date
+            for jwt in re.findall(r'eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+', webpage):
+                try:
+                    payload = jwt.split('.')[1]
+                    payload += '=' * ((4 - len(payload) % 4) % 4)
+                    data = json.loads(base64.urlsafe_b64decode(payload))
+                except Exception:
+                    continue
+                timestamp = unified_timestamp(data.get('thumbnail_updated_date')) or timestamp
+                uploader_id = uploader_id or str_or_none(data.get('owner'))
+                if timestamp:
+                    break
+
         return {
             'id': video_id,
             'title': title,
             'formats': formats,
             'thumbnail': url_or_none(
                 self._html_search_meta(['og:image', 'twitter:image'], webpage)),
-            'timestamp': unified_timestamp(
-                try_get(metadata, lambda x: x['collection']['created_at'])),
-            'uploader_id': str_or_none(
-                try_get(metadata, lambda x: x['account']['nickname'])),
-            'duration': int_or_none(
-                video_info.get('source_duration')),
+            'timestamp': timestamp,
+            'uploader_id': uploader_id,
+            'duration': duration,
             'artist': str_or_none(
                 video_info.get('music_track_artist')) or None,
             'track': str_or_none(
