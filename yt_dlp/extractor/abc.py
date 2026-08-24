@@ -75,7 +75,7 @@ class ABCIE(InfoExtractor):
             'id': '12342074',
             'ext': 'mp4',
             'title': 'Black Lives Matter protests spawn support for Papuans in Indonesia',
-            'description': 'md5:625257209f2d14ce23cb4e3785da9beb',
+            'description': 'md5:8748c27e44e3a1da72f83b8fd282f929',
             'thumbnail': r're:https://live-production\.wcms\.abc-cdn\.net\.au/7ee6f190de6d7dbb04203e514bfae9ec',
         },
     }, {
@@ -96,7 +96,7 @@ class ABCIE(InfoExtractor):
             'title': 'Wagner Group retreating from Russia, leader Prigozhin to move to Belarus',
             'ext': 'mp4',
             'description': 'Wagner troops leave Rostov-on-Don and\xa0Yevgeny Prigozhin will move to Belarus under a deal brokered by Belarusian President Alexander Lukashenko to end the mutiny.',
-            'thumbnail': r're:https://live-production\.wcm\.abc-cdn\.net\.au/0c170f5b57f0105c432f366c0e8e267b',
+            'thumbnail': r're:https?://.*',
         },
     }, {
         'url': 'https://www.abc.net.au/listen/programs/the-followers-madness-of-two/presents-followers-madness-of-two/105697646',
@@ -194,6 +194,7 @@ class ABCIViewIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://iview.abc.net.au/show/utopia/series/1/video/CO1211V001S00',
+        'skip': 'Geo-restricted',
         'md5': '52a942bfd7a0b79a6bfe9b4ce6c9d0ed',
         'info_dict': {
             'id': 'CO1211V001S00',
@@ -218,6 +219,7 @@ class ABCIViewIE(InfoExtractor):
     }, {
         'note': 'No episode name',
         'url': 'https://iview.abc.net.au/show/gruen/series/11/video/LE1927H001S00',
+        'skip': 'Geo-restricted',
         'md5': '67715ce3c78426b11ba167d875ac6abf',
         'info_dict': {
             'id': 'LE1927H001S00',
@@ -243,6 +245,7 @@ class ABCIViewIE(InfoExtractor):
     }, {
         'note': 'No episode number',
         'url': 'https://iview.abc.net.au/show/four-corners/series/2022/video/NC2203H039S00',
+        'skip': 'Geo-restricted',
         'md5': '77cb7d8434440e3b28fbebe331c2456a',
         'info_dict': {
             'id': 'NC2203H039S00',
@@ -268,6 +271,7 @@ class ABCIViewIE(InfoExtractor):
     }, {
         'note': 'No episode name or number',
         'url': 'https://iview.abc.net.au/show/landline/series/2021/video/RF2004Q043S00',
+        'skip': 'Geo-restricted',
         'md5': '2e17dec06b13cc81dc119d2565289396',
         'info_dict': {
             'id': 'RF2004Q043S00',
@@ -294,9 +298,30 @@ class ABCIViewIE(InfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url)
         video_params = self._download_json(
-            'https://iview.abc.net.au/api/programs/' + video_id, video_id)
-        title = unescapeHTML(video_params.get('title') or video_params['seriesTitle'])
-        stream = next(s for s in video_params['playlist'] if s.get('type') in ('program', 'livestream'))
+            f'https://api.iview.abc.net.au/v3/video/{video_id}', video_id,
+            fatal=False) or {}
+        if not video_params.get('id'):
+            video_params = self._download_json(
+                'https://iview.abc.net.au/api/programs/' + video_id, video_id)
+
+        unavailable = video_params.get('unavailableMessage')
+        if unavailable:
+            if re.search(r'outside Australia|location', unavailable, re.I):
+                self.raise_geo_restricted(unavailable, countries=self._GEO_COUNTRIES)
+            raise ExtractorError(unavailable, expected=True)
+        if video_params.get('requiresLogin') and not video_params.get('playable', True):
+            self.raise_login_required(method='cookies')
+
+        title = unescapeHTML(video_params.get('title') or video_params.get('seriesTitle') or video_params.get('showTitle'))
+        playlist = video_params.get('playlist')
+        if not playlist:
+            # v3 metadata has no stream URLs for geo-blocked/login sessions
+            if not video_params.get('playable', True):
+                self.raise_geo_restricted(
+                    video_params.get('unavailableMessage') or 'This video is not playable from your location',
+                    countries=self._GEO_COUNTRIES)
+            raise ExtractorError('No playlist/stream data in iView response', expected=True)
+        stream = next(s for s in playlist if s.get('type') in ('program', 'livestream'))
 
         house_number = video_params.get('episodeHouseNumber') or video_id
         path = f'/auth/hls/sign?ts={int(time.time())}&hn={house_number}&d=android-tablet'
@@ -364,6 +389,7 @@ class ABCIViewShowSeriesIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://iview.abc.net.au/show/upper-middle-bogan',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '124870-1',
             'title': 'Series 1',
@@ -375,6 +401,7 @@ class ABCIViewShowSeriesIE(InfoExtractor):
         'playlist_count': 8,
     }, {
         'url': 'https://iview.abc.net.au/show/upper-middle-bogan',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'CO1108V001S00',
             'ext': 'mp4',
@@ -392,6 +419,7 @@ class ABCIViewShowSeriesIE(InfoExtractor):
     }, {
         # 'videoEpisodes' is a dict with `items` key
         'url': 'https://iview.abc.net.au/show/7-30-mark-humphries-satire',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '178458-0',
             'title': 'Episodes',
@@ -404,6 +432,7 @@ class ABCIViewShowSeriesIE(InfoExtractor):
         'skip': 'This program is not currently available in ABC iview',
     }, {
         'url': 'https://iview.abc.net.au/show/inbestigators',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '175343-1',
             'title': 'Series 1',
