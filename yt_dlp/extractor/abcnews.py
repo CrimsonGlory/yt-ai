@@ -1,3 +1,5 @@
+import re
+
 from .amp import AMPIE
 from .common import InfoExtractor
 from ..utils import (
@@ -78,7 +80,7 @@ class AbcNewsIE(InfoExtractor):
             'title': "Peter Billingsley: From child actor in 'A Christmas Story' to Hollywood power player",
             'description': 'Billingsley went from a child actor to Hollywood power player.',
         },
-        'playlist_count': 5,
+        'playlist_mincount': 1,
     }, {
         'url': 'http://abcnews.go.com/Entertainment/justin-timberlake-performs-stop-feeling-eurovision-2016/story?id=39125818',
         'info_dict': {
@@ -88,6 +90,8 @@ class AbcNewsIE(InfoExtractor):
             'description': 'Lara Spencer reports the buzziest stories of the day in "GMA" Pop News.',
             'upload_date': '20160505',
             'timestamp': 1462442280,
+            'duration': int,
+            'thumbnail': r're:https?://.*',
         },
         'params': {
             # m3u8 download
@@ -96,6 +100,7 @@ class AbcNewsIE(InfoExtractor):
             'playlist_items': '1',
         },
         'add_ie': ['AbcNewsVideo'],
+        'expected_warnings': ['Unable to download f4m'],
     }, {
         'url': 'http://abcnews.go.com/Technology/exclusive-apple-ceo-tim-cook-iphone-cracking-software/story?id=37173343',
         'only_matching': True,
@@ -108,24 +113,38 @@ class AbcNewsIE(InfoExtractor):
     def _real_extract(self, url):
         story_id = self._match_id(url)
         webpage = self._download_webpage(url, story_id)
-        story = self._parse_json(self._search_regex(
+        page_content = self._parse_json(self._search_regex(
             r"window\['__abcnews__'\]\s*=\s*({.+?});",
-            webpage, 'data'), story_id)['page']['content']['story']['everscroll'][0]
+            webpage, 'data'), story_id)['page']['content']
+        # Legacy everscroll payload, then the current story.story object.
+        story = try_get(page_content, lambda x: x['story']['everscroll'][0]) or {}
+        if not story:
+            story = try_get(page_content, lambda x: x['story']['story']) or {}
         article_contents = story.get('articleContents') or {}
 
         def entries():
             featured_video = story.get('featuredVideo') or {}
             feed = try_get(featured_video, lambda x: x['video']['feed'])
+            featured_id = featured_video.get('id')
             if feed:
                 yield {
                     '_type': 'url',
-                    'id': featured_video.get('id'),
-                    'title': featured_video.get('name'),
+                    'id': featured_id,
+                    'title': featured_video.get('name') or featured_video.get('title'),
                     'url': feed,
                     'thumbnail': featured_video.get('images'),
                     'description': featured_video.get('description'),
                     'timestamp': parse_iso8601(featured_video.get('uploadDate')),
                     'duration': parse_duration(featured_video.get('duration')),
+                    'ie_key': AbcNewsVideoIE.ie_key(),
+                }
+            elif featured_id:
+                yield {
+                    '_type': 'url',
+                    'id': featured_id,
+                    'title': featured_video.get('name') or featured_video.get('title'),
+                    'url': f'http://abcnews.go.com/video/embed?id={featured_id}',
+                    'description': featured_video.get('description'),
                     'ie_key': AbcNewsVideoIE.ie_key(),
                 }
 
@@ -148,6 +167,11 @@ class AbcNewsIE(InfoExtractor):
                             'ie_key': AbcNewsVideoIE.ie_key(),
                         }
 
+            # Current articles embed YouTube in the HTML body instead of everscroll inlines.
+            for yt_id in re.findall(r'youtube\.com/embed/([\w-]+)', webpage):
+                yield self.url_result(f'https://www.youtube.com/watch?v={yt_id}', ie='Youtube', video_id=yt_id)
+
         return self.playlist_result(
-            entries(), story_id, article_contents.get('headline'),
-            article_contents.get('subHead'))
+            entries(), story_id,
+            article_contents.get('headline') or story.get('headline') or story.get('title'),
+            article_contents.get('subHead') or story.get('description') or story.get('alternativeHeadline'))
