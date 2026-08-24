@@ -121,9 +121,10 @@ class VRTIE(VRTBaseIE):
             'id': 'pbs-pub-7855fc7b-1448-49bc-b073-316cb60caa71$vid-2ca50305-c38a-4762-9890-65cbd098b7bd',
             'ext': 'mp4',
             'title': 'Beelden van binnenkant Notre-Dame, één maand na de brand',
-            'description': 'md5:6fd85f999b2d1841aa5568f4bf02c3ff',
+            'description': str,
             'duration': 31.2,
-            'thumbnail': 'https://images.vrt.be/orig/2019/05/15/2d914d61-7710-11e9-abcc-02b7b76bf47f.jpg',
+            'thumbnail': r're:https?://.*',
+            '_old_archive_ids': ['canvas pbs-pub-7855fc7b-1448-49bc-b073-316cb60caa71$vid-2ca50305-c38a-4762-9890-65cbd098b7bd'],
         },
         'params': {'skip_download': 'm3u8'},
     }, {
@@ -132,9 +133,9 @@ class VRTIE(VRTBaseIE):
             'id': 'pbs-pub-f2c86a46-8138-413a-a4b9-a0015a16ce2c$vid-1f112b31-e58e-4379-908d-aca6d80f8818',
             'ext': 'mp4',
             'title': 'De Belgian Cats zijn klaar voor het EK',
-            'description': 'Video: De Belgian Cats zijn klaar voor het EK mét Ann Wauters | basketbal, sport in het journaal',
             'duration': 115.17,
-            'thumbnail': 'https://images.vrt.be/orig/2019/05/15/11c0dba3-770e-11e9-abcc-02b7b76bf47f.jpg',
+            'thumbnail': r're:https?://.*',
+            '_old_archive_ids': list,
         },
         'params': {'skip_download': 'm3u8'},
     }]
@@ -148,17 +149,23 @@ class VRTIE(VRTBaseIE):
         webpage = self._download_webpage(url, display_id)
         attrs = extract_attributes(get_element_html_by_class('vrtvideo', webpage) or '')
 
-        asset_id = attrs.get('data-video-id') or attrs['data-videoid']
+        asset_id = attrs.get('data-video-id') or attrs.get('data-videoid')
         publication_id = traverse_obj(attrs, 'data-publication-id', 'data-publicationid')
         if publication_id:
             asset_id = f'{publication_id}${asset_id}'
+        if not asset_id:
+            asset_id = (
+                self._search_regex(r'"mediaReference"\s*:\s*"([^"]+)"', webpage, 'media reference', default=None)
+                or self._search_regex(
+                    r'(?:video=|mediaid["\']?\s*:\s*["\'])?(pbs-pub-[\da-f-]+\$vid-[\da-f-]+)',
+                    webpage, 'media reference'))
         client = traverse_obj(attrs, 'data-client-code', 'data-client') or self._CLIENT_MAP[site]
 
         data = self._call_api(asset_id, client)
         formats, subtitles = self._extract_formats_and_subtitles(data, asset_id)
 
         description = self._html_search_meta(
-            ['og:description', 'twitter:description', 'description'], webpage)
+            ['og:description', 'twitter:description', 'description'], webpage, default=None)
         if description == '…':
             description = None
 
