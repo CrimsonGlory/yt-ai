@@ -12,6 +12,7 @@ class CrackedIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?cracked\.com/video_(?P<id>\d+)_[\da-z-]+\.html'
     _TESTS = [{
         'url': 'http://www.cracked.com/video_19070_if-animal-actors-got-e21-true-hollywood-stories.html',
+        'skip': 'video gone',
         'md5': '89b90b9824e3806ca95072c4d78f13f7',
         'info_dict': {
             'id': '19070',
@@ -23,6 +24,7 @@ class CrackedIE(InfoExtractor):
     }, {
         # youtube embed
         'url': 'http://www.cracked.com/video_19006_4-plot-holes-you-didnt-notice-in-your-favorite-movies.html',
+        'skip': 'video gone',
         'md5': 'ccd52866b50bde63a6ef3b35016ba8c7',
         'info_dict': {
             'id': 'EjI00A3rZD0',

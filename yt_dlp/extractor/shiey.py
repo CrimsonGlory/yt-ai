@@ -11,6 +11,7 @@ class ShieyIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.shiey.com/videos/v/train-journey-to-edge-of-serbia-ep-2',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '1103409448',
             'ext': 'mp4',

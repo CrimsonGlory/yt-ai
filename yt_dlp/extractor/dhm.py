@@ -9,6 +9,7 @@ class DHMIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://www.dhm.de/filmarchiv/die-filme/the-marshallplan-at-work-in-west-germany/',
+        'skip': 'video gone',
         'md5': '11c475f670209bf6acca0b2b7ef51827',
         'info_dict': {
             'id': 'the-marshallplan-at-work-in-west-germany',
@@ -20,6 +21,7 @@ class DHMIE(InfoExtractor):
         },
     }, {
         'url': 'http://www.dhm.de/filmarchiv/02-mapping-the-wall/peter-g/rolle-1/',
+        'skip': 'video gone',
         'md5': '09890226332476a3e3f6f2cb74734aa5',
         'info_dict': {
             'id': 'rolle-1',

@@ -43,6 +43,7 @@ class RTSIE(SRGSSRIE):  # XXX: Do not subclass from concrete IE
         },
         {
             'url': 'http://www.rts.ch/emissions/passe-moi-les-jumelles/5624067-entre-ciel-et-mer.html',
+            'skip': 'video gone',
             'info_dict': {
                 'id': '5624065',
                 'title': 'Passe-moi les jumelles',
@@ -106,6 +107,7 @@ class RTSIE(SRGSSRIE):  # XXX: Do not subclass from concrete IE
         {
             # article with videos on rhs
             'url': 'http://www.rts.ch/sport/hockey/6693917-hockey-davos-decroche-son-31e-titre-de-champion-de-suisse.html',
+            'skip': 'Geo-restricted',
             'info_dict': {
                 'id': '6693917',
                 'title': 'Hockey: Davos décroche son 31e titre de champion de Suisse',

@@ -26,6 +26,7 @@ class MediasiteIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://hitsmediaweb.h-its.org/mediasite/Play/2db6c271681e4f199af3c60d1f82869b1d',
+            'skip': 'Request timed out',
             'info_dict': {
                 'id': '2db6c271681e4f199af3c60d1f82869b1d',
                 'ext': 'mp4',
@@ -37,6 +38,7 @@ class MediasiteIE(InfoExtractor):
         },
         {
             'url': 'http://mediasite.uib.no/Mediasite/Play/90bb363295d945d6b548c867d01181361d?catalog=a452b7df-9ae1-46b7-a3ba-aceeb285f3eb',
+            'skip': 'Site no longer exists or is broken',
             'info_dict': {
                 'id': '90bb363295d945d6b548c867d01181361d',
                 'ext': 'mp4',
@@ -293,6 +295,7 @@ class MediasiteCatalogIE(InfoExtractor):
                     '''
     _TESTS = [{
         'url': 'http://events7.mediasite.com/Mediasite/Catalog/Full/631f9e48530d454381549f955d08c75e21',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': '631f9e48530d454381549f955d08c75e21',
             'title': 'WCET Summit: Adaptive Learning in Higher Ed: Improving Outcomes Dynamically',
@@ -302,6 +305,7 @@ class MediasiteCatalogIE(InfoExtractor):
     }, {
         # with CurrentFolderId and RootDynamicFolderId
         'url': 'https://medaudio.medicine.iu.edu/Mediasite/Catalog/Full/9518c4a6c5cf4993b21cbd53e828a92521/97a9db45f7ab47428c77cd2ed74bb98f14/9518c4a6c5cf4993b21cbd53e828a92521',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': '9518c4a6c5cf4993b21cbd53e828a92521',
             'title': 'IUSM Family and Friends Sessions',
@@ -316,6 +320,7 @@ class MediasiteCatalogIE(InfoExtractor):
         'only_matching': True,
     }, {
         'url': 'https://medaudio.medicine.iu.edu/Mediasite/Catalog/Full/9518c4a6c5cf4993b21cbd53e828a92521/97a9db45f7ab47428c77cd2ed74bb98f14/9518c4a6c5cf4993b21cbd53e828a92521',
+        'skip': 'Site no longer exists or is broken',
         'only_matching': True,
     }, {
         # dashed id

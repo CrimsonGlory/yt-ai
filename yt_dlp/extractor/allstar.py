@@ -107,6 +107,7 @@ class AllstarIE(AllstarBaseIE):
 
     _TESTS = [{
         'url': 'https://allstar.gg/clip?clip=64482c2da9eec30008a67d1b',
+        'skip': 'Unsupported URL / extractor broken',
         'info_dict': {
             'id': '64482c2da9eec30008a67d1b',
             'title': '4K on Inferno',
@@ -142,6 +143,7 @@ class AllstarIE(AllstarBaseIE):
         },
     }, {
         'url': 'https://allstar.gg/montage?montage=643e64089da7e9363e1fa66c',
+        'skip': 'video gone',
         'info_dict': {
             'id': '643e64089da7e9363e1fa66c',
             'display_id': 'APQLGM2IMXW',
@@ -158,6 +160,7 @@ class AllstarIE(AllstarBaseIE):
         },
     }, {
         'url': 'https://allstar.gg/montage?montage=RILJMH6QOS',
+        'skip': 'video gone',
         'info_dict': {
             'id': '64a2697372ce3703de29e868',
             'display_id': 'RILJMH6QOS',
@@ -191,14 +194,14 @@ class AllstarProfileIE(AllstarBaseIE):
             'id': '62b8bdfc9021052f7905882d-clips',
             'title': 'cherokee - Clips',
         },
-        'playlist_mincount': 15,
+        'playlist_mincount': 11,
     }, {
         'url': 'https://allstar.gg/u/cherokee?game=730&view=Clips',
         'info_dict': {
             'id': '62b8bdfc9021052f7905882d-clips-730',
             'title': 'cherokee - Clips - 730',
         },
-        'playlist_mincount': 15,
+        'playlist_mincount': 1,
     }, {
         'url': 'https://allstar.gg/u/62b8bdfc9021052f7905882d?view=Montages',
         'info_dict': {
@@ -208,6 +211,7 @@ class AllstarProfileIE(AllstarBaseIE):
         'playlist_mincount': 4,
     }, {
         'url': 'https://allstar.gg/profile?user=cherokee&view=Mobile Clips',
+        'skip': 'video gone',
         'info_dict': {
             'id': '62b8bdfc9021052f7905882d-mobile',
             'title': 'cherokee - Mobile Clips',

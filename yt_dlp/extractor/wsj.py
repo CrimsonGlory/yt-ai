@@ -29,6 +29,8 @@ class WSJIE(InfoExtractor):
             'categories': list,  # a long list
             'duration': 90,
             'title': 'Bills Coach Rex Ryan Updates His Old Jets Tattoo',
+            'creators': list,
+            'thumbnail': r're:https?://.*',
         },
     }, {
         'url': 'http://www.wsj.com/video/can-alphabet-build-a-smarter-city/359DDAA8-9AC1-489C-82E6-0429C1E430E0.html',
@@ -109,6 +111,10 @@ class WSJArticleIE(InfoExtractor):
             'upload_date': '20170221',
             'uploader_id': 'ralcaraz',
             'title': 'Bao Bao the Panda Leaves for China',
+            'categories': list,
+            'creators': list,
+            'duration': int,
+            'thumbnail': r're:https?://.*',
         },
     }, {
         'url': 'https://www.wsj.com/opinion/hamas-hostages-caskets-bibas-family-israel-gaza-29da083b',
@@ -118,6 +124,10 @@ class WSJArticleIE(InfoExtractor):
             'upload_date': '20241007',
             'uploader_id': 'Tinnes, David',
             'title': 'WSJ Opinion: "Get the Jew": The Crown Heights Riot Revisited',
+            'categories': list,
+            'creators': list,
+            'duration': int,
+            'thumbnail': r're:https?://.*',
         },
     }]
 

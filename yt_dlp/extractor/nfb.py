@@ -48,6 +48,7 @@ class NFBIE(NFBBaseIE):
     _TESTS = [{
         'note': 'NFB film',
         'url': 'https://www.nfb.ca/film/trafficopter/',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'trafficopter',
             'ext': 'mp4',
@@ -62,6 +63,7 @@ class NFBIE(NFBBaseIE):
     }, {
         'note': 'ONF film',
         'url': 'https://www.onf.ca/film/mal-du-siecle/',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'mal-du-siecle',
             'ext': 'mp4',
@@ -76,6 +78,7 @@ class NFBIE(NFBBaseIE):
     }, {
         'note': 'NFB episode with English title',
         'url': 'https://www.nfb.ca/series/true-north-inside-the-rise-of-toronto-basketball/season1/episode9/',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'true-north-episode9-true-north-finale-making-it',
             'ext': 'mp4',
@@ -94,6 +97,7 @@ class NFBIE(NFBBaseIE):
     }, {
         'note': 'ONF episode with French title',
         'url': 'https://www.onf.ca/serie/direction-nord-la-montee-du-basketball-a-toronto/saison1/episode9/',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'direction-nord-episode-9',
             'ext': 'mp4',
@@ -112,6 +116,7 @@ class NFBIE(NFBBaseIE):
     }, {
         'note': 'NFB episode with French title (needs geo-bypass)',
         'url': 'https://www.nfb.ca/series/etoile-du-nord/saison1/episode1/',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'etoile-du-nord-episode-1-lobservation',
             'ext': 'mp4',
@@ -130,6 +135,7 @@ class NFBIE(NFBBaseIE):
     }, {
         'note': 'ONF episode with English title (needs geo-bypass)',
         'url': 'https://www.onf.ca/serie/north-star/season1/episode1/',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'north-star-episode-1-observation',
             'ext': 'mp4',
@@ -148,6 +154,7 @@ class NFBIE(NFBBaseIE):
     }, {
         'note': 'NFB episode with /film/ URL and English title (needs geo-bypass)',
         'url': 'https://www.nfb.ca/film/north-star-episode-1-observation/',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'north-star-episode-1-observation',
             'ext': 'mp4',
@@ -166,6 +173,7 @@ class NFBIE(NFBBaseIE):
     }, {
         'note': 'ONF episode with /film/ URL and French title (needs geo-bypass)',
         'url': 'https://www.onf.ca/film/etoile-du-nord-episode-1-lobservation/',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'etoile-du-nord-episode-1-lobservation',
             'ext': 'mp4',
@@ -184,6 +192,7 @@ class NFBIE(NFBBaseIE):
     }, {
         'note': 'Season 2 episode w/o episode num in id, extract from json ld',
         'url': 'https://www.onf.ca/film/liste-des-choses-qui-existent-saison-2-ours',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'liste-des-choses-qui-existent-saison-2-ours',
             'ext': 'mp4',
@@ -202,6 +211,7 @@ class NFBIE(NFBBaseIE):
     }, {
         'note': 'NFB film /embed/player/ page',
         'url': 'https://www.nfb.ca/film/afterlife/embed/player/',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'afterlife',
             'ext': 'mp4',
@@ -265,12 +275,14 @@ class NFBSeriesIE(NFBBaseIE):
     _VALID_URL = rf'{NFBBaseIE._VALID_URL_BASE}/(?P<type>series?)/(?P<id>[^/?#&]+)/?(?:[?#]|$)'
     _TESTS = [{
         'url': 'https://www.nfb.ca/series/true-north-inside-the-rise-of-toronto-basketball/',
+        'skip': 'Geo-restricted',
         'playlist_mincount': 9,
         'info_dict': {
             'id': 'true-north-inside-the-rise-of-toronto-basketball',
         },
     }, {
         'url': 'https://www.onf.ca/serie/la-liste-des-choses-qui-existent-serie/',
+        'skip': 'Geo-restricted',
         'playlist_mincount': 26,
         'info_dict': {
             'id': 'la-liste-des-choses-qui-existent-serie',

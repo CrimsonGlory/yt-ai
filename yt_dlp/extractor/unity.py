@@ -7,6 +7,7 @@ class UnityIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?unity3d\.com/learn/tutorials/(?:[^/]+/)*(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://unity3d.com/learn/tutorials/topics/animation/animate-anything-mecanim',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'jWuNtik0C8E',
             'ext': 'mp4',

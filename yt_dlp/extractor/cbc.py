@@ -831,6 +831,7 @@ class CBCGemContentIE(CBCGemBaseIE):
     }, {
         # Olympics URL; content_type == 'Standalone'
         'url': 'https://gem.cbc.ca/ski-jumping-nh-individual-womens-final-30086',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'ski-jumping-nh-individual-womens-final-30086',
             'ext': 'mp4',
@@ -880,6 +881,7 @@ class CBCGemOlympicsIE(CBCGemBaseIE):
     _VALID_URL = r'https?://gem\.cbc\.ca/(?P<id>(?:[0-9a-z]+-)+[0-9]{5,})/s01e(?P<media_id>[0-9]{5,})'
     _TESTS = [{
         'url': 'https://gem.cbc.ca/ski-jumping-nh-individual-womens-final-30086/s01e30086',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'ski-jumping-nh-individual-womens-final-30086',
             'ext': 'mp4',

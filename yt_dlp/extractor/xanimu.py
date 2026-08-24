@@ -8,6 +8,7 @@ class XanimuIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?xanimu\.com/(?P<id>[^/]+)/?'
     _TESTS = [{
         'url': 'https://xanimu.com/51944-the-princess-the-frog-hentai/',
+        'skip': 'HTTP Error 403',
         'md5': '899b88091d753d92dad4cb63bbf357a7',
         'info_dict': {
             'id': '51944-the-princess-the-frog-hentai',

@@ -31,9 +31,9 @@ class VidlyIE(InfoExtractor):
         },
     }, {
         # Vidlyplayer
-        'url': 'https://vid.ly/7x0e6l',
+        'url': 'https://vid.ly/5u4h3e',
         'info_dict': {
-            'id': '7x0e6l',
+            'id': '5u4h3e',
             'ext': 'mp4',
             'title': '7x0e6l',
         },

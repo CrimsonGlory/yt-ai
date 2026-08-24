@@ -17,6 +17,7 @@ class TelewebionIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?telewebion\.ir/episode/(?P<id>(?:0x[a-fA-F\d]+|\d+))'
     _TESTS = [{
         'url': 'http://www.telewebion.ir/episode/0x1b3139c/',
+        'skip': 'Site SSL/certificate broken',
         'info_dict': {
             'id': '0x1b3139c',
             'ext': 'mp4',

@@ -34,10 +34,10 @@ class KikaIE(InfoExtractor):
     }, {
         # Video with season/episode info
         # Also: Video with subtitles
-        'url': 'https://www.kika.de/kaltstart/videos/video92498',
+        'url': 'https://www.kika.de/filme/videos/zu-weit-weg-106?videoType=mainContent',
         'md5': 'e58073070acb195906c55c4ad31dceb3',
         'info_dict': {
-            'id': 'video92498',
+            'id': 'zu-weit-weg-106',
             'ext': 'mp4',
             'title': '7. Wo ist Leo?',
             'description': 'md5:fb48396a5b75068bcac1df74f1524920',

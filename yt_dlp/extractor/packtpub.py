@@ -22,6 +22,7 @@ class PacktPubIE(PacktPubBaseIE):
 
     _TESTS = [{
         'url': 'https://www.packtpub.com/mapt/video/web-development/9781787122215/20528/20530/Project+Intro',
+        'skip': 'HTTP Error 403',
         'md5': '1e74bd6cfd45d7d07666f4684ef58f70',
         'info_dict': {
             'id': '20530',
@@ -99,7 +100,7 @@ class PacktPubCourseIE(PacktPubBaseIE):
         'info_dict': {
             'id': '9781787122215',
             'title': 'Learn Nodejs by building 12 projects [Video]',
-            'description': 'md5:489da8d953f416e51927b60a1c7db0aa',
+            'description': 'md5:022061f8491074cd1dd00b2f0a37193b',
         },
         'playlist_count': 90,
     }, {

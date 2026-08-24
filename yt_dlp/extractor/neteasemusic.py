@@ -136,6 +136,7 @@ class NetEaseMusicIE(NetEaseMusicBaseIE):
     _VALID_URL = r'https?://(?:y\.)?music\.163\.com/(?:[#m]/)?song\?.*?\bid=(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'https://music.163.com/#/song?id=550136151',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '550136151',
             'ext': 'mp3',
@@ -152,6 +153,7 @@ class NetEaseMusicIE(NetEaseMusicBaseIE):
         },
     }, {
         'url': 'http://music.163.com/song?id=17241424',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '17241424',
             'ext': 'mp3',
@@ -170,6 +172,7 @@ class NetEaseMusicIE(NetEaseMusicBaseIE):
         },
     }, {
         'url': 'https://music.163.com/#/song?id=2755669231',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '2755669231',
             'ext': 'mp3',
@@ -188,6 +191,7 @@ class NetEaseMusicIE(NetEaseMusicBaseIE):
         },
     }, {
         'url': 'https://y.music.163.com/m/song?app_version=8.8.45&id=95670&uct2=sKnvS4+0YStsWkqsPhFijw%3D%3D&dlt=0846',
+        'skip': 'Geo-restricted',
         'md5': 'b896be78d8d34bd7bb665b26710913ff',
         'info_dict': {
             'id': '95670',

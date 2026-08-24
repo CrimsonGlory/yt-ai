@@ -26,6 +26,7 @@ class LSMLREmbedIE(InfoExtractor):
         )/?\?(?:[^#]+&)?(?:show|id)=(?P<id>\d+)'''
     _TESTS = [{
         'url': 'https://latvijasradio.lsm.lv/lv/embed/?theme=black&size=16x9&showCaptions=0&id=183522',
+        'skip': 'HTTP Error 403',
         'md5': '719b33875cd1429846eeeaeec6df2830',
         'info_dict': {
             'id': 'a342781',
@@ -36,6 +37,7 @@ class LSMLREmbedIE(InfoExtractor):
         },
     }, {
         'url': 'https://radioteatris.lsm.lv/lv/embed/?id=&show=1270&theme=white&size=16x9',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '1270',
         },
@@ -52,6 +54,7 @@ class LSMLREmbedIE(InfoExtractor):
         }],
     }, {
         'url': 'https://radioteatris.lsm.lv/lv/embed/?id=&show=1269&theme=white&size=16x9',
+        'skip': 'HTTP Error 403',
         'md5': '24810d4a961da2295d9860afdcaf4f5a',
         'info_dict': {
             'id': 'a230690',
@@ -62,6 +65,7 @@ class LSMLREmbedIE(InfoExtractor):
         },
     }, {
         'url': 'https://lr1.lsm.lv/lv/embed/?id=166557&show=0&theme=white&size=16x9',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '166557',
         },
@@ -159,6 +163,7 @@ class LSMLTVEmbedIE(InfoExtractor):
     _VALID_URL = r'https?://ltv\.lsm\.lv/embed\?(?:[^#]+&)?c=(?P<id>[^#&]+)'
     _TESTS = [{
         'url': 'https://ltv.lsm.lv/embed?c=eyJpdiI6IjQzbHVUeHAyaDJiamFjcjdSUUFKdnc9PSIsInZhbHVlIjoiMHl3SnJNRmd2TmFIdnZwOGtGUUpzODFzUEZ4SVVsN2xoRjliSW9vckUyMWZIWG8vbWVzaFFkY0lhNmRjbjRpaCIsIm1hYyI6ImMzNjdhMzFhNTFhZmY1ZmE0NWI5YmFjZGI1YmJiNGEyNjgzNDM4MjUzMWEwM2FmMDMyZDMwYWM1MDFjZmM5MGIiLCJ0YWciOiIifQ==',
+        'skip': 'HTTP Error 403',
         'md5': '64f72a360ca530d5ed89c77646c9eee5',
         'info_dict': {
             'id': '46k_d23-6000-105',
@@ -231,6 +236,7 @@ class LSMReplayIE(InfoExtractor):
     _VALID_URL = r'https?://replay\.lsm\.lv/[^/?#]+/(?:skaties/|klausies/)?(?:ieraksts|statja)/[^/?#]+/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://replay.lsm.lv/lv/skaties/ieraksts/ltv/311130/4-studija-zolitudes-tragedija-un-incupes-stacija',
+        'skip': 'HTTP Error 403',
         'md5': '64f72a360ca530d5ed89c77646c9eee5',
         'info_dict': {
             'id': '46k_d23-6000-105',
@@ -244,6 +250,7 @@ class LSMReplayIE(InfoExtractor):
         },
     }, {
         'url': 'https://replay.lsm.lv/lv/klausies/ieraksts/lr/183522/138-nepilniga-kompensejamo-zalu-sistema-pat-menesiem-dzena-pacientus-pa-aptiekam',
+        'skip': 'HTTP Error 403',
         'md5': '84feb80fd7e6ec07744726a9f01cda4d',
         'info_dict': {
             'id': '183522',

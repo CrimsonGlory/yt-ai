@@ -121,6 +121,7 @@ class VideocampusSachsenIE(InfoExtractor):
         },
         {
             'url': 'https://www2.univ-sba.dz/video/Presentation-de-la-Faculte-de-droit-et-des-sciences-politiques-Journee-portes-ouvertes-202122/0183356e41af7bfb83d7667b20d9b6a3',
+            'skip': 'Site returned HTTP 5xx',
             'info_dict': {
                 'url': 'https://www2.univ-sba.dz/getMedium/0183356e41af7bfb83d7667b20d9b6a3.mp4',
                 'id': '0183356e41af7bfb83d7667b20d9b6a3',

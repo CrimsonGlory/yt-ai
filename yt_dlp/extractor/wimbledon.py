@@ -9,6 +9,7 @@ class WimbledonIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?wimbledon\.com/\w+/video/media/(?P<id>\d+)\.html'
     _TESTS = [{
         'url': 'https://www.wimbledon.com/en_GB/video/media/6330247525112.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': '6330247525112',
             'ext': 'mp4',
@@ -23,6 +24,7 @@ class WimbledonIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.wimbledon.com/en_GB/video/media/6308703111112.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': '6308703111112',
             'ext': 'mp4',

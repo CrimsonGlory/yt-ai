@@ -56,10 +56,10 @@ class DreiSatIE(ZDFBaseIE):
         },
     }, {
         # Video with chapters
-        'url': 'https://www.3sat.de/kultur/buchmesse/dein-buch-das-beste-von-der-leipziger-buchmesse-2025-teil-1-100.html',
+        'url': 'https://www.3sat.de/kabarett/kabarett-in-3sat/stefan-danziger-3sat-zu-gast-2026-kabarett-in-3sat-104.html',
         'md5': '6b95790ce52e75f0d050adcdd2711ee6',
         'info_dict': {
-            'id': '250330_dein_buch1_bum',
+            'id': '260621_stefan_danziger_mittel_und_wege_kabarett_in_3sat',
             'ext': 'mp4',
             'title': 'dein buch  - Das Beste von der Leipziger Buchmesse 2025 - Teil 1',
             'description': 'md5:bae51bfc22f15563ce3acbf97d2e8844',

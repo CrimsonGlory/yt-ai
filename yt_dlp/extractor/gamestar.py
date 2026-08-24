@@ -9,6 +9,7 @@ class GameStarIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?game(?P<site>pro|star)\.de/videos/.*,(?P<id>[0-9]+)\.html'
     _TESTS = [{
         'url': 'http://www.gamestar.de/videos/trailer,3/hobbit-3-die-schlacht-der-fuenf-heere,76110.html',
+        'skip': 'HTTP Error 403',
         'md5': 'ee782f1f8050448c95c5cacd63bc851c',
         'info_dict': {
             'id': '76110',

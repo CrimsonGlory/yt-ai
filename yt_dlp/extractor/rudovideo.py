@@ -58,6 +58,7 @@ class RudoVideoIE(InfoExtractor):
             'live_status': 'is_live',
             'title': r're:^LIVE BBTV\s\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}$',
             'thumbnail': r're:^(?:https?:)?//.*\.(png|jpg)$',
+            'creators': list,
         },
     }, {
         'url': 'https://rudo.video/live/c13',

@@ -238,6 +238,7 @@ class TNAFlixIE(TNAEMPFlixBaseIE):
             'duration': 91,
             'age_limit': 18,
             'categories': list,
+            'description': str,
         },
     }, {
         # non-anonymous uploader, categories
@@ -266,6 +267,7 @@ class EMPFlixIE(TNAEMPFlixBaseIE):
 
     _TESTS = [{
         'url': 'http://www.empflix.com/amateur-porn/Amateur-Finger-Fuck/video33051',
+        'skip': 'HTTP Error 403',
         'md5': 'd761c7b26601bd14476cd9512f2654fc',
         'info_dict': {
             'id': '33051',

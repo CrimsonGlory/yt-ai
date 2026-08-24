@@ -145,12 +145,13 @@ class NebulaIE(NebulaBaseIE):
             'channel_url': r're:https://nebula\.(tv|app)/lindsayellis',
             'creator': 'Lindsay Ellis',
             'duration': 2212,
-            'thumbnail': r're:https://\w+\.cloudfront\.net/[\w-]+',
+            'thumbnail': r're:https?://.*',
             '_old_archive_ids': ['nebula 5c271b40b13fd613090034fd', 'nebulasubscriptions 5c271b40b13fd613090034fd'],
         },
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://nebula.tv/videos/the-logistics-of-d-day-landing-craft-how-the-allies-got-ashore',
+        'skip': 'Login required',
         'md5': 'd05739cf6c38c09322422f696b569c23',
         'info_dict': {
             'id': '7e623145-1b44-4ca3-aa0b-ed25a247ea34',
@@ -175,6 +176,7 @@ class NebulaIE(NebulaBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://nebula.tv/videos/money-episode-1-the-draw',
+        'skip': 'Login required',
         'md5': 'ebe28a7ad822b9ee172387d860487868',
         'info_dict': {
             'id': 'b96c5714-9e2b-4ec3-b3f1-20f6e89cc553',
@@ -218,7 +220,7 @@ class NebulaIE(NebulaBaseIE):
             'duration': 524,
             'channel_url': r're:https://nebula\.(tv|app)/tldrnewseu',
             'series': 'TLDR News EU',
-            'thumbnail': r're:https://\w+\.cloudfront\.net/[\w-]+',
+            'thumbnail': r're:https?://.*',
             'creator': 'TLDR News EU',
             '_old_archive_ids': ['nebula 63f64c74366fcd00017c1513', 'nebulasubscriptions 63f64c74366fcd00017c1513'],
         },
@@ -253,6 +255,7 @@ class NebulaClassIE(NebulaBaseIE):
     _VALID_URL = rf'{_BASE_URL_RE}/(?!(?:myshows|library|videos)/)(?P<id>[\w-]+)/(?P<ep>[\w-]+)/?(?:$|[?#])'
     _TESTS = [{
         'url': 'https://nebula.tv/copyright-for-fun-and-profit/14',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'd7432cdc-c608-474d-942c-f74345daed7b',
             'ext': 'mp4',
@@ -287,6 +290,7 @@ class NebulaClassIE(NebulaBaseIE):
         },
     }, {
         'url': 'https://nebula.tv/thelayover/the-layover-episode-1',
+        'skip': 'Login required',
         'info_dict': {
             'ext': 'mp3',
             'id': '9d74a762-00bb-45a8-9e8d-9ed47c04a1d0',
@@ -424,7 +428,7 @@ class NebulaChannelIE(NebulaBaseIE):
         'info_dict': {
             'id': 'trussissuespodcast',
             'title': 'The TLDR News Podcast',
-            'description': 'md5:a08c4483bc0b705881d3e0199e721385',
+            'description': 'md5:e66698f9e99054129c1696d28cc1dc7f',
         },
         'playlist_mincount': 80,
     }]

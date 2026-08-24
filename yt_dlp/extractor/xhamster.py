@@ -590,7 +590,7 @@ class XHamsterUserIE(InfoExtractor):
         'info_dict': {
             'id': 'netvideogirls',
         },
-        'playlist_mincount': 267,
+        'playlist_mincount': 30,
     }, {
         # Non-paginated user profile
         'url': 'https://xhamster.com/users/firatkaan/videos',

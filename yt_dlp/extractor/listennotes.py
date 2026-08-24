@@ -16,6 +16,7 @@ class ListenNotesIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?listennotes\.com/podcasts/[^/]+/[^/]+-(?P<id>.+)/'
     _TESTS = [{
         'url': 'https://www.listennotes.com/podcasts/thriving-on-overload/tim-oreilly-on-noticing-KrDgvNb_u1n/',
+        'skip': 'HTTP Error 403',
         'md5': '5b91a32f841e5788fb82b72a1a8af7f7',
         'info_dict': {
             'id': 'KrDgvNb_u1n',
@@ -32,6 +33,7 @@ class ListenNotesIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.listennotes.com/podcasts/ask-noah-show/episode-177-wireguard-with-lwEA3154JzG/',
+        'skip': 'HTTP Error 403',
         'md5': '62fb4ffe7fc525632a1138bf72a5ce53',
         'info_dict': {
             'id': 'lwEA3154JzG',

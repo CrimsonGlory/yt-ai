@@ -37,6 +37,7 @@ class HolodexIE(InfoExtractor):
         },
     }, {
         'url': 'https://holodex.net/api/v2/playlist/239',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '239',
             'title': 'Songs/Videos that made fall into the rabbit hole (from my google activity history)',
@@ -44,6 +45,7 @@ class HolodexIE(InfoExtractor):
         'playlist_count': 14,
     }, {
         'url': 'https://holodex.net/watch/_m2mQyaofjI?foo=bar&playlist=69',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '69',
             'title': '拿著金斧頭的藍髮大姊姊',

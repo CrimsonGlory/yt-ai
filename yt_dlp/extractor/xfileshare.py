@@ -74,6 +74,7 @@ class XFileShareIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://uqload.com/dltx1wztngdz',
+        'skip': 'No video formats found',
         'md5': '3cfbb65e4c90e93d7b37bcb65a595557',
         'info_dict': {
             'id': 'dltx1wztngdz',
@@ -83,6 +84,7 @@ class XFileShareIE(InfoExtractor):
         }
     }, {
         'url': 'http://xvideosharing.com/fq65f94nd2ve',
+        'skip': 'No video formats found',
         'md5': '4181f63957e8fe90ac836fa58dc3c8a6',
         'info_dict': {
             'id': 'fq65f94nd2ve',

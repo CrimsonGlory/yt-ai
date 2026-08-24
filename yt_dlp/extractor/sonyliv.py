@@ -187,12 +187,14 @@ class SonyLIVSeriesIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?sonyliv\.com/shows/[^/?#&]+-(?P<id>\d{10})/?(?:$|[?#])'
     _TESTS = [{
         'url': 'https://www.sonyliv.com/shows/adaalat-1700000091',
+        'skip': 'HTTP Error 403',
         'playlist_mincount': 452,
         'info_dict': {
             'id': '1700000091',
         },
     }, {
         'url': 'https://www.sonyliv.com/shows/beyhadh-1700000007/',
+        'skip': 'HTTP Error 403',
         'playlist_mincount': 358,
         'info_dict': {
             'id': '1700000007',

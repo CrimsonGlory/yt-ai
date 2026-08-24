@@ -28,6 +28,8 @@ class SinaIE(InfoExtractor):
                 'id': '250576622',
                 'ext': 'mp4',
                 'title': '现场:克鲁兹宣布退选 特朗普将稳获提名',
+                'duration': int,
+                'thumbnail': r're:https?://.*',
             },
         },
         {
@@ -46,6 +48,8 @@ class SinaIE(InfoExtractor):
                 'id': '250587748',
                 'ext': 'mp4',
                 'title': '瞬间泪目：8年前汶川地震珍贵视频首曝光',
+                'duration': int,
+                'thumbnail': r're:https?://.*',
             },
         },
     ]

@@ -655,6 +655,7 @@ class WeverseLiveTabIE(WeverseTabBaseIE):
     _VALID_URL = r'https?://(?:www\.|m\.)?weverse\.io/(?P<id>[^/?#]+)/live/?(?:[?#]|$)'
     _TESTS = [{
         'url': 'https://weverse.io/billlie/live/',
+        'skip': 'Login required',
         'playlist_mincount': 55,
         'info_dict': {
             'id': 'billlie-live',
@@ -673,6 +674,7 @@ class WeverseMediaTabIE(WeverseTabBaseIE):
     _VALID_URL = r'https?://(?:www\.|m\.)?weverse\.io/(?P<id>[^/?#]+)/media(?:/|/all|/new)?(?:[?#]|$)'
     _TESTS = [{
         'url': 'https://weverse.io/billlie/media/',
+        'skip': 'Login required',
         'playlist_mincount': 231,
         'info_dict': {
             'id': 'billlie-media',

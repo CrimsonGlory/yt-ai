@@ -10,6 +10,7 @@ class TV24UAVideoIE(InfoExtractor):
     IE_NAME = '24tv.ua'
     _TESTS = [{
         'url': 'https://24tv.ua/news/showPlayer.do?objectId=2074790&videoUrl=2022/07/2074790&w=640&h=360',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '2074790',
             'ext': 'mp4',
@@ -36,6 +37,7 @@ class TV24UAVideoIE(InfoExtractor):
         },
         {
             'url': 'https://24tv.ua/vipalyuyut-nashi-mista-sela-dsns-pokazali-motoroshni-naslidki_n1883966',
+            'skip': 'Cloudflare anti-bot',
             'info_dict': {
                 'id': '1883966',
                 'ext': 'mp4',

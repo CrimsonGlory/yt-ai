@@ -8,6 +8,7 @@ class FoxSportsIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?foxsports\.com/watch/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://www.foxsports.com/watch/play-612168c6700004b',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'b72f5bd8658140baa5791bb676433733',
             'ext': 'mp4',

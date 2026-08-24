@@ -8,6 +8,7 @@ class TOnlineIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?t-online\.de/tv/(?:[^/]+/)*id_(?P<id>\d+)'
     _TEST = {
         'url': 'http://www.t-online.de/tv/sport/fussball/id_79166266/drittes-remis-zidane-es-muss-etwas-passieren-.html',
+        'skip': 'video gone',
         'md5': '7d94dbdde5f9d77c5accc73c39632c29',
         'info_dict': {
             'id': '79166266',

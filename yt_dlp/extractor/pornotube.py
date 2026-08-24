@@ -8,6 +8,7 @@ class PornotubeIE(InfoExtractor):
     _VALID_URL = r'https?://(?:\w+\.)?pornotube\.com/(?:[^?#]*?)/video/(?P<id>[0-9]+)'
     _TEST = {
         'url': 'http://www.pornotube.com/orientation/straight/video/4964/title/weird-hot-and-wet-science',
+        'skip': 'video gone',
         'md5': '60fc5a4f0d93a97968fc7999d98260c9',
         'info_dict': {
             'id': '4964',

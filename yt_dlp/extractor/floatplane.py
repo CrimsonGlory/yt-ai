@@ -165,6 +165,7 @@ class FloatplaneIE(FloatplaneBaseIE):
     }
     _TESTS = [{
         'url': 'https://www.floatplane.com/post/2Yf3UedF7C',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'yuleLogLTT',
             'ext': 'mp4',
@@ -189,6 +190,7 @@ class FloatplaneIE(FloatplaneBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.floatplane.com/post/j2jqG3JmgJ',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'j2jqG3JmgJ',
             'title': 'TJM: Does Anyone Care About Avatar: The Way of Water?',
@@ -210,6 +212,7 @@ class FloatplaneIE(FloatplaneBaseIE):
         'playlist_count': 2,
     }, {
         'url': 'https://www.floatplane.com/post/3tK2tInhoN',
+        'skip': 'Login required',
         'info_dict': {
             'id': '3tK2tInhoN',
             'title': 'Extras - How Linus Communicates with Editors (Compensator 4)',
@@ -231,6 +234,7 @@ class FloatplaneIE(FloatplaneBaseIE):
         'playlist_count': 2,
     }, {
         'url': 'https://beta.floatplane.com/post/d870PEFXS1',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'bg9SuYKEww',
             'ext': 'mp4',

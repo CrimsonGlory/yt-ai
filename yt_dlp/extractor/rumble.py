@@ -26,6 +26,7 @@ class RumbleEmbedIE(InfoExtractor):
     _EMBED_REGEX = [fr'(?:<(?:script|iframe)[^>]+\bsrc=|["\']embedUrl["\']\s*:\s*)["\'](?P<url>{_VALID_URL})']
     _TESTS = [{
         'url': 'https://rumble.com/embed/v5pv5f',
+        'skip': 'HTTP Error 403',
         'md5': '36a18a049856720189f30977ccbb2c34',
         'info_dict': {
             'id': 'v5pv5f',
@@ -42,6 +43,7 @@ class RumbleEmbedIE(InfoExtractor):
         },
     }, {
         'url': 'https://rumble.com/embed/vslb7v',
+        'skip': 'HTTP Error 403',
         'md5': '7418035de1a30a178b8af34dc2b6a52b',
         'info_dict': {
             'id': 'vslb7v',
@@ -58,6 +60,7 @@ class RumbleEmbedIE(InfoExtractor):
         },
     }, {
         'url': 'https://rumble.com/embed/vunh1h',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'vunh1h',
             'ext': 'mp4',
@@ -83,6 +86,7 @@ class RumbleEmbedIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://rumble.com/embed/v1essrt',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'v1essrt',
             'ext': 'mp4',
@@ -98,6 +102,7 @@ class RumbleEmbedIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://rumble.com/embed/v1amumr',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'v1amumr',
             'ext': 'mp4',
@@ -115,6 +120,7 @@ class RumbleEmbedIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://rumble.com/embed/v6pezdb',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'v6pezdb',
             'ext': 'mp4',
@@ -261,6 +267,7 @@ class RumbleIE(InfoExtractor):
     _TESTS = [{
         'add_ie': ['RumbleEmbed'],
         'url': 'https://rumble.com/vdmum1-moose-the-dog-helps-girls-dig-a-snow-fort.html',
+        'skip': 'HTTP Error 403',
         'md5': '53af34098a7f92c4e51cf0bd1c33f009',
         'info_dict': {
             'id': 'vb0ofn',
@@ -285,6 +292,7 @@ class RumbleIE(InfoExtractor):
     }, {
         'note': 'timeline format',
         'url': 'https://rumble.com/v2ea9qb-the-u.s.-cannot-hide-this-in-ukraine-anymore-redacted-with-natali-and-clayt.html',
+        'skip': 'HTTP Error 403',
         'md5': '40d61fec6c0945bca3d0e1dc1aa53d79',
         'params': {'format': 'wv'},
         'info_dict': {
@@ -306,6 +314,7 @@ class RumbleIE(InfoExtractor):
         },
     }, {
         'url': 'https://rumble.com/v2e7fju-the-covid-twitter-files-drop-protecting-fauci-while-censoring-the-truth-wma.html',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'v2blzyy',
             'ext': 'mp4',
@@ -338,6 +347,7 @@ class RumbleIE(InfoExtractor):
         },
     }, {
         'url': 'https://rumble.com/browse/live',
+        'skip': 'Cloudflare anti-bot',
         'playlist_mincount': 25,
         'info_dict': {
             'id': 'live',
@@ -346,6 +356,7 @@ class RumbleIE(InfoExtractor):
         },
     }, {
         'url': 'https://rumble.com/search/video?q=rumble&sort=views',
+        'skip': 'Cloudflare anti-bot',
         'playlist_mincount': 24,
         'info_dict': {
             'id': 'video?q=rumble&sort=views',
@@ -382,12 +393,14 @@ class RumbleChannelIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://rumble.com/c/Styxhexenhammer666',
+        'skip': 'HTTP Error 403',
         'playlist_mincount': 1160,
         'info_dict': {
             'id': 'Styxhexenhammer666',
         },
     }, {
         'url': 'https://rumble.com/user/goldenpoodleharleyeuna',
+        'skip': 'HTTP Error 403',
         'playlist_mincount': 4,
         'info_dict': {
             'id': 'goldenpoodleharleyeuna',

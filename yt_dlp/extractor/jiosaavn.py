@@ -290,7 +290,7 @@ class JioSaavnPlaylistIE(JioSaavnBaseIE):
             'id': 'DVR,pFUOwyXqIp77B1JF,A__',
             'title': 'Mood Hindi',
         },
-        'playlist_mincount': 750,
+        'playlist_mincount': 683,
     }, {
         'url': 'https://www.jiosaavn.com/featured/taaza-tunes/Me5RridRfDk_',
         'info_dict': {
@@ -379,7 +379,7 @@ class JioSaavnArtistIE(JioSaavnBaseIE):
             'id': 'SkNEv3qRhDE_',
             'title': 'Sanam Puri',
         },
-        'playlist_mincount': 51,
+        'playlist_mincount': 49,
     }]
     _ENTRY_IE = JioSaavnSongIE
     _PAGE_SIZE = 50

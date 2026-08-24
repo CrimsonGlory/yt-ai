@@ -16,6 +16,7 @@ class LibraryOfCongressIE(InfoExtractor):
     _TESTS = [{
         # embedded via <div class="media-player"
         'url': 'http://loc.gov/item/90716351/',
+        'skip': 'HTTP Error 403',
         'md5': '6ec0ae8f07f86731b1b2ff70f046210a',
         'info_dict': {
             'id': '90716351',
@@ -27,6 +28,7 @@ class LibraryOfCongressIE(InfoExtractor):
     }, {
         # webcast embedded via mediaObjectId
         'url': 'https://www.loc.gov/today/cyberlc/feature_wdesc.php?rec=5578',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '5578',
             'ext': 'mp4',
@@ -41,6 +43,7 @@ class LibraryOfCongressIE(InfoExtractor):
     }, {
         # with direct download links
         'url': 'https://www.loc.gov/item/78710669/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '78710669',
             'ext': 'mp4',

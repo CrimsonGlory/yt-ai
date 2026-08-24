@@ -8,6 +8,7 @@ class WeiqiTVIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://www.weiqitv.com/index/video_play?videoId=53c744f09874f0e76a8b46f3',
+        'skip': 'video gone',
         'md5': '26450599afd64c513bc77030ad15db44',
         'info_dict': {
             'id': '53c744f09874f0e76a8b46f3',
@@ -16,6 +17,7 @@ class WeiqiTVIE(InfoExtractor):
         },
     }, {
         'url': 'http://www.weiqitv.com/index/video_play?videoId=567379a2d4c36cca518b4569',
+        'skip': 'video gone',
         'info_dict': {
             'id': '567379a2d4c36cca518b4569',
             'ext': 'mp4',
@@ -23,6 +25,7 @@ class WeiqiTVIE(InfoExtractor):
         },
     }, {
         'url': 'http://www.weiqitv.com/index/video_play?videoId=5430220a9874f088658b4567',
+        'skip': 'video gone',
         'info_dict': {
             'id': '5430220a9874f088658b4567',
             'ext': 'mp4',

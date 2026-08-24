@@ -17,6 +17,7 @@ class DigitallySpeakingIE(InfoExtractor):
     _TESTS = [{
         # From http://gdcvault.com/play/1023460/Tenacious-Design-and-The-Interface
         'url': 'http://evt.dispeak.com/ubm/gdc/sf16/xml/840376_BQRC.xml',
+        'skip': 'HTTP Error 403',
         'md5': 'a8efb6c31ed06ca8739294960b2dbabd',
         'info_dict': {
             'id': '840376_BQRC',
@@ -34,6 +35,7 @@ class DigitallySpeakingIE(InfoExtractor):
     }, {
         # From https://gdcvault.com/play/1016624, empty speakerVideo
         'url': 'https://sevt.dispeak.com/ubm/gdc/online12/xml/201210-822101_1349794556671DDDD.xml',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '201210-822101_1349794556671DDDD',
             'ext': 'flv',

@@ -82,6 +82,7 @@ class Mx3IE(Mx3BaseIE):
     _VALID_URL = Mx3BaseIE._VALID_URL_TMPL % re.escape(_DOMAIN)
     _TESTS = [{
         'url': 'https://mx3.ch/t/1Cru',
+        'skip': 'HTTP Error 403',
         'md5': '7ba09e9826b4447d4e1ce9d69e0e295f',
         'info_dict': {
             'id': '1Cru',
@@ -97,6 +98,7 @@ class Mx3IE(Mx3BaseIE):
         },
     }, {
         'url': 'https://mx3.ch/t/1LIY',
+        'skip': 'HTTP Error 403',
         'md5': '48293cb908342547827f963a5a2e9118',
         'info_dict': {
             'id': '1LIY',
@@ -113,6 +115,7 @@ class Mx3IE(Mx3BaseIE):
         },
     }, {
         'url': 'https://mx3.ch/t/1C6E',
+        'skip': 'HTTP Error 403',
         'md5': '1afcd578493ddb8e5008e94bb6d97e25',
         'info_dict': {
             'id': '1C6E',
@@ -134,6 +137,7 @@ class Mx3NeoIE(Mx3BaseIE):
     _VALID_URL = Mx3BaseIE._VALID_URL_TMPL % re.escape(_DOMAIN)
     _TESTS = [{
         'url': 'https://neo.mx3.ch/t/1hpd',
+        'skip': 'HTTP Error 403',
         'md5': '6d9986bbae5cac3296ec8813bf965eb2',
         'info_dict': {
             'id': '1hpd',
@@ -155,6 +159,7 @@ class Mx3VolksmusikIE(Mx3BaseIE):
     _VALID_URL = Mx3BaseIE._VALID_URL_TMPL % re.escape(_DOMAIN)
     _TESTS = [{
         'url': 'https://volksmusik.mx3.ch/t/Zx',
+        'skip': 'HTTP Error 403',
         'md5': 'dd967a7b0c1ef898f3e072cf9c2eae3c',
         'info_dict': {
             'id': 'Zx',

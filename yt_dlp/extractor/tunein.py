@@ -70,7 +70,7 @@ class TuneInStationIE(TuneInBaseIE):
             'title': str,
             'alt_title': 'The biggest new pop and all-day vibes',
             'channel_follower_count': int,
-            'description': 'md5:ee2c56794844610d045f8caf5ff34d0c',
+            'description': 'md5:246b02a42df015acb828b41f9049a419',
             'location': 'London, UK',
             'live_status': 'is_live',
             'thumbnail': r're:https?://.+',
@@ -115,7 +115,7 @@ class TuneInPodcastIE(TuneInBaseIE):
             'id': 'p14',
             'title': 'BBC News',
         },
-        'playlist_mincount': 35,
+        'playlist_mincount': 31,
     }]
 
     @classmethod
@@ -163,9 +163,9 @@ class TuneInPodcastEpisodeIE(TuneInBaseIE):
             'series_id': 'p1153019',
         },
     }, {
-        'url': 'https://tunein.com/podcasts/The-BOB--TOM-Show-Free-Podcast-p20069/?topicId=174556405',
+        'url': 'https://tunein.com/podcasts/The-BOB--TOM-Show-Free-Podcast-p20069/?topicId=174552664',
         'info_dict': {
-            'id': 't174556405',
+            'id': 't174552664',
             'ext': 'mp3',
             'title': 'B&T Extra: Ohhh Yeah, It\'s Sexy Time',
             'alt_title': 'Westwood One >',
@@ -319,7 +319,7 @@ class TuneInShortenerIE(InfoExtractor):
             'id': 'p14',
             'title': 'BBC News',
         },
-        'playlist_mincount': 35,
+        'playlist_mincount': 31,
     }]
 
     def _real_extract(self, url):

@@ -19,6 +19,7 @@ class GameDevTVDashboardIE(InfoExtractor):
     _NETRC_MACHINE = 'gamedevtv'
     _TESTS = [{
         'url': 'https://www.gamedev.tv/dashboard/courses/25',
+        'skip': 'Login required',
         'info_dict': {
             'id': '25',
             'title': 'Complete Blender Creator 3: Learn 3D Modelling for Beginners',
@@ -33,6 +34,7 @@ class GameDevTVDashboardIE(InfoExtractor):
         'playlist_count': 100,
     }, {
         'url': 'https://www.gamedev.tv/dashboard/courses/63/2279',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'df04f4d8-68a4-4756-a71b-9ca9446c3a01',
             'ext': 'mp4',

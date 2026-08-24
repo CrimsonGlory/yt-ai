@@ -6,6 +6,7 @@ class GrouponIE(InfoExtractor):
 
     _TEST = {
         'url': 'https://www.groupon.com/deals/bikram-yoga-huntington-beach-2#ooid=tubGNycTo_9Uxg82uESj4i61EYX8nyuf',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'bikram-yoga-huntington-beach-2',
             'title': '$49 for 10 Yoga Classes or One Month of Unlimited Classes at Bikram Yoga Huntington Beach ($180 Value)',

@@ -220,6 +220,7 @@ class PolskieRadioAuditionIE(InfoExtractor):
     _TESTS = [{
         # articles, PR1
         'url': 'https://jedynka.polskieradio.pl/audycje/5102',
+        'skip': 'video gone',
         'info_dict': {
             'id': '5102',
             'title': 'Historia żywa',
@@ -338,6 +339,7 @@ class PolskieRadioCategoryIE(InfoExtractor):
     }, {
         # billennium tabs
         'url': 'https://www.polskieradio.pl/8/2385',
+        'skip': 'video gone',
         'info_dict': {
             'id': '2385',
             'title': 'Droga przez mąkę',
@@ -583,6 +585,7 @@ class PolskieRadioPodcastIE(PolskieRadioPodcastBaseIE):
     _VALID_URL = r'https?://podcasty\.polskieradio\.pl/track/(?P<id>[a-f\d]{8}(?:-[a-f\d]{4}){4}[a-f\d]{8})'
     _TESTS = [{
         'url': 'https://podcasty.polskieradio.pl/track/6eafe403-cb8f-4756-b896-4455c3713c32',
+        'skip': 'video gone',
         'info_dict': {
             'id': '6eafe403-cb8f-4756-b896-4455c3713c32',
             'ext': 'mp3',

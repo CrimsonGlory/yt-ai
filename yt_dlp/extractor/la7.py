@@ -27,10 +27,10 @@ class LA7IE(InfoExtractor):
         },
     }, {
         # multiple quality video
-        'url': 'https://www.la7.it/calcio-femminile/news/il-gol-di-lindsey-thomas-fiorentina-vs-milan-serie-a-calcio-femminile-26-11-2022-461736',
+        'url': 'https://www.la7.it/laria-che-tira/video/corrado-augias-a-difesa-di-sigfrido-ranucci-vittima-di-una-serie-di-circostanze-e-stato-anche-un-po-21-08-2026-655053',
         'md5': 'd2370e78f75e8d1238cb3a0db9a2eda3',
         'info_dict': {
-            'id': 'il-gol-di-lindsey-thomas-fiorentina-vs-milan-serie-a-calcio-femminile-26-11-2022-461736',
+            'id': 'corrado-augias-a-difesa-di-sigfrido-ranucci-vittima-di-una-serie-di-circostanze-e-stato-anche-un-po-21-08-2026-655053',
             'ext': 'mp4',
             'title': 'Il gol di Lindsey Thomas | Fiorentina vs Milan | Serie A Calcio Femminile',
             'description': 'Il gol di Lindsey Thomas | Fiorentina vs Milan | Serie A Calcio Femminile',
@@ -108,7 +108,7 @@ class LA7PodcastEpisodeIE(InfoExtractor):
             'id': '371497',
             'ext': 'mp3',
             'title': '"La carezza delle memoria" di Carlo Verdone',
-            'description': 'md5:5abf07c3c551a687db80af3f9ceb7d52',
+            'description': 'md5:bd032fc75933400d72afde6f2753e4d7',
             'thumbnail': 'https://www.la7.it/sites/default/files/podcast/371497.jpg',
             'upload_date': '20210323',
         },

@@ -26,6 +26,7 @@ class HarpodeonIE(InfoExtractor):
             'description': 'md5:47e16bdb41fc8a79c83ab83af11c8b77',
             'creator': 'Vitagraph Company of America',
             'release_year': 1915,
+            'creators': list,
         },
     }, {
         'url': 'https://www.harpodeon.com/preview/Behind_the_Screen/421838710',
@@ -37,6 +38,7 @@ class HarpodeonIE(InfoExtractor):
             'description': 'md5:008972a3dc51fba3965ee517d2ba9155',
             'creator': 'Lone Star Corporation',
             'release_year': 1916,
+            'creators': list,
         },
     }]
 

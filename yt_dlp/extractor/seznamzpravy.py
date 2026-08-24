@@ -131,6 +131,7 @@ class SeznamZpravyArticleIE(InfoExtractor):
     }, {
         # video with live stream URL
         'url': 'https://www.seznam.cz/zpravy/clanek/znovu-do-vlady-s-ano-pavel-belobradek-ve-volebnim-specialu-seznamu-38489',
+        'skip': 'video gone',
         'info_dict': {
             'id': '38489',
             'title': 'md5:8fa1afdc36fd378cf0eba2b74c5aca60',

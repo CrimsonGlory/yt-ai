@@ -18,6 +18,7 @@ class JojIE(InfoExtractor):
     _EMBED_REGEX = [r'<iframe\b[^>]+\bsrc=(["\'])(?P<url>(?:https?:)?//media\.joj\.sk/embed/(?:(?!\1).)+)\1']
     _TESTS = [{
         'url': 'https://media.joj.sk/embed/a388ec4c-6019-4a4a-9312-b1bee194e932',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'a388ec4c-6019-4a4a-9312-b1bee194e932',
             'ext': 'mp4',
@@ -27,6 +28,7 @@ class JojIE(InfoExtractor):
         },
     }, {
         'url': 'https://media.joj.sk/embed/CSM0Na0l0p1',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'CSM0Na0l0p1',
             'ext': 'mp4',

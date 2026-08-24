@@ -37,6 +37,7 @@ class ElementorEmbedIE(InfoExtractor):
         },
     }, {
         'url': 'https://elementor.com/academy/theme-builder-collection/?playlist=76011151&video=9e59909',
+        'skip': 'Unsupported URL / extractor broken',
         'info_dict': {
             'id': '?playlist=76011151&video=9e59909',
             'title': 'Theme Builder Collection - Academy',

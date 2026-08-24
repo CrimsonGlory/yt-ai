@@ -6,6 +6,7 @@ class MyVidsterIE(InfoExtractor):
 
     _TEST = {
         'url': 'http://www.myvidster.com/video/32059805/Hot_chemistry_with_raw_love_making',
+        'skip': 'HTTP Error 403',
         'md5': '95296d0231c1363222c3441af62dc4ca',
         'info_dict': {
             'id': '3685814',

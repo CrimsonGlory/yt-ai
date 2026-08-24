@@ -10,7 +10,7 @@ class OutsideTVIE(InfoExtractor):
             'id': 'Hdg0jukV',
             'ext': 'mp4',
             'title': 'Home - Jackson Ep 1 | Arbor Snowboards',
-            'description': 'md5:41a12e94f3db3ca253b04bb1e8d8f4cd',
+            'description': 'md5:6adec8880757702b868d9d8d85855e50',
             'upload_date': '20181225',
             'timestamp': 1545742800,
         },

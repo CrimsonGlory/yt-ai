@@ -7,6 +7,7 @@ class DaystarClipIE(InfoExtractor):
     _VALID_URL = r'https?://player\.daystar\.tv/(?P<id>\w+)'
     _TESTS = [{
         'url': 'https://player.daystar.tv/0MTO2ITM',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '0MTO2ITM',
             'ext': 'mp4',

@@ -29,13 +29,14 @@ class TheChosenIE(InfoExtractor):
             'id': '184683596189',
             'ext': 'mp4',
             'title': 'Season 4 Episode 8: Humble',
-            'description': 'md5:20a57bead43da1cf77cd5b0fe29bbc76',
+            'description': 'md5:75a13fbb4ac69177f901261c8cafb4a5',
             'duration': 5092,
             'thumbnail': 'https://cdn.thechosen.media/videos/cmkvu7nn500nhfm0wpgmm6180/thumbnail.jpg',
         },
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://watch.thechosen.tv/video/184683621748',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': '184683621748',
             'ext': 'mp4',
@@ -47,6 +48,7 @@ class TheChosenIE(InfoExtractor):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://watch.thechosen.tv/video/184683621750',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': '184683621750',
             'ext': 'mp4',
@@ -106,6 +108,7 @@ class TheChosenGroupIE(FrontroGroupBaseIE):
     _VALID_URL = r'https?://(?:www\.)?watch\.thechosen\.tv/group/(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'https://watch.thechosen.tv/group/309237658592',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '309237658592',
             'title': 'Season 3',

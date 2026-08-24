@@ -334,6 +334,13 @@ class InstagramIE(InstagramBaseIE):
                 'title': 'Video 1',
                 'thumbnail': r're:^https?://.*\.jpg',
                 'view_count': int,
+                'channel': str,
+                'comment_count': int,
+                'like_count': int,
+                'timestamp': int,
+                'upload_date': str,
+                'uploader': str,
+                'uploader_id': str,
             },
         }, {
             'info_dict': {

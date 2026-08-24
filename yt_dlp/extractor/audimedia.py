@@ -9,6 +9,7 @@ class AudiMediaIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?audi-mediacenter\.com/(?:en|de)/audimediatv/(?:video/)?(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://www.audi-mediacenter.com/en/audimediatv/60-seconds-of-audi-sport-104-2015-wec-bahrain-rookie-test-1467',
+        'skip': 'video gone',
         'md5': '79a8b71c46d49042609795ab59779b66',
         'info_dict': {
             'id': '1565',

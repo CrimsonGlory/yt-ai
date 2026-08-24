@@ -10,6 +10,7 @@ class PopcornTVIE(InfoExtractor):
     _VALID_URL = r'https?://[^/]+\.popcorntv\.it/guarda/(?P<display_id>[^/]+)/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://animemanga.popcorntv.it/guarda/food-wars-battaglie-culinarie-episodio-01/9183',
+        'skip': 'video gone',
         'md5': '47d65a48d147caf692ab8562fe630b45',
         'info_dict': {
             'id': '9183',

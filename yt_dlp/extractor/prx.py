@@ -166,6 +166,7 @@ class PRXStoryIE(PRXBaseIE):
         {
             # Story with season and episode details
             'url': 'https://beta.prx.org/stories/399200',
+            'skip': 'Login required',
             'info_dict': {
                 'id': '399200',
                 'title': 'Fly Me To The Moon',
@@ -237,6 +238,7 @@ class PRXStoryIE(PRXBaseIE):
         }, {
             # Story with only split audio
             'url': 'https://beta.prx.org/stories/326414',
+            'skip': 'Login required',
             'info_dict': {
                 'id': '326414',
                 'title': 'Massachusetts v EPA',
@@ -255,6 +257,7 @@ class PRXStoryIE(PRXBaseIE):
         }, {
             # Story with single combined audio
             'url': 'https://beta.prx.org/stories/400404',
+            'skip': 'Login required',
             'info_dict': {
                 'id': '400404',
                 'title': 'Cafe Chill (Episode 2022-01)',
@@ -329,6 +332,7 @@ class PRXSeriesIE(PRXBaseIE):
     _TESTS = [
         {
             'url': 'https://beta.prx.org/series/36252',
+            'skip': 'Login required',
             'info_dict': {
                 'id': '36252',
                 'title': 'Outside/In',
@@ -346,6 +350,7 @@ class PRXSeriesIE(PRXBaseIE):
         }, {
             # Blank series
             'url': 'https://beta.prx.org/series/25038',
+            'skip': 'Login required',
             'info_dict': {
                 'id': '25038',
                 'title': '25038',
@@ -379,6 +384,7 @@ class PRXAccountIE(PRXBaseIE):
     _VALID_URL = PRXBaseIE.PRX_BASE_URL_RE % r'accounts/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://beta.prx.org/accounts/206',
+        'skip': 'Login required',
         'info_dict': {
             'id': '206',
             'title': 'New Hampshire Public Radio',

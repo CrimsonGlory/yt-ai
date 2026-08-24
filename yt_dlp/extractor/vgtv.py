@@ -255,6 +255,7 @@ class BTArticleIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?bt\.no/(?:[^/]+/)+(?P<id>[^/]+)-\d+\.html'
     _TEST = {
         'url': 'http://www.bt.no/nyheter/lokalt/Kjemper-for-internatet-1788214.html',
+        'skip': 'video gone',
         'md5': '2acbe8ad129b3469d5ae51b1158878df',
         'info_dict': {
             'id': '23199',

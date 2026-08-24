@@ -63,6 +63,7 @@ class RbgTumCourseIE(InfoExtractor):
     _VALID_URL = r'https?://(?P<hostname>(?:live\.rbg\.tum\.de|tum\.live))/old/course/(?P<id>(?P<year>\d+)/(?P<term>\w+)/(?P<slug>[^/?#]+))'
     _TESTS = [{
         'url': 'https://live.rbg.tum.de/old/course/2022/S/fpv',
+        'skip': 'video gone',
         'info_dict': {
             'title': 'Funktionale Programmierung und Verifikation (IN0003)',
             'id': '2022/S/fpv',
@@ -73,6 +74,7 @@ class RbgTumCourseIE(InfoExtractor):
         'playlist_count': 13,
     }, {
         'url': 'https://live.rbg.tum.de/old/course/2022/W/set',
+        'skip': 'video gone',
         'info_dict': {
             'title': 'SET FSMPIC',
             'id': '2022/W/set',
@@ -108,6 +110,7 @@ class RbgTumNewCourseIE(InfoExtractor):
     _VALID_URL = r'https?://(?P<hostname>(?:live\.rbg\.tum\.de|tum\.live))/\?'
     _TESTS = [{
         'url': 'https://live.rbg.tum.de/?year=2022&term=S&slug=fpv&view=3',
+        'skip': 'video gone',
         'info_dict': {
             'title': 'Funktionale Programmierung und Verifikation (IN0003)',
             'id': '2022/S/fpv',
@@ -118,6 +121,7 @@ class RbgTumNewCourseIE(InfoExtractor):
         'playlist_count': 13,
     }, {
         'url': 'https://live.rbg.tum.de/?year=2022&term=W&slug=set&view=3',
+        'skip': 'video gone',
         'info_dict': {
             'title': 'SET FSMPIC',
             'id': '2022/W/set',

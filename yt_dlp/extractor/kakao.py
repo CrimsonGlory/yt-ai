@@ -17,6 +17,7 @@ class KakaoIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://tv.kakao.com/channel/2671005/cliplink/301965083',
+        'skip': 'No video formats found',
         'md5': '702b2fbdeb51ad82f5c904e8c0766340',
         'info_dict': {
             'id': '301965083',
@@ -36,6 +37,7 @@ class KakaoIE(InfoExtractor):
         },
     }, {
         'url': 'http://tv.kakao.com/channel/2653210/cliplink/300103180',
+        'skip': 'No video formats found',
         'md5': 'a8917742069a4dd442516b86e7d66529',
         'info_dict': {
             'id': '300103180',

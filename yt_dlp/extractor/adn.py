@@ -70,6 +70,7 @@ class ADNIE(ADNBaseIE):
         'skip': 'Only available in French and German speaking Europe',
     }, {
         'url': 'https://animationdigitalnetwork.com/de/video/973-the-eminence-in-shadow/23550-folge-1',
+        'skip': 'HTTP Error 403',
         'md5': '5c5651bf5791fa6fcd7906012b9d94e8',
         'info_dict': {
             'id': '23550',
@@ -298,6 +299,7 @@ class ADNSeasonIE(ADNBaseIE):
     _VALID_URL = r'https?://(?:www\.)?animationdigitalnetwork\.com/(?:(?P<lang>de)/)?video/(?P<id>\d+)[^/?#]*/?(?:$|[#?])'
     _TESTS = [{
         'url': 'https://animationdigitalnetwork.com/video/911-tokyo-mew-mew-new',
+        'skip': 'HTTP Error 403',
         'playlist_count': 12,
         'info_dict': {
             'id': '911',

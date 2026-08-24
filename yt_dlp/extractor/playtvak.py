@@ -29,6 +29,7 @@ class PlaytvakIE(InfoExtractor):
         },
     }, {  # live video test
         'url': 'http://slowtv.playtvak.cz/planespotting-0pr-/planespotting.aspx?c=A150624_164934_planespotting_cat',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': 'A150624_164934_planespotting_cat',
             'ext': 'flv',
@@ -41,6 +42,7 @@ class PlaytvakIE(InfoExtractor):
         },
     }, {  # another live stream, this one without Misc.videoFLV
         'url': 'https://slowtv.playtvak.cz/zive-sledujte-vlaky-v-primem-prenosu-dwi-/hlavni-nadrazi.aspx?c=A151218_145728_hlavni-nadrazi_plap',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': 'A151218_145728_hlavni-nadrazi_plap',
             'ext': 'flv',
@@ -79,6 +81,7 @@ class PlaytvakIE(InfoExtractor):
         },
     }, {  # metro.cz
         'url': 'http://www.metro.cz/video-pod-billboardem-se-na-vltavske-roztocil-kolotoc-deti-vozil-jen-par-hodin-1hx-/metro-extra.aspx?c=A141111_173251_metro-extra_row',
+        'skip': 'Unsupported URL / extractor broken',
         'md5': '84fc1deedcac37b7d4a6ccae7c716668',
         'info_dict': {
             'id': 'A141111_173251_metro-extra_row',

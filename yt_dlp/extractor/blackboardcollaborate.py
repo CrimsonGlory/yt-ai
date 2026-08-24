@@ -25,6 +25,7 @@ class BlackboardCollaborateIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://us-lti.bbcollab.com/collab/ui/session/playback/load/0a633b6a88824deb8c918f470b22b256',
+            'skip': 'Login required',
             'md5': 'bb7a055682ee4f25fdb5838cdf014541',
             'info_dict': {
                 'id': '0a633b6a88824deb8c918f470b22b256',
@@ -40,6 +41,7 @@ class BlackboardCollaborateIE(InfoExtractor):
         },
         {
             'url': 'https://eu.bbcollab.com/collab/ui/session/playback/load/4bde2dee104f40289a10f8e554270600',
+            'skip': 'Login required',
             'md5': '108db6a8f83dcb0c2a07793649581865',
             'info_dict': {
                 'id': '4bde2dee104f40289a10f8e554270600',
@@ -52,6 +54,7 @@ class BlackboardCollaborateIE(InfoExtractor):
         },
         {
             'url': 'https://eu.bbcollab.com/recording/f83be390ecff46c0bf7dccb9dddcf5f6',
+            'skip': 'Login required',
             'md5': 'e3b0b88ddf7847eae4b4c0e2d40b83a5',
             'info_dict': {
                 'id': 'f83be390ecff46c0bf7dccb9dddcf5f6',
@@ -67,6 +70,7 @@ class BlackboardCollaborateIE(InfoExtractor):
         },
         {
             'url': 'https://eu.bbcollab.com/recording/c3e1e7c9e83d4cd9981c93c74888d496',
+            'skip': 'Login required',
             'md5': 'fdb2d8c43d66fbc0b0b74ef5e604eb1f',
             'info_dict': {
                 'id': 'c3e1e7c9e83d4cd9981c93c74888d496',

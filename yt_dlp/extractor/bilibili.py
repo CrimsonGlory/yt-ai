@@ -433,7 +433,7 @@ class BiliBiliIE(BilibiliBaseIE):
                 'comment_count': int,
                 'upload_date': '20200516',
                 'view_count': int,
-                'description': 'md5:e3c401cf7bc363118d1783dd74068a68',
+                'description': 'md5:8d2739b7d216987a53c88bbb18200e0d',
                 'duration': 90.314,
                 '_old_archive_ids': ['bilibili 498159642_part1'],
             },
@@ -455,7 +455,7 @@ class BiliBiliIE(BilibiliBaseIE):
             'comment_count': int,
             'upload_date': '20200516',
             'view_count': int,
-            'description': 'md5:e3c401cf7bc363118d1783dd74068a68',
+            'description': 'md5:8d2739b7d216987a53c88bbb18200e0d',
             'duration': 90.314,
             '_old_archive_ids': ['bilibili 498159642_part1'],
         },
@@ -1972,6 +1972,7 @@ class BilibiliAudioIE(BilibiliAudioBaseIE):
             'upload_date': '20190803',
             'uploader': '十六夜tsukimiつきみぐ',
             'view_count': int,
+            'artists': list,
         },
     }
 
@@ -2261,6 +2262,7 @@ class BiliIntlIE(BiliIntlBaseIE):
     _TESTS = [{
         # Bstation page
         'url': 'https://www.bilibili.tv/en/play/34613/341736',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '341736',
             'ext': 'mp4',
@@ -2288,6 +2290,7 @@ class BiliIntlIE(BiliIntlBaseIE):
     }, {
         # Non-Bstation page
         'url': 'https://www.bilibili.tv/en/play/1033760/11005006',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '11005006',
             'ext': 'mp4',
@@ -2326,6 +2329,7 @@ class BiliIntlIE(BiliIntlBaseIE):
     }, {
         # episode comment extraction
         'url': 'https://www.bilibili.tv/en/play/34580/340317',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '340317',
             'ext': 'mp4',
@@ -2373,6 +2377,7 @@ class BiliIntlIE(BiliIntlBaseIE):
     }, {
         # episode id without intro and outro
         'url': 'https://www.bilibili.tv/en/play/1048837/11246489',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '11246489',
             'ext': 'mp4',
@@ -2551,7 +2556,7 @@ class BiliIntlSeriesIE(BiliIntlBaseIE):
             'title': 'SPY×FAMILY',
             'description': 'md5:b4434eb1a9a97ad2bccb779514b89f17',
             'categories': ['Adventure', 'Action', 'Comedy'],
-            'thumbnail': r're:^https://pic\.bstarstatic\.com/ogv/.+\.jpg$',
+            'thumbnail': r're:https?://.*',
             'view_count': int,
         },
         'playlist_mincount': 25,

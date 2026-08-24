@@ -76,7 +76,7 @@ class CCMAIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'Una mosca volava per la llum',
             'alt_title': '17Z004Ç UNA MOSCA VOLAVA PER LA LLUM',
-            'description': 'md5:9ab64276944b0825336f4147f13f7854',
+            'description': 'md5:091eb805b43077e11b1c183c5ca5c843',
             'series': 'Mic',
             'upload_date': '20180411',
             'timestamp': 1523440105,

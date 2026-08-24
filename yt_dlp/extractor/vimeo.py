@@ -589,6 +589,7 @@ class VimeoIE(VimeoBaseInfoExtractor):
         'skip': 'No longer available',
     }, {
         'url': 'https://player.vimeo.com/video/54469442',
+        'skip': 'HTTP Error 403',
         'md5': '619b811a4417aa4abe78dc653becf511',
         'note': 'Videos that embed the url in the player page',
         'info_dict': {
@@ -605,6 +606,7 @@ class VimeoIE(VimeoBaseInfoExtractor):
         'expected_warnings': ['Failed to parse XML: not well-formed'],
     }, {
         'url': 'http://vimeo.com/68375962',
+        'skip': 'Login required',
         'md5': 'aaf896bdb7ddd6476df50007a0ac0ae7',
         'note': 'Video protected with password',
         'info_dict': {
@@ -653,6 +655,7 @@ class VimeoIE(VimeoBaseInfoExtractor):
         'expected_warnings': ['Failed to parse XML: not well-formed'],
     }, {
         'url': 'http://vimeo.com/76979871',
+        'skip': 'Login required',
         'note': 'Video with subtitles',
         'info_dict': {
             'id': '76979871',
@@ -684,6 +687,7 @@ class VimeoIE(VimeoBaseInfoExtractor):
     }, {
         # from https://www.ouya.tv/game/Pier-Solar-and-the-Great-Architects/
         'url': 'https://player.vimeo.com/video/98044508',
+        'skip': 'Login required',
         'note': 'The js code contains assignments to the same variable as the config',
         'info_dict': {
             'id': '98044508',
@@ -699,6 +703,7 @@ class VimeoIE(VimeoBaseInfoExtractor):
     }, {
         # contains Original format
         'url': 'https://vimeo.com/33951933',
+        'skip': 'Login required',
         # 'md5': '53c688fa95a55bf4b7293d37a89c5c53',
         'info_dict': {
             'id': '33951933',
@@ -722,6 +727,7 @@ class VimeoIE(VimeoBaseInfoExtractor):
     }, {
         'note': 'Contains source format not accessible in webpage',
         'url': 'https://vimeo.com/393756517',
+        'skip': 'Login required',
         # 'md5': 'c464af248b592190a5ffbb5d33f382b0',
         'info_dict': {
             'id': '393756517',
@@ -817,6 +823,7 @@ class VimeoIE(VimeoBaseInfoExtractor):
         'only_matching': True,
     }, {
         'url': 'https://vimeo.com/showcase/3253534/video/119195465',
+        'skip': 'Login required',
         'note': 'A video in a password protected album (showcase)',
         'info_dict': {
             'id': '119195465',
@@ -846,6 +853,7 @@ class VimeoIE(VimeoBaseInfoExtractor):
     }, {
         'note': 'Direct URL with hash',
         'url': 'https://vimeo.com/160743502/abd0e13fb4',
+        'skip': 'Login required',
         'info_dict': {
             'id': '160743502',
             'ext': 'mp4',
@@ -867,6 +875,7 @@ class VimeoIE(VimeoBaseInfoExtractor):
         'expected_warnings': ['Failed to parse XML: not well-formed'],
     }, {
         'url': 'https://vimeo.com/138909882',
+        'skip': 'Login required',
         'info_dict': {
             'id': '138909882',
             # 'ext': 'm4v',
@@ -921,6 +930,7 @@ class VimeoIE(VimeoBaseInfoExtractor):
         # similar, but all numeric: ID must be 581039021, not 9603038895
         # https://github.com/ytdl-org/youtube-dl/issues/29690
         'url': 'https://vimeo.com/581039021/9603038895',
+        'skip': 'Login required',
         'info_dict': {
             'id': '581039021',
             'ext': 'mp4',
@@ -974,6 +984,7 @@ class VimeoIE(VimeoBaseInfoExtractor):
     }, {
         # vimeo.com URL with unlisted hash and Original format
         'url': 'https://vimeo.com/144579403/ec02229140',
+        'skip': 'Login required',
         # 'md5': '6b662c2884e0373183fbde2a0d15cb78',
         'info_dict': {
             'id': '144579403',
@@ -1387,10 +1398,10 @@ class VimeoOndemandIE(VimeoIE):  # XXX: Do not subclass from concrete IE
     _VALID_URL = r'https?://(?:www\.)?vimeo\.com/ondemand/(?:[^/]+/)?(?P<id>[^/?#&]+)'
     _TESTS = [{
         # ondemand video not available via https://vimeo.com/id
-        'url': 'https://vimeo.com/ondemand/20704',
+        'url': 'https://vimeo.com/ondemand/thetalent',
         'md5': 'c424deda8c7f73c1dfb3edd7630e2f35',
         'info_dict': {
-            'id': '105442900',
+            'id': '1106412691',
             'ext': 'mp4',
             'title': 'המעבדה - במאי יותם פלדמן',
             'uploader': 'גם סרטים',
@@ -1841,6 +1852,7 @@ class VimeoProIE(VimeoBaseInfoExtractor):
     _TESTS = [{
         # Vimeo URL derived from video_id
         'url': 'http://vimeopro.com/openstreetmapus/state-of-the-map-us-2013/video/68093876',
+        'skip': 'Login required',
         'md5': '3b5ca6aa22b60dfeeadf50b72e44ed82',
         'note': 'Vimeo Pro video (#1197)',
         'info_dict': {
@@ -1871,7 +1883,7 @@ class VimeoProIE(VimeoBaseInfoExtractor):
             'ext': 'mp4',
             'title': 'Mechanische Systeme in Perfektion: Realität erfassen, Innovation treiben',
             'thumbnail': r're:https?://i\.vimeocdn\.com/video/.+',
-            'description': 'md5:2a9d195cd1b0f6f79827107dc88c2420',
+            'description': 'md5:b00fa3d4d80e475bf64ff3e7659c5909',
             'uploader': 'CADFEM',
             'uploader_id': 'cadfem',
             'uploader_url': 'https://vimeo.com/cadfem',
@@ -1934,6 +1946,7 @@ class VimeoEventIE(VimeoBaseInfoExtractor):
     _TESTS = [{
         # stream_privacy.view: 'anybody'
         'url': 'https://vimeo.com/event/5116195',
+        'skip': 'Login required',
         'info_dict': {
             'id': '1082194134',
             'ext': 'mp4',
@@ -1982,6 +1995,7 @@ class VimeoEventIE(VimeoBaseInfoExtractor):
     }, {
         # Last entry on 2nd page of the 37 video playlist, but use clip_to_play_id API param shortcut
         'url': 'https://vimeo.com/event/4753126/videos/1046153257',
+        'skip': 'Login required',
         'info_dict': {
             'id': '1046153257',
             'ext': 'mp4',
@@ -2023,6 +2037,7 @@ class VimeoEventIE(VimeoBaseInfoExtractor):
     }, {
         # stream_privacy.view: 'unlisted' with unlisted_hash in URL path (stream_privacy.embed: 'whitelist')
         'url': 'https://vimeo.com/event/4259978/3db517c479',
+        'skip': 'video gone',
         'info_dict': {
             'id': '939104114',
             'ext': 'mp4',
@@ -2047,6 +2062,7 @@ class VimeoEventIE(VimeoBaseInfoExtractor):
     }, {
         # "done" event with video_id in URL and unlisted_hash in VimeoIE URL
         'url': 'https://vimeo.com/event/595460/videos/498149131/',
+        'skip': 'Login required',
         'info_dict': {
             'id': '498149131',
             'ext': 'mp4',
@@ -2071,6 +2087,7 @@ class VimeoEventIE(VimeoBaseInfoExtractor):
     }, {
         # stream_privacy.view: 'password'; stream_privacy.embed: 'public'
         'url': 'https://vimeo.com/event/4940578',
+        'skip': 'Login required',
         'info_dict': {
             'id': '1059263570',
             'ext': 'mp4',

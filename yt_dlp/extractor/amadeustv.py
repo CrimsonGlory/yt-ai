@@ -13,6 +13,7 @@ class AmadeusTVIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?amadeus\.tv/library/(?P<id>[\da-f]+)'
     _TESTS = [{
         'url': 'http://www.amadeus.tv/library/65091a87ff85af59d9fc54c3',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': '5576678021301411311',
             'ext': 'mp4',

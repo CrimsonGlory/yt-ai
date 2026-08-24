@@ -25,6 +25,7 @@ class NubilesPornIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://members.nubiles-porn.com/video/watch/165320/trying-to-focus-my-one-track-mind-s3e1',
+        'skip': 'Rate limited',
         'md5': 'fa7f09da8027c35e4bdf0f94f55eac82',
         'info_dict': {
             'id': '165320',

@@ -152,6 +152,7 @@ class NYTimesIE(NYTimesBaseIE):
             'creator': 'Brett Weiner',
             'thumbnail': r're:https?://\w+\.nyt.com/images/.+\.jpg',
             'duration': 419,
+            'creators': list,
         },
     }, {
         'url': 'http://www.nytimes.com/video/travel/100000003550828/36-hours-in-dubai.html',
@@ -185,6 +186,7 @@ class NYTimesArticleIE(NYTimesBaseIE):
     }, {
         # article with audio and no video
         'url': 'https://www.nytimes.com/2023/09/29/health/mosquitoes-genetic-engineering.html',
+        'skip': 'HTTP Error 403',
         'md5': '2365b3555c8aa7f4dd34ca735ad02e6a',
         'info_dict': {
             'id': '100000009110381',
@@ -200,6 +202,7 @@ class NYTimesArticleIE(NYTimesBaseIE):
     }, {
         # lede_media_block already has sourceId
         'url': 'https://www.nytimes.com/2023/11/29/business/dealbook/kamala-harris-biden-voters.html',
+        'skip': 'HTTP Error 403',
         'md5': '3eb5ddb1d6f86254fe4f233826778737',
         'info_dict': {
             'id': '100000009202270',
@@ -219,6 +222,7 @@ class NYTimesArticleIE(NYTimesBaseIE):
     }, {
         # multiple videos in the same article
         'url': 'https://www.nytimes.com/2023/12/02/business/air-traffic-controllers-safety.html',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'air-traffic-controllers-safety',
             'title': 'Drunk and Asleep on the Job: Air Traffic Controllers Pushed to the Brink',
@@ -231,6 +235,7 @@ class NYTimesArticleIE(NYTimesBaseIE):
     }, {
         # lede_media_block does not have sourceId
         'url': 'https://www.nytimes.com/2025/04/30/well/move/hip-mobility-routine.html',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'hip-mobility-routine',
             'title': 'Tight Hips? These Moves Can Help.',

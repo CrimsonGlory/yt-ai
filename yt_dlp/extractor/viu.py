@@ -435,6 +435,7 @@ class ViuOTTIndonesiaIE(ViuOTTIndonesiaBaseIE):
     _VALID_URL = r'https?://www\.viu\.com/ott/\w+/\w+/all/video-[\w-]+-(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.viu.com/ott/id/id/all/video-japanese-drama-tv_shows-detective_conan_episode_793-1165863142?containerId=playlist-26271226',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '1165863142',
             'ext': 'mp4',
@@ -449,6 +450,7 @@ class ViuOTTIndonesiaIE(ViuOTTIndonesiaBaseIE):
         },
     }, {
         'url': 'https://www.viu.com/ott/id/id/all/video-korean-reality-tv_shows-entertainment_weekly_episode_1622-1118617054',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '1118617054',
             'ext': 'mp4',
@@ -465,6 +467,7 @@ class ViuOTTIndonesiaIE(ViuOTTIndonesiaBaseIE):
     }, {
         # age-limit test
         'url': 'https://www.viu.com/ott/id/id/all/video-japanese-trailer-tv_shows-trailer_jujutsu_kaisen_ver_01-1166044219?containerId=playlist-26273140',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '1166044219',
             'ext': 'mp4',
@@ -480,6 +483,7 @@ class ViuOTTIndonesiaIE(ViuOTTIndonesiaBaseIE):
     }, {
         # json ld metadata type equal to Movie instead of TVEpisodes
         'url': 'https://www.viu.com/ott/id/id/all/video-japanese-animation-movies-demon_slayer_kimetsu_no_yaiba_the_movie_mugen_train-1165892707?containerId=1675060691786',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '1165892707',
             'ext': 'mp4',

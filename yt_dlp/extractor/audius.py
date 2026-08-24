@@ -91,6 +91,8 @@ class AudiusIE(AudiusBaseIE):
                 'view_count': int,
                 'like_count': int,
                 'repost_count': int,
+                'artists': list,
+                'genres': list,
             },
         },
         {
@@ -109,6 +111,8 @@ class AudiusIE(AudiusBaseIE):
                 'view_count': int,
                 'like_count': int,
                 'repost_count': int,
+                'artists': list,
+                'genres': list,
             },
         },
     ]

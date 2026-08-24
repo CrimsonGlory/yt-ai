@@ -11,6 +11,7 @@ class ClubicIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://www.clubic.com/video/clubic-week/video-clubic-week-2-0-le-fbi-se-lance-dans-la-photo-d-identite-448474.html',
+        'skip': 'Site no longer exists or is broken',
         'md5': '1592b694ba586036efac1776b0b43cd3',
         'info_dict': {
             'id': '448474',

@@ -165,6 +165,7 @@ class LifeEmbedIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://embed.life.ru/embed/e50c2dec2867350528e2574c899b8291',
+        'skip': 'video gone',
         'md5': 'b889715c9e49cb1981281d0e5458fbbe',
         'info_dict': {
             'id': 'e50c2dec2867350528e2574c899b8291',

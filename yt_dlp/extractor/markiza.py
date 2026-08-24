@@ -13,6 +13,7 @@ class MarkizaIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?videoarchiv\.markiza\.sk/(?:video/(?:[^/]+/)*|embed/)(?P<id>\d+)(?:[_/]|$)'
     _TESTS = [{
         'url': 'http://videoarchiv.markiza.sk/video/oteckovia/84723_oteckovia-109',
+        'skip': 'HTTP Error 403',
         'md5': 'ada4e9fad038abeed971843aa028c7b0',
         'info_dict': {
             'id': '139078',
@@ -24,6 +25,7 @@ class MarkizaIE(InfoExtractor):
         },
     }, {
         'url': 'http://videoarchiv.markiza.sk/video/televizne-noviny/televizne-noviny/85430_televizne-noviny',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '85430',
             'title': 'Televízne noviny',
@@ -72,6 +74,7 @@ class MarkizaPageIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?:(?:[^/]+\.)?markiza|tvnoviny)\.sk/(?:[^/]+/)*(?P<id>\d+)_'
     _TESTS = [{
         'url': 'http://www.markiza.sk/soubiz/zahranicny/1923705_oteckovia-maju-svoj-den-ti-slavni-nie-su-o-nic-menej-rozkosni',
+        'skip': 'HTTP Error 403',
         'md5': 'ada4e9fad038abeed971843aa028c7b0',
         'info_dict': {
             'id': '139355',

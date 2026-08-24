@@ -117,6 +117,7 @@ class GoIE(AdobePassIE):
         'skip': 'This video requires AdobePass MSO credentials',
     }, {
         'url': 'https://www.freeform.com/episode/bda0eaf7-761a-4838-aa44-96f794000844/playlist/PL553044961',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'VDKA39007340',
             'ext': 'mp4',
@@ -136,6 +137,7 @@ class GoIE(AdobePassIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.nationalgeographic.com/tv/episode/ca694661-1186-41ae-8089-82f64d69b16d/playlist/PL554408064',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'VDKA39492078',
             'ext': 'mp4',

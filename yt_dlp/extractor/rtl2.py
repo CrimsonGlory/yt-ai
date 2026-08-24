@@ -23,6 +23,7 @@ class RTL2IE(InfoExtractor):
         'expected_warnings': ['Unable to download f4m manifest', 'Failed to download m3u8 information'],
     }, {
         'url': 'http://www.rtl2.de/sendung/koeln-50667/video/5512-anna/21040-anna-erwischt-alex/',
+        'skip': 'Request timed out',
         'info_dict': {
             'id': 'anna-erwischt-alex',
             'ext': 'mp4',

@@ -7,6 +7,7 @@ class JeuxVideoIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://www.jeuxvideo.com/reportages-videos-jeux/0004/00046170/tearaway-playstation-vita-gc-2013-tearaway-nous-presente-ses-papiers-d-identite-00115182.htm',
+        'skip': 'HTTP Error 403',
         'md5': '046e491afb32a8aaac1f44dd4ddd54ee',
         'info_dict': {
             'id': '114765',

@@ -143,7 +143,7 @@ class AsobiChannelTagURLIE(AsobiChannelBaseIE):
             'id': 'hvm5qw3c6od',
             'title': 'アイマスMOIW2023ラジオ',
         },
-        'playlist_mincount': 13,
+        'playlist_mincount': 11,
     }]
 
     def _real_extract(self, url):

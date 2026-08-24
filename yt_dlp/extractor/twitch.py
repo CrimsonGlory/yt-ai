@@ -735,6 +735,7 @@ class TwitchVideosIE(TwitchVideosBaseIE):
         # TODO: Investigate why we get 0 entries
         # Past Broadcasts sorted by Date
         'url': 'https://www.twitch.tv/spamfish/videos?filter=archives',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'spamfish',
             'title': 'spamfish - Past Broadcasts sorted by Date',
@@ -752,6 +753,7 @@ class TwitchVideosIE(TwitchVideosBaseIE):
         # TODO: Investigate why we get 0 entries
         # Uploads sorted by Date
         'url': 'https://www.twitch.tv/esl_csgo/videos?filter=uploads&sort=time',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'esl_csgo',
             'title': 'esl_csgo - Uploads sorted by Date',
@@ -761,6 +763,7 @@ class TwitchVideosIE(TwitchVideosBaseIE):
         # TODO: Investigate why we get 0 entries
         # Past Premieres sorted by Date
         'url': 'https://www.twitch.tv/spamfish/videos?filter=past_premieres',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'spamfish',
             'title': 'spamfish - Past Premieres sorted by Date',

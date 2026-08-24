@@ -12,6 +12,7 @@ class XinpianchangIE(InfoExtractor):
     IE_DESC = '新片场'
     _TESTS = [{
         'url': 'https://www.xinpianchang.com/a11766551',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'a11766551',
             'ext': 'mp4',
@@ -26,6 +27,7 @@ class XinpianchangIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.xinpianchang.com/a11762904',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'a11762904',
             'ext': 'mp4',

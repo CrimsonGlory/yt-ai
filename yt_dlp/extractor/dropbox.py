@@ -22,6 +22,7 @@ class DropboxIE(InfoExtractor):
                 'id': 'nelirfsxnmcfbfh',
                 'ext': 'mp4',
                 'title': 'youtube-dl test video \'ä"BaW_jenozKc',
+                'thumbnail': r're:https?://.*',
             },
         }, {
             'url': 'https://www.dropbox.com/s/nelirfsxnmcfbfh',

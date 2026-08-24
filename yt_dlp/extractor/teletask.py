@@ -9,6 +9,7 @@ class TeleTaskIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?tele-task\.de/archive/video/html5/(?P<id>[0-9]+)'
     _TEST = {
         'url': 'http://www.tele-task.de/archive/video/html5/26168/',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': '26168',
             'title': 'Duplicate Detection',

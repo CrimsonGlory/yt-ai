@@ -150,6 +150,7 @@ class NaverIE(NaverBaseIE):
         },
     }, {
         'url': 'http://tv.naver.com/v/395837',
+        'skip': 'video gone',
         'md5': '7791205fa89dbed2f5e3eb16d287ff05',
         'info_dict': {
             'id': '395837',
@@ -226,6 +227,7 @@ class NaverLiveIE(NaverBaseIE):
     _GEO_BYPASS = False
     _TESTS = [{
         'url': 'https://tv.naver.com/l/127062',
+        'skip': 'livestream has ended',
         'info_dict': {
             'id': '127062',
             'ext': 'mp4',
@@ -240,6 +242,7 @@ class NaverLiveIE(NaverBaseIE):
         },
     }, {
         'url': 'https://tv.naver.com/l/140535',
+        'skip': 'livestream has ended',
         'info_dict': {
             'id': '140535',
             'ext': 'mp4',

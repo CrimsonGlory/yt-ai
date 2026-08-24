@@ -16,6 +16,7 @@ class BTVPlusIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?btvplus\.bg/produkt/(?:predavaniya|seriali|novini)/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://btvplus.bg/produkt/predavaniya/67271/btv-reporterite/btv-reporterite-12-07-2025-g',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'ext': 'mp4',
             'id': '67271',
@@ -24,6 +25,7 @@ class BTVPlusIE(InfoExtractor):
         },
     }, {
         'url': 'https://btvplus.bg/produkt/seriali/66942/sezon-2/plen-sezon-2-epizod-55',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'ext': 'mp4',
             'id': '66942',

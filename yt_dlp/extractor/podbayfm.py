@@ -29,6 +29,7 @@ class PodbayFMIE(InfoExtractor):
     _VALID_URL = r'https?://podbay\.fm/p/[^/?#]+/e/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://podbay.fm/p/behind-the-bastards/e/1647338400',
+        'skip': 'HTTP Error 403',
         'md5': '895ac8505de349515f5ee8a4a3195c93',
         'info_dict': {
             'id': '62306451f4a48e58d0c4d6a8',
@@ -53,6 +54,7 @@ class PodbayFMChannelIE(InfoExtractor):
     _VALID_URL = r'https?://podbay\.fm/p/(?P<id>[^/?#]+)/?(?:$|[?#])'
     _TESTS = [{
         'url': 'https://podbay.fm/p/behind-the-bastards',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'behind-the-bastards',
             'title': 'Behind the Bastards',

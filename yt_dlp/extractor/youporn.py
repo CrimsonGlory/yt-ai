@@ -294,6 +294,7 @@ class YouPornCategoryIE(YouPornListBaseIE):
     _TESTS = [{
         'note': 'Full list with pagination',
         'url': 'https://www.youporn.com/category/popular-with-women/popular/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'popular-with-women/popular',
             'title': 'Category popular with women videos by popular',
@@ -302,6 +303,7 @@ class YouPornCategoryIE(YouPornListBaseIE):
     }, {
         'note': 'Filtered paginated list with single page result',
         'url': 'https://www.youporn.com/category/popular-with-women/duration/?min_minutes=10',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'popular-with-women/duration/min_minutes=10',
             'title': 'Category popular with women videos by duration (min_minutes=10)',
@@ -311,6 +313,7 @@ class YouPornCategoryIE(YouPornListBaseIE):
     }, {
         'note': 'Single page of full list',
         'url': 'https://www.youporn.com/category/popular-with-women/popular?page=1',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'popular-with-women/popular/page=1',
             'title': 'Category popular with women videos by popular (page=1)',
@@ -329,6 +332,7 @@ class YouPornChannelIE(YouPornListBaseIE):
     _TESTS = [{
         'note': 'Full list with pagination',
         'url': 'https://www.youporn.com/channel/x-feeds/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'x-feeds',
             'title': 'Channel X-Feeds videos',
@@ -337,6 +341,7 @@ class YouPornChannelIE(YouPornListBaseIE):
     }, {
         'note': 'Single page of full list (no filters here)',
         'url': 'https://www.youporn.com/channel/x-feeds/duration?page=1',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'x-feeds/duration/page=1',
             'title': 'Channel X-Feeds videos by duration (page=1)',
@@ -404,6 +409,7 @@ class YouPornTagIE(YouPornListBaseIE):
     _TESTS = [{
         'note': 'Full list with pagination',
         'url': 'https://www.youporn.com/porntags/austrian',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'austrian',
             'title': 'Tag austrian videos',
@@ -413,6 +419,7 @@ class YouPornTagIE(YouPornListBaseIE):
     }, {
         'note': 'Filtered paginated list with single page result',
         'url': 'https://www.youporn.com/porntags/austrian/duration/?min_minutes=10',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'austrian/duration/min_minutes=10',
             'title': 'Tag austrian videos by duration (min_minutes=10)',
@@ -426,6 +433,7 @@ class YouPornTagIE(YouPornListBaseIE):
     }, {
         'note': 'Single page of full list',
         'url': 'https://www.youporn.com/porntags/austrian/?page=1',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'austrian/page=1',
             'title': 'Tag austrian videos (page=1)',
@@ -538,6 +546,7 @@ class YouPornVideosIE(YouPornListBaseIE):
     }, {
         'note': 'Filtered paginated list with single page result',
         'url': 'https://www.youporn.com/most_favorited/?res=VR&max_minutes=2',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'youporn/most_favorited/max_minutes=2/res=VR',
             'title': 'YouPorn videos by most favorited (max_minutes=2,res=VR)',
@@ -547,6 +556,7 @@ class YouPornVideosIE(YouPornListBaseIE):
     }, {
         'note': 'Filtered paginated list with several pages',
         'url': 'https://www.youporn.com/most_favorited/?res=VR&max_minutes=5',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'youporn/most_favorited/max_minutes=5/res=VR',
             'title': 'YouPorn videos by most favorited (max_minutes=5,res=VR)',
@@ -555,6 +565,7 @@ class YouPornVideosIE(YouPornListBaseIE):
     }, {
         'note': 'Single page of full list',
         'url': 'https://www.youporn.com/browse/time?page=1',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'browse/time/page=1',
             'title': 'YouPorn videos by time (page=1)',

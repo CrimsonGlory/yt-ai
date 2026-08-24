@@ -75,7 +75,7 @@ class PatreonIE(PatreonBaseIE):
             'ext': 'mp3',
             'alt_title': 'cd166.mp3',
             'title': 'Episode 166: David Smalley of Dogma Debate',
-            'description': 'md5:34d207dd29aa90e24f1b3f58841b81c7',
+            'description': 'md5:1ad91906cca7b88111636bfa01e5df08',
             'uploader': 'Cognitive Dissonance Podcast',
             'thumbnail': 're:^https?://.*$',
             'timestamp': 1406473987,
@@ -171,7 +171,7 @@ class PatreonIE(PatreonBaseIE):
             'upload_date': '20191218',
             'thumbnail': r're:^https?://.*$',
             'uploader_url': 'https://www.patreon.com/loish',
-            'description': 'md5:e2693e97ee299c8ece47ffdb67e7d9d2',
+            'description': 'md5:9675acee15dcc5a71e0d4f547f3429cc',
             'title': 'VIDEO // sketchbook flipthrough',
             'uploader': 'Loish',
             'tags': ['sketchbook', 'video'],
@@ -328,6 +328,7 @@ class PatreonIE(PatreonBaseIE):
             'thumbnail': 're:^https?://.*$',
             'timestamp': 1762101034,
             'upload_date': '20251102',
+            'description': str,
         },
     }]
     _RETURN_TYPE = 'video'

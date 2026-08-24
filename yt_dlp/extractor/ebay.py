@@ -6,6 +6,7 @@ class EbayIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?ebay\.com/itm/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.ebay.com/itm/194509326719',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '194509326719',
             'ext': 'mp4',

@@ -372,6 +372,7 @@ class ArteTVCategoryIE(ArteTVBaseIE):
     _VALID_URL = rf'https?://(?:www\.)?arte\.tv/(?P<lang>{ArteTVBaseIE._ARTE_LANGUAGES})/videos/(?P<id>[\w-]+(?:/[\w-]+)*)/?\s*$'
     _TESTS = [{
         'url': 'https://www.arte.tv/en/videos/politics-and-society/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'politics-and-society',
             'title': 'Politics and society',

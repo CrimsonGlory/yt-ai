@@ -666,12 +666,14 @@ class PornHubPagedVideoListIE(PornHubPagedPlaylistBaseIE):
         'only_matching': True,
     }, {
         'url': 'https://www.pornhub.com/pornstar/jenny-blighe/videos',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'pornstar/jenny-blighe/videos',
         },
         'playlist_mincount': 149,
     }, {
         'url': 'https://www.pornhub.com/pornstar/jenny-blighe/videos?page=3',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'pornstar/jenny-blighe/videos',
         },
@@ -766,6 +768,7 @@ class PornHubUserVideosUploadIE(PornHubPagedPlaylistBaseIE):
     _VALID_URL = rf'(?P<url>https?://(?:[^/]+\.)?{PornHubBaseIE._PORNHUB_HOST_RE}/(?:(?:user|channel)s|model|pornstar)/(?P<id>[^/]+)/videos/upload)'
     _TESTS = [{
         'url': 'https://www.pornhub.com/pornstar/jenny-blighe/videos/upload',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'jenny-blighe',
         },
@@ -783,6 +786,7 @@ class PornHubPlaylistIE(PornHubPlaylistBaseIE):
     _VALID_URL = rf'(?P<url>https?://(?:[^/]+\.)?{PornHubBaseIE._PORNHUB_HOST_RE}/playlist/(?P<id>[^/?#&]+))'
     _TESTS = [{
         'url': 'https://www.pornhub.com/playlist/44121572',
+        'skip': 'video gone',
         'info_dict': {
             'id': '44121572',
         },

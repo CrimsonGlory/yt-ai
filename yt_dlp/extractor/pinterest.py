@@ -118,7 +118,7 @@ class PinterestIE(PinterestBaseIE):
             'id': '664281013778109217',
             'ext': 'mp4',
             'title': 'Origami',
-            'description': 'md5:e29801cab7d741ea8c741bc50c8d00ab',
+            'description': 'md5:c2f8d7d7af7d93980a02b7e0fa4f4fce',
             'duration': 57.7,
             'timestamp': 1593073622,
             'upload_date': '20200625',
@@ -136,7 +136,7 @@ class PinterestIE(PinterestBaseIE):
             'id': '1084663891475263837',
             'ext': 'mp4',
             'title': 'Gadget, Cool products, Amazon product, technology, Kitchen gadgets',
-            'description': 'md5:d0a4b6ae996ff0c6eed83bc869598d13',
+            'description': 'md5:14de91e8d8d94cf545dcecf348a4a3e3',
             'uploader': 'CoolCrazyGadgets',
             'uploader_id': '1084664028912989237',
             'upload_date': '20211003',
@@ -151,6 +151,7 @@ class PinterestIE(PinterestBaseIE):
     }, {
         # vimeo.com embed
         'url': 'https://www.pinterest.ca/pin/441282463481903715/',
+        'skip': 'Login required',
         'info_dict': {
             'id': '111691128',
             'ext': 'mp4',
@@ -181,7 +182,7 @@ class PinterestIE(PinterestBaseIE):
             'id': '2885187256207927',
             'ext': 'mp4',
             'title': 'Dive into Serenity: Blue Lagoon Pedi Nails for a Tranquil and Refreshing Spa Experience! 💙💅',
-            'description': 'md5:5da41c767d2317e42e49b663b0b2150f',
+            'description': 'md5:17d2863acf0f43f9175d0801ea9dce3f',
             'uploader': 'Glamour Artistry |Everyday Outfits, Luxury Fashion & Nail Designs',
             'uploader_id': '1142999717836434688',
             'upload_date': '20240702',

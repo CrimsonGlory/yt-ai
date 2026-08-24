@@ -18,6 +18,7 @@ class RTRFMIE(InfoExtractor):
         },
         {
             'url': 'https://rtrfm.com.au/show-episode/breakfast-2021-11-11/',
+            'skip': 'video gone',
             'md5': '396bedf1e40f96c62b30d4999202a790',
             'info_dict': {
                 'id': 'breakfast-2021-11-11',

@@ -43,6 +43,7 @@ class GoogleDriveIE(InfoExtractor):
     }, {
         # has itag 50 which is not in YoutubeIE._formats (royalty Free music from 1922)
         'url': 'https://drive.google.com/uc?id=1IP0o8dHcQrIHGgVyp0Ofvx2cGfLzyO1x',
+        'skip': 'video gone',
         'md5': '322db8d63dd19788c04050a4bba67073',
         'info_dict': {
             'id': '1IP0o8dHcQrIHGgVyp0Ofvx2cGfLzyO1x',
@@ -53,6 +54,7 @@ class GoogleDriveIE(InfoExtractor):
     }, {
         # Has subtitle track
         'url': 'https://drive.google.com/file/d/1RAGWRgzn85TXCaCk4gxnwF6TGUaZatzE/view',
+        'skip': 'video gone',
         'md5': '05488c528da6ef737ec8c962bfa9724e',
         'info_dict': {
             'id': '1RAGWRgzn85TXCaCk4gxnwF6TGUaZatzE',
@@ -64,6 +66,7 @@ class GoogleDriveIE(InfoExtractor):
     }, {
         # Has subtitle track with kind 'asr'
         'url': 'https://drive.google.com/file/d/1Prvv9-mtDDfN_gkJgtt1OFvIULK8c3Ev/view',
+        'skip': 'video gone',
         'md5': 'ccae12d07f18b5988900b2c8b92801fc',
         'info_dict': {
             'id': '1Prvv9-mtDDfN_gkJgtt1OFvIULK8c3Ev',

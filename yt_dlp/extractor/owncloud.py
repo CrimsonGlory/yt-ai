@@ -20,6 +20,7 @@ class OwnCloudIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://ruhr-uni-bochum.sciebo.de/s/wWhqZzh9jTumVFN',
+            'skip': 'video gone',
             'info_dict': {
                 'id': 'wWhqZzh9jTumVFN',
                 'ext': 'mp4',
@@ -28,6 +29,7 @@ class OwnCloudIE(InfoExtractor):
         },
         {
             'url': 'https://ruhr-uni-bochum.sciebo.de/s/WNDuFu0XuFtmm3f',
+            'skip': 'video gone',
             'info_dict': {
                 'id': 'WNDuFu0XuFtmm3f',
                 'ext': 'mp4',

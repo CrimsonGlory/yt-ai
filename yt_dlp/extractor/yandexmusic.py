@@ -64,6 +64,7 @@ class YandexMusicTrackIE(YandexMusicBaseIE):
 
     _TESTS = [{
         'url': 'http://music.yandex.ru/album/540508/track/4878838',
+        'skip': 'video gone',
         'md5': 'dec8b661f12027ceaba33318787fff76',
         'info_dict': {
             'id': '4878838',
@@ -81,6 +82,7 @@ class YandexMusicTrackIE(YandexMusicBaseIE):
     }, {
         # multiple disks
         'url': 'http://music.yandex.ru/album/3840501/track/705105',
+        'skip': 'video gone',
         'md5': '82a54e9e787301dd45aba093cf6e58c0',
         'info_dict': {
             'id': '705105',
@@ -256,6 +258,7 @@ class YandexMusicAlbumIE(YandexMusicPlaylistBaseIE):
 
     _TESTS = [{
         'url': 'http://music.yandex.ru/album/540508',
+        'skip': 'video gone',
         'info_dict': {
             'id': '540508',
             'title': 'md5:7ed1c3567f28d14be9f61179116f5571',
@@ -264,6 +267,7 @@ class YandexMusicAlbumIE(YandexMusicPlaylistBaseIE):
         # 'skip': 'Travis CI servers blocked by YandexMusic',
     }, {
         'url': 'https://music.yandex.ru/album/3840501',
+        'skip': 'video gone',
         'info_dict': {
             'id': '3840501',
             'title': 'md5:36733472cdaa7dcb1fd9473f7da8e50f',
@@ -273,6 +277,7 @@ class YandexMusicAlbumIE(YandexMusicPlaylistBaseIE):
     }, {
         # empty artists
         'url': 'https://music.yandex.ru/album/9091882',
+        'skip': 'video gone',
         'info_dict': {
             'id': '9091882',
             'title': 'ТЕД на русском',
@@ -313,6 +318,7 @@ class YandexMusicPlaylistIE(YandexMusicPlaylistBaseIE):
 
     _TESTS = [{
         'url': 'http://music.yandex.ru/users/music.partners/playlists/1245',
+        'skip': 'video gone',
         'info_dict': {
             'id': '1245',
             'title': 'md5:841559b3fe2b998eca88d0d2e22a3097',
@@ -327,6 +333,7 @@ class YandexMusicPlaylistIE(YandexMusicPlaylistBaseIE):
         # playlist exceeding the limit of 150 tracks (see
         # https://github.com/ytdl-org/youtube-dl/issues/6666)
         'url': 'https://music.yandex.ru/users/mesiaz/playlists/1364',
+        'skip': 'video gone',
         'info_dict': {
             'id': '1364',
             'title': 'md5:b3b400f997d3f878a13ae0699653f7db',
@@ -392,6 +399,7 @@ class YandexMusicArtistTracksIE(YandexMusicArtistBaseIE):
 
     _TESTS = [{
         'url': 'https://music.yandex.ru/artist/617526/tracks',
+        'skip': 'video gone',
         'info_dict': {
             'id': '617526',
             'title': 'md5:131aef29d45fd5a965ca613e708c040b',
@@ -422,6 +430,7 @@ class YandexMusicArtistAlbumsIE(YandexMusicArtistBaseIE):
 
     _TESTS = [{
         'url': 'https://music.yandex.ru/artist/617526/albums',
+        'skip': 'video gone',
         'info_dict': {
             'id': '617526',
             'title': 'md5:55dc58d5c85699b7fb41ee926700236c',

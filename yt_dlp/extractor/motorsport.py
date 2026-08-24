@@ -9,6 +9,7 @@ class MotorsportIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?motorsport\.com/[^/?#]+/video/(?:[^/?#]+/)(?P<id>[^/]+)/?(?:$|[?#])'
     _TEST = {
         'url': 'http://www.motorsport.com/f1/video/main-gallery/red-bull-racing-2014-rules-explained/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '2-T3WuR-KMM',
             'ext': 'mp4',

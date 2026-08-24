@@ -59,7 +59,7 @@ class IHeartRadioPodcastIE(IHeartRadioBaseIE):
         'info_dict': {
             'id': '30717896',
             'title': 'It Could Happen Here',
-            'description': 'md5:5842117412a967eb0b01f8088eb663e2',
+            'description': 'md5:a9ed0bbebeadfe01d64e3363e967d474',
         },
         'playlist_mincount': 11,
     }, {

@@ -34,6 +34,12 @@ class GabIE(InfoExtractor):
             'timestamp': 1633390571,
             'upload_date': '20211004',
             'uploader': 'TheLonelyProud',
+            'comment_count': int,
+            'description': str,
+            'duration': int,
+            'like_count': int,
+            'repost_count': int,
+            'uploader_url': r're:https?://.*',
         },
     }]
 

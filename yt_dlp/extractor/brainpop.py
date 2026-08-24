@@ -88,6 +88,7 @@ class BrainPOPIE(BrainPOPBaseIE):
     _CDN_URL = 'https://cdn.brainpop.com'
     _TESTS = [{
         'url': 'https://www.brainpop.com/health/conflictresolution/martinlutherkingjr/movie?ref=null',
+        'skip': 'video gone',
         'md5': '3ead374233ae74c7f1b0029a01c972f0',
         'info_dict': {
             'id': '1f3259fa457292b4',

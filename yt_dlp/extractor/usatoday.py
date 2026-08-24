@@ -13,6 +13,7 @@ class USATodayIE(InfoExtractor):
     _TESTS = [{
         # Brightcove Partner ID = 29906170001
         'url': 'http://www.usatoday.com/media/cinematic/video/81729424/us-france-warn-syrian-regime-ahead-of-new-peace-talks/',
+        'skip': 'video gone',
         'md5': '033587d2529dc3411a1ab3644c3b8827',
         'info_dict': {
             'id': '4799374959001',

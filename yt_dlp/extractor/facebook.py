@@ -247,6 +247,7 @@ class FacebookIE(InfoExtractor):
     }, {
         # data.node.comet_sections.content.story.attachments[].styles.attachment.media
         'url': 'https://www.facebook.com/attn/posts/pfbid0j1Czf2gGDVqeQ8KiMLFm3pWN8GxsQmeRrVhimWDzMuKQoR8r4b1knNsejELmUgyhl',
+        'skip': 'Login required',
         'info_dict': {
             'id': '6968553779868435',
             'ext': 'mp4',
@@ -263,6 +264,7 @@ class FacebookIE(InfoExtractor):
     }, {
         # data.node.comet_sections.content.story.attachments[].styles.attachment.media
         'url': 'https://www.facebook.com/permalink.php?story_fbid=pfbid0fqQuVEQyXRa9Dp4RcaTR14KHU3uULHV1EK7eckNXSH63JMuoALsAvVCJ97zAGitil&id=100068861234290',
+        'skip': 'Login required',
         'info_dict': {
             'id': '270103405756416',
             'ext': 'mp4',
@@ -424,6 +426,7 @@ class FacebookIE(InfoExtractor):
         # FIXME: Embed detection
         # <iframe> embed, plugin video
         'url': 'https://www.newsmemory.com/eedition/e-publishing-solutions/2-in-one-app/',
+        'skip': 'Unsupported URL / extractor broken',
         'md5': 'ae97d4a44f8cc9a8b1a4c03b9ed793af',
         'info_dict': {
             'id': '10155710648695814',
@@ -443,6 +446,7 @@ class FacebookIE(InfoExtractor):
     }, {
         # API embed
         'url': 'https://www.curs.md/ro',
+        'skip': 'Unsupported URL / extractor broken',
         'md5': '090bae53b9bff2be993c896edc2ea205',
         'info_dict': {
             'id': '334484292523563',

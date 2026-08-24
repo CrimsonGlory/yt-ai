@@ -314,9 +314,9 @@ class FranceTVSiteIE(FranceTVBaseInfoExtractor):
         'params': {'skip_download': 'livestream'},
     }, {
         # Not geo-restricted
-        'url': 'https://www.france.tv/france-2/la-maison-des-maternelles/5574051-nous-sommes-amis-et-nous-avons-fait-un-enfant-ensemble.html',
+        'url': 'https://www.france.tv/films/films-comedie/8734809-comme-un-prince.html',
         'info_dict': {
-            'id': 'b448bfe4-9fe7-11ee-97d8-2ba3426fa3df',
+            'id': '6061509a-e1a8-46ed-b44e-34772c18f525',
             'ext': 'mp4',
             'title': 'Nous sommes amis et nous avons fait un enfant ensemble - Émission du jeudi 21 décembre 2023',
             'duration': 1065,

@@ -13,6 +13,7 @@ class SportDeutschlandIE(InfoExtractor):
     _TESTS = [{
         # Single-part video, direct link
         'url': 'https://sporteurope.tv/rostock-griffins/gfl2-rostock-griffins-vs-elmshorn-fighting-pirates',
+        'skip': 'video gone',
         'md5': '35c11a19395c938cdd076b93bda54cde',
         'info_dict': {
             'id': '9f27a97d-1544-4d0b-aa03-48d92d17a03a',
@@ -31,6 +32,7 @@ class SportDeutschlandIE(InfoExtractor):
     }, {
         # Single-part video, embedded player link
         'url': 'https://player.sporteurope.tv/9e9619c4-7d77-43c4-926d-49fb57dc06dc',
+        'skip': 'video gone',
         'info_dict': {
             'id': '9f27a97d-1544-4d0b-aa03-48d92d17a03a',
             'ext': 'mp4',

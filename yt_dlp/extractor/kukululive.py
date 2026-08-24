@@ -20,6 +20,7 @@ class KukuluLiveIE(InfoExtractor):
     _VALID_URL = r'https?://live\.erinn\.biz/live\.php\?h(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://live.erinn.biz/live.php?h675134569',
+        'skip': 'video gone',
         'md5': 'e380fa6a47fc703d91cea913ab44ec2e',
         'info_dict': {
             'id': '675134569',
@@ -32,6 +33,7 @@ class KukuluLiveIE(InfoExtractor):
         },
     }, {
         'url': 'https://live.erinn.biz/live.php?h102338092',
+        'skip': 'video gone',
         'md5': 'dcf5167a934b1c60333461e13a81a6e2',
         'info_dict': {
             'id': '102338092',

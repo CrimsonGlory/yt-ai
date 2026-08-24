@@ -10,6 +10,7 @@ class IvideonIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?ivideon\.com/tv/(?:[^/]+/)*camera/(?P<id>\d+-[\da-f]+)/(?P<camera_id>\d+)'
     _TESTS = [{
         'url': 'https://www.ivideon.com/tv/camera/100-916ca13b5c4ad9f564266424a026386d/0/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '100-916ca13b5c4ad9f564266424a026386d',
             'ext': 'flv',

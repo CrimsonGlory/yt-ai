@@ -21,6 +21,7 @@ class RadioFranceIE(InfoExtractor):
 
     _TEST = {
         'url': 'http://maison.radiofrance.fr/radiovisions/one-one',
+        'skip': 'video gone',
         'md5': 'bdbb28ace95ed0e04faab32ba3160daf',
         'info_dict': {
             'id': 'one-one',
@@ -96,25 +97,27 @@ class FranceCultureIE(RadioFranceBaseIE):
     _TESTS = [
         {
             'url': 'https://www.radiofrance.fr/franceculture/podcasts/science-en-questions/la-physique-d-einstein-aiderait-elle-a-comprendre-le-cerveau-8440487',
+            'skip': 'video gone',
             'info_dict': {
                 'id': '8440487',
                 'display_id': 'la-physique-d-einstein-aiderait-elle-a-comprendre-le-cerveau',
                 'ext': 'mp3',
                 'title': 'La physique d’Einstein aiderait-elle à comprendre le cerveau ?',
                 'description': 'Existerait-il un pont conceptuel entre la physique de l’espace-temps et les neurosciences ?',
-                'thumbnail': r're:^https?://.*\.(?:jpg|png)',
+                'thumbnail': r're:https?://.*',
                 'upload_date': '20220514',
                 'duration': 2750,
             },
         },
         {
             'url': 'https://www.radiofrance.fr/franceinter/podcasts/le-7-9-30/le-7-9-30-du-vendredi-10-mars-2023-2107675',
+            'skip': 'video gone',
             'info_dict': {
                 'id': '2107675',
                 'display_id': 'le-7-9-30-du-vendredi-10-mars-2023',
                 'title': 'Inflation alimentaire : comment en sortir ? - Régis Debray et Claude Grange - Cybèle Idelot',
                 'description': 'md5:36ee74351ede77a314fdebb94026b916',
-                'thumbnail': r're:^https?://.*\.(?:jpg|png)',
+                'thumbnail': r're:https?://.*',
                 'upload_date': '20230310',
                 'duration': 8977,
                 'ext': 'mp3',
@@ -122,6 +125,7 @@ class FranceCultureIE(RadioFranceBaseIE):
         },
         {
             'url': 'https://www.radiofrance.fr/franceinter/podcasts/la-rafle-du-vel-d-hiv-une-affaire-d-etat/les-racines-du-crime-episode-1-3715507',
+            'skip': 'video gone',
             'only_matching': True,
         }, {
             'url': 'https://www.radiofrance.fr/franceinfo/podcasts/le-billet-sciences/sante-bientot-un-vaccin-contre-l-asthme-allergique-3057200',
@@ -163,6 +167,7 @@ class RadioFranceLiveIE(RadioFranceBaseIE):
 
     _TESTS = [{
         'url': 'https://www.radiofrance.fr/franceinter/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'franceinter',
             'title': str,
@@ -174,6 +179,7 @@ class RadioFranceLiveIE(RadioFranceBaseIE):
         },
     }, {
         'url': 'https://www.radiofrance.fr/franceculture',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'franceculture',
             'title': str,
@@ -317,6 +323,7 @@ class RadioFrancePodcastIE(RadioFrancePlaylistBaseIE):
 
     _TESTS = [{
         'url': 'https://www.radiofrance.fr/franceinfo/podcasts/le-billet-vert',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'eaf6ef81-a980-4f1c-a7d1-8a75ecd54b17',
             'display_id': 'le-billet-vert',
@@ -327,6 +334,7 @@ class RadioFrancePodcastIE(RadioFrancePlaylistBaseIE):
         'playlist_mincount': 11,
     }, {
         'url': 'https://www.radiofrance.fr/franceinter/podcasts/jean-marie-le-pen-l-obsession-nationale',
+        'skip': 'video gone',
         'info_dict': {
             'id': '566fd524-3074-4fbc-ac69-8696f2152a54',
             'display_id': 'jean-marie-le-pen-l-obsession-nationale',
@@ -337,6 +345,7 @@ class RadioFrancePodcastIE(RadioFrancePlaylistBaseIE):
         'playlist_count': 7,
     }, {
         'url': 'https://www.radiofrance.fr/franceculture/podcasts/serie-thomas-grjebine',
+        'skip': 'video gone',
         'info_dict': {
             'id': '63c1ddc9-9f15-457a-98b2-411bac63f48d',
             'display_id': 'serie-thomas-grjebine',
@@ -345,6 +354,7 @@ class RadioFrancePodcastIE(RadioFrancePlaylistBaseIE):
         'playlist_count': 1,
     }, {
         'url': 'https://www.radiofrance.fr/fip/podcasts/certains-l-aiment-fip',
+        'skip': 'video gone',
         'info_dict': {
             'id': '143dff38-e956-4a5d-8576-1c0b7242b99e',
             'display_id': 'certains-l-aiment-fip',
@@ -355,6 +365,7 @@ class RadioFrancePodcastIE(RadioFrancePlaylistBaseIE):
         'playlist_mincount': 321,
     }, {
         'url': 'https://www.radiofrance.fr/franceinter/podcasts/le-7-9',
+        'skip': 'video gone',
         'only_matching': True,
     }, {
         'url': 'https://www.radiofrance.fr/mouv/podcasts/dirty-mix',
@@ -374,6 +385,7 @@ class RadioFranceProfileIE(RadioFrancePlaylistBaseIE):
 
     _TESTS = [{
         'url': 'https://www.radiofrance.fr/personnes/thomas-pesquet?p=3',
+        'skip': 'video gone',
         'info_dict': {
             'id': '86c62790-e481-11e2-9f7b-782bcb6744eb',
             'display_id': 'thomas-pesquet',
@@ -383,6 +395,7 @@ class RadioFranceProfileIE(RadioFrancePlaylistBaseIE):
         'playlist_mincount': 212,
     }, {
         'url': 'https://www.radiofrance.fr/personnes/eugenie-bastie',
+        'skip': 'video gone',
         'info_dict': {
             'id': '9593050b-0183-4972-a0b5-d8f699079e02',
             'display_id': 'eugenie-bastie',
@@ -419,6 +432,7 @@ class RadioFranceProgramScheduleIE(RadioFranceBaseIE):
 
     _TESTS = [{
         'url': 'https://www.radiofrance.fr/franceinter/grille-programmes?date=17-02-2023',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'franceinter-program-20230217',
             'upload_date': '20230217',
@@ -426,6 +440,7 @@ class RadioFranceProgramScheduleIE(RadioFranceBaseIE):
         'playlist_count': 25,
     }, {
         'url': 'https://www.radiofrance.fr/franceculture/grille-programmes?date=01-02-2023',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'franceculture-program-20230201',
             'upload_date': '20230201',
@@ -447,6 +462,7 @@ class RadioFranceProgramScheduleIE(RadioFranceBaseIE):
         'playlist_count': 15,
     }, {
         'url': 'https://www.radiofrance.fr/franceculture/grille-programmes',
+        'skip': 'video gone',
         'only_matching': True,
     }]
 

@@ -33,6 +33,7 @@ class HungamaIE(HungamaBaseIE):
                     '''
     _TESTS = [{
         'url': 'http://www.hungama.com/video/krishna-chants/39349649/',
+        'skip': 'HTTP Error 403',
         'md5': '687c5f1e9f832f3b59f44ed0eb1f120a',
         'info_dict': {
             'id': '39349649',
@@ -48,6 +49,7 @@ class HungamaIE(HungamaBaseIE):
         },
     }, {
         'url': 'https://un.hungama.com/short-film/adira/102524179/',
+        'skip': 'HTTP Error 403',
         'md5': '2278463f5dc9db9054d0c02602d44666',
         'info_dict': {
             'id': '102524179',
@@ -178,12 +180,13 @@ class HungamaAlbumPlaylistIE(HungamaBaseIE):
         },
     }, {
         'url': 'https://www.hungama.com/playlists/hindi-jan-to-june-2021/123063/',
-        'playlist_mincount': 33,
+        'playlist_mincount': 25,
         'info_dict': {
             'id': '123063',
         },
     }, {
         'url': 'https://un.hungama.com/album/what-jhumka-%3F-from-rocky-aur-rani-kii-prem-kahaani/103891805/',
+        'skip': 'video gone',
         'playlist_mincount': 1,
         'info_dict': {
             'id': '103891805',

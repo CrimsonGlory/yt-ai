@@ -60,6 +60,7 @@ class NownessIE(NownessBaseIE):
             'timestamp': 1446745676,
             'upload_date': '20151105',
             'uploader_id': '2385340575001',
+            'duration': int,
         },
         'add_ie': ['BrightcoveNew'],
     }, {
@@ -74,11 +75,13 @@ class NownessIE(NownessBaseIE):
             'timestamp': 1407315371,
             'upload_date': '20140806',
             'uploader_id': '2385340575001',
+            'duration': int,
         },
         'add_ie': ['BrightcoveNew'],
     }, {
         # vimeo
         'url': 'https://www.nowness.com/series/nowness-picks/jean-luc-godard-supercut',
+        'skip': 'Login required',
         'md5': '9a5a6a8edf806407e411296ab6bc2a49',
         'info_dict': {
             'id': '130020913',

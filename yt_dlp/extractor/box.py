@@ -40,6 +40,7 @@ class BoxIE(InfoExtractor):
         'params': {'skip_download': 'dash fragment too small'},
     }, {
         'url': 'https://thejacksonlaboratory.ent.box.com/s/2x09dm6vcg6y28o0oox1so4l0t8wzt6l/file/1536173056065',
+        'skip': 'video gone',
         'info_dict': {
             'id': '1536173056065',
             'ext': 'mp4',

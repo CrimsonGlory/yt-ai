@@ -15,10 +15,10 @@ class NTVRuIE(InfoExtractor):
 
     _TESTS = [{
         # JSON Api is geo restricted
-        'url': 'https://www.ntv.ru/peredacha/svoya_igra/m58980/o818800',
+        'url': 'https://www.ntv.ru/novosti/3008484/',
         'md5': '818962a1b52747d446db7cd5be43e142',
         'info_dict': {
-            'id': '2520563',
+            'id': '2610271',
             'ext': 'mp4',
             'title': 'Участники: Ирина Петрова, Сергей Коновалов, Кристина Кораблина',
             'description': 'md5:fcbd21cd45238a940b95550f9e178e3e',

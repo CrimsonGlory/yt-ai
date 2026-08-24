@@ -83,6 +83,9 @@ class BrightcoveLegacyIE(InfoExtractor):
                 'timestamp': 1382041798,
                 'upload_date': '20131017',
                 'uploader_id': '1130468786001',
+                'duration': int,
+                'tags': list,
+                'thumbnail': r're:https?://.*',
             },
         },
         {

@@ -247,6 +247,7 @@ class RCTIPlusSeriesIE(RCTIPlusBaseIE):
             'age_limit': 2,
             'tags': 'count:11',
             'display_id': 'inews-pagi',
+            'cast': list,
         },
     }]
     _AGE_RATINGS = {  # Based off https://id.wikipedia.org/wiki/Sistem_rating_konten_televisi with additional ratings

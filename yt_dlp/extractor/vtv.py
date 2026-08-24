@@ -36,6 +36,7 @@ class VTVGoIE(InfoExtractor):
         },
     }, {
         'url': 'https://vtvgo.vn/digital/detail.php?digital_id=168&content_id=918634',
+        'skip': 'video gone',
         'info_dict': {
             'id': '918634',
             'ext': 'mp4',
@@ -45,6 +46,7 @@ class VTVGoIE(InfoExtractor):
         },
     }, {
         'url': 'https://vtvgo.vn/digital/detail.php?content_id=919358',
+        'skip': 'video gone',
         'info_dict': {
             'id': '919358',
             'ext': 'mp4',

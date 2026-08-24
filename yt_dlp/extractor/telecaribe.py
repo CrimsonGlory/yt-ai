@@ -8,6 +8,7 @@ class TelecaribePlayIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?play\.telecaribe\.co/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://www.play.telecaribe.co/breicok',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': 'breicok',
             'title': 'Breicok',
@@ -15,6 +16,7 @@ class TelecaribePlayIE(InfoExtractor):
         'playlist_count': 7,
     }, {
         'url': 'https://www.play.telecaribe.co/si-fue-gol-de-yepes',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': 'si-fue-gol-de-yepes',
             'title': 'Sí Fue Gol de Yepes',
@@ -22,6 +24,7 @@ class TelecaribePlayIE(InfoExtractor):
         'playlist_count': 6,
     }, {
         'url': 'https://www.play.telecaribe.co/ciudad-futura',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': 'ciudad-futura',
             'title': 'Ciudad Futura',
@@ -29,6 +32,7 @@ class TelecaribePlayIE(InfoExtractor):
         'playlist_count': 10,
     }, {
         'url': 'https://www.play.telecaribe.co/live',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': 'live',
             'title': r're:^Señal en vivo',
@@ -40,6 +44,7 @@ class TelecaribePlayIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.play.telecaribe.co/liveplus',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': 'liveplus',
             'title': r're:^Señal en vivo Plus',

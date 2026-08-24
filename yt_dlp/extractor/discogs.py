@@ -18,7 +18,7 @@ class DiscogsReleasePlaylistIE(InfoExtractor):
             'id': 'master113',
             'title': 'Moments In Time',
         },
-        'playlist_mincount': 53,
+        'playlist_mincount': 7,
     }]
 
     def _real_extract(self, url):

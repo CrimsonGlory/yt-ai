@@ -15,6 +15,7 @@ class FazIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://www.faz.net/multimedia/videos/stockholm-chemie-nobelpreis-fuer-drei-amerikanische-forscher-12610585.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': '12610585',
             'ext': 'mp4',

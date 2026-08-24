@@ -75,6 +75,11 @@ class NexxIE(InfoExtractor):
             'duration': 607,
             'timestamp': 1518614955,
             'upload_date': '20180214',
+            'cast': list,
+            'episode': str,
+            'episode_number': int,
+            'season': str,
+            'season_number': int,
         },
     }, {
         # free cdn from http://www.spiegel.de/video/eifel-zoo-aufregung-um-ausgebrochene-raubtiere-video-99018031.html

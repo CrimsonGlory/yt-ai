@@ -21,6 +21,7 @@ class DigitalConcertHallIE(InfoExtractor):
     _TESTS = [{
         'note': 'Playlist with only one video',
         'url': 'https://www.digitalconcerthall.com/en/concert/53201',
+        'skip': 'Login required',
         'info_dict': {
             'id': '53201-1',
             'ext': 'mp4',
@@ -37,6 +38,7 @@ class DigitalConcertHallIE(InfoExtractor):
     }, {
         'note': 'Concert with several works and an interview',
         'url': 'https://www.digitalconcerthall.com/en/concert/53785',
+        'skip': 'Login required',
         'info_dict': {
             'id': '53785',
             'album_artists': ['Berliner Philharmoniker', 'Kirill Petrenko'],
@@ -47,6 +49,7 @@ class DigitalConcertHallIE(InfoExtractor):
         'playlist_count': 3,
     }, {
         'url': 'https://www.digitalconcerthall.com/en/film/388',
+        'skip': 'Login required',
         'info_dict': {
             'id': '388',
             'ext': 'mp4',
@@ -61,6 +64,7 @@ class DigitalConcertHallIE(InfoExtractor):
     }, {
         'note': 'Concert with several works and an interview',
         'url': 'https://www.digitalconcerthall.com/en/work/53785-1',
+        'skip': 'Login required',
         'info_dict': {
             'id': '53785',
             'album_artists': ['Berliner Philharmoniker', 'Kirill Petrenko'],

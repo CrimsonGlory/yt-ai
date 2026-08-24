@@ -73,6 +73,7 @@ class EplusIbIE(InfoExtractor):
         ],
     }, {
         'url': 'https://live.eplus.jp/2053935',
+        'skip': 'Login required',
         'info_dict': {
             'id': '331320-0001-001',
             'title': '丘みどり2020配信LIVE Vol.2 ～秋麗～ 【Streaming+(配信チケット)】',

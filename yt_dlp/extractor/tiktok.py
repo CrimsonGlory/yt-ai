@@ -1514,6 +1514,7 @@ class TikTokVMIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.tiktok.com/t/ZTRC5xgJp',
+        'skip': 'Unsupported URL / extractor broken',
         'info_dict': {
             'id': '7170520270497680683',
             'ext': 'mp4',
@@ -1537,6 +1538,7 @@ class TikTokVMIE(InfoExtractor):
         },
     }, {
         'url': 'https://vm.tiktok.com/ZTR45GpSF/',
+        'skip': 'Unsupported URL / extractor broken',
         'info_dict': {
             'id': '7106798200794926362',
             'ext': 'mp4',

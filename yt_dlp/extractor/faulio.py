@@ -68,6 +68,7 @@ class FaulioIE(FaulioBaseIE):
         },
     }, {
         'url': 'https://maraya.sba.net.ae/episode/127735',
+        'skip': 'DRM protected',
         'info_dict': {
             'id': 'maraya.faulio.com_127735',
             'ext': 'mp4',
@@ -174,6 +175,7 @@ class FaulioLiveIE(FaulioBaseIE):
         },
     }, {
         'url': 'https://maraya.sba.net.ae/live/1',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': 'maraya.faulio.com_1',
             'title': str,
@@ -186,6 +188,7 @@ class FaulioLiveIE(FaulioBaseIE):
         },
     }, {
         'url': 'https://sat7plus.org/live/pars',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': 'sat7.faulio.com_pars',
             'title': str,

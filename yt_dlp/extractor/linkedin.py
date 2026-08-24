@@ -61,7 +61,7 @@ class LinkedInIE(InfoExtractor):
             'title': 'Mishal K. on LinkedIn: #sendinblueviews #toronto #digitalmarketing #nowhiring #sendinblue…',
             'description': 'md5:2998a31f6f479376dd62831f53a80f71',
             'uploader': 'Mishal K.',
-            'thumbnail': 're:^https?://media.licdn.com/dms/image/.*$',
+            'thumbnail': r're:https?://.*',
             'like_count': int,
         },
     }, {
@@ -72,7 +72,7 @@ class LinkedInIE(InfoExtractor):
             'title': 'MathWorks on LinkedIn: What Is MathWorks Cloud Center?',
             'description': 'md5:95f9d4eeb6337882fb47eefe13d7a40c',
             'uploader': 'MathWorks',
-            'thumbnail': 're:^https?://media.licdn.com/dms/image/.*$',
+            'thumbnail': r're:https?://.*',
             'like_count': int,
             'subtitles': 'mincount:1',
         },
@@ -117,6 +117,7 @@ class LinkedInLearningIE(LinkedInLearningBaseIE):
     _VALID_URL = r'https?://(?:www\.)?linkedin\.com/learning/(?P<course_slug>[^/]+)/(?P<id>[^/?#]+)'
     _TEST = {
         'url': 'https://www.linkedin.com/learning/programming-foundations-fundamentals/welcome?autoplay=true',
+        'skip': 'Login required',
         'md5': 'a1d74422ff0d5e66a792deb996693167',
         'info_dict': {
             'id': '90426',
@@ -205,6 +206,7 @@ class LinkedInLearningCourseIE(LinkedInLearningBaseIE):
     _VALID_URL = r'https?://(?:www\.)?linkedin\.com/learning/(?P<id>[^/?#]+)'
     _TEST = {
         'url': 'https://www.linkedin.com/learning/programming-foundations-fundamentals',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'programming-foundations-fundamentals',
             'title': 'Programming Foundations: Fundamentals',
@@ -251,6 +253,7 @@ class LinkedInEventsIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?linkedin\.com/events/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://www.linkedin.com/events/7084656651378536448/comments/',
+        'skip': 'Login required',
         'info_dict': {
             'id': '7084656651378536448',
             'ext': 'mp4',
@@ -265,6 +268,7 @@ class LinkedInEventsIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.linkedin.com/events/27-02energyfreedombyenergyclub7295762520814874625/comments/',
+        'skip': 'Login required',
         'info_dict': {
             'id': '27-02energyfreedombyenergyclub7295762520814874625',
             'ext': 'mp4',

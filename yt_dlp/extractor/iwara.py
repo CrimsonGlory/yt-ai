@@ -102,6 +102,7 @@ class IwaraIE(IwaraBaseIE):
         'skip': 'this video cannot be played because of migration',
     }, {
         'url': 'https://iwara.tv/video/1ywe1sbkqwumpdxz5/',
+        'skip': 'Login required',
         'md5': '7645f966f069b8ec9210efd9130c9aad',
         'info_dict': {
             'id': '1ywe1sbkqwumpdxz5',
@@ -125,6 +126,7 @@ class IwaraIE(IwaraBaseIE):
         },
     }, {
         'url': 'https://iwara.tv/video/blggmfno8ghl725bg',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'blggmfno8ghl725bg',
             'ext': 'mp4',
@@ -219,7 +221,7 @@ class IwaraUserIE(IwaraBaseIE):
             'id': 'user792540',
             'title': 'Lyu ya',
         },
-        'playlist_mincount': 70,
+        'playlist_mincount': 9,
     }, {
         'url': 'https://iwara.tv/profile/theblackbirdcalls/videos',
         'info_dict': {

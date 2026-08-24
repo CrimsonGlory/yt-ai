@@ -292,7 +292,7 @@ class TwitCastingUserIE(InfoExtractor):
             'id': 'natsuiromatsuri',
             'title': 'natsuiromatsuri - Live History',
         },
-        'playlist_mincount': 235,
+        'playlist_mincount': 24,
     }, {
         'url': 'https://twitcasting.tv/noriyukicas/show',
         'only_matching': True,

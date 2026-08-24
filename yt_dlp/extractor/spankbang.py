@@ -27,6 +27,7 @@ class SpankBangIE(InfoExtractor):
                     '''
     _TESTS = [{
         'url': 'https://spankbang.com/56b3d/video/the+slut+maker+hmv',
+        'skip': 'video gone',
         'md5': '2D13903DE4ECC7895B5D55930741650A',
         'info_dict': {
             'id': '56b3d',

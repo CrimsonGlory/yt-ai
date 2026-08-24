@@ -67,6 +67,7 @@ class VoicyIE(VoicyBaseIE):
     ARTICLE_LIST_API_URL = 'https://vmw.api.voicy.jp/articles_list?channel_id=%s&pid=%s'
     _TESTS = [{
         'url': 'https://voicy.jp/channel/1253/122754',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': '122754',
             'title': '1/21(木)声日記：ついに原稿終わった！！',
@@ -94,6 +95,7 @@ class VoicyChannelIE(VoicyBaseIE):
     PROGRAM_LIST_API_URL = 'https://vmw.api.voicy.jp/program_list/all?channel_id=%s&limit=20&public_type=3%s'
     _TESTS = [{
         'url': 'https://voicy.jp/channel/1253/',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': '7339',
             'title': 'ゆるふわ日常ラジオ #ちょまラジ',

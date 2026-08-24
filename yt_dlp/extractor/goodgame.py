@@ -12,6 +12,7 @@ class GoodGameIE(InfoExtractor):
     _VALID_URL = r'https?://goodgame\.ru/(?!channel/)(?P<id>[\w.*-]+)'
     _TESTS = [{
         'url': 'https://goodgame.ru/TGW#autoplay',
+        'skip': 'livestream has ended',
         'info_dict': {
             'id': '7998',
             'ext': 'mp4',

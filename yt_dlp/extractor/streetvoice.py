@@ -13,6 +13,7 @@ class StreetVoiceIE(InfoExtractor):
     _VALID_URL = r'https?://(?:.+?\.)?streetvoice\.com/[^/]+/songs/(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'https://streetvoice.com/skippylu/songs/123688/',
+        'skip': 'HTTP Error 403',
         'md5': '0eb535970629a5195685355f3ed60bfd',
         'info_dict': {
             'id': '123688',

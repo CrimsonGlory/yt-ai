@@ -116,6 +116,7 @@ class TV5UnisIE(TV5UnisBaseIE):
     _TESTS = [{
         # geo-restricted to Canada; xff is ineffective
         'url': 'https://www.tv5unis.ca/videos/watatatow/saisons/11/episodes/1',
+        'skip': 'Geo-restricted',
         'md5': '43beebd47eefb1c5caf9a47a3fc35589',
         'info_dict': {
             'id': '2c06e4af20f0417b86c2536825287690',
@@ -138,6 +139,7 @@ class TV5UnisIE(TV5UnisBaseIE):
     }, {
         # geo-restricted to Canada; xff is ineffective
         'url': 'https://www.tv5unis.ca/videos/boite-a-savon',
+        'skip': 'Geo-restricted',
         'md5': '7898e868e8c540f03844660e0aab6bbe',
         'info_dict': {
             'id': '4de6d0c6467b4511a0c04b92037a9f15',

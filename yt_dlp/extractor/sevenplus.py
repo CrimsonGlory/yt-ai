@@ -15,6 +15,7 @@ class SevenPlusIE(BrightcoveNewBaseIE):
     _VALID_URL = r'https?://(?:www\.)?7plus\.com\.au/(?P<path>[^?]+\?.*?\bepisode-id=(?P<id>[^&#]+))'
     _TESTS = [{
         'url': 'https://7plus.com.au/MTYS?episode-id=MTYS7-003',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'MTYS7-003',
             'ext': 'mp4',

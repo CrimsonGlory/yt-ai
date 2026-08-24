@@ -18,6 +18,7 @@ class GolemIE(InfoExtractor):
             'title': 'iPhone 6 und 6 Plus - Test',
             'duration': 300.44,
             'filesize': 65309548,
+            'thumbnail': r're:https?://.*',
         },
     }
 

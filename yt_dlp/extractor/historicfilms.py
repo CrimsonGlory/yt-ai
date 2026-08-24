@@ -6,6 +6,7 @@ class HistoricFilmsIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?historicfilms\.com/(?:tapes/|play)(?P<id>\d+)'
     _TEST = {
         'url': 'http://www.historicfilms.com/tapes/4728',
+        'skip': 'video gone',
         'md5': 'd4a437aec45d8d796a38a215db064e9a',
         'info_dict': {
             'id': '4728',

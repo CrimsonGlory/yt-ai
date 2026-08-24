@@ -5,6 +5,7 @@ class NonkTubeIE(NuevoBaseIE):
     _VALID_URL = r'https?://(?:www\.)?nonktube\.com/(?:(?:video|embed)/|media/nuevo/embed\.php\?.*?\bid=)(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.nonktube.com/video/118636/sensual-wife-uncensored-fucked-in-hairy-pussy-and-facialized',
+        'skip': 'video gone',
         'info_dict': {
             'id': '118636',
             'ext': 'mp4',

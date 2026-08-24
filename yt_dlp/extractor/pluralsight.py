@@ -427,6 +427,7 @@ class PluralsightCourseIE(PluralsightBaseIE):
         # Free course from Pluralsight Starter Subscription for Microsoft TechNet
         # https://offers.pluralsight.com/technet?loc=zTS3z&prod=zOTprodz&tech=zOttechz&prog=zOTprogz&type=zSOz&media=zOTmediaz&country=zUSz
         'url': 'http://www.pluralsight.com/courses/hosting-sql-server-windows-azure-iaas',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'hosting-sql-server-windows-azure-iaas',
             'title': 'Hosting SQL Server in Microsoft Azure IaaS Fundamentals',

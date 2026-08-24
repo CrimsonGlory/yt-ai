@@ -118,6 +118,7 @@ class OnetIE(OnetBaseIE):
 
     _TESTS = [{
         'url': 'http://onet.tv/k/openerfestival/open-er-festival-2016-najdziwniejsze-wymagania-gwiazd/qbpyqc',
+        'skip': 'video gone',
         'md5': '436102770fb095c75b8bb0392d3da9ff',
         'info_dict': {
             'id': 'qbpyqc',
@@ -156,6 +157,7 @@ class OnetChannelIE(OnetBaseIE):
 
     _TESTS = [{
         'url': 'http://onet.tv/k/openerfestival',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'openerfestival',
             'title': "Open'er Festival",
@@ -199,6 +201,7 @@ class OnetPlIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://eurosport.onet.pl/zimowe/skoki-narciarskie/ziobro-wygral-kwalifikacje-w-pjongczangu/9ckrly',
+        'skip': 'video gone',
         'md5': 'b94021eb56214c3969380388b6e73cb0',
         'info_dict': {
             'id': '1561707.1685479',
@@ -211,6 +214,7 @@ class OnetPlIE(InfoExtractor):
     }, {
         # embedded via pulsembed
         'url': 'http://film.onet.pl/pensjonat-nad-rozlewiskiem-relacja-z-planu-serialu/y428n0',
+        'skip': 'video gone',
         'info_dict': {
             'id': '501235.965429946',
             'ext': 'mp4',

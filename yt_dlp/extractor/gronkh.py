@@ -14,6 +14,7 @@ class GronkhIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://gronkh.tv/streams/657',
+        'skip': 'Site SSL/certificate broken',
         'info_dict': {
             'id': '657',
             'ext': 'mp4',
@@ -27,6 +28,7 @@ class GronkhIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://gronkh.tv/stream/536',
+        'skip': 'Site SSL/certificate broken',
         'info_dict': {
             'id': '536',
             'ext': 'mp4',
@@ -75,6 +77,7 @@ class GronkhFeedIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://gronkh.tv/feed',
+        'skip': 'Site SSL/certificate broken',
         'info_dict': {
             'id': 'feed',
         },
@@ -101,6 +104,7 @@ class GronkhVodsIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://gronkh.tv/vods/streams',
+        'skip': 'Site SSL/certificate broken',
         'info_dict': {
             'id': 'vods',
         },

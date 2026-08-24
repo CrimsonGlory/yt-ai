@@ -25,6 +25,7 @@ class DropoutIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://watch.dropout.tv/game-changer/season:2/videos/yes-or-no',
+            'skip': 'Login required',
             'note': 'Episode in a series',
             'md5': '4b76963f904f8bc4ba22dcf0e66ada06',
             'info_dict': {
@@ -49,6 +50,7 @@ class DropoutIE(InfoExtractor):
         },
         {
             'url': 'https://watch.dropout.tv/tablepop-presents-megadungeon-live/season:1/videos/enter-through-the-gift-shop',
+            'skip': 'Login required',
             'note': 'Episode in a series (missing release_date)',
             'md5': 'b08fb03050585ea25cd7ee092db9134c',
             'info_dict': {
@@ -72,6 +74,7 @@ class DropoutIE(InfoExtractor):
         },
         {
             'url': 'https://watch.dropout.tv/videos/misfits-magic-holiday-special',
+            'skip': 'Login required',
             'note': 'Episode not in a series',
             'md5': '1e6428f7756b02c93b573d39ddd789fe',
             'info_dict': {

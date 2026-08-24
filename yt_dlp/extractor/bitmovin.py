@@ -18,6 +18,7 @@ class BitmovinIE(InfoExtractor):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://streams.bitmovin.com/cgl9rh94uvs51rqc8jhg/share',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'cgl9rh94uvs51rqc8jhg',
             'ext': 'mp4',

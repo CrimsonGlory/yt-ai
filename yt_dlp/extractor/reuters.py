@@ -13,6 +13,7 @@ class ReutersIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?reuters\.com/.*?\?.*?videoId=(?P<id>[0-9]+)'
     _TEST = {
         'url': 'http://www.reuters.com/video/2016/05/20/san-francisco-police-chief-resigns?videoId=368575562',
+        'skip': 'video gone',
         'md5': '8015113643a0b12838f160b0b81cc2ee',
         'info_dict': {
             'id': '368575562',

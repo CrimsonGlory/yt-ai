@@ -8,6 +8,7 @@ class AcademicEarthCourseIE(InfoExtractor):
     IE_NAME = 'AcademicEarth:Course'
     _TEST = {
         'url': 'http://academicearth.org/playlists/laws-of-nature/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'laws-of-nature',
             'title': 'Laws of Nature',

@@ -221,6 +221,7 @@ class TVPlayHomeIE(InfoExtractor):
     '''
     _TESTS = [{
         'url': 'https://play.tv3.lt/series/gauju-karai-karveliai,serial-2343791/serija-8,episode-2343828',
+        'skip': 'video gone',
         'info_dict': {
             'id': '2343828',
             'ext': 'mp4',

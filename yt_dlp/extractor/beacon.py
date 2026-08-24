@@ -35,6 +35,7 @@ class BeaconTvIE(InfoExtractor):
             'upload_date': '20240508',
             'duration': 53.249,
             'thumbnail': 'https://cdn.jwplayer.com/v2/media/PW5ApIw3/poster.jpg?width=720',
+            'description': str,
         },
     }]
 

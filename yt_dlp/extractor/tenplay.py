@@ -27,6 +27,7 @@ class TenPlayIE(InfoExtractor):
     _TESTS = [{
         # Geo-restricted to Australia
         'url': 'https://10.com.au/australian-survivor/web-extras/season-10-brains-v-brawn-ii/myless-journey/tpv250414jdmtf',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '7440980000013868',
             'ext': 'mp4',
@@ -48,6 +49,7 @@ class TenPlayIE(InfoExtractor):
     }, {
         # Geo-restricted to Australia
         'url': 'https://10.com.au/neighbours/episodes/season-42/episode-9107/tpv240902nzqyp',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '9000000000091177',
             'ext': 'mp4',
@@ -285,6 +287,7 @@ class TenPlaySeasonIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?10(?:play)?\.com\.au/(?P<show>[^/?#]+)/episodes/(?P<season>[^/?#]+)/?(?:$|[?#])'
     _TESTS = [{
         'url': 'https://10.com.au/masterchef/episodes/season-15',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'title': 'Season 15',
             'id': 'MTQ2NjMxOQ==',
@@ -292,6 +295,7 @@ class TenPlaySeasonIE(InfoExtractor):
         'playlist_mincount': 50,
     }, {
         'url': 'https://10.com.au/the-bold-and-the-beautiful-fast-tracked/episodes/season-2024',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'title': 'Season 2024',
             'id': 'Mjc0OTIw',

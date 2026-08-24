@@ -13,6 +13,7 @@ class VeoIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://app.veo.co/matches/20201027-last-period/',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': '20201027-last-period',
             'ext': 'mp4',

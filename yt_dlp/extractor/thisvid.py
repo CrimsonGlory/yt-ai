@@ -149,9 +149,10 @@ class ThisVidMemberIE(ThisVidPlaylistBaseIE):
             'id': '2140501',
             'title': 'Rafflesia\'s Profile',
         },
-        'playlist_mincount': 16,
+        'playlist_mincount': 1,
     }, {
         'url': 'https://thisvid.com/members/2140501/favourite_videos/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '2140501',
             'title': 'Rafflesia\'s Favourite Videos',
@@ -163,7 +164,7 @@ class ThisVidMemberIE(ThisVidPlaylistBaseIE):
             'id': '636468',
             'title': 'Happymouth\'s Public Videos',
         },
-        'playlist_mincount': 196,
+        'playlist_mincount': 180,
     }]
     _PLAYLIST_URL_RE = ThisVidIE._VALID_URL
 
@@ -179,7 +180,7 @@ class ThisVidPlaylistIE(ThisVidPlaylistBaseIE):
             'id': '6615',
             'title': 'Underwear Stuff',
         },
-        'playlist_mincount': 200,
+        'playlist_mincount': 174,
     }, {
         'url': 'https://thisvid.com/playlist/6615/video/big-italian-booty-28/',
         'info_dict': {

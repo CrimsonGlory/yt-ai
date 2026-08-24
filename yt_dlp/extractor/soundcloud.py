@@ -66,6 +66,16 @@ class SoundcloudEmbedIE(InfoExtractor):
             'uploader': 'Guitar Player',
             'uploader_id': '489924156',
             'uploader_url': 'https://soundcloud.com/user-630852220',
+            'duration': int,
+            'license': str,
+            'like_count': int,
+            'modified_date': str,
+            'modified_timestamp': int,
+            'release_date': str,
+            'release_timestamp': int,
+            'repost_count': int,
+            'timestamp': int,
+            'upload_date': str,
         },
         'playlist_mincount': 7,
     }]
@@ -1184,7 +1194,7 @@ class SoundcloudTrackStationIE(SoundcloudPagedPlaylistBaseIE):
             'id': '286017854',
             'title': 'Track station: your text',
         },
-        'playlist_mincount': 47,
+        'playlist_mincount': 36,
     }]
 
     def _real_extract(self, url):

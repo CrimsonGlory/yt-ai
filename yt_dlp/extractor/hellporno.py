@@ -17,7 +17,7 @@ class HellPornoIE(InfoExtractor):
             'display_id': 'dixie-is-posing-with-naked-ass-very-erotic',
             'ext': 'mp4',
             'title': 'Dixie is posing with naked ass very erotic',
-            'description': 'md5:9a72922749354edb1c4b6e540ad3d215',
+            'description': 'md5:925de8f06937489439889d42a78b5672',
             'categories': list,
             'thumbnail': r're:https?://.*\.jpg$',
             'duration': 240,

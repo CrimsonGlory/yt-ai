@@ -57,6 +57,7 @@ class DubokuIE(InfoExtractor):
     _VALID_URL = r'(?:https?://[^/]+\.duboku\.io/vodplay/)(?P<id>[0-9]+-[0-9-]+)\.html.*'
     _TESTS = [{
         'url': 'https://w.duboku.io/vodplay/1575-1-1.html',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': '1575-1-1',
             'ext': 'mp4',
@@ -74,6 +75,7 @@ class DubokuIE(InfoExtractor):
         },
     }, {
         'url': 'https://w.duboku.io/vodplay/1588-1-1.html',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': '1588-1-1',
             'ext': 'mp4',
@@ -175,6 +177,7 @@ class DubokuPlaylistIE(InfoExtractor):
     _VALID_URL = r'(?:https?://[^/]+\.duboku\.io/voddetail/)(?P<id>[0-9]+)\.html.*'
     _TESTS = [{
         'url': 'https://w.duboku.io/voddetail/1575.html',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': 'startswith:1575',
             'title': '白色月光',
@@ -182,6 +185,7 @@ class DubokuPlaylistIE(InfoExtractor):
         'playlist_count': 12,
     }, {
         'url': 'https://w.duboku.io/voddetail/1554.html',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': 'startswith:1554',
             'title': '以家人之名',

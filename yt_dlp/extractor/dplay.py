@@ -250,6 +250,7 @@ class DPlayIE(DPlayBaseIE):
         'skip': 'Available for Premium users',
     }, {
         'url': 'http://it.dplay.com/nove/biografie-imbarazzanti/luigi-di-maio-la-psicosi-di-stanislawskij/',
+        'skip': 'Site returned HTTP 5xx',
         'md5': '2b808ffb00fc47b884a172ca5d13053c',
         'info_dict': {
             'id': '6918',
@@ -267,6 +268,7 @@ class DPlayIE(DPlayBaseIE):
         },
     }, {
         'url': 'https://es.dplay.com/dmax/la-fiebre-del-oro/temporada-8-episodio-1/',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': '21652',
             'display_id': 'la-fiebre-del-oro/temporada-8-episodio-1',
@@ -438,6 +440,7 @@ class TravelChannelIE(DiscoveryPlusBaseIE):
     _VALID_URL = r'https?://(?:watch\.)?travelchannel\.com/video' + DPlayBaseIE._PATH_REGEX
     _TESTS = [{
         'url': 'https://watch.travelchannel.com/video/the-dead-files-travel-channel/protect-the-children',
+        'skip': 'Login required',
         'info_dict': {
             'id': '4710177',
             'display_id': 'the-dead-files-travel-channel/protect-the-children',
@@ -485,6 +488,7 @@ class CookingChannelIE(DiscoveryPlusBaseIE):
     _VALID_URL = r'https?://(?:watch\.)?cookingchanneltv\.com/video' + DPlayBaseIE._PATH_REGEX
     _TESTS = [{
         'url': 'https://watch.cookingchanneltv.com/video/bobbys-triple-threat-food-network-atve-us/titans-vs-marcus-samuelsson',
+        'skip': 'Login required',
         'info_dict': {
             'id': '5350005',
             'ext': 'mp4',
@@ -575,6 +579,7 @@ class FoodNetworkIE(DiscoveryPlusBaseIE):
     _VALID_URL = r'https?://(?:watch\.)?foodnetwork\.com/video' + DPlayBaseIE._PATH_REGEX
     _TESTS = [{
         'url': 'https://watch.foodnetwork.com/video/guys-grocery-games-food-network/wild-in-the-aisles',
+        'skip': 'video gone',
         'info_dict': {
             'id': '2152549',
             'display_id': 'guys-grocery-games-food-network/wild-in-the-aisles',
@@ -622,6 +627,7 @@ class DestinationAmericaIE(DiscoveryPlusBaseIE):
     _VALID_URL = r'https?://(?:www\.)?destinationamerica\.com/video' + DPlayBaseIE._PATH_REGEX
     _TESTS = [{
         'url': 'https://www.destinationamerica.com/video/bbq-pit-wars-destination-america/smoke-on-the-water',
+        'skip': 'Login required',
         'info_dict': {
             'id': '2218409',
             'display_id': 'bbq-pit-wars-destination-america/smoke-on-the-water',
@@ -857,6 +863,7 @@ class AnimalPlanetIE(DiscoveryPlusBaseIE):
     _VALID_URL = r'https?://(?:www\.)?animalplanet\.com/video' + DPlayBaseIE._PATH_REGEX
     _TESTS = [{
         'url': 'https://www.animalplanet.com/video/mysterious-creatures-with-forrest-galante-animal-planet-atve-us/the-demon-of-peru',
+        'skip': 'Login required',
         'info_dict': {
             'id': '4650835',
             'display_id': 'mysterious-creatures-with-forrest-galante-animal-planet-atve-us/the-demon-of-peru',
@@ -904,6 +911,7 @@ class TLCIE(DiscoveryPlusBaseIE):
     _VALID_URL = r'https?://(?:go\.)?tlc\.com/video' + DPlayBaseIE._PATH_REGEX
     _TESTS = [{
         'url': 'https://go.tlc.com/video/90-day-the-last-resort-tlc-atve-us/the-last-chance',
+        'skip': 'video gone',
         'info_dict': {
             'id': '5186422',
             'display_id': '90-day-the-last-resort-tlc-atve-us/the-last-chance',
@@ -1031,6 +1039,7 @@ class DiscoveryPlusIndiaIE(DiscoveryPlusBaseIE):
             'episode': 'Episode 2',
             'season': 'Season 8',
             'tags': [],
+            'creators': list,
         },
         'params': {
             'skip_download': True,
@@ -1272,6 +1281,7 @@ class DiscoveryPlusItalyShowIE(DiscoveryPlusShowBaseIE):
     _VALID_URL = r'https?://(?:www\.)?discoveryplus\.it/programmi/(?P<show_name>[^/]+)/?(?:[?#]|$)'
     _TESTS = [{
         'url': 'https://www.discoveryplus.it/programmi/deal-with-it-stai-al-gioco',
+        'skip': 'Site returned HTTP 5xx',
         'playlist_mincount': 168,
         'info_dict': {
             'id': 'deal-with-it-stai-al-gioco',
@@ -1291,6 +1301,7 @@ class DiscoveryPlusIndiaShowIE(DiscoveryPlusShowBaseIE):
     _VALID_URL = r'https?://(?:www\.)?discoveryplus\.in/show/(?P<show_name>[^/]+)/?(?:[?#]|$)'
     _TESTS = [{
         'url': 'https://www.discoveryplus.in/show/how-do-they-do-it',
+        'skip': 'video gone',
         'playlist_mincount': 140,
         'info_dict': {
             'id': 'how-do-they-do-it',

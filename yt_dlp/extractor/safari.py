@@ -82,6 +82,7 @@ class SafariIE(SafariBaseIE):
 
     _TESTS = [{
         'url': 'https://www.safaribooksonline.com/library/view/hadoop-fundamentals-livelessons/9780133392838/part00.html',
+        'skip': 'HTTP Error 403',
         'md5': 'dcc5a425e79f2564148652616af1f2a3',
         'info_dict': {
             'id': '0_qbqx90ic',

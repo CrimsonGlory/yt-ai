@@ -150,6 +150,7 @@ class PlatziCourseIE(PlatziBaseIE):
                     '''
     _TESTS = [{
         'url': 'https://platzi.com/clases/next-js/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '1311',
             'title': 'Curso de Next.js',

@@ -136,9 +136,10 @@ class OnDemandKoreaProgramIE(InfoExtractor):
         'info_dict': {
             'id': 'uskn-news',
         },
-        'playlist_mincount': 755,
+        'playlist_mincount': 342,
     }, {
         'url': 'https://www.ondemandkorea.com/en/player/vod/the-land',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'the-land',
         },

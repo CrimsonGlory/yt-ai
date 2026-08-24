@@ -12,6 +12,7 @@ class NewsPicksIE(InfoExtractor):
     _VALID_URL = r'https?://newspicks\.com/movie-series/(?P<id>[^?/#]+)'
     _TESTS = [{
         'url': 'https://newspicks.com/movie-series/11/?movieId=1813',
+        'skip': 'Login required',
         'info_dict': {
             'id': '1813',
             'ext': 'mp4',
@@ -28,6 +29,7 @@ class NewsPicksIE(InfoExtractor):
         },
     }, {
         'url': 'https://newspicks.com/movie-series/158/?movieId=3932',
+        'skip': 'Login required',
         'info_dict': {
             'id': '3932',
             'ext': 'mp4',

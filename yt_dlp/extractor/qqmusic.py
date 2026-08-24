@@ -432,6 +432,7 @@ class QQMusicVideoIE(QQMusicBaseIE):
 
     _TESTS = [{
         'url': 'https://y.qq.com/n/ryqq/mv/002Vsarh3SVU8K',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '002Vsarh3SVU8K',
             'ext': 'mp4',

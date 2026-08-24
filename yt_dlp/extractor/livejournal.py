@@ -7,6 +7,7 @@ class LiveJournalIE(InfoExtractor):
     _VALID_URL = r'https?://(?:[^.]+\.)?livejournal\.com/video/album/\d+.+?\bid=(?P<id>\d+)'
     _TEST = {
         'url': 'https://andrei-bt.livejournal.com/video/album/407/?mode=view&id=51272',
+        'skip': 'Request timed out',
         'md5': 'adaf018388572ced8a6f301ace49d4b2',
         'info_dict': {
             'id': '1263729',

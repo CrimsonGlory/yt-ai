@@ -14,6 +14,7 @@ class MSNIE(InfoExtractor):
     _VALID_URL = r'https?://(?:(?:www|preview)\.)?msn\.com/(?P<locale>[a-z]{2}-[a-z]{2})/(?:[^/?#]+/)+(?P<display_id>[^/?#]+)/[a-z]{2}-(?P<id>[\da-zA-Z]+)'
     _TESTS = [{
         'url': 'https://www.msn.com/en-gb/video/news/president-macron-interrupts-trump-over-ukraine-funding/vi-AA1zMcD7',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'AA1zMcD7',
             'ext': 'mp4',
@@ -34,6 +35,7 @@ class MSNIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.msn.com/en-gb/video/watch/films-success-saved-adam-pearsons-acting-career/vi-AA1znZGE?ocid=hpmsn',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'AA1znZGE',
             'ext': 'mp4',
@@ -53,6 +55,7 @@ class MSNIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.msn.com/en-us/entertainment/news/rock-frontman-replacements-you-might-not-know-happened/vi-AA1yLVcD',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'AA1yLVcD',
             'ext': 'mp4',
@@ -73,6 +76,7 @@ class MSNIE(InfoExtractor):
     }, {
         # Dailymotion Embed
         'url': 'https://www.msn.com/de-de/nachrichten/other/the-first-descendant-gameplay-trailer-zu-serena-der-neuen-gefl%C3%BCgelten-nachfahrin/vi-AA1B1d06',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'x9g6oli',
             'ext': 'mp4',
@@ -92,6 +96,7 @@ class MSNIE(InfoExtractor):
     }, {
         # Youtube Embed
         'url': 'https://www.msn.com/en-gb/video/webcontent/web-content/vi-AA1ybFaJ',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'kQSChWu95nE',
             'ext': 'mp4',
@@ -122,6 +127,7 @@ class MSNIE(InfoExtractor):
     }, {
         # Article with social embed
         'url': 'https://www.msn.com/en-in/news/techandscience/watch-earth-sets-and-rises-behind-moon-in-breathtaking-blue-ghost-video/ar-AA1zKoAc',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'AA1zKoAc',
             'title': 'Watch: Earth sets and rises behind Moon in breathtaking Blue Ghost video',

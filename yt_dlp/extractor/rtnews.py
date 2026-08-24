@@ -76,6 +76,7 @@ class RTDocumentryIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://rtd.rt.com/shows/the-kalashnikova-show-military-secrets-anna-knishenko/iskander-tactical-system-natos-headache/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'iskander-tactical-system-natos-headache',
             'ext': 'mp4',
@@ -91,6 +92,7 @@ class RTDocumentryIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://rtd.rt.com/series/i-am-hacked-trailer/introduction-to-safe-digital-life-ep2/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'introduction-to-safe-digital-life-ep2',
             'ext': 'mp4',
@@ -132,12 +134,14 @@ class RTDocumentryPlaylistIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://rtd.rt.com/series/i-am-hacked-trailer/',
+        'skip': 'video gone',
         'playlist_mincount': 6,
         'info_dict': {
             'id': 'i-am-hacked-trailer',
         },
     }, {
         'url': 'https://rtd.rt.com/shows/the-kalashnikova-show-military-secrets-anna-knishenko/',
+        'skip': 'video gone',
         'playlist_mincount': 34,
         'info_dict': {
             'id': 'the-kalashnikova-show-military-secrets-anna-knishenko',
@@ -169,6 +173,7 @@ class RuptlyIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.ruptly.tv/en/videos/20220112-020-Japan-Double-trouble-Tokyo-zoo-presents-adorable-panda-twins',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': '20220112-020',
             'ext': 'mp4',

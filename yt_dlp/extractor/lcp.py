@@ -26,6 +26,7 @@ class LcpIE(InfoExtractor):
     _TESTS = [{
         # dailymotion live stream
         'url': 'http://www.lcp.fr/le-direct',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'xji3qy',
             'ext': 'mp4',

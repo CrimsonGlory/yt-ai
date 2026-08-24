@@ -32,6 +32,7 @@ class HSEShowIE(HSEShowBaseIE):
     _VALID_URL = r'https?://(?:www\.)?hse\.de/dpl/c/tv-shows/(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'https://www.hse.de/dpl/c/tv-shows/505350',
+        'skip': 'video gone',
         'info_dict': {
             'id': '505350',
             'ext': 'mp4',

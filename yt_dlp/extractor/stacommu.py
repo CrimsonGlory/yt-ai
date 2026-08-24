@@ -111,6 +111,7 @@ class StacommuVODIE(StacommuBaseIE):
     }, {
         # encrypted; requires a premium account
         'url': 'https://www.stacommu.jp/videos/episodes/3hybMByUvzMEqndSeu5LpD',
+        'skip': 'Login required',
         'info_dict': {
             'id': '3hybMByUvzMEqndSeu5LpD',
             'ext': 'mp4',
@@ -144,6 +145,7 @@ class StacommuLiveIE(StacommuBaseIE):
     _VALID_URL = r'https?://www\.stacommu\.jp/(?:en/)?live/(?P<id>[\da-zA-Z]+)'
     _TESTS = [{
         'url': 'https://www.stacommu.jp/live/d2FJ3zLnndegZJCAEzGM3m',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'd2FJ3zLnndegZJCAEzGM3m',
             'ext': 'mp4',
@@ -189,6 +191,7 @@ class TheaterComplexTownVODIE(TheaterComplexTownBaseIE):
     IE_NAME = 'theatercomplextown:vod'
     _TESTS = [{
         'url': 'https://www.theater-complex.town/videos/episodes/hoxqidYNoAn7bP92DN6p78',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'hoxqidYNoAn7bP92DN6p78',
             'ext': 'mp4',
@@ -222,6 +225,7 @@ class TheaterComplexTownPPVIE(TheaterComplexTownBaseIE):
     IE_NAME = 'theatercomplextown:ppv'
     _TESTS = [{
         'url': 'https://www.theater-complex.town/ppv/wytW3X7khrjJBUpKuV3jen',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'wytW3X7khrjJBUpKuV3jen',
             'ext': 'mp4',

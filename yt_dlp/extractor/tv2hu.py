@@ -20,12 +20,14 @@ class TV2HuIE(InfoExtractor):
             'thumbnail': r're:^https?://.*\.jpg$',
             'release_date': '20210825',
             'episode_number': 213,
+            'episode': str,
         },
         'params': {
             'skip_download': True,
         },
     }, {
         'url': 'https://tv2play.hu/taxi_2',
+        'skip': 'video gone',
         'md5': '585e58e2e090f34603804bb2c48e98d8',
         'info_dict': {
             'id': '199363',
@@ -84,7 +86,7 @@ class TV2HuSeriesIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://tv2play.hu/szalag/59?rendezes=nepszeruseg',
-        'playlist_mincount': 284,
+        'playlist_mincount': 262,
         'info_dict': {
             'id': '59',
         },

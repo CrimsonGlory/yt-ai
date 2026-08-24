@@ -23,7 +23,7 @@ class TeamTreeHouseIE(InfoExtractor):
         'info_dict': {
             'id': 'introduction-to-user-authentication-in-php',
             'title': 'Introduction to User Authentication in PHP',
-            'description': 'md5:405d7b4287a159b27ddf30ca72b5b053',
+            'description': 'md5:49e31bf38cdc48ec0a6c18c6dd5224d6',
         },
         'playlist_mincount': 24,
     }, {
@@ -42,7 +42,7 @@ class TeamTreeHouseIE(InfoExtractor):
             'id': 'application-overview-2',
             'ext': 'mp4',
             'title': 'Application Overview',
-            'description': 'md5:4b0a234385c27140a4378de5f1e15127',
+            'description': 'md5:7f6e9d217cf04ebf11fb449bdf14516f',
         },
         'expected_warnings': ['This is just a preview'],
     }]

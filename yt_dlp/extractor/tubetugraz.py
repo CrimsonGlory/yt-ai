@@ -187,6 +187,7 @@ class TubeTuGrazSeriesIE(TubeTuGrazBaseIE):
     '''
     _TESTS = [{
         'url': 'https://tube.tugraz.at/paella/ui/browse.html?series=0e6351b7-c372-491e-8a49-2c9b7e21c5a6',
+        'skip': 'video gone',
         'id': '0e6351b7-c372-491e-8a49-2c9b7e21c5a6',
         'info_dict': {
             'id': '0e6351b7-c372-491e-8a49-2c9b7e21c5a6',

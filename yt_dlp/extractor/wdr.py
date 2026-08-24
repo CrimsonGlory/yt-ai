@@ -26,6 +26,7 @@ class WDRIE(InfoExtractor):
     _GEO_COUNTRIES = ['DE']
     _TESTS = [{
         'url': 'http://deviceids-medp.wdr.de/ondemand/155/1557833.js',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'mdb-1557833',
             'ext': 'mp4',
@@ -322,6 +323,7 @@ class WDRElefantIE(InfoExtractor):
             'id': 'mdb-1198320',
             'ext': 'mp4',
             'upload_date': '20071003',
+            'alt_title': str,
         },
     }
 

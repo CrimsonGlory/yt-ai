@@ -6,6 +6,7 @@ class IsraelNationalNewsIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?israelnationalnews\.com/news/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.israelnationalnews.com/news/354520',
+        'skip': 'video gone',
         'info_dict': {
             'id': '354520',
         },

@@ -22,6 +22,7 @@ class StreamsbIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?P<domain>%s)/(?:embed-)?(?P<id>[0-9a-zA-Z]+)' % '|'.join(_DOMAINS)
     _TESTS = [{
         'url': 'https://viewsb.com/dxfvlu4qanjx',
+        'skip': 'Site no longer exists or is broken',
         'md5': '488d111a63415369bf90ea83adc8a325',
         'info_dict': {
             'id': 'dxfvlu4qanjx',

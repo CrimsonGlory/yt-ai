@@ -207,7 +207,7 @@ class WistiaIE(WistiaBaseIE):
             'id': '5vd7p4bct5',
             'ext': 'mp4',
             'title': 'md5:eaa9f64c4efd7b5f098b9b6118597679',
-            'description': 'md5:a9bea0315f0616aa5df2dc413ddcdd0f',
+            'description': 'md5:4457eb7ecea284d8178fbdb6d4edd4a3',
             'upload_date': '20220915',
             'timestamp': 1663258727,
             'duration': 623.019,

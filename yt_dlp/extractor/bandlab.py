@@ -195,6 +195,7 @@ class BandlabIE(BandlabBaseIE):
     }, {
         # Video
         'url': 'https://www.bandlab.com/post/5cdf9036-3857-ef11-991a-6045bd36e0d9',
+        'skip': 'HTTP Error 403',
         'md5': '8caa2ef28e86c1dacf167293cfdbeba9',
         'info_dict': {
             'id': '5cdf9036-3857-ef11-991a-6045bd36e0d9',
@@ -234,6 +235,7 @@ class BandlabIE(BandlabBaseIE):
     }, {
         # Track without revisions available
         'url': 'https://www.bandlab.com/track/55767ac51789ea11a94c0003ffd1fc09_2f007b0a37b94ec7a69bc25ae15108a5',
+        'skip': 'HTTP Error 403',
         'md5': 'f05d68a3769952c2d9257c473e14c15f',
         'info_dict': {
             'id': '55767ac51789ea11a94c0003ffd1fc09_2f007b0a37b94ec7a69bc25ae15108a5',
@@ -367,6 +369,7 @@ class BandlabPlaylistIE(BandlabBaseIE):
     }, {
         # Tracks without revision id
         'url': 'https://www.bandlab.com/embed/collection/?id=e98aafb5-d932-ee11-b8f0-00224844c719',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'like_count': int,
             'uploader_id': 'sorakime',

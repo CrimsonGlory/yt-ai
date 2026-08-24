@@ -46,6 +46,7 @@ class MxplayerIE(MxplayerBaseIE):
     _TESTS = [{
         # show, mxplay
         'url': 'https://www.mxplayer.in/show/watch-my-girlfriend-is-an-alien/season-1/episode-1-online-9d2013d31d5835bb8400e3b3c5e7bb72',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '9d2013d31d5835bb8400e3b3c5e7bb72',
             'ext': 'mp4',
@@ -74,6 +75,7 @@ class MxplayerIE(MxplayerBaseIE):
     }, {
         # show, mxplay, NFSW
         'url': 'https://www.mxplayer.in/show/watch-miya-biwi-aur-murder/season-1/episode-1-online-ca17972f052449de6633129ddd7db90b',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'ca17972f052449de6633129ddd7db90b',
             'ext': 'mp4',
@@ -102,6 +104,7 @@ class MxplayerIE(MxplayerBaseIE):
     }, {
         # shorts, mxplay
         'url': 'https://www.mxplayer.in/shorts/watch-official-trailer-made-in-india-a-titan-story-online-c36b0ad18e56f1da0743ad826fe9e14b',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'c36b0ad18e56f1da0743ad826fe9e14b',
             'ext': 'mp4',
@@ -123,6 +126,7 @@ class MxplayerIE(MxplayerBaseIE):
     }, {
         # movie, mxplay
         'url': 'https://www.mxplayer.in/movie/watch-thiruchitrambalam-movie-online-fbba39c1fdf8b14cffcea05f0635da84',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'fbba39c1fdf8b14cffcea05f0635da84',
             'ext': 'mp4',
@@ -148,6 +152,7 @@ class MxplayerIE(MxplayerBaseIE):
     }, {
         # movie, thirdParty
         'url': 'https://www.mxplayer.in/movie/watch-drishyam-2-hindi-movie-online-2c580670b2104d156e2d9a3fd42a413e',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '2c580670b2104d156e2d9a3fd42a413e',
             'ext': 'mp4',
@@ -252,6 +257,7 @@ class MxplayerSeasonIE(MxplayerBaseIE):
     _VALID_URL = r'https?://(?:www\.)?mxplayer\.in/show/[\w-]+/seasons/[\w-]+-(?P<id>[0-9a-f]{32})(?:[/?#]|$)'
     _TESTS = [{
         'url': 'https://www.mxplayer.in/show/watch-campus-beats/seasons/season-4-925794ae840c597b3c36f2d8f2f138b8',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '925794ae840c597b3c36f2d8f2f138b8',
             'title': 'Campus Beats - Season 4',
@@ -298,6 +304,7 @@ class MxplayerShowIE(MxplayerBaseIE):
     _VALID_URL = r'https?://(?:www\.)?mxplayer\.in/show/[\w-]+-(?P<id>[0-9a-f]{32})(?:[/?#]|$)'
     _TESTS = [{
         'url': 'https://www.mxplayer.in/show/watch-bhaukaal-series-online-775ad3b682fde6a608559a60986b230d',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '775ad3b682fde6a608559a60986b230d',
             'title': 'Bhaukaal',
@@ -339,6 +346,7 @@ class MxplayerRedirectIE(MxplayerBaseIE):
         # episode
         # https://www.mxplayer.in/show/watch-that-time-i-got-reincarnated-as-a-slime/season-2/megiddo-online-3eda0b3baf27f2892d3fca2fd650fb95
         'url': 'https://www.mxplayer.in/detail/episode/3eda0b3baf27f2892d3fca2fd650fb95',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '3eda0b3baf27f2892d3fca2fd650fb95',
             'ext': 'mp4',
@@ -368,6 +376,7 @@ class MxplayerRedirectIE(MxplayerBaseIE):
         # movie
         # https://www.mxplayer.in/movie/watch-sardar-udham-movie-online-0c586053d7ac563ca911ddfe08cf922f
         'url': 'https://www.mxplayer.in/detail/movie/0c586053d7ac563ca911ddfe08cf922f',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '0c586053d7ac563ca911ddfe08cf922f',
             'ext': 'mp4',
@@ -394,6 +403,7 @@ class MxplayerRedirectIE(MxplayerBaseIE):
         # shorts
         # https://www.mxplayer.in/shorts/watch-official-trailer-lafangey-sapne-dosti-duniya-online-55c77863e406c7b71f6bab28f7fbbe85
         'url': 'https://www.mxplayer.in/detail/shorts/55c77863e406c7b71f6bab28f7fbbe85',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '55c77863e406c7b71f6bab28f7fbbe85',
             'ext': 'mp4',
@@ -416,6 +426,7 @@ class MxplayerRedirectIE(MxplayerBaseIE):
         # season
         # https://www.mxplayer.in/show/watch-demon-slayer/seasons/season-3-41a6d7432bea96f2f0d06a625b39d9b1
         'url': 'https://www.mxplayer.in/detail/season/41a6d7432bea96f2f0d06a625b39d9b1',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '41a6d7432bea96f2f0d06a625b39d9b1',
             'title': 'Demon Slayer - Season 3',
@@ -425,6 +436,7 @@ class MxplayerRedirectIE(MxplayerBaseIE):
         # tvshow
         # https://www.mxplayer.in/show/watch-my-hero-academia-series-online-e7c68fb3951e61986af073a719c2ee4f
         'url': 'https://www.mxplayer.in/detail/tvshow/e7c68fb3951e61986af073a719c2ee4f',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'e7c68fb3951e61986af073a719c2ee4f',
             'title': 'My Hero Academia',

@@ -17,6 +17,7 @@ class GameSpotIE(InfoExtractor):
         'skip': 'manifest URL give HTTP Error 404: Not Found',
     }, {
         'url': 'http://www.gamespot.com/videos/the-witcher-3-wild-hunt-xbox-one-now-playing/2300-6424837/',
+        'skip': 'HTTP Error 403',
         'md5': '173ea87ad762cf5d3bf6163dceb255a6',
         'info_dict': {
             'id': 'gs-2300-6424837',

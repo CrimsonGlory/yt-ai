@@ -11,6 +11,7 @@ class ScreencastifyIE(InfoExtractor):
     ]
     _TESTS = [{
         'url': 'https://watch.screencastify.com/v/sYVkZip3quLKhHw4Ybk8',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'sYVkZip3quLKhHw4Ybk8',
             'ext': 'mp4',

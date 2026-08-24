@@ -439,6 +439,7 @@ class ZDFIE(ZDFBaseIE):
     }, {
         # Live stream
         'url': 'https://www.zdf.de/play/live-tv/sender/zdf-live-beitrag-100',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'zdf-live-beitrag-100',
             'ext': 'mp4',

@@ -43,6 +43,7 @@ class ITVIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.itv.com/hub/the-jonathan-ross-show/2a1166a0209',
+        'skip': 'video gone',
         'info_dict': {
             'id': '2a1166a0209',
             'ext': 'mp4',

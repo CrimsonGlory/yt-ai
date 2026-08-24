@@ -10,11 +10,12 @@ class BaiduVideoIE(InfoExtractor):
         'info_dict': {
             'id': '1069',
             'title': '中华小当家 TV版国语',
-            'description': 'md5:51be07afe461cf99fa61231421b5397c',
+            'description': 'md5:a915f384c1b31ed93e37777e1f8bf3e7',
         },
         'playlist_count': 52,
     }, {
         'url': 'http://v.baidu.com/show/11595.htm?frp=bdbrand',
+        'skip': 'video gone',
         'info_dict': {
             'id': '11595',
             'title': 're:^奔跑吧兄弟',

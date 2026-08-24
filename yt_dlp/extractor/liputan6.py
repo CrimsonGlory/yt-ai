@@ -29,6 +29,7 @@ class Liputan6IE(InfoExtractor):
         },
     }, {
         'url': 'https://www.liputan6.com/tv/read/5007719/video-program-minyakita-minyak-goreng-kemasan-sederhana-seharga-rp-14-ribu',
+        'skip': 'video gone',
         'info_dict': {
             'id': '7082543',
             'ext': 'mp4',

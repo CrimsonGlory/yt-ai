@@ -89,6 +89,7 @@ class SverigesRadioPublicationIE(SverigesRadioBaseIE):
     _VALID_URL = r'https?://(?:www\.)?sverigesradio\.se/(?:sida/)?(?:artikel|gruppsida)(?:\.aspx\?.*?\bartikel=(?P<id>[0-9]+)|/(?P<slug>[\w-]+))'
     _TESTS = [{
         'url': 'https://sverigesradio.se/sida/artikel.aspx?programid=83&artikel=7038546',
+        'skip': 'video gone',
         'md5': '6a4917e1923fccb080e5a206a5afa542',
         'info_dict': {
             'id': '7038546',
@@ -123,6 +124,7 @@ class SverigesRadioEpisodeIE(SverigesRadioBaseIE):
     _VALID_URL = r'https?://(?:www\.)?sverigesradio\.se/(?:sida/)?avsnitt/(?:(?P<id>\d+)|(?P<slug>[\w-]+))(?:$|[#?])'
     _TESTS = [{
         'url': 'https://sverigesradio.se/avsnitt/1140922?programid=1300',
+        'skip': 'video gone',
         'md5': '20dc4d8db24228f846be390b0c59a07c',
         'info_dict': {
             'id': '1140922',
@@ -135,6 +137,7 @@ class SverigesRadioEpisodeIE(SverigesRadioBaseIE):
         },
     }, {
         'url': 'https://sverigesradio.se/avsnitt/p4-live-med-first-aid-kit-scandinavium-mars-2023',
+        'skip': 'video gone',
         'md5': 'ce17fb82520a8033dbb846993d5589fe',
         'info_dict': {
             'id': '2160416',

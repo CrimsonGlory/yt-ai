@@ -289,7 +289,7 @@ class MixcloudUserIE(MixcloudPlaylistBaseIE):
         'info_dict': {
             'id': 'dholbach_uploads',
             'title': 'dholbach (uploads)',
-            'description': 'md5:a3f468a60ac8c3e1f8616380fc469b2b',
+            'description': 'md5:aef3caf7a5ee6f8ab7857f95bf87da44',
         },
         'playlist_mincount': 36,
     }, {
@@ -297,7 +297,7 @@ class MixcloudUserIE(MixcloudPlaylistBaseIE):
         'info_dict': {
             'id': 'dholbach_uploads',
             'title': 'dholbach (uploads)',
-            'description': 'md5:a3f468a60ac8c3e1f8616380fc469b2b',
+            'description': 'md5:aef3caf7a5ee6f8ab7857f95bf87da44',
         },
         'playlist_mincount': 36,
     }, {
@@ -305,7 +305,7 @@ class MixcloudUserIE(MixcloudPlaylistBaseIE):
         'info_dict': {
             'id': 'dholbach_favorites',
             'title': 'dholbach (favorites)',
-            'description': 'md5:a3f468a60ac8c3e1f8616380fc469b2b',
+            'description': 'md5:aef3caf7a5ee6f8ab7857f95bf87da44',
         },
         # 'params': {
         #     'playlist_items': '1-100',

@@ -24,6 +24,7 @@ class BundestagIE(InfoExtractor):
     ]
     _TESTS = [{
         'url': 'https://dbtg.tv/cvid/7605304',
+        'skip': 'video gone',
         'info_dict': {
             'id': '7605304',
             'ext': 'mp4',
@@ -32,6 +33,7 @@ class BundestagIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.bundestag.de/mediathek?videoid=7602120&url=L21lZGlhdGhla292ZXJsYXk=&mod=mediathek',
+        'skip': 'video gone',
         'info_dict': {
             'id': '7602120',
             'ext': 'mp4',

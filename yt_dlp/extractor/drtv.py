@@ -253,6 +253,7 @@ class DRTVLiveIE(InfoExtractor):
     _GEO_COUNTRIES = ['DK']
     _TEST = {
         'url': 'https://www.dr.dk/tv/live/dr1',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'dr1',
             'ext': 'mp4',

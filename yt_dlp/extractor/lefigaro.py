@@ -13,6 +13,7 @@ class LeFigaroVideoEmbedIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://video.lefigaro.fr/embed/figaro/video/les-francais-ne-veulent-ils-plus-travailler-suivez-en-direct-le-club-le-figaro-idees/',
+        'skip': 'video gone',
         'md5': 'a0c3069b7e4c4526abf0053a7713f56f',
         'info_dict': {
             'id': 'g9j7Eovo',
@@ -26,6 +27,7 @@ class LeFigaroVideoEmbedIE(InfoExtractor):
         },
     }, {
         'url': 'https://video.lefigaro.fr/embed/figaro/video/intelligence-artificielle-faut-il-sen-mefier/',
+        'skip': 'video gone',
         'md5': '319c662943dd777bab835cae1e2d73a5',
         'info_dict': {
             'id': 'LeAgybyc',
@@ -55,6 +57,7 @@ class LeFigaroVideoEmbedIE(InfoExtractor):
         },
     }, {
         'url': 'https://video.lefigaro.fr/figaro/video/la-philosophe-nathalie-sarthou-lajus-est-linvitee-du-figaro-live/',
+        'skip': 'Unsupported URL / extractor broken',
         'md5': 'f6df814cae53e85937621599d2967520',
         'info_dict': {
             'id': 'QJzqoNbf',

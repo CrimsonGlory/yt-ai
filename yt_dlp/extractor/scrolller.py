@@ -8,6 +8,7 @@ class ScrolllerIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?scrolller\.com/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://scrolller.com/a-helping-hand-1k9pxikxkw',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'a-helping-hand-1k9pxikxkw',
             'ext': 'mp4',
@@ -17,6 +18,7 @@ class ScrolllerIE(InfoExtractor):
         },
     }, {
         'url': 'https://scrolller.com/tigers-chasing-a-drone-c5d1f2so6j',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'tigers-chasing-a-drone-c5d1f2so6j',
             'ext': 'mp4',
@@ -26,6 +28,7 @@ class ScrolllerIE(InfoExtractor):
         },
     }, {
         'url': 'https://scrolller.com/baby-rhino-smells-something-9chhugsv9p',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'baby-rhino-smells-something-9chhugsv9p',
             'ext': 'mp4',
@@ -35,6 +38,7 @@ class ScrolllerIE(InfoExtractor):
         },
     }, {
         'url': 'https://scrolller.com/its-all-fun-and-games-cco8jjmoh7',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'its-all-fun-and-games-cco8jjmoh7',
             'ext': 'mp4',
@@ -44,6 +48,7 @@ class ScrolllerIE(InfoExtractor):
         },
     }, {
         'url': 'https://scrolller.com/may-the-force-be-with-you-octokuro-yeytg1fs7a',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'may-the-force-be-with-you-octokuro-yeytg1fs7a',
             'ext': 'mp4',

@@ -6,10 +6,10 @@ class NovaPlayIE(InfoExtractor):
     _VALID_URL = r'https?://play\.nova\.bg/video/[^?#]+/(?P<id>\d+)'
     _TESTS = [
         {
-            'url': 'https://play.nova.bg/video/ochakvaite/season-0/ochakvaite-2022-07-22-sybudi-se-sat/606627',
+            'url': 'https://play.nova.bg/video/ochakvaite/season-0/ochakvaite-2026-08-18-dolinata-na-liubovta-np/665491',
             'md5': 'd79dff2d09d196c595a7290f48e33399',
             'info_dict': {
-                'id': '606627',
+                'id': '665491',
                 'ext': 'mp4',
                 'title': 'Събуди се - събота по NOVA (23.07.2022)',
                 'alt_title': 'ochakvaite/season-0/ochakvaite-2022-07-22-sybudi-se-sat',
@@ -22,6 +22,7 @@ class NovaPlayIE(InfoExtractor):
         },
         {
             'url': 'https://play.nova.bg/video/ochakvaite/season-0/ochakvaite-2022-07-22-cherry-tazi/606609',
+            'skip': 'video gone',
             'md5': 'f3e973e2ed1a5b9b3f498b1ab82d01b3',
             'info_dict': {
                 'id': '606609',

@@ -19,7 +19,7 @@ class CCTVIE(InfoExtractor):
             'id': '5ecdbeab623f4973b40ff25f18b174e8',
             'ext': 'mp4',
             'title': '[NBA]二少联手砍下46分 雷霆主场击败鹈鹕（快讯）',
-            'description': 'md5:7e14a5328dc5eb3d1cd6afbbe0574e95',
+            'description': 'md5:a530bb10317153e3862cc8c1bb9b930f',
             'duration': 98,
             'uploader': 'songjunjie',
             'timestamp': 1455279956,
@@ -44,6 +44,7 @@ class CCTVIE(InfoExtractor):
     }, {
         # changePlayer('id')
         'url': 'http://english.cntv.cn/special/four_comprehensives/index.shtml',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': '4bb9bb4db7a6471ba85fdeda5af0381e',
             'ext': 'mp4',
@@ -76,6 +77,7 @@ class CCTVIE(InfoExtractor):
     }, {
         # var initMyAray = 'id'
         'url': 'http://www.ncpa-classic.com/2013/05/22/VIDE1369219508996867.shtml',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': 'a194cfa7f18c426b823d876668325946',
             'ext': 'mp4',
@@ -97,6 +99,8 @@ class CCTVIE(InfoExtractor):
             'uploader': 'yangjuan',
             'timestamp': 1708554940,
             'upload_date': '20240221',
+            'description': str,
+            'duration': int,
         },
         'params': {
             'skip_download': True,
@@ -104,6 +108,7 @@ class CCTVIE(InfoExtractor):
     }, {
         # var ids = ["id"]
         'url': 'http://www.ncpa-classic.com/clt/more/416/index.shtml',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': 'a8606119a4884588a79d81c02abecc16',
             'ext': 'mp3',

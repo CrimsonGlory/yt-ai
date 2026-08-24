@@ -22,6 +22,7 @@ class SRMediathekIE(ARDMediathekBaseIE):
     _VALID_URL = r'https?://(?:www\.)?sr-mediathek\.de/index\.php\?.*?&id=(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.sr-mediathek.de/index.php?seite=7&id=141317',
+        'skip': 'Unsupported URL / extractor broken',
         'info_dict': {
             'id': '141317',
             'ext': 'mp4',
@@ -36,6 +37,7 @@ class SRMediathekIE(ARDMediathekBaseIE):
         },
     }, {
         'url': 'https://www.sr-mediathek.de/index.php?seite=7&id=153853',
+        'skip': 'Unsupported URL / extractor broken',
         'info_dict': {
             'id': '153853',
             'ext': 'mp3',

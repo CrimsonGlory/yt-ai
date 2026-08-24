@@ -6,6 +6,7 @@ class GlideIE(InfoExtractor):
     _VALID_URL = r'https?://share\.glide\.me/(?P<id>[A-Za-z0-9\-=_+]+)'
     _TEST = {
         'url': 'http://share.glide.me/UZF8zlmuQbe4mr+7dCiQ0w==',
+        'skip': 'video gone',
         'md5': '4466372687352851af2d131cfaa8a4c7',
         'info_dict': {
             'id': 'UZF8zlmuQbe4mr+7dCiQ0w==',

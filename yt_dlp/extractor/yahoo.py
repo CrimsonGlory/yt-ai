@@ -34,7 +34,7 @@ class YahooIE(InfoExtractor):
             'upload_date': '20131129',
             'display_id': 'china-moses-crazy-blues-104538833',
             'view_count': int,
-            'thumbnail': r're:https://media\.zenfs\.com/.+',
+            'thumbnail': r're:https?://.*',
         },
     }, {
         'url': 'https://www.yahoo.com/movies/v/true-story-trailer-173000497.html',
@@ -287,9 +287,9 @@ class YahooJapanNewsIE(InfoExtractor):
     _VALID_URL = r'https?://news\.yahoo\.co\.jp/(?:articles|feature)/(?P<id>[a-zA-Z0-9]+)'
     _GEO_COUNTRIES = ['JP']
     _TESTS = [{
-        'url': 'https://news.yahoo.co.jp/articles/a70fe3a064f1cfec937e2252c7fc6c1ba3201c0e',
+        'url': 'https://news.yahoo.co.jp/articles/b060b38db6a10fadb9540dd724310e092a9a68a5',
         'info_dict': {
-            'id': 'a70fe3a064f1cfec937e2252c7fc6c1ba3201c0e',
+            'id': 'b060b38db6a10fadb9540dd724310e092a9a68a5',
             'ext': 'mp4',
             'title': '【独自】安倍元総理「国葬」中止求め“脅迫メール”…「子ども誘拐」“送信者”を追跡',
             'description': 'md5:1c06974575f930f692d8696fbcfdc546',

@@ -36,6 +36,7 @@ class Art19IE(InfoExtractor):
         },
     }, {
         'url': 'https://art19.com/shows/scamfluencers/episodes/8319b776-4153-4d22-8630-631f204a03dd',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '8319b776-4153-4d22-8630-631f204a03dd',
             'ext': 'mp3',
@@ -82,6 +83,7 @@ class Art19IE(InfoExtractor):
         },
     }, {
         'url': 'https://www.wishtv.com/podcast-episode/larry-bucshon-announces-retirement-from-congress/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '8da368bd-08d1-46d0-afaa-c134a4af7dc0',
             'ext': 'mp3',
@@ -181,6 +183,7 @@ class Art19ShowIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.art19.com/shows/5898c087-a14f-48dc-b6fc-a2280a1ff6e0/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             '_type': 'playlist',
             'id': '5898c087-a14f-48dc-b6fc-a2280a1ff6e0',
@@ -196,6 +199,7 @@ class Art19ShowIE(InfoExtractor):
         'playlist_mincount': 425,
     }, {
         'url': 'https://www.art19.com/shows/echt-gebeurd',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             '_type': 'playlist',
             'id': '5898c087-a14f-48dc-b6fc-a2280a1ff6e0',
@@ -216,7 +220,7 @@ class Art19ShowIE(InfoExtractor):
             'id': 'd3c9b8ca-26b3-42f4-9bd8-21d1a9031e75',
             'display_id': 'scamfluencers',
             'title': 'Scamfluencers',
-            'description': 'md5:7d239d670c0ced6dadbf71c4caf764b7',
+            'description': 'md5:f7177f144183a524cb9ac0ac42434a61',
             'timestamp': 1647368573,
             'upload_date': '20220315',
             'modified_timestamp': int,
@@ -226,6 +230,7 @@ class Art19ShowIE(InfoExtractor):
         'playlist_mincount': 90,
     }, {
         'url': 'https://art19.com/shows/enthuellt/embed',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             '_type': 'playlist',
             'id': 'e2cacf57-bb8a-4263-aa81-719bcdd4f80c',
@@ -262,7 +267,7 @@ class Art19ShowIE(InfoExtractor):
             'id': '9dfa2c37-ab87-4c13-8388-4897914313ec',
             'display_id': 'the-ben-joravsky-show',
             'title': 'The Ben Joravsky Show',
-            'description': 'md5:c0f3ec0ee0dbea764390e521adc8780a',
+            'description': 'md5:bde23f342bb8f7f7d60ced90e6bbaf0c',
             'timestamp': 1550875095,
             'upload_date': '20190222',
             'modified_timestamp': int,

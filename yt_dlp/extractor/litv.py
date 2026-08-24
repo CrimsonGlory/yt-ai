@@ -20,6 +20,7 @@ class LiTVIE(InfoExtractor):
     _GEO_COUNTRIES = ['TW']
     _TESTS = [{
         'url': 'https://www.litv.tv/drama/watch/VOD00041610',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'VOD00041606',
             'title': '花千骨',
@@ -27,6 +28,7 @@ class LiTVIE(InfoExtractor):
         'playlist_count': 51,  # 50 episodes + 1 trailer
     }, {
         'url': 'https://www.litv.tv/drama/watch/VOD00041610',
+        'skip': 'video gone',
         'md5': 'b90ff1e9f1d8f5cfcd0a44c3e2b34c7a',
         'info_dict': {
             'id': 'VOD00041610',

@@ -15,6 +15,7 @@ class CPACIE(InfoExtractor):
     _TEST = {
         # 'url': 'http://www.cpac.ca/en/programs/primetime-politics/episodes/65490909',
         'url': 'https://www.cpac.ca/episode?id=fc7edcae-4660-47e1-ba61-5b7f29a9db0f',
+        'skip': 'video gone',
         'md5': 'e46ad699caafd7aa6024279f2614e8fa',
         'info_dict': {
             'id': 'fc7edcae-4660-47e1-ba61-5b7f29a9db0f',
@@ -76,6 +77,7 @@ class CPACPlaylistIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.cpac.ca/program?id=6',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'id=6',
             'title': 'Headline Politics',
@@ -84,6 +86,7 @@ class CPACPlaylistIE(InfoExtractor):
         'playlist_count': 10,
     }, {
         'url': 'https://www.cpac.ca/search?key=hudson&type=all&order=desc',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'key=hudson',
             'title': 'hudson',
@@ -91,6 +94,7 @@ class CPACPlaylistIE(InfoExtractor):
         'playlist_count': 22,
     }, {
         'url': 'https://www.cpac.ca/search?programId=50',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'programId=50',
             'title': '50',

@@ -23,6 +23,7 @@ class MixlrIE(InfoExtractor):
         },
     }, {
         'url': 'https://brcountdown.mixlr.com/events/4395480',
+        'skip': 'video gone',
         'info_dict': {
             'id': '4395480',
             'ext': 'aac',

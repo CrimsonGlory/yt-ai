@@ -75,6 +75,7 @@ class ThreeSpeakUserIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://3speak.tv/user/theycallmedan',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'theycallmedan',
         },

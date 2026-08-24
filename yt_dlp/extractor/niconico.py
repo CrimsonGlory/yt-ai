@@ -242,6 +242,7 @@ class NiconicoIE(NiconicoBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.nicovideo.jp/watch/so38016254',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'so38016254',
             'ext': 'mp4',
@@ -774,6 +775,7 @@ class NicovideoSearchURLIE(NicovideoSearchBaseIE):
     _VALID_URL = r'https?://(?:www\.)?nicovideo\.jp/search/(?P<id>[^?#&]+)?'
     _TESTS = [{
         'url': 'http://www.nicovideo.jp/search/sm9',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'sm9',
             'title': 'sm9',
@@ -781,6 +783,7 @@ class NicovideoSearchURLIE(NicovideoSearchBaseIE):
         'playlist_mincount': 40,
     }, {
         'url': 'https://www.nicovideo.jp/search/sm9?sort=h&order=d&end=2020-12-31&start=2020-01-01',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'sm9',
             'title': 'sm9',
@@ -799,6 +802,7 @@ class NicovideoSearchDateIE(NicovideoSearchBaseIE, SearchInfoExtractor):
     _SEARCH_KEY = 'nicosearchdate'
     _TESTS = [{
         'url': 'nicosearchdateall:a',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'a',
             'title': 'a',
@@ -846,6 +850,7 @@ class NicovideoTagURLIE(NicovideoSearchBaseIE):
     _VALID_URL = r'https?://(?:www\.)?nicovideo\.jp/tag/(?P<id>[^?#&]+)?'
     _TESTS = [{
         'url': 'https://www.nicovideo.jp/tag/ドキュメンタリー淫夢',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'ドキュメンタリー淫夢',
             'title': 'ドキュメンタリー淫夢',
@@ -862,6 +867,7 @@ class NiconicoUserIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?nicovideo\.jp/user/(?P<id>\d+)(?:/video)?/?(?:$|[#?])'
     _TEST = {
         'url': 'https://www.nicovideo.jp/user/419948',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': '419948',
         },

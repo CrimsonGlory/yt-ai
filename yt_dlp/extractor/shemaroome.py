@@ -18,7 +18,7 @@ class ShemarooMeIE(InfoExtractor):
             'title': 'Dil Hai Tumhaara',
             'release_date': '20020906',
             'thumbnail': r're:^https?://.*\.jpg$',
-            'description': 'md5:2782c4127807103cf5a6ae2ca33645ce',
+            'description': 'md5:d41d8cd98f00b204e9800998ecf8427e',
         },
         'params': {
             'skip_download': True,

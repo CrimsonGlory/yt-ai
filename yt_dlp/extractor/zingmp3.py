@@ -122,6 +122,7 @@ class ZingMp3IE(ZingMp3BaseIE):
         },
     }, {
         'url': 'https://zingmp3.vn/video-clip/Suong-Hoa-Dua-Loi-K-ICM-RYO/ZO8ZF7C7.html',
+        'skip': 'video gone',
         'md5': '92c6e7a019f06b4682a6c35ae5785fab',
         'info_dict': {
             'id': 'ZO8ZF7C7',
@@ -271,18 +272,21 @@ class ZingMp3ChartHomeIE(ZingMp3BaseIE):
     _VALID_URL = r'https?://(?:mp3\.zing|zingmp3)\.vn/(?P<id>(?:zing-chart|moi-phat-hanh|top100|podcast-discover))/?(?:[#?]|$)'
     _TESTS = [{
         'url': 'https://zingmp3.vn/zing-chart',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'zing-chart',
         },
         'playlist_mincount': 100,
     }, {
         'url': 'https://zingmp3.vn/moi-phat-hanh',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'moi-phat-hanh',
         },
         'playlist_mincount': 100,
     }, {
         'url': 'https://zingmp3.vn/top100',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'top100',
         },
@@ -317,6 +321,7 @@ class ZingMp3WeekChartIE(ZingMp3BaseIE):
     IE_NAME = 'zingmp3:week-chart'
     _TESTS = [{
         'url': 'https://zingmp3.vn/zing-chart-tuan/Bai-hat-Viet-Nam/IWZ9Z08I.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'IWZ9Z08I',
             'title': 'zing-chart-vn',
@@ -324,6 +329,7 @@ class ZingMp3WeekChartIE(ZingMp3BaseIE):
         'playlist_mincount': 10,
     }, {
         'url': 'https://zingmp3.vn/zing-chart-tuan/Bai-hat-US-UK/IWZ9Z0BW.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'IWZ9Z0BW',
             'title': 'zing-chart-us',
@@ -331,6 +337,7 @@ class ZingMp3WeekChartIE(ZingMp3BaseIE):
         'playlist_mincount': 10,
     }, {
         'url': 'https://zingmp3.vn/zing-chart-tuan/Bai-hat-KPop/IWZ9Z0BO.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'IWZ9Z0BO',
             'title': 'zing-chart-korea',
@@ -350,6 +357,7 @@ class ZingMp3ChartMusicVideoIE(ZingMp3BaseIE):
     IE_NAME = 'zingmp3:chart-music-video'
     _TESTS = [{
         'url': 'https://zingmp3.vn/the-loai-video/Viet-Nam/IWZ9Z08I.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'IWZ9Z08I',
             'title': 'the-loai-video_Viet-Nam',
@@ -357,6 +365,7 @@ class ZingMp3ChartMusicVideoIE(ZingMp3BaseIE):
         'playlist_mincount': 400,
     }, {
         'url': 'https://zingmp3.vn/the-loai-video/Au-My/IWZ9Z08O.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'IWZ9Z08O',
             'title': 'the-loai-video_Au-My',
@@ -364,6 +373,7 @@ class ZingMp3ChartMusicVideoIE(ZingMp3BaseIE):
         'playlist_mincount': 40,
     }, {
         'url': 'https://zingmp3.vn/the-loai-video/Han-Quoc/IWZ9Z08W.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'IWZ9Z08W',
             'title': 'the-loai-video_Han-Quoc',
@@ -371,6 +381,7 @@ class ZingMp3ChartMusicVideoIE(ZingMp3BaseIE):
         'playlist_mincount': 30,
     }, {
         'url': 'https://zingmp3.vn/the-loai-video/Khong-Loi/IWZ9Z086.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'IWZ9Z086',
             'title': 'the-loai-video_Khong-Loi',
@@ -428,12 +439,14 @@ class ZingMp3UserIE(ZingMp3BaseIE):
         'playlist_mincount': 15,
     }, {
         'url': 'https://zingmp3.vn/new-release/song',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'new-release-song',
         },
         'playlist_mincount': 50,
     }, {
         'url': 'https://zingmp3.vn/new-release/album',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'new-release-album',
         },
@@ -607,12 +620,14 @@ class ZingMp3PodcastIE(ZingMp3BaseIE):
         'playlist_mincount': 5,
     }, {
         'url': 'https://zingmp3.vn/top-podcast',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'top-podcast',
         },
         'playlist_mincount': 7,
     }, {
         'url': 'https://zingmp3.vn/podcast-new',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'podcast-new',
         },

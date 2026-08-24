@@ -8,6 +8,7 @@ class FreespeechIE(InfoExtractor):
     _TEST = {
         'add_ie': ['Youtube'],
         'url': 'http://www.freespeech.org/stories/fcc-announces-net-neutrality-rollback-whats-stake/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'waRk6IPqyWM',
             'ext': 'mp4',

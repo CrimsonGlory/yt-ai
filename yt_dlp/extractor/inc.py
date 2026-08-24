@@ -6,6 +6,7 @@ class IncIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?inc\.com/(?:[^/]+/)+(?P<id>[^.]+).html'
     _TESTS = [{
         'url': 'http://www.inc.com/tip-sheet/bill-gates-says-these-5-books-will-make-you-smarter.html',
+        'skip': 'HTTP Error 403',
         'md5': '7416739c9c16438c09fa35619d6ba5cb',
         'info_dict': {
             'id': '1_wqig47aq',
@@ -22,6 +23,7 @@ class IncIE(InfoExtractor):
     }, {
         # div with id=kaltura_player_1_kqs38cgm
         'url': 'https://www.inc.com/oscar-raymundo/richard-branson-young-entrepeneurs.html',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '1_kqs38cgm',
             'ext': 'mp4',

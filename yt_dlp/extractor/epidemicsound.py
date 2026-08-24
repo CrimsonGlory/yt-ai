@@ -17,6 +17,7 @@ class EpidemicSoundIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?epidemicsound\.com/(?:(?P<sfx>sound-effects/tracks)|track)/(?P<id>[0-9a-zA-Z-]+)'
     _TESTS = [{
         'url': 'https://www.epidemicsound.com/track/yFfQVRpSPz/',
+        'skip': 'video gone',
         'md5': 'd98ff2ddb49e8acab9716541cbc9dfac',
         'info_dict': {
             'id': '45014',

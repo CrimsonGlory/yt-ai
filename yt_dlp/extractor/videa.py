@@ -92,6 +92,7 @@ class VideaIE(InfoExtractor):
     }, {
         # FIXME: No video formats found
         'url': 'https://hirtv.hu/hirtv_kesleltetett',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': 'IDRqF7W9X0GXHGj1',
             'ext': 'mp4',

@@ -12,10 +12,10 @@ from ..utils import (
 class XboxClipsIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?:xboxclips\.com|gameclips\.io)/(?:video\.php\?.*vid=|[^/]+/)(?P<id>[\da-f]{8}-(?:[\da-f]{4}-){3}[\da-f]{12})'
     _TESTS = [{
-        'url': 'http://xboxclips.com/video.php?uid=2533274823424419&gamertag=Iabdulelah&vid=074a69a9-5faf-46aa-b93b-9909c1720325',
+        'url': 'http://xboxclips.com/Minecraft/d614dfde-0afc-4f5d-9257-ec4018187696',
         'md5': 'fbe1ec805e920aeb8eced3c3e657df5d',
         'info_dict': {
-            'id': '074a69a9-5faf-46aa-b93b-9909c1720325',
+            'id': 'd614dfde-0afc-4f5d-9257-ec4018187696',
             'ext': 'mp4',
             'title': 'iAbdulElah playing Titanfall',
             'filesize_approx': 26800000,

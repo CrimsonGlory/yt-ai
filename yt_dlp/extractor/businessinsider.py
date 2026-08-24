@@ -6,6 +6,7 @@ class BusinessInsiderIE(InfoExtractor):
     _VALID_URL = r'https?://(?:[^/]+\.)?businessinsider\.(?:com|nl)/(?:[^/]+/)*(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'http://uk.businessinsider.com/how-much-radiation-youre-exposed-to-in-everyday-life-2016-6',
+        'skip': 'Site returned HTTP 5xx',
         'md5': 'ffed3e1e12a6f950aa2f7d83851b497a',
         'info_dict': {
             'id': 'cjGDb0X9',
@@ -17,6 +18,7 @@ class BusinessInsiderIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.businessinsider.nl/5-scientifically-proven-things-make-you-less-attractive-2017-7/',
+        'skip': 'video gone',
         'md5': '43f438dbc6da0b89f5ac42f68529d84a',
         'info_dict': {
             'id': '5zJwd4FK',

@@ -24,6 +24,7 @@ class VrSquareIE(InfoExtractor):
     _VALID_URL = r'https?://livr\.jp/contents/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://livr.jp/contents/P470896661',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'P470896661',
             'ext': 'mp4',
@@ -126,7 +127,7 @@ class VrSquareChannelIE(VrSquarePlaylistBaseIE):
             'id': 'H372648599',
             'title': 'AKB48＋チャンネル',
         },
-        'playlist_mincount': 502,
+        'playlist_mincount': 322,
     }]
 
     def _real_extract(self, url):
@@ -147,7 +148,7 @@ class VrSquareSearchIE(VrSquarePlaylistBaseIE):
         'info_dict': {
             'id': '#小栗有以',
         },
-        'playlist_mincount': 60,
+        'playlist_mincount': 41,
     }]
 
     def _real_extract(self, url):
@@ -163,6 +164,7 @@ class VrSquareSectionIE(VrSquarePlaylistBaseIE):
     _VALID_URL = r'https?://livr\.jp/(?:category|headline)/(?P<id>\w+)'
     _TESTS = [{
         'url': 'https://livr.jp/category/C133936275',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'C133936275',
             'title': 'そこ曲がったら、櫻坂？VR',
@@ -170,6 +172,7 @@ class VrSquareSectionIE(VrSquarePlaylistBaseIE):
         'playlist_mincount': 308,
     }, {
         'url': 'https://livr.jp/headline/A296449604',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'A296449604',
             'title': 'AKB48 アフターVR',

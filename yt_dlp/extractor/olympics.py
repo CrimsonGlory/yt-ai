@@ -53,7 +53,7 @@ class OlympicsReplayIE(InfoExtractor):
         'info_dict': {
             'id': 'a42f37ab-8a74-41d0-a7d9-af27b7b02a90',
             'ext': 'mp4',
-            'title': 'md5:c7cfbc9918636a98e66400a812e4d407',
+            'title': 'md5:b1c37e4e39b8908d4a075f823734eec3',
             'upload_date': '20240729',
             'timestamp': 1722288600,
         },

@@ -13,6 +13,7 @@ class AmaraIE(InfoExtractor):
     _TESTS = [{
         # Youtube
         'url': 'https://amara.org/en/videos/jVx79ZKGK1ky/info/why-jury-trials-are-becoming-less-common/?tab=video',
+        'skip': 'video gone',
         'md5': 'ea10daf2b6154b8c1ecf9922aca5e8ae',
         'info_dict': {
             'id': 'h6ZuVdvYnfE',
@@ -29,6 +30,7 @@ class AmaraIE(InfoExtractor):
     }, {
         # Vimeo
         'url': 'https://amara.org/en/videos/kYkK1VUTWW5I/info/vimeo-at-ces-2011',
+        'skip': 'HTTP Error 403',
         'md5': '99392c75fa05d432a8f11df03612195e',
         'info_dict': {
             'id': '18622084',
@@ -45,6 +47,7 @@ class AmaraIE(InfoExtractor):
     }, {
         # Direct Link
         'url': 'https://amara.org/en/videos/s8KL7I3jLmh6/info/the-danger-of-a-single-story/',
+        'skip': 'video gone',
         'md5': 'd3970f08512738ee60c5807311ff5d3f',
         'info_dict': {
             'id': 's8KL7I3jLmh6',

@@ -10,6 +10,7 @@ class GodTubeIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.godtube.com/watch/?v=0C0CNNNU',
+            'skip': 'video gone',
             'md5': '77108c1e4ab58f48031101a1a2119789',
             'info_dict': {
                 'id': '0C0CNNNU',

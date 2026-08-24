@@ -17,6 +17,7 @@ class JStreamIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'jstream:www50:eqd638pvwx:752',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'eqd638pvwx:752',
             'ext': 'mp4',

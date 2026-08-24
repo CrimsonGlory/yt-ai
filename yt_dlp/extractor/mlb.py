@@ -278,6 +278,7 @@ class MLBTVIE(InfoExtractor):
     _NETRC_MACHINE = 'mlb'
     _TESTS = [{
         'url': 'https://www.mlb.com/tv/g661581/vee2eff5f-a7df-4c20-bdb4-7b926fa12638',
+        'skip': 'Login required',
         'info_dict': {
             'id': '661581',
             'ext': 'mp4',
@@ -289,6 +290,7 @@ class MLBTVIE(InfoExtractor):
     }, {
         # makeup game: has multiple dates, need to avoid games with 'rescheduleDate'
         'url': 'https://www.mlb.com/tv/g747039/vd22541c4-5a29-45f7-822b-635ec041cf5e',
+        'skip': 'Login required',
         'info_dict': {
             'id': '747039',
             'ext': 'mp4',

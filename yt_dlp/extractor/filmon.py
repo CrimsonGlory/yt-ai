@@ -18,6 +18,7 @@ class FilmOnIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'Plan 9 From Outer Space',
             'description': 'Dead human, zombies and vampires',
+            'thumbnail': r're:https?://.*',
         },
     }, {
         'url': 'https://www.filmon.com/vod/view/2825-1-popeye-series-1',

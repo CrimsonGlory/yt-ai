@@ -99,7 +99,7 @@ class RTVCPlayIE(RTVCPlayBaseIE):
         'info_dict': {
             'id': 'james-regresa-clases-28022022',
             'title': 'James regresa a clases - 28/02/2022',
-            'description': 'md5:c5dcdf757c7ab29305e8763c6007e675',
+            'description': 'md5:c2bd63f9824d38a064cbfa57d9a75ada',
             'ext': 'mp4',
         },
     }, {

@@ -14,6 +14,7 @@ class SapoIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'http://videos.sapo.pt/UBz95kOtiWYUMTA5Ghfi',
+            'skip': 'HTTP Error 403',
             'md5': '79ee523f6ecb9233ac25075dee0eda83',
             'note': 'SD video',
             'info_dict': {
@@ -40,6 +41,10 @@ class SapoIE(InfoExtractor):
                 'uploader': 'codebits',
                 'upload_date': '20140427',
                 'categories': ['codebits', 'codebits2014'],
+                'age_limit': int,
+                'comment_count': int,
+                'thumbnail': r're:https?://.*',
+                'view_count': int,
             },
         },
         {
@@ -55,6 +60,10 @@ class SapoIE(InfoExtractor):
                 'uploader': 'sapozen',
                 'upload_date': '20090609',
                 'categories': ['condicionativa', 'heloisa', 'hipnose', 'miranda', 'sapo', 'zen'],
+                'age_limit': int,
+                'comment_count': int,
+                'thumbnail': r're:https?://.*',
+                'view_count': int,
             },
         },
     ]

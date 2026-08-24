@@ -15,6 +15,7 @@ class UkColumnIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.ukcolumn.org/ukcolumn-news/uk-column-news-28th-april-2021',
+        'skip': 'Rate limited',
         'info_dict': {
             'id': '541632443',
             'ext': 'mp4',
@@ -29,6 +30,7 @@ class UkColumnIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.ukcolumn.org/video/insight-eu-military-unification',
+        'skip': 'Rate limited',
         'info_dict': {
             'id': 'Fzbnb9t7XAw',
             'ext': 'mp4',

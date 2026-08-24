@@ -13,6 +13,7 @@ class FlickrIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.|secure\.)?flickr\.com/photos/[\w\-_@]+/(?P<id>\d+)'
     _TEST = {
         'url': 'http://www.flickr.com/photos/forestwander-nature-pictures/5645318632/in/photostream/',
+        'skip': 'Site returned HTTP 5xx',
         'md5': '164fe3fa6c22e18d448d4d5af2330f31',
         'info_dict': {
             'id': '5645318632',

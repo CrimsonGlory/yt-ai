@@ -17,9 +17,9 @@ class MediaKlikkIE(InfoExtractor):
 
     _TESTS = [{
         # mediaklikk
-        'url': 'https://mediaklikk.hu/ajanlo/video/2025/08/04/heviz-dzsungel-a-viz-alatt-ajanlo-08-10/',
+        'url': 'https://m4sport.hu/magyar-foci/cikk/2026/08/23/valamit-jol-csinalunk-juareznek-az-eredmenynel-fontosabb-az-eto-jelenlegi-teljesitmenye',
         'info_dict': {
-            'id': '8573769',
+            'id': '10160439',
             'title': 'Hévíz - dzsungel a víz alatt – Ajánló (08.10.)',
             'display_id': 'heviz-dzsungel-a-viz-alatt-ajanlo-08-10',
             'ext': 'mp4',
@@ -29,6 +29,7 @@ class MediaKlikkIE(InfoExtractor):
     }, {
         # mediaklikk - date in html
         'url': 'https://mediaklikk.hu/video/hazajaro-bilo-hegyseg-verocei-barangolas-a-drava-menten/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '8482167',
             'title': 'Hazajáró, Bilo-hegység - Verőcei barangolás a Dráva mentén',
@@ -40,6 +41,7 @@ class MediaKlikkIE(InfoExtractor):
     }, {
         # m4sport
         'url': 'https://m4sport.hu/video/2025/08/07/holnap-kezdodik-a-12-vilagjatekok/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '8581887',
             'title': 'Holnap kezdődik a 12. Világjátékok',
@@ -62,6 +64,7 @@ class MediaKlikkIE(InfoExtractor):
     }, {
         # hirado - subcategory
         'url': 'https://hirado.hu/belfold/video/2025/08/09/nyitott-porta-napok-2025/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '8590581',
             'title': 'Nyitott Porta Napok 2025',

@@ -12,6 +12,7 @@ class MzaaloIE(InfoExtractor):
     _TESTS = [{
         # Movies
         'url': 'https://www.mzaalo.com/play/movie/c0958d9f-f90e-4503-a755-44358758921d/Jamun',
+        'skip': 'Request timed out',
         'info_dict': {
             'id': 'c0958d9f-f90e-4503-a755-44358758921d',
             'title': 'Jamun',
@@ -28,6 +29,7 @@ class MzaaloIE(InfoExtractor):
     }, {
         # Shows
         'url': 'https://www.mzaalo.com/play/original/93d42b2b-f373-4c2d-bca4-997412cb069d/Modi-Season-2-CM-TO-PM/Episode-1:Decision,-Not-Promises',
+        'skip': 'Request timed out',
         'info_dict': {
             'id': '93d42b2b-f373-4c2d-bca4-997412cb069d',
             'title': 'Episode 1:Decision, Not Promises',
@@ -44,6 +46,7 @@ class MzaaloIE(InfoExtractor):
     }, {
         # Streams/Clips
         'url': 'https://www.mzaalo.com/play/clip/83cdbcb5-400a-42f1-a1d2-459053cfbda5/Manto-Ki-Kahaaniya',
+        'skip': 'Request timed out',
         'info_dict': {
             'id': '83cdbcb5-400a-42f1-a1d2-459053cfbda5',
             'title': 'Manto Ki Kahaaniya',

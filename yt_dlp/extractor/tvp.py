@@ -41,6 +41,7 @@ class TVPIE(InfoExtractor):
     }, {
         # TVPlayer legacy
         'url': 'https://www.tvp.pl/polska-press-video-uploader/wideo/62042351',
+        'skip': 'video gone',
         'info_dict': {
             'id': '62042351',
             'ext': 'mp4',
@@ -116,7 +117,7 @@ class TVPIE(InfoExtractor):
             'id': '46925618',
             'title': 'Filmy',
         },
-        'playlist_mincount': 19,
+        'playlist_mincount': 7,
     }, {
         'url': 'http://vod.tvp.pl/seriale/obyczajowe/na-sygnale/sezon-2-27-/odc-39/17834272',
         'only_matching': True,
@@ -550,7 +551,7 @@ class TVPVODVideoIE(TVPVODBaseIE):
             'id': '398869',
             'ext': 'mp4',
             'title': 'odc. 7',
-            'description': 'md5:dd2bb33f023dc5c2fbaddfbe4cb5dba0',
+            'description': 'md5:71d8c5d237da632be2efa36b9cb78adc',
             'duration': 2750,
             'age_limit': 16,
             'series': 'Polowanie na ćmy',

@@ -108,6 +108,7 @@ class CHZZKVideoIE(InfoExtractor):
     }, {
         # Manually uploaded video
         'url': 'https://chzzk.naver.com/video/1980',
+        'skip': 'Request timed out',
         'info_dict': {
             'id': '1980',
             'ext': 'mp4',
@@ -124,6 +125,7 @@ class CHZZKVideoIE(InfoExtractor):
     }, {
         # Partner channel replay video
         'url': 'https://chzzk.naver.com/video/2458',
+        'skip': 'Request timed out',
         'info_dict': {
             'id': '2458',
             'ext': 'mp4',
@@ -140,6 +142,7 @@ class CHZZKVideoIE(InfoExtractor):
     }, {
         # video_status == 'NONE' but is downloadable
         'url': 'https://chzzk.naver.com/video/6325166',
+        'skip': 'video gone',
         'info_dict': {
             'id': '6325166',
             'ext': 'mp4',

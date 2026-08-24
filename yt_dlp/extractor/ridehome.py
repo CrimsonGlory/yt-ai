@@ -8,6 +8,7 @@ class RideHomeIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?ridehome\.info/show/[\w-]+/(?P<id>[\w-]+)/?(?:$|[?#])'
     _TESTS = [{
         'url': 'https://www.ridehome.info/show/techmeme-ride-home/thu-1228-will-2024-be-the-year-apple-gets-serious-about-gaming-on-macs/',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': 'thu-1228-will-2024-be-the-year-apple-gets-serious-about-gaming-on-macs',
         },
@@ -34,6 +35,7 @@ class RideHomeIE(InfoExtractor):
         }],
     }, {
         'url': 'https://www.ridehome.info/show/techmeme-ride-home/portfolio-profile-sensel-with-ilyarosenberg/',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': 'portfolio-profile-sensel-with-ilyarosenberg',
         },
@@ -60,6 +62,7 @@ class RideHomeIE(InfoExtractor):
         }],
     }, {
         'url': 'https://www.ridehome.info/show/spacecasts/big-tech-news-apples-macbook-pro-event/',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': 'big-tech-news-apples-macbook-pro-event',
         },

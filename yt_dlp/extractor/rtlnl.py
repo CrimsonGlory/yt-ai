@@ -21,6 +21,7 @@ class RtlNlIE(InfoExtractor):
     _TESTS = [{
         # new URL schema
         'url': 'https://www.rtlxl.nl/programma/rtl-nieuws/0bd1384d-d970-3086-98bb-5c104e10c26f',
+        'skip': 'video gone',
         'md5': '490428f1187b60d714f34e1f2e3af0b6',
         'info_dict': {
             'id': '0bd1384d-d970-3086-98bb-5c104e10c26f',
@@ -48,6 +49,7 @@ class RtlNlIE(InfoExtractor):
     }, {
         # best format available a3t
         'url': 'http://www.rtl.nl/system/videoplayer/derden/rtlnieuws/video_embed.html#uuid=84ae5571-ac25-4225-ae0c-ef8d9efb2aed/autoplay=false',
+        'skip': 'video gone',
         'md5': 'dea7474214af1271d91ef332fb8be7ea',
         'info_dict': {
             'id': '84ae5571-ac25-4225-ae0c-ef8d9efb2aed',
@@ -62,6 +64,7 @@ class RtlNlIE(InfoExtractor):
         # empty synopsis and missing episodes (see https://github.com/ytdl-org/youtube-dl/issues/6275)
         # best format available nettv
         'url': 'http://www.rtl.nl/system/videoplayer/derden/rtlnieuws/video_embed.html#uuid=f536aac0-1dc3-4314-920e-3bd1c5b3811a/autoplay=false',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'f536aac0-1dc3-4314-920e-3bd1c5b3811a',
             'ext': 'mp4',
@@ -190,6 +193,7 @@ class RTLLuTeleVODIE(RTLLuBaseIE):
     _VALID_URL = r'https?://(?:www\.)?rtl\.lu/(tele/(?P<slug>[\w-]+)/v/|video/)(?P<id>\d+)(\.html)?'
     _TESTS = [{
         'url': 'https://www.rtl.lu/tele/de-journal-vun-der-tele/v/3266757.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': '3266757',
             'title': 'Informatiounsversammlung Héichwaasser',
@@ -199,6 +203,7 @@ class RTLLuTeleVODIE(RTLLuBaseIE):
         },
     }, {
         'url': 'https://www.rtl.lu/video/3295215',
+        'skip': 'video gone',
         'info_dict': {
             'id': '3295215',
             'title': 'Kulturassisen iwwer d\'Bestandsopnam vum Lëtzebuerger Konscht',
@@ -215,6 +220,7 @@ class RTLLuArticleIE(RTLLuBaseIE):
     _TESTS = [{
         # Audio-only
         'url': 'https://www.rtl.lu/sport/news/a/1934360.html',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': '1934360',
             'ext': 'mp3',
@@ -225,6 +231,7 @@ class RTLLuArticleIE(RTLLuBaseIE):
     }, {
         # 5minutes
         'url': 'https://5minutes.rtl.lu/espace-frontaliers/frontaliers-en-questions/a/1853173.html',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': '1853173',
             'ext': 'mp4',
@@ -235,6 +242,7 @@ class RTLLuArticleIE(RTLLuBaseIE):
     }, {
         # today.lu
         'url': 'https://today.rtl.lu/entertainment/news/a/1936203.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': '1936203',
             'ext': 'mp4',
@@ -250,6 +258,7 @@ class RTLLuLiveIE(RTLLuBaseIE):
     _TESTS = [{
         # Tele:live
         'url': 'https://www.rtl.lu/tele/live',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'live',
             'ext': 'mp4',
@@ -260,6 +269,7 @@ class RTLLuLiveIE(RTLLuBaseIE):
     }, {
         # Tele:live-2
         'url': 'https://www.rtl.lu/tele/live-2',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'live-2',
             'ext': 'mp4',
@@ -270,6 +280,7 @@ class RTLLuLiveIE(RTLLuBaseIE):
     }, {
         # Radio:lauschteren
         'url': 'https://www.rtl.lu/radio/lauschteren',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'lauschteren',
             'ext': 'mp4',
@@ -284,6 +295,7 @@ class RTLLuRadioIE(RTLLuBaseIE):
     _VALID_URL = r'https?://www\.rtl\.lu/radio/(?:[\w-]+)/s/(?P<id>\d+)(\.html)?'
     _TESTS = [{
         'url': 'https://www.rtl.lu/radio/5-vir-12/s/4033058.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': '4033058',
             'ext': 'mp3',

@@ -155,6 +155,7 @@ class HBOIE(HBOBaseIE):
     _VALID_URL = r'https?://(?:www\.)?hbo\.com/(?:video|embed)(?:/[^/]+)*/(?P<id>[^/?#]+)'
     _TEST = {
         'url': 'https://www.hbo.com/video/game-of-thrones/seasons/season-8/videos/trailer',
+        'skip': 'video gone',
         'md5': '8126210656f433c452a21367f9ad85b3',
         'info_dict': {
             'id': '22113301',

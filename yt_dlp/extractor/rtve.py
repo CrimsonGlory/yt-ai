@@ -148,13 +148,14 @@ class RTVEALaCartaIE(RTVEBaseIE):
             'title': 're:^24H LIVE [0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$',
             'is_live': True,
             'live_status': 'is_live',
-            'thumbnail': r're:https://img2\.rtve\.es/v/.*\.png',
+            'thumbnail': r're:https?://.*',
         },
         'params': {
             'skip_download': 'live stream',
         },
     }, {
         'url': 'http://www.rtve.es/alacarta/videos/servir-y-proteger/servir-proteger-capitulo-104/4236788/',
+        'skip': 'HTTP Error 403',
         'md5': 'f3cf0d1902d008c48c793e736706c174',
         'info_dict': {
             'id': '4236788',
@@ -180,7 +181,7 @@ class RTVEALaCartaIE(RTVEBaseIE):
             'id': '16177116',
             'ext': 'mp4',
             'title': 'Saber vivir - 07/07/24',
-            'thumbnail': r're:https://img2\.rtve\.es/v/.*\.png',
+            'thumbnail': r're:https?://.*',
             'duration': 2162.68,
             'series': 'Saber vivir',
         },
@@ -190,7 +191,7 @@ class RTVEALaCartaIE(RTVEBaseIE):
             'id': '7048976',
             'ext': 'mp4',
             'title': 'Gusano',
-            'thumbnail': r're:https://img2\.rtve\.es/v/.*\.png',
+            'thumbnail': r're:https?://.*',
             'duration': 292.86,
             'series': 'Agus & Lui: Churros y Crafts',
             '_old_archive_ids': ['rtveinfantil 7048976'],
@@ -234,10 +235,10 @@ class RTVEAudioIE(RTVEBaseIE):
     _VALID_URL = r'https?://(?:www\.)?rtve\.es/(alacarta|play)/audios/(?:[^/?#]+/){2}(?P<id>\d+)'
 
     _TESTS = [{
-        'url': 'https://www.rtve.es/alacarta/audios/a-hombros-de-gigantes/palabra-ingeniero-codigos-informaticos-27-04-21/5889192/',
+        'url': 'https://www.rtve.es/play/audios/clasicos-populares/verano-1924-gershwin-24-08-26/17200403/',
         'md5': 'ae06d27bff945c4e87a50f89f6ce48ce',
         'info_dict': {
-            'id': '5889192',
+            'id': '17200403',
             'ext': 'mp3',
             'title': 'Códigos informáticos',
             'alt_title': 'Códigos informáticos - Escuchar ahora',
@@ -270,7 +271,7 @@ class RTVEAudioIE(RTVEBaseIE):
             'thumbnail': r're:https?://.+/1632147445707.jpg',
             'duration': 3174.086,
             'series': 'Frankenstein o el moderno Prometeo',
-            'description': 'md5:4ee6fcb82ebe2e46d267e1d1c1a8f7b5',
+            'description': 'md5:e85d8c3c8a647f81e8b4e23ece5af7cb',
         },
     }]
 

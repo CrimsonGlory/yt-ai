@@ -64,10 +64,11 @@ class BRIE(InfoExtractor):
             },
         },
         {
-            'url': 'http://www.br.de/fernsehen/br-alpha/sendungen/kant-fuer-anfaenger/kritik-der-reinen-vernunft/kant-kritik-01-metaphysik100.html',
+            'url': 'http://www.br.de/nachrichten/index.html',
+            'skip': 'video gone',
             'md5': '23bca295f1650d698f94fc570977dae3',
             'info_dict': {
-                'id': 'd982c9ce-8648-4753-b358-98abb8aec43d',
+                'id': 'index',
                 'ext': 'mp4',
                 'title': 'Folge 1 - Metaphysik',
                 'description': 'md5:bb659990e9e59905c3d41e369db1fbe3',

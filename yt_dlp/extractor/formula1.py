@@ -13,6 +13,9 @@ class Formula1IE(InfoExtractor):
             'timestamp': 1463332814,
             'upload_date': '20160515',
             'uploader_id': '6057949432001',
+            'duration': int,
+            'tags': list,
+            'thumbnail': r're:https?://.*',
         },
         'add_ie': ['BrightcoveNew'],
     }

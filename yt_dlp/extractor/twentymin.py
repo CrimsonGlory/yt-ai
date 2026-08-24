@@ -20,16 +20,17 @@ class TwentyMinutenIE(InfoExtractor):
                     '''
     _EMBED_REGEX = [r'<iframe[^>]+src=(["\'])(?P<url>(?:(?:https?:)?//)?(?:www\.)?20min\.ch/videoplayer/videoplayer.html\?.*?\bvideoId@\d+.*?)\1']
     _TESTS = [{
-        'url': 'http://www.20min.ch/videotv/?vid=469148&cid=2',
+        'url': 'http://www.20min.ch/story/live-interview-herr-blocher-was-verdienen-sie-wenn-russland-sanktionen-fallen-103621700',
         'md5': 'e7264320db31eed8c38364150c12496e',
         'info_dict': {
-            'id': '469148',
+            'id': '103621700',
             'ext': 'mp4',
             'title': '85 000 Franken für 15 perfekte Minuten',
             'thumbnail': r're:https?://.+\.jpg',
         },
     }, {
         'url': 'http://www.20min.ch/videoplayer/videoplayer.html?params=client@twentyDE|videoId@523629',
+        'skip': 'video gone',
         'info_dict': {
             'id': '523629',
             'ext': 'mp4',

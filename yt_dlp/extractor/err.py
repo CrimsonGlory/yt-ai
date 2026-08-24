@@ -100,6 +100,7 @@ class ERRJupiterIE(InfoExtractor):
     }, {
         'note': 'Jupiter+: Series: The Sniffer',
         'url': 'https://jupiterpluss.err.ee/1608311387/njuhach',
+        'skip': 'video gone',
         'md5': '2abdeb7131ce551bce49e8d0cea08536',
         'info_dict': {
             'id': '1608311387',

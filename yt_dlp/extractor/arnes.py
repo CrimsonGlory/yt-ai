@@ -33,6 +33,8 @@ class ArnesIE(InfoExtractor):
             'view_count': int,
             'tags': ['linearna_algebra'],
             'start_time': 10,
+            'creators': list,
+            'thumbnail': r're:https?://.*',
         },
     }, {
         'url': 'https://video.arnes.si/api/asset/s1YjnV7hadlC/play.mp4',

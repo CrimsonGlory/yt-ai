@@ -7,6 +7,7 @@ class TeleBruxellesIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?:telebruxelles|bx1)\.be/(?:[^/]+/)*(?P<id>[^/#?]+)'
     _TESTS = [{
         'url': 'http://bx1.be/news/que-risque-lauteur-dune-fausse-alerte-a-la-bombe/',
+        'skip': 'video gone',
         'md5': 'a2a67a5b1c3e8c9d33109b902f474fd9',
         'info_dict': {
             'id': '158856',
@@ -17,6 +18,7 @@ class TeleBruxellesIE(InfoExtractor):
         },
     }, {
         'url': 'http://bx1.be/sport/futsal-schaerbeek-sincline-5-3-a-thulin/',
+        'skip': 'video gone',
         'md5': 'dfe07ecc9c153ceba8582ac912687675',
         'info_dict': {
             'id': '158433',

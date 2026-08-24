@@ -79,6 +79,7 @@ class DWIE(InfoExtractor):
         'playlist_count': 1,
     }, {
         'url': 'https://www.dw.com/en/0/live-72516011',
+        'skip': 'video gone',
         'info_dict': {
             'id': '72516011',
             'title': 'Germany updates: Afghan family sues government — report',

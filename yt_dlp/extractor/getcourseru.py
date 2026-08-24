@@ -66,6 +66,7 @@ class GetCourseRuIE(InfoExtractor):
     ]
     _TESTS = [{
         'url': 'http://academymel.online/3video_1',
+        'skip': 'video gone',
         'info_dict': {
             'id': '3059742',
             'display_id': '3video_1',
@@ -83,6 +84,7 @@ class GetCourseRuIE(InfoExtractor):
         }],
     }, {
         'url': 'https://academymel.getcourse.ru/3video_1',
+        'skip': 'video gone',
         'info_dict': {
             'id': '3059742',
             'display_id': '3video_1',

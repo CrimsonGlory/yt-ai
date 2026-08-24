@@ -126,6 +126,7 @@ class OpencastIE(OpencastBaseIE):
                 'season_id': 'cf68a4a1-36b1-4a53-a6ba-61af5705a0d0',
                 'series': 'Kryptographie - WiSe 15/16',
                 'creator': 'Alexander May',
+                'creators': list,
             },
         },
     ]

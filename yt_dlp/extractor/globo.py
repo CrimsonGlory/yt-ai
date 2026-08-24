@@ -66,6 +66,7 @@ class GloboIE(InfoExtractor):
     },
         {
         'url': 'globo:8013907',  # needs subscription to globoplay
+        'skip': 'Login required',
         'info_dict': {
             'id': '8013907',
             'ext': 'mp4',
@@ -83,6 +84,7 @@ class GloboIE(InfoExtractor):
     },
         {
         'url': 'globo:12824146',
+        'skip': 'Login required',
         'info_dict': {
             'id': '12824146',
             'ext': 'mp4',

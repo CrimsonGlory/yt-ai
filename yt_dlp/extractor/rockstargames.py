@@ -9,10 +9,10 @@ class RockstarGamesIE(InfoExtractor):
     _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:www\.)?rockstargames\.com/(?:[a-z]{2}/)?videos(?:/video/|#?/?\?.*\bvideo=|/)(?P<id>[\w-]+)/?'
     _TESTS = [{
-        'url': 'https://www.rockstargames.com/videos/video/11544/',
+        'url': 'https://www.rockstargames.com/videos/sok93cc8',
         'md5': '03b5caa6e357a4bd50e3143fc03e5733',
         'info_dict': {
-            'id': '11544',
+            'id': 'sok93cc8',
             'ext': 'mp4',
             'title': 'Further Adventures in Finance and Felony Trailer',
             'description': 'md5:6d31f55f30cb101b5476c4a379e324a3',

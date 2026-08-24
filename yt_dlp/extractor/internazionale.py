@@ -19,6 +19,7 @@ class InternazionaleIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.internazionale.it/video/2018/08/29/telefono-stare-con-noi-stessi',
+        'skip': 'HTTP Error 403',
         'md5': '9db8663704cab73eb972d1cee0082c79',
         'info_dict': {
             'id': '761344',

@@ -245,6 +245,7 @@ class MTVIE(MTVServicesBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.mtv.com/episodes/uzvigh',
+        'skip': 'video gone',
         'info_dict': {
             'id': '364e8b9e-e415-11ef-b405-16fff45bc035',
             'ext': 'mp4',

@@ -374,7 +374,7 @@ class WeTvEpisodeIE(WeTvBaseIE):
         'info_dict': {
             'id': 'i0042y00lxp',
             'ext': 'mp4',
-            'title': 'md5:f7a0857dbe5fbbe2e7ad630b92b54e6a',
+            'title': 'md5:0ff83fac2f97d88973900dbdd9060739',
             'description': 'md5:76260cb9cdc0ef76826d7ca9d92fadfa',
             'thumbnail': r're:^https?://[^?#]+i0042y00lxp',
             'series': 'WeTV PICK-A-BOO',

@@ -15,6 +15,7 @@ class FolketingetIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?ft\.dk/webtv/video/[^?#]*?\.(?P<id>[0-9]+)\.aspx'
     _TEST = {
         'url': 'http://www.ft.dk/webtv/video/20141/eru/td.1165642.aspx?as=1#player',
+        'skip': 'HTTP Error 403',
         'md5': '6269e8626fa1a891bf5369b386ae996a',
         'info_dict': {
             'id': '1165642',

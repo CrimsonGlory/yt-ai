@@ -12,6 +12,7 @@ class ErocastIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?erocast\.me/track/(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'https://erocast.me/track/9787/f',
+        'skip': 'HTTP Error 403',
         'md5': 'af63b91f5f231096aba54dd682abea3b',
         'info_dict': {
             'id': '9787',

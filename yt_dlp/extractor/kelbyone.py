@@ -8,6 +8,7 @@ class KelbyOneIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://members.kelbyone.com/course/glyn-dewis-mastering-selections/',
+        'skip': 'HTTP Error 403',
         'playlist_mincount': 1,
         'info_dict': {
             'id': 'glyn-dewis-mastering-selections',

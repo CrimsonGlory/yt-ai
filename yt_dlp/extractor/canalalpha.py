@@ -12,6 +12,7 @@ class CanalAlphaIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.canalalpha.ch/play/le-journal/episode/24520/jeudi-28-octobre-2021',
+        'skip': 'Request timed out',
         'info_dict': {
             'id': '24520',
             'ext': 'mp4',
@@ -36,6 +37,7 @@ class CanalAlphaIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://www.canalalpha.ch/play/eureka/episode/24484/ces-innovations-qui-veulent-rendre-lagriculture-plus-durable',
+        'skip': 'Request timed out',
         'info_dict': {
             'id': '24484',
             'ext': 'mp4',
@@ -48,6 +50,7 @@ class CanalAlphaIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://www.canalalpha.ch/play/avec-le-temps/episode/23516/redonner-de-leclat-grace-au-polissage',
+        'skip': 'Request timed out',
         'info_dict': {
             'id': '23516',
             'ext': 'mp4',
@@ -60,6 +63,7 @@ class CanalAlphaIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://www.canalalpha.ch/play/le-journal/topic/33500/encore-des-mesures-deconomie-dans-le-jura',
+        'skip': 'Request timed out',
         'info_dict': {
             'id': '33500',
             'ext': 'mp4',

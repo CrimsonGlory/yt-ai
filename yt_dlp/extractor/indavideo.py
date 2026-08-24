@@ -18,6 +18,7 @@ class IndavideoEmbedIE(InfoExtractor):
     _EMBED_REGEX = [r'<iframe[^>]+\bsrc=["\'](?P<url>(?:https?:)//embed\.indavideo\.hu/player/video/[\da-f]+)']
     _TESTS = [{
         'url': 'https://indavideo.hu/player/video/1bdc3c6d80/',
+        'skip': 'HTTP Error 403',
         'md5': 'c8a507a1c7410685f83a06eaeeaafeab',
         'info_dict': {
             'id': '1837039',
@@ -55,6 +56,7 @@ class IndavideoEmbedIE(InfoExtractor):
         },
     }, {
         'url': 'https://palyazat.indavideo.hu/video/RUSH_1',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '3808180',
             'ext': 'mp4',

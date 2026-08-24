@@ -14,6 +14,7 @@ class DumpertIE(InfoExtractor):
         )(?P<id>[0-9]+[/_][0-9a-zA-Z]+)'''
     _TESTS = [{
         'url': 'https://www.dumpert.nl/item/6646981_951bc60f',
+        'skip': 'HTTP Error 403',
         'md5': '1b9318d7d5054e7dcb9dc7654f21d643',
         'info_dict': {
             'id': '6646981/951bc60f',
@@ -36,6 +37,7 @@ class DumpertIE(InfoExtractor):
         'only_matching': True,
     }, {
         'url': 'https://www.dumpert.nl/item/100031688_b317a185',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '100031688/b317a185',
             'ext': 'mp4',

@@ -20,6 +20,7 @@ class UstreamIE(InfoExtractor):
     _EMBED_REGEX = [r'<iframe[^>]+?src=(["\'])(?P<url>https?://(?:www\.)?(?:ustream\.tv|video\.ibm\.com)/embed/.+?)\1']
     _TESTS = [{
         'url': 'http://www.ustream.tv/recorded/20274954',
+        'skip': 'video gone',
         'md5': '088f151799e8f572f84eb62f17d73e5c',
         'info_dict': {
             'id': '20274954',
@@ -45,12 +46,14 @@ class UstreamIE(InfoExtractor):
         'skip': 'This Pro Broadcaster has chosen to remove this video from the ustream.tv site.',
     }, {
         'url': 'http://www.ustream.tv/embed/10299409',
+        'skip': 'video gone',
         'info_dict': {
             'id': '10299409',
         },
         'playlist_count': 3,
     }, {
         'url': 'http://www.ustream.tv/recorded/91343263',
+        'skip': 'video gone',
         'info_dict': {
             'id': '91343263',
             'ext': 'mp4',
@@ -239,6 +242,7 @@ class UstreamChannelIE(InfoExtractor):
     IE_NAME = 'ustream:channel'
     _TEST = {
         'url': 'http://www.ustream.tv/channel/channeljapan',
+        'skip': 'video gone',
         'info_dict': {
             'id': '10874166',
         },

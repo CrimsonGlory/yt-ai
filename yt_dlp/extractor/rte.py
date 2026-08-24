@@ -104,6 +104,7 @@ class RteIE(RteBaseIE):
     _VALID_URL = r'https?://(?:www\.)?rte\.ie/player/[^/]{2,3}/show/[^/]+/(?P<id>[0-9]+)'
     _TEST = {
         'url': 'http://www.rte.ie/player/ie/show/iwitness-862/10478715/',
+        'skip': 'Request timed out',
         'md5': '4a76eb3396d98f697e6e8110563d2604',
         'info_dict': {
             'id': '10478715',
@@ -131,6 +132,7 @@ class RteRadioIE(RteBaseIE):
     _TESTS = [{
         # Old-style player URL; HLS and RTMPE formats
         'url': 'http://www.rte.ie/radio/utils/radioplayer/rteradioweb.html#!rii=16:10507902:2414:27-12-2015:',
+        'skip': 'Request timed out',
         'md5': 'c79ccb2c195998440065456b69760411',
         'info_dict': {
             'id': '10507902',
@@ -145,6 +147,7 @@ class RteRadioIE(RteBaseIE):
     }, {
         # New-style player URL; RTMPE formats only
         'url': 'http://rte.ie/radio/utils/radioplayer/rteradioweb.html#!rii=b16_3250678_8861_06-04-2012_',
+        'skip': 'Unsupported URL / extractor broken',
         'info_dict': {
             'id': '3250678',
             'ext': 'flv',

@@ -28,10 +28,10 @@ class TeacherTubeIE(InfoExtractor):
         },
     }, {
         # jwplayer
-        'url': 'http://www.teachertube.com/music.php?music_id=8805',
+        'url': 'https://www.teachertube.com/videos/graphing-quadratic-inequalities-on-desmos-507405',
         'md5': '01e8352006c65757caf7b961f6050e21',
         'info_dict': {
-            'id': '8805',
+            'id': '507405',
             'ext': 'mp3',
             'title': 'PER ASPERA AD ASTRA',
             'description': 'RADIJSKA EMISIJA ZRAKOPLOVNE TEHNI?KE ?KOLE P',
@@ -110,6 +110,7 @@ class TeacherTubeUserIE(InfoExtractor):
     '''
     _TEST = {
         'url': 'http://www.teachertube.com/user/profile/rbhagwati2',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'rbhagwati2',
         },

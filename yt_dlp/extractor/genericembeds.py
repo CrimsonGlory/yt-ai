@@ -54,6 +54,7 @@ class QuotedHTMLIE(InfoExtractor):
     }, {
         # Generic iframe embed of TV24UAPlayerIE within data-html
         'url': 'https://24tv.ua/harkivyani-zgaduyut-misto-do-viyni-shhemlive-video_n1887584',
+        'skip': 'Cloudflare anti-bot',
         'info_dict': {
             'id': '1887584',
             'ext': 'mp4',

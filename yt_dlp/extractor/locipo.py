@@ -34,6 +34,7 @@ class LocipoIE(LocipoBaseIE):
     ]
     _TESTS = [{
         'url': 'https://locipo.jp/creative/fb5ffeaa-398d-45ce-bb49-0e221b5f94f1',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'fb5ffeaa-398d-45ce-bb49-0e221b5f94f1',
             'ext': 'mp4',
@@ -56,6 +57,7 @@ class LocipoIE(LocipoBaseIE):
         },
     }, {
         'url': 'https://locipo.jp/embed/?id=71a334a0-2b25-406f-9d96-88f341f571c2',
+        'skip': 'video gone',
         'info_dict': {
             'id': '71a334a0-2b25-406f-9d96-88f341f571c2',
             'ext': 'mp4',
@@ -85,6 +87,7 @@ class LocipoIE(LocipoBaseIE):
         'playlist_mincount': 3,
     }, {
         'url': 'https://locipo.jp/creative/a0751a7f-c7dd-4a10-a7f1-e12720bdf16c?list=006cff3f-ba74-42f0-b4fd-241486ebda2b',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'a0751a7f-c7dd-4a10-a7f1-e12720bdf16c',
             'ext': 'mp4',

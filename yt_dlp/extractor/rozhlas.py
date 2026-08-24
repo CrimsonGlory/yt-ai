@@ -97,6 +97,7 @@ class RozhlasVltavaIE(RozhlasBaseIE):
         'info_dict': {
             'id': '8891337',
             'title': 'md5:21f99739d04ab49d8c189ec711eef4ec',
+            'artists': list,
         },
         'playlist_count': 1,
         'playlist': [{
@@ -116,6 +117,7 @@ class RozhlasVltavaIE(RozhlasBaseIE):
         'info_dict': {
             'id': '8554744',
             'title': 'Poslechněte si Neklid. Podcastový thriller o vině, strachu a vztahu, který zašel příliš daleko',
+            'artists': list,
         },
         'playlist_count': 5,
         'playlist': [{
@@ -186,6 +188,7 @@ class RozhlasVltavaIE(RozhlasBaseIE):
         }],
     }, {
         'url': 'https://dvojka.rozhlas.cz/karel-siktanc-cerny-jezdec-bily-kun-napinava-pohadka-o-tajemnem-prizraku-8946969',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': '8946969',
             'title': 'Karel Šiktanc: Černý jezdec, bílý kůň. Napínavá pohádka o tajemném přízraku',
@@ -245,6 +248,7 @@ class MujRozhlasIE(RozhlasBaseIE):
     _TESTS = [{
         # single episode extraction
         'url': 'https://www.mujrozhlas.cz/vykopavky/ach-jo-zase-teleci-rizek-je-mnohem-min-cesky-nez-jsme-si-mysleli',
+        'skip': 'HTTP Error 403',
         'md5': '6f8fd68663e64936623e67c152a669e0',
         'info_dict': {
             'id': '10787730',
@@ -262,6 +266,7 @@ class MujRozhlasIE(RozhlasBaseIE):
     }, {
         # serial extraction
         'url': 'https://www.mujrozhlas.cz/radiokniha/jaroslava-janackova-pribeh-tajemneho-psani-o-pramenech-genezi-babicky',
+        'skip': 'HTTP Error 403',
         'playlist_mincount': 7,
         'info_dict': {
             'id': 'bb2b5f4e-ffb4-35a6-a34a-046aa62d6f6b',
@@ -271,6 +276,7 @@ class MujRozhlasIE(RozhlasBaseIE):
     }, {
         # show extraction
         'url': 'https://www.mujrozhlas.cz/nespavci',
+        'skip': 'HTTP Error 403',
         'playlist_mincount': 14,
         'info_dict': {
             'id': '09db9b37-d0f4-368c-986a-d3439f741f08',
@@ -280,6 +286,7 @@ class MujRozhlasIE(RozhlasBaseIE):
     }, {
         # serialPart
         'url': 'https://www.mujrozhlas.cz/povidka/gustavo-adolfo-becquer-hora-duchu',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '8889035',
             'ext': 'm4a',

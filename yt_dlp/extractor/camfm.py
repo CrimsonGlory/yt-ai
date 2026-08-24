@@ -17,6 +17,7 @@ class CamFMShowIE(InfoExtractor):
     _TESTS = [{
         'playlist_mincount': 5,
         'url': 'https://camfm.co.uk/shows/soul-mining/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'soul-mining',
             'thumbnail': 'md5:6a873091f92c936f23bdcce80f75e66a',

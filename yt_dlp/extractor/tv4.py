@@ -28,6 +28,7 @@ class TV4IE(InfoExtractor):
         {
             # not geo-restricted
             'url': 'http://www.tv4.se/kalla-fakta/klipp/kalla-fakta-5-english-subtitles-2491650',
+            'skip': 'video gone',
             'md5': 'cb837212f342d77cec06e6dad190e96d',
             'info_dict': {
                 'id': '2491650',

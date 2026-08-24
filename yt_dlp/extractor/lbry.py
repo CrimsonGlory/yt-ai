@@ -200,6 +200,7 @@ class LBRYIE(LBRYBaseIE):
         },
     }, {
         'url': 'https://odysee.com/@gardeningincanada:b/plants-i-will-never-grow-again.-the:e',
+        'skip': 'Rate limited',
         'md5': 'c35fac796f62a14274b4dc2addb5d0ba',
         'info_dict': {
             'id': 'e51671357333fe22ae88aad320bde2f6f96b1410',
@@ -228,7 +229,7 @@ class LBRYIE(LBRYBaseIE):
             'ext': 'mp4',
             'live_status': 'is_live',
             'title': 'startswith:RT News | Livestream 24/7',
-            'description': 'md5:fe68d0056dfe79c1a6b8ce8c34d5f6fa',
+            'description': 'md5:bdedbb09b51865a14e30e402ad6c27e2',
             'timestamp': int,
             'upload_date': str,
             'release_timestamp': int,
@@ -246,6 +247,7 @@ class LBRYIE(LBRYBaseIE):
     }, {
         # original quality format w/higher resolution than HLS formats
         'url': 'https://odysee.com/@wickedtruths:2/Biotechnological-Invasion-of-Skin-(April-2023):4',
+        'skip': 'Rate limited',
         'md5': '305b0b3b369bde1b984961f005b67193',
         'info_dict': {
             'id': '41fbfe805eb73c8d3012c0c49faa0f563274f634',

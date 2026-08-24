@@ -69,10 +69,10 @@ class VidioBaseIE(InfoExtractor):
 class VidioIE(VidioBaseIE):
     _VALID_URL = r'https?://(?:www\.)?vidio\.com/(watch|embed)/(?P<id>\d+)-(?P<display_id>[^/?#&]+)'
     _TESTS = [{
-        'url': 'http://www.vidio.com/watch/165683-dj_ambred-booyah-live-2015',
+        'url': 'http://www.vidio.com/watch/9421103-persija-vs-semen-padang-fc-full-highlights-bri-super-league-2025-26?watchpage_type=next',
         'md5': 'abac81b1a205a8d94c609a473b5ea62a',
         'info_dict': {
-            'id': '165683',
+            'id': '9421103',
             'display_id': 'dj_ambred-booyah-live-2015',
             'ext': 'mp4',
             'title': 'DJ_AMBRED - Booyah (Live 2015)',

@@ -19,6 +19,7 @@ class QDanceIE(InfoExtractor):
     _TESTS = [{
         'note': 'vod',
         'url': 'https://www.q-dance.com/network/library/146542138',
+        'skip': 'Login required',
         'info_dict': {
             'id': '146542138',
             'ext': 'mp4',
@@ -56,6 +57,7 @@ class QDanceIE(InfoExtractor):
     }, {
         'note': 'vod with alphanumeric id',
         'url': 'https://www.q-dance.com/network/library/WhDleSIWSfeT3Q9ObBKBeA',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'WhDleSIWSfeT3Q9ObBKBeA',
             'ext': 'mp4',

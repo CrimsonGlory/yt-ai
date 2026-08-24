@@ -5,6 +5,7 @@ class WorldStarHipHopIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www|m)\.worldstar(?:candy|hiphop)\.com/(?:videos|android)/video\.php\?.*?\bv=(?P<id>[^&]+)'
     _TESTS = [{
         'url': 'http://www.worldstarhiphop.com/videos/video.php?v=wshh6a7q1ny0G34ZwuIO',
+        'skip': 'video gone',
         'md5': '9d04de741161603bf7071bbf4e883186',
         'info_dict': {
             'id': 'wshh6a7q1ny0G34ZwuIO',

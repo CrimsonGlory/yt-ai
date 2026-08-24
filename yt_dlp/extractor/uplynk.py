@@ -55,6 +55,7 @@ class UplynkIE(UplynkBaseIE):
     _VALID_URL = UplynkBaseIE._UPLYNK_URL_RE
     _TEST = {
         'url': 'http://content.uplynk.com/e89eaf2ce9054aa89d92ddb2d817a52e.m3u8',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'e89eaf2ce9054aa89d92ddb2d817a52e',
             'ext': 'mp4',

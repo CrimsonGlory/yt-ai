@@ -19,6 +19,7 @@ class TV2IE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?tv2\.no/v(?:ideo)?\d*/(?:[^?#]+/)*(?P<id>\d+)'
     _TESTS = [{
         'url': 'http://www.tv2.no/v/1791207/',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': '1791207',
             'ext': 'mp4',
@@ -120,6 +121,7 @@ class TV2ArticleIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?tv2\.no/(?!v(?:ideo)?\d*/)[^?#]+/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.tv2.no/underholdning/forraeder/katarina-flatland-angrer-etter-forraeder-exit/15095188/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '15095188',
             'title': 'Katarina Flatland angrer etter Forræder-exit',
@@ -284,6 +286,7 @@ class MTVUutisetArticleIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)mtvuutiset\.fi/artikkeli/[^/]+/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.mtvuutiset.fi/artikkeli/tallaisia-vaurioita-viking-amorellassa-on-useamman-osaston-alla-vetta/7931384',
+        'skip': 'video gone',
         'info_dict': {
             'id': '1311159',
             'ext': 'mp4',

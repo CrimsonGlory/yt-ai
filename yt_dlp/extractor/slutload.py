@@ -5,6 +5,7 @@ class SlutloadIE(InfoExtractor):
     _VALID_URL = r'https?://(?:\w+\.)?slutload\.com/(?:video/[^/]+|embed_player|watch)/(?P<id>[^/]+)'
     _TESTS = [{
         'url': 'http://www.slutload.com/video/virginie-baisee-en-cam/TD73btpBqSxc/',
+        'skip': 'HTTP Error 403',
         'md5': '868309628ba00fd488cf516a113fd717',
         'info_dict': {
             'id': 'TD73btpBqSxc',

@@ -5,6 +5,7 @@ class CaltransIE(InfoExtractor):
     _VALID_URL = r'https?://(?:[^/]+\.)?ca\.gov/vm/loc/[^/]+/(?P<id>[a-z0-9_]+)\.htm'
     _TEST = {
         'url': 'https://cwwp2.dot.ca.gov/vm/loc/d3/hwy50at24th.htm',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'hwy50at24th',
             'ext': 'ts',

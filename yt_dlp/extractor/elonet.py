@@ -6,6 +6,7 @@ class ElonetIE(InfoExtractor):
     _VALID_URL = r'https?://elonet\.finna\.fi/Record/kavi\.elonet_elokuva_(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'https://elonet.finna.fi/Record/kavi.elonet_elokuva_107867',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '107867',
             'ext': 'mp4',
@@ -17,6 +18,7 @@ class ElonetIE(InfoExtractor):
     }, {
         # DASH with subtitles
         'url': 'https://elonet.finna.fi/Record/kavi.elonet_elokuva_116539',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '116539',
             'ext': 'mp4',
@@ -28,6 +30,7 @@ class ElonetIE(InfoExtractor):
     }, {
         # Page with multiple videos, download the main one
         'url': 'https://elonet.finna.fi/Record/kavi.elonet_elokuva_117396',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '117396',
             'ext': 'mp4',

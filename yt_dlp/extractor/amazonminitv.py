@@ -44,6 +44,7 @@ class AmazonMiniTVIE(AmazonMiniTVBaseIE):
     _VALID_URL = r'(?:https?://(?:www\.)?amazon\.in/minitv/tp/|amazonminitv:(?:amzn1\.dv\.gti\.)?)(?P<id>[a-f0-9-]+)'
     _TESTS = [{
         'url': 'https://www.amazon.in/minitv/tp/75fe3a75-b8fe-4499-8100-5c9424344840?referrer=https%3A%2F%2Fwww.amazon.in%2Fminitv',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': 'amzn1.dv.gti.75fe3a75-b8fe-4499-8100-5c9424344840',
             'ext': 'mp4',
@@ -66,6 +67,7 @@ class AmazonMiniTVIE(AmazonMiniTVBaseIE):
         },
     }, {
         'url': 'https://www.amazon.in/minitv/tp/280d2564-584f-452f-9c98-7baf906e01ab?referrer=https%3A%2F%2Fwww.amazon.in%2Fminitv',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'amzn1.dv.gti.280d2564-584f-452f-9c98-7baf906e01ab',
             'ext': 'mp4',

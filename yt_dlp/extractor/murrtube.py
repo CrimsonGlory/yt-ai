@@ -96,6 +96,7 @@ class MurrtubeUserIE(InfoExtractor):
     _VALID_URL = r'https?://murrtube\.net/(?P<id>[^/]+)$'
     _TESTS = [{
         'url': 'https://murrtube.net/stormy',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'stormy',
         },

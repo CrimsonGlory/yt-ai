@@ -22,6 +22,8 @@ class DisneyIE(InfoExtractor):
             'title': 'Moana - Trailer',
             'description': 'A fun adventure for the entire Family!  Bring home Moana on Digital HD Feb 21 & Blu-ray March 7',
             'upload_date': '20170112',
+            'duration': int,
+            'thumbnail': r're:https?://.*',
         },
         'params': {
             # m3u8 download
@@ -36,6 +38,8 @@ class DisneyIE(InfoExtractor):
             'title': '"Intro" Featurette: Rogue One: A Star Wars Story',
             'upload_date': '20170104',
             'description': 'Go behind-the-scenes of Rogue One: A Star Wars Story in this featurette with Director Gareth Edwards and the cast of the film.',
+            'duration': int,
+            'thumbnail': r're:https?://.*',
         },
         'params': {
             # m3u8 download

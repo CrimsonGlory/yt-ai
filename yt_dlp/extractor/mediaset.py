@@ -34,6 +34,7 @@ class MediasetIE(ThePlatformBaseIE):
     _TESTS = [{
         # full episode
         'url': 'https://mediasetinfinity.mediaset.it/video/mrwronglezionidamore/episodio-1_F310575103000102',
+        'skip': 'Geo-restricted',
         'md5': 'a7e75c6384871f322adb781d3bd72c26',
         'info_dict': {
             'id': 'F310575103000102',
@@ -54,10 +55,10 @@ class MediasetIE(ThePlatformBaseIE):
             'chapters': [{'start_time': 0.0, 'end_time': 439.88}, {'start_time': 439.88, 'end_time': 1685.84}, {'start_time': 1685.84, 'end_time': 2682.0}],
         },
     }, {
-        'url': 'https://mediasetinfinity.mediaset.it/video/matrix/puntata-del-25-maggio_F309013801000501',
+        'url': 'https://mediasetinfinity.mediaset.it/video/yogaradioestate/green-o-red-flag_FD00000000540346',
         'md5': '1276f966ac423d16ba255ce867de073e',
         'info_dict': {
-            'id': 'F309013801000501',
+            'id': 'FD00000000540346',
             'ext': 'mp4',
             'title': 'Puntata del 25 maggio',
             'description': 'md5:ee2e456e3eb1dba5e814596655bb5296',
@@ -275,6 +276,7 @@ class MediasetShowIE(MediasetIE):  # XXX: Do not subclass from concrete IE
     }, {
         # TV Show webpage (specific season)
         'url': 'https://mediasetinfinity.mediaset.it/programmi-tv/leiene/leiene_SE000000000061,ST000000002763',
+        'skip': 'video gone',
         'info_dict': {
             'id': '000000002763',
             'title': 'Le Iene 2021/2022',

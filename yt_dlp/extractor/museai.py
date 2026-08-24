@@ -16,6 +16,7 @@ class MuseAIIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?muse\.ai/(?:v|embed)/(?P<id>\w+)'
     _TESTS = [{
         'url': 'https://muse.ai/embed/YdTWvUW',
+        'skip': 'Site no longer exists or is broken',
         'md5': 'f994f9a38be1c3aaf9e37cbd7d76fe7c',
         'info_dict': {
             'id': 'YdTWvUW',
@@ -32,6 +33,7 @@ class MuseAIIE(InfoExtractor):
         },
     }, {
         'url': 'https://muse.ai/v/gQ4gGAA-0756',
+        'skip': 'Site no longer exists or is broken',
         'md5': '52dbfc78e865e56dc19a1715badc35e8',
         'info_dict': {
             'id': 'gQ4gGAA',

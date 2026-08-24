@@ -154,6 +154,7 @@ class StreaksIE(StreaksBaseIE):
     }, {
         # https://www.ktv.jp/mycoffeetime/
         'url': 'https://players.streaks.jp/ktv-web/0298e8964c164ab384c07ef6e08c444b/index.html?m=ref:mycoffeetime_250317',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'dccdc079e3fd41f88b0c8435e2d453ab',
             'ext': 'mp4',

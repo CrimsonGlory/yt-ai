@@ -44,6 +44,7 @@ class WatIE(InfoExtractor):
         },
         {
             'url': 'wat:14010600',
+            'skip': 'DRM protected',
             'info_dict': {
                 'id': '14010600',
                 'title': 'Burger Quiz - S03 EP21 avec Eye Haidara, Anne Depétrini, Jonathan Zaccaï et Pio Marmaï',

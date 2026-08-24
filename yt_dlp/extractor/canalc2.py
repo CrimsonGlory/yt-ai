@@ -16,6 +16,7 @@ class Canalc2IE(InfoExtractor):
             'ext': 'mp4',
             'title': 'Terrasses du Numérique',
             'duration': 122,
+            'thumbnail': r're:https?://.*',
         },
     }, {
         'url': 'http://archives-canalc2.u-strasbg.fr/video.asp?idVideo=11427&voir=oui',

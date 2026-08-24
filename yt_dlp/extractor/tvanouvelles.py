@@ -16,6 +16,9 @@ class TVANouvellesIE(InfoExtractor):
             'uploader_id': '1741764581',
             'timestamp': 1473352030,
             'upload_date': '20160908',
+            'duration': int,
+            'tags': list,
+            'thumbnail': r're:https?://.*',
         },
         'add_ie': ['BrightcoveNew'],
     }
@@ -32,6 +35,7 @@ class TVANouvellesArticleIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?tvanouvelles\.ca/(?:[^/]+/)+(?P<id>[^/?#&]+)'
     _TEST = {
         'url': 'http://www.tvanouvelles.ca/2016/11/17/des-policiers-qui-ont-la-meche-un-peu-courte',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'des-policiers-qui-ont-la-meche-un-peu-courte',
             'title': 'Des policiers qui ont «la mèche un peu courte»?',

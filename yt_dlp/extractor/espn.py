@@ -41,9 +41,9 @@ class ESPNIE(InfoExtractor):
                     '''
 
     _TESTS = [{
-        'url': 'http://espn.go.com/video/clip?id=10365079',
+        'url': 'http://espn.go.com/video/clip/_/id/49711735/pathetic-browns-start-watson',
         'info_dict': {
-            'id': '10365079',
+            'id': '49711735',
             'ext': 'mp4',
             'title': '30 for 30 Shorts: Judging Jewell',
             'description': 'md5:39370c2e016cb4ecf498ffe75bef7f0f',
@@ -57,6 +57,7 @@ class ESPNIE(InfoExtractor):
         },
     }, {
         'url': 'https://broadband.espn.go.com/video/clip?id=18910086',
+        'skip': 'video gone',
         'info_dict': {
             'id': '18910086',
             'ext': 'mp4',
@@ -240,6 +241,7 @@ class ESPNCricInfoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?espncricinfo\.com/(?:cricket-)?videos?/[^#$&?/]+-(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.espncricinfo.com/video/finch-chasing-comes-with-risks-despite-world-cup-trend-1289135',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '1289135',
             'ext': 'mp4',
@@ -251,6 +253,7 @@ class ESPNCricInfoIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://www.espncricinfo.com/cricket-videos/daryl-mitchell-mitchell-santner-is-one-of-the-best-white-ball-spinners-india-vs-new-zealand-1356225',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '1356225',
             'ext': 'mp4',
@@ -292,6 +295,7 @@ class WatchESPNIE(AdobePassIE):
     _VALID_URL = r'https?://(?:www\.)?espn\.com/(?:watch|espnplus)/player/_/id/(?P<id>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'
     _TESTS = [{
         'url': 'https://www.espn.com/watch/player/_/id/11ce417a-6ac9-42b6-8a15-46aeb9ad5710',
+        'skip': 'Login required',
         'info_dict': {
             'id': '11ce417a-6ac9-42b6-8a15-46aeb9ad5710',
             'ext': 'mp4',
@@ -304,6 +308,7 @@ class WatchESPNIE(AdobePassIE):
         },
     }, {
         'url': 'https://www.espn.com/watch/player/_/id/90a2c85d-75e0-4b1e-a878-8e428a3cb2f3',
+        'skip': 'Login required',
         'info_dict': {
             'id': '90a2c85d-75e0-4b1e-a878-8e428a3cb2f3',
             'ext': 'mp4',
@@ -316,6 +321,7 @@ class WatchESPNIE(AdobePassIE):
         },
     }, {
         'url': 'https://www.espn.com/watch/player/_/id/c4313bbe-95b5-4bb8-b251-ac143ea0fc54',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'c4313bbe-95b5-4bb8-b251-ac143ea0fc54',
             'ext': 'mp4',

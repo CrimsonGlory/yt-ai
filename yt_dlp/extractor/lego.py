@@ -20,6 +20,9 @@ class LEGOIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'Blocumentary Great Creations: Akiyuki Kawaguchi',
             'description': 'Blocumentary Great Creations: Akiyuki Kawaguchi',
+            'age_limit': int,
+            'duration': int,
+            'thumbnail': r're:https?://.*',
         },
     }, {
         # geo-restricted but the contentUrl contain a valid url

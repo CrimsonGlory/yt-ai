@@ -352,7 +352,7 @@ class ZenYandexChannelIE(ZenYandexBaseIE):
             'description': 'md5:517b7c97d8ca92e940f5af65448fd928',
             'title': 'AcademeG DailyStream',
         },
-        'playlist_mincount': 657,
+        'playlist_mincount': 656,
     }, {
         # Test that the playlist extractor finishes extracting when the
         # channel has less than one page

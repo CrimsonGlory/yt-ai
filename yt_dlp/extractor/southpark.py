@@ -61,6 +61,7 @@ class SouthParkEsIE(MTVServicesBaseIE):
     _VALID_URL = r'https?://(?:www\.)?southpark\.cc\.com/es/episodios/(?P<id>[^?#]+)'
     _TESTS = [{
         'url': 'https://southpark.cc.com/es/episodios/er4a32/south-park-aumento-de-peso-4000-temporada-1-ep-2',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '5fb94f0c-ecfd-11e0-aca6-0026b9414f30',
             'ext': 'mp4',
@@ -146,6 +147,7 @@ class SouthParkDeIE(MTVServicesBaseIE):
     }, {
         # clip
         'url': 'https://www.southpark.de/videoclip/ct46op/south-park-zahnfee-cartman',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'ext': 'mp4',
             'id': 'e99d45ea-ed00-11e0-aca6-0026b9414f30',
@@ -168,6 +170,7 @@ class SouthParkDeIE(MTVServicesBaseIE):
     }, {
         # episode
         'url': 'https://www.southpark.de/folgen/4r4367/south-park-katerstimmung-staffel-12-ep-3',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'ext': 'mp4',
             'id': '68c79aa4-ecfd-11e0-aca6-0026b9414f30',

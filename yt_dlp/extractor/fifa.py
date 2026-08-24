@@ -10,6 +10,7 @@ class FifaIE(InfoExtractor):
     _VALID_URL = r'https?://www\.fifa\.com/fifaplus/\w{2}/watch/([^#?]+/)?(?P<id>\w+)'
     _TESTS = [{
         'url': 'https://www.fifa.com/fifaplus/en/watch/7on10qPcnyLajDDU3ntg6y',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '7on10qPcnyLajDDU3ntg6y',
             'title': 'Italy v France | Final | 2006 FIFA World Cup Germany™ | Full Match Replay',
@@ -24,6 +25,7 @@ class FifaIE(InfoExtractor):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.fifa.com/fifaplus/pt/watch/1cg5r5Qt6Qt12ilkDgb1sV',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '1cg5r5Qt6Qt12ilkDgb1sV',
             'title': 'Brazil v Germany | Semi-finals | 2014 FIFA World Cup Brazil™ | Extended Highlights',
@@ -38,6 +40,7 @@ class FifaIE(InfoExtractor):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.fifa.com/fifaplus/fr/watch/3C6gQH9C2DLwzNx7BMRQdp',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '3C6gQH9C2DLwzNx7BMRQdp',
             'title': 'Josimar goal against Northern Ireland | Classic Goals',

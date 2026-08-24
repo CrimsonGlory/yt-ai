@@ -36,6 +36,7 @@ class VolejTVIE(VolejTVBaseIE):
     _VALID_URL = r'https?://volej\.tv/match/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://volej.tv/match/270579',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': '270579',
             'ext': 'mp4',

@@ -10,6 +10,7 @@ class AsobiStageIE(InfoExtractor):
     _VALID_URL = r'https?://asobistage\.asobistore\.jp/event/(?P<id>(?P<event>\w+)/(?P<type>archive|player)/(?P<slug>\w+))(?:[?#]|$)'
     _TESTS = [{
         'url': 'https://asobistage.asobistore.jp/event/315passionhour_2022summer/archive/frame',
+        'skip': 'Login required',
         'info_dict': {
             'id': '315passionhour_2022summer/archive/frame',
             'title': '315プロダクションプレゼンツ 315パッションアワー!!!',
@@ -42,6 +43,7 @@ class AsobiStageIE(InfoExtractor):
         }],
     }, {
         'url': 'https://asobistage.asobistore.jp/event/sidem_fclive_bpct/archive/premium_hc',
+        'skip': 'Login required',
         'playlist_count': 4,
         'info_dict': {
             'id': 'sidem_fclive_bpct/archive/premium_hc',

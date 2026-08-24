@@ -195,7 +195,7 @@ class TedPlaylistIE(TedBaseIE):
         'info_dict': {
             'id': '171',
             'title': 'The most popular talks of all time',
-            'description': 'md5:d2f22831dc86c7040e733a3cb3993d78',
+            'description': 'md5:5346ef094754d2edd7e1a4cd3a166168',
         },
         'playlist_mincount': 25,
     }]

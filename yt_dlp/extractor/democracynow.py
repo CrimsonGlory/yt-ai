@@ -19,7 +19,7 @@ class DemocracynowIE(InfoExtractor):
             'id': '2015-0703-001',
             'ext': 'mp4',
             'title': 'Daily Show for July 03, 2015',
-            'description': 'md5:80eb927244d6749900de6072c7cc2c86',
+            'description': 'md5:26b6425e840edf1db005ece6e1a35fcc',
         },
     }, {
         'url': 'http://www.democracynow.org/2015/7/3/this_flag_comes_down_today_bree',
@@ -27,7 +27,7 @@ class DemocracynowIE(InfoExtractor):
             'id': '2015-0703-001',
             'ext': 'mp4',
             'title': '"This Flag Comes Down Today": Bree Newsome Scales SC Capitol Flagpole, Takes Down Confederate Flag',
-            'description': 'md5:4d2bc4f0d29f5553c2210a4bc7761a21',
+            'description': 'md5:b9452ad698dedfb286205ac622d9c8fd',
         },
         'params': {
             'skip_download': True,

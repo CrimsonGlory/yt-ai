@@ -30,10 +30,13 @@ class MySpaceIE(InfoExtractor):
             'uploader_id': 'fiveminutestothestage',
             'timestamp': 1414108751,
             'upload_date': '20141023',
+            'duration': int,
+            'thumbnail': r're:https?://.*',
         },
     }, {
         # songs
         'url': 'https://myspace.com/killsorrow/music/song/of-weakened-soul...-93388656-103880681',
+        'skip': 'Site returned HTTP 5xx',
         'md5': '1d7ee4604a3da226dd69a123f748b262',
         'info_dict': {
             'id': '93388656',
@@ -169,6 +172,7 @@ class MySpaceAlbumIE(InfoExtractor):
         'info_dict': {
             'title': 'The Demo',
             'id': '18596029',
+            'display_id': str,
         },
         'playlist_count': 5,
     }]

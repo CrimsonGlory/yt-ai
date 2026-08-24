@@ -17,7 +17,7 @@ class CraftsyIE(InfoExtractor):
         'info_dict': {
             'id': 'the-midnight-quilt-show-season-5',
             'title': 'The Midnight Quilt Show Season 5',
-            'description': 'md5:113eda818e985d1a566625fb2f833b7a',
+            'description': 'md5:48a6712d05a56a1204597aa7956d7069',
         },
         'playlist_count': 10,
     }, {
@@ -25,7 +25,7 @@ class CraftsyIE(InfoExtractor):
         'info_dict': {
             'id': 'sew-your-own-designer-handbag',
             'title': 'Sew Your Own Designer Handbag',
-            'description': 'md5:8270d0ef5427d3c895a27351aeaac276',
+            'description': 'md5:628f4d44b03e61b6291eceb9e939aaad',
         },
         'playlist_mincount': 1,
     }, {
@@ -33,7 +33,7 @@ class CraftsyIE(InfoExtractor):
         'info_dict': {
             'id': 'all-access-estes-park-wool-market',
             'title': 'All Access: Estes Park Wool Market',
-            'description': 'md5:aded1bd8d38ae2fae4dae936c0ae01e7',
+            'description': 'md5:2e1355c2fee3899f4219836b00fe7775',
         },
         'playlist_count': 6,
     }]

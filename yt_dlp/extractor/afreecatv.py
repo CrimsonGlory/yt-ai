@@ -100,6 +100,7 @@ class AfreecaTVIE(AfreecaTVBaseIE):
     _VALID_URL = r'https?://vod\.sooplive\.com/(?:PLAYER/STATION|player)/(?P<id>\d+)/?(?:$|[?#&])'
     _TESTS = [{
         'url': 'https://vod.sooplive.com/player/192805325',
+        'skip': 'Login required',
         'info_dict': {
             'id': '20260414_1B44E53B_293230967_1',
             'ext': 'mp4',

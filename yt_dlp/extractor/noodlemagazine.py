@@ -13,6 +13,7 @@ class NoodleMagazineIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www|adult\.)?noodlemagazine\.com/watch/(?P<id>[0-9-_]+)'
     _TEST = {
         'url': 'https://adult.noodlemagazine.com/watch/-67421364_456239604',
+        'skip': 'HTTP Error 403',
         'md5': '9e02aa763612929d0b4b850591a9248b',
         'info_dict': {
             'id': '-67421364_456239604',

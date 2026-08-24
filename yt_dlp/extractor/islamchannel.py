@@ -66,6 +66,7 @@ class IslamChannelSeriesIE(InfoExtractor):
     _VALID_URL = r'https?://watch\.islamchannel\.tv/series/(?P<id>[a-f\d-]+)'
     _TESTS = [{
         'url': 'https://watch.islamchannel.tv/series/a6cccef3-3ef1-11eb-bc19-06b69c2357cd',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'a6cccef3-3ef1-11eb-bc19-06b69c2357cd',
         },

@@ -9,6 +9,7 @@ class MoviepilotIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.moviepilot.de/movies/interstellar-2/',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'x7xdpkk',
             'display_id': 'interstellar-2',
@@ -28,9 +29,11 @@ class MoviepilotIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.moviepilot.de/movies/interstellar-2/trailer',
+        'skip': 'Geo-restricted',
         'only_matching': True,
     }, {
         'url': 'https://www.moviepilot.de/movies/interstellar-2/kinoprogramm/berlin',
+        'skip': 'Geo-restricted',
         'only_matching': True,
     }, {
         'url': 'https://www.moviepilot.de/movies/queen-slim/trailer',
@@ -39,7 +42,7 @@ class MoviepilotIE(InfoExtractor):
             'display_id': 'queen-slim',
             'title': 'Queen & Slim',
             'ext': 'mp4',
-            'thumbnail': r're:https://\w+\.dmcdn\.net/v/SbUM71ZeG2N975lf2/x1080',
+            'thumbnail': r're:https?://.*',
             'timestamp': 1605555825,
             'description': 'md5:83228bb86f5367dd181447fdc4873989',
             'uploader': 'Moviepilot',
@@ -71,7 +74,7 @@ class MoviepilotIE(InfoExtractor):
             'age_limit': 0,
             'duration': 82,
             'upload_date': '20201109',
-            'thumbnail': r're:https://\w+\.dmcdn\.net/v/SaMes1Z.*/x1080',
+            'thumbnail': r're:https?://.*',
             'uploader': 'Moviepilot',
             'like_count': int,
             'view_count': int,

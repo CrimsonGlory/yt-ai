@@ -38,6 +38,7 @@ class AGalegaIE(AGalegaBaseIE):
     _VALID_URL = r'https?://(?:www\.)?agalega\.gal/videos/(?:detail/)?(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'https://www.agalega.gal/videos/288664-lr-ninguencheconta',
+        'skip': 'video gone',
         'md5': '04533a66c5f863d08dd9724b11d1c223',
         'info_dict': {
             'id': '288664',
@@ -48,6 +49,7 @@ class AGalegaIE(AGalegaBaseIE):
         },
     }, {
         'url': 'https://www.agalega.gal/videos/detail/296152-pulso-activo-7',
+        'skip': 'video gone',
         'md5': '26df7fdcf859f38ad92d837279d6b56d',
         'info_dict': {
             'id': '296152',

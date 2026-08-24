@@ -6,6 +6,7 @@ class KickerIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)kicker\.(?:de)/(?P<id>[\w-]+)/video'
     _TESTS = [{
         'url': 'https://www.kicker.de/pogba-dembel-co-die-top-11-der-abloesefreien-spieler-905049/video',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'km04mrK0DrRAVxy2GcA',
             'title': 'md5:b91d145bac5745ac58d5479d8347a875',
@@ -24,6 +25,7 @@ class KickerIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.kicker.de/ex-unioner-in-der-bezirksliga-felix-kroos-vereinschallenge-in-pankow-902825/video',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'k2omNsJKdZ3TxwxYSFJ',
             'title': 'md5:72ec24d7f84b8436fe1e89d198152adf',

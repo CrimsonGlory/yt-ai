@@ -5,6 +5,7 @@ class LumniIE(FranceTVBaseInfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?lumni\.fr/video/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://www.lumni.fr/video/l-homme-et-son-environnement-dans-la-revolution-industrielle',
+        'skip': 'video gone',
         'md5': '960e8240c4f2c7a20854503a71e52f5e',
         'info_dict': {
             'id': 'd2b9a4e5-a526-495b-866c-ab72737e3645',

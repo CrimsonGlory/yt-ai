@@ -13,6 +13,7 @@ class NetzkinoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?netzkino\.de/details/(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://www.netzkino.de/details/snow-beast',
+        'skip': 'HTTP Error 403',
         'md5': '1a4c90fe40d3ccabce163287e45e56dd',
         'info_dict': {
             'id': 'snow-beast',

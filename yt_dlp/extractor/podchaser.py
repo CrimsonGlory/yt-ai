@@ -47,7 +47,7 @@ class PodchaserIE(InfoExtractor):
         'info_dict': {
             'id': '699349',
             'title': 'Sean Carroll\'s Mindscape: Science, Society, Philosophy, Culture, Arts, and Ideas',
-            'description': 'md5:2cbd8f4749891a84dc8235342e0b5ff1',
+            'description': 'md5:0800fc2e98cd8b97b02c22786a8db7e4',
         },
         'playlist_mincount': 225,
     }]

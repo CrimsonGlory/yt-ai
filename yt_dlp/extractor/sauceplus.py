@@ -12,6 +12,7 @@ class SaucePlusIE(FloatplaneBaseIE):
     _IMPERSONATE_TARGET = True
     _TESTS = [{
         'url': 'https://www.sauceplus.com/post/YbBwIa2A5g',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'eit4Ugu5TL',
             'ext': 'mp4',
@@ -48,6 +49,7 @@ class SaucePlusChannelIE(FloatplaneChannelBaseIE):
     _PAGE_SIZE = 20
     _TESTS = [{
         'url': 'https://www.sauceplus.com/channel/williamosman/home',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'williamosman',
             'title': 'William Osman',

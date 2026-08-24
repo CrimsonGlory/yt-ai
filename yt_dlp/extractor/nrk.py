@@ -360,7 +360,7 @@ class NRKTVIE(InfoExtractor):
             'id': 'MDFP15000514',
             'ext': 'mp4',
             'title': 'Kunnskapskanalen - Grunnlovsjubiléet - Stor ståhei for ingenting',
-            'description': 'md5:89290c5ccde1b3a24bb8050ab67fe1db',
+            'description': 'md5:4811cff3de75707d23f0bb5edfaa1bc6',
             'duration': 4605.08,
             'series': 'Kunnskapskanalen',
             'episode': 'Grunnlovsjubiléet - Stor ståhei for ingenting',
@@ -454,7 +454,7 @@ class NRKTVEpisodeIE(InfoExtractor):
             'id': 'MUHH36005220',
             'ext': 'mp4',
             'title': 'Hellums kro - 2. Kro, krig og kjærlighet',
-            'description': 'md5:ad92ddffc04cea8ce14b415deef81787',
+            'description': 'md5:b32a7dc0b1ed27c8064f58b97bda4350',
             'duration': 1563.92,
             'series': 'Hellums kro',
             'season_number': 1,
@@ -597,6 +597,7 @@ class NRKTVSeasonIE(NRKTVSerieBaseIE):
     }, {
         # 841 entries, multi page
         'url': 'https://radio.nrk.no/serie/dagsnytt/sesong/201509',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'dagsnytt/201509',
             'title': 'September 2015',
@@ -649,7 +650,7 @@ class NRKTVSeriesIE(NRKTVSerieBaseIE):
         'info_dict': {
             'id': 'groenn-glede',
             'title': 'Grønn glede',
-            'description': 'md5:7576e92ae7f65da6993cf90ee29e4608',
+            'description': 'md5:917264f45973d122218876368af624f2',
         },
         'playlist_mincount': 90,
     }, {
@@ -696,7 +697,7 @@ class NRKTVSeriesIE(NRKTVSerieBaseIE):
         'info_dict': {
             'id': 'dickie-dick-dickens',
             'title': 'Dickie Dick Dickens',
-            'description': 'md5:19e67411ffe57f7dce08a943d7a0b91f',
+            'description': 'md5:34fbee33e04b886414cde1b45f9988c9',
         },
         'playlist_mincount': 8,
     }, {

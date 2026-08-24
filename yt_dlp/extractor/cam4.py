@@ -5,6 +5,7 @@ class CAM4IE(InfoExtractor):
     _VALID_URL = r'https?://(?:[^/]+\.)?cam4\.com/(?P<id>[a-z0-9_]+)'
     _TEST = {
         'url': 'https://www.cam4.com/foxynesss',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'foxynesss',
             'ext': 'mp4',

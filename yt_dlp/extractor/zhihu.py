@@ -20,6 +20,7 @@ class ZhihuIE(InfoExtractor):
             'view_count': int,
             'like_count': int,
             'comment_count': int,
+            'uploader_url': r're:https?://.*',
         },
     }
 

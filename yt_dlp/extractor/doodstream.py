@@ -10,6 +10,7 @@ class DoodStreamIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?:dood(?:stream)?\.(?:com|to|watch|so|pm|wf|re|la|li|ws)|playmogo\.com)/[ed]/(?P<id>[a-z0-9]+)'
     _TESTS = [{
         'url': 'http://dood.to/e/5s1wmbdacezb',
+        'skip': 'HTTP Error 403',
         'md5': '4568b83b31e13242b3f1ff96c55f0595',
         'info_dict': {
             'id': '5s1wmbdacezb',
@@ -20,6 +21,7 @@ class DoodStreamIE(InfoExtractor):
         }
     }, {
         'url': 'http://dood.watch/d/5s1wmbdacezb',
+        'skip': 'HTTP Error 403',
         'md5': '4568b83b31e13242b3f1ff96c55f0595',
         'info_dict': {
             'id': '5s1wmbdacezb',
@@ -30,6 +32,7 @@ class DoodStreamIE(InfoExtractor):
         }
     }, {
         'url': 'https://dood.to/d/jzrxn12t2s7n',
+        'skip': 'HTTP Error 403',
         'md5': '3207e199426eca7c2aa23c2872e6728a',
         'info_dict': {
             'id': 'jzrxn12t2s7n',

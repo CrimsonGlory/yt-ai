@@ -21,6 +21,7 @@ class EggheadCourseIE(EggheadBaseIE):
     _VALID_URL = r'https?://(?:app\.)?egghead\.io/(?:course|playlist)s/(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript',
+        'skip': 'Site returned HTTP 5xx',
         'playlist_count': 29,
         'info_dict': {
             'id': '432655',

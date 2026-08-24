@@ -19,10 +19,10 @@ class AeonCoIE(InfoExtractor):
             'duration': 348,
         },
     }, {
-        'url': 'https://aeon.co/videos/dazzling-timelapse-shows-how-microbes-spoil-our-food-and-sometimes-enrich-it',
+        'url': 'https://aeon.co/videos/i-listen-to-the-land-poetry-and-greenery-intertwine-in-emilio-ambaszs-architecture',
         'md5': '03582d795382e49f2fd0b427b55de409',
         'info_dict': {
-            'id': '759576926',
+            'id': 'aQwobrLxmXU',
             'ext': 'mp4',
             'title': 'Wrought',
             'thumbnail': 'https://i.vimeocdn.com/video/1525599692-84614af88e446612f49ca966cf8f80eab2c73376bedd80555741c521c26f9a3e-d_1280',

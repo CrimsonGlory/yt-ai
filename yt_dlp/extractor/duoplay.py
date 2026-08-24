@@ -39,6 +39,7 @@ class DuoplayIE(InfoExtractor):
     }, {
         'note': 'Empty title',
         'url': 'https://duoplay.ee/17/uhikarotid?ep=14',
+        'skip': 'video gone',
         'md5': 'cba9f5dabf2582b224d80ac44fb80e47',
         'info_dict': {
             'id': '17_14',

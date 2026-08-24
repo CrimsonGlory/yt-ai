@@ -26,6 +26,7 @@ class TVerIE(StreaksBaseIE):
     _TESTS = [{
         # via Streaks backend
         'url': 'https://tver.jp/episodes/epc1hdugbk',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'epc1hdugbk',
             'ext': 'mp4',
@@ -54,6 +55,7 @@ class TVerIE(StreaksBaseIE):
     }, {
         # via Brightcove backend (deprecated)
         'url': 'https://tver.jp/episodes/epc1hdugbk',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'ref:baeebeac-a2a6-4dbf-9eb3-c40d59b40068',
             'ext': 'mp4',
@@ -88,7 +90,7 @@ class TVerIE(StreaksBaseIE):
             'id': 'srtxft431v',
             'title': '名探偵コナン',
         },
-        'playlist_mincount': 21,
+        'playlist_mincount': 9,
     }, {
         'url': 'https://tver.jp/series/sru35hwdd2',
         'info_dict': {

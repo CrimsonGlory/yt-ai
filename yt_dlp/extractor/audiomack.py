@@ -16,6 +16,7 @@ class AudiomackIE(InfoExtractor):
         # hosted on audiomack
         {
             'url': 'http://www.audiomack.com/song/roosh-williams/extraordinary',
+            'skip': 'video gone',
             'info_dict':
             {
                 'id': '310086',
@@ -77,6 +78,7 @@ class AudiomackAlbumIE(InfoExtractor):
         # Standard album playlist
         {
             'url': 'http://www.audiomack.com/album/flytunezcom/tha-tour-part-2-mixtape',
+            'skip': 'video gone',
             'playlist_count': 11,
             'info_dict':
             {
@@ -87,6 +89,7 @@ class AudiomackAlbumIE(InfoExtractor):
         # Album playlist ripped from fakeshoredrive with no metadata
         {
             'url': 'http://www.audiomack.com/album/fakeshoredrive/ppp-pistol-p-project',
+            'skip': 'video gone',
             'info_dict': {
                 'title': 'PPP (Pistol P Project)',
                 'id': '837572',

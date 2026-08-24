@@ -19,6 +19,7 @@ class LentaIE(InfoExtractor):
     }, {
         # EaglePlatform iframe embed
         'url': 'http://lenta.ru/news/2015/03/06/navalny/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '227304',
             'ext': 'mp4',

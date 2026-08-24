@@ -27,6 +27,7 @@ class BleacherReportIE(InfoExtractor):
         'skip': 'Video removed',
     }, {
         'url': 'http://bleacherreport.com/articles/2586817-aussie-golfers-get-fright-of-their-lives-after-being-chased-by-angry-kangaroo',
+        'skip': 'Site returned HTTP 5xx',
         'md5': '6a5cd403418c7b01719248ca97fb0692',
         'info_dict': {
             'id': '2586817',
@@ -88,6 +89,7 @@ class BleacherReportCMSIE(AMPIE):
     _VALID_URL = r'https?://(?:www\.)?bleacherreport\.com/video_embed\?id=(?P<id>[0-9a-f-]{36}|\d{5})'
     _TESTS = [{
         'url': 'http://bleacherreport.com/video_embed?id=8fd44c2f-3dc5-4821-9118-2c825a98c0e1&library=video-cms',
+        'skip': 'Site returned HTTP 5xx',
         'md5': '670b2d73f48549da032861130488c681',
         'info_dict': {
             'id': '8fd44c2f-3dc5-4821-9118-2c825a98c0e1',

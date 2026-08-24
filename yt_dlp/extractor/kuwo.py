@@ -71,6 +71,7 @@ class KuwoIE(KuwoBaseIE):
         'skip': 'this song has been offline because of copyright issues',
     }, {
         'url': 'http://www.kuwo.cn/yinyue/6446136/',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': '6446136',
             'ext': 'mp3',
@@ -140,6 +141,7 @@ class KuwoAlbumIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?kuwo\.cn/album/(?P<id>\d+?)/'
     _TEST = {
         'url': 'http://www.kuwo.cn/album/502294/',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': '502294',
             'title': 'Made\xa0Series\xa0《M》',
@@ -177,6 +179,7 @@ class KuwoChartIE(InfoExtractor):
     _VALID_URL = r'https?://yinyue\.kuwo\.cn/billboard_(?P<id>[^.]+).htm'
     _TEST = {
         'url': 'http://yinyue.kuwo.cn/billboard_香港中文龙虎榜.htm',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': '香港中文龙虎榜',
         },
@@ -203,6 +206,7 @@ class KuwoSingerIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?kuwo\.cn/mingxing/(?P<id>[^/]+)'
     _TESTS = [{
         'url': 'http://www.kuwo.cn/mingxing/bruno+mars/',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': 'bruno+mars',
             'title': 'Bruno\xa0Mars',
@@ -261,6 +265,7 @@ class KuwoCategoryIE(InfoExtractor):
     _VALID_URL = r'https?://yinyue\.kuwo\.cn/yy/cinfo_(?P<id>\d+?).htm'
     _TEST = {
         'url': 'http://yinyue.kuwo.cn/yy/cinfo_86375.htm',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': '86375',
             'title': '八十年代精选',
@@ -301,6 +306,7 @@ class KuwoMvIE(KuwoBaseIE):
     _VALID_URL = r'https?://(?:www\.)?kuwo\.cn/mv/(?P<id>\d+?)/'
     _TEST = {
         'url': 'http://www.kuwo.cn/mv/6480076/',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': '6480076',
             'ext': 'mp4',

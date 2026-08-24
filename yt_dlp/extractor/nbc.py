@@ -326,6 +326,7 @@ class NBCSportsVPlayerIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://vplayer.nbcsports.com/p/BxmELC/nbcsports_embed/select/9CsDKds0kvHI',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': '9CsDKds0kvHI',
             'ext': 'mp4',
@@ -618,6 +619,7 @@ class NBCOlympicsIE(InfoExtractor):
     _TESTS = [{
         # Geo-restricted to US
         'url': 'https://www.nbcolympics.com/videos/watch-final-minutes-team-usas-mens-basketball-gold',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'SAwGfPlQ1q01',
             'ext': 'mp4',
@@ -937,6 +939,7 @@ class BravoTVIE(NBCUniversalBaseIE):
     _VALID_URL = r'https?://(?:www\.)?(?:bravotv|oxygen)\.com/(?:[^/?#]+/)+(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://www.bravotv.com/top-chef/season-16/episode-15/videos/the-top-chef-season-16-winner-is',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '3923059',
             'ext': 'mp4',
@@ -1011,6 +1014,7 @@ class BravoTVIE(NBCUniversalBaseIE):
         'skip': 'This video requires AdobePass MSO credentials',
     }, {
         'url': 'https://www.oxygen.com/in-ice-cold-blood/season-2/episode-16/videos/handling-the-horwitz-house-after-the-murder-season-2',
+        'skip': 'video gone',
         'info_dict': {
             'id': '3974019',
             'ext': 'mp4',
@@ -1046,6 +1050,7 @@ class SyfyIE(NBCUniversalBaseIE):
     _VALID_URL = r'https?://(?:www\.)?syfy\.com/[^/?#]+/(?:season-\d+/episode-\d+/(?:videos/)?|videos/)(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://www.syfy.com/face-off/season-13/episode-10/videos/keyed-up',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '3774403',
             'ext': 'mp4',

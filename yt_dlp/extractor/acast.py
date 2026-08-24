@@ -123,7 +123,7 @@ class ACastChannelIE(ACastBaseIE):
         'info_dict': {
             'id': '4efc5294-5385-4847-98bd-519799ce5786',
             'title': 'Today in Focus',
-            'description': 'md5:feca253de9947634605080cd9eeea2bf',
+            'description': 'md5:fc469ec3716db1b65a98f0d89696ed87',
         },
         'playlist_mincount': 200,
     }, {

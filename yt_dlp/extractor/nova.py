@@ -16,6 +16,7 @@ class NovaEmbedIE(InfoExtractor):
     _VALID_URL = r'https?://media(?:tn)?\.cms\.nova\.cz/embed/(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://media.cms.nova.cz/embed/8o0n0r?autoplay=1',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '8o0n0r',
             'title': '2180. díl',
@@ -29,6 +30,7 @@ class NovaEmbedIE(InfoExtractor):
         'expected_warnings': ['DRM protected', 'Requested format is not available'],
     }, {
         'url': 'https://media.cms.nova.cz/embed/KybpWYvcgOa',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'KybpWYvcgOa',
             'ext': 'mp4',
@@ -39,6 +41,7 @@ class NovaEmbedIE(InfoExtractor):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://mediatn.cms.nova.cz/embed/EU5ELEsmOHt?autoplay=1',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'EU5ELEsmOHt',
             'ext': 'mp4',
@@ -135,6 +138,7 @@ class NovaIE(InfoExtractor):
     _VALID_URL = r'https?://(?:[^.]+\.)?(?P<site>tv(?:noviny)?|tn|novaplus|vymena|fanda|krasna|doma|prask)\.nova\.cz/(?:[^/]+/)+(?P<id>[^/]+?)(?:\.html|/|$)'
     _TESTS = [{
         'url': 'http://tn.nova.cz/clanek/tajemstvi-ukryte-v-podzemi-specialni-nemocnice-v-prazske-krci.html#player_13260',
+        'skip': 'HTTP Error 403',
         'md5': 'da8f3f1fcdaf9fb0f112a32a165760a3',
         'info_dict': {
             'id': '8OvQqEvV3MW',

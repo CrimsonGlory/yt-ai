@@ -172,6 +172,7 @@ class OpenRecIE(OpenRecBaseIE):
     }, {
         # SP
         'url': 'https://www.mellow-fan.com/live/2p8vv29438y',
+        'skip': 'Login required',
         'info_dict': {
             'id': '2p8vv29438y',
             'ext': 'mp4',
@@ -457,6 +458,7 @@ class OpenRecMovieIE(OpenRecBaseIE):
     _VALID_URL = r'https?://(?:www\.)?(?:mellow-fan\.com|openrec\.tv)/(?:m/)?movie/(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://www.mellow-fan.com/movie/e5rk9k4o6zv',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': 'e5rk9k4o6zv',
             'ext': 'mp4',

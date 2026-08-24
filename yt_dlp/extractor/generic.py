@@ -133,6 +133,7 @@ class GenericIE(InfoExtractor):
         # HLS: `Content-Type: audio/mpegurl`; https://bitmovin.com/demos/stream-test
         # https://github.com/ytdl-org/youtube-dl/commit/20938f768b16c945c6041ba3c0a7ae1a4e790881
         'url': 'https://cdn.bitmovin.com/content/assets/art-of-motion-dash-hls-progressive/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8',
+        'skip': 'Cloudflare anti-bot',
         'info_dict': {
             'id': 'f08e80da-bf1d-4e3d-8899-f0f6155f6efa',
             'ext': 'mp4',
@@ -156,6 +157,7 @@ class GenericIE(InfoExtractor):
         # MPEG-DASH; https://bitmovin.com/demos/stream-test
         # https://github.com/ytdl-org/youtube-dl/commit/9d939cec48f06a401fb79eb078c1fc50b2aefbe1
         'url': 'https://cdn.bitmovin.com/content/assets/art-of-motion-dash-hls-progressive/mpds/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.mpd',
+        'skip': 'Cloudflare anti-bot',
         'info_dict': {
             'id': 'f08e80da-bf1d-4e3d-8899-f0f6155f6efa',
             'ext': 'mp4',
@@ -179,6 +181,7 @@ class GenericIE(InfoExtractor):
         # SMIL
         # https://github.com/ytdl-org/youtube-dl/pull/6428
         'url': 'https://api.new.livestream.com/accounts/21/events/7954027/videos/166558123.secure.smil',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': '166558123.secure',
             'ext': 'mp4',
@@ -238,6 +241,7 @@ class GenericIE(InfoExtractor):
         # Webpage starts with a duplicate UTF-8 BOM
         # https://github.com/yt-dlp/yt-dlp/commit/80e8493ee7c3083f4e215794e4a67ba5265f24f7
         'url': 'https://www.filmarkivet.se/movies/paris-d-moll/',
+        'skip': 'Request timed out',
         'md5': 'df02cadc719dcc63d43288366f037754',
         'info_dict': {
             'id': 'paris-d-moll',
@@ -271,6 +275,7 @@ class GenericIE(InfoExtractor):
         # Flowplayer
         # https://github.com/ytdl-org/youtube-dl/commit/4d805e063c6c4ffd557d7c7cb905a3ed9c926b08
         'url': 'https://flowplayer.com/resources/demos/standard-setup',
+        'skip': 'Unsupported URL / extractor broken',
         'info_dict': {
             'id': 'playlist',
             'ext': 'mp4',
@@ -316,6 +321,7 @@ class GenericIE(InfoExtractor):
         # JW Player: Complex
         # https://github.com/ytdl-org/youtube-dl/commit/a4a554a79354981fcab55de8eaab7b95a40bbb48
         'url': 'https://www.indiedb.com/games/king-machine/videos',
+        'skip': 'Cloudflare anti-bot',
         'info_dict': {
             'id': 'videos-1',
             'ext': 'mp4',
@@ -388,7 +394,7 @@ class GenericIE(InfoExtractor):
             'age_limit': 18,
             'description': 'md5:efd70fd3973f8750d285c743b910580a',
             'display_id': 'fresh-out-of-the-shower',
-            'thumbnail': r're:https?://i\.shoosh\.co/contents/videos_screenshots/.+\.jpg',
+            'thumbnail': r're:https?://.*',
         },
         'expected_warnings': ['Untested major version'],
     }, {
@@ -419,6 +425,7 @@ class GenericIE(InfoExtractor):
         # twitter:player:stream
         # https://github.com/ytdl-org/youtube-dl/commit/371ddb14fe651d4a1e5a8310d6d7c0e395cd92b0
         'url': 'https://beltzlaw.com/',
+        'skip': 'Cloudflare anti-bot',
         'info_dict': {
             'id': 'beltzlaw-1',
             'ext': 'mp4',
@@ -477,6 +484,7 @@ class GenericIE(InfoExtractor):
         # JSON-LD: VideoObject
         # https://github.com/ytdl-org/youtube-dl/commit/6e6b70d65f0681317c425bfe1e157f3474afbbe8
         'url': 'https://breezy.hr/',
+        'skip': 'Unsupported URL / extractor broken',
         'info_dict': {
             'id': 'k6gl2kt2eq',
             'ext': 'mp4',

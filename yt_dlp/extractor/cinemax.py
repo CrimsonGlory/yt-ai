@@ -6,6 +6,7 @@ class CinemaxIE(HBOBaseIE):
     _VALID_URL = r'https?://(?:www\.)?cinemax\.com/(?P<path>[^/]+/video/[0-9a-z-]+-(?P<id>\d+))'
     _TESTS = [{
         'url': 'https://www.cinemax.com/warrior/video/s1-ep-1-recap-20126903',
+        'skip': 'video gone',
         'md5': '82e0734bba8aa7ef526c9dd00cf35a05',
         'info_dict': {
             'id': '20126903',
@@ -15,6 +16,7 @@ class CinemaxIE(HBOBaseIE):
         'expected_warnings': ['Unknown MIME type application/mp4 in DASH manifest'],
     }, {
         'url': 'https://www.cinemax.com/warrior/video/s1-ep-1-recap-20126903.embed',
+        'skip': 'video gone',
         'only_matching': True,
     }]
 

@@ -7,6 +7,7 @@ class ToggoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?toggo\.de/(?:toggolino/)?[^/?#]+/(?:folge|video)/(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://www.toggo.de/weihnachtsmann--co-kg/folge/ein-geschenk-fuer-zwei',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'VEP2977',
             'ext': 'mp4',

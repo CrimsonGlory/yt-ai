@@ -183,6 +183,7 @@ class TwitterCardIE(InfoExtractor):
         },
         {
             'url': 'https://twitter.com/i/cards/tfw/v1/623160978427936768',
+            'skip': 'Site returned HTTP 5xx',
             'md5': '7137eca597f72b9abbe61e5ae0161399',
             'info_dict': {
                 'id': '623160978427936768',
@@ -310,6 +311,7 @@ class TwitterIE(TwitterBaseIE):
         'skip': 'Account suspended',
     }, {
         'url': 'https://twitter.com/starwars/status/665052190608723968',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': '665052190608723968',
             'display_id': '665052190608723968',
@@ -1396,6 +1398,7 @@ class TwitterAmplifyIE(TwitterBaseIE):
 
     _TEST = {
         'url': 'https://amp.twimg.com/v/0ba0c3c7-0af3-4c0a-bed5-7efd1ffa2951',
+        'skip': 'Site returned HTTP 5xx',
         'md5': 'fec25801d18a4557c5c9f33d2c379ffa',
         'info_dict': {
             'id': '0ba0c3c7-0af3-4c0a-bed5-7efd1ffa2951',

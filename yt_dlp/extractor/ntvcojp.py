@@ -14,6 +14,7 @@ class NTVCoJpCUIE(StreaksBaseIE):
     _VALID_URL = r'https?://cu\.ntv\.co\.jp/(?!program-list|search)(?P<id>[\w-]+)/?(?:[?#]|$)'
     _TESTS = [{
         'url': 'https://cu.ntv.co.jp/gaki_20250525/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'gaki_20250525',
             'ext': 'mp4',

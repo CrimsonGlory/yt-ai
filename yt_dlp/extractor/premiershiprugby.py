@@ -6,6 +6,7 @@ class PremiershipRugbyIE(InfoExtractor):
     _VALID_URL = r'https?://(?:\w+\.)premiershiprugby\.(?:com)/watch/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://www.premiershiprugby.com/watch/full-match-harlequins-v-newcastle-falcons',
+        'skip': 'video gone',
         'info_dict': {
             'id': '0_mbkb7ldt',
             'title': 'Full Match: Harlequins v Newcastle Falcons',

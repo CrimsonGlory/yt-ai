@@ -371,6 +371,7 @@ class NPORadioIE(InfoExtractor):
 
     _TEST = {
         'url': 'http://www.npo.nl/radio/radio-1',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'radio-1',
             'ext': 'mp3',
@@ -420,6 +421,7 @@ class NPORadioFragmentIE(InfoExtractor):
 
     _TEST = {
         'url': 'http://www.npo.nl/radio/radio-5/fragment/174356',
+        'skip': 'video gone',
         'md5': 'dd8cc470dad764d0fdc70a9a1e2d18c2',
         'info_dict': {
             'id': '174356',
@@ -487,6 +489,7 @@ class HetKlokhuisIE(NPODataMidEmbedIE):
 
     _TEST = {
         'url': 'http://hetklokhuis.nl/tv-uitzending/3471/Zwaartekrachtsgolven',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'VPWON_1260528',
             'display_id': 'Zwaartekrachtsgolven',
@@ -541,6 +544,7 @@ class VPROIE(NPOPlaylistBaseIE):
         },
         {
             'url': 'http://www.vpro.nl/programmas/2doc/2015/sergio-herman.html',
+            'skip': 'video gone',
             'info_dict': {
                 'id': 'sergio-herman',
                 'title': 'sergio herman: fucking perfect',
@@ -550,6 +554,7 @@ class VPROIE(NPOPlaylistBaseIE):
         {
             # playlist with youtube embed
             'url': 'http://www.vpro.nl/programmas/2doc/2015/education-education.html',
+            'skip': 'video gone',
             'info_dict': {
                 'id': 'education-education',
                 'title': 'education education',
@@ -558,6 +563,7 @@ class VPROIE(NPOPlaylistBaseIE):
         },
         {
             'url': 'http://www.2doc.nl/documentaires/series/2doc/2015/oktober/de-tegenprestatie.html',
+            'skip': 'video gone',
             'info_dict': {
                 'id': 'de-tegenprestatie',
                 'title': 'De Tegenprestatie',
@@ -565,6 +571,7 @@ class VPROIE(NPOPlaylistBaseIE):
             'playlist_count': 2,
         }, {
             'url': 'http://www.2doc.nl/speel~VARA_101375237~mh17-het-verdriet-van-nederland~.html',
+            'skip': 'video gone',
             'info_dict': {
                 'id': 'VARA_101375237',
                 'ext': 'm4v',
@@ -604,6 +611,7 @@ class AndereTijdenIE(NPOPlaylistBaseIE):
 
     _TESTS = [{
         'url': 'http://anderetijden.nl/programma/1/Andere-Tijden/aflevering/676/Duitse-soldaten-over-de-Slag-bij-Arnhem',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'Duitse-soldaten-over-de-Slag-bij-Arnhem',
             'title': 'Duitse soldaten over de Slag bij Arnhem',

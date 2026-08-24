@@ -35,10 +35,10 @@ class TagesschauIE(InfoExtractor):
         },
     }, {
         # exclusive audio
-        'url': 'http://www.tagesschau.de/multimedia/audio/audio-29417.html',
+        'url': 'https://www.tagesschau.de/wetter/deutschland/wettervorhersage-deutschland-100.html',
         'md5': '4bff8f23504df56a0d86ed312d654182',
         'info_dict': {
-            'id': 'audio-29417-1',
+            'id': 'wettervorhersage-deutschland-100',
             'ext': 'mp3',
             'title': 'EU-Gipfel: Im Verbrennerstreit hat Deutschland maximalen Schaden angerichtet',
         },
@@ -59,6 +59,7 @@ class TagesschauIE(InfoExtractor):
         'playlist_mincount': 15,
     }, {
         'url': 'https://www.tagesschau.de/multimedia/audio/audio-29417~player.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'audio-29417-1',
             'ext': 'mp3',
@@ -66,6 +67,7 @@ class TagesschauIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.tagesschau.de/multimedia/audio/podcast-11km-327.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'podcast-11km-327',
             'ext': 'mp3',

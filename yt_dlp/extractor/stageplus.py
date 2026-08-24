@@ -16,6 +16,7 @@ class StagePlusVODConcertIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?stage-plus\.com/video/(?P<id>vod_concert_\w+)'
     _TESTS = [{
         'url': 'https://www.stage-plus.com/video/vod_concert_APNM8GRFDPHMASJKBSPJACG',
+        'skip': 'Login required',
         'playlist_count': 6,
         'info_dict': {
             'id': 'vod_concert_APNM8GRFDPHMASJKBSPJACG',

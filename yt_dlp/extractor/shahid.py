@@ -170,7 +170,7 @@ class ShahidShowIE(ShahidBaseIE):
         'info_dict': {
             'id': '79187',
             'title': 'رامز قرش البحر',
-            'description': 'md5:c88fa7e0f02b0abd39d417aee0d046ff',
+            'description': 'md5:d85c0675eb07251f9ec5273ee1979496',
         },
         'playlist_mincount': 32,
     }, {

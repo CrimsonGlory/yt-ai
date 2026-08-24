@@ -244,6 +244,7 @@ class EuropeanCommissionIE(InfoExtractor):
     }
     _TESTS = [{
         'url': 'https://webcast.ec.europa.eu/2nd-dma-enforcement-workshop-apple-update-on-first-year-of-dma-compliance-2025-06-30',
+        'skip': 'video gone',
         'md5': 'ba9eefc2bb245a95854d23b222697d1f',
         'info_dict': {
             'id': '2nd-dma-enforcement-workshop-apple-update-on-first-year-of-dma-compliance-2025-06-30',
@@ -254,6 +255,7 @@ class EuropeanCommissionIE(InfoExtractor):
         },
     }, {
         'url': 'https://webcast.ec.europa.eu/2nd-dma-enforcement-workshop-alphabet-update-on-first-year-of-dma-compliance-2025-07-01',
+        'skip': 'video gone',
         'md5': '5d5b1b4e6365ac51daa84d8920491af0',
         'info_dict': {
             'id': '2nd-dma-enforcement-workshop-alphabet-update-on-first-year-of-dma-compliance-2025-07-01',

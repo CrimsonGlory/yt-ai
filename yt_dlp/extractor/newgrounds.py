@@ -25,6 +25,7 @@ class NewgroundsIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?newgrounds\.com/(?:audio/listen|portal/view)/(?P<id>\d+)(?:/format/flash)?'
     _TESTS = [{
         'url': 'https://www.newgrounds.com/audio/listen/549479',
+        'skip': 'Site blocks automated access',
         'md5': 'fe6033d297591288fa1c1f780386f07a',
         'info_dict': {
             'id': '549479',
@@ -41,6 +42,7 @@ class NewgroundsIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.newgrounds.com/portal/view/1',
+        'skip': 'Site blocks automated access',
         'md5': 'fbfb40e2dc765a7e830cb251d370d981',
         'info_dict': {
             'id': '1',
@@ -57,6 +59,7 @@ class NewgroundsIE(InfoExtractor):
     }, {
         # source format unavailable, additional mp4 formats
         'url': 'http://www.newgrounds.com/portal/view/689400',
+        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': '689400',
             'ext': 'mp4',
@@ -74,6 +77,7 @@ class NewgroundsIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.newgrounds.com/portal/view/297383',
+        'skip': 'Site blocks automated access',
         'md5': '2c11f5fd8cb6b433a63c89ba3141436c',
         'info_dict': {
             'id': '297383',
@@ -89,6 +93,7 @@ class NewgroundsIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.newgrounds.com/portal/view/297383/format/flash',
+        'skip': 'Site blocks automated access',
         'md5': '5d05585a9a0caca059f5abfbd3865524',
         'info_dict': {
             'id': '297383',
@@ -104,6 +109,7 @@ class NewgroundsIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.newgrounds.com/portal/view/823109',
+        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': '823109',
             'ext': 'mp4',
@@ -220,6 +226,7 @@ class NewgroundsPlaylistIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?newgrounds\.com/(?:collection|[^/]+/search/[^/]+)/(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://www.newgrounds.com/collection/cats',
+        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': 'cats',
             'title': 'Cats',
@@ -227,6 +234,7 @@ class NewgroundsPlaylistIE(InfoExtractor):
         'playlist_mincount': 45,
     }, {
         'url': 'https://www.newgrounds.com/collection/dogs',
+        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': 'dogs',
             'title': 'Dogs',
@@ -269,18 +277,21 @@ class NewgroundsUserIE(InfoExtractor):
     _VALID_URL = r'https?://(?P<id>[^\.]+)\.newgrounds\.com/(?:movies|audio)/?(?:[#?]|$)'
     _TESTS = [{
         'url': 'https://burn7.newgrounds.com/audio',
+        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': 'burn7',
         },
         'playlist_mincount': 150,
     }, {
         'url': 'https://burn7.newgrounds.com/movies',
+        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': 'burn7',
         },
         'playlist_mincount': 2,
     }, {
         'url': 'https://brian-beaton.newgrounds.com/movies',
+        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': 'brian-beaton',
         },

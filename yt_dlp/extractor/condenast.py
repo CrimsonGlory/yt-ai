@@ -63,6 +63,7 @@ class CondeNastIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://video.wired.com/watch/3d-printed-speakers-lit-with-led',
+        'skip': 'Site returned HTTP 5xx',
         'md5': '1921f713ed48aabd715691f774c451f7',
         'info_dict': {
             'id': '5171b343c2b4c00dd0c1ccb3',
@@ -75,6 +76,7 @@ class CondeNastIE(InfoExtractor):
         },
     }, {
         'url': 'http://video.gq.com/watch/the-closer-with-keith-olbermann-the-only-true-surprise-trump-s-an-idiot?c=series',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': '58d1865bfd2e6126e2000015',
             'ext': 'mp4',
@@ -95,6 +97,12 @@ class CondeNastIE(InfoExtractor):
             'uploader': 'arstechnica',
             'upload_date': '20150916',
             'timestamp': 1442434920,
+            'categories': list,
+            'duration': int,
+            'season': str,
+            'series': str,
+            'tags': list,
+            'thumbnail': r're:https?://.*',
         },
     }, {
         # FIXME: Subtitles

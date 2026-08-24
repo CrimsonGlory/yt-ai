@@ -332,6 +332,7 @@ class SmotrimPlaylistIE(SmotrimBaseIE):
     _TESTS = [{
         # Video
         'url': 'https://smotrim.ru/brand/64356',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '64356',
             'title': 'Большие и маленькие',
@@ -349,6 +350,7 @@ class SmotrimPlaylistIE(SmotrimBaseIE):
     }, {
         # Audio
         'url': 'https://smotrim.ru/brand/68880',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '68880',
             'title': 'Веселый колобок',
@@ -357,6 +359,7 @@ class SmotrimPlaylistIE(SmotrimBaseIE):
     }, {
         # Podcast
         'url': 'https://smotrim.ru/podcast/8021',
+        'skip': 'video gone',
         'info_dict': {
             'id': '8021',
             'title': 'Сила звука',

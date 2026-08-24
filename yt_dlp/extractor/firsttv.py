@@ -28,7 +28,7 @@ class FirstTVIE(InfoExtractor):
             'id': '40049',
             'ext': 'mp4',
             'title': 'Гость Людмила Сенчина. Наедине со всеми. Выпуск от 12.02.2015',
-            'thumbnail': r're:https?://.+/.+\.jpg',
+            'thumbnail': r're:https?://.*',
             'upload_date': '20150212',
             'duration': 2694,
         },

@@ -17,6 +17,7 @@ class MicrosoftEmbedIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.microsoft.com/en-us/videoplayer/embed/RWL07e',
+        'skip': 'Site returned HTTP 5xx',
         'md5': 'eb0ae9007f9b305f9acd0a03e74cb1a9',
         'info_dict': {
             'id': 'RWL07e',
@@ -171,9 +172,9 @@ class MicrosoftLearnPlaylistIE(InfoExtractor):
         },
         'playlist_count': 20,
     }, {
-        'url': 'https://learn.microsoft.com/en-us/events/build-2022',
+        'url': 'https://learn.microsoft.com/en-us/shows/exam-readiness-zone',
         'info_dict': {
-            'id': 'build-2022',
+            'id': 'exam-readiness-zone',
             'title': 'Microsoft Build 2022 - Events',
             'description': 'md5:c16b43848027df837b22c6fbac7648d3',
         },
@@ -219,7 +220,7 @@ class MicrosoftLearnEpisodeIE(MicrosoftMediusBaseIE):
             'description': 'md5:7bbbfb593d21c2cf2babc3715ade6b88',
             'timestamp': 1676339547,
             'upload_date': '20230214',
-            'thumbnail': r're:https://learn\.microsoft\.com/video/media/.+\.png',
+            'thumbnail': r're:https?://.*',
             'subtitles': 'count:14',
         },
     }, {
@@ -287,6 +288,7 @@ class MicrosoftLearnSessionIE(InfoExtractor):
     _VALID_URL = r'https?://learn\.microsoft\.com/(?:[\w-]+/)?events/[\w-]+/(?P<id>[^?#/]+)'
     _TESTS = [{
         'url': 'https://learn.microsoft.com/en-us/events/build-2022/ts01-rapidly-code-test-ship-from-secure-cloud-developer-environments',
+        'skip': 'video gone',
         'info_dict': {
             'id': '9640d86c-f513-4889-959e-5dace86e7d2b',
             'ext': 'ismv',

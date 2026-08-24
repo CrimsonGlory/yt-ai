@@ -11,6 +11,7 @@ class UrortIE(InfoExtractor):
 
     _TEST = {
         'url': 'https://urort.p3.no/#!/Band/Gerilja',
+        'skip': 'video gone',
         'md5': '5ed31a924be8a05e47812678a86e127b',
         'info_dict': {
             'id': '33124-24',

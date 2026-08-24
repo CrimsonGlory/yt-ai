@@ -41,6 +41,7 @@ class S4CIE(InfoExtractor):
     }, {
         # No series
         'url': 'https://www.s4c.cymru/clic/programme/876045439',
+        'skip': 'video gone',
         'info_dict': {
             'id': '876045439',
             'ext': 'mp4',
@@ -105,6 +106,7 @@ class S4CSeriesIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?s4c\.cymru/clic/series/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.s4c.cymru/clic/series/864982911',
+        'skip': 'video gone',
         'playlist_mincount': 6,
         'info_dict': {
             'id': '864982911',
@@ -112,6 +114,7 @@ class S4CSeriesIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.s4c.cymru/clic/series/866852587',
+        'skip': 'video gone',
         'playlist_mincount': 8,
         'info_dict': {
             'id': '866852587',

@@ -16,6 +16,7 @@ class LivestreamfailsIE(InfoExtractor):
             'thumbnail': r're:^https?://.+',
             'timestamp': 1656271785,
             'upload_date': '20220626',
+            'creators': list,
         },
     }, {
         'url': 'https://livestreamfails.com/post/139200',

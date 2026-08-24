@@ -16,6 +16,7 @@ class UOLIE(InfoExtractor):
     _VALID_URL = r'https?://(?:.+?\.)?uol\.com\.br/.*?(?:(?:mediaId|v)=|view/(?:[a-z0-9]+/)?|video(?:=|/(?:\d{4}/\d{2}/\d{2}/)?))(?P<id>\d+|[\w-]+-[A-Z0-9]+)'
     _TESTS = [{
         'url': 'http://player.mais.uol.com.br/player_video_v3.swf?mediaId=15951931',
+        'skip': 'video gone',
         'md5': '4f1e26683979715ff64e4e29099cf020',
         'info_dict': {
             'id': '15951931',
@@ -27,6 +28,7 @@ class UOLIE(InfoExtractor):
         },
     }, {
         'url': 'http://tvuol.uol.com.br/video/incendio-destroi-uma-das-maiores-casas-noturnas-de-londres-04024E9A3268D4C95326',
+        'skip': 'video gone',
         'md5': '2850a0e8dfa0a7307e04a96c5bdc5bc2',
         'info_dict': {
             'id': '15954259',

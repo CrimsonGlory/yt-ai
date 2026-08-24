@@ -263,6 +263,7 @@ class MailRuMusicIE(MailRuMusicSearchBaseIE):
     _VALID_URL = r'https?://my\.mail\.ru/+music/+songs/+[^/?#&]+-(?P<id>[\da-f]+)'
     _TESTS = [{
         'url': 'https://my.mail.ru/music/songs/%D0%BC8%D0%BB8%D1%82%D1%85-l-a-h-luciferian-aesthetics-of-herrschaft-single-2017-4e31f7125d0dfaef505d947642366893',
+        'skip': 'video gone',
         'md5': '0f8c22ef8c5d665b13ac709e63025610',
         'info_dict': {
             'id': '4e31f7125d0dfaef505d947642366893',

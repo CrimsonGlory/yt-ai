@@ -16,6 +16,7 @@ class ParlerIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://parler.com/feed/df79fdba-07cc-48fe-b085-3293897520d7',
+            'skip': 'video gone',
             'md5': '16e0f447bf186bb3cf64de5bbbf4d22d',
             'info_dict': {
                 'id': 'df79fdba-07cc-48fe-b085-3293897520d7',
@@ -35,6 +36,7 @@ class ParlerIE(InfoExtractor):
         },
         {
             'url': 'https://parler.com/feed/f23b85c1-6558-470f-b9ff-02c145f28da5',
+            'skip': 'video gone',
             'md5': 'eaba1ff4a10fe281f5ce74e930ab2cb4',
             'info_dict': {
                 'id': 'r5vkSaz8PxQ',

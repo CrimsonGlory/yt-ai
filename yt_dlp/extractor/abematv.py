@@ -435,11 +435,12 @@ class AbemaTVTitleIE(AbemaTVBaseIE):
         'info_dict': {
             'id': '90-1887',
             'title': 'シャッフルアイランド',
-            'description': 'md5:61b2425308f41a5282a926edda66f178',
+            'description': 'md5:beb3b563acda8d1b69f79e7722fdc196',
         },
         'playlist_mincount': 2,
     }, {
         'url': 'https://abema.tv/video/title/193-132',
+        'skip': 'video gone',
         'info_dict': {
             'id': '193-132',
             'title': '真心が届く~僕とスターのオフィス・ラブ!?~',
@@ -456,6 +457,7 @@ class AbemaTVTitleIE(AbemaTVBaseIE):
         'playlist_mincount': 25,
     }, {
         'url': 'https://abema.tv/video/title/26-2mzbynr-cph?s=26-2mzbynr-cph_s40',
+        'skip': 'video gone',
         'info_dict': {
             'title': '〈物語〉シリーズ',
             'id': '26-2mzbynr-cph',

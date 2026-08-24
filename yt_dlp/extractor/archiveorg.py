@@ -686,6 +686,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
                 'channel_url': 'https://www.youtube.com/channel/UC4BOzQel6tvJm7OEDd3vZlw',
                 'duration': 1606,
                 'upload_date': '20150213',
+                'thumbnail': r're:https?://.*',
             },
         }, {
             # Video unavailable through wayback-fakeurl

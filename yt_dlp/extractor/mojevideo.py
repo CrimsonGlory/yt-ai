@@ -23,6 +23,7 @@ class MojevideoIE(InfoExtractor):
             'dislike_count': int,
             'view_count': int,
             'comment_count': int,
+            'uploader': str,
         },
     }, {
         # 720p
@@ -42,6 +43,7 @@ class MojevideoIE(InfoExtractor):
             'dislike_count': int,
             'view_count': int,
             'comment_count': int,
+            'uploader': str,
         },
     }, {
         # 1080p
@@ -61,6 +63,7 @@ class MojevideoIE(InfoExtractor):
             'dislike_count': int,
             'view_count': int,
             'comment_count': int,
+            'uploader': str,
         },
     }, {
         # 720p

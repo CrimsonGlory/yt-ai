@@ -6,6 +6,7 @@ class KickStarterIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?kickstarter\.com/projects/(?P<id>[^/]*)/.*'
     _TESTS = [{
         'url': 'https://www.kickstarter.com/projects/1404461844/intersection-the-story-of-josh-grant/description',
+        'skip': 'HTTP Error 403',
         'md5': 'c81addca81327ffa66c642b5d8b08cab',
         'info_dict': {
             'id': '1404461844',
@@ -19,6 +20,7 @@ class KickStarterIE(InfoExtractor):
     }, {
         'note': 'Embedded video (not using the native kickstarter video service)',
         'url': 'https://www.kickstarter.com/projects/597507018/pebble-e-paper-watch-for-iphone-and-android/posts/659178',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '78704821',
             'ext': 'mp4',
@@ -29,6 +31,7 @@ class KickStarterIE(InfoExtractor):
         'add_ie': ['Vimeo'],
     }, {
         'url': 'https://www.kickstarter.com/projects/1420158244/power-drive-2000/widget/video.html',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '1420158244',
             'ext': 'mp4',

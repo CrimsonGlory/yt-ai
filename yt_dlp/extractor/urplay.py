@@ -16,6 +16,7 @@ class URPlayIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?ur(?:play|skola)\.se/(?:program|Produkter)/(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'https://urplay.se/program/203704-ur-samtiden-livet-universum-och-rymdens-markliga-musik-om-vetenskap-kritiskt-tankande-och-motstand',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '203704',
             'ext': 'mp4',
@@ -34,6 +35,7 @@ class URPlayIE(InfoExtractor):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://urplay.se/program/222967-en-foralders-dagbok-mitt-barn-skadar-sig-sjalv',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '222967',
             'ext': 'mp4',
@@ -53,6 +55,7 @@ class URPlayIE(InfoExtractor):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://urskola.se/Produkter/190031-Tripp-Trapp-Trad-Sovkudde',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '190031',
             'ext': 'mp4',
@@ -74,6 +77,7 @@ class URPlayIE(InfoExtractor):
     }, {
         # Only accessible through new media api
         'url': 'https://urplay.se/program/242932-vulkanernas-krafter-fran-kraftfull-till-forgorande',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '242932',
             'ext': 'mp4',

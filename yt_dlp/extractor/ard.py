@@ -129,11 +129,11 @@ class ARDBetaMediathekIE(InfoExtractor):
     _TOKEN_URL = 'https://sso.ardmediathek.de/sso/token'
 
     _TESTS = [{
-        'url': 'https://www.ardmediathek.de/video/filme-im-mdr/liebe-auf-vier-pfoten/mdr-fernsehen/Y3JpZDovL21kci5kZS9zZW5kdW5nLzI4MjA0MC80MjIwOTEtNDAyNTM0',
+        'url': 'https://www.ardmediathek.de/video/y-kollektiv/die-staerksten-frauen-der-welt-oder-reportage/br/Y3JpZDovL2JyLmRlL2Jyb2FkY2FzdC9GMjAyNldPMDAxNjA0QTA',
         'md5': 'b6e8ab03f2bcc6e1f9e6cef25fcc03c4',
         'info_dict': {
             'display_id': 'Y3JpZDovL21kci5kZS9zZW5kdW5nLzI4MjA0MC80MjIwOTEtNDAyNTM0',
-            'id': '12939099',
+            'id': '11088843',
             'title': 'Liebe auf vier Pfoten',
             'description': r're:^Claudia Schmitt, Anwältin in Salzburg',
             'duration': 5222,
@@ -188,7 +188,7 @@ class ARDBetaMediathekIE(InfoExtractor):
             'ext': 'mp4',
             'duration': 2670,
             'episode': '7 Tage ... unter harten Jungs',
-            'description': 'md5:0f215470dcd2b02f59f4bd10c963f072',
+            'description': 'md5:5b15a57c4580e2b7059b0677759f4ecb',
             'upload_date': '20231005',
             'timestamp': 1696491171,
             'display_id': 'N2I2YmM5MzgtNWFlOS00ZGFlLTg2NzMtYzNjM2JlNjk4MDg3',
@@ -391,9 +391,9 @@ class ARDMediathekCollectionIE(InfoExtractor):
     _GEO_COUNTRIES = ['DE']
 
     _TESTS = [{
-        'url': 'https://www.ardmediathek.de/serie/quiz/staffel-1-originalversion/Y3JpZDovL3dkci5kZS9vbmUvcXVpeg/1/OV',
+        'url': 'https://www.ardmediathek.de/serie/nachtstreife-oder-start-der-7-staffel/staffel-1/Y3JpZDovL3N3ci5kZS9zZGIvc3RJZC8xMjQy/1',
         'info_dict': {
-            'id': 'Y3JpZDovL3dkci5kZS9vbmUvcXVpeg_1_OV',
+            'id': 'Y3JpZDovL3N3ci5kZS9zZGIvc3RJZC8xMjQy_1',
             'display_id': 'quiz/staffel-1-originalversion',
             'title': 'Staffel 1 Originalversion',
         },
@@ -424,6 +424,7 @@ class ARDMediathekCollectionIE(InfoExtractor):
         'playlist_mincount': 500,
     }, {
         'url': 'https://www.ardmediathek.de/sammlung/die-kirche-bleibt-im-dorf/5eOHzt8XB2sqeFXbIoJlg2',
+        'skip': 'video gone',
         'info_dict': {
             'id': '5eOHzt8XB2sqeFXbIoJlg2',
             'display_id': 'die-kirche-bleibt-im-dorf',
@@ -540,9 +541,9 @@ class ARDAudiothekIE(ARDAudiothekBaseIE):
             'episode_number': 1,
         },
     }, {
-        'url': 'https://www.ardsounds.de/episode/urn:ard:extra:d2fe7303d2dcbf5d/',
+        'url': 'https://www.ardsounds.de/episode/urn:ard:episode:8a3c955c3beeb397/',
         'info_dict': {
-            'id': 'urn:ard:extra:d2fe7303d2dcbf5d',
+            'id': 'urn:ard:episode:8a3c955c3beeb397',
             'ext': 'mp3',
             'title': 'Trailer: Fanta Vier Forever, Baby!?!',
             'description': 'md5:b64a586f2e976b8bb5ea0a79dbd8751c',

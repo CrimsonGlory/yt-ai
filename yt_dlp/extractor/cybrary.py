@@ -48,6 +48,7 @@ class CybraryIE(CybraryBaseIE):
     _VALID_URL = r'https?://app\.cybrary\.it/immersive/(?P<enrollment>[0-9]+)/activity/(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'https://app.cybrary.it/immersive/12487950/activity/63102',
+        'skip': 'Login required',
         'md5': '9ae12d37e555cb2ed554223a71a701d0',
         'info_dict': {
             'id': '646609770',
@@ -66,6 +67,7 @@ class CybraryIE(CybraryBaseIE):
         'expected_warnings': ['No authenticators for vimeo'],
     }, {
         'url': 'https://app.cybrary.it/immersive/12747143/activity/52686',
+        'skip': 'Login required',
         'md5': '62f26547dccc59c44363e2a13d4ad08d',
         'info_dict': {
             'id': '445638073',
@@ -113,6 +115,7 @@ class CybraryCourseIE(CybraryBaseIE):
     _VALID_URL = r'https?://app\.cybrary\.it/browse/course/(?P<id>[\w-]+)/?(?:$|[#?])'
     _TESTS = [{
         'url': 'https://app.cybrary.it/browse/course/az-500-microsoft-azure-security-technologies',
+        'skip': 'Login required',
         'info_dict': {
             'id': '898',
             'title': 'AZ-500: Microsoft Azure Security Technologies',
@@ -121,6 +124,7 @@ class CybraryCourseIE(CybraryBaseIE):
         'playlist_count': 59,
     }, {
         'url': 'https://app.cybrary.it/browse/course/cybrary-orientation',
+        'skip': 'Login required',
         'info_dict': {
             'id': '1245',
             'title': 'Cybrary Orientation',

@@ -18,6 +18,8 @@ class WashingtonPostIE(InfoExtractor):
             'description': 'md5:a17ceee432f215a5371388c1f680bd86',
             'upload_date': '20160520',
             'timestamp': 1463775187,
+            'duration': int,
+            'thumbnail': r're:https?://.*',
         },
     }, {
         'url': 'https://www.washingtonpost.com/video/world/egypt-finds-belongings-debris-from-plane-crash/2016/05/20/480ba4ee-1ec7-11e6-82c2-a7dcb313287d_video.html',

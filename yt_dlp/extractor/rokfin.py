@@ -30,6 +30,7 @@ class RokfinIE(InfoExtractor):
     _access_mgmt_tokens = {}  # OAuth 2.0: RFC 6749, Sec. 1.4-5
     _TESTS = [{
         'url': 'https://www.rokfin.com/post/57548/Mitt-Romneys-Crazy-Solution-To-Climate-Change',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'post/57548',
             'ext': 'mp4',
@@ -66,6 +67,7 @@ class RokfinIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.rokfin.com/stream/10543/Its-A-Crazy-Mess-Regional-Director-Blows-Whistle-On-Pfizers-Vaccine-Trial-Data',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'stream/10543',
             'ext': 'mp4',
@@ -89,6 +91,7 @@ class RokfinIE(InfoExtractor):
         },
     }, {
         'url': 'https://rokfin.com/post/126703/Brave-New-World--Aldous-Huxley-DEEPDIVE--Chpts-13--Quite-Frankly--Jay-Dyer',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'post/126703',
             'ext': 'mp4',
@@ -109,6 +112,7 @@ class RokfinIE(InfoExtractor):
         },
     }, {
         'url': 'https://rokfin.com/stream/31332/The-Grayzone-live-on-Nordstream-blame-game',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'stream/31332',
             'ext': 'mp4',
@@ -333,7 +337,7 @@ class RokfinChannelIE(RokfinPlaylistBaseIE):
         'info_dict': {
             'id': '12071-new',
             'title': 'TheConvoCouch - New',
-            'description': 'md5:bb622b1bca100209b91cd685f7847f06',
+            'description': 'md5:0cc9a84ef4726bb0bd86e89e91954048',
         },
     }]
 
@@ -395,6 +399,7 @@ class RokfinSearchIE(SearchInfoExtractor):
     }
     _TESTS = [{
         'url': 'rkfnsearch5:"zelenko"',
+        'skip': 'video gone',
         'playlist_count': 5,
         'info_dict': {
             'id': '"zelenko"',

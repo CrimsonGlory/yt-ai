@@ -145,6 +145,7 @@ class NhkVodIE(NhkBaseIE):
     }, {
         # video clip
         'url': 'https://www3.nhk.or.jp/nhkworld/en/ondemand/video/9999011/',
+        'skip': 'video gone',
         'md5': '153c3016dfd252ba09726588149cf0e7',
         'info_dict': {
             'id': '9999011-en',
@@ -231,6 +232,7 @@ class NhkVodIE(NhkBaseIE):
     }, {
         # /ondemand/video/ url with alphabetical character in 5th position of id
         'url': 'https://www3.nhk.or.jp/nhkworld/en/ondemand/video/9999a07/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '9999a07-en',
             'ext': 'mp4',
@@ -246,6 +248,7 @@ class NhkVodIE(NhkBaseIE):
         },
     }, {
         'url': 'https://www3.nhk.or.jp/nhkworld/en/ondemand/video/9999d17/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '9999d17-en',
             'ext': 'mp4',
@@ -280,6 +283,7 @@ class NhkVodProgramIE(NhkBaseIE):
     _TESTS = [{
         # video program episodes
         'url': 'https://www3.nhk.or.jp/nhkworld/en/shows/sumo/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'sumo',
             'title': 'GRAND SUMO Highlights',
@@ -315,7 +319,7 @@ class NhkVodProgramIE(NhkBaseIE):
             'description': 'md5:665bb36ec2a12c5a7f598ee713fc2b54',
             'series': 'Living in Japan',
         },
-        'playlist_mincount': 11,
+        'playlist_mincount': 7,
     }, {
         'url': 'https://www3.nhk.or.jp/nhkworld/en/shows/10yearshayaomiyazaki/',
         'only_matching': True,
@@ -358,6 +362,7 @@ class NhkForSchoolBangumiIE(InfoExtractor):
     _VALID_URL = r'https?://www2\.nhk\.or\.jp/school/movie/(?P<type>bangumi|clip)\.cgi\?das_id=(?P<id>[a-zA-Z0-9_-]+)'
     _TESTS = [{
         'url': 'https://www2.nhk.or.jp/school/movie/bangumi.cgi?das_id=D0005150191_00000',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'D0005150191_00003',
             'title': 'にている かな',

@@ -6,6 +6,7 @@ class EbaumsWorldIE(InfoExtractor):
 
     _TEST = {
         'url': 'http://www.ebaumsworld.com/videos/a-giant-python-opens-the-door/83367677/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '83367677',
             'ext': 'mp4',

@@ -15,6 +15,7 @@ class DaumIE(DaumBaseIE):
 
     _TESTS = [{
         'url': 'http://tvpot.daum.net/v/vab4dyeDBysyBssyukBUjBz',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': 'vab4dyeDBysyBssyukBUjBz',
             'ext': 'mp4',
@@ -31,6 +32,7 @@ class DaumIE(DaumBaseIE):
         },
     }, {
         'url': 'http://m.tvpot.daum.net/v/65139429',
+        'skip': 'video gone',
         'info_dict': {
             'id': '65139429',
             'ext': 'mp4',
@@ -67,6 +69,7 @@ class DaumIE(DaumBaseIE):
     }, {
         # Requires dte_type=WEB (#9972)
         'url': 'http://tvpot.daum.net/v/s3794Uf1NZeZ1qMpGpeqeRU',
+        'skip': 'No video formats found',
         'md5': 'a8917742069a4dd442516b86e7d66529',
         'info_dict': {
             'id': 's3794Uf1NZeZ1qMpGpeqeRU',
@@ -95,6 +98,7 @@ class DaumClipIE(DaumBaseIE):
 
     _TESTS = [{
         'url': 'http://tvpot.daum.net/clip/ClipView.do?clipid=52554690',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': '52554690',
             'ext': 'mp4',
@@ -163,6 +167,7 @@ class DaumPlaylistIE(DaumListIE):
     _TESTS = [{
         'note': 'Playlist url with clipid',
         'url': 'http://tvpot.daum.net/mypot/View.do?playlistid=6213966&clipid=73806844',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': '6213966',
             'title': 'Woorissica Official',
@@ -171,6 +176,7 @@ class DaumPlaylistIE(DaumListIE):
     }, {
         'note': 'Playlist url with clipid - noplaylist',
         'url': 'http://tvpot.daum.net/mypot/View.do?playlistid=6213966&clipid=73806844',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': '73806844',
             'ext': 'mp4',
@@ -205,6 +211,7 @@ class DaumUserIE(DaumListIE):
 
     _TESTS = [{
         'url': 'http://tvpot.daum.net/mypot/View.do?ownerid=o2scDLIVbHc0',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': 'o2scDLIVbHc0',
             'title': '마이 리틀 텔레비전',
@@ -212,6 +219,7 @@ class DaumUserIE(DaumListIE):
         'playlist_mincount': 213,
     }, {
         'url': 'http://tvpot.daum.net/mypot/View.do?ownerid=o2scDLIVbHc0&clipid=73801156',
+        'skip': 'video gone',
         'info_dict': {
             'id': '73801156',
             'ext': 'mp4',
@@ -226,6 +234,7 @@ class DaumUserIE(DaumListIE):
     }, {
         'note': 'Playlist url has ownerid and playlistid, playlistid takes precedence',
         'url': 'http://tvpot.daum.net/mypot/View.do?ownerid=o2scDLIVbHc0&playlistid=6196631',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': '6196631',
             'title': '마이 리틀 텔레비전 - 20160109',

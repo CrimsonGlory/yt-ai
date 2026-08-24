@@ -33,6 +33,7 @@ class SBSIE(InfoExtractor):
         # Original URL is handled by the generic IE which finds the iframe:
         # http://www.sbs.com.au/thefeed/blog/2014/08/21/dingo-conservation
         'url': 'http://www.sbs.com.au/ondemand/video/single/320403011771/?source=drupal&vertical=thefeed',
+        'skip': 'video gone',
         'md5': '31f84a7a19b53635db63c73f8ab0c4a7',
         'info_dict': {
             'id': '320403011771',  # '_rFBPRPO4pMR',

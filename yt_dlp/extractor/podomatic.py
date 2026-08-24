@@ -18,6 +18,7 @@ class PodomaticIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://scienceteachingtips.podomatic.com/entry/2009-01-02T16_03_35-08_00',
+        'skip': 'video gone',
         'md5': '84bb855fcf3429e6bf72460e1eed782d',
         'info_dict': {
             'id': '2009-01-02T16_03_35-08_00',
@@ -29,6 +30,7 @@ class PodomaticIE(InfoExtractor):
         },
     }, {
         'url': 'http://ostbahnhof.podomatic.com/entry/2013-11-15T16_31_21-08_00',
+        'skip': 'video gone',
         'md5': 'd2cf443931b6148e27638650e2638297',
         'info_dict': {
             'id': '2013-11-15T16_31_21-08_00',

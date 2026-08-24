@@ -9,6 +9,7 @@ class ToypicsIE(InfoExtractor):
     _VALID_URL = r'https?://videos\.toypics\.net/view/(?P<id>[0-9]+)'
     _TEST = {
         'url': 'http://videos.toypics.net/view/514/chancebulged,-2-1/',
+        'skip': 'video gone',
         'md5': '16e806ad6d6f58079d210fe30985e08b',
         'info_dict': {
             'id': '514',
@@ -49,9 +50,9 @@ class ToypicsUserIE(InfoExtractor):
     IE_DESC = 'Toypics user profile'
     _VALID_URL = r'https?://videos\.toypics\.net/(?!view)(?P<id>[^/?#&]+)'
     _TEST = {
-        'url': 'http://videos.toypics.net/Mikey',
+        'url': 'http://videos.toypics.net/u/Philly/3218',
         'info_dict': {
-            'id': 'Mikey',
+            'id': 'u',
         },
         'playlist_mincount': 19,
     }

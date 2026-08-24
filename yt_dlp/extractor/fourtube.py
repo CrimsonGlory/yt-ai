@@ -113,6 +113,7 @@ class FourTubeIE(FourTubeBaseIE):
     _TKN_HOST = 'token.4tube.com'
     _TESTS = [{
         'url': 'http://www.4tube.com/videos/209733/hot-babe-holly-michaels-gets-her-ass-stuffed-by-black',
+        'skip': 'HTTP Error 403',
         'md5': '6516c8ac63b03de06bc8eac14362db4f',
         'info_dict': {
             'id': '209733',
@@ -143,6 +144,7 @@ class FuxIE(FourTubeBaseIE):
     _TKN_HOST = 'token.fux.com'
     _TESTS = [{
         'url': 'https://www.fux.com/video/195359/awesome-fucking-kitchen-ends-cum-swallow',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '195359',
             'ext': 'mp4',
@@ -165,6 +167,7 @@ class FuxIE(FourTubeBaseIE):
         'only_matching': True,
     }, {
         'url': 'https://www.fux.com/video/195359/awesome-fucking-kitchen-ends-cum-swallow',
+        'skip': 'HTTP Error 403',
         'only_matching': True,
     }]
 
@@ -296,6 +299,7 @@ class PornerBrosIE(FourTubeBaseIE):
     _TKN_HOST = 'token.pornerbros.com'
     _TESTS = [{
         'url': 'https://www.pornerbros.com/videos/skinny-brunette-takes-big-cock-down-her-anal-hole_181369',
+        'skip': 'HTTP Error 403',
         'md5': '6516c8ac63b03de06bc8eac14362db4f',
         'info_dict': {
             'id': '181369',

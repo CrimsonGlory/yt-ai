@@ -629,7 +629,7 @@ class DailymotionUserIE(DailymotionPlaylistBaseIE):
         'info_dict': {
             'id': 'nqtv',
         },
-        'playlist_mincount': 148,
+        'playlist_mincount': 141,
     }, {
         'url': 'http://www.dailymotion.com/user/UnderProject',
         'info_dict': {

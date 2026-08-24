@@ -15,6 +15,7 @@ class RadioJavanIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?radiojavan\.com/videos/video/(?P<id>[^/]+)/?'
     _TEST = {
         'url': 'http://www.radiojavan.com/videos/video/chaartaar-ashoobam',
+        'skip': 'HTTP Error 403',
         'md5': 'e85208ffa3ca8b83534fca9fe19af95b',
         'info_dict': {
             'id': 'chaartaar-ashoobam',

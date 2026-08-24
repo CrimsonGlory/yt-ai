@@ -21,6 +21,7 @@ class MetacriticIE(InfoExtractor):
         'skip': 'Not providing trailers anymore',
     }, {
         'url': 'http://www.metacritic.com/game/playstation-4/tales-from-the-borderlands-a-telltale-game-series/trailers/5740315',
+        'skip': 'video gone',
         'info_dict': {
             'id': '5740315',
             'ext': 'mp4',

@@ -7,6 +7,7 @@ class TeachingChannelIE(InfoExtractor):
 
     _TEST = {
         'url': 'https://www.teachingchannel.org/videos/teacher-teaming-evolution',
+        'skip': 'Request timed out',
         'info_dict': {
             'id': '3swwlzkT',
             'ext': 'mp4',

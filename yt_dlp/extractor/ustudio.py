@@ -67,6 +67,7 @@ class UstudioEmbedIE(InfoExtractor):
     _VALID_URL = r'https?://(?:(?:app|embed)\.)?ustudio\.com/embed/(?P<uid>[^/]+)/(?P<id>[^/]+)'
     _TEST = {
         'url': 'http://app.ustudio.com/embed/DeN7VdYRDKhP/Uw7G1kMCe65T',
+        'skip': 'video gone',
         'md5': '47c0be52a09b23a7f40de9469cec58f4',
         'info_dict': {
             'id': 'Uw7G1kMCe65T',

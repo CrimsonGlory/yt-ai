@@ -5,6 +5,7 @@ class MediaiteIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?mediaite\.com(?!/category)(?:/[\w-]+){2}'
     _TESTS = [{
         'url': 'https://www.mediaite.com/sports/bill-burr-roasts-nfl-for-promoting-black-lives-matter-while-scheduling-more-games-after-all-the-sht-they-know-about-cte/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'vPHKITzy',
             'ext': 'm4a',
@@ -18,6 +19,7 @@ class MediaiteIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://www.mediaite.com/tv/joe-scarborough-goes-off-on-tax-breaks-for-super-wealthy-largest-income-redistribution-scam-in-american-history/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'eeFcK4Xm',
             'ext': 'mp4',
@@ -31,6 +33,7 @@ class MediaiteIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://www.mediaite.com/politics/watch-rudy-giuliani-impersonates-queen-elizabeth-calls-mark-milley-an-asshle-in-bizarre-9-11-speech/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'EiyiXKcr',
             'ext': 'mp4',
@@ -44,6 +47,7 @@ class MediaiteIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://www.mediaite.com/podcasts/clarissa-ward-says-she-decided-to-become-a-journalist-on-9-11/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'TxavoRTx',
             'ext': 'mp4',
@@ -57,6 +61,7 @@ class MediaiteIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://www.mediaite.com/opinion/mainstream-media-ignores-rose-mcgowans-bombshell-allegation-that-newsoms-wife-tried-to-silence-her-on-weinstein/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'sEIWvKR7',
             'ext': 'mp4',
@@ -70,6 +75,7 @@ class MediaiteIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://www.mediaite.com/news/watch-cnbcs-jim-cramer-says-nobody-wants-to-die-getting-infected-by-unvaccinated-coworker-even-for-22-an-hour/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'nwpt1elX',
             'ext': 'mp4',
@@ -83,6 +89,7 @@ class MediaiteIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://www.mediaite.com/politics/i-cant-read-it-fast-enough-while-defending-trump-larry-kudlow-overwhelmed-by-volume-of-ex-presidents-legal-troubles/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'E6EhDX5z',
             'ext': 'mp4',

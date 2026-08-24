@@ -164,6 +164,7 @@ class RedBullIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?redbull\.com/(?P<region>[a-z]{2,3})-(?P<lang>[a-z]{2})/(?P<type>(?:episode|film|(?:(?:recap|trailer)-)?video)s|live)/(?!AP-|rrn:content:)(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://www.redbull.com/int-en/episodes/grime-hashtags-s02-e04',
+        'skip': 'video gone',
         'md5': 'db8271a7200d40053a1809ed0dd574ff',
         'info_dict': {
             'id': 'AA-1MT8DQWA91W14',

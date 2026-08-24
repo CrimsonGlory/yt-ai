@@ -62,6 +62,7 @@ class AcFunVideoIE(AcFunVideoBaseIE):
     }, {
         # example for len(video_list) > 1
         'url': 'https://www.acfun.cn/v/ac35468952_2',
+        'skip': 'video gone',
         'info_dict': {
             'id': '35468952_2',
             'ext': 'mp4',
@@ -114,6 +115,7 @@ class AcFunBangumiIE(AcFunVideoBaseIE):
 
     _TESTS = [{
         'url': 'https://www.acfun.cn/bangumi/aa6002917_36188_1745457?ac=2',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'aa6002917_36188_1745457__2',
             'ext': 'mp4',
@@ -124,6 +126,7 @@ class AcFunBangumiIE(AcFunVideoBaseIE):
         },
     }, {
         'url': 'https://www.acfun.cn/bangumi/aa5023171_36188_1750645',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'aa5023171_36188_1750645',
             'ext': 'mp4',
@@ -141,6 +144,7 @@ class AcFunBangumiIE(AcFunVideoBaseIE):
         },
     }, {
         'url': 'https://www.acfun.cn/bangumi/aa6065485_36188_1885061',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'aa6065485_36188_1885061',
             'ext': 'mp4',

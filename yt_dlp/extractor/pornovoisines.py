@@ -11,10 +11,10 @@ class PornoVoisinesIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?pornovoisines\.com/videos/show/(?P<id>\d+)/(?P<display_id>[^/.]+)'
 
     _TEST = {
-        'url': 'http://www.pornovoisines.com/videos/show/919/recherche-appartement.html',
+        'url': 'http://www.pornovoisines.com/videos/show/32698/irogenia-31ans-se-sentait-prete-a-passer-un-grand-cap-dans-sa-sexualite',
         'md5': '6f8aca6a058592ab49fe701c8ba8317b',
         'info_dict': {
-            'id': '919',
+            'id': '32698',
             'display_id': 'recherche-appartement',
             'ext': 'mp4',
             'title': 'Recherche appartement',

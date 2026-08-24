@@ -17,6 +17,7 @@ class ManyVidsIE(InfoExtractor):
     _TESTS = [{
         # preview video
         'url': 'https://www.manyvids.com/Video/530341/mv-tips-tricks',
+        'skip': 'video gone',
         'md5': '738dc723f7735ee9602f7ea352a6d058',
         'info_dict': {
             'id': '530341-preview',
@@ -36,6 +37,7 @@ class ManyVidsIE(InfoExtractor):
     }, {
         # full video
         'url': 'https://www.manyvids.com/Video/935718/MY-FACE-REVEAL/',
+        'skip': 'video gone',
         'md5': 'bb47bab0e0802c2a60c24ef079dfe60f',
         'info_dict': {
             'id': '935718',

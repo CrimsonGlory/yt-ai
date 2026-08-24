@@ -160,6 +160,7 @@ class ConanClassicIE(TeamcocoBaseIE):
     _VALID_URL = r'https?://(?:(?:www\.)?conanclassic|conan25\.teamcoco)\.com/(?P<id>([^/]+/)*[^/?#]+)'
     _TESTS = [{
         'url': 'https://conanclassic.com/video/ice-cube-kevin-hart-conan-share-lyft',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': '74709',
             'ext': 'mp4',

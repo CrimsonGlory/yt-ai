@@ -53,6 +53,7 @@ class IcareusIE(InfoExtractor):
         },
     }, {  # Non-m3u8 stream
         'url': 'https://suite.icareus.com/fi/web/westend-indians/player/vod?assetId=47567389',
+        'skip': 'video gone',
         'md5': '72fc04ee971bbedc44405cdf16c990b6',
         'info_dict': {
             'id': '47567389',

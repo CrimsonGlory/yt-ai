@@ -21,6 +21,7 @@ class CTVNewsIE(InfoExtractor):
     ]
     _TESTS = [{
         'url': 'http://www.ctvnews.ca/video?clipId=901995',
+        'skip': 'video gone',
         'md5': 'b608f466c7fa24b9666c6439d766ab7e',
         'info_dict': {
             'id': '901995',
@@ -59,6 +60,7 @@ class CTVNewsIE(InfoExtractor):
         },
     }, {
         'url': 'http://www.ctvnews.ca/video?playlistId=1.2966224',
+        'skip': 'video gone',
         'info_dict':
         {
             'id': '1.2966224',
@@ -66,6 +68,7 @@ class CTVNewsIE(InfoExtractor):
         'playlist_mincount': 19,
     }, {
         'url': 'http://www.ctvnews.ca/video?binId=1.2876780',
+        'skip': 'video gone',
         'info_dict':
         {
             'id': '1.2876780',
@@ -73,6 +76,7 @@ class CTVNewsIE(InfoExtractor):
         'playlist_mincount': 100,
     }, {
         'url': 'https://www.ctvnews.ca/it-s-been-23-years-since-toronto-called-in-the-army-after-a-major-snowstorm-1.5736957',
+        'skip': 'video gone',
         'info_dict':
         {
             'id': '1.5736957',
@@ -80,6 +84,7 @@ class CTVNewsIE(InfoExtractor):
         'playlist_mincount': 6,
     }, {
         'url': 'https://www.ctvnews.ca/business/respondents-to-bank-of-canada-questionnaire-largely-oppose-creating-a-digital-loonie-1.6665797',
+        'skip': 'video gone',
         'md5': '24bc4b88cdc17d8c3fc01dfc228ab72c',
         'info_dict': {
             'id': '2695026',
@@ -99,6 +104,7 @@ class CTVNewsIE(InfoExtractor):
         },
     }, {
         'url': 'https://stox.ctvnews.ca/video-gallery?clipId=582589',
+        'skip': 'video gone',
         'md5': '135cc592df607d29dddc931f1b756ae2',
         'info_dict': {
             'id': '582589',
@@ -118,6 +124,7 @@ class CTVNewsIE(InfoExtractor):
         },
     }, {
         'url': 'https://ottawa.ctvnews.ca/features/regional-contact/regional-contact-archive?binId=1.1164587#3023759',
+        'skip': 'DRM protected',
         'md5': 'a14c0603557decc6531260791c23cc5e',
         'info_dict': {
             'id': '3023759',

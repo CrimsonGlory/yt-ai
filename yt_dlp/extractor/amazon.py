@@ -88,6 +88,7 @@ class AmazonReviewsIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?amazon\.(?:[a-z]{2,3})(?:\.[a-z]{2})?/gp/customer-reviews/(?P<id>[^/&#$?]+)'
     _TESTS = [{
         'url': 'https://www.amazon.com/gp/customer-reviews/R10VE9VUSY19L3/ref=cm_cr_arp_d_rvw_ttl',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'R10VE9VUSY19L3',
             'ext': 'mp4',
@@ -100,6 +101,7 @@ class AmazonReviewsIE(InfoExtractor):
         'expected_warnings': ['Review body was not found in webpage'],
     }, {
         'url': 'https://www.amazon.com/gp/customer-reviews/R10VE9VUSY19L3/ref=cm_cr_arp_d_rvw_ttl?language=es_US',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'R10VE9VUSY19L3',
             'ext': 'mp4',
@@ -112,6 +114,7 @@ class AmazonReviewsIE(InfoExtractor):
         'expected_warnings': ['Review body was not found in webpage'],
     }, {
         'url': 'https://www.amazon.in/gp/customer-reviews/RV1CO8JN5VGXV/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'RV1CO8JN5VGXV',
             'ext': 'mp4',

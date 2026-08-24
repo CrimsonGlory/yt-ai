@@ -29,6 +29,7 @@ class ZanIE(InfoExtractor):
     _VALID_URL = r'https?://(www\.)?zan-live\.com/[^/?#]+/live/play/\d+/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.zan-live.com/en/live/play/1797/663',
+        'skip': 'Login required',
         'info_dict': {
             'id': '663',
             'ext': 'mp4',
@@ -41,6 +42,7 @@ class ZanIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.zan-live.com/ja/live/play/6910/4268',
+        'skip': 'Login required',
         'info_dict': {
             'id': '4268',
             'ext': 'mp4',

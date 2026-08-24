@@ -97,6 +97,7 @@ class KickVODIE(KickBaseIE):
     _TESTS = [{
         # Regular VOD
         'url': 'https://kick.com/xqc/videos/5c697a87-afce-4256-b01f-3c8fe71ef5cb',
+        'skip': 'video gone',
         'info_dict': {
             'id': '5c697a87-afce-4256-b01f-3c8fe71ef5cb',
             'ext': 'mp4',

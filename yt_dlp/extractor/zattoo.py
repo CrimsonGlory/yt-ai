@@ -254,6 +254,7 @@ class ZattooIE(ZattooBaseIE):
     _TYPE = 'video'
     _TESTS = [{
         'url': 'https://zattoo.com/program/zdf/250170418',
+        'skip': 'Login required',
         'info_dict': {
             'id': '250170418',
             'ext': 'mp4',

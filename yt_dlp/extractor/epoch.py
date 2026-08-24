@@ -15,6 +15,7 @@ class EpochIE(InfoExtractor):
         },
         {
             'url': 'https://www.theepochtimes.com/the-communist-partys-cyberattacks-on-america-explained-rex-lee-talks-tech-hybrid-warfare_4342413.html',
+            'skip': 'video gone',
             'info_dict': {
                 'id': '276c7f46-3bbf-475d-9934-b9bbe827cf0a',
                 'ext': 'mp4',

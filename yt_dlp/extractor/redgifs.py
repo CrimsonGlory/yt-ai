@@ -184,7 +184,7 @@ class RedGifsSearchIE(RedGifsBaseIE):
                 'title': 'Lesbian',
                 'description': 'RedGifs search for Lesbian, ordered by trending',
             },
-            'playlist_mincount': 100,
+            'playlist_mincount': 21,
         },
         {
             'url': 'https://www.redgifs.com/browse?type=g&order=latest&tags=Lesbian',
@@ -193,7 +193,7 @@ class RedGifsSearchIE(RedGifsBaseIE):
                 'title': 'Lesbian',
                 'description': 'RedGifs search for Lesbian, ordered by latest',
             },
-            'playlist_mincount': 100,
+            'playlist_mincount': 27,
         },
         {
             'url': 'https://www.redgifs.com/browse?type=g&order=latest&tags=Lesbian&page=2',

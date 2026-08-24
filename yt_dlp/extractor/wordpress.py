@@ -27,6 +27,7 @@ class WordpressPlaylistEmbedIE(InfoExtractor):
         'playlist_count': 5,
     }, {
         'url': 'https://pianoadventures.com/products/piano-adventures-level-1-lesson-book-enhanced-cd/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'piano-adventures-level-1-lesson-book-enhanced-cd-wp-playlist-1',
             'title': 'Wordpress Playlist',
@@ -102,6 +103,7 @@ class WordpressMiniAudioPlayerEmbedIE(InfoExtractor):
     }, {
         # Version 1.9.3: https://plugins.trac.wordpress.org/browser/wp-miniaudioplayer/tags/1.9.3
         'url': 'https://www.booksontape.com/collections/audiobooks-with-teacher-guides/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'audiobooks-with-teacher-guides',
             'title': 'Audiobooks with Teacher Guides | Books on Tape',
@@ -120,7 +122,7 @@ class WordpressMiniAudioPlayerEmbedIE(InfoExtractor):
             'timestamp': float,
             'upload_date': str,
             'thumbnail': 'https://www.estudiords.com.br/wp-content/uploads/2021/03/LOGO-TEMAS.png',
-            'description': 'md5:ab24d6a7ed0312ad2d466e721679f5a0',
+            'description': 'md5:cf7a961a7b57151eb3717ee5f540fc57',
         },
         'playlist_mincount': 30,
     }]

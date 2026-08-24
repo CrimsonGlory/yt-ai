@@ -137,6 +137,7 @@ class BBCCoUkIE(InfoExtractor):
             'skip': 'Episode is no longer available on BBC iPlayer Radio',
         }, {
             'url': 'http://www.bbc.co.uk/music/clips/p022h44b',
+            'skip': 'video gone',
             'note': 'Audio',
             'info_dict': {
                 'id': 'p022h44j',
@@ -151,6 +152,7 @@ class BBCCoUkIE(InfoExtractor):
             },
         }, {
             'url': 'http://www.bbc.co.uk/music/clips/p025c0zz',
+            'skip': 'video gone',
             'note': 'Video',
             'info_dict': {
                 'id': 'p025c103',
@@ -734,6 +736,7 @@ class BBCIE(BBCCoUkIE):  # XXX: Do not subclass from concrete IE
     }, {
         # single video in __INITIAL_DATA__
         'url': 'http://www.bbc.com/sport/0/football/33653409',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'p02xycnp',
             'ext': 'mp4',
@@ -1663,6 +1666,7 @@ class BBCCoUkIPlayerEpisodesIE(BBCCoUkIPlayerPlaylistBaseIE):
     }, {
         # explicit season
         'url': 'https://www.bbc.co.uk/iplayer/episodes/b094m5t9/doctor-foster?seriesId=b094m6nv',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'b094m5t9',
             'title': 'Doctor Foster',
@@ -1740,7 +1744,7 @@ class BBCCoUkIPlayerGroupIE(BBCCoUkIPlayerPlaylistBaseIE):
             'title': 'Bohemian Icons',
             'description': 'md5:683e901041b2fe9ba596f2ab04c4dbe7',
         },
-        'playlist_mincount': 10,
+        'playlist_mincount': 6,
     }, {
         # all pages
         'url': 'https://www.bbc.co.uk/iplayer/group/p081d7j7',
@@ -1749,10 +1753,11 @@ class BBCCoUkIPlayerGroupIE(BBCCoUkIPlayerPlaylistBaseIE):
             'title': 'Music in Scotland',
             'description': 'Perfomances in Scotland and programmes featuring Scottish acts.',
         },
-        'playlist_mincount': 47,
+        'playlist_mincount': 25,
     }, {
         # explicit page
         'url': 'https://www.bbc.co.uk/iplayer/group/p081d7j7?page=2',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'p081d7j7',
             'title': 'Music in Scotland',
@@ -1812,7 +1817,7 @@ class BBCCoUkPlaylistIE(BBCCoUkPlaylistBaseIE):
         'info_dict': {
             'id': 'b00mfl7n',
             'title': 'Frozen Planet - Clips - BBC One',
-            'description': 'md5:65dcbf591ae628dafe32aa6c4a4a0d8c',
+            'description': 'md5:4a629b1ba5f1eee1264b90a9fa2b88c0',
         },
         'playlist_mincount': 24,
     }, {
@@ -1821,7 +1826,7 @@ class BBCCoUkPlaylistIE(BBCCoUkPlaylistBaseIE):
         'info_dict': {
             'id': 'b00mfl7n',
             'title': 'Frozen Planet - Clips - BBC One',
-            'description': 'md5:65dcbf591ae628dafe32aa6c4a4a0d8c',
+            'description': 'md5:4a629b1ba5f1eee1264b90a9fa2b88c0',
         },
         'playlist_mincount': 142,
     }, {

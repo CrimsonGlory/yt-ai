@@ -195,6 +195,7 @@ class GlobalPlayerAudioEpisodeIE(GlobalPlayerBaseIE):
     _TESTS = [{
         # podcast
         'url': 'https://www.globalplayer.com/podcasts/episodes/7DrfNnE/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '7DrfNnE',
             'ext': 'mp3',
@@ -211,6 +212,7 @@ class GlobalPlayerAudioEpisodeIE(GlobalPlayerBaseIE):
     }, {
         # radio catchup
         'url': 'https://www.globalplayer.com/catchup/lbc/uk/episodes/2zGq26Vcv1fCWhddC4JAwETXWe/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '2zGq26Vcv1fCWhddC4JAwETXWe',
             'ext': 'm4a',

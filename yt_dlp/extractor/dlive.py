@@ -9,6 +9,7 @@ class DLiveVODIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?dlive\.tv/p/(?P<uploader_id>.+?)\+(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://dlive.tv/p/pdp+3mTzOl4WR',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': '3mTzOl4WR',
             'ext': 'mp4',

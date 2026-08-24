@@ -10,6 +10,7 @@ class TheInterceptIE(InfoExtractor):
     _VALID_URL = r'https?://theintercept\.com/fieldofvision/(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://theintercept.com/fieldofvision/thisisacoup-episode-four-surrender-or-die/',
+        'skip': 'video gone',
         'md5': '145f28b41d44aab2f87c0a4ac8ec95bd',
         'info_dict': {
             'id': '46214',

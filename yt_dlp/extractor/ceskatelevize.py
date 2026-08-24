@@ -20,6 +20,7 @@ class CeskaTelevizeIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?ceskatelevize\.cz/(?:ivysilani|porady|zive)/(?:[^/?#&]+/)*(?P<id>[^/#?]+)'
     _TESTS = [{
         'url': 'http://www.ceskatelevize.cz/ivysilani/10441294653-hyde-park-civilizace/215411058090502/bonus/20641-bonus-01-en',
+        'skip': 'video gone',
         'info_dict': {
             'id': '61924494877028507',
             'ext': 'mp4',
@@ -35,6 +36,7 @@ class CeskaTelevizeIE(InfoExtractor):
     }, {
         # live stream
         'url': 'http://www.ceskatelevize.cz/zive/ct1/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '102',
             'ext': 'mp4',
@@ -63,6 +65,7 @@ class CeskaTelevizeIE(InfoExtractor):
     }, {
         # video with 18+ caution trailer
         'url': 'http://www.ceskatelevize.cz/porady/10520528904-queer/215562210900007-bogotart/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '215562210900007-bogotart',
             'title': 'Bogotart - Queer',

@@ -25,6 +25,7 @@ class RayWenderlichIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.raywenderlich.com/3530-testing-in-ios/lessons/1',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': '248377018',
             'ext': 'mp4',

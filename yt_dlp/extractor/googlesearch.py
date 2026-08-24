@@ -10,6 +10,7 @@ class GoogleSearchIE(SearchInfoExtractor):
     _SEARCH_KEY = 'gvsearch'
     _TESTS = [{
         'url': 'gvsearch15:python language',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'python language',
             'title': 'python language',

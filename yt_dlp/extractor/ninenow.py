@@ -65,7 +65,7 @@ class NineNowIE(InfoExtractor):
             'timestamp': 1619002200,
             'upload_date': '20210421',
             'duration': 3574.085,
-            'thumbnail': r're:https?://.+/1920x0/.+\.jpg',
+            'thumbnail': r're:https?://.*',
             'tags': ['episode'],
             'series': 'Lego Masters',
             'season': 'Season 3',

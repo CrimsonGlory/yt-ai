@@ -10,6 +10,7 @@ class HotNewHipHopIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?hotnewhiphop\.com/.*\.(?P<id>.*)\.html'
     _TEST = {
         'url': 'http://www.hotnewhiphop.com/freddie-gibbs-lay-it-down-song.1435540.html',
+        'skip': 'video gone',
         'md5': '2c2cd2f76ef11a9b3b581e8b232f3d96',
         'info_dict': {
             'id': '1435540',

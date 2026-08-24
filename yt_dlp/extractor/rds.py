@@ -14,6 +14,7 @@ class RDSIE(InfoExtractor):
     _TESTS = [{
         # has two 9c9media ContentPackages, the web player selects the first ContentPackage
         'url': 'https://www.rds.ca/videos/Hockey/NationalHockeyLeague/teams/9/forum-du-5-a-7-jesperi-kotkaniemi-de-retour-de-finlande-3.1377606',
+        'skip': 'video gone',
         'info_dict': {
             'id': '2083309',
             'display_id': 'forum-du-5-a-7-jesperi-kotkaniemi-de-retour-de-finlande',

@@ -7,6 +7,7 @@ class NinaProtocolIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?ninaprotocol\.com/releases/(?P<id>[^/#?]+)'
     _TESTS = [{
         'url': 'https://www.ninaprotocol.com/releases/3SvsMM3y4oTPZ5DXFJnLkCAqkxz34hjzFxqms1vu9XBJ',
+        'skip': 'Request timed out',
         'info_dict': {
             'id': '3SvsMM3y4oTPZ5DXFJnLkCAqkxz34hjzFxqms1vu9XBJ',
             'title': 'The Spatulas - March Chant',
@@ -140,6 +141,7 @@ class NinaProtocolIE(InfoExtractor):
         }],
     }, {
         'url': 'https://www.ninaprotocol.com/releases/f-g-s-american-shield',
+        'skip': 'Request timed out',
         'info_dict': {
             'id': '76PZnJwaMgViQHYfA4NYJXds7CmW6vHQKAtQUxGene6J',
             'description': 'md5:63f08d5db558b4b36e1896f317062721',
@@ -159,6 +161,7 @@ class NinaProtocolIE(InfoExtractor):
         'playlist_count': 1,
     }, {
         'url': 'https://www.ninaprotocol.com/releases/time-to-figure-things-out',
+        'skip': 'Request timed out',
         'info_dict': {
             'id': '6Zi1nC5hj6b13NkpxVYwRhFy6mYA7oLBbe9DMrgGDcYh',
             'display_id': 'time-to-figure-things-out',

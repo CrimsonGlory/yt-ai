@@ -184,7 +184,7 @@ class BanByeChannelIE(BanByeBaseIE):
         'info_dict': {
             'title': 'wRealu24',
             'id': 'ch_wrealu24',
-            'description': 'md5:da54e48416b74dfdde20a04867c0c2f6',
+            'description': 'md5:3982f98a3f8bed1b30c872113cedc39a',
         },
         'playlist_mincount': 791,
     }, {

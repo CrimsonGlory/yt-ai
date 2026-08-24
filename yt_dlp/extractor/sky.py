@@ -67,6 +67,7 @@ class SkyNewsIE(SkyBaseIE):
     _VALID_URL = r'https?://news\.sky\.com/video/[0-9a-z-]+-(?P<id>[0-9]+)'
     _TEST = {
         'url': 'https://news.sky.com/video/russian-plane-inspected-after-deadly-fire-11712962',
+        'skip': 'HTTP Error 403',
         'md5': '411e8893fd216c75eaf7e4c65d364115',
         'info_dict': {
             'id': 'ref:1ua21xaDE6lCtZDmbYfl8kwsKLooJbNM',
@@ -86,6 +87,7 @@ class SkyNewsStoryIE(SkyBaseIE):
     _VALID_URL = r'https?://news\.sky\.com/story/[0-9a-z-]+-(?P<id>[0-9]+)'
     _TEST = {
         'url': 'https://news.sky.com/story/budget-2021-chancellor-rishi-sunak-vows-address-will-deliver-strong-economy-fit-for-a-new-age-of-optimism-12445425',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'ref:0714acb9-123d-42c8-91b8-5c1bc6c73f20',
             'title': 'md5:e408dd7aad63f31a1817bbe40c7d276f',

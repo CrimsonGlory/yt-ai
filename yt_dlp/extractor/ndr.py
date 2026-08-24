@@ -67,6 +67,7 @@ class NDRIE(NDRBaseIE):
     }, {
         # httpAudio, same content id
         'url': 'http://www.ndr.de/info/La-Valette-entgeht-der-Hinrichtung,audio51535.html',
+        'skip': 'video gone',
         'md5': 'bb3cd38e24fbcc866d13b50ca59307b8',
         'info_dict': {
             'id': 'audio51535',
@@ -178,6 +179,7 @@ class NJoyIE(NDRBaseIE):
     }, {
         # httpVideo, different content id
         'url': 'http://www.n-joy.de/musik/Das-frueheste-DJ-Set-des-Nordens-live-mit-Felix-Jaehn-,felixjaehn168.html',
+        'skip': 'video gone',
         'md5': '417660fffa90e6df2fda19f1b40a64d8',
         'info_dict': {
             'id': 'livestream283',
@@ -348,6 +350,7 @@ class NDREmbedIE(NDREmbedBaseIE):  # XXX: Do not subclass from concrete IE
         'skip': 'No longer available',
     }, {
         'url': 'http://www.ndr.de/info/audio51535-player.html',
+        'skip': 'video gone',
         'md5': 'bb3cd38e24fbcc866d13b50ca59307b8',
         'info_dict': {
             'id': 'audio51535',
@@ -380,6 +383,7 @@ class NDREmbedIE(NDREmbedBaseIE):  # XXX: Do not subclass from concrete IE
     }, {
         # httpVideoLive
         'url': 'http://www.ndr.de/fernsehen/livestream/livestream217-externalPlayer.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'livestream217',
             'ext': 'mp4',
@@ -418,6 +422,7 @@ class NJoyEmbedIE(NDREmbedBaseIE):  # XXX: Do not subclass from concrete IE
     _TESTS = [{
         # httpVideo
         'url': 'http://www.n-joy.de/events/reeperbahnfestival/doku948-player_image-bc168e87-5263-4d6d-bd27-bb643005a6de_theme-n-joy.html',
+        'skip': 'video gone',
         'md5': '8483cbfe2320bd4d28a349d62d88bd74',
         'info_dict': {
             'id': 'doku948',
@@ -448,6 +453,7 @@ class NJoyEmbedIE(NDREmbedBaseIE):  # XXX: Do not subclass from concrete IE
     }, {
         # httpAudioLive, no explicit ext
         'url': 'http://www.n-joy.de/news_wissen/webradioweltweit100-player_image-3fec0484-2244-4565-8fb8-ed25fd28b173_theme-n-joy.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'webradioweltweit100',
             'ext': 'mp3',

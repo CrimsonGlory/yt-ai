@@ -9,6 +9,7 @@ class BlerpIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?blerp\.com/soundbites/(?P<id>[0-9a-zA-Z]+)'
     _TESTS = [{
         'url': 'https://blerp.com/soundbites/6320fe8745636cb4dd677a5a',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '6320fe8745636cb4dd677a5a',
             'title': 'Samsung Galaxy S8 Over the Horizon Ringtone 2016',
@@ -19,6 +20,7 @@ class BlerpIE(InfoExtractor):
         },
     }, {
         'url': 'https://blerp.com/soundbites/5bc94ef4796001000498429f',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '5bc94ef4796001000498429f',
             'title': 'Yee',

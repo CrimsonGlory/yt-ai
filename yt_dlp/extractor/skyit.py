@@ -195,6 +195,7 @@ class CieloTVItIE(SkyItIE):  # XXX: Do not subclass from concrete IE
     _VALID_URL = r'https?://(?:www\.)?cielotv\.it/video/(?P<id>[^.]+)\.html'
     _TESTS = [{
         'url': 'https://www.cielotv.it/video/Il-lunedi-e-sempre-un-dramma.html',
+        'skip': 'video gone',
         'md5': 'c4deed77552ba901c2a0d9258320304b',
         'info_dict': {
             'id': '499240',
@@ -250,6 +251,7 @@ class TV8ItLiveIE(SkyItBaseIE):
     _VALID_URL = r'https?://(?:www\.)?tv8\.it/streaming'
     _TESTS = [{
         'url': 'https://tv8.it/streaming',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'tv8',
             'ext': 'mp4',
@@ -295,7 +297,7 @@ class TV8ItPlaylistIE(InfoExtractor):
         'info_dict': {
             'id': 'uefa-europa-league',
             'title': 'UEFA Europa League',
-            'description': 'md5:9ab1832b7a8b1705b1f590e13a36bc6a',
+            'description': 'md5:3b9cb9725c3d4d226768a9684ffc0821',
             'thumbnail': r're:https://static\.sky\.it/.+\.(png|jpe?g|webp)',
         },
     }]

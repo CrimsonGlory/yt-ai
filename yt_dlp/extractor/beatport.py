@@ -8,6 +8,7 @@ class BeatportIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.|pro\.)?beatport\.com/track/(?P<display_id>[^/]+)/(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'https://beatport.com/track/synesthesia-original-mix/5379371',
+        'skip': 'HTTP Error 403',
         'md5': 'b3c34d8639a2f6a7f734382358478887',
         'info_dict': {
             'id': '5379371',
@@ -17,6 +18,7 @@ class BeatportIE(InfoExtractor):
         },
     }, {
         'url': 'https://beatport.com/track/love-and-war-original-mix/3756896',
+        'skip': 'HTTP Error 403',
         'md5': 'e44c3025dfa38c6577fbaeb43da43514',
         'info_dict': {
             'id': '3756896',
@@ -26,6 +28,7 @@ class BeatportIE(InfoExtractor):
         },
     }, {
         'url': 'https://beatport.com/track/birds-original-mix/4991738',
+        'skip': 'HTTP Error 403',
         'md5': 'a1fd8e8046de3950fd039304c186c05f',
         'info_dict': {
             'id': '4991738',

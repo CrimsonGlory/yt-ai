@@ -6,6 +6,7 @@ class BerufeTVIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?web\.arbeitsagentur\.de/berufetv/[^?#]+/film;filmId=(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://web.arbeitsagentur.de/berufetv/studienberufe/wirtschaftswissenschaften/wirtschaftswissenschaften-volkswirtschaft/film;filmId=DvKC3DUpMKvUZ_6fEnfg3u',
+        'skip': 'HTTP Error 403',
         'md5': '041b6432ec8e6838f84a5c30f31cc795',
         'info_dict': {
             'id': 'DvKC3DUpMKvUZ_6fEnfg3u',

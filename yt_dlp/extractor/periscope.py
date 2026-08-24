@@ -140,7 +140,7 @@ class PeriscopeUserIE(PeriscopeBaseIE):
         'info_dict': {
             'id': 'LularoeHusbandMike',
             'title': 'LULAROE HUSBAND MIKE',
-            'description': 'md5:6cf4ec8047768098da58e446e82c82f0',
+            'description': 'md5:25f5f26c9756be1a8b03bb1a7cb05666',
         },
         # Periscope only shows videos in the last 24 hours, so it's possible to
         # get 0 videos

@@ -17,6 +17,7 @@ class CinetecaMilanoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?cinetecamilano\.it/film/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.cinetecamilano.it/film/1942',
+        'skip': 'video gone',
         'info_dict': {
             'id': '1942',
             'ext': 'mp4',

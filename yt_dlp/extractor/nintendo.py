@@ -15,6 +15,7 @@ class NintendoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?nintendo\.com/(?:(?P<locale>\w{2}(?:-\w{2})?)/)?nintendo-direct/(?P<slug>[^/?#]+)'
     _TESTS = [{
         'url': 'https://www.nintendo.com/nintendo-direct/09-04-2019/',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'ext': 'mp4',
             'id': '2oPmiviVePUA1IqAZzjuVh',
@@ -28,6 +29,7 @@ class NintendoIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.nintendo.com/en-ca/nintendo-direct/08-31-2023/',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'ext': 'mp4',
             'id': '2TB2w2rJhNYF84qQ9E57hU',
@@ -41,6 +43,7 @@ class NintendoIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.nintendo.com/us/nintendo-direct/50-fact-extravaganza/',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'ext': 'mp4',
             'id': 'j0BBGzfw0pQ',

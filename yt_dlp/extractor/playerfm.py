@@ -28,7 +28,7 @@ class PlayerFmIE(InfoExtractor):
             'title': 'Thursday, April 17, 2025',
             'thumbnail': r're:^https://.*\.(jpg|png)',
             'duration': 1143,
-            'description': 'md5:4890b8cf9a55a787561cd5d59dfcda82',
+            'description': 'md5:3bb8c5cf33e966fc4e9671ca0ad67277',
             'creators': ['NBC News'],
             'timestamp': 1744941374,
             'upload_date': '20250418',

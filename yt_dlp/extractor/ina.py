@@ -49,6 +49,7 @@ class InaIE(InfoExtractor):
             'description': 'md5:3d89b5e419d8514c934f146045ccdbad',
             'upload_date': '19581128',
             'thumbnail': 'https://cdn-hub.ina.fr/notice/690x517/082/I22203233.jpeg',
+            'duration': int,
         },
     }, {
         'url': 'https://www.ina.fr/ina-eclaire-actu/chasse-croise-sncf-gare-d-austerlitz-vacances-d-ete',
@@ -60,6 +61,7 @@ class InaIE(InfoExtractor):
             'description': 'md5:1630ee819d8d4da97df53459e99f72bb',
             'upload_date': '19740801',
             'thumbnail': 'https://cdn-hub.ina.fr/notice/690x517/2cf/CAF91038285.jpeg',
+            'duration': int,
         },
     }]
 

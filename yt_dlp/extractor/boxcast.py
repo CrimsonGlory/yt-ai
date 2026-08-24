@@ -21,9 +21,11 @@ class BoxCastVideoIE(InfoExtractor):
             'release_date': '20221210',
             'uploader_id': 're8w0v8hohhvpqtbskpe',
             'uploader': 'Children\'s Health Defense',
+            'description': str,
         },
     }, {
         'url': 'https://boxcast.tv/video-portal/vctwevwntun3o0ikq7af/rvyblnn0fxbfjx5nwxhl/otbpltj2kzkveo2qz3ad',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'otbpltj2kzkveo2qz3ad',
             'ext': 'mp4',

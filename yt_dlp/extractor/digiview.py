@@ -8,6 +8,7 @@ class DigiviewIE(InfoExtractor):
     _TESTS = [{
         # normal video
         'url': 'https://ladigitale.dev/digiview/#/v/67a8e50aee2ec',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '67a8e50aee2ec',
             'ext': 'mp4',
@@ -42,6 +43,7 @@ class DigiviewIE(InfoExtractor):
     }, {
         # cut video
         'url': 'https://ladigitale.dev/digiview/#/v/67a8e51d0dd58',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '67a8e51d0dd58',
             'ext': 'mp4',
@@ -76,6 +78,7 @@ class DigiviewIE(InfoExtractor):
     }, {
         # changed title
         'url': 'https://ladigitale.dev/digiview/#/v/67a8ea5644d7a',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '67a8ea5644d7a',
             'ext': 'mp4',

@@ -14,6 +14,8 @@ class HypemIE(InfoExtractor):
             'uploader': 'BODYWORK',
             'timestamp': 1371810457,
             'upload_date': '20130621',
+            'duration': int,
+            'track': str,
         },
     }
 

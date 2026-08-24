@@ -6,6 +6,7 @@ class YourUploadIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?:yourupload\.com/(?:watch|embed)|embed\.yourupload\.com)/(?P<id>[A-Za-z0-9]+)'
     _TESTS = [{
         'url': 'http://yourupload.com/watch/14i14h',
+        'skip': 'video gone',
         'md5': '5e2c63385454c557f97c4c4131a393cd',
         'info_dict': {
             'id': '14i14h',

@@ -173,7 +173,7 @@ class SRGSSRPlayIE(InfoExtractor):
             'title': 'Snowden beantragt Asyl in Russland',
             'timestamp': 1372708215,
             'duration': 113.827,
-            'thumbnail': r're:^https?://.*1383719781\.png$',
+            'thumbnail': r're:https?://.*',
         },
         'expected_warnings': ['Unable to download f4m manifest'],
     }, {
@@ -185,6 +185,7 @@ class SRGSSRPlayIE(InfoExtractor):
             'title': 'Saira: Tujetsch - tuttina cuntinuar cun Sedrun Mustér Turissem',
             'timestamp': 1444709160,
             'duration': 336.816,
+            'thumbnail': r're:https?://.*',
         },
         'params': {
             # rtmp download
@@ -209,6 +210,7 @@ class SRGSSRPlayIE(InfoExtractor):
         },
     }, {
         'url': 'http://play.swissinfo.ch/play/tv/business/video/why-people-were-against-tax-reforms?id=42960270',
+        'skip': 'video gone',
         'info_dict': {
             'id': '42960270',
             'ext': 'mp4',

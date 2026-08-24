@@ -6,6 +6,7 @@ class NprIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?npr\.org/(?:sections/[^/]+/)?\d{4}/\d{2}/\d{2}/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.npr.org/sections/allsongs/2015/10/21/449974205/new-music-from-beach-house-chairlift-cmj-discoveries-and-more',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '449974205',
             'title': 'New Music From Beach House, Chairlift, CMJ Discoveries And More',
@@ -13,6 +14,7 @@ class NprIE(InfoExtractor):
         'playlist_count': 7,
     }, {
         'url': 'https://www.npr.org/sections/deceptivecadence/2015/10/09/446928052/music-from-the-shadows-ancient-armenian-hymns-and-piano-jazz',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '446928052',
             'title': "Songs We Love: Tigran Hamasyan, 'Your Mercy is Boundless'",
@@ -29,6 +31,7 @@ class NprIE(InfoExtractor):
     }, {
         # multimedia, not media title
         'url': 'https://www.npr.org/2017/06/19/533198237/tigers-jaw-tiny-desk-concert',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '533198237',
             'title': 'Tigers Jaw: Tiny Desk Concert',
@@ -49,6 +52,7 @@ class NprIE(InfoExtractor):
         'only_matching': True,
     }, {
         'url': 'https://www.npr.org/2022/03/15/1084896560/bonobo-tiny-desk-home-concert',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '1086468851',
             'ext': 'mp4',

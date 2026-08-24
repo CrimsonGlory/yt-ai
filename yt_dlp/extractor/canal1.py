@@ -6,6 +6,7 @@ class Canal1IE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://canal1.com.co/noticias/napa-i-una-cadena-de-produccion-de-arroz-que-se-quedo-en-veremos-y-abandonada-en-el-departamento-del-choco/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '63b39f6b354977084b85ab54',
             'display_id': 'napa-i-una-cadena-de-produccion-de-arroz-que-se-quedo-en-veremos-y-abandonada-en-el-departamento-del-choco',
@@ -16,6 +17,7 @@ class Canal1IE(InfoExtractor):
         },
     }, {
         'url': 'https://noticias.canal1.com.co/noticias/tres-i-el-triste-record-que-impuso-elon-musk-el-dueno-de-tesla-y-de-twitter/',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': '63b39e93f5fd223aa32250fb',
             'display_id': 'tres-i-el-triste-record-que-impuso-elon-musk-el-dueno-de-tesla-y-de-twitter',

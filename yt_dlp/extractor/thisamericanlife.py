@@ -4,7 +4,7 @@ from .common import InfoExtractor
 class ThisAmericanLifeIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?thisamericanlife\.org/(?:radio-archives/episode/|play_full\.php\?play=)(?P<id>\d+)'
     _TESTS = [{
-        'url': 'http://www.thisamericanlife.org/radio-archives/episode/487/harper-high-school-part-one',
+        'url': 'http://www.thisamericanlife.org/radio-archives/episode/487/#content',
         'md5': '8f7d2da8926298fdfca2ee37764c11ce',
         'info_dict': {
             'id': '487',

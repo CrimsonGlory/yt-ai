@@ -19,6 +19,7 @@ class IPrimaIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://prima.iprima.cz/particka/92-epizoda',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'p51388',
             'ext': 'mp4',
@@ -35,6 +36,7 @@ class IPrimaIE(InfoExtractor):
         },
     }, {
         'url': 'https://zoom.iprima.cz/porady/krasy-kanarskych-ostrovu/tenerife-v-risi-ohne',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'p1412199',
             'ext': 'mp4',

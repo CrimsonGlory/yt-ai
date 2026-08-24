@@ -42,6 +42,7 @@ class AntennaGrWatchIE(AntennaBaseIE):
 
     _TESTS = [{
         'url': 'https://www.ant1news.gr/watch/1506168/ant1-news-09112021-stis-18-45',
+        'skip': 'Site no longer exists or is broken',
         'md5': 'c472d9dd7cd233c63aff2ea42201cda6',
         'info_dict': {
             'id': '1506168',
@@ -78,6 +79,7 @@ class Ant1NewsGrArticleIE(AntennaBaseIE):
 
     _TESTS = [{
         'url': 'https://www.ant1news.gr/afieromata/article/549468/o-tzeims-mpont-sta-meteora-oi-apeiles-kai-o-xesikomos-ton-kalogeron',
+        'skip': 'Site no longer exists or is broken',
         'md5': '57eb8d12181f0fa2b14b0b138e1de9b6',
         'info_dict': {
             'id': '_xvg/m_cmbatw=',
@@ -89,6 +91,7 @@ class Ant1NewsGrArticleIE(AntennaBaseIE):
         },
     }, {
         'url': 'https://ant1news.gr/Society/article/620286/symmoria-anilikon-dikigoros-thymaton-ithelan-na-toys-apoteleiosoyn',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': '620286',
             'title': 'md5:91fe569e952e4d146485740ae927662b',

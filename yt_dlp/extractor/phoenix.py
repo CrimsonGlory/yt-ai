@@ -13,6 +13,7 @@ class PhoenixIE(ZDFBaseIE):
     _VALID_URL = r'https?://(?:www\.)?phoenix\.de/(?:[^/?#]+/)*[^/?#&]*-a-(?P<id>\d+)\.html'
     _TESTS = [{
         'url': 'https://www.phoenix.de/sendungen/dokumentationen/spitzbergen-a-893349.html',
+        'skip': 'HTTP Error 403',
         'md5': 'a79e86d9774d0b3f2102aff988a0bd32',
         'info_dict': {
             'id': '221215_phx_spitzbergen',

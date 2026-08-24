@@ -161,6 +161,7 @@ class GlomexEmbedIE(GlomexBaseIE):
     }, {
         # Geo-restricted
         'url': 'https://player.glomex.com/integration/1/iframe-player.html?playlistId=cl-bgqaata6aw8x&integrationId=19syy24xjn1oqlpc',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': 'cl-bgqaata6aw8x',
         },

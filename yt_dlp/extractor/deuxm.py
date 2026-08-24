@@ -7,6 +7,7 @@ class DeuxMIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://2m.ma/fr/replay/single/6351d439b15e1a613b3debe8',
+        'skip': 'HTTP Error 403',
         'md5': '5f761f04c9d686e553b685134dca5d32',
         'info_dict': {
             'id': '6351d439b15e1a613b3debe8',
@@ -16,6 +17,7 @@ class DeuxMIE(InfoExtractor):
         },
     }, {
         'url': 'https://2m.ma/fr/replay/single/635c0aeab4eec832622356da',
+        'skip': 'HTTP Error 403',
         'md5': 'ad6af2f5e4d5b2ad2194a84b6e890b4c',
         'info_dict': {
             'id': '635c0aeab4eec832622356da',
@@ -43,6 +45,7 @@ class DeuxMNewsIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://2m.ma/fr/news/Kan-Ya-Mkan-d%C3%A9poussi%C3%A8re-l-histoire-du-phare-du-Cap-Beddouza-20221028',
+        'skip': 'HTTP Error 403',
         'md5': '43d5e693a53fa0b71e8a5204c7d4542a',
         'info_dict': {
             'id': '635c5d1233b83834e35b282e',
@@ -53,6 +56,7 @@ class DeuxMNewsIE(InfoExtractor):
         },
     }, {
         'url': 'https://2m.ma/fr/news/Interview-Casablanca-hors-des-sentiers-battus-avec-Abderrahim-KASSOU-Replay--20221017',
+        'skip': 'HTTP Error 403',
         'md5': '7aca29f02230945ef635eb8290283c0c',
         'info_dict': {
             'id': '634d9e108b70d40bc51a844b',

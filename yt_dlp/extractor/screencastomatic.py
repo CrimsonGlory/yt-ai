@@ -14,6 +14,7 @@ class ScreencastOMaticIE(InfoExtractor):
     _VALID_URL = r'https?://screencast-o-matic\.com/(?:(?:watch|player)/|embed\?.*?\bsc=)(?P<id>[0-9a-zA-Z]+)'
     _TESTS = [{
         'url': 'http://screencast-o-matic.com/watch/c2lD3BeOPl',
+        'skip': 'video gone',
         'md5': '483583cb80d92588f15ccbedd90f0c18',
         'info_dict': {
             'id': 'c2lD3BeOPl',

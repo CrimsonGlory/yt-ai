@@ -16,6 +16,7 @@ class TechTVMITIE(InfoExtractor):
 
     _TEST = {
         'url': 'http://techtv.mit.edu/videos/25418-mit-dna-learning-center-set',
+        'skip': 'video gone',
         'md5': '00a3a27ee20d44bcaa0933ccec4a2cf7',
         'info_dict': {
             'id': '25418',
@@ -83,6 +84,7 @@ class OCWMITIE(InfoExtractor):
         },
         {
             'url': 'http://ocw.mit.edu/courses/mathematics/18-01sc-single-variable-calculus-fall-2010/1.-differentiation/part-a-definition-and-basic-rules/session-1-introduction-to-derivatives/',
+            'skip': 'video gone',
             'info_dict': {
                 'id': '7K1sB05pE0A',
                 'ext': 'mp4',

@@ -41,6 +41,7 @@ class CDAIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://www.cda.pl/video/5749950c',
+        'skip': 'HTTP Error 403',
         'md5': '6f844bf51b15f31fae165365707ae970',
         'info_dict': {
             'id': '5749950c',
@@ -57,6 +58,7 @@ class CDAIE(InfoExtractor):
         },
     }, {
         'url': 'http://www.cda.pl/video/57413289',
+        'skip': 'HTTP Error 403',
         'md5': 'a88828770a8310fc00be6c95faf7f4d5',
         'info_dict': {
             'id': '57413289',
@@ -74,6 +76,7 @@ class CDAIE(InfoExtractor):
     }, {
         # Age-restricted with vfilm redirection
         'url': 'https://www.cda.pl/video/8753244c4',
+        'skip': 'HTTP Error 403',
         'md5': 'd8eeb83d63611289507010d3df3bb8b3',
         'info_dict': {
             'id': '8753244c4',
@@ -92,6 +95,7 @@ class CDAIE(InfoExtractor):
     }, {
         # Age-restricted without vfilm redirection
         'url': 'https://www.cda.pl/video/17028157b8',
+        'skip': 'HTTP Error 403',
         'md5': 'c1fe5ff4582bace95d4f0ce0fbd0f992',
         'info_dict': {
             'id': '17028157b8',
@@ -373,6 +377,7 @@ class CDAFolderIE(InfoExtractor):
     _VALID_URL = r'https?://(?:(?:www|m)\.)?cda\.pl/(?P<channel>[\w-]+)/folder/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.cda.pl/domino264/folder/31188385',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '31188385',
             'title': 'SERIA DRUGA',
@@ -380,6 +385,7 @@ class CDAFolderIE(InfoExtractor):
         'playlist_mincount': 13,
     }, {
         'url': 'https://www.cda.pl/smiechawaTV/folder/2664592/vfilm',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '2664592',
             'title': 'VideoDowcipy - wszystkie odcinki',
@@ -387,6 +393,7 @@ class CDAFolderIE(InfoExtractor):
         'playlist_mincount': 71,
     }, {
         'url': 'https://www.cda.pl/DeliciousBeauty/folder/19129979/vfilm',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '19129979',
             'title': 'TESTY KOSMETYKÓW',

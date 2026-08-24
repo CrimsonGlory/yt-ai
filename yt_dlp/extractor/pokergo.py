@@ -34,6 +34,7 @@ class PokerGoIE(PokerGoBaseIE):
 
     _TESTS = [{
         'url': 'https://www.pokergo.com/videos/2a70ec4e-4a80-414b-97ec-725d9b72a7dc',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'aVLOxDzY',
             'ext': 'mp4',
@@ -87,6 +88,7 @@ class PokerGoCollectionIE(PokerGoBaseIE):
 
     _TESTS = [{
         'url': 'https://www.pokergo.com/collections/19ffe481-5dae-481a-8869-75cc0e3c4700',
+        'skip': 'Login required',
         'playlist_mincount': 13,
         'info_dict': {
             'id': '19ffe481-5dae-481a-8869-75cc0e3c4700',

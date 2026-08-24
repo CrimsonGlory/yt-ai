@@ -100,6 +100,7 @@ class NBAWatchEmbedIE(NBAWatchBaseIE):
     _VALID_URL = NBAWatchBaseIE._VALID_URL_BASE + r'embed\?.*?\bid=(?P<id>\d+)'
     _TESTS = [{
         'url': 'http://watch.nba.com/embed?id=659395',
+        'skip': 'Request timed out',
         'md5': 'b7e3f9946595f4ca0a13903ce5edd120',
         'info_dict': {
             'id': '659395',
@@ -122,6 +123,7 @@ class NBAWatchIE(NBAWatchBaseIE):
     _VALID_URL = NBAWatchBaseIE._VALID_URL_BASE + r'(?:nba/)?video/(?P<id>.+?(?=/index\.html)|(?:[^/]+/)*[^/?#&]+)'
     _TESTS = [{
         'url': 'http://www.nba.com/video/games/nets/2012/12/04/0021200253-okc-bkn-recap.nba/index.html',
+        'skip': 'Request timed out',
         'md5': '9d902940d2a127af3f7f9d2f3dc79c96',
         'info_dict': {
             'id': '70946',
@@ -137,6 +139,7 @@ class NBAWatchIE(NBAWatchBaseIE):
         'only_matching': True,
     }, {
         'url': 'http://watch.nba.com/video/channels/playoffs/2015/05/20/0041400301-cle-atl-recap.nba',
+        'skip': 'Request timed out',
         'md5': 'b2b39b81cf28615ae0c3360a3f9668c4',
         'info_dict': {
             'id': '330865',
@@ -175,6 +178,7 @@ class NBAWatchCollectionIE(NBAWatchBaseIE):
     _VALID_URL = NBAWatchBaseIE._VALID_URL_BASE + r'list/collection/(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://watch.nba.com/list/collection/season-preview-2020',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'season-preview-2020',
         },
@@ -396,6 +400,7 @@ class NBAChannelIE(NBABaseIE):
     _VALID_URL = NBABaseIE._VALID_URL_BASE + f'(?:{NBABaseIE._CHANNEL_PATH_REGEX})/(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://www.nba.com/blazers/video/channel/summer_league',
+        'skip': 'video gone',
         'info_dict': {
             'title': 'Summer League',
         },

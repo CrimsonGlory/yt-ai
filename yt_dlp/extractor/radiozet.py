@@ -9,6 +9,7 @@ class RadioZetPodcastIE(InfoExtractor):
     _VALID_URL = r'https?://player\.radiozet\.pl\/Podcasty/.*?/(?P<id>.+)'
     _TEST = {
         'url': 'https://player.radiozet.pl/Podcasty/Nie-Ma-Za-Co/O-przedmiotach-szkolnych-ktore-przydaja-sie-w-zyciu',
+        'skip': 'video gone',
         'md5': 'e03665c316b4fbc5f6a8f232948bbba3',
         'info_dict': {
             'id': '42154',

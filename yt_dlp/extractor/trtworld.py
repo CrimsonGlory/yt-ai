@@ -8,6 +8,7 @@ class TrtWorldIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.trtworld.com/video/news/turkiye-switches-to-sustainable-tourism-16067690',
+        'skip': 'video gone',
         'info_dict': {
             'id': '16067690',
             'ext': 'mp4',
@@ -19,6 +20,7 @@ class TrtWorldIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.trtworld.com/video/one-offs/frames-from-anatolia-recreating-a-james-bond-scene-in-istanbuls-grand-bazaar-14541780',
+        'skip': 'video gone',
         'info_dict': {
             'id': '14541780',
             'ext': 'mp4',
@@ -30,6 +32,7 @@ class TrtWorldIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.trtworld.com/video/the-newsmakers/can-sudan-find-peace-amidst-failed-transition-to-democracy-12904760',
+        'skip': 'video gone',
         'info_dict': {
             'id': '12904760',
             'ext': 'mp4',
@@ -40,6 +43,7 @@ class TrtWorldIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.trtworld.com/video/africa-matters/locals-learning-to-cope-with-rising-tides-of-kenyas-great-lakes-16059545',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'zEns2dWl00w',
             'ext': 'mp4',

@@ -48,6 +48,7 @@ class LibsynIE(InfoExtractor):
         },
     }, {
         'url': 'https://undergroundwellness.com/podcasts/306-5-steps-to-permanent-gut-healing/',
+        'skip': 'Unsupported URL / extractor broken',
         'md5': '23576952577f9604520a730d90371761',
         'info_dict': {
             'id': '3793998',

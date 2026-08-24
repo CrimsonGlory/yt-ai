@@ -24,6 +24,7 @@ class SnapchatSpotlightIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.snapchat.com/spotlight/W7_EDlXWTBiXAEEniNoMPwAAYcnVjYWdwcGV1AZEaIYn5AZEaIYnrAAAAAQ',
+        'skip': 'video gone',
         'md5': '4cd9626458c1a0e3e6dbe72c544a9ec2',
         'info_dict': {
             'id': 'W7_EDlXWTBiXAEEniNoMPwAAYcnVjYWdwcGV1AZEaIYn5AZEaIYnrAAAAAQ',

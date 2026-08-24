@@ -30,6 +30,7 @@ class ViddlerIE(InfoExtractor):
         'skip': 'Invalid URL',
     }, {
         'url': 'http://www.viddler.com/v/4d03aad9/',
+        'skip': 'Site no longer exists or is broken',
         'md5': 'f12c5a7fa839c47a79363bfdf69404fb',
         'info_dict': {
             'id': '4d03aad9',
@@ -59,6 +60,7 @@ class ViddlerIE(InfoExtractor):
     }, {
         # secret protected
         'url': 'http://www.viddler.com/v/890c0985?secret=34051570',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': '890c0985',
             'ext': 'mp4',

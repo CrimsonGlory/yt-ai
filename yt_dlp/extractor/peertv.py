@@ -7,6 +7,7 @@ class PeerTVIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?peer\.tv/(?:de|it|en)/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.peer.tv/de/841',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '841',
             'ext': 'mp4',
@@ -15,6 +16,7 @@ class PeerTVIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.peer.tv/it/404',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '404',
             'ext': 'mp4',

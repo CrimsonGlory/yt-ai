@@ -53,6 +53,7 @@ class DetikEmbedIE(InfoExtractor):
     }, {
         # insertlive embed
         'url': 'https://www.insertlive.com/embed/video/290482',
+        'skip': 'video gone',
         'info_dict': {
             'id': '290482',
             'ext': 'mp4',

@@ -273,6 +273,7 @@ class GameJoltIE(GameJoltBaseIE):
     }, {
         # Multiple GIFs
         'url': 'https://gamejolt.com/p/gif-yhsqkumq',
+        'skip': 'video gone',
         'playlist_count': 35,
         'info_dict': {
             'id': 'yhsqkumq',
@@ -317,6 +318,7 @@ class GameJoltUserIE(GameJoltPostListBaseIE):
     _VALID_URL = r'https?://(?:www\.)?gamejolt\.com/@(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://gamejolt.com/@BlazikenSuperStar',
+        'skip': 'video gone',
         'playlist_mincount': 1,
         'info_dict': {
             'id': '6116784',
@@ -348,7 +350,7 @@ class GameJoltGameIE(GameJoltPostListBaseIE):
         'info_dict': {
             'id': '655124',
             'title': 'Friday Night Funkin\': Friday 4 Fun',
-            'description': 'md5:576a7dd87912a2dcf33c50d2bd3966d3',
+            'description': 'md5:a98ea8a805ab0eb0eb8b48a864a2fb3b',
         },
         'params': {
             'ignore_no_formats_error': True,
@@ -427,7 +429,7 @@ class GameJoltCommunityIE(GameJoltPostListBaseIE):
         'info_dict': {
             'id': 'fnf/videos',
             'title': 'Friday Night Funkin\' - Videos',
-            'description': 'md5:6d8c06f27460f7d35c1554757ffe53c8',
+            'description': 'md5:827f25f2f9793da2aecfd277eb22716c',
         },
         'params': {
             'playlistend': 50,
@@ -440,7 +442,7 @@ class GameJoltCommunityIE(GameJoltPostListBaseIE):
         'info_dict': {
             'id': 'youtubers/featured',
             'title': 'Youtubers - featured',
-            'description': 'md5:53e5582c93dcc467ab597bfca4db17d4',
+            'description': 'md5:3bfd35b099ea9daf31ce4def51ac78fe',
         },
         'params': {
             'playlistend': 50,

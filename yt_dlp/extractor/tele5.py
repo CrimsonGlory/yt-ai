@@ -30,6 +30,7 @@ class Tele5IE(DiscoveryPlusBaseIE):
     }, {
         # only slug_a
         'url': 'https://tele5.de/mediathek/30-miles-from-nowhere-im-wald-hoert-dich-niemand-schreien',
+        'skip': 'video gone',
         'info_dict': {
             'id': '4102641',
             'ext': 'mp4',

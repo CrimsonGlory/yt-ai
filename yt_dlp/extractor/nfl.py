@@ -280,6 +280,7 @@ class NFLPlusReplayIE(NFLBaseIE):
     _VALID_URL = r'https?://(?:www\.)?nfl\.com/plus/games/(?P<slug>[\w-]+)(?:/(?P<id>\d+))?'
     _TESTS = [{
         'url': 'https://www.nfl.com/plus/games/giants-at-vikings-2022-post-1/1572108',
+        'skip': 'Login required',
         'info_dict': {
             'id': '1572108',
             'ext': 'mp4',
@@ -297,6 +298,7 @@ class NFLPlusReplayIE(NFLBaseIE):
     }, {
         'note': 'Subscription required',
         'url': 'https://www.nfl.com/plus/games/giants-at-vikings-2022-post-1',
+        'skip': 'Login required',
         'playlist_count': 4,
         'info_dict': {
             'id': 'giants-at-vikings-2022-post-1',
@@ -304,6 +306,7 @@ class NFLPlusReplayIE(NFLBaseIE):
     }, {
         'note': 'Subscription required',
         'url': 'https://www.nfl.com/plus/games/giants-at-patriots-2011-pre-4',
+        'skip': 'Login required',
         'playlist_count': 2,
         'info_dict': {
             'id': 'giants-at-patriots-2011-pre-4',
@@ -311,6 +314,7 @@ class NFLPlusReplayIE(NFLBaseIE):
     }, {
         'note': 'Subscription required',
         'url': 'https://www.nfl.com/plus/games/giants-at-patriots-2011-pre-4',
+        'skip': 'Login required',
         'info_dict': {
             'id': '950701',
             'ext': 'mp4',
@@ -378,6 +382,7 @@ class NFLPlusEpisodeIE(NFLBaseIE):
     _TESTS = [{
         'note': 'Subscription required',
         'url': 'https://www.nfl.com/plus/episodes/kurt-s-qb-insider-conference-championships',
+        'skip': 'Login required',
         'info_dict': {
             'id': '1576832',
             'ext': 'mp4',

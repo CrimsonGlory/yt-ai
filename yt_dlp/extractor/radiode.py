@@ -7,6 +7,7 @@ class RadioDeIE(InfoExtractor):
     _VALID_URL = r'https?://(?P<id>.+?)\.(?:radio\.(?:de|at|fr|pt|es|pl|it)|rad\.io)'
     _TEST = {
         'url': 'http://ndr2.radio.de/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'ndr2',
             'ext': 'mp3',

@@ -11,6 +11,7 @@ class EurosportIE(InfoExtractor):
     '''
     _TESTS = [{
         'url': 'https://www.eurosport.com/tennis/roland-garros/2022/highlights-rafael-nadal-brushes-aside-caper-ruud-to-win-record-extending-14th-french-open-title_vid1694147/video.shtml',
+        'skip': 'video gone',
         'info_dict': {
             'id': '2480939',
             'ext': 'mp4',
@@ -38,6 +39,7 @@ class EurosportIE(InfoExtractor):
     }, {
         # geo-fence but can bypassed by xff
         'url': 'https://www.eurosport.com/cycling/tour-de-france-femmes/2022/incredible-ride-marlen-reusser-storms-to-stage-4-win-at-tour-de-france-femmes_vid1722221/video.shtml',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '2582552',
             'ext': 'mp4',

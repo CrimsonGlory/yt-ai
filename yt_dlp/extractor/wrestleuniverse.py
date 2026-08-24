@@ -188,6 +188,7 @@ class WrestleUniverseVODIE(WrestleUniverseBaseIE):
     _VALID_URL = WrestleUniverseBaseIE._VALID_URL_TMPL % 'videos'
     _TESTS = [{
         'url': 'https://www.wrestle-universe.com/en/videos/dp8mpjmcKfxzUhEHM2uFws',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'dp8mpjmcKfxzUhEHM2uFws',
             'ext': 'mp4',
@@ -273,6 +274,7 @@ class WrestleUniversePPVIE(WrestleUniverseBaseIE):
     }, {
         'note': 'unencrypted HLS',
         'url': 'https://www.wrestle-universe.com/en/lives/wUG8hP5iApC63jbtQzhVVx',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'wUG8hP5iApC63jbtQzhVVx',
             'ext': 'mp4',

@@ -105,6 +105,7 @@ class TV2DKBornholmPlayIE(InfoExtractor):
     _VALID_URL = r'https?://play\.tv2bornholm\.dk/\?.*?\bid=(?P<id>\d+)'
     _TEST = {
         'url': 'http://play.tv2bornholm.dk/?area=specifikTV&id=781021',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '781021',
             'ext': 'mp4',

@@ -7,6 +7,7 @@ class VTMIE(MedialaanBaseIE):
     _VALID_URL = r'https?://(?:www\.)?vtm\.be/[^/?#]+~v(?P<id>[\da-f]{8}(?:-[\da-f]{4}){3}-[\da-f]{12})'
     _TESTS = [{
         'url': 'https://vtm.be/gast-vernielt-genkse-hotelkamer~ve7534523-279f-4b4d-a5c9-a33ffdbe23e1',
+        'skip': 'Login required',
         'info_dict': {
             'id': '192445',
             'ext': 'mp4',

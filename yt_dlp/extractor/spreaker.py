@@ -94,6 +94,7 @@ class SpreakerIE(InfoExtractor):
     }, {
         'note': 'episode',
         'url': 'https://www.spreaker.com/episode/grunge-music-origins-the-raw-sound-that-defined-a-generation--60269615',
+        'skip': 'video gone',
         'info_dict': {
             'id': '60269615',
             'display_id': 'grunge-music-origins-the-raw-sound-that-',

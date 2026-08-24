@@ -12,6 +12,7 @@ class TF1IE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?tf1\.fr/[^/]+/(?P<program_slug>[^/]+)/videos/(?P<id>[^/?&#]+)\.html'
     _TESTS = [{
         'url': 'https://www.tf1.fr/tmc/quotidien-avec-yann-barthes/videos/quotidien-premiere-partie-11-juin-2019.html',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '13641379',
             'ext': 'mp4',
@@ -29,6 +30,7 @@ class TF1IE(InfoExtractor):
         },
     }, {
         'url': 'https://www.tf1.fr/tmc/burger-quiz/videos/burger-quiz-du-19-aout-2023-s03-episode-21-85585666.html',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '14010600',
             'ext': 'mp4',

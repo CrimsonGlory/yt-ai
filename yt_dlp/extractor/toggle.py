@@ -16,6 +16,7 @@ class ToggleIE(InfoExtractor):
     _VALID_URL = r'(?:https?://(?:(?:www\.)?mewatch|video\.toggle)\.sg/(?:en|zh)/(?:[^/]+/){2,}|toggle:)(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'http://www.mewatch.sg/en/series/lion-moms-tif/trailers/lion-moms-premier/343115',
+        'skip': 'video gone',
         'info_dict': {
             'id': '343115',
             'ext': 'mp4',
@@ -173,6 +174,7 @@ class MeWatchIE(InfoExtractor):
     _VALID_URL = r'https?://(?:(?:www|live)\.)?mewatch\.sg/watch/[^/?#&]+-(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'https://www.mewatch.sg/watch/Recipe-Of-Life-E1-179371',
+        'skip': 'video gone',
         'info_dict': {
             'id': '1008625',
             'ext': 'mp4',

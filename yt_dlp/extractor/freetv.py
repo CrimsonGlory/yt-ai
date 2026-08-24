@@ -17,6 +17,7 @@ class FreeTvMoviesIE(FreeTvBaseIE):
     _VALID_URL = r'https?://(?:www\.)?freetv\.com/peliculas/(?P<id>[^/]+)'
     _TESTS = [{
         'url': 'https://www.freetv.com/peliculas/atrapame-si-puedes/',
+        'skip': 'video gone',
         'md5': 'dc62d5abf0514726640077cd1591aa92',
         'info_dict': {
             'id': '428021',
@@ -26,6 +27,7 @@ class FreeTvMoviesIE(FreeTvBaseIE):
         },
     }, {
         'url': 'https://www.freetv.com/peliculas/monstruoso/',
+        'skip': 'video gone',
         'md5': '509c15c68de41cb708d1f92d071f20aa',
         'info_dict': {
             'id': '377652',
@@ -69,6 +71,7 @@ class FreeTvIE(FreeTvBaseIE):
     _VALID_URL = r'https?://(?:www\.)?freetv\.com/series/(?P<id>[^/]+)'
     _TESTS = [{
         'url': 'https://www.freetv.com/series/el-detective-l/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'el-detective-l',
             'title': 'El Detective L',
@@ -77,6 +80,7 @@ class FreeTvIE(FreeTvBaseIE):
         'playlist_count': 24,
     }, {
         'url': 'https://www.freetv.com/series/esmeraldas/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'esmeraldas',
             'title': 'Esmeraldas',
@@ -85,6 +89,7 @@ class FreeTvIE(FreeTvBaseIE):
         'playlist_count': 62,
     }, {
         'url': 'https://www.freetv.com/series/las-aventuras-de-leonardo/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'las-aventuras-de-leonardo',
             'title': 'Las Aventuras de Leonardo',

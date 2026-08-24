@@ -8,6 +8,7 @@ class GofileIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?gofile\.io/d/(?P<id>[^/]+)'
     _TESTS = [{
         'url': 'https://gofile.io/d/AMZyDw',
+        'skip': 'Login required',
         'info_dict': {
             'id': 'AMZyDw',
         },
@@ -32,12 +33,14 @@ class GofileIE(InfoExtractor):
         'skip': 'No video/audio found at provided URL.',
     }, {
         'url': 'https://gofile.io/d/TMjXd9',
+        'skip': 'Rate limited',
         'info_dict': {
             'id': 'TMjXd9',
         },
         'playlist_count': 1,
     }, {
         'url': 'https://gofile.io/d/gqOtRf',
+        'skip': 'Rate limited',
         'info_dict': {
             'id': 'gqOtRf',
         },

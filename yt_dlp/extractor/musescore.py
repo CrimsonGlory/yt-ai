@@ -7,6 +7,7 @@ class MuseScoreIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?musescore\.com/(?:user/\d+|[^/]+)(?:/scores)?/(?P<id>[^#&?]+)'
     _TESTS = [{
         'url': 'https://musescore.com/user/73797/scores/142975',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '142975',
             'ext': 'mp3',
@@ -18,6 +19,7 @@ class MuseScoreIE(InfoExtractor):
         },
     }, {
         'url': 'https://musescore.com/user/36164500/scores/6837638',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '6837638',
             'ext': 'mp3',
@@ -29,6 +31,7 @@ class MuseScoreIE(InfoExtractor):
         },
     }, {
         'url': 'https://musescore.com/classicman/fur-elise',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '33816',
             'ext': 'mp3',

@@ -142,6 +142,7 @@ class HotStarIE(HotStarBaseIE):
 
     _TESTS = [{
         'url': 'https://www.hotstar.com/can-you-not-spread-rumours/1000076273',
+        'skip': 'Login required',
         'info_dict': {
             'id': '1000076273',
             'ext': 'mp4',
@@ -155,6 +156,7 @@ class HotStarIE(HotStarBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.hotstar.com/tv/ek-bhram-sarvagun-sampanna/s-2116/janhvi-targets-suman/1000234847',
+        'skip': 'Login required',
         'info_dict': {
             'id': '1000234847',
             'ext': 'mp4',
@@ -175,6 +177,7 @@ class HotStarIE(HotStarBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {  # Metadata call gets HTTP Error 504 with tas=10000
         'url': 'https://www.hotstar.com/in/shows/anupama/1260022017/anupama-anuj-share-a-moment/1000282843',
+        'skip': 'Login required',
         'info_dict': {
             'id': '1000282843',
             'ext': 'mp4',
@@ -195,6 +198,7 @@ class HotStarIE(HotStarBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.hotstar.com/in/shows/kana-kaanum-kaalangal/1260097087/back-to-school/1260097320',
+        'skip': 'Login required',
         'info_dict': {
             'id': '1260097320',
             'ext': 'mp4',
@@ -215,6 +219,7 @@ class HotStarIE(HotStarBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {  # Metadata call gets HTTP Error 504 with tas=10000
         'url': 'https://www.hotstar.com/in/clips/e3-sairat-kahani-pyaar-ki/1000262286',
+        'skip': 'Login required',
         'info_dict': {
             'id': '1000262286',
             'ext': 'mp4',
@@ -228,6 +233,7 @@ class HotStarIE(HotStarBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.hotstar.com/in/movies/premam/1000091195',
+        'skip': 'Login required',
         'info_dict': {
             'id': '1000091195',
             'ext': 'mp4',
@@ -412,6 +418,7 @@ class HotStarPrefixIE(InfoExtractor):
         'only_matching': True,
     }, {
         'url': 'hotstar:movies:1260009879',
+        'skip': 'Login required',
         'info_dict': {
             'id': '1260009879',
             'ext': 'mp4',
@@ -445,24 +452,28 @@ class HotStarSeriesIE(HotStarBaseIE):
     _VALID_URL = r'(?P<url>https?://(?:www\.)?hotstar\.com(?:/in)?/(?:tv|shows)/[^/]+/(?P<id>\d+))/?(?:[#?]|$)'
     _TESTS = [{
         'url': 'https://www.hotstar.com/in/tv/radhakrishn/1260000646',
+        'skip': 'Login required',
         'info_dict': {
             'id': '1260000646',
         },
         'playlist_mincount': 690,
     }, {
         'url': 'https://www.hotstar.com/tv/dancee-/1260050431',
+        'skip': 'Login required',
         'info_dict': {
             'id': '1260050431',
         },
         'playlist_mincount': 42,
     }, {
         'url': 'https://www.hotstar.com/in/tv/mahabharat/435/',
+        'skip': 'Login required',
         'info_dict': {
             'id': '435',
         },
         'playlist_mincount': 267,
     }, {  # HTTP Error 504 with tas=10000 (possibly because total size is over 1000 items?)
         'url': 'https://www.hotstar.com/in/shows/anupama/1260022017/',
+        'skip': 'Login required',
         'info_dict': {
             'id': '1260022017',
         },

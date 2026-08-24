@@ -13,6 +13,7 @@ class BYUtvIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?byutv\.org/(?:(?:watch|player)/(?!event/))?(?P<id>[0-9a-f-]{8,})(?:/(?P<display_id>[^/?#&]+))?'
     _TESTS = [{
         'url': 'http://www.byutv.org/watch/6587b9a3-89d2-42a6-a7f7-fd2f81840a7d/studio-c-season-5-episode-5',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': 'ZvanRocTpW-G5_yZFeltTAMv6jxOU9KH',
             'display_id': 'studio-c-season-5-episode-5',
@@ -28,6 +29,7 @@ class BYUtvIE(InfoExtractor):
     }, {
         # dvr
         'url': 'https://www.byutv.org/player/8f1dab9b-b243-47c8-b525-3e2d021a3451/byu-softball-pacific-vs-byu-41219---game-2',
+        'skip': 'Site no longer exists or is broken',
         'info_dict': {
             'id': '8f1dab9b-b243-47c8-b525-3e2d021a3451',
             'display_id': 'byu-softball-pacific-vs-byu-41219---game-2',

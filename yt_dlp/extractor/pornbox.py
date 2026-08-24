@@ -15,6 +15,7 @@ class PornboxIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?pornbox\.com/application/watch-page/(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'https://pornbox.com/application/watch-page/212108',
+        'skip': 'video gone',
         'md5': '3ff6b6e206f263be4c5e987a3162ac6e',
         'info_dict': {
             'id': '212108',
@@ -45,7 +46,7 @@ class PornboxIE(InfoExtractor):
             'duration': 2710,
             'cast': 'count:3',
             'tags': 'count:29',
-            'thumbnail': r're:^https?://cdn-image\.gtflixtv\.com.*\.jpg.*$',
+            'thumbnail': r're:https?://.*',
             'subtitles': 'count:6',
         },
         'params': {

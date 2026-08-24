@@ -26,6 +26,7 @@ class MindsIE(MindsBaseIE):
     _VALID_URL = MindsBaseIE._VALID_URL_BASE + r'(?:media|newsfeed|archive/view)/(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'https://www.minds.com/media/100000000000086822',
+        'skip': 'HTTP Error 403',
         'md5': '215a658184a419764852239d4970b045',
         'info_dict': {
             'id': '100000000000086822',
@@ -46,6 +47,7 @@ class MindsIE(MindsBaseIE):
     }, {
         # entity.type == 'activity' and empty title
         'url': 'https://www.minds.com/newsfeed/798025111988506624',
+        'skip': 'HTTP Error 403',
         'md5': 'b2733a74af78d7fd3f541c4cbbaa5950',
         'info_dict': {
             'id': '798022190320226304',
@@ -187,6 +189,7 @@ class MindsGroupIE(MindsFeedBaseIE):
         'info_dict': {
             'id': '785582576369672204',
             'title': 'Cooking Videos',
+            'description': str,
         },
         'playlist_mincount': 1,
     }

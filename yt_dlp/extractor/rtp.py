@@ -20,6 +20,7 @@ class RTPIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?rtp\.pt/play/(?:[^/#?]+/)?(?P<program_id>p\d+)/(?P<episode_id>e\d+)(?:/[^/#?]+/(?P<asset_id>\d+))?'
     _TESTS = [{
         'url': 'http://www.rtp.pt/play/p405/e174042/paixoes-cruzadas',
+        'skip': 'video gone',
         'md5': 'e736ce0c665e459ddb818546220b4ef8',
         'info_dict': {
             'id': '395769',
@@ -39,6 +40,7 @@ class RTPIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.rtp.pt/play/zigzag/p13166/e757904/25-curiosidades-25-de-abril',
+        'skip': 'video gone',
         'md5': '5b4859940e3adef61247a77dfb76046a',
         'info_dict': {
             'id': '1226642',
@@ -61,6 +63,7 @@ class RTPIE(InfoExtractor):
     }, {
         # Episode not accessible through API
         'url': 'https://www.rtp.pt/play/estudoemcasa/p7776/e500050/portugues-1-ano',
+        'skip': 'video gone',
         'md5': '57660c0b46db9f22118c52cbd65975e4',
         'info_dict': {
             'id': '871639',
@@ -79,6 +82,7 @@ class RTPIE(InfoExtractor):
     }, {
         # Ambiguous URL for 1st part of a multi-part episode without --no-playlist
         'url': 'https://www.rtp.pt/play/p14335/e877072/a-nossa-tarde',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'e877072',
             'title': 'A Nossa Tarde',
@@ -96,6 +100,7 @@ class RTPIE(InfoExtractor):
     }, {
         # Ambiguous URL for 1st part of a multi-part episode with --no-playlist
         'url': 'https://www.rtp.pt/play/p14335/e877072/a-nossa-tarde',
+        'skip': 'video gone',
         'md5': '2aa3c89c95e852d6f04168b95d0d0632',
         'info_dict': {
             'id': '1364711',
@@ -117,6 +122,7 @@ class RTPIE(InfoExtractor):
     }, {
         # Unambiguous URL for 2nd part of a multi-part episode
         'url': 'https://www.rtp.pt/play/p14335/e877072/a-nossa-tarde/1364744',
+        'skip': 'video gone',
         'md5': 'b624767af558a557372a6fcd1dcdfa17',
         'info_dict': {
             'id': '1364744',

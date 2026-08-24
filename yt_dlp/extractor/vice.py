@@ -38,6 +38,7 @@ class ViceIE(ViceBaseIE, AdobePassIE):
     _EMBED_REGEX = [r'<iframe\b[^>]+\bsrc=["\'](?P<url>(?:https?:)?//video\.vice\.com/[^/]+/embed/[\da-f]{24})']
     _TESTS = [{
         'url': 'https://video.vice.com/en_us/video/pet-cremator/58c69e38a55424f1227dc3f7',
+        'skip': 'video gone',
         'info_dict': {
             'id': '58c69e38a55424f1227dc3f7',
             'ext': 'mp4',
@@ -56,6 +57,7 @@ class ViceIE(ViceBaseIE, AdobePassIE):
     }, {
         # geo restricted to US
         'url': 'https://video.vice.com/en_us/video/the-signal-from-tolva/5816510690b70e6c5fd39a56',
+        'skip': 'video gone',
         'info_dict': {
             'id': '5816510690b70e6c5fd39a56',
             'ext': 'mp4',
@@ -72,6 +74,7 @@ class ViceIE(ViceBaseIE, AdobePassIE):
         },
     }, {
         'url': 'https://video.vice.com/alps/video/ulfs-wien-beruchtigste-grafitti-crew-part-1/581b12b60a0e1f4c0fb6ea2f',
+        'skip': 'video gone',
         'info_dict': {
             'id': '581b12b60a0e1f4c0fb6ea2f',
             'ext': 'mp4',
@@ -189,6 +192,7 @@ class ViceShowIE(ViceBaseIE):
     _PAGE_SIZE = 25
     _TESTS = [{
         'url': 'https://video.vice.com/en_us/show/fck-thats-delicious',
+        'skip': 'video gone',
         'info_dict': {
             'id': '57a2040c8cb727dec794c901',
             'title': 'F*ck, That’s Delicious',
@@ -230,6 +234,7 @@ class ViceArticleIE(ViceBaseIE):
 
     _TESTS = [{
         'url': 'https://www.vice.com/en_us/article/on-set-with-the-woman-making-mormon-porn-in-utah',
+        'skip': 'video gone',
         'info_dict': {
             'id': '58dc0a3dee202d2a0ccfcbd8',
             'ext': 'mp4',
@@ -248,6 +253,7 @@ class ViceArticleIE(ViceBaseIE):
         'add_ie': [ViceIE.ie_key()],
     }, {
         'url': 'https://www.vice.com/en_us/article/how-to-hack-a-car',
+        'skip': 'video gone',
         'md5': '13010ee0bc694ea87ec40724397c2349',
         'info_dict': {
             'id': '3jstaBeXgAs',
@@ -261,6 +267,7 @@ class ViceArticleIE(ViceBaseIE):
         'add_ie': [YoutubeIE.ie_key()],
     }, {
         'url': 'https://www.vice.com/en_us/article/znm9dx/karley-sciortino-slutever-reloaded',
+        'skip': 'video gone',
         'md5': 'a7ecf64ee4fa19b916c16f4b56184ae2',
         'info_dict': {
             'id': '57f41d3556a0a80f54726060',

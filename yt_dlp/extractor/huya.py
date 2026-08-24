@@ -26,6 +26,7 @@ class HuyaLiveIE(InfoExtractor):
     IE_DESC = '虎牙直播'
     _TESTS = [{
         'url': 'https://www.huya.com/572329',
+        'skip': 'livestream has ended',
         'info_dict': {
             'id': '572329',
             'title': str,
@@ -183,6 +184,7 @@ class HuyaVideoIE(InfoExtractor):
     }, {
         # Only m3u8 available
         'url': 'https://www.huya.com/video/play/1063345618.html',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': '1063345618',
             'ext': 'mp4',

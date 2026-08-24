@@ -10,6 +10,7 @@ class MySpassIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?myspass\.de/(?:[^/]+/)*(?P<id>\d+)/?[^/]*$'
     _TESTS = [{
         'url': 'http://www.myspass.de/myspass/shows/tvshows/absolute-mehrheit/Absolute-Mehrheit-vom-17022013-Die-Highlights-Teil-2--/11741/',
+        'skip': 'video gone',
         'md5': '0b49f4844a068f8b33f4b7c88405862b',
         'info_dict': {
             'id': '11741',
@@ -28,6 +29,7 @@ class MySpassIE(InfoExtractor):
     },
         {
         'url': 'https://www.myspass.de/shows/tvshows/tv-total/Novak-Puffovic-bei-bester-Laune--/44996/',
+        'skip': 'video gone',
         'md5': 'eb28b7c5e254192046e86ebaf7deac8f',
         'info_dict': {
             'id': '44996',
@@ -46,6 +48,7 @@ class MySpassIE(InfoExtractor):
     },
         {
         'url': 'https://www.myspass.de/channels/tv-total-raabigramm/17033/20831/',
+        'skip': 'video gone',
         'md5': '7b293a6b9f3a7acdd29304c8d0dbb7cc',
         'info_dict': {
             'id': '20831',

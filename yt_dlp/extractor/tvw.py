@@ -21,6 +21,7 @@ class TvwIE(InfoExtractor):
     ]
     _TESTS = [{
         'url': 'https://tvw.org/video/billy-frank-jr-statue-maquette-unveiling-ceremony-2024011211/',
+        'skip': 'HTTP Error 403',
         'md5': '9ceb94fe2bb7fd726f74f16356825703',
         'info_dict': {
             'id': '2024011211',
@@ -36,6 +37,7 @@ class TvwIE(InfoExtractor):
         },
     }, {
         'url': 'https://tvw.org/video/ebeys-landing-state-park-2024081007/',
+        'skip': 'HTTP Error 403',
         'md5': '71e87dae3deafd65d75ff3137b9a32fc',
         'info_dict': {
             'id': '2024081007',
@@ -51,6 +53,7 @@ class TvwIE(InfoExtractor):
         },
     }, {
         'url': 'https://tvw.org/video/home-warranties-workgroup-2',
+        'skip': 'HTTP Error 403',
         'md5': 'f678789bf94d07da89809f213cf37150',
         'info_dict': {
             'id': '1999121000',
@@ -65,6 +68,7 @@ class TvwIE(InfoExtractor):
         },
     }, {
         'url': 'https://tvw.org/video/washington-to-washington-a-new-space-race-2022041111/?eventID=2022041111',
+        'skip': 'HTTP Error 403',
         'md5': '6f5551090b351aba10c0d08a881b4f30',
         'info_dict': {
             'id': '2022041111',
@@ -80,6 +84,7 @@ class TvwIE(InfoExtractor):
         },
     }, {
         'url': 'https://tvw.org/watch?eventID=2025041235',
+        'skip': 'HTTP Error 403',
         'md5': '7d697c02f110b37d6a47622ea608ca90',
         'info_dict': {
             'id': '2025041235',
@@ -147,6 +152,7 @@ class TvwNewsIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?tvw\.org/\d{4}/\d{2}/(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://tvw.org/2024/01/the-impact-issues-to-watch-in-the-2024-legislative-session/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'the-impact-issues-to-watch-in-the-2024-legislative-session',
             'title': 'The Impact - Issues to Watch in the 2024 Legislative Session',
@@ -155,6 +161,7 @@ class TvwNewsIE(InfoExtractor):
         'playlist_count': 6,
     }, {
         'url': 'https://tvw.org/2024/06/the-impact-water-rights-and-the-skookumchuck-dam-debate/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'the-impact-water-rights-and-the-skookumchuck-dam-debate',
             'title': 'The Impact - Water Rights and the Skookumchuck Dam Debate',
@@ -182,6 +189,7 @@ class TvwTvChannelsIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?tvw\.org/tvchannels/(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://tvw.org/tvchannels/air/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'air',
             'ext': 'mp4',
@@ -191,6 +199,7 @@ class TvwTvChannelsIE(InfoExtractor):
         },
     }, {
         'url': 'https://tvw.org/tvchannels/tvw2/',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'tvw2',
             'ext': 'mp4',

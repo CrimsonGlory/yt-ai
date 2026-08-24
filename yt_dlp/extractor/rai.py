@@ -277,6 +277,7 @@ class RaiPlayIE(RaiBaseIE):
     }, {
         # 1080p
         'url': 'https://www.raiplay.it/video/2021/11/Blanca-S1E1-Senza-occhi-b1255a4a-8e72-4a2f-b9f3-fc1308e00736.html',
+        'skip': 'Geo-restricted',
         'md5': 'aeda7243115380b2dd5e881fd42d949a',
         'info_dict': {
             'id': 'b1255a4a-8e72-4a2f-b9f3-fc1308e00736',
@@ -414,6 +415,7 @@ class RaiPlayLiveIE(RaiPlayIE):  # XXX: Do not subclass from concrete IE
             'upload_date': '20090502',
             'timestamp': 1241276220,
             'formats': 'count:3',
+            'creators': list,
         },
         'params': {'skip_download': True},
     }]
@@ -501,6 +503,7 @@ class RaiPlaySoundIE(RaiBaseIE):
             'creator': 'rai radio 2',
             'timestamp': 1638346620,
             'upload_date': '20211201',
+            'creators': list,
         },
         'params': {'skip_download': True},
     }, {
@@ -578,6 +581,7 @@ class RaiPlaySoundLiveIE(RaiPlaySoundIE):  # XXX: Do not subclass from concrete 
             'creator': 'raiplaysound',
             'is_live': True,
             'live_status': 'is_live',
+            'creators': list,
         },
         'params': {'skip_download': True},
     }]
@@ -591,7 +595,7 @@ class RaiPlaySoundPlaylistIE(InfoExtractor):
         'info_dict': {
             'id': 'ilruggitodelconiglio',
             'title': 'Il Ruggito del Coniglio',
-            'description': 'md5:62a627b3a2d0635d08fa8b6e0a04f27e',
+            'description': 'md5:79ff2b32072e8fe561d359ec28701a39',
         },
         'playlist_mincount': 65,
     }, {
@@ -629,6 +633,7 @@ class RaiIE(RaiBaseIE):
     _VALID_URL = rf'https?://[^/]+\.(?:rai\.(?:it|tv))/.+?-(?P<id>{RaiBaseIE._UUID_RE})(?:-.+?)?\.html'
     _TESTS = [{
         'url': 'https://www.raisport.rai.it/dl/raiSport/media/rassegna-stampa-04a9f4bd-b563-40cf-82a6-aad3529cb4a9.html',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '04a9f4bd-b563-40cf-82a6-aad3529cb4a9',
             'ext': 'mp4',

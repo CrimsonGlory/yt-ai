@@ -35,6 +35,7 @@ class YandexDiskIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://yadi.sk/i/VdOeDou8eZs6Y',
+        'skip': 'video gone',
         'md5': 'a4a8d52958c8fddcf9845935070402ae',
         'info_dict': {
             'id': 'VdOeDou8eZs6Y',

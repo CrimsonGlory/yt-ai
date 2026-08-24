@@ -166,6 +166,7 @@ class VidyardIE(VidyardBaseIE):
     }, {
         # First video from playlist below
         'url': 'https://embed.vidyard.com/share/SyStyHtYujcBHe5PkZc5DL',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'SyStyHtYujcBHe5PkZc5DL',
             'display_id': '41974005',
@@ -178,6 +179,7 @@ class VidyardIE(VidyardBaseIE):
     }, {
         # Playlist
         'url': 'https://thelink.hubs.vidyard.com/watch/pwu7pCYWSwAnPxs8nDoFrE',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'pwu7pCYWSwAnPxs8nDoFrE',
             'title': 'PLAYLIST - Palm Beach Shutters- Bi-Fold Track System Installation',

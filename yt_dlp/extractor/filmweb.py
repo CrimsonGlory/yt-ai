@@ -5,6 +5,7 @@ class FilmwebIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?filmweb\.no/(?P<type>trailere|filmnytt)/article(?P<id>\d+)\.ece'
     _TEST = {
         'url': 'http://www.filmweb.no/trailere/article1264921.ece',
+        'skip': 'video gone',
         'md5': 'e353f47df98e557d67edaceda9dece89',
         'info_dict': {
             'id': '13033574',

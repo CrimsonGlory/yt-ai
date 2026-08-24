@@ -150,7 +150,7 @@ class SovietsClosetPlaylistIE(SovietsClosetBaseIE):
                 'id': 'Total-War-Warhammer',
                 'title': 'Total War: Warhammer - Greenskins',
             },
-            'playlist_mincount': 33,
+            'playlist_mincount': 32,
         },
     ]
 

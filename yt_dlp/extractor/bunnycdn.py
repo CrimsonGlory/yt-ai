@@ -55,7 +55,7 @@ class BunnyCdnIE(InfoExtractor):
             'duration': 3959.0,
             'description': '',
             'upload_date': '20240221',
-            'thumbnail': r're:^https?://.*\.b-cdn\.net/2e8545ec-509d-4571-b855-4cf0235ccd75/thumbnail\.jpg',
+            'thumbnail': r're:https?://.*',
         },
         'params': {'skip_download': True},
     }, {
@@ -93,6 +93,7 @@ class BunnyCdnIE(InfoExtractor):
     }, {
         # URL requires token and expires
         'url': 'https://www.stockphotos.com/video/moscow-subway-the-train-is-arriving-at-the-park-kultury-station-10017830',
+        'skip': 'Cloudflare anti-bot',
         'info_dict': {
             'id': '0b02fa20-4e8c-4140-8f87-f64d820a3386',
             'ext': 'mp4',

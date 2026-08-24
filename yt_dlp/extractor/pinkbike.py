@@ -14,6 +14,7 @@ class PinkbikeIE(InfoExtractor):
     _VALID_URL = r'https?://(?:(?:www\.)?pinkbike\.com/video/|es\.pinkbike\.org/i/kvid/kvid-y5\.swf\?id=)(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'http://www.pinkbike.com/video/402811/',
+        'skip': 'HTTP Error 403',
         'md5': '4814b8ca7651034cd87e3361d5c2155a',
         'info_dict': {
             'id': '402811',

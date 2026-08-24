@@ -138,6 +138,7 @@ class TeleQuebecEmissionIE(InfoExtractor):
                     '''
     _TESTS = [{
         'url': 'http://lindicemcsween.telequebec.tv/emissions/100430013/des-soins-esthetiques-a-377-d-interets-annuels-ca-vous-tente',
+        'skip': 'video gone',
         'info_dict': {
             'id': '6154476028001',
             'ext': 'mp4',
@@ -175,6 +176,7 @@ class TeleQuebecLiveIE(TeleQuebecBaseIE):
     _VALID_URL = r'https?://zonevideo\.telequebec\.tv/(?P<id>endirect)'
     _TEST = {
         'url': 'http://zonevideo.telequebec.tv/endirect/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '6159095684001',
             'ext': 'mp4',
@@ -198,6 +200,7 @@ class TeleQuebecVideoIE(TeleQuebecBaseIE):
     _VALID_URL = r'https?://video\.telequebec\.tv/player(?:-live)?/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://video.telequebec.tv/player/31110/stream',
+        'skip': 'video gone',
         'info_dict': {
             'id': '6202570652001',
             'ext': 'mp4',

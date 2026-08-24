@@ -50,6 +50,7 @@ class AtresPlayerIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.atresplayer.com/flooxer/series/biara-proyecto-lazarus/temporada-1/capitulo-3-supervivientes_67a6038b64ceca00070f4f69/',
+        'skip': 'Login required',
         'info_dict': {
             'ext': 'mp4',
             'id': '67a6038b64ceca00070f4f69',

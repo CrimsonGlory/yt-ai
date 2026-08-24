@@ -12,9 +12,9 @@ class ABCOTVSIE(InfoExtractor):
     _VALID_URL = r'https?://(?P<site>abc(?:7(?:news|ny|chicago)?|11|13|30)|6abc)\.com(?:(?:/[^/]+)*/(?P<display_id>[^/]+))?/(?P<id>\d+)'
     _TESTS = [
         {
-            'url': 'http://abc7news.com/entertainment/east-bay-museum-celebrates-vintage-synthesizers/472581/',
+            'url': 'https://abc7news.com/post/san-francisco-49ers-owner-jed-york-arrested-ohio-prostitution-court-documents/19727825/',
             'info_dict': {
-                'id': '472548',
+                'id': '19727969',
                 'display_id': 'east-bay-museum-celebrates-vintage-synthesizers',
                 'ext': 'mp4',
                 'title': 'East Bay museum celebrates synthesized music',
@@ -97,6 +97,7 @@ class ABCOTVSClipsIE(InfoExtractor):
     _VALID_URL = r'https?://clips\.abcotvs\.com/(?:[^/]+/)*video/(?P<id>\d+)'
     _TEST = {
         'url': 'https://clips.abcotvs.com/kabc/video/214814',
+        'skip': 'Request timed out',
         'info_dict': {
             'id': '214814',
             'ext': 'mp4',

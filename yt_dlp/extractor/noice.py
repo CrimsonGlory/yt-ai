@@ -13,6 +13,7 @@ class NoicePodcastIE(InfoExtractor):
     _VALID_URL = r'https?://open\.noice\.id/content/(?P<id>[a-fA-F0-9-]+)'
     _TESTS = [{
         'url': 'https://open.noice.id/content/7694bb04-ff0f-40fa-a60b-5b39f29584b2',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': '7694bb04-ff0f-40fa-a60b-5b39f29584b2',
             'ext': 'm4a',
@@ -38,6 +39,7 @@ class NoicePodcastIE(InfoExtractor):
         },
     }, {
         'url': 'https://open.noice.id/content/222134e4-99f2-456f-b8a2-b8be404bf063',
+        'skip': 'No video formats found',
         'info_dict': {
             'id': '222134e4-99f2-456f-b8a2-b8be404bf063',
             'ext': 'm4a',

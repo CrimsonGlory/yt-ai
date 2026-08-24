@@ -690,7 +690,7 @@ class VKWallPostIE(VKBaseIE):
         'info_dict': {
             'id': '-23538238_35',
             'title': 'Black Shadow - Wall post -23538238_35',
-            'description': 'md5:190c78f905a53e0de793d83933c6e67f',
+            'description': 'md5:005ba3513369f243bf66598c234c13e4',
         },
         'playlist': [{
             'md5': '5ba93864ec5b85f7ce19a9af4af080f6',

@@ -16,6 +16,7 @@ class SBSCoKrIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://programs.sbs.co.kr/enter/dongsang2/clip/52007/OC467706746?div=main_pop_clip',
+        'skip': 'Site no longer exists or is broken',
         'md5': 'c3f6d45e1fb5682039d94cda23c36f19',
         'info_dict': {
             'id': 'OC467706746',
@@ -35,6 +36,7 @@ class SBSCoKrIE(InfoExtractor):
         },
     }, {
         'url': 'https://allvod.sbs.co.kr/allvod/vodPackageEndPage.do?mdaId=22000489324&combiId=PA000000284&packageType=A&isFreeYN=',
+        'skip': 'Site no longer exists or is broken',
         'md5': 'bf46b2e89fda7ae7de01f5743cef7236',
         'info_dict': {
             'id': '22000489324',
@@ -54,6 +56,7 @@ class SBSCoKrIE(InfoExtractor):
         },
     }, {
         'url': 'https://programs.sbs.co.kr/enter/fourman/vod/69625/22000508948',
+        'skip': 'Site no longer exists or is broken',
         'md5': '41e8ae4cc6c8424f4e4d76661a4becbf',
         'info_dict': {
             'id': '22000508948',

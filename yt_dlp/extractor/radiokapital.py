@@ -31,6 +31,7 @@ class RadioKapitalIE(RadioKapitalBaseIE):
 
     _TESTS = [{
         'url': 'https://radiokapital.pl/shows/tutaj-sa-smoki/5-its-okay-to-be-immaterial',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'radiokapital_radio-kapitał-tutaj-są-smoki-5-its-okay-to-be-immaterial-2021-05-20',
             'ext': 'm4a',
@@ -56,6 +57,7 @@ class RadioKapitalShowIE(RadioKapitalBaseIE):
 
     _TESTS = [{
         'url': 'https://radiokapital.pl/shows/wesz',
+        'skip': 'video gone',
         'info_dict': {
             'id': '100',
             'title': 'WĘSZ',

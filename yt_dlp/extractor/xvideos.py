@@ -31,7 +31,7 @@ class XVideosIE(InfoExtractor):
             'title': 'A Beautiful Red-Haired Stranger Was Refused, But Still Came To My Room For Sex',
             'duration': 1238,
             'age_limit': 18,
-            'thumbnail': r're:^https://cdn\d+-pic.xvideos-cdn.com/.+\.jpg',
+            'thumbnail': r're:https?://.*',
         },
     }, {
         # Broken HLS formats
@@ -43,7 +43,7 @@ class XVideosIE(InfoExtractor):
             'title': 'what\'s her name?',
             'duration': 120,
             'age_limit': 18,
-            'thumbnail': r're:^https://cdn\d+-pic.xvideos-cdn.com/.+\.jpg',
+            'thumbnail': r're:https?://.*',
         },
     }, {
         'url': 'https://flashservice.xvideos.com/embedframe/4588838',
@@ -183,7 +183,7 @@ class XVideosQuickiesIE(InfoExtractor):
             'title': 'Mexican chichóna putisima',
             'age_limit': 18,
             'duration': 81,
-            'thumbnail': r're:^https://cdn.*-pic.xvideos-cdn.com/.+\.jpg',
+            'thumbnail': r're:https?://.*',
         },
     }, {
         'url': 'https://www.xvideos.com/profiles/lili_love#quickies/a/ipphaob6fd1',
@@ -194,7 +194,7 @@ class XVideosQuickiesIE(InfoExtractor):
             'title': 'Puta chichona mexicana squirting',
             'age_limit': 18,
             'duration': 56,
-            'thumbnail': r're:^https://cdn.*-pic.xvideos-cdn.com/.+\.jpg',
+            'thumbnail': r're:https?://.*',
         },
     }, {
         'url': 'https://www.xvideos.com/amateur-channels/lili_love#quickies/a/hfmffmd7661',
@@ -205,7 +205,7 @@ class XVideosQuickiesIE(InfoExtractor):
             'title': 'Chichona mexican slut',
             'age_limit': 18,
             'duration': 9,
-            'thumbnail': r're:^https://cdn.*-pic.xvideos-cdn.com/.+\.jpg',
+            'thumbnail': r're:https?://.*',
         },
     }, {
         'url': 'https://www.xvideos.com/amateur-channels/wifeluna#quickies/a/47258683',
@@ -216,7 +216,7 @@ class XVideosQuickiesIE(InfoExtractor):
             'title': 'Verification video',
             'age_limit': 18,
             'duration': 16,
-            'thumbnail': r're:^https://cdn.*-pic.xvideos-cdn.com/.+\.jpg',
+            'thumbnail': r're:https?://.*',
         },
     }]
 

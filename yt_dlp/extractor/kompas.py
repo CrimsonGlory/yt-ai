@@ -5,6 +5,7 @@ class KompasVideoIE(JixieBaseIE):
     _VALID_URL = r'https?://video\.kompas\.com/\w+/(?P<id>\d+)/(?P<slug>[\w-]+)'
     _TESTS = [{
         'url': 'https://video.kompas.com/watch/164474/kim-jong-un-siap-kirim-nuklir-lawan-as-dan-korsel',
+        'skip': 'video gone',
         'info_dict': {
             'id': '164474',
             'ext': 'mp4',

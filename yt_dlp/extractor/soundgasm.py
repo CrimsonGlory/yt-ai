@@ -15,6 +15,7 @@ class SoundgasmIE(InfoExtractor):
             'title': 'Piano sample',
             'description': 'Royalty Free Sample Music',
             'uploader': 'ytdl',
+            'display_id': str,
         },
     }
 

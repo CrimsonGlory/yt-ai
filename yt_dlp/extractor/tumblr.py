@@ -15,6 +15,7 @@ class TumblrIE(InfoExtractor):
     _OAUTH_URL = 'https://www.tumblr.com/api/v2/oauth2/token'
     _TESTS = [{
         'url': 'http://tatianamaslanydaily.tumblr.com/post/54196191430/orphan-black-dvd-extra-behind-the-scenes',
+        'skip': 'Site blocks automated access',
         'md5': '479bb068e5b16462f5176a6828829767',
         'info_dict': {
             'id': '54196191430',
@@ -35,6 +36,7 @@ class TumblrIE(InfoExtractor):
     }, {
         'note': 'multiple formats',
         'url': 'https://maskofthedragon.tumblr.com/post/626907179849564160/mona-talking-in-english',
+        'skip': 'Site blocks automated access',
         'md5': 'f43ff8a8861712b6cf0e0c2bd84cfc68',
         'info_dict': {
             'id': '626907179849564160',
@@ -75,6 +77,7 @@ class TumblrIE(InfoExtractor):
     }, {
         'note': 'dashboard only (original post)',
         'url': 'https://jujanon.tumblr.com/post/159704441298/my-baby-eating',
+        'skip': 'Site blocks automated access',
         'md5': '029f7c91ab386701b211e3d494d2d95e',
         'info_dict': {
             'id': '159704441298',
@@ -94,6 +97,7 @@ class TumblrIE(InfoExtractor):
     }, {
         'note': 'dashboard only (reblog)',
         'url': 'https://bartlebyshop.tumblr.com/post/180294460076/duality-of-bird',
+        'skip': 'Site blocks automated access',
         'md5': '04334e7cadb1af680d162912559f51a5',
         'info_dict': {
             'id': '180294460076',
@@ -146,6 +150,7 @@ class TumblrIE(InfoExtractor):
         'skip': 'Video Unavailable',
     }, {
         'url': 'https://prozdvoices.tumblr.com/post/673201091169681408/what-recording-voice-acting-sounds-like',
+        'skip': 'Site blocks automated access',
         'md5': 'cb8328a6723c30556cef59e370202918',
         'info_dict': {
             'id': 'eomhW5MLGWA',
@@ -178,6 +183,7 @@ class TumblrIE(InfoExtractor):
         'add_ie': ['Youtube'],
     }, {
         'url': 'https://dominustempori.tumblr.com/post/673572712813297664/youtubes-all-right-for-some-pretty-cool',
+        'skip': 'Site blocks automated access',
         'md5': '203e9eb8077e3f45bfaeb4c86c1467b8',
         'info_dict': {
             'id': '87816359',
@@ -199,6 +205,7 @@ class TumblrIE(InfoExtractor):
         'add_ie': ['Vimeo'],
     }, {
         'url': 'https://silami.tumblr.com/post/84250043974/my-bad-river-flows-in-you-impression-on-maschine',
+        'skip': 'Site blocks automated access',
         'md5': '3c92d7c3d867f14ccbeefa2119022277',
         'info_dict': {
             'id': 'nYtvtTPuTl',
@@ -218,6 +225,7 @@ class TumblrIE(InfoExtractor):
     }, {
         'note': 'new url scheme',
         'url': 'https://www.tumblr.com/autumnsister/765162750456578048?source=share',
+        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': '765162750456578048',
             'ext': 'mp4',
@@ -233,6 +241,7 @@ class TumblrIE(InfoExtractor):
     }, {
         'note': 'bandcamp album embed',
         'url': 'https://patricia-taxxon.tumblr.com/post/704473755725004800/patricia-taxxon-agnes-hilda-patricia-taxxon',
+        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': 'agnes-hilda',
             'title': 'Agnes & Hilda',
@@ -243,6 +252,7 @@ class TumblrIE(InfoExtractor):
     }, {
         'note': 'bandcamp track embeds (many)',
         'url': 'https://www.tumblr.com/felixcosm/730460905855467520/if-youre-looking-for-new-music-to-write-or',
+        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': '730460905855467520',
             'uploader_id': 'felixcosm',
@@ -260,6 +270,7 @@ class TumblrIE(InfoExtractor):
     }, {
         'note': 'soundcloud track embed',
         'url': 'https://silverfoxstole.tumblr.com/post/765305403763556352/jamie-robertson-doctor-who-8th-doctor',
+        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': '1218136399',
             'ext': 'opus',
@@ -282,6 +293,7 @@ class TumblrIE(InfoExtractor):
     }, {
         'note': 'soundcloud set embed',
         'url': 'https://www.tumblr.com/beyourselfchulanmaria/703505323122638848/chu-lan-maria-the-playlist-%E5%BF%83%E7%9A%84%E5%91%BC%E5%96%9A-call-of-the',
+        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': '691222680',
             'title': '心的呼喚 Call of the heart I',
@@ -291,6 +303,7 @@ class TumblrIE(InfoExtractor):
     }, {
         'note': 'dailymotion video embed',
         'url': 'https://www.tumblr.com/funvibecentral/759390024460632064',
+        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': 'x94cnnk',
             'ext': 'mp4',
@@ -310,6 +323,7 @@ class TumblrIE(InfoExtractor):
     }, {
         'note': 'tiktok video embed',
         'url': 'https://fansofcolor.tumblr.com/post/660637918605475840/blockquote-class-tiktok-embed',
+        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': '7000937272010935558',
             'ext': 'mp4',
@@ -335,6 +349,7 @@ class TumblrIE(InfoExtractor):
     }, {
         'note': 'tumblr video AND youtube embed',
         'url': 'https://www.tumblr.com/anyaboz/765332564457209856/my-music-video-for-selkie-by-nobodys-wolf-child',
+        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': '765332564457209856',
             'timestamp': 1729878010,

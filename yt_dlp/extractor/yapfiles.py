@@ -15,6 +15,7 @@ class YapFilesIE(InfoExtractor):
     _TESTS = [{
         # with hd
         'url': 'http://www.yapfiles.ru/get_player/?v=vMDE1NjcyNDUt0413',
+        'skip': 'HTTP Error 403',
         'md5': '2db19e2bfa2450568868548a1aa1956c',
         'info_dict': {
             'id': 'vMDE1NjcyNDUt0413',

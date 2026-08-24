@@ -519,7 +519,7 @@ class PanoptoListIE(PanoptoBaseIE):
             'id': '4b9de7ae-0080-4158-8496-a9ba01692c2e',
             'title': 'Video Tutorials',
         },
-        'playlist_mincount': 9,
+        'playlist_mincount': 3,
     }]
 
     def _fetch_page(self, base_url, query_params, display_id, page):

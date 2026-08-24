@@ -15,6 +15,7 @@ class RadLiveIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?rad\.live/content/(?P<content_type>feature|episode)/(?P<id>[a-f0-9-]+)'
     _TESTS = [{
         'url': 'https://rad.live/content/feature/dc5acfbc-761b-4bec-9564-df999905116a',
+        'skip': 'video gone',
         'md5': '6219d5d31d52de87d21c9cf5b7cb27ff',
         'info_dict': {
             'id': 'dc5acfbc-761b-4bec-9564-df999905116a',
@@ -30,6 +31,7 @@ class RadLiveIE(InfoExtractor):
         },
     }, {
         'url': 'https://rad.live/content/episode/bbcf66ec-0d02-4ca0-8dc0-4213eb2429bf',
+        'skip': 'video gone',
         'md5': '40b2175f347592125d93e9a344080125',
         'info_dict': {
             'id': 'bbcf66ec-0d02-4ca0-8dc0-4213eb2429bf',
@@ -94,6 +96,7 @@ class RadLiveSeasonIE(RadLiveIE):  # XXX: Do not subclass from concrete IE
     _VALID_URL = r'https?://(?:www\.)?rad\.live/content/season/(?P<id>[a-f0-9-]+)'
     _TESTS = [{
         'url': 'https://rad.live/content/season/08a290f7-c9ef-4e22-9105-c255995a2e75',
+        'skip': 'video gone',
         'md5': '40b2175f347592125d93e9a344080125',
         'info_dict': {
             'id': '08a290f7-c9ef-4e22-9105-c255995a2e75',
@@ -139,7 +142,7 @@ class RadLiveChannelIE(RadLiveIE):  # XXX: Do not subclass from concrete IE
             'id': '5c4d8df4-6fa0-413c-81e3-873479b49274',
             'title': 'Whistle Sports',
         },
-        'playlist_mincount': 7,
+        'playlist_mincount': 6,
     }]
 
     _QUERY = '''

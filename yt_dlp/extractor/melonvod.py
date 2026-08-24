@@ -9,6 +9,7 @@ class MelonVODIE(InfoExtractor):
     _VALID_URL = r'https?://vod\.melon\.com/video/detail2\.html?\?.*?mvId=(?P<id>[0-9]+)'
     _TEST = {
         'url': 'http://vod.melon.com/video/detail2.htm?mvId=50158734',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': '50158734',
             'ext': 'mp4',

@@ -7,6 +7,7 @@ class OktoberfestTVIE(InfoExtractor):
 
     _TEST = {
         'url': 'http://www.oktoberfest-tv.de/de/kameras/video/hb-zelt',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'hb-zelt',
             'ext': 'mp4',

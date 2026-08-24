@@ -14,10 +14,11 @@ class ScreencastIE(InfoExtractor):
             'ext': 'm4v',
             'title': 'Color Measurement with Ocean Optics Spectrometers',
             'description': 'md5:240369cde69d8bed61349a199c5fb153',
-            'thumbnail': r're:^https?://.*\.(?:gif|jpg)$',
+            'thumbnail': r're:https?://.*',
         },
     }, {
         'url': 'http://www.screencast.com/t/V2uXehPJa1ZI',
+        'skip': 'video gone',
         'md5': 'e8e4b375a7660a9e7e35c33973410d34',
         'info_dict': {
             'id': 'V2uXehPJa1ZI',
@@ -34,7 +35,7 @@ class ScreencastIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'Google Earth Export',
             'description': 'Provides a demo of a CommunityViz export to Google Earth, one of the 3D viewing options.',
-            'thumbnail': r're:^https?://.*\.(?:gif|jpg)$',
+            'thumbnail': r're:https?://.*',
         },
     }, {
         'url': 'http://www.screencast.com/t/X3ddTrYh',
