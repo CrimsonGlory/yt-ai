@@ -49,6 +49,7 @@ class ORFRadioIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://radiothek.orf.at/ooe/20220801/OGMO',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'OGMO',
             'title': 'Guten Morgen OÖ',
@@ -68,6 +69,7 @@ class ORFRadioIE(InfoExtractor):
         }],
     }, {
         'url': 'https://ooe.orf.at/player/20220801/OGMO',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'OGMO',
             'title': 'Guten Morgen OÖ',
@@ -394,6 +396,7 @@ class ORFONIE(InfoExtractor):
     _VALID_URL = r'https?://on\.orf\.at/video/(?P<id>\d+)(?:/(?P<segment>\d+))?'
     _TESTS = [{
         'url': 'https://on.orf.at/video/14210000/school-of-champions-48',
+        'skip': 'Geo-restricted',
         'info_dict': {
             'id': '14210000',
             'ext': 'mp4',
@@ -541,16 +544,20 @@ class ORFONIE(InfoExtractor):
         if traverse_obj(api_json, 'is_drm_protected'):
             self.report_drm(video_id)
 
-        segments = traverse_obj(api_json, ('_embedded', 'segments', lambda _, v: v['id']))
+        segments = traverse_obj(api_json, ('_embedded', 'segments', lambda _, v: v['id'])) or []
         selected_segment = traverse_obj(segments, (lambda _, v: str(v['id']) == segment_id, any))
 
         # selected_segment will be falsy if input URL did not include a valid segment_id
         if selected_segment and not self._yes_playlist(video_id, segment_id, playlist_label='episode', video_label='segment'):
             return self._extract_video_info(segment_id, selected_segment)
 
+        has_sources = bool(traverse_obj(api_json, ('sources', ..., ..., 'src', {url_or_none})))
+        if not has_sources and not segments:
+            self.raise_geo_restricted(countries=['AT'])
+
         # Even some segmented videos have an unsegmented version available in API response root
         if (self._configuration_arg('prefer_segments_playlist')
-                or not traverse_obj(api_json, ('sources', ..., ..., 'src', {url_or_none}))):
+                or not has_sources):
             return self.playlist_result(
                 (self._extract_video_info(str(segment['id']), segment) for segment in segments),
                 video_id, **self._parse_metadata(api_json), multi_video=True)
