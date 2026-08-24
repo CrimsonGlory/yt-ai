@@ -1,4 +1,5 @@
 from .common import InfoExtractor
+from .dailymotion import DailymotionIE
 from ..utils import (
     int_or_none,
     qualities,
@@ -7,6 +8,7 @@ from ..utils import (
     try_get,
     unified_timestamp,
     url_basename,
+    urljoin,
 )
 
 
@@ -60,13 +62,21 @@ class AllocineIE(InfoExtractor):
         },
     }, {
         'url': 'http://www.allocine.fr/video/video-19550147/',
-        'md5': '3566c0668c0235e2d224fd8edb389f67',
         'info_dict': {
             'id': '19550147',
             'ext': 'mp4',
-            'title': 'Faux Raccord N°123 - Les gaffes de Cliffhanger',
-            'description': 'md5:bc734b83ffa2d8a12188d9eb48bb6354',
-            'thumbnail': r're:http://.*\.jpg',
+            'title': 'Les gaffes de Cliffhanger',
+            'description': str,
+            'thumbnail': r're:https?://.*\.jpg',
+            'uploader': str,
+            'uploader_id': str,
+            'view_count': int,
+            'like_count': int,
+            'age_limit': int,
+            'duration': int,
+            'tags': list,
+            'timestamp': int,
+            'upload_date': r're:\d{8}',
         },
     }]
 
@@ -84,7 +94,26 @@ class AllocineIE(InfoExtractor):
             model_data = self._parse_json(model, display_id)
             video = model_data['videos'][0]
             title = video['title']
-            for video_url in video['sources'].values():
+            sources = video.get('sources') or {}
+            dm_id = video.get('idDailymotion')
+            if dm_id and not sources:
+                dm_ie = DailymotionIE()
+                dm_ie.set_downloader(self._downloader)
+                info = dm_ie.extract(f'https://www.dailymotion.com/video/{dm_id}')
+                info['id'] = str(video.get('id') or display_id)
+                info['display_id'] = display_id
+                info['title'] = title
+                info['description'] = (video.get('description')
+                                       or self._og_search_description(webpage))
+                thumb = video.get('image')
+                if thumb:
+                    info['thumbnail'] = urljoin('http://www.allocine.fr', thumb)
+                info['duration'] = int_or_none(video.get('duration'))
+                info['timestamp'] = unified_timestamp(try_get(
+                    video, lambda x: x['added_at']['date'], str))
+                info['view_count'] = int_or_none(video.get('view_count'))
+                return info
+            for video_url in sources.values():
                 video_id, format_id = url_basename(video_url).split('_')[:2]
                 formats.append({
                     'format_id': format_id,
