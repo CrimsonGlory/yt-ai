@@ -44,5 +44,6 @@
     "allsubtitles": false,
     "listsubtitles": false,
     "fixup": "never",
-    "allow_playlist_files": false
+    "allow_playlist_files": false,
+    "js_runtimes": {"node": {}}
 }
