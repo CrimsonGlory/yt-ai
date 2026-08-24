@@ -2,7 +2,9 @@ import re
 
 from .common import InfoExtractor
 from ..utils import (
+    ExtractorError,
     int_or_none,
+    orderedSet,
     parse_iso8601,
     parse_resolution,
     traverse_obj,
@@ -100,32 +102,35 @@ class MicrosoftMediusIE(MicrosoftMediusBaseIE):
         'url': 'https://medius.microsoft.com/Embed/video-nc/9640d86c-f513-4889-959e-5dace86e7d2b',
         'info_dict': {
             'id': '9640d86c-f513-4889-959e-5dace86e7d2b',
-            'ext': 'ismv',
+            'ext': 'mp4',
             'title': 'Rapidly code, test and ship from secure cloud developer environments',
             'description': 'md5:33c8e4facadc438613476eea24165f71',
-            'thumbnail': r're:https://mediusimg\.event\.microsoft\.com/video-\d+/thumbnail\.jpg.*',
+            'thumbnail': r're:https?://.*',
             'subtitles': 'count:30',
         },
+        'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://medius.microsoft.com/Embed/video-nc/81215af5-c813-4dcd-aede-94f4e1a7daa3',
         'info_dict': {
             'id': '81215af5-c813-4dcd-aede-94f4e1a7daa3',
-            'ext': 'ismv',
+            'ext': 'mp4',
             'title': 'Microsoft Build opening',
             'description': 'md5:43455096141077a1f23144cab8cec1cb',
-            'thumbnail': r're:https://mediusimg\.event\.microsoft\.com/video-\d+/thumbnail\.jpg.*',
+            'thumbnail': r're:https?://.*',
             'subtitles': 'count:31',
         },
+        'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://medius.microsoft.com/Embed/VideoDetails/78493569-9b3b-4a85-a409-ee76e789e25c',
         'info_dict': {
             'id': '78493569-9b3b-4a85-a409-ee76e789e25c',
-            'ext': 'ismv',
+            'ext': 'mp4',
             'title': ' Anomaly Detection & Root cause at Edge',
             'description': 'md5:f8f1ad93d7918649bfb97fa081b03b83',
-            'thumbnail': r're:https://mediusdownload.event.microsoft.com/asset.*\.jpg.*',
+            'thumbnail': r're:https?://.*',
             'subtitles': 'count:17',
         },
+        'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://medius.microsoft.com/Embed/Video?id=0dc69bda-079b-4070-a7db-a8da1a06a9c7',
         'only_matching': True,
@@ -150,14 +155,31 @@ class MicrosoftMediusIE(MicrosoftMediusBaseIE):
         video_id = self._match_id(url)
         webpage = self._download_webpage(f'https://medius.microsoft.com/Embed/video-nc/{video_id}', video_id)
 
+        formats, subtitles = [], self._extract_subtitle(webpage, video_id)
+        ism_url = self._search_regex(
+            r'StreamUrl\s*=\s*"([^"]+manifest)"', webpage, 'ism url', default=None)
+        if ism_url:
+            formats.extend(self._extract_ism(ism_url, video_id, fatal=False))
+
+        if not formats:
+            m3u8_urls = orderedSet(re.findall(
+                r'https://stream\.event\.microsoft\.com/[^"\\]+/master\.m3u8', webpage))
+            for m3u8_url in m3u8_urls:
+                fmts, subs = self._extract_m3u8_formats_and_subtitles(
+                    m3u8_url, video_id, 'mp4', m3u8_id='hls', fatal=False)
+                formats.extend(fmts)
+                self._merge_subtitles(subs, target=subtitles)
+
+        if not formats:
+            raise ExtractorError('Unable to extract ism url')
+
         return {
             'id': video_id,
             'title': self._og_search_title(webpage),
             'description': self._og_search_description(webpage),
-            'formats': self._extract_ism(
-                self._search_regex(r'StreamUrl\s*=\s*"([^"]+manifest)"', webpage, 'ism url'), video_id),
+            'formats': formats,
             'thumbnail': self._og_search_thumbnail(webpage),
-            'subtitles': self._extract_subtitle(webpage, video_id),
+            'subtitles': subtitles,
         }
 
 
@@ -296,7 +318,7 @@ class MicrosoftLearnSessionIE(InfoExtractor):
             'description': 'md5:f26c1a85d41c1cffd27a0279254a25c3',
             'timestamp': 1653408600,
             'upload_date': '20220524',
-            'thumbnail': r're:https://mediusimg\.event\.microsoft\.com/video-\d+/thumbnail\.jpg.*',
+            'thumbnail': r're:https?://.*',
         },
     }]
 
@@ -330,7 +352,7 @@ class MicrosoftBuildIE(InfoExtractor):
             'description': 'md5:d38338f336ef4b6ef9ad2a7466a76655',
             'timestamp': 1716307200,
             'upload_date': '20240521',
-            'thumbnail': r're:https://mediusimg\.event\.microsoft\.com/video-\d+/thumbnail\.jpg.*',
+            'thumbnail': r're:https?://.*',
         },
     }, {
         'url': 'https://build.microsoft.com/en-US/sessions',
