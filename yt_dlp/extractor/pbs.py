@@ -251,7 +251,7 @@ class PBSIE(InfoExtractor):
                 'id': '2201174722',
                 'ext': 'mp4',
                 'title': 'PBS NewsHour - Cyber Schools Gain Popularity, but Quality Questions Persist',
-                'description': 'md5:86ab9a3d04458b876147b355788b8781',
+                'description': 'md5:e145f95a1e667414ba7e1a4ba9272a91',
                 'duration': 801,
             },
         },
@@ -298,6 +298,7 @@ class PBSIE(InfoExtractor):
         },
         {
             'url': 'http://www.pbs.org/wgbh/americanexperience/films/death/player/',
+            'skip': 'video gone',
             'info_dict': {
                 'id': '2276541483',
                 'display_id': 'player',
@@ -351,6 +352,7 @@ class PBSIE(InfoExtractor):
                 'description': 'md5:f677e4520cfacb4a5ce1471e31b57800',
                 'duration': 723,
                 'thumbnail': r're:^https?://.*\.jpg$',
+                'chapters': list,
             },
             'params': {
                 'skip_download': True,  # requires ffmpeg
@@ -422,6 +424,8 @@ class PBSIE(InfoExtractor):
                 'title': 'Stories from the Stage - Road Trip',
                 'duration': 1619,
                 'thumbnail': r're:^https?://.*\.(?:jpg|JPG)$',
+                'chapters': list,
+                'display_id': str,
             },
             'params': {
                 'skip_download': True,
@@ -634,7 +638,7 @@ class PBSIE(InfoExtractor):
                     extract_redirect_urls(video_info)
                     if not info:
                         info = video_info
-                if not chapters:
+                if video_info and not chapters:
                     raw_chapters = video_info.get('chapters') or []
                     if not raw_chapters:
                         for chapter_data in re.findall(r'(?s)chapters\.push\(({.*?})\)', player):
@@ -735,8 +739,11 @@ class PBSIE(InfoExtractor):
         # info['title'] is often incomplete (e.g. 'Full Episode', 'Episode 5', etc)
         # Try turning it to 'program - title' naming scheme if possible
         alt_title = info.get('program', {}).get('title')
-        if alt_title:
-            info['title'] = alt_title + ' - ' + re.sub(r'^' + alt_title + r'[\s\-:]+', '', info['title'])
+        title = info.get('title') or alt_title
+        if alt_title and title:
+            info['title'] = alt_title + ' - ' + re.sub(r'^' + alt_title + r'[\s\-:]+', '', title)
+        elif alt_title:
+            info['title'] = alt_title
 
         description = info.get('description') or info.get(
             'program', {}).get('description') or description
@@ -744,7 +751,7 @@ class PBSIE(InfoExtractor):
         return {
             'id': video_id,
             'display_id': display_id,
-            'title': info['title'],
+            'title': info.get('title'),
             'description': description,
             'thumbnail': info.get('image_url'),
             'duration': int_or_none(info.get('duration')),
@@ -761,6 +768,7 @@ class PBSKidsIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://pbskids.org/video/molly-of-denali/3030407927',
+            'skip': 'video gone',
             'md5': '1ded20a017cc6b53446238f1804ce4c7',
             'info_dict': {
                 'id': '3030407927',
@@ -776,6 +784,7 @@ class PBSKidsIE(InfoExtractor):
         },
         {
             'url': 'https://pbskids.org/video/plum-landing/2365205059',
+            'skip': 'video gone',
             'md5': '92e5d189851a64ae1d0237a965be71f5',
             'info_dict': {
                 'id': '2365205059',
