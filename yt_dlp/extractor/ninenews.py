@@ -10,6 +10,8 @@ class NineNewsIE(InfoExtractor):
     _TESTS = [{
         'url': 'https://www.9news.com.au/videos/national/fair-trading-pulls-dozens-of-toys-from-shelves/clqgc7dvj000y0jnvfism0w5m',
         'md5': 'd1a65b2e9d126e5feb9bc5cb96e62c80',
+        'expected_warnings': ['AES-128', 'pycryptodomex'],
+        'params': {'skip_download': 'm3u8'},
         'info_dict': {
             'id': '6343717246112',
             'ext': 'mp4',
@@ -57,12 +59,20 @@ class NineNewsIE(InfoExtractor):
         article_id = self._match_id(url)
         webpage = self._download_webpage(url, article_id)
         initial_state = self._search_json(
-            r'var\s+__INITIAL_STATE__\s*=', webpage, 'initial state', article_id)
+            r'var\s+__INITIAL_STATE__\s*=', webpage, 'initial state', article_id,
+            default={})
         video_id = traverse_obj(
             initial_state, ('videoIndex', 'currentVideo', 'brightcoveId', {str}),
             ('article', ..., 'media', lambda _, v: v['type'] == 'video', 'urn', {str}), get_all=False)
         account = traverse_obj(initial_state, (
             'videoIndex', 'config', (None, 'video'), 'account', {str}), get_all=False)
+        if not video_id:
+            video_id = self._search_regex(
+                r'brightcoveId\\?"?\s*:\s*\\?"(\d+)', webpage, 'brightcove id', default=None)
+        if not account:
+            account = self._search_regex(
+                r'account\\?"?\s*:\s*\\?"(\d{9,})',
+                webpage, 'brightcove account', default=None)
 
         if not video_id or not account:
             raise ExtractorError('Unable to get the required video data')
