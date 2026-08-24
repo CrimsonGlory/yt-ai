@@ -54,6 +54,13 @@ class ElPaisIE(InfoExtractor):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
 
+        yt_id = self._search_regex(
+            r'(?:youtube\.com/embed/|youtube\.com/watch\?v=)([\w-]{11})',
+            webpage, 'youtube id', default=None)
+        if yt_id and 'url_cache' not in webpage:
+            return self.url_result(
+                f'https://www.youtube.com/watch?v={yt_id}', ie='Youtube', video_id=yt_id)
+
         prefix = self._html_search_regex(
             r'var\s+url_cache\s*=\s*"([^"]+)";', webpage, 'URL prefix')
         id_multimedia = self._search_regex(
