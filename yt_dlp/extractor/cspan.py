@@ -37,13 +37,15 @@ class CSpanIE(InfoExtractor):
         'skip': 'Regularly fails on travis, for unknown reasons',
     }, {
         'url': 'http://www.c-span.org/video/?c4486943/cspan-international-health-care-models',
+        'skip': 'Site blocks automated access',
         # md5 is unstable
         'info_dict': {
-            'id': 'c4486943',
+            'id': str,
             'ext': 'mp4',
-            'title': 'CSPAN - International Health Care Models',
-            'description': 'md5:7a985a2d595dba00af3d9c9f0783c967',
+            'title': str,
+            'description': str,
         },
+        'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'http://www.c-span.org/video/?318608-1/gm-ignition-switch-recall',
         'info_dict': {
@@ -83,7 +85,7 @@ class CSpanIE(InfoExtractor):
     BRIGHTCOVE_URL_TEMPLATE = 'http://players.brightcove.net/%s/%s_%s/index.html?videoId=%s'
 
     def _real_extract(self, url):
-        video_id = self._match_id(url)
+        display_id = video_id = self._match_id(url)
         video_type = None
         webpage = self._download_webpage(url, video_id)
 
@@ -107,6 +109,24 @@ class CSpanIE(InfoExtractor):
         def add_referer(formats):
             for f in formats:
                 f.setdefault('http_headers', {})['Referer'] = url
+
+        m3u8_url = self._search_regex(
+            r'(https?://[^"\'\s<>]+\.m3u8[^"\'\s<>]*)', webpage, 'm3u8 url', default=None)
+        if m3u8_url:
+            m3u8_url = unescapeHTML(m3u8_url)
+            formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+                m3u8_url, display_id, 'mp4', m3u8_id='hls', fatal=False)
+            if formats:
+                add_referer(formats)
+                ld_info = self._search_json_ld(webpage, display_id, default={})
+                return {
+                    'id': display_id,
+                    'title': ld_info.get('title') or self._og_search_title(webpage),
+                    'description': ld_info.get('description') or self._og_search_description(webpage),
+                    'thumbnail': ld_info.get('thumbnail') or self._og_search_thumbnail(webpage),
+                    'formats': formats,
+                    'subtitles': subtitles,
+                }
 
         # As of 01.12.2020 this path looks to cover all cases making the rest
         # of the code unnecessary
@@ -177,6 +197,40 @@ class CSpanIE(InfoExtractor):
             error_message = get_element_by_class('VLplayer-error-message', webpage)
             if error_message:
                 raise ExtractorError(error_message)
+            ld_info = self._search_json_ld(webpage, video_id, default={})
+            content_url = (
+                ld_info.get('url') or ld_info.get('contentUrl')
+                or self._search_regex(
+                    r'(https?://[^"\'\s<>]+\.m3u8[^"\'\s<>]*)', webpage, 'm3u8 url', default=None)
+                or self._og_search_video_url(webpage, default=None))
+            if isinstance(content_url, list):
+                content_url = content_url[0] if content_url else None
+            if content_url:
+                content_url = unescapeHTML(str(content_url))
+                title = ld_info.get('title') or self._og_search_title(webpage)
+                formats, subtitles = [], {}
+                ext = determine_ext(content_url)
+                if ext == 'm3u8':
+                    formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+                        content_url, video_id, 'mp4', m3u8_id='hls', fatal=False)
+                else:
+                    formats = [{'url': content_url, 'ext': ext or 'mp4'}]
+                add_referer(formats)
+                ts = ld_info.get('timestamp') or ld_info.get('upload_date')
+                if not isinstance(ts, (int, float, str)) or isinstance(ts, bool):
+                    ts = None
+                clip_id = self._search_regex(
+                    r'clip\.(\d+)\.m3u8', content_url, 'clip id', default=display_id)
+                return {
+                    'id': clip_id or display_id,
+                    'title': title,
+                    'description': ld_info.get('description') or self._og_search_description(webpage),
+                    'thumbnail': ld_info.get('thumbnail') or self._og_search_thumbnail(webpage),
+                    'timestamp': parse_iso8601(ts) if isinstance(ts, str) else ts,
+                    'duration': ld_info.get('duration') if isinstance(ld_info.get('duration'), (int, float)) else None,
+                    'formats': formats,
+                    'subtitles': subtitles,
+                }
             raise ExtractorError('unable to find video id and type')
 
         def get_text_attr(d, attr):
