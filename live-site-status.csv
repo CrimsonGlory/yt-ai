@@ -64,7 +64,7 @@ alura.com.br,true,NULL,true,false
 amadeus.tv,true,2026-08-26,false,false
 amara.org,true,2026-08-26,false,false
 amazon.co.uk,false,NULL,false,false
-amazon.com,true,NULL,false,false
+amazon.com,true,2026-08-26,false,false
 amazon.in,true,NULL,false,false
 amazonminitv:season,false,NULL,false,false
 amazonminitv:series,false,NULL,false,false
