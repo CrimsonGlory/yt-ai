@@ -24,12 +24,57 @@ class CineverseBaseIE(InfoExtractor):
         'retrocrush.tv',
     ))))
 
+    def _extract_from_item_details(self, item, video_id, smuggled_data=None):
+        smuggled_data = smuggled_data or {}
+        hls_url = traverse_obj(item, ('details', 'media_hls_url', {url_or_none}))
+        if not hls_url:
+            err_msg = item.get('playback_err_msg') or ''
+            if 'not available in your location' in err_msg.lower():
+                self.raise_geo_restricted(
+                    'This video is not available from your location due to geo restriction. '
+                    'You may be able to bypass it by using the /details/ page instead of the /watch/ page',
+                    countries=smuggled_data.get('geo_countries') or traverse_obj(
+                        item, ('geo_country', {lambda x: x.split(', ') if x else None})))
+            if item.get('subscriber_type') in ('paid', 'registered') or item.get('err_code') == 1002:
+                self.raise_login_required()
+            self.raise_no_formats(err_msg or 'No video formats found', expected=True, video_id=video_id)
+
+        def parse_rating(rating):
+            if not rating:
+                return None
+            for part in rating.split(','):
+                age = parse_age_limit(part.strip())
+                if age is not None:
+                    return age
+
+        return {
+            'id': video_id,
+            'formats': self._extract_m3u8_formats(hls_url, video_id),
+            'subtitles': filter_dict({
+                'en': traverse_obj(item, (
+                    'details', (('captions', 'vtt'), 'caption_en_url'),
+                    {url_or_none}, {lambda u: {'url': u}})),
+            }),
+            **traverse_obj(item, {
+                'title': 'title',
+                'id': 'item_id',
+                'description': 'description',
+                'duration': ('duration', {float_or_none(scale=1000)}),
+                'cast': ('cast', {lambda x: x.split(', ') if x else None}),
+                'modified_timestamp': ('updated_by', 0, 'update_time', 'time', {int_or_none}),
+                'season_number': ('season', {int_or_none}),
+                'episode_number': ('episode', {int_or_none}),
+                'age_limit': ('rating_code', {parse_rating}),
+                'series': ('series_details', 'title'),
+                'thumbnail': ('thumbnail', {url_or_none}),
+            }),
+        }
+
 
 class CineverseIE(CineverseBaseIE):
     _VALID_URL = rf'{CineverseBaseIE._VALID_URL_BASE}/watch/(?P<id>[A-Z0-9]+)'
     _TESTS = [{
         'url': 'https://www.asiancrush.com/watch/DMR00018919/Women-Who-Flirt',
-        'skip': 'geo-blocked',
         'info_dict': {
             'title': 'Women Who Flirt',
             'ext': 'mp4',
@@ -37,8 +82,9 @@ class CineverseIE(CineverseBaseIE):
             'modified_timestamp': 1678744575289,
             'cast': ['Xun Zhou', 'Xiaoming Huang', 'Yi-Lin Sie', 'Sonia Sui', 'Quniciren'],
             'duration': 5811.597,
-            'description': 'md5:892fd62a05611d394141e8394ace0bc6',
+            'description': 'md5:b65c7e0ae03a85585476a62a186f924c',
             'age_limit': 13,
+            'thumbnail': r're:https://cdn\.matchpoint\.tv/.+/DMR00018919_1900x850\.jpg',
         },
     }, {
         'url': 'https://www.retrocrush.tv/watch/1000000023016/Archenemy! Crystal Bowie',
@@ -64,43 +110,51 @@ class CineverseIE(CineverseBaseIE):
         self._initialize_geo_bypass({
             'countries': smuggled_data.get('geo_countries'),
         })
-        video_id = self._match_id(url)
+        host, video_id = self._match_valid_url(url).group('host', 'id')
         html = self._download_webpage(url, video_id)
-        idetails = self._search_nextjs_data(html, video_id)['props']['pageProps']['idetails']
+        page_props = self._search_nextjs_data(html, video_id)['props']['pageProps']
 
-        err_code = idetails.get('err_code')
-        if err_code == 1002:
-            self.raise_login_required()
-        elif err_code == 1200:
-            self.raise_geo_restricted(
-                'This video is not available from your location due to geo restriction. '
-                'You may be able to bypass it by using the /details/ page instead of the /watch/ page',
-                countries=smuggled_data.get('geo_countries'))
+        idetails = page_props.get('idetails')
+        if idetails:
+            err_code = idetails.get('err_code')
+            if err_code == 1002:
+                self.raise_login_required()
+            elif err_code == 1200:
+                self.raise_geo_restricted(
+                    'This video is not available from your location due to geo restriction. '
+                    'You may be able to bypass it by using the /details/ page instead of the /watch/ page',
+                    countries=smuggled_data.get('geo_countries'))
+            if traverse_obj(idetails, ('url', {url_or_none})):
+                return {
+                    'subtitles': filter_dict({
+                        'en': traverse_obj(idetails, (('cc_url_vtt', 'subtitle_url'), {'url': {url_or_none}})) or None,
+                    }),
+                    'formats': self._extract_m3u8_formats(idetails['url'], video_id),
+                    **traverse_obj(idetails, {
+                        'title': 'title',
+                        'id': ('details', 'item_id'),
+                        'description': ('details', 'description'),
+                        'duration': ('duration', {float_or_none(scale=1000)}),
+                        'cast': ('details', 'cast', {lambda x: x.split(', ')}),
+                        'modified_timestamp': ('details', 'updated_by', 0, 'update_time', 'time', {int_or_none}),
+                        'season_number': ('details', 'season', {int_or_none}),
+                        'episode_number': ('details', 'episode', {int_or_none}),
+                        'age_limit': ('details', 'rating_code', {parse_age_limit}),
+                        'series': ('details', 'series_details', 'title'),
+                    }),
+                }
 
-        return {
-            'subtitles': filter_dict({
-                'en': traverse_obj(idetails, (('cc_url_vtt', 'subtitle_url'), {'url': {url_or_none}})) or None,
-            }),
-            'formats': self._extract_m3u8_formats(idetails['url'], video_id),
-            **traverse_obj(idetails, {
-                'title': 'title',
-                'id': ('details', 'item_id'),
-                'description': ('details', 'description'),
-                'duration': ('duration', {float_or_none(scale=1000)}),
-                'cast': ('details', 'cast', {lambda x: x.split(', ')}),
-                'modified_timestamp': ('details', 'updated_by', 0, 'update_time', 'time', {int_or_none}),
-                'season_number': ('details', 'season', {int_or_none}),
-                'episode_number': ('details', 'episode', {int_or_none}),
-                'age_limit': ('details', 'rating_code', {parse_age_limit}),
-                'series': ('details', 'series_details', 'title'),
-            }),
-        }
+        details_html = self._download_webpage(
+            f'https://www.{host}/details/{video_id}', video_id, 'Downloading details webpage')
+        item = self._search_nextjs_data(details_html, video_id)['props']['pageProps']['itemDetailsData']
+        return self._extract_from_item_details(item, video_id, smuggled_data)
 
 
 class CineverseDetailsIE(CineverseBaseIE):
     _VALID_URL = rf'{CineverseBaseIE._VALID_URL_BASE}/details/(?P<id>[A-Z0-9]+)'
     _TESTS = [{
         'url': 'https://www.retrocrush.tv/details/1000000023012/Space-Adventure-COBRA-(Original-Japanese)',
+        'skip': 'episode list no longer embedded in page',
         'playlist_mincount': 30,
         'info_dict': {
             'title': 'Space Adventure COBRA (Original Japanese)',
@@ -112,9 +166,11 @@ class CineverseDetailsIE(CineverseBaseIE):
             'id': 'NNVG4938',
             'ext': 'mp4',
             'title': 'Hansel and Gretel',
-            'description': 'md5:e3e4c35309c2e82aee044f972c2fb05d',
+            'description': 'md5:8a919dd9d00c226947696c453a2ebcfb',
             'cast': ['Jeong-myeong Cheon', 'Eun Won-jae', 'Shim Eun-gyeong', 'Ji-hee Jin', 'Hee-soon Park', 'Lydia Park', 'Kyeong-ik Kim'],
             'duration': 7030.732,
+            'age_limit': 14,
+            'thumbnail': r're:https://cdn\.matchpoint\.tv/.+/NNVG4938_1900x850\.jpg',
         },
     }]
 
