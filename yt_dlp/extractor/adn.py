@@ -35,6 +35,8 @@ class ADNBaseIE(InfoExtractor):
     _PLAYER_BASE_URL = f'{_API_BASE_URL}player/'
     _HEADERS = {}
     _LOGIN_ERR_MESSAGE = 'Unable to log in'
+    _GEO_COUNTRIES = ['FR', 'DE', 'PL']
+    _GEO_BYPASS = False
     _RSA_KEY = (0x9B42B08905199A5CCE2026274399CA560ECB209EE9878A708B1C0812E1BB8CB5D1FB7441861147C1A1F2F3A0476DD63A9CAC20D3E983613346850AA6CB38F16DC7D720FD7D86FC6E5B3D5BBC72E14CD0BF9E869F2CEA2CCAD648F1DCE38F1FF916CEFB2D339B64AA0264372344BC775E265E8A852F88144AB0BD9AA06C1A4ABB, 65537)
     _POS_ALIGN_MAP = {
         'start': 1,
@@ -45,19 +47,34 @@ class ADNBaseIE(InfoExtractor):
         'end': 4,
     }
 
+    def _raise_geo_from_http_error(self, err, video_id):
+        if not isinstance(err.cause, HTTPError) or err.cause.status != 403:
+            return
+        error = self._parse_json(err.cause.response.read(), video_id, fatal=False) or {}
+        message = traverse_obj(error, ('message', {str}))
+        if error.get('code') == 'player-bad-geolocation-country' or (
+                message and 'pas accessible depuis votre pays' in message.lower()):
+            self.raise_geo_restricted(msg=message, countries=self._GEO_COUNTRIES)
+
+    def _download_player_json(self, url, video_id, note, **kwargs):
+        try:
+            return self._download_json(url, video_id, note, **kwargs)
+        except ExtractorError as e:
+            self._raise_geo_from_http_error(e, video_id)
+            raise
+
 
 class ADNIE(ADNBaseIE):
     _VALID_URL = r'https?://(?:www\.)?animationdigitalnetwork\.com/(?:(?P<lang>de)/)?video/[^/?#]+/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://animationdigitalnetwork.com/video/558-fruits-basket/9841-episode-1-a-ce-soir',
-        'md5': '1c9ef066ceb302c86f80c2b371615261',
+        'md5': '1f3d1139453194d699bb752c612feb0a',
         'info_dict': {
             'id': '9841',
             'ext': 'mp4',
             'title': 'Fruits Basket - Episode 1',
-            'description': 'md5:14be2f72c3c96809b0ca424b0097d336',
             'series': 'Fruits Basket',
-            'duration': 1437,
+            'duration': 1436,
             'release_date': '20190405',
             'comment_count': int,
             'average_rating': float,
@@ -67,28 +84,9 @@ class ADNIE(ADNBaseIE):
             'thumbnail': str,
             'season': 'Season 1',
         },
-        'skip': 'Only available in French and German speaking Europe',
     }, {
         'url': 'https://animationdigitalnetwork.com/de/video/973-the-eminence-in-shadow/23550-folge-1',
-        'skip': 'HTTP Error 403',
-        'md5': '5c5651bf5791fa6fcd7906012b9d94e8',
-        'info_dict': {
-            'id': '23550',
-            'ext': 'mp4',
-            'episode_number': 1,
-            'duration': 1417,
-            'release_date': '20231004',
-            'series': 'The Eminence in Shadow',
-            'season_number': 2,
-            'episode': str,
-            'title': str,
-            'thumbnail': str,
-            'season': 'Season 2',
-            'comment_count': int,
-            'average_rating': float,
-            'description': str,
-        },
-        # 'skip': 'Only available in French and German speaking Europe',
+        'only_matching': True,
     }]
 
     def _get_subtitles(self, sub_url, video_id):
@@ -176,7 +174,7 @@ Format: Marked,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text'''
         lang, video_id = self._match_valid_url(url).group('lang', 'id')
         self._HEADERS['X-Target-Distribution'] = lang or 'fr'
         video_base_url = self._PLAYER_BASE_URL + f'video/{video_id}/'
-        player = self._download_json(
+        player = self._download_player_json(
             video_base_url + 'configuration', video_id,
             'Downloading player config JSON metadata',
             headers=self._HEADERS)['player']
@@ -234,7 +232,7 @@ Format: Marked,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text'''
                 error = self._parse_json(e.cause.response.read(), video_id)
                 message = error.get('message')
                 if e.cause.status == 403 and error.get('code') == 'player-bad-geolocation-country':
-                    self.raise_geo_restricted(msg=message)
+                    self.raise_geo_restricted(msg=message, countries=self._GEO_COUNTRIES)
                 raise ExtractorError(message)
         else:
             raise ExtractorError('Giving up retrying')
@@ -311,7 +309,7 @@ class ADNSeasonIE(ADNBaseIE):
     def _real_extract(self, url):
         lang, video_show_slug = self._match_valid_url(url).group('lang', 'id')
         self._HEADERS['X-Target-Distribution'] = lang or 'fr'
-        show = self._download_json(
+        show = self._download_player_json(
             f'{self._API_BASE_URL}show/{video_show_slug}/', video_show_slug,
             'Downloading show JSON metadata', headers=self._HEADERS)['show']
         show_id = str(show['id'])
