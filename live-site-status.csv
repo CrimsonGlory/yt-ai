@@ -15,7 +15,7 @@ domain,has_true_live_test,confirmed_working_on_date,register_only,cloudflare_tur
 3speak.tv,false,NULL,false,false
 4tube.com,true,NULL,false,false
 5-tv.ru,true,2026-08-24,false,false
-56.com,true,NULL,false,false
+56.com,true,2026-08-26,false,false
 7plus.com.au,false,NULL,false,false
 91porn.com,true,2026-08-23,false,false
 9c9media,false,NULL,false,false
