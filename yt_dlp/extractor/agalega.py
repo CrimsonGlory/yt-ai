@@ -37,6 +37,16 @@ class AGalegaIE(AGalegaBaseIE):
     IE_NAME = 'agalega:videos'
     _VALID_URL = r'https?://(?:www\.)?agalega\.gal/videos/(?:detail/)?(?P<id>[0-9]+)'
     _TESTS = [{
+        'url': 'https://www.agalega.gal/videos/detail/175546-as-redes-sociais',
+        'md5': 'a22e65693a7ecf84c929ad4f2ff30692',
+        'info_dict': {
+            'id': '175546',
+            'title': 'As redes sociais | 27-10-2024',
+            'description': 'Un dos temas que máis preocupa ás familias: o uso das redes sociais por parte dos adolescentes.',
+            'thumbnail': 'https://crtvg-bucket.flumotion.cloud/content_cards/6e09ce92cd0c4572a1de0f9dc2fea392.png',
+            'ext': 'mp4',
+        },
+    }, {
         'url': 'https://www.agalega.gal/videos/288664-lr-ninguencheconta',
         'skip': 'video gone',
         'md5': '04533a66c5f863d08dd9724b11d1c223',
