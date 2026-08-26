@@ -12,8 +12,23 @@ from ..utils.traversal import traverse_obj
 class AmadeusTVIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?amadeus\.tv/library/(?P<id>[\da-f]+)'
     _TESTS = [{
+        'url': 'http://www.amadeus.tv/library/69a4146be04adacbddb27b20',
+        'md5': '129ac3fd1750c84fc3e25558d667b7e5',
+        'info_dict': {
+            'id': '5145403718503936398',
+            'ext': 'mov',
+            'title': 'YEO Yoonji【2026高松国际钢琴比赛】第三轮',
+            'thumbnail': 'http://1253584441.vod2.myqcloud.com/e4cb846cvodtransgzp1253584441/0ac0a3695145403718503936398/coverBySnapshot_10_0.jpg',
+            'duration': 2584.544,
+            'upload_date': '20260317',
+            'timestamp': 1773763200,
+            'display_id': '69a4146be04adacbddb27b20',
+            'view_count': int,
+            'description': 'R. Schumann\nPiano Quartet in E flat major, Op. 47',
+        },
+    }, {
         'url': 'http://www.amadeus.tv/library/65091a87ff85af59d9fc54c3',
-        'skip': 'No video formats found',
+        'skip': 'video gone',
         'info_dict': {
             'id': '5576678021301411311',
             'ext': 'mp4',
