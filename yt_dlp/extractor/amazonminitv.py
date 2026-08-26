@@ -1,7 +1,7 @@
 import json
 
 from .common import InfoExtractor
-from ..utils import ExtractorError, int_or_none, traverse_obj, try_get
+from ..utils import ExtractorError, int_or_none, traverse_obj, url_or_none
 
 
 class AmazonMiniTVBaseIE(InfoExtractor):
@@ -41,10 +41,39 @@ class AmazonMiniTVBaseIE(InfoExtractor):
 
 
 class AmazonMiniTVIE(AmazonMiniTVBaseIE):
-    _VALID_URL = r'(?:https?://(?:www\.)?amazon\.in/minitv/tp/|amazonminitv:(?:amzn1\.dv\.gti\.)?)(?P<id>[a-f0-9-]+)'
+    _VALID_URL = r'(?:https?://(?:www\.)?amazon\.in/minitv/tp/(?:[^/?#]+/)*|amazonminitv:(?:amzn1\.dv\.gti\.)?)(?P<id>[a-f0-9-]+)'
     _TESTS = [{
+        'url': 'https://www.amazon.in/minitv/tp/7e03b04f-057c-4d83-b9d5-21ad7461f8f7',
+        'md5': '09a4c38c2ce3941d202d2027bd30e7bf',
+        'info_dict': {
+            'id': 'amzn1.dv.gti.7e03b04f-057c-4d83-b9d5-21ad7461f8f7',
+            'ext': 'mp4',
+            'title': 'Crossroads',
+            'thumbnail': r're:^https?://.*\.(?:jpg|png)',
+            'description': 'md5:dca5a6b396a6ce22ef2615d0768b3e65',
+            'release_timestamp': 1762300800,
+            'release_date': '20251105',
+            'duration': 1512,
+            'chapters': 'count:4',
+            'series': 'First Copy',
+            'series_id': 'amzn1.dv.gti.658460dc-db1f-445b-b7f2-1e392db11ccd',
+            'season': 'First Copy - Season 2',
+            'season_number': 2,
+            'season_id': 'amzn1.dv.gti.b1bd236d-5964-4c06-9fe4-e4696957e0d6',
+            'episode': 'Crossroads',
+            'episode_number': 1,
+            'episode_id': 'amzn1.dv.gti.7e03b04f-057c-4d83-b9d5-21ad7461f8f7',
+            'cast': ['Munawar Faruqui', 'Ashi Singh', 'Saqib Ayub', 'Raza Murad', 'Saanand Verma', 'Mast Ali', 'Gulshan Grover'],
+            'genres': ['Drama', 'Romance', 'Comedy'],
+        },
+        # DASH --test only fetches the init fragment (~1KB), below the default 10KB check
+        'file_minsize': None,
+        'params': {
+            'format': 'bestvideo[ext=mp4]/best[ext=mp4]/best',
+        },
+    }, {
         'url': 'https://www.amazon.in/minitv/tp/75fe3a75-b8fe-4499-8100-5c9424344840?referrer=https%3A%2F%2Fwww.amazon.in%2Fminitv',
-        'skip': 'Site returned HTTP 5xx',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'amzn1.dv.gti.75fe3a75-b8fe-4499-8100-5c9424344840',
             'ext': 'mp4',
@@ -84,6 +113,9 @@ class AmazonMiniTVIE(AmazonMiniTVBaseIE):
         'url': 'https://www.amazon.in/minitv/tp/280d2564-584f-452f-9c98-7baf906e01ab',
         'only_matching': True,
     }, {
+        'url': 'https://www.amazon.in/minitv/tp/web-series/first-copy-season-2/episode-1/7e03b04f-057c-4d83-b9d5-21ad7461f8f7',
+        'only_matching': True,
+    }, {
         'url': 'amazonminitv:amzn1.dv.gti.280d2564-584f-452f-9c98-7baf906e01ab',
         'only_matching': True,
     }, {
@@ -91,105 +123,84 @@ class AmazonMiniTVIE(AmazonMiniTVBaseIE):
         'only_matching': True,
     }]
 
-    _GRAPHQL_QUERY_CONTENT = '''
-query content($sessionIdToken: String!, $deviceLocale: String, $contentId: ID!, $contentType: ContentType!, $clientId: String) {
-  content(
-    applicationContextInput: {deviceLocale: $deviceLocale, sessionIdToken: $sessionIdToken, clientId: $clientId}
-    contentId: $contentId
-    contentType: $contentType
-  ) {
-    contentId
-    name
-    ... on Episode {
-      contentId
-      vodType
-      name
-      images
-      description {
-        synopsis
-        contentLengthInSeconds
-      }
-      publicReleaseDateUTC
-      audioTracks
-      seasonId
-      seriesId
-      seriesName
-      seasonNumber
-      episodeNumber
-      timecode {
-        endCreditsTime
-      }
-    }
-    ... on MovieContent {
-      contentId
-      vodType
-      name
-      description {
-        synopsis
-        contentLengthInSeconds
-      }
-      images
-      publicReleaseDateUTC
-      audioTracks
-    }
-  }
-}'''
-
     def _real_extract(self, url):
-        asin = f'amzn1.dv.gti.{self._match_id(url)}'
-        prs = self._call_api(asin, note='Downloading playback info')
+        video_id = self._match_id(url)
+        webpage = self._download_webpage(
+            f'https://www.amazon.in/minitv/tp/{video_id}', video_id)
+        next_data = self._search_nextjs_data(webpage, video_id)
+        page_data = traverse_obj(
+            next_data, ('props', 'pageProps', 'ssrProps', 'pageLayoutData')) or {}
+
+        widgets = {
+            widget.get('type'): widget.get('data') or {}
+            for widget in page_data.get('widgets') or []
+        }
+        player_data = widgets.get('PLAYER') or {}
+        playback_assets = player_data.get('playbackAssets') or {}
+        player_content = player_data.get('contentDetails') or {}
+        meta = traverse_obj(page_data, ('metaData', 'contentDetails')) or {}
 
         formats, subtitles = [], {}
-        for type_, asset in prs['playbackAssets'].items():
-            if not traverse_obj(asset, 'manifestUrl'):
-                continue
-            if type_ == 'hls':
-                m3u8_fmts, m3u8_subs = self._extract_m3u8_formats_and_subtitles(
-                    asset['manifestUrl'], asin, ext='mp4', entry_protocol='m3u8_native',
-                    m3u8_id=type_, fatal=False)
-                formats.extend(m3u8_fmts)
-                subtitles = self._merge_subtitles(subtitles, m3u8_subs)
-            elif type_ == 'dash':
-                mpd_fmts, mpd_subs = self._extract_mpd_formats_and_subtitles(
-                    asset['manifestUrl'], asin, mpd_id=type_, fatal=False)
-                formats.extend(mpd_fmts)
-                subtitles = self._merge_subtitles(subtitles, mpd_subs)
-            else:
-                self.report_warning(f'Unknown asset type: {type_}')
+        seen_manifests = set()
 
-        title_info = self._call_api(
-            asin, note='Downloading title info', data={
-                'operationName': 'content',
-                'variables': {'contentId': asin},
-                'query': self._GRAPHQL_QUERY_CONTENT,
-            })
-        credits_time = try_get(title_info, lambda x: x['timecode']['endCreditsTime'] / 1000)
-        is_episode = title_info.get('vodType') == 'EPISODE'
+        def add_dash(manifest_url, codec=None):
+            manifest_url = url_or_none(manifest_url)
+            if not manifest_url or manifest_url in seen_manifests:
+                return
+            seen_manifests.add(manifest_url)
+            mpd_id = 'dash' if not codec else f'dash-{codec.lower()}'
+            mpd_fmts, mpd_subs = self._extract_mpd_formats_and_subtitles(
+                manifest_url, video_id, mpd_id=mpd_id, fatal=False)
+            formats.extend(mpd_fmts)
+            self._merge_subtitles(mpd_subs, target=subtitles)
+
+        add_dash(playback_assets.get('manifestURL'))
+        for asset in traverse_obj(playback_assets, ('manifestData', lambda _, v: v['manifestURL'])):
+            add_dash(asset.get('manifestURL'), asset.get('codec'))
+
+        if not formats:
+            geo_msg = traverse_obj(next_data, (
+                'props', 'pageProps', 'additionalProps', 'appContextProps',
+                'error', 'networkError', 'result', 'message'))
+            if geo_msg:
+                self.raise_geo_restricted(geo_msg, countries=['IN'])
+            raise ExtractorError(
+                'Unable to find video data in page; the title may be unavailable',
+                expected=True)
+
+        chapters = sorted(({
+            'start_time': int_or_none(elem.get('start')),
+            'end_time': int_or_none(elem.get('end')),
+            'title': (elem.get('elementType') or '').replace('_', ' ').title() or None,
+        } for elem in player_content.get('transitionElements') or []),
+            key=lambda c: c['start_time'] if c['start_time'] is not None else -1)
+
+        is_episode = meta.get('vodType') == 'EPISODE'
+        content_id = meta.get('contentId') or f'amzn1.dv.gti.{video_id}'
 
         return {
-            'id': asin,
-            'title': title_info.get('name'),
+            'id': content_id,
+            'title': meta.get('name') or player_content.get('name'),
             'formats': formats,
             'subtitles': subtitles,
-            'language': traverse_obj(title_info, ('audioTracks', 0)),
-            'thumbnails': [{
-                'id': type_,
-                'url': url,
-            } for type_, url in (title_info.get('images') or {}).items()],
-            'description': traverse_obj(title_info, ('description', 'synopsis')),
-            'release_timestamp': int_or_none(try_get(title_info, lambda x: x['publicReleaseDateUTC'] / 1000)),
-            'duration': traverse_obj(title_info, ('description', 'contentLengthInSeconds')),
-            'chapters': [{
-                'start_time': credits_time,
-                'title': 'End Credits',
-            }] if credits_time else [],
-            'series': title_info.get('seriesName'),
-            'series_id': title_info.get('seriesId'),
-            'season_number': title_info.get('seasonNumber'),
-            'season_id': title_info.get('seasonId'),
-            'episode': title_info.get('name') if is_episode else None,
-            'episode_number': title_info.get('episodeNumber'),
-            'episode_id': asin if is_episode else None,
+            'language': traverse_obj(player_content, ('audioTracks', 0)),
+            'thumbnail': url_or_none(meta.get('imageSrc')),
+            'description': meta.get('synopsis'),
+            'release_timestamp': int_or_none(meta.get('publicReleaseDateUTC'), scale=1000),
+            'duration': int_or_none(
+                meta.get('contentLengthInSeconds')
+                or player_content.get('contentLengthInSeconds')),
+            'chapters': chapters,
+            'series': meta.get('seriesName') or player_content.get('seriesName'),
+            'series_id': player_content.get('seriesId'),
+            'season': meta.get('seasonName') or player_content.get('seasonName'),
+            'season_number': int_or_none(meta.get('seasonNumber') or player_content.get('seasonNumber')),
+            'season_id': player_content.get('seasonId'),
+            'episode': (meta.get('name') or player_content.get('name')) if is_episode else None,
+            'episode_number': int_or_none(meta.get('episodeNumber') or player_content.get('episodeNumber')),
+            'episode_id': content_id if is_episode else None,
+            'cast': meta.get('starringCast'),
+            'genres': meta.get('genres'),
         }
 
 
