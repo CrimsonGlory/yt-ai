@@ -862,6 +862,22 @@ class DiscoveryLifeIE(DiscoveryPlusBaseIE):
 class AnimalPlanetIE(DiscoveryPlusBaseIE):
     _VALID_URL = r'https?://(?:www\.)?animalplanet\.com/video' + DPlayBaseIE._PATH_REGEX
     _TESTS = [{
+        'url': 'https://www.animalplanet.com/video/puppy-bowl-presents-20-years-of-puppies-discovery-atve-us/puppy-bowl-presents-20-years',
+        'info_dict': {
+            'id': '5266753',
+            'display_id': 'puppy-bowl-presents-20-years-of-puppies-discovery-atve-us/puppy-bowl-presents-20-years',
+            'ext': 'mp4',
+            'title': 'Puppy Bowl Presents: 20 Years',
+            'description': 'Dan the Ref celebrates 20 years of the cutest game in sports: Puppy Bowl.',
+            'series': 'Puppy Bowl Presents: 20 Years of Puppies',
+            'duration': 2505.87,
+            'upload_date': '20240312',
+            'timestamp': 1710216000,
+            'creators': ['Animal Planet'],
+            'tags': [],
+            'thumbnail': 'https://us1-prod-images.disco-api.com/2024/02/01/21f8949f-aadd-32cd-a298-818c0c2c1af3.jpeg',
+        },
+    }, {
         'url': 'https://www.animalplanet.com/video/mysterious-creatures-with-forrest-galante-animal-planet-atve-us/the-demon-of-peru',
         'skip': 'Login required',
         'info_dict': {
