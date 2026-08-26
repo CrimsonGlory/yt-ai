@@ -5,8 +5,22 @@ from .jwplatform import JWPlatformIE
 class BusinessInsiderIE(InfoExtractor):
     _VALID_URL = r'https?://(?:[^/]+\.)?businessinsider\.(?:com|nl)/(?:[^/]+/)*(?P<id>[^/?#&]+)'
     _TESTS = [{
+        'url': 'https://www.businessinsider.com/excel-index-match-vlookup-video-how-to-2015-2?IR=T',
+        'md5': '9cd25f3aeddbcd5bfc442761a5719d27',
+        'info_dict': {
+            'id': '24hZsa73',
+            'ext': 'mp4',
+            'title': 'This is what separates the Excel masters from the wannabes',
+            'description': '',
+            'thumbnail': r're:https?://cdn\.jwplayer\.com/v2/media/.+',
+            'upload_date': '20150209',
+            'timestamp': 1423507627,
+            'duration': 191.0,
+        },
+        'params': {'format': 'best[protocol=https]'},
+    }, {
         'url': 'http://uk.businessinsider.com/how-much-radiation-youre-exposed-to-in-everyday-life-2016-6',
-        'skip': 'Site returned HTTP 5xx',
+        'skip': 'uk.businessinsider.com domain is gone',
         'md5': 'ffed3e1e12a6f950aa2f7d83851b497a',
         'info_dict': {
             'id': 'cjGDb0X9',
@@ -28,9 +42,6 @@ class BusinessInsiderIE(InfoExtractor):
             'upload_date': '20170705',
             'timestamp': 1499270528,
         },
-    }, {
-        'url': 'http://www.businessinsider.com/excel-index-match-vlookup-video-how-to-2015-2?IR=T',
-        'only_matching': True,
     }]
 
     def _real_extract(self, url):
