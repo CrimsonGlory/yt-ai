@@ -14,6 +14,7 @@ class BannedVideoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?banned\.video/watch\?id=(?P<id>[0-f]{24})'
     _TESTS = [{
         'url': 'https://banned.video/watch?id=5e7a859644e02200c6ef5f11',
+        'skip': 'Site is off-air: domain in registrar redemption (NXDOMAIN/clientHold); origin serves a static Off Air page and the GraphQL API is dead',
         'md5': '14b6e81d41beaaee2215cd75c6ed56e4',
         'info_dict': {
             'id': '5e7a859644e02200c6ef5f11',
