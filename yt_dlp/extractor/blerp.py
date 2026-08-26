@@ -9,7 +9,7 @@ class BlerpIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?blerp\.com/soundbites/(?P<id>[0-9a-zA-Z]+)'
     _TESTS = [{
         'url': 'https://blerp.com/soundbites/6320fe8745636cb4dd677a5a',
-        'skip': 'HTTP Error 403',
+        'md5': 'f1e586c23a98a986f220971af48a0343',
         'info_dict': {
             'id': '6320fe8745636cb4dd677a5a',
             'title': 'Samsung Galaxy S8 Over the Horizon Ringtone 2016',
@@ -20,7 +20,7 @@ class BlerpIE(InfoExtractor):
         },
     }, {
         'url': 'https://blerp.com/soundbites/5bc94ef4796001000498429f',
-        'skip': 'HTTP Error 403',
+        'md5': 'e2490fdd6cb01aab801a3d8907dd1e41',
         'info_dict': {
             'id': '5bc94ef4796001000498429f',
             'title': 'Yee',
@@ -165,4 +165,6 @@ class BlerpIE(InfoExtractor):
             'uploader_id': traverse_obj(bite_json, ('ownerObject', '_id'), expected_type=strip_or_none),
             'ext': 'mp3',
             'tags': list(filter(None, map(strip_or_none, (traverse_obj(bite_json, 'userKeywords', expected_type=list) or []))) or None),
+            # cdn.blerp.com is behind a Cloudflare JS challenge
+            'impersonate': True,
         }
