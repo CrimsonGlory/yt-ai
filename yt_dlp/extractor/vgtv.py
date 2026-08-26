@@ -183,9 +183,6 @@ class VGTVIE(InfoExtractor):
         info = {
             'formats': [],
         }
-        if len(video_id) == 5:
-            if appname == 'bttv':
-                info = self._extract_video_info('btno', video_id)
 
         streams = data['streamUrls']
         stream_type = data.get('streamType')
@@ -295,14 +292,20 @@ class BTVestlendingenIE(InfoExtractor):
         'skip': '404 Error',
     }, {
         'url': 'http://www.bt.no/spesial/vestlendingen/#!/86255',
-        'md5': 'a2893f8632e96389f4bdf36aa9463ceb',
+        'md5': '0dd9b2efeb463424f6bfd4b0e65375cb',
         'info_dict': {
             'id': '86255',
-            'ext': 'mov',
+            'ext': 'mp4',
             'title': 'Du må tåle å fryse og være sulten',
             'description': 'md5:b8046f4d022d5830ddab04865791d063',
+            'thumbnail': r're:^https?://.*\.jpg',
+            'duration': 296.0,
             'upload_date': '20150321',
             'timestamp': 1426942023,
+        },
+        'params': {
+            # HLS playlist can 504; progressive MP4 is stable
+            'format': 'best[protocol=https]',
         },
     }]
 
