@@ -89,6 +89,7 @@ from .americastestkitchen import (
     AmericasTestKitchenSeasonIE,
 )
 from .angel import AngelIE
+from .anonmp4 import AnonMP4IE
 from .antenna import (
     Ant1NewsGrArticleIE,
     Ant1NewsGrEmbedIE,
