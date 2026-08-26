@@ -20,7 +20,7 @@ domain,has_true_live_test,confirmed_working_on_date,register_only,cloudflare_tur
 91porn.com,true,2026-08-23,false,false
 9c9media,false,NULL,false,false
 9gag.com,true,2026-08-24,false,false
-9news.com.au,true,NULL,false,false
+9news.com.au,true,2026-08-26,false,false
 9now.com.au,false,NULL,false,false
 AdobeConnect,false,NULL,false,false
 Anvato,false,NULL,false,false

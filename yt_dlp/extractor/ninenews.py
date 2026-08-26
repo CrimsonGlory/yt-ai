@@ -26,7 +26,8 @@ class NineNewsIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.9news.com.au/world/tape-reveals-donald-trump-pressured-michigan-officials-not-to-certify-2020-vote-a-new-report-says/0b8b880e-7d3c-41b9-b2bd-55bc7e492259',
-        'md5': 'a885c44d20898c3e70e9a53e8188cea1',
+        'md5': '6a58855e35c0ef6da8ffd60631618172',
+        'params': {'format': 'b[protocol=https]'},
         'info_dict': {
             'id': '6343587450112',
             'ext': 'mp4',
@@ -41,6 +42,8 @@ class NineNewsIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.9news.com.au/national/outrage-as-parents-banned-from-giving-gifts-to-kindergarten-teachers/e19b49d4-a1a4-4533-9089-6e10e2d9386a',
+        'md5': '14750fdf68eb9c96da63a3e583a38bca',
+        'params': {'format': 'b[protocol=https]'},
         'info_dict': {
             'id': '6343716797112',
             'ext': 'mp4',
@@ -61,14 +64,30 @@ class NineNewsIE(InfoExtractor):
         initial_state = self._search_json(
             r'var\s+__INITIAL_STATE__\s*=', webpage, 'initial state', article_id,
             default={})
+        env = self._search_json(
+            r'window\.ENVIRONMENT_VARIABLES\s*=', webpage, 'environment variables',
+            article_id, default={})
+        apollo_state = self._search_json(
+            r'window\.__APOLLO_STATE__\s*=', webpage, 'apollo state', article_id,
+            default={})
+
         video_id = traverse_obj(
             initial_state, ('videoIndex', 'currentVideo', 'brightcoveId', {str}),
             ('article', ..., 'media', lambda _, v: v['type'] == 'video', 'urn', {str}), get_all=False)
-        account = traverse_obj(initial_state, (
-            'videoIndex', 'config', (None, 'video'), 'account', {str}), get_all=False)
+        if not video_id:
+            video_id = traverse_obj(apollo_state, (
+                lambda _, v: v['__typename'] == 'ArticleAsset', 'body', 'blocks',
+                lambda _, v: v['type'] == 'VIDEOS',
+                'videos', lambda _, v: v['provider']['type'] == 'brightcove',
+                'provider', 'id', {str}), get_all=False)
         if not video_id:
             video_id = self._search_regex(
                 r'brightcoveId\\?"?\s*:\s*\\?"(\d+)', webpage, 'brightcove id', default=None)
+
+        account = traverse_obj(initial_state, (
+            'videoIndex', 'config', (None, 'video'), 'account', {str}), get_all=False)
+        if not account:
+            account = traverse_obj(env, ('VIDEO_PLAYER', 'NETWORK', 'ACCOUNT_ID', {str}))
         if not account:
             account = self._search_regex(
                 r'account\\?"?\s*:\s*\\?"(\d{9,})',
