@@ -1,9 +1,11 @@
 from .common import InfoExtractor
 from ..utils import (
-    get_element_by_id,
+    clean_html,
+    format_field,
     int_or_none,
-    merge_dicts,
-    mimetype2ext,
+    join_nonempty,
+    parse_iso8601,
+    traverse_obj,
     url_or_none,
 )
 
@@ -19,11 +21,21 @@ class AparatIE(InfoExtractor):
             'id': 'wP8On',
             'ext': 'mp4',
             'title': 'تیم گلکسی 11 - زومیت',
-            'description': 'md5:096bdabcdcc4569f2b8a5e903a3b3028',
+            'description': 'www.zoomit.ir',
             'duration': 231,
             'timestamp': 1387394859,
             'upload_date': '20131218',
             'view_count': int,
+            'uploader': 'وبسایت زومیت',
+            'uploader_id': 'thezoomit',
+            'channel': 'وبسایت زومیت',
+            'channel_id': 'thezoomit',
+            'channel_url': 'https://www.aparat.com/thezoomit',
+            'comment_count': int,
+            'like_count': int,
+            'thumbnail': r're:https?://.*\.(?:jpg|png)',
+            'categories': ['فناوری و رایانه'],
+            'tags': ['تیم', 'گلکسی', 'زومیت'],
         },
     }, {
         # multiple formats
@@ -31,58 +43,61 @@ class AparatIE(InfoExtractor):
         'only_matching': True,
     }]
 
-    def _parse_options(self, webpage, video_id, fatal=True):
-        return self._parse_json(self._search_regex(
-            r'options\s*=\s*({.+?})\s*;', webpage, 'options', default='{}'), video_id)
-
     def _real_extract(self, url):
         video_id = self._match_id(url)
-
-        # If available, provides more metadata
-        webpage = self._download_webpage(url, video_id, fatal=False)
-        options = self._parse_options(webpage, video_id, fatal=False)
-
-        if not options:
-            webpage = self._download_webpage(
-                'http://www.aparat.com/video/video/embed/vt/frame/showvideo/yes/videohash/' + video_id,
-                video_id, 'Downloading embed webpage')
-            options = self._parse_options(webpage, video_id)
+        video = self._download_json(
+            f'https://www.aparat.com/api/fa/v1/video/video/show/videohash/{video_id}',
+            video_id, query={'pr': 1, 'mf': 1})
+        attrs = traverse_obj(video, ('data', 'attributes', {dict}))
+        if not attrs:
+            self.raise_no_formats('No video data found', expected=True, video_id=video_id)
 
         formats = []
-        for sources in (options.get('multiSRC') or []):
-            for item in sources:
-                if not isinstance(item, dict):
-                    continue
-                file_url = url_or_none(item.get('src'))
-                if not file_url:
-                    continue
-                item_type = item.get('type')
-                if item_type == 'application/vnd.apple.mpegurl':
-                    formats.extend(self._extract_m3u8_formats(
-                        file_url, video_id, 'mp4',
-                        entry_protocol='m3u8_native', m3u8_id='hls',
-                        fatal=False))
-                else:
-                    ext = mimetype2ext(item.get('type'))
-                    label = item.get('label')
-                    formats.append({
-                        'url': file_url,
-                        'ext': ext,
-                        'format_id': 'http-%s' % (label or ext),
-                        'height': int_or_none(self._search_regex(
-                            r'(\d+)[pP]', label or '', 'height',
-                            default=None)),
-                    })
+        for item in traverse_obj(attrs, ('file_link_all', lambda _, v: isinstance(v, dict) and v.get('urls'))):
+            profile = item.get('profile') or ''
+            height = int_or_none(self._search_regex(
+                r'(\d+)[pP]', profile, 'height', default=None))
+            for idx, file_url in enumerate(traverse_obj(item, ('urls', ..., {url_or_none}))):
+                formats.append({
+                    'url': file_url,
+                    'format_id': join_nonempty('http', profile, idx or None),
+                    'height': height,
+                })
+        if not formats:
+            file_url = url_or_none(attrs.get('file_link'))
+            if file_url:
+                formats.append({'url': file_url})
 
-        info = self._search_json_ld(webpage, video_id, default={})
+        hls_url = traverse_obj(attrs, (('hls_link', ('hls', 'link')), {url_or_none}, any))
+        if hls_url:
+            formats.extend(self._extract_m3u8_formats(
+                hls_url, video_id, 'mp4', m3u8_id='hls', fatal=False, quality=-10))
 
-        if not info.get('title'):
-            info['title'] = get_element_by_id('videoTitle', webpage) or \
-                self._html_search_meta(['og:title', 'twitter:title', 'DC.Title', 'title'], webpage, fatal=True)
+        channel = traverse_obj(video, (
+            'included', lambda _, v: v.get('type') == 'channel', 'attributes', {dict}, any)) or {}
+        username = traverse_obj(channel, ('username', {str})) or traverse_obj(
+            attrs, ('owner_username', {str}))
 
-        return merge_dicts(info, {
+        return {
             'id': video_id,
-            'thumbnail': url_or_none(options.get('poster')),
-            'duration': int_or_none(options.get('duration')),
             'formats': formats,
-        })
+            **traverse_obj(attrs, {
+                'title': ('title', {str}),
+                'description': ('description', {clean_html}),
+                'duration': ('duration', {int_or_none}),
+                'timestamp': ('mdate', {parse_iso8601}),
+                'thumbnail': ('big_poster', {url_or_none}),
+                'view_count': ('visit_cnt_non_formatted', {int_or_none}),
+                'like_count': ('like_cnt_non_formatted', {int_or_none}),
+                'comment_count': ('comment_cnt_non_formatted', {int_or_none}),
+                'tags': ('tags', ..., {str}, {str.strip}, filter),
+                'categories': ('category', 'name', {str}, filter, all),
+            }),
+            **traverse_obj(channel, {
+                'uploader': (('displayName', 'name'), {str}, any),
+                'channel': (('displayName', 'name'), {str}, any),
+            }),
+            'uploader_id': username,
+            'channel_id': username,
+            'channel_url': format_field(username, None, 'https://www.aparat.com/%s'),
+        }
