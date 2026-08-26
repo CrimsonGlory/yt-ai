@@ -5,8 +5,21 @@ from ..utils import float_or_none, mimetype2ext, traverse_obj
 class BerufeTVIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?web\.arbeitsagentur\.de/berufetv/[^?#]+/film;filmId=(?P<id>[\w-]+)'
     _TESTS = [{
+        'url': 'https://web.arbeitsagentur.de/berufetv/detailansicht/film;filmId=A7B1D53hQVzsM1XsQ7f53e',
+        'md5': '335de04c0d42d31b26ba689e770679d5',
+        'info_dict': {
+            'id': 'A7B1D53hQVzsM1XsQ7f53e',
+            'ext': 'mp4',
+            'title': 'Fachangestellte/r für Arbeitsmarktdienstleistungen',
+            'description': 'md5:113647972254cf889f117851140acc8a',
+            'categories': ['Ausbildungs&shy;beruf'],
+            'tags': ['Ausbildungsfilm'],
+            'duration': 521.36,
+            'thumbnail': r're:^https://asset-out-cdn\.video-cdn\.net/private/videos/A7B1D53hQVzsM1XsQ7f53e/thumbnails/\d+\?quality=thumbnail&__token__=[^\s]+$',
+        },
+    }, {
         'url': 'https://web.arbeitsagentur.de/berufetv/studienberufe/wirtschaftswissenschaften/wirtschaftswissenschaften-volkswirtschaft/film;filmId=DvKC3DUpMKvUZ_6fEnfg3u',
-        'skip': 'HTTP Error 403',
+        'skip': 'video gone',
         'md5': '041b6432ec8e6838f84a5c30f31cc795',
         'info_dict': {
             'id': 'DvKC3DUpMKvUZ_6fEnfg3u',
@@ -26,7 +39,7 @@ class BerufeTVIE(InfoExtractor):
         movie_metadata = self._download_json(
             'https://rest.arbeitsagentur.de/infosysbub/berufetv/pc/v1/film-metadata',
             video_id, 'Downloading JSON metadata',
-            headers={'X-API-Key': '79089773-4892-4386-86e6-e8503669f426'}, fatal=False)
+            headers={'X-API-Key': 'infosysbub-berufetv'}, fatal=False)
 
         meta = traverse_obj(
             movie_metadata, ('metadaten', lambda _, i: video_id == i['miId']),
