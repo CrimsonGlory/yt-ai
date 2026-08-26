@@ -2,7 +2,9 @@
 from .common import InfoExtractor
 from ..utils import (
     int_or_none,
+    traverse_obj,
     try_get,
+    url_or_none,
 )
 
 
@@ -96,8 +98,22 @@ class CBSSportsIE(CBSSportsBaseIE):
 class TwentyFourSevenSportsIE(CBSSportsBaseIE):
     _WEB_FALLBACK = True
     IE_NAME = '247sports'
-    _VALID_URL = r'https?://(?:www\.)?247sports\.com/Video/(?:[^/?#&]+-)?(?P<id>\d+)'
+    _VALID_URL = r'https?://(?:www\.)?247sports\.com/[Vv]ideo/(?:[^/?#&]+-)?(?P<id>\d+)'
     _TESTS = [{
+        'url': 'https://247sports.com/video/2026-oklahoma-position-preview-safeties-14292392/',
+        'md5': '4df8bae47803b42466872e5a38bda35e',
+        'info_dict': {
+            'id': '5cd5e463-f28d-439d-be5a-ce29ad736b22',
+            'ext': 'mp4',
+            'display_id': '14292392',
+            'title': '2026 Oklahoma Position Preview: Safeties',
+            'description': "Sooners Illustrated's Josh Callaway and Tom Green preview the Oklahoma safety room ahead of the 2026 season.",
+            'thumbnail': r're:https?://.+\.jpg',
+            'timestamp': 1787756103,
+            'upload_date': '20260826',
+            'duration': 531,
+        },
+    }, {
         'url': 'https://247sports.com/Video/2021-QB-Jake-Garcia-senior-highlights-through-five-games-10084854/',
         'info_dict': {
             'id': '4f1265cb-c3b5-44a8-bb1d-1914119a0ccc',
@@ -108,4 +124,35 @@ class TwentyFourSevenSportsIE(CBSSportsBaseIE):
             'upload_date': '20201204',
             'duration': 208,
         },
+        'skip': 'This video is no longer available',
     }]
+
+    def _real_extract(self, url):
+        display_id = self._match_id(url)
+        webpage = self._download_webpage(url, display_id, impersonate=True)
+        video = self._search_json(
+            r'"main"\s*:\s*\{\s*"video"\s*:', webpage, 'video', display_id, default=None)
+        if not video:
+            iframe_url = self._search_regex(
+                r'<iframe[^>]+(?:data-)?src="(https?://[^/]+/player/embed[^"]+)"',
+                webpage, 'embed url')
+            return self.url_result(iframe_url, CBSSportsEmbedIE.ie_key())
+
+        video_id = video['id']
+        formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+            traverse_obj(video, ('sources', 'hls', ..., {url_or_none}), get_all=False),
+            video_id, 'mp4', m3u8_id='hls')
+
+        return {
+            'id': video_id,
+            'display_id': display_id,
+            'formats': formats,
+            'subtitles': subtitles,
+            **traverse_obj(video, {
+                'title': ('title', {str}),
+                'description': ('description', {str}),
+                'thumbnail': ('thumbnail', {url_or_none}),
+                'timestamp': ('startTime', {int_or_none}),
+                'duration': ('length', {int_or_none}),
+            }),
+        }
