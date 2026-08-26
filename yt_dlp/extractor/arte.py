@@ -30,6 +30,25 @@ class ArteTVIE(ArteTVBaseIE):
                         /(?P<id>\d{{6}}-\d{{3}}-[AF]|LIVE)
                     '''
     _TESTS = [{
+        'url': 'https://www.arte.tv/en/videos/116041-009-A/tape/',
+        'md5': '0b73baf165bc50c155007e88673c89fe',
+        'info_dict': {
+            'id': '116041-009-A',
+            'ext': 'mp4',
+            'title': 'Dolly Parton',
+            'alt_title': 'TAPE',
+            'description': 'md5:e9d255683aad869532d4c5273390bc24',
+            'thumbnail': r're:https?://api-cdn\.arte\.tv/img/v2/image/.+',
+            'timestamp': 1736356586,
+            'upload_date': '20250108',
+            'duration': 184,
+        },
+        # HLS --test only fetches the fMP4 init fragment (~1KB), below the default 10KB check
+        'file_minsize': None,
+        'params': {
+            'format': 'bv[vcodec^=avc1]/bv/b',
+        },
+    }, {
         'url': 'https://www.arte.tv/en/videos/088501-000-A/mexico-stealing-petrol-to-survive/',
         'only_matching': True,
     }, {
