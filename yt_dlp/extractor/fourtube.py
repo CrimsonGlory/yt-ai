@@ -113,7 +113,7 @@ class FourTubeIE(FourTubeBaseIE):
     _TKN_HOST = 'token.4tube.com'
     _TESTS = [{
         'url': 'http://www.4tube.com/videos/209733/hot-babe-holly-michaels-gets-her-ass-stuffed-by-black',
-        'skip': 'HTTP Error 403',
+        'skip': 'Site is now a link aggregator and no longer hosts videos',
         'md5': '6516c8ac63b03de06bc8eac14362db4f',
         'info_dict': {
             'id': '209733',
