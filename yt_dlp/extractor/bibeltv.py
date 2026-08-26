@@ -1,3 +1,4 @@
+import json
 
 from .common import InfoExtractor
 from ..utils import (
@@ -18,8 +19,7 @@ class BibelTVBaseIE(InfoExtractor):
     _GEO_COUNTRIES = ['AT', 'CH', 'DE']
     _GEO_BYPASS = False
 
-    API_URL = 'https://www.bibeltv.de/mediathek/api'
-    AUTH_TOKEN = 'j88bRXY8DsEqJ9xmTdWhrByVi5Hm'
+    _VIDEO_ACTION = 'c54a3b3c4f2e8c51ff2fa76e05af1af5338d7f9e'
 
     def _extract_formats_and_subtitles(self, data, crn_id, *, is_live=False):
         formats = []
@@ -36,7 +36,10 @@ class BibelTVBaseIE(InfoExtractor):
                 formats.extend(mpd_formats)
                 subtitles.update(mpd_subs)
             elif media_ext == 'mp4':
-                formats.append({'url': media_url})
+                formats.append({
+                    'url': media_url,
+                    'format_id': 'http-mp4',
+                })
             else:
                 self.report_warning(f'Unknown format {media_ext!r}')
 
@@ -68,19 +71,36 @@ class BibelTVBaseIE(InfoExtractor):
             **self._extract_base_info(data),
         }
 
-    def _extract_video_info(self, data):
+    @staticmethod
+    def _parse_next_action_data(flight_text):
+        for line in flight_text.splitlines():
+            body = line.partition(':')[2]
+            if body.startswith('{') and '"videoUrls"' in body:
+                return body
+        return '{}'
+
+    def _extract_video_info(self, data, webpage_url):
         crn_id = data['crn']
 
         if data.get('drm'):
             self.report_drm(crn_id)
 
         json_data = self._download_json(
-            format_field(data, 'id', f'{self.API_URL}/video/%s'), crn_id,
-            headers={'Authorization': self.AUTH_TOKEN}, fatal=False,
-            errnote='No formats available') or {}
+            webpage_url, crn_id,
+            data=json.dumps([data['id'], crn_id], separators=(',', ':')).encode(),
+            headers={
+                'Content-Type': 'text/plain;charset=UTF-8',
+                'Next-Action': self._VIDEO_ACTION,
+            },
+            transform_source=self._parse_next_action_data,
+            fatal=False, errnote='No formats available') or {}
 
         formats, subtitles = self._extract_formats_and_subtitles(
-            traverse_obj(json_data, ('video', 'videoUrls', ...)), crn_id)
+            traverse_obj(json_data, (
+                'video', (
+                    ('editions', ..., 'videoUrls', ...),
+                    ('videoUrls', ...),
+                ))), crn_id)
 
         return {
             '_type': 'video',
@@ -97,35 +117,39 @@ class BibelTVVideoIE(BibelTVBaseIE):
 
     _TESTS = [{
         'url': 'https://www.bibeltv.de/mediathek/videos/344436-alte-wege',
-        'md5': 'ec1c07efe54353780512e8a4103b612e',
+        'md5': '6e64b14b7d31b469068fbde05bb65828',
         'info_dict': {
             'id': '344436',
             'ext': 'mp4',
             'title': 'Alte Wege',
             'description': 'md5:2f4eb7294c9797a47b8fd13cccca22e9',
             'timestamp': 1677877071,
-            'duration': 150.0,
+            'duration': 150,
             'upload_date': '20230303',
             'thumbnail': r're:https://bibeltv\.imgix\.net/[\w-]+\.jpg',
             'episode': 'Episode 1',
             'episode_number': 1,
+            'season': 'Season 1',
+            'season_number': 1,
             'view_count': int,
             'like_count': int,
         },
         'params': {
-            'format': '6',
+            'format': 'http-mp4',
         },
     }]
 
     def _real_extract(self, url):
         crn_id = self._match_id(url)
-        video_data = traverse_obj(
-            self._search_nextjs_data(self._download_webpage(url, crn_id), crn_id),
-            ('props', 'pageProps', 'videoPageData', 'videos', 0, {dict}))
+        webpage = self._download_webpage(url, crn_id)
+        video_data = traverse_obj(self._search_nextjs_v13_data(webpage, crn_id), (
+            ..., {dict},
+            lambda _, v: str(v.get('crn')) == crn_id and v.get('id') is not None,
+            any))
         if not video_data:
             raise ExtractorError('Missing video data.')
 
-        return self._extract_video_info(video_data)
+        return self._extract_video_info(video_data, url)
 
 
 class BibelTVSeriesIE(BibelTVBaseIE):
