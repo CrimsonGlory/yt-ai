@@ -7,7 +7,7 @@ class AitubeKZVideoIE(InfoExtractor):
     _TESTS = [{
         # id paramater as first parameter
         'url': 'https://aitube.kz/video?id=9291d29b-c038-49a1-ad42-3da2051d353c&playlistId=d55b1f5f-ef2a-4f23-b646-2a86275b86b7&season=1',
-        'skip': 'Site no longer exists or is broken',
+        'skip': 'Web video platform shut down; all URLs serve a static Aitu app landing page and the streaming API is dead',
         'info_dict': {
             'id': '9291d29b-c038-49a1-ad42-3da2051d353c',
             'ext': 'mp4',
