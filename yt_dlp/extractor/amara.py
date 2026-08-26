@@ -11,6 +11,21 @@ from ..utils import (
 class AmaraIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?amara\.org/(?:\w+/)?videos/(?P<id>\w+)'
     _TESTS = [{
+        # Direct Link (TED HTML5)
+        'url': 'https://amara.org/en/videos/U7nug0p1xZ5a/info/we-need-to-talk-about-an-injustice/',
+        'md5': '425e42807d634b0f2e800b80af94d273',
+        'info_dict': {
+            'id': 'U7nug0p1xZ5a',
+            'ext': 'mp4',
+            'title': 'We need to talk about an injustice',
+            'description': 'md5:e6b5445ecd4d88db98433e95383086d8',
+            'thumbnail': r're:^https?://.*\.jpg$',
+            'subtitles': dict,
+            'duration': 1400,
+            'timestamp': 1331095533,
+            'upload_date': '20120307',
+        },
+    }, {
         # Youtube
         'url': 'https://amara.org/en/videos/jVx79ZKGK1ky/info/why-jury-trials-are-becoming-less-common/?tab=video',
         'skip': 'video gone',
