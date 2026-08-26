@@ -8,6 +8,7 @@ from ..utils import (
     int_or_none,
     join_nonempty,
     parse_qs,
+    url_or_none,
     urljoin,
 )
 from ..utils.traversal import traverse_obj
@@ -61,7 +62,12 @@ class AllstarBaseIE(InfoExtractor):
     @staticmethod
     def _parse_video_data(video_data):
         def media_url_or_none(path):
-            return urljoin('https://media.allstar.gg/', path)
+            if not isinstance(path, str):
+                return None
+            # API now returns Backblaze keys (b2://<bucket>/<object-key>)
+            if path.startswith('b2://'):
+                path = path.split('/', 3)[-1]
+            return url_or_none(urljoin('https://media2.allstar.gg/', path))
 
         info = traverse_obj(video_data, {
             'id': ('_id', {str}),
@@ -103,16 +109,17 @@ class AllstarBaseIE(InfoExtractor):
 
 
 class AllstarIE(AllstarBaseIE):
-    _VALID_URL = r'https?://(?:www\.)?allstar\.gg/(?P<type>(?:clip|montage))\?(?P=type)=(?P<id>[^/?#&]+)'
+    _VALID_URL = r'https?://(?:www\.)?allstar\.gg/(?P<type>clip|montage)(?:\?(?P=type)=|/)(?P<id>[^/?#&]+)'
 
     _TESTS = [{
         'url': 'https://allstar.gg/clip?clip=64482c2da9eec30008a67d1b',
-        'skip': 'Unsupported URL / extractor broken',
+        'md5': '4083f5e97a6c12ea1b827705d668fe0b',
         'info_dict': {
             'id': '64482c2da9eec30008a67d1b',
+            'display_id': '64482c2da9eec30008a67d1b',
             'title': '4K on Inferno',
-            'url': 'md5:66befb5381eef0c9456026386c25fa55',
-            'thumbnail': r're:https://media\.allstar\.gg/.+\.(?:png|jpg)$',
+            'url': 'md5:7ff963fa37fd1c3565028d0ee7de18f0',
+            'thumbnail': r're:https://media\d*\.allstar\.gg/.+\.(?:png|jpg)$',
             'uploader': 'chrk.',
             'ext': 'mp4',
             'duration': 20,
@@ -124,14 +131,18 @@ class AllstarIE(AllstarBaseIE):
             'view_count': int,
         },
     }, {
+        'url': 'https://allstar.gg/clip/64482c2da9eec30008a67d1b',
+        'only_matching': True,
+    }, {
         'url': 'https://allstar.gg/clip?clip=8LJLY4JKB',
+        'skip': 'video gone',
         'info_dict': {
             'id': '64a1ec6b887f4c0008dc50b8',
             'display_id': '8LJLY4JKB',
             'title': 'AK-47 3K on Mirage',
             'url': 'md5:dde224fd12f035c0e2529a4ae34c4283',
             'ext': 'mp4',
-            'thumbnail': r're:https://media\.allstar\.gg/.+\.(?:png|jpg)$',
+            'thumbnail': r're:https://media\d*\.allstar\.gg/.+\.(?:png|jpg)$',
             'duration': 16,
             'filesize': 30175859,
             'timestamp': 1688333419,
@@ -149,7 +160,7 @@ class AllstarIE(AllstarBaseIE):
             'display_id': 'APQLGM2IMXW',
             'title': 'cherokee Rapid Fire Snipers Montage',
             'url': 'md5:a3ee356022115db2b27c81321d195945',
-            'thumbnail': r're:https://media\.allstar\.gg/.+\.(?:png|jpg)$',
+            'thumbnail': r're:https://media\d*\.allstar\.gg/.+\.(?:png|jpg)$',
             'ext': 'mp4',
             'timestamp': 1681810448,
             'uploader': 'cherokee',
@@ -166,7 +177,7 @@ class AllstarIE(AllstarBaseIE):
             'display_id': 'RILJMH6QOS',
             'title': 'cherokee Rapid Fire Snipers Montage',
             'url': 'md5:d5672e6f88579730c2310a80fdbc4030',
-            'thumbnail': r're:https://media\.allstar\.gg/.+\.(?:png|jpg)$',
+            'thumbnail': r're:https://media\d*\.allstar\.gg/.+\.(?:png|jpg)$',
             'ext': 'mp4',
             'timestamp': 1688365434,
             'uploader': 'cherokee',
@@ -180,9 +191,11 @@ class AllstarIE(AllstarBaseIE):
     def _real_extract(self, url):
         query_id, video_id = self._match_valid_url(url).group('type', 'id')
 
-        return self._parse_video_data(
-            self._call_api(
-                _QUERIES.get(query_id), {'id': video_id}, ('data', 'video'), video_id))
+        video_data = self._call_api(
+            _QUERIES.get(query_id), {'id': video_id}, ('data', 'video'), video_id)
+        if not video_data:
+            raise ExtractorError('Video not found', expected=True, video_id=video_id)
+        return self._parse_video_data(video_data)
 
 
 class AllstarProfileIE(AllstarBaseIE):
