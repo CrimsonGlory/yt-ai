@@ -15,6 +15,17 @@ class DigitallySpeakingIE(InfoExtractor):
     _VALID_URL = r'https?://(?:s?evt\.dispeak|events\.digitallyspeaking)\.com/(?:[^/]+/)+xml/(?P<id>[^.]+)\.xml'
 
     _TESTS = [{
+        # Adobe Summit 2017
+        'url': 'http://evt.dispeak.com/adobe/dms/17/xml/17623_QPTT.xml',
+        'md5': 'e8b57570afa26d24b0a9395172c99a91',
+        'info_dict': {
+            'id': '17623_QPTT',
+            'ext': 'mp4',
+            'title': 'Target Everywhere: Power Experiences across IOT Using Target APIs',
+            'duration': 3046,
+            'creators': ['Nipun Nair', 'Daniel Placinta'],
+        },
+    }, {
         # From http://gdcvault.com/play/1023460/Tenacious-Design-and-The-Interface
         'url': 'http://evt.dispeak.com/ubm/gdc/sf16/xml/840376_BQRC.xml',
         'skip': 'HTTP Error 403',
