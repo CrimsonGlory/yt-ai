@@ -1,17 +1,40 @@
+import base64
 import json
 import math
 
 from .common import InfoExtractor
+from .jwplatform import JWPlatformIE
 from ..utils import (
     InAdvancePagedList,
+    extract_attributes,
     traverse_obj,
 )
 
 
 class LeFigaroVideoEmbedIE(InfoExtractor):
-    _VALID_URL = r'https?://video\.lefigaro\.fr/embed/[^?#]+/(?P<id>[\w-]+)'
+    _VALID_URL = r'https?://video\.lefigaro\.fr/(?:embed/)?[\w-]+/(?:[\w-]+/)+(?P<id>[\w-]+)/?(?:[#?]|$)'
 
     _TESTS = [{
+        'url': 'https://video.lefigaro.fr/figarotv/emission/suivez-en-direct-le-club-le-figaro-international-avec-philippe-gelie-9-20230123',
+        'md5': '15f17d062e422188b03d19d05e3bcaea',
+        'info_dict': {
+            'id': 'QChnbPYA',
+            'ext': 'mp4',
+            'title': 'Où en est le couple franco-allemand ? Retrouvez Le Club Le Figaro International',
+            'description': 'md5:6f47235b7e7c93b366fd8ebfa10572ac',
+            'upload_date': '20230123',
+            'timestamp': 1674503575,
+            'duration': 3152.0,
+            'thumbnail': r're:^https?://[^?#]+\.(?:jpeg|jpg)',
+        },
+        'params': {
+            # Prefer progressive MP4 so the live test is not HLS-only
+            'format': 'best[protocol=https][ext=mp4]/best',
+        },
+    }, {
+        'url': 'https://video.lefigaro.fr/figaro/faits-divers/caen-un-automobiliste-fonce-dans-la-foule-une-personne-decedee-et-10-blesses-20260827',
+        'only_matching': True,
+    }, {
         'url': 'https://video.lefigaro.fr/embed/figaro/video/les-francais-ne-veulent-ils-plus-travailler-suivez-en-direct-le-club-le-figaro-idees/',
         'skip': 'video gone',
         'md5': 'a0c3069b7e4c4526abf0053a7713f56f',
@@ -43,21 +66,23 @@ class LeFigaroVideoEmbedIE(InfoExtractor):
 
     _WEBPAGE_TESTS = [{
         'url': 'https://video.lefigaro.fr/figaro/video/suivez-en-direct-le-club-le-figaro-international-avec-philippe-gelie-9/',
-        'md5': '6289f9489efb969e38245f31721596fe',
+        'md5': '15f17d062e422188b03d19d05e3bcaea',
         'info_dict': {
             'id': 'QChnbPYA',
             'title': 'Où en est le couple franco-allemand ? Retrouvez Le Club Le Figaro International',
             'description': 'md5:6f47235b7e7c93b366fd8ebfa10572ac',
             'upload_date': '20230123',
             'timestamp': 1674503575,
-            'duration': 3153,
+            'duration': 3152.0,
             'thumbnail': r're:^https?://[^?#]+\.(?:jpeg|jpg)',
-            'age_limit': 0,
             'ext': 'mp4',
+        },
+        'params': {
+            'format': 'best[protocol=https][ext=mp4]/best',
         },
     }, {
         'url': 'https://video.lefigaro.fr/figaro/video/la-philosophe-nathalie-sarthou-lajus-est-linvitee-du-figaro-live/',
-        'skip': 'Unsupported URL / extractor broken',
+        'skip': 'old URL redirected; covered by embed extractor',
         'md5': 'f6df814cae53e85937621599d2967520',
         'info_dict': {
             'id': 'QJzqoNbf',
@@ -76,12 +101,13 @@ class LeFigaroVideoEmbedIE(InfoExtractor):
         display_id = self._match_id(url)
         webpage = self._download_webpage(url, display_id)
 
-        player_data = self._search_nextjs_data(
-            webpage, display_id)['props']['pageProps']['initialProps']['pageData']['playerData']
+        source_token = extract_attributes(self._search_regex(
+            r'(<flive-player\b[^>]*>)', webpage, 'player'))['source-token']
+        source_token += '=' * (-len(source_token) % 4)
+        player_data = self._parse_json(base64.b64decode(source_token).decode(), display_id)
 
-        return self.url_result(
-            f'jwplatform:{player_data["videoId"]}', title=player_data.get('title'),
-            description=player_data.get('description'), thumbnail=player_data.get('poster'))
+        video_id = player_data['videoId']
+        return self.url_result(f'jwplatform:{video_id}', JWPlatformIE, video_id)
 
 
 class LeFigaroVideoSectionIE(InfoExtractor):
@@ -127,7 +153,7 @@ class LeFigaroVideoSectionIE(InfoExtractor):
             api_response = self._get_api_response(display_id, page_num + 1, note=f'Downloading page {page_num + 1}')
 
             return [self.url_result(
-                video['embedUrl'], LeFigaroVideoEmbedIE, **traverse_obj(video, {
+                video['embedUrl'].replace('/embed/', '/'), LeFigaroVideoEmbedIE, **traverse_obj(video, {
                     'title': 'name',
                     'description': 'description',
                     'thumbnail': 'thumbnailUrl',
