@@ -2,6 +2,7 @@ import json
 
 from .common import InfoExtractor
 from ..utils import (
+    ExtractorError,
     int_or_none,
     js_to_json,
     parse_iso8601,
@@ -31,6 +32,7 @@ class LikeeIE(InfoExtractor):
             'comment_count': int,
             'like_count': int,
         },
+        'skip': 'Likee web video pages redirect to homepage; playback is app-only',
     }, {
         'url': 'https://likee.video/@649222262/video/7093167848050058862',
         'info_dict': {
@@ -49,6 +51,7 @@ class LikeeIE(InfoExtractor):
             'uploader_id': '649222262',
             'view_count': int,
         },
+        'skip': 'Likee web video pages redirect to homepage; playback is app-only',
     }, {
         'url': 'https://likee.video/@fernanda_rivasg/video/6932224568407629502',
         'info_dict': {
@@ -67,6 +70,7 @@ class LikeeIE(InfoExtractor):
             'timestamp': 1614034308,
             'upload_date': '20210222',
         },
+        'skip': 'Likee web video pages redirect to homepage; playback is app-only',
     }, {
         'url': 'https://likee.video/v/k6QcOp',
         'info_dict': {
@@ -85,6 +89,7 @@ class LikeeIE(InfoExtractor):
             'artist': 'ʟᴇʀɪᴋ_ᴜɴɪᴄᴏʀɴ♡︎',
             'upload_date': '20210126',
         },
+        'skip': 'Likee web video pages redirect to homepage; playback is app-only',
     }, {
         'url': 'https://www.likee.video/@649222262/video/7093167848050058862',
         'only_matching': True,
@@ -96,9 +101,13 @@ class LikeeIE(InfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
-        info = self._parse_json(
-            self._search_regex(r'window\.data\s=\s({.+?});', webpage, 'video info'),
-            video_id, transform_source=js_to_json)
+        data = self._search_regex(
+            r'window\.data\s=\s({.+?});', webpage, 'video info', default=None)
+        if not data:
+            raise ExtractorError(
+                'Likee no longer serves public web video pages; videos are app-only',
+                expected=True)
+        info = self._parse_json(data, video_id, transform_source=js_to_json)
         video_url = traverse_obj(info, 'video_url', ('originVideoInfo', 'video_url'))
         if not video_url:
             self.raise_no_formats('Video was deleted', expected=True)
@@ -141,6 +150,7 @@ class LikeeUserIE(InfoExtractor):
             'title': 'fernanda_rivasg',
         },
         'playlist_mincount': 500,
+        'skip': 'Likee profile pages redirect to homepage; playback is app-only',
     }, {
         'url': 'https://likee.video/@may_hmoob',
         'info_dict': {
@@ -148,6 +158,7 @@ class LikeeUserIE(InfoExtractor):
             'title': 'may_hmoob',
         },
         'playlist_mincount': 80,
+        'skip': 'Likee profile pages redirect to homepage; playback is app-only',
     }]
     _PAGE_SIZE = 50
     _API_GET_USER_VIDEO = 'https://api.like-video.com/likee-activity-flow-micro/videoApi/getUserVideo'
@@ -175,8 +186,12 @@ class LikeeUserIE(InfoExtractor):
     def _real_extract(self, url):
         user_name = self._match_id(url)
         webpage = self._download_webpage(url, user_name)
-        info = self._parse_json(
-            self._search_regex(r'window\.data\s*=\s*({.+?});', webpage, 'user info'),
-            user_name, transform_source=js_to_json)
+        data = self._search_regex(
+            r'window\.data\s*=\s*({.+?});', webpage, 'user info', default=None)
+        if not data:
+            raise ExtractorError(
+                'Likee no longer serves public web profile pages; videos are app-only',
+                expected=True)
+        info = self._parse_json(data, user_name, transform_source=js_to_json)
         user_id = traverse_obj(info, ('userinfo', 'uid'))
         return self.playlist_result(self._entries(user_name, user_id), user_id, traverse_obj(info, ('userinfo', 'user_name')))
