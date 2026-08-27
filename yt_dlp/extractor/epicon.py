@@ -26,6 +26,7 @@ class EpiconIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.epicon.in/tv-shows/paapnaashini-ganga/season-1/vardaan',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'vardaan',
             'ext': 'mp4',
@@ -35,6 +36,7 @@ class EpiconIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.epicon.in/movies/jayadev',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'jayadev',
             'ext': 'mp4',
@@ -54,16 +56,18 @@ class EpiconIE(InfoExtractor):
                 r'<input[^>]+id="cont_id"[^>]+value="(\d+)"', webpage, 'cid', default=None)
         if not cid:
             cid = self._search_regex(
-                r"playTrailer\('(\d+)'", webpage, 'cid')
-        headers = {'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-        data = f'cid={cid}&action=st&type=video'.encode()
-        try:
-            data_json = self._download_json(
-                'https://www.epicon.in/ajaxplayer/', video_id, headers=headers, data=data)
-            if isinstance(data_json, str):
-                data_json = self._parse_json(data_json, video_id)
-        except ExtractorError:
-            data_json = {}
+                r"playTrailer\('(\d+)'", webpage, 'cid', default=None)
+        data_json = {}
+        if cid:
+            headers = {'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+            data = f'cid={cid}&action=st&type=video'.encode()
+            try:
+                data_json = self._download_json(
+                    'https://www.epicon.in/ajaxplayer/', video_id, headers=headers, data=data)
+                if isinstance(data_json, str):
+                    data_json = self._parse_json(data_json, video_id)
+            except ExtractorError:
+                data_json = {}
 
         if not data_json.get('success'):
             m3u8_url = self._search_regex(
