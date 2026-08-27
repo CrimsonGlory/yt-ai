@@ -1,6 +1,4 @@
-import base64
 import json
-import re
 
 from .common import InfoExtractor
 from ..utils import (
@@ -9,18 +7,39 @@ from ..utils import (
     mimetype2ext,
     qualities,
     traverse_obj,
-    try_get,
     url_or_none,
 )
+
+_GRAPHQL_API = 'https://api.graphql.imdb.com/'
+_GRAPHQL_HEADERS = {
+    'Content-Type': 'application/json',
+    'Origin': 'https://www.imdb.com',
+    'Referer': 'https://www.imdb.com/',
+}
 
 
 class ImdbIE(InfoExtractor):
     IE_NAME = 'imdb'
     IE_DESC = 'Internet Movie Database trailers'
     _VALID_URL = r'https?://(?:www|m)\.imdb\.com/(?:video|title|list).*?[/-]vi(?P<id>\d+)'
+    _GRAPHQL_QUERY = '''query VideoPlayback($id: ID!) {
+        video(id: $id) {
+            name { value }
+            description { value }
+            runtime { value }
+            thumbnail { url }
+            primaryTitle { titleText { text } }
+            playbackURLs {
+                displayName { value }
+                videoMimeType
+                url
+            }
+        }
+    }'''
 
     _TESTS = [{
         'url': 'http://www.imdb.com/video/imdb/vi2524815897',
+        'md5': '471594d511a4dee8d71cea96dd72b1ad',
         'info_dict': {
             'id': '2524815897',
             'ext': 'mp4',
@@ -29,8 +48,10 @@ class ImdbIE(InfoExtractor):
             'duration': 152,
             'thumbnail': r're:^https?://.+\.jpg',
         },
+        'params': {'format': '720p'},
     }, {
         'url': 'https://www.imdb.com/video/vi3516832537',
+        'md5': 'b594917779ace7e12be2dfbb2689c3e5',
         'info_dict': {
             'id': '3516832537',
             'ext': 'mp4',
@@ -39,6 +60,7 @@ class ImdbIE(InfoExtractor):
             'duration': 153,
             'thumbnail': r're:^https?://.+\.jpg',
         },
+        'params': {'format': '1080p'},
     }, {
         'url': 'http://www.imdb.com/video/_/vi2524815897',
         'only_matching': True,
@@ -61,21 +83,17 @@ class ImdbIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        webpage = self._download_webpage(f'https://www.imdb.com/video/vi{video_id}', video_id)
-        info = self._search_nextjs_data(webpage, video_id)
-        video_info = traverse_obj(info, ('props', 'pageProps', 'videoPlaybackData', 'video'), default={})
+        video_info = traverse_obj(self._download_json(
+            _GRAPHQL_API, video_id, 'Downloading GraphQL JSON',
+            data=json.dumps({
+                'query': self._GRAPHQL_QUERY,
+                'operationName': 'VideoPlayback',
+                'variables': {'id': f'vi{video_id}'},
+            }).encode(),
+            headers=_GRAPHQL_HEADERS), ('data', 'video')) or {}
         title = (traverse_obj(video_info, ('name', 'value'), ('primaryTitle', 'titleText', 'text'))
-                 or self._html_search_meta(('og:title', 'twitter:title'), webpage, default=None)
-                 or self._html_extract_title(webpage))
-        data = video_info.get('playbackURLs') or try_get(self._download_json(
-            'https://www.imdb.com/ve/data/VIDEO_PLAYBACK_DATA', video_id,
-            query={
-                'key': base64.b64encode(json.dumps({
-                    'type': 'VIDEO_PLAYER',
-                    'subType': 'FORCE_LEGACY',
-                    'id': f'vi{video_id}',
-                }).encode()).decode(),
-            }), lambda x: x[0]['videoLegacyEncodings'])
+                 or f'vi{video_id}')
+        data = video_info.get('playbackURLs') or []
         quality = qualities(('SD', '480p', '720p', '1080p'))
         formats, subtitles = [], {}
         for encoding in data:
@@ -84,8 +102,9 @@ class ImdbIE(InfoExtractor):
             video_url = url_or_none(encoding.get('url'))
             if not video_url:
                 continue
-            ext = mimetype2ext(encoding.get(
-                'mimeType')) or determine_ext(video_url)
+            ext = (mimetype2ext(encoding.get('mimeType'))
+                   or {'MP4': 'mp4', 'M3U8': 'm3u8'}.get(encoding.get('videoMimeType'))
+                   or determine_ext(video_url))
             if ext == 'm3u8':
                 fmts, subs = self._extract_m3u8_formats_and_subtitles(
                     video_url, video_id, 'mp4', entry_protocol='m3u8_native',
@@ -104,11 +123,10 @@ class ImdbIE(InfoExtractor):
         return {
             'id': video_id,
             'title': title,
-            'alt_title': info.get('videoSubTitle'),
             'formats': formats,
-            'description': try_get(video_info, lambda x: x['description']['value']),
-            'thumbnail': url_or_none(try_get(video_info, lambda x: x['thumbnail']['url'])),
-            'duration': int_or_none(try_get(video_info, lambda x: x['runtime']['value'])),
+            'description': traverse_obj(video_info, ('description', 'value')),
+            'thumbnail': traverse_obj(video_info, ('thumbnail', 'url', {url_or_none})),
+            'duration': traverse_obj(video_info, ('runtime', 'value', {int_or_none})),
             'subtitles': subtitles,
         }
 
@@ -117,6 +135,15 @@ class ImdbListIE(InfoExtractor):
     IE_NAME = 'imdb:list'
     IE_DESC = 'Internet Movie Database lists'
     _VALID_URL = r'https?://(?:www\.)?imdb\.com/list/ls(?P<id>\d{9})(?!/videoplayer/vi\d+)'
+    _GRAPHQL_QUERY = '''query VideoList($id: ID!) {
+        list(id: $id) {
+            name { originalText }
+            description { originalText { plainText } }
+            items(first: 250) {
+                edges { node { item { ... on Video { id } } } }
+            }
+        }
+    }'''
     _TEST = {
         'url': 'https://www.imdb.com/list/ls009921623/',
         'info_dict': {
@@ -129,16 +156,20 @@ class ImdbListIE(InfoExtractor):
 
     def _real_extract(self, url):
         list_id = self._match_id(url)
-        webpage = self._download_webpage(url, list_id)
+        list_info = traverse_obj(self._download_json(
+            _GRAPHQL_API, list_id, 'Downloading GraphQL JSON',
+            data=json.dumps({
+                'query': self._GRAPHQL_QUERY,
+                'operationName': 'VideoList',
+                'variables': {'id': f'ls{list_id}'},
+            }).encode(),
+            headers=_GRAPHQL_HEADERS), ('data', 'list')) or {}
         entries = [
-            self.url_result('http://www.imdb.com' + m, 'Imdb')
-            for m in re.findall(rf'href="(/list/ls{list_id}/videoplayer/vi[^"]+)"', webpage)]
-
-        list_title = self._html_search_regex(
-            r'<h1[^>]+class="[^"]*header[^"]*"[^>]*>(.*?)</h1>',
-            webpage, 'list title')
-        list_description = self._html_search_regex(
-            r'<div[^>]+class="[^"]*list-description[^"]*"[^>]*><p>(.*?)</p>',
-            webpage, 'list description')
-
-        return self.playlist_result(entries, list_id, list_title, list_description)
+            self.url_result(f'https://www.imdb.com/video/{video_id}', 'Imdb', video_id[2:])
+            for video_id in traverse_obj(list_info, (
+                'items', 'edges', ..., 'node', 'item', 'id', {str}))
+            if video_id.startswith('vi')]
+        return self.playlist_result(
+            entries, list_id,
+            traverse_obj(list_info, ('name', 'originalText')),
+            traverse_obj(list_info, ('description', 'originalText', 'plainText')))
