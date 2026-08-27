@@ -1,19 +1,37 @@
-import json
-
 from .common import InfoExtractor
+from .jwplatform import JWPlatformIE
 from ..utils import (
-    determine_ext,
-    int_or_none,
-    qualities,
-    unescapeHTML,
+    parse_iso8601,
+    traverse_obj,
+    url_or_none,
 )
 
 
 class GiantBombIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?giantbomb\.com/(?:videos|shows)/(?P<display_id>[^/]+)/(?P<id>\d+-\d+)'
+    _VALID_URL = (
+        r'https?://(?:www\.)?giantbomb\.com/(?:videos|shows)/'
+        r'(?!random(?:[/?#]|$))(?P<id>[^?#]+?)(?:/(?P<legacy_id>\d+-\d+))?/?(?:[?#]|$)')
     _TESTS = [{
+        'url': 'https://giantbomb.com/videos/non-subscriber-video',
+        'md5': 'f6ab1bce3f3450c214dddd3d3478ed0e',
+        'info_dict': {
+            'id': 'qIsgFXX7',
+            'ext': 'mp4',
+            'title': 'NON SUBSCRIBER VIDEO',
+            'description': 'This video shows for non-members during paid events.',
+            'display_id': 'non-subscriber-video',
+            'duration': 29.0,
+            'thumbnail': 'https://cdn.jwplayer.com/v2/media/qIsgFXX7/poster.jpg?width=720',
+            'timestamp': 1086099480,
+            'upload_date': '20040601',
+        },
+        'params': {
+            # Prefer progressive MP4 so the live test is not HLS-only
+            'format': 'best[protocol=https][ext=mp4]/best',
+        },
+    }, {
         'url': 'http://www.giantbomb.com/videos/quick-look-destiny-the-dark-below/2300-9782/',
-        'skip': 'HTTP Error 403',
+        'skip': '404',
         'md5': '132f5a803e7e0ab0e274d84bda1e77ae',
         'info_dict': {
             'id': '2300-9782',
@@ -27,60 +45,46 @@ class GiantBombIE(InfoExtractor):
     }, {
         'url': 'https://www.giantbomb.com/shows/ben-stranding/2970-20212',
         'only_matching': True,
+    }, {
+        'url': 'https://giantbomb.com/videos/quick-looks/blood-dungeon',
+        'only_matching': True,
     }]
 
     def _real_extract(self, url):
-        mobj = self._match_valid_url(url)
-        video_id = mobj.group('id')
-        display_id = mobj.group('display_id')
+        slug = self._match_id(url).strip('/')
 
-        webpage = self._download_webpage(url, display_id)
+        video = traverse_obj(self._download_json(
+            'https://giantbomb.com/api/videos', slug,
+            query={'where[slug][equals]': slug, 'limit': '1'},
+            impersonate=True), ('docs', 0, {dict}))
 
-        title = self._og_search_title(webpage)
-        description = self._og_search_description(webpage)
-        thumbnail = self._og_search_thumbnail(webpage)
+        if not video:
+            webpage = self._download_webpage(url, slug, impersonate=True)
+            video_id = self._search_regex(r'videoId\\?":(\d+)', webpage, 'video id')
+            video = self._download_json(
+                f'https://giantbomb.com/api/videos/{video_id}', video_id,
+                impersonate=True)
 
-        video = json.loads(unescapeHTML(self._search_regex(
-            r'data-video="([^"]+)"', webpage, 'data-video')))
-
-        duration = int_or_none(video.get('lengthSeconds'))
-
-        quality = qualities([
-            'f4m_low', 'progressive_low', 'f4m_high',
-            'progressive_high', 'f4m_hd', 'progressive_hd'])
-
-        formats = []
-        for format_id, video_url in video['videoStreams'].items():
-            if format_id == 'f4m_stream':
-                continue
-            ext = determine_ext(video_url)
-            if ext == 'f4m':
-                f4m_formats = self._extract_f4m_formats(video_url + '?hdcore=3.3.1', display_id)
-                if f4m_formats:
-                    f4m_formats[0]['quality'] = quality(format_id)
-                    formats.extend(f4m_formats)
-            elif ext == 'm3u8':
-                formats.extend(self._extract_m3u8_formats(
-                    video_url, display_id, ext='mp4', entry_protocol='m3u8_native',
-                    m3u8_id='hls', fatal=False))
-            else:
-                formats.append({
-                    'url': video_url,
-                    'format_id': format_id,
-                    'quality': quality(format_id),
-                })
-
-        if not formats:
-            youtube_id = video.get('youtubeID')
-            if youtube_id:
-                return self.url_result(youtube_id, 'Youtube')
-
-        return {
-            'id': video_id,
-            'display_id': display_id,
-            'title': title,
-            'description': description,
-            'thumbnail': thumbnail,
-            'duration': duration,
-            'formats': formats,
+        info = {
+            'display_id': slug,
+            **traverse_obj(video, {
+                'title': ('title', {str}),
+                'description': ('description', {str}),
+                'timestamp': (('publishedAt', 'publishDate'), {parse_iso8601}, any),
+                'thumbnail': ('thumbnailUrl', {url_or_none}),
+            }),
         }
+
+        jw_id = traverse_obj(video, ('jwMediaIdFree', {str}, filter))
+        if jw_id:
+            return self.url_result(
+                f'jwplatform:{jw_id}', ie=JWPlatformIE, video_id=jw_id,
+                url_transparent=True, **info)
+
+        youtube_url = traverse_obj(video, ('youtubeUrl', {url_or_none}))
+        if youtube_url:
+            return self.url_result(
+                youtube_url, ie='Youtube', url_transparent=True, **info)
+
+        self.raise_login_required(
+            'This video is only available for Giant Bomb Premium subscribers')
