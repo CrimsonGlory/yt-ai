@@ -281,7 +281,7 @@ class CommitRange:
 
     def _get_commits_and_fixes(self, default_author):
         result = run_process(
-            self.COMMAND, 'log', f'--format=%H%n%s%n%b%n{self.COMMIT_SEPARATOR}',
+            self.COMMAND, 'log', f'--format=%H%n%s%n%an%n%b%n{self.COMMIT_SEPARATOR}',
             f'{self._start}..{self._end}' if self._start else self._end).stdout
 
         commits, reverts = {}, {}
@@ -289,13 +289,14 @@ class CommitRange:
         lines = iter(result.splitlines(False))
         for i, commit_hash in enumerate(lines):
             short = next(lines)
+            git_author = next(lines)
             skip = short.startswith('Release ') or short == '[version] update'
 
             fix_commitish = None
             if match := self.FIXES_RE.search(short):
                 fix_commitish = match.group(1)
 
-            authors = [default_author] if default_author else []
+            authors = [git_author or default_author] if (git_author or default_author) else []
             for line in iter(lambda: next(lines), self.COMMIT_SEPARATOR):
                 if match := self.AUTHOR_INDICATOR_RE.match(line):
                     authors = sorted(map(str.strip, line[match.end():].split(',')), key=str.casefold)
@@ -505,10 +506,10 @@ def create_parser():
         '--override-path', type=Path, default=LOCATION_PATH / 'changelog_override.json',
         help='path to the changelog_override.json file')
     parser.add_argument(
-        '--default-author', default='pukkandan',
-        help='the author to use without a author indicator (default: %(default)s)')
+        '--default-author', default='CrimsonGlory',
+        help='the author to use without a git author or author indicator (default: %(default)s)')
     parser.add_argument(
-        '--repo', default='yt-dlp/yt-dlp',
+        '--repo', default='CrimsonGlory/yt-ai',
         help='the github repository to use for the operations (default: %(default)s)')
     parser.add_argument(
         '--collapsible', action='store_true',
