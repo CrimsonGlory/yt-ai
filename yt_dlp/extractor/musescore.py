@@ -31,12 +31,12 @@ class MuseScoreIE(InfoExtractor):
         },
     }, {
         'url': 'https://musescore.com/classicman/fur-elise',
-        'skip': 'HTTP Error 403',
+        'md5': '5001c69cdef24101a15a26a8e736cbcc',
         'info_dict': {
             'id': '33816',
             'ext': 'mp3',
             'title': 'Für Elise – Beethoven',
-            'description': 'md5:e37b241c0280b33e9ac25651b815d06e',
+            'description': 'md5:37febd397e23cb64b314b11da8ff4c41',
             'thumbnail': r're:https?://cdn\.ustatik\.com/musescore/.*\.jpg',
             'uploader': 'ClassicMan',
             'creators': ['Ludwig van Beethoven (1770–1827)'],
@@ -48,20 +48,26 @@ class MuseScoreIE(InfoExtractor):
 
     @staticmethod
     def _generate_auth_token(video_id):
-        return hashlib.md5((video_id + 'mp30gs').encode()).hexdigest()[:4]
+        return hashlib.md5((video_id + 'mp30111011').encode()).hexdigest()[:4]
 
     def _real_extract(self, url):
-        webpage = self._download_webpage(url, None)
+        webpage = self._download_webpage(url, None, impersonate=True)
         url = self._og_search_url(webpage) or url
         video_id = self._match_id(url)
         mp3_url = self._download_json(
             'https://musescore.com/api/jmuse', video_id,
-            headers={'authorization': self._generate_auth_token(video_id)},
-            query={'id': video_id, 'index': '0', 'type': 'mp3'})['info']['url']
+            headers={
+                'Authorization': self._generate_auth_token(video_id),
+                'Referer': url,
+                'Origin': 'https://musescore.com',
+            },
+            query={'id': video_id, 'index': '0', 'type': 'mp3'},
+            impersonate=True)['info']['url']
         formats = [{
             'url': mp3_url,
             'ext': 'mp3',
             'vcodec': 'none',
+            'http_headers': {'Referer': url},
         }]
 
         return {
