@@ -17,6 +17,8 @@ from ..utils.traversal import traverse_obj
 
 
 class LSMLREmbedIE(InfoExtractor):
+    # *.lsm.lv HTML is behind a Cloudflare managed challenge from datacenter IPs.
+    # Radio media remains on muste.latvijasradio.lv.
     _VALID_URL = r'''(?x)
         https?://(?:
             (?:latvijasradio|lr1|lr2|klasika|lr4|naba|radioteatris)\.lsm|
@@ -26,7 +28,7 @@ class LSMLREmbedIE(InfoExtractor):
         )/?\?(?:[^#]+&)?(?:show|id)=(?P<id>\d+)'''
     _TESTS = [{
         'url': 'https://latvijasradio.lsm.lv/lv/embed/?theme=black&size=16x9&showCaptions=0&id=183522',
-        'skip': 'HTTP Error 403',
+        'skip': 'Cloudflare managed challenge',
         'md5': '719b33875cd1429846eeeaeec6df2830',
         'info_dict': {
             'id': 'a342781',
@@ -37,7 +39,7 @@ class LSMLREmbedIE(InfoExtractor):
         },
     }, {
         'url': 'https://radioteatris.lsm.lv/lv/embed/?id=&show=1270&theme=white&size=16x9',
-        'skip': 'HTTP Error 403',
+        'skip': 'Cloudflare managed challenge',
         'info_dict': {
             'id': '1270',
         },
@@ -54,7 +56,7 @@ class LSMLREmbedIE(InfoExtractor):
         }],
     }, {
         'url': 'https://radioteatris.lsm.lv/lv/embed/?id=&show=1269&theme=white&size=16x9',
-        'skip': 'HTTP Error 403',
+        'skip': 'Cloudflare managed challenge',
         'md5': '24810d4a961da2295d9860afdcaf4f5a',
         'info_dict': {
             'id': 'a230690',
@@ -65,7 +67,7 @@ class LSMLREmbedIE(InfoExtractor):
         },
     }, {
         'url': 'https://lr1.lsm.lv/lv/embed/?id=166557&show=0&theme=white&size=16x9',
-        'skip': 'HTTP Error 403',
+        'skip': 'Cloudflare managed challenge',
         'info_dict': {
             'id': '166557',
         },
@@ -160,10 +162,12 @@ class LSMLREmbedIE(InfoExtractor):
 
 
 class LSMLTVEmbedIE(InfoExtractor):
+    # ltv.lsm.lv embed pages are behind a Cloudflare managed challenge from
+    # datacenter IPs. Player media remains on embed.backscreen.com (CloudyCDN).
     _VALID_URL = r'https?://ltv\.lsm\.lv/embed\?(?:[^#]+&)?c=(?P<id>[^#&]+)'
     _TESTS = [{
         'url': 'https://ltv.lsm.lv/embed?c=eyJpdiI6IjQzbHVUeHAyaDJiamFjcjdSUUFKdnc9PSIsInZhbHVlIjoiMHl3SnJNRmd2TmFIdnZwOGtGUUpzODFzUEZ4SVVsN2xoRjliSW9vckUyMWZIWG8vbWVzaFFkY0lhNmRjbjRpaCIsIm1hYyI6ImMzNjdhMzFhNTFhZmY1ZmE0NWI5YmFjZGI1YmJiNGEyNjgzNDM4MjUzMWEwM2FmMDMyZDMwYWM1MDFjZmM5MGIiLCJ0YWciOiIifQ==',
-        'skip': 'HTTP Error 403',
+        'skip': 'Cloudflare managed challenge',
         'md5': '64f72a360ca530d5ed89c77646c9eee5',
         'info_dict': {
             'id': '46k_d23-6000-105',
@@ -176,6 +180,7 @@ class LSMLTVEmbedIE(InfoExtractor):
         },
     }, {
         'url': 'https://ltv.lsm.lv/embed?enablesdkjs=1&c=eyJpdiI6IncwVzZmUFk2MU12enVWK1I3SUcwQ1E9PSIsInZhbHVlIjoid3FhV29vamc3T2sxL1RaRmJ5Rm1GTXozU0o2dVczdUtLK0cwZEZJMDQ2a3ZIRG5DK2pneGlnbktBQy9uazVleHN6VXhxdWIweWNvcHRDSnlISlNYOHlVZ1lpcTUrcWZSTUZPQW14TVdkMW9aOUtRWVNDcFF4eWpHNGcrT0VZbUNFQStKQk91cGpndW9FVjJIa0lpbkh3PT0iLCJtYWMiOiIyZGI1NDJlMWRlM2QyMGNhOGEwYTM2MmNlN2JlOGRhY2QyYjdkMmEzN2RlOTEzYTVkNzI1ODlhZDlhZjU4MjQ2IiwidGFnIjoiIn0=',
+        'skip': 'Cloudflare managed challenge',
         'md5': 'f236cef2fd5953612754e4e66be51e7a',
         'info_dict': {
             'id': 'wUnFArIPDSY',
@@ -233,10 +238,11 @@ class LSMLTVEmbedIE(InfoExtractor):
 
 
 class LSMReplayIE(InfoExtractor):
+    # replay.lsm.lv HTML is behind a Cloudflare managed challenge from datacenter IPs.
     _VALID_URL = r'https?://replay\.lsm\.lv/[^/?#]+/(?:skaties/|klausies/)?(?:ieraksts|statja)/[^/?#]+/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://replay.lsm.lv/lv/skaties/ieraksts/ltv/311130/4-studija-zolitudes-tragedija-un-incupes-stacija',
-        'skip': 'HTTP Error 403',
+        'skip': 'Cloudflare managed challenge',
         'md5': '64f72a360ca530d5ed89c77646c9eee5',
         'info_dict': {
             'id': '46k_d23-6000-105',
@@ -250,7 +256,7 @@ class LSMReplayIE(InfoExtractor):
         },
     }, {
         'url': 'https://replay.lsm.lv/lv/klausies/ieraksts/lr/183522/138-nepilniga-kompensejamo-zalu-sistema-pat-menesiem-dzena-pacientus-pa-aptiekam',
-        'skip': 'HTTP Error 403',
+        'skip': 'Cloudflare managed challenge',
         'md5': '84feb80fd7e6ec07744726a9f01cda4d',
         'info_dict': {
             'id': '183522',
