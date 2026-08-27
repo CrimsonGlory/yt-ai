@@ -10,6 +10,7 @@ import urllib.parse
 
 from .common import InfoExtractor
 from ..compat import compat_ord
+from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
     OnDemandPagedList,
@@ -41,7 +42,7 @@ class CDAIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://www.cda.pl/video/5749950c',
-        'skip': 'HTTP Error 403',
+        'skip': 'video gone',
         'md5': '6f844bf51b15f31fae165365707ae970',
         'info_dict': {
             'id': '5749950c',
@@ -58,20 +59,19 @@ class CDAIE(InfoExtractor):
         },
     }, {
         'url': 'http://www.cda.pl/video/57413289',
-        'skip': 'HTTP Error 403',
-        'md5': 'a88828770a8310fc00be6c95faf7f4d5',
+        'md5': '4886f1370388ef9b1686147b9921d57b',
         'info_dict': {
             'id': '57413289',
             'ext': 'mp4',
             'title': 'Lądowanie na lotnisku na Maderze',
             'description': 'md5:60d76b71186dcce4e0ba6d4bbdb13e1a',
-            'thumbnail': r're:^https?://.*\.jpg$',
+            'thumbnail': r're:https?://.+\.jpg',
             'uploader': 'crash404',
             'average_rating': float,
             'duration': 137,
             'age_limit': 0,
-            'upload_date': '20160220',
-            'timestamp': 1455968218,
+            'height': 480,
+            'view_count': int,
         },
     }, {
         # Age-restricted with vfilm redirection
@@ -186,9 +186,15 @@ class CDAIE(InfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url)
 
-        if 'Authorization' in self._API_HEADERS:
+        try:
             return self._api_extract(video_id)
-        else:
+        except ExtractorError as e:
+            # Prefer the public API: www.cda.pl is behind a Cloudflare JS challenge.
+            if 'Authorization' in self._API_HEADERS or (
+                isinstance(getattr(e, 'cause', None), HTTPError)
+                and e.cause.status in (404, 410)
+            ):
+                raise
             return self._web_extract(video_id)
 
     def _api_extract(self, video_id):
@@ -196,14 +202,34 @@ class CDAIE(InfoExtractor):
             f'{self._BASE_API_URL}/video/{video_id}', video_id, headers=self._API_HEADERS)['video']
 
         uploader = traverse_obj(meta, ('author', 'login', {str}))
+        adaptive = traverse_obj(meta, ('quality_adaptive', {dict})) or {}
+        # Direct quality URLs are hosted on bhole*.cda.pl (Cloudflare + expired
+        # TLS). The same files are available next to the DASH/HLS manifests.
+        cdn_base = urljoin(
+            url_or_none(adaptive.get('manifest') or adaptive.get('manifest_h264')), '.')
 
-        formats = [{
-            'url': quality['file'],
-            'format': quality.get('title'),
-            'resolution': quality.get('name'),
-            'height': try_call(lambda: int(quality['name'][:-1])),
-            'filesize': quality.get('length'),
-        } for quality in meta['qualities'] if quality.get('file')]
+        formats = []
+        for quality in traverse_obj(meta, ('qualities', ..., {dict})) or []:
+            file_url = url_or_none(quality.get('file'))
+            if not file_url:
+                continue
+            filename = file_url.rsplit('/', 1)[-1]
+            formats.append({
+                'url': urljoin(cdn_base, filename) if cdn_base else file_url,
+                'format': quality.get('title'),
+                'format_id': quality.get('name'),
+                'resolution': quality.get('name'),
+                'height': try_call(lambda: int(quality['name'][:-1])),
+                'filesize': quality.get('length'),
+            })
+
+        if not formats:
+            if hls := url_or_none(adaptive.get('manifest_apple') or adaptive.get('manifest_h264_hls')):
+                formats.extend(self._extract_m3u8_formats(
+                    hls, video_id, 'mp4', m3u8_id='hls', fatal=False))
+            if mpd := url_or_none(adaptive.get('manifest') or adaptive.get('manifest_h264')):
+                formats.extend(self._extract_mpd_formats(
+                    mpd, video_id, mpd_id='dash', fatal=False))
 
         if meta.get('premium') and not meta.get('premium_free') and not formats:
             raise ExtractorError(
