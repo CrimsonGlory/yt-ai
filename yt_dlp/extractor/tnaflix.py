@@ -15,6 +15,7 @@ from ..utils import (
 
 class TNAFlixNetworkBaseIE(InfoExtractor):
     # May be overridden in descendants if necessary
+    _IMPERSONATE = None
     _CONFIG_REGEX = [
         r'flashvars\.config\s*=\s*escape\("(?P<url>[^"]+)"',
         r'<input[^>]+name="config\d?" value="(?P<url>[^"]+)"',
@@ -79,7 +80,7 @@ class TNAFlixNetworkBaseIE(InfoExtractor):
         else:
             display_id = video_id
 
-        webpage = self._download_webpage(url, display_id)
+        webpage = self._download_webpage(url, display_id, impersonate=self._IMPERSONATE)
         inputs = self._hidden_inputs(webpage)
         query = {}
 
@@ -143,8 +144,8 @@ class TNAFlixNetworkBaseIE(InfoExtractor):
         # check for EMPFlix-style JSON and extract
         else:
             player = self._download_json(
-                f'http://www.{host}.com/ajax/video-player/{video_id}', video_id,
-                headers={'Referer': url}).get('html', '')
+                f'https://www.{host}.com/ajax/video-player/{video_id}', video_id,
+                headers={'Referer': url}, impersonate=self._IMPERSONATE).get('html', '')
             for mobj in re.finditer(r'<source src="(?P<src>[^"]+)"', player):
                 video_url = mobj.group('src')
                 height = self._search_regex(r'-(\d+)p\.', url_basename(video_url), 'height', default=None)
@@ -264,10 +265,11 @@ class TNAFlixIE(TNAEMPFlixBaseIE):
 
 class EMPFlixIE(TNAEMPFlixBaseIE):
     _VALID_URL = r'https?://(?:www\.)?(?P<host>empflix)\.com/(?:videos/(?P<display_id>.+?)-|[^/]+/(?P<display_id_2>[^/]+)/video)(?P<id>[0-9]+)'
+    _IMPERSONATE = True
+    _DESCRIPTION_REGEX = r'(?s)>Description:</[^>]+>\s*:?\s*(.+?)<'
 
     _TESTS = [{
-        'url': 'http://www.empflix.com/amateur-porn/Amateur-Finger-Fuck/video33051',
-        'skip': 'HTTP Error 403',
+        'url': 'https://www.empflix.com/amateur-porn/Amateur-Finger-Fuck/video33051',
         'md5': 'd761c7b26601bd14476cd9512f2654fc',
         'info_dict': {
             'id': '33051',
