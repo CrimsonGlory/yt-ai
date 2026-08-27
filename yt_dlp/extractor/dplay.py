@@ -189,6 +189,24 @@ class DPlayIE(DPlayBaseIE):
         )/[^/]+''' + DPlayBaseIE._PATH_REGEX
 
     _TESTS = [{
+        # Free trailer (dplay.se frontend is gone; disco-api.dplay.se still serves SE catalog)
+        'url': 'https://www.dplay.se/videos/alskar-alskar-inte/alskar-alskar-inte-s3-casting',
+        'md5': '883807bf93eaadc8d9017622a3b4b734',
+        'info_dict': {
+            'id': '1887271',
+            'ext': 'mp4',
+            'display_id': 'alskar-alskar-inte/alskar-alskar-inte-s3-casting',
+            'title': 'Sök till nästa säsong nu',
+            'description': 'md5:fb0cfcfbb0d804eb003bafadf9511d07',
+            'duration': 25.88,
+            'timestamp': 1646607600,
+            'upload_date': '20220306',
+            'creators': ['discovery+'],
+            'series': 'Älskar, älskar inte',
+            'thumbnail': r're:https://.+\.jpeg',
+            'tags': [],
+        },
+    }, {
         # non geo restricted, via secure api, unsigned download hls URL
         'url': 'https://www.dplay.se/videos/nugammalt-77-handelser-som-format-sverige/nugammalt-77-handelser-som-format-sverige-101',
         'info_dict': {
@@ -205,6 +223,7 @@ class DPlayIE(DPlayBaseIE):
             'season_number': 1,
             'episode_number': 1,
         },
+        'skip': 'This video is no longer available',
         'params': {
             'skip_download': True,
         },
@@ -225,6 +244,7 @@ class DPlayIE(DPlayBaseIE):
             'season_number': 1,
             'episode_number': 1,
         },
+        'skip': 'This video is no longer available',
         'params': {
             'skip_download': True,
         },
@@ -312,6 +332,21 @@ class DPlayIE(DPlayBaseIE):
         'only_matching': True,
     }]
 
+    def _update_disco_api_headers(self, headers, disco_base, display_id, realm):
+        headers['Authorization'] = self._get_auth(disco_base, display_id, realm)
+
+    def _download_video_playback_info(self, disco_base, video_id, headers):
+        return self._download_json(
+            disco_base + 'playback/v3/videoPlaybackInfo',
+            video_id, headers=headers, data=json.dumps({
+                'deviceInfo': {
+                    'adBlocker': False,
+                    'drmSupported': False,
+                },
+                'videoId': video_id,
+                'wisteriaProperties': {},
+            }).encode())['data']['attributes']['streaming']
+
     def _real_extract(self, url):
         mobj = self._match_valid_url(url)
         display_id = mobj.group('id')
@@ -319,7 +354,7 @@ class DPlayIE(DPlayBaseIE):
         country = mobj.group('country') or mobj.group('subdomain_country') or mobj.group('plus_country')
         host = 'disco-api.' + domain if domain[0] == 'd' else 'eu2-prod.disco-api.com'
         return self._get_disco_api_info(
-            url, display_id, host, 'dplay' + country, country, domain)
+            url, display_id, host, 'dplay', country, domain)
 
 
 class DiscoveryPlusBaseIE(DPlayBaseIE):
