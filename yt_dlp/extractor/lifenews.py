@@ -8,15 +8,32 @@ from ..utils import (
     int_or_none,
     parse_iso8601,
     remove_end,
+    url_or_none,
 )
+from ..utils.traversal import traverse_obj
 
 
 class LifeNewsIE(InfoExtractor):
     IE_NAME = 'life'
     IE_DESC = 'Life.ru'
-    _VALID_URL = r'https?://life\.ru/t/[^/]+/(?P<id>\d+)'
+    _VALID_URL = r'https?://(?:www\.)?life\.ru/(?:p|t/[^/?#]+)/(?P<id>\d+)'
 
     _TESTS = [{
+        # native video hosted on static.life.ru (Next.js publication data)
+        'url': 'https://life.ru/p/1882491',
+        'md5': '208ae3debbbd8ed6a8c001c1e6ebdde2',
+        'info_dict': {
+            'id': '1882491',
+            'ext': 'mp4',
+            'title': 'Петербург в ожидании ПМЭФ: Life.ru публикует первое видео с площадки',
+            'description': 'md5:a56b66bfe5abf72f77d5e541b682abb6',
+            'thumbnail': r're:https://static\.life\.ru/.+',
+            'timestamp': 1780392422,
+            'upload_date': '20260602',
+            'view_count': int,
+            'uploader': 'Полина Никифорова',
+        },
+    }, {
         # single video embedded via video/source
         'url': 'https://life.ru/t/новости/98736',
         'md5': '77c95eaefaca216e32a76a343ad89d23',
@@ -29,6 +46,7 @@ class LifeNewsIE(InfoExtractor):
             'upload_date': '20120805',
             'view_count': int,
         },
+        'skip': 'video gone',
     }, {
         # single video embedded via iframe
         'url': 'https://life.ru/t/новости/152125',
@@ -42,6 +60,7 @@ class LifeNewsIE(InfoExtractor):
             'upload_date': '20150402',
             'view_count': int,
         },
+        'skip': 'video gone',
     }, {
         # two videos embedded via iframe
         'url': 'https://life.ru/t/новости/153461',
@@ -73,6 +92,7 @@ class LifeNewsIE(InfoExtractor):
                 'upload_date': '20150505',
             },
         }],
+        'skip': 'video gone',
     }, {
         'url': 'https://life.ru/t/новости/213035',
         'only_matching': True,
@@ -89,34 +109,51 @@ class LifeNewsIE(InfoExtractor):
 
         webpage = self._download_webpage(url, video_id)
 
-        video_urls = re.findall(
-            r'<video[^>]+><source[^>]+src=["\'](.+?)["\']', webpage)
+        pdata = traverse_obj(
+            self._search_nextjs_data(webpage, video_id, default={}),
+            ('props', 'pageProps', 'pData', {dict})) or {}
 
-        iframe_links = re.findall(
-            r'<iframe[^>]+src=["\']((?:https?:)?//embed\.life\.ru/(?:embed|video)/.+?)["\']',
-            webpage)
+        video_urls = traverse_obj(pdata, (
+            'blocks', lambda _, v: v.get('type') == 'VIDEO',
+            'content', 'video', 'url', {url_or_none}))
+
+        iframe_links = []
+        if not video_urls:
+            video_urls = re.findall(
+                r'<video[^>]+><source[^>]+src=["\'](.+?)["\']', webpage)
+            iframe_links = re.findall(
+                r'<iframe[^>]+src=["\']((?:https?:)?//embed\.life\.ru/(?:embed|video)/.+?)["\']',
+                webpage)
 
         if not video_urls and not iframe_links:
             raise ExtractorError(f'No media links available for {video_id}')
 
-        title = remove_end(
+        title = pdata.get('title') or remove_end(
             self._og_search_title(webpage),
             ' - Life.ru')
 
-        description = self._og_search_description(webpage)
+        description = (
+            pdata.get('description')
+            or pdata.get('subtitle')
+            or self._og_search_description(webpage))
 
-        view_count = self._html_search_regex(
-            r'<div[^>]+class=(["\']).*?\bhits-count\b.*?\1[^>]*>\s*(?P<value>\d+)\s*</div>',
-            webpage, 'view count', fatal=False, group='value')
+        view_count = int_or_none(pdata.get('views'))
+        if view_count is None:
+            view_count = int_or_none(self._html_search_regex(
+                r'<div[^>]+class=(["\']).*?\bhits-count\b.*?\1[^>]*>\s*(?P<value>\d+)\s*</div>',
+                webpage, 'view count', fatal=False, group='value'))
 
-        timestamp = parse_iso8601(self._search_regex(
-            r'<time[^>]+datetime=(["\'])(?P<value>.+?)\1',
-            webpage, 'upload date', fatal=False, group='value'))
+        timestamp = parse_iso8601(pdata.get('publicDate')) or parse_iso8601(
+            self._search_regex(
+                r'<time[^>]+datetime=(["\'])(?P<value>.+?)\1',
+                webpage, 'upload date', fatal=False, group='value'))
 
         common_info = {
             'description': description,
-            'view_count': int_or_none(view_count),
+            'view_count': view_count,
             'timestamp': timestamp,
+            'thumbnail': traverse_obj(pdata, ('cover', 'url', {url_or_none})),
+            'uploader': traverse_obj(pdata, ('authors', 0, 0, 'name', {str})),
         }
 
         def make_entry(video_id, video_url, index=None):
@@ -133,7 +170,7 @@ class LifeNewsIE(InfoExtractor):
             return make_entry(video_id, video_url, index)
 
         def make_iframe_entry(video_id, video_url, index=None):
-            video_url = self._proto_relative_url(video_url, 'http:')
+            video_url = self._proto_relative_url(video_url, 'https:')
             cur_info = make_entry(video_id, video_url, index)
             cur_info['_type'] = 'url_transparent'
             return cur_info
