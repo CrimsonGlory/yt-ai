@@ -11,6 +11,7 @@ class FoxNewsIE(AMPIE):
     _TESTS = [
         {
             'url': 'https://video.foxnews.com/v/6320653836112',
+            'md5': 'c7a941ea072c4a3730ec585ea7c317b0',
             'info_dict': {
                 'id': '6320653836112',
                 'ext': 'mp4',
@@ -21,7 +22,6 @@ class FoxNewsIE(AMPIE):
                 'description': 'md5:858a8a36f59e9ca897d758855bcdfa02',
                 'timestamp': 1676611344.0,
             },
-            'params': {'skip_download': 'm3u8'},
         },
         {
             # From http://insider.foxnews.com/2016/08/25/univ-wisconsin-student-group-pushing-silence-certain-words
