@@ -15,6 +15,23 @@ from ..utils import (
 class EpornerIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?eporner\.com/(?:(?:hd-porn|embed)/|video-)(?P<id>\w+)(?:/(?P<display_id>[\w-]+))?'
     _TESTS = [{
+        'url': 'https://www.eporner.com/hd-porn/F5dpHTIC91X/Cute-Big-Tits-Anime-Hentai/',
+        'md5': 'd8aa211803fbec074333ec0fe53b826a',
+        'info_dict': {
+            'id': 'F5dpHTIC91X',
+            'display_id': 'Cute-Big-Tits-Anime-Hentai',
+            'ext': 'mp4',
+            'title': 'Cute Big Tits Anime Hentai',
+            'description': 'hentai, Cute Big Tits Anime Hentai',
+            'timestamp': 1533161313,
+            'upload_date': '20180801',
+            'duration': 1688,
+            'view_count': int,
+            'age_limit': 18,
+            'average_rating': float,
+            'thumbnail': r're:https?://.*\.jpg$',
+        },
+    }, {
         'url': 'http://www.eporner.com/hd-porn/95008/Infamous-Tiffany-Teen-Strip-Tease-Video/',
         'md5': '39d486f046212d8e1b911c52ab4691f8',
         'info_dict': {
@@ -29,6 +46,7 @@ class EpornerIE(InfoExtractor):
             'view_count': int,
             'age_limit': 18,
         },
+        'skip': 'video gone',
     }, {
         # New (May 2016) URL layout
         'url': 'http://www.eporner.com/hd-porn/3YRUtzMcWn0/Star-Wars-XXX-Parody/',
