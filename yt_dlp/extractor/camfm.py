@@ -45,8 +45,23 @@ class CamFMShowIE(InfoExtractor):
 class CamFMEpisodeIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?camfm\.co\.uk/player/(?P<id>[^/]+)'
     _TESTS = [{
+        'url': 'https://camfm.co.uk/player/52583',
+        'md5': 'e5dd6563f190a8f9ca5dd31f54802876',
+        'info_dict': {
+            'id': '52583',
+            'title': 'Simon Ruggles - The Big Noise - 22:00 Wed 26/08/2026',
+            'ext': 'mp3',
+            'upload_date': '20260826',
+            'description': 'md5:c4c5d6e58ea38ff40dd82bcb9186bf4a',
+            'timestamp': 1787781600,
+            'series': 'Simon Ruggles - The Big Noise',
+            'thumbnail': 'https://camfm.co.uk/media/shows/sha1/4d97ec515376df4709c093ff1fcbb34c102d6649.jpg',
+            'categories': ['Entertainment'],
+            'was_live': True,
+        },
+    }, {
         'url': 'https://camfm.co.uk/player/43336',
-        'skip': 'Episode will expire - don\'t actually know when, but it will go eventually',
+        'skip': 'Episode gone',
         'info_dict': {
             'id': '43336',
             'title': 'AITAA: Am I the Agony Aunt? - 19:00 Tue 16/05/2023',
