@@ -16,6 +16,26 @@ class ManyVidsIE(InfoExtractor):
     _VALID_URL = r'(?i)https?://(?:www\.)?manyvids\.com/video/(?P<id>\d+)'
     _TESTS = [{
         # preview video
+        'url': 'https://www.manyvids.com/Video/7728992/my-good-boy-learn-to-obey',
+        'md5': 'fdc37aae07b69dbbae32f9dcf1a213ff',
+        'info_dict': {
+            'id': '7728992-preview',
+            'ext': 'mp4',
+            'title': 'My Good Boy - Learn To Obey (Preview)',
+            'description': r"re:I gave you one simple task, and you couldn't even manage that",
+            'thumbnail': r're:https://ods\.manyvids\.com/.+\.jpg',
+            'uploader': 'VeronicaRusso',
+            'view_count': int,
+            'like_count': int,
+            'release_timestamp': 1786231130,
+            'tags': ['Femdom', 'GoodBoy', 'LATINA', 'MILF', 'Mommydomme',
+                     'OrgasmDenial', 'POVSex', 'SpanishDirtyTalk', 'stepmommy', 'VeronicaRusso'],
+            'release_date': '20260808',
+            'duration': 743,
+        },
+        'expected_warnings': ['Only extracting preview'],
+    }, {
+        # preview video
         'url': 'https://www.manyvids.com/Video/530341/mv-tips-tricks',
         'skip': 'video gone',
         'md5': '738dc723f7735ee9602f7ea352a6d058',
