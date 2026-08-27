@@ -1,4 +1,4 @@
-import hashlib
+import base64
 import itertools
 import re
 import time
@@ -8,11 +8,8 @@ from .common import InfoExtractor
 from .openload import PhantomJSwrapper
 from ..utils import (
     ExtractorError,
-    clean_html,
     float_or_none,
     format_field,
-    get_element_by_attribute,
-    get_element_by_id,
     int_or_none,
     js_to_json,
     parse_age_limit,
@@ -27,10 +24,6 @@ from ..utils import (
 )
 
 
-def md5_text(text):
-    return hashlib.md5(text.encode()).hexdigest()
-
-
 class IqiyiIE(InfoExtractor):
     IE_NAME = 'iqiyi'
     IE_DESC = '爱奇艺'
@@ -38,13 +31,24 @@ class IqiyiIE(InfoExtractor):
     _VALID_URL = r'https?://(?:(?:[^.]+\.)?iqiyi\.com|www\.pps\.tv)/.+\.html'
 
     _TESTS = [{
-        'url': 'http://www.iqiyi.com/v_19rrojlavg.html',
-        # MD5 checksum differs on my machine and Travis CI
+        'url': 'https://www.iqiyi.com/v_17tea0e85po.html',
+        'md5': '2a29a1b8b251d28c0d19648f594d2f6d',
         'info_dict': {
-            'id': '9c1fb1b99d192b21c559e5a1a2cb3c73',
+            'id': '4426852504624000',
+            'ext': 'mp4',
+            'title': '《醒来》一人三面预告',
+            'duration': 125,
+            'thumbnail': 'http://pic1.iqiyipic.com/image/20260826/50/21/v_216224726_m_601_m1.jpg',
+        },
+        'expected_warnings': ['format is restricted'],
+    }, {
+        'url': 'http://www.iqiyi.com/v_19rrojlavg.html',
+        'info_dict': {
+            'id': '369658400',
             'ext': 'mp4',
             'title': '美国德州空中惊现奇异云团 酷似UFO',
         },
+        'skip': 'video gone',
     }, {
         'url': 'http://www.iqiyi.com/v_19rrhnnclk.html',
         'md5': 'b7dc800a4004b1b57749d9abae0472da',
@@ -68,6 +72,7 @@ class IqiyiIE(InfoExtractor):
             'ext': 'mp4',
             'title': '第2017-04-21期 女艺人频遭极端粉丝骚扰',
         },
+        'skip': 'video gone',
     }, {
         # VIP-only video. The first 2 parts (6 minutes) are available without login
         # MD5 sums omitted as values are different on Travis CI and my machine
@@ -85,39 +90,57 @@ class IqiyiIE(InfoExtractor):
             'title': '灌篮高手 国语版',
         },
         'playlist_count': 101,
+        'skip': 'playlist page changed',
     }, {
         'url': 'http://www.pps.tv/w_19rrbav0ph.html',
         'only_matching': True,
     }]
 
-    _FORMATS_MAP = {
-        '96': 1,    # 216p, 240p
-        '1': 2,     # 336p, 360p
-        '2': 3,     # 480p, 504p
-        '21': 4,    # 504p
-        '4': 5,     # 720p
-        '17': 5,    # 720p
-        '5': 6,     # 1072p, 1080p
-        '18': 7,    # 1080p
+    _BID_TAGS = {
+        '100': '240P',
+        '200': '360P',
+        '300': '480P',
+        '500': '720P',
+        '600': '1080P',
+        '610': '1080P50',
+        '700': '2K',
+        '800': '4K',
     }
 
-    def get_raw_data(self, tvid, video_id):
-        tm = int(time.time() * 1000)
+    @staticmethod
+    def _tvid_from_url(url):
+        query = urllib.parse.parse_qs(urllib.parse.urlparse(url).query)
+        for key in ('shareId', 'positiveId', 'tvid'):
+            raw = traverse_obj(query, (key, 0), expected_type=str)
+            if not raw:
+                continue
+            if key == 'tvid' and raw.isdigit():
+                return raw
+            try:
+                tvid = int(base64.b64decode(urllib.parse.unquote(raw)))
+            except (ValueError, TypeError, OSError):
+                continue
+            if tvid:
+                return str(tvid)
 
-        key = 'd5fb4bd9d50c4be6948c97edd7254b0e'
-        sc = md5_text(str(tm) + key + tvid)
-        params = {
-            'tvid': tvid,
-            'vid': video_id,
-            'src': '76f90cbd92f94a2e925d83e8ccd22cb7',
-            'sc': sc,
-            't': tm,
-        }
-
-        return self._download_json(
-            f'http://cache.m.iqiyi.com/jp/tmts/{tvid}/{video_id}/',
-            video_id, transform_source=lambda s: remove_start(s, 'var tvInfoJs='),
-            query=params, headers=self.geo_verification_headers())
+        slug = urllib.parse.unquote(
+            traverse_obj(re.search(r'/[vwp]_([^/?#]+)\.html', url), 1) or '')
+        if not slug:
+            return None
+        try:
+            id_bits = format(int(slug, 36), 'b')[::-1]
+        except ValueError:
+            return None
+        key_bits = format(0x75706971676c, 'b')[::-1]
+        xored = []
+        for i in range(max(len(id_bits), len(key_bits))):
+            a = int(id_bits[i]) if i < len(id_bits) else 0
+            b = int(key_bits[i]) if i < len(key_bits) else 0
+            xored.append(str(a ^ b))
+        tvid = int(''.join(reversed(xored)), 2)
+        if tvid < 900000:
+            tvid = 100 * (tvid + 900000)
+        return str(tvid) if tvid else None
 
     def _extract_playlist(self, webpage):
         PAGE_SIZE = 50
@@ -152,59 +175,97 @@ class IqiyiIE(InfoExtractor):
 
         return self.playlist_result(entries, album_id, album_title)
 
-    def _real_extract(self, url):
-        webpage = self._download_webpage(
-            url, 'temp_id', note='download video page')
+    def _extract_program_formats(self, format_data, video_id):
+        formats = []
+        http_headers = {
+            'Referer': 'https://www.iqiyi.com/',
+            'Origin': 'https://www.iqiyi.com',
+        }
+        for video_format in traverse_obj(
+                format_data, ('program', 'video', ...), expected_type=dict):
+            bid = str_or_none(video_format.get('bid'))
+            extracted_formats = []
+            if video_format.get('m3u8'):
+                ff = video_format.get('ff', 'ts')
+                if ff == 'ts':
+                    m3u8_formats, _ = self._parse_m3u8_formats_and_subtitles(
+                        video_format['m3u8'], ext='mp4', m3u8_id=bid, fatal=False)
+                    extracted_formats.extend(m3u8_formats)
+                else:
+                    self.report_warning(f'{ff} formats are currently not supported')
+            if not extracted_formats:
+                if video_format.get('s'):
+                    self.report_warning(
+                        f'{self._BID_TAGS.get(bid, bid)} format is restricted')
+                continue
+            for f in extracted_formats:
+                f.update({
+                    'quality': qualities(list(self._BID_TAGS.keys()))(bid),
+                    'format_note': self._BID_TAGS.get(bid),
+                    'http_headers': {
+                        **(f.get('http_headers') or {}),
+                        **http_headers,
+                    },
+                    **parse_resolution(video_format.get('scrsz')),
+                })
+            formats.extend(extracted_formats)
+        return formats
 
-        # There's no simple way to determine whether an URL is a playlist or not
-        # Sometimes there are playlist links in individual videos, so treat it
-        # as a single video first
-        tvid = self._search_regex(
-            r'data-(?:player|shareplattrigger)-tvid\s*=\s*[\'"](\d+)', webpage, 'tvid', default=None)
-        if tvid is None:
+    def _real_extract(self, url):
+        tvid = self._tvid_from_url(url)
+        if not tvid:
+            webpage = self._download_webpage(
+                url, 'temp_id', note='download video page')
             playlist_result = self._extract_playlist(webpage)
             if playlist_result:
                 return playlist_result
             raise ExtractorError('Can\'t find any video')
 
-        video_id = self._search_regex(
-            r'data-(?:player|shareplattrigger)-videoid\s*=\s*[\'"]([a-f\d]+)', webpage, 'video_id')
+        data = self._download_json(
+            'https://mesh.if.iqiyi.com/player/lw/lwplay/accelerator.js', tvid,
+            note='Downloading video info', errnote='Unable to download video info',
+            query={
+                'tvid': tvid,
+                'ad_cid': '',
+                'disableDRM': 'false',
+                'cpt': 0,
+                'apiVer': 3,
+                'format': 'json',
+                'timestamp': int(time.time() * 1000),
+            }, headers={
+                'Referer': url,
+                **self.geo_verification_headers(),
+            })
 
-        formats = []
-        for _ in range(5):
-            raw_data = self.get_raw_data(tvid, video_id)
+        if data.get('offline') or traverse_obj(data, ('videoInfo', 'pagePublishStatus')) == 'PAGE_OFFLINE':
+            raise ExtractorError('Video is offline', expected=True)
 
-            if raw_data['code'] != 'A00000':
-                if raw_data['code'] == 'A00111':
-                    self.raise_geo_restricted()
-                raise ExtractorError('Unable to load data. Error code: ' + raw_data['code'])
+        ev = data.get('ev')
+        if not ev:
+            raise ExtractorError('No video formats found')
 
-            data = raw_data['data']
+        ev_data = self._parse_json(''.join(chr(ord(c) ^ 90) for c in ev), tvid)
+        if traverse_obj(ev_data, 'code') not in (None, 'A00000'):
+            code = ev_data['code']
+            if code == 'A00111':
+                self.raise_geo_restricted()
+            raise ExtractorError(f'Unable to load data. Error code: {code}')
 
-            for stream in data['vidl']:
-                if 'm3utx' not in stream:
-                    continue
-                vd = str(stream['vd'])
-                formats.append({
-                    'url': stream['m3utx'],
-                    'format_id': vd,
-                    'ext': 'mp4',
-                    'quality': self._FORMATS_MAP.get(vd, -1),
-                    'protocol': 'm3u8_native',
-                })
+        format_data = ev_data.get('data') or ev_data
+        st = int_or_none(format_data.get('st'))
+        if st == 111:
+            self.raise_geo_restricted()
+        formats = self._extract_program_formats(format_data, tvid)
+        if not formats:
+            raise ExtractorError('No video formats found')
 
-            if formats:
-                break
-
-            self._sleep(5, video_id)
-
-        title = (get_element_by_id('widget-videotitle', webpage)
-                 or clean_html(get_element_by_attribute('class', 'mod-play-tit', webpage))
-                 or self._html_search_regex(r'<span[^>]+data-videochanged-title="word"[^>]*>([^<]+)</span>', webpage, 'title'))
-
+        video_info = data.get('videoInfo') or {}
         return {
-            'id': video_id,
-            'title': title,
+            'id': tvid,
+            'title': video_info.get('title'),
+            'thumbnail': video_info.get('imageUrl'),
+            'duration': int_or_none(traverse_obj(
+                format_data, ('program', 'video', ..., 'duration'), get_all=False)),
             'formats': formats,
         }
 
