@@ -13,6 +13,27 @@ from ..utils.traversal import traverse_obj
 class MSNIE(InfoExtractor):
     _VALID_URL = r'https?://(?:(?:www|preview)\.)?msn\.com/(?P<locale>[a-z]{2}-[a-z]{2})/(?:[^/?#]+/)+(?P<display_id>[^/?#]+)/[a-z]{2}-(?P<id>[\da-zA-Z]+)'
     _TESTS = [{
+        'url': 'https://www.msn.com/en-us/news/crime/teens-arrested-after-teacher-prank-turns-deadly-in-georgia/vi-AA1XPnqq',
+        'md5': '2a7404b6f75362da99feb138355bb841',
+        'info_dict': {
+            'id': 'AA1XPnqq',
+            'ext': 'mp4',
+            'display_id': 'teens-arrested-after-teacher-prank-turns-deadly-in-georgia',
+            'title': 'Teens arrested after teacher prank turns deadly in Georgia',
+            'description': 'md5:ca5756e2fc4eb9afff5df484c9959dcf',
+            'uploader': 'ABC News',
+            'uploader_id': 'BBTquMf',
+            'duration': 119,
+            'thumbnail': 'https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA1XPgkQ.img',
+            'tags': 'count:11',
+            'timestamp': 1773056961,
+            'upload_date': '20260309',
+            'release_timestamp': 1773056959,
+            'release_date': '20260309',
+            'modified_timestamp': 1787743537,
+            'modified_date': '20260826',
+        },
+    }, {
         'url': 'https://www.msn.com/en-gb/video/news/president-macron-interrupts-trump-over-ukraine-funding/vi-AA1zMcD7',
         'skip': 'video gone',
         'info_dict': {
