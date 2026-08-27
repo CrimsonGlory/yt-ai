@@ -2,158 +2,35 @@ import re
 
 from .common import InfoExtractor
 from ..utils import (
-    int_or_none,
-    join_nonempty,
-    parse_duration,
+    ExtractorError,
+    float_or_none,
+    url_or_none,
     urljoin,
-    xpath_element,
-    xpath_text,
 )
+from ..utils.traversal import traverse_obj
 
 
-class HBOBaseIE(InfoExtractor):
-    _FORMATS_INFO = {
-        'pro7': {
-            'width': 1280,
-            'height': 720,
-        },
-        '1920': {
-            'width': 1280,
-            'height': 720,
-        },
-        'pro6': {
-            'width': 768,
-            'height': 432,
-        },
-        '640': {
-            'width': 768,
-            'height': 432,
-        },
-        'pro5': {
-            'width': 640,
-            'height': 360,
-        },
-        'highwifi': {
-            'width': 640,
-            'height': 360,
-        },
-        'high3g': {
-            'width': 640,
-            'height': 360,
-        },
-        'medwifi': {
-            'width': 400,
-            'height': 224,
-        },
-        'med3g': {
-            'width': 400,
-            'height': 224,
-        },
-    }
-
-    def _extract_info(self, url, display_id):
-        video_data = self._download_xml(url, display_id)
-        video_id = xpath_text(video_data, 'id', fatal=True)
-        episode_title = title = xpath_text(video_data, 'title', fatal=True)
-        series = xpath_text(video_data, 'program')
-        if series:
-            title = f'{series} - {title}'
-
-        formats = []
-        for source in xpath_element(video_data, 'videos', 'sources', True):
-            if source.tag == 'size':
-                path = xpath_text(source, './/path')
-                if not path:
-                    continue
-                width = source.attrib.get('width')
-                format_info = self._FORMATS_INFO.get(width, {})
-                height = format_info.get('height')
-                fmt = {
-                    'url': path,
-                    'format_id': join_nonempty('http'. height and f'{height}p'),
-                    'width': format_info.get('width'),
-                    'height': height,
-                }
-                rtmp = re.search(r'^(?P<url>rtmpe?://[^/]+/(?P<app>.+))/(?P<playpath>mp4:.+)$', path)
-                if rtmp:
-                    fmt.update({
-                        'url': rtmp.group('url'),
-                        'play_path': rtmp.group('playpath'),
-                        'app': rtmp.group('app'),
-                        'ext': 'flv',
-                        'format_id': fmt['format_id'].replace('http', 'rtmp'),
-                    })
-                formats.append(fmt)
-            else:
-                video_url = source.text
-                if not video_url:
-                    continue
-                if source.tag == 'tarball':
-                    formats.extend(self._extract_m3u8_formats(
-                        video_url.replace('.tar', '/base_index_w8.m3u8'),
-                        video_id, 'mp4', 'm3u8_native', m3u8_id='hls', fatal=False))
-                elif source.tag == 'hls':
-                    m3u8_formats = self._extract_m3u8_formats(
-                        video_url.replace('.tar', '/base_index.m3u8'),
-                        video_id, 'mp4', 'm3u8_native', m3u8_id='hls', fatal=False)
-                    for f in m3u8_formats:
-                        if f.get('vcodec') == 'none' and not f.get('tbr'):
-                            f['tbr'] = int_or_none(self._search_regex(
-                                r'-(\d+)k/', f['url'], 'tbr', default=None))
-                    formats.extend(m3u8_formats)
-                elif source.tag == 'dash':
-                    formats.extend(self._extract_mpd_formats(
-                        video_url.replace('.tar', '/manifest.mpd'),
-                        video_id, mpd_id='dash', fatal=False))
-                else:
-                    format_info = self._FORMATS_INFO.get(source.tag, {})
-                    formats.append({
-                        'format_id': f'http-{source.tag}',
-                        'url': video_url,
-                        'width': format_info.get('width'),
-                        'height': format_info.get('height'),
-                    })
-
-        thumbnails = []
-        card_sizes = xpath_element(video_data, 'titleCardSizes')
-        if card_sizes is not None:
-            for size in card_sizes:
-                path = xpath_text(size, 'path')
-                if not path:
-                    continue
-                width = int_or_none(size.get('width'))
-                thumbnails.append({
-                    'id': width,
-                    'url': path,
-                    'width': width,
-                })
-
-        subtitles = None
-        caption_url = xpath_text(video_data, 'captionUrl')
-        if caption_url:
-            subtitles = {
-                'en': [{
-                    'url': caption_url,
-                    'ext': 'ttml',
-                }],
-            }
-
-        return {
-            'id': video_id,
-            'title': title,
-            'duration': parse_duration(xpath_text(video_data, 'duration/tv14')),
-            'series': series,
-            'episode': episode_title,
-            'formats': formats,
-            'thumbnails': thumbnails,
-            'subtitles': subtitles,
-        }
-
-
-class HBOIE(HBOBaseIE):
+class HBOIE(InfoExtractor):
     IE_NAME = 'hbo'
-    _VALID_URL = r'https?://(?:www\.)?hbo\.com/(?:video|embed)(?:/[^/]+)*/(?P<id>[^/?#]+)'
-    _TEST = {
+    _VALID_URL = (
+        r'https?://(?:www\.)?hbo\.com/(?:video|embed|content)'
+        r'(?:/[^/?#]+)*/(?P<id>[^/?#]+)/?(?:[?#]|$)')
+    _TESTS = [{
+        'url': 'https://www.hbo.com/content/lanterns',
+        'md5': '62f54f87ac62e4d334c66ea1805ebcd7',
+        'info_dict': {
+            'id': 'me517d9dc51bbc7a2d6bbec453837451815d65db26',
+            'ext': 'mp4',
+            'display_id': 'lanterns',
+            'title': 'Lanterns - Watch the Teaser',
+            'alt_title': 'Lanterns',
+            'description': 'md5:8d1530405339d84a584c61911ff82ef4',
+            'thumbnail': r're:https://.+\.(?:jpe?g|png)',
+            'duration': 107.940956,
+        },
+        # Native HLS --test only fetches the CMAF init segment (~1KB)
+        'params': {'downloader': 'ffmpeg'},
+    }, {
         'url': 'https://www.hbo.com/video/game-of-thrones/seasons/season-8/videos/trailer',
         'skip': 'video gone',
         'md5': '8126210656f433c452a21367f9ad85b3',
@@ -163,11 +40,85 @@ class HBOIE(HBOBaseIE):
             'title': 'Game of Thrones - Trailer',
         },
         'expected_warnings': ['Unknown MIME type application/mp4 in DASH manifest'],
-    }
+    }]
+
+    def _extract_page_sources(self, webpage, url, display_id):
+        sources = [webpage]
+        for src in re.findall(r'<script[^>]+\bsrc=["\']([^"\']+)["\']', webpage):
+            if '/chunks/pages/' not in src or '/pages/_' in src:
+                continue
+            js = self._download_webpage(
+                urljoin(url, src), display_id,
+                note='Downloading page script', fatal=False)
+            if js:
+                sources.append(js)
+        return sources
+
+    def _player_meta(self, source, media_id):
+        idx = source.find(media_id)
+        if idx < 0:
+            return {}
+        window = source[max(0, idx - 1200):idx + 80]
+        cover = self._search_regex(
+            r'coverImage:\w+\(\'({[^\']+})\'', window, 'cover', default=None)
+        title = self._search_regex(
+            r'\btitle:\w+\("([^"]+)"', window, 'title', default=None)
+        alt_title = self._search_regex(
+            r'\baltText:\w+\("([^"]*)"', window, 'alt title', default=None)
+        thumbnail = traverse_obj(
+            self._parse_json(
+                cover.replace('\\/', '/'), media_id, fatal=False) if cover else None,
+            ('large', {url_or_none}))
+        return {
+            'title': ' - '.join(filter(None, (alt_title, title))) or None,
+            'alt_title': alt_title or None,
+            'thumbnail': thumbnail,
+            'duration': float_or_none(self._search_regex(
+                r'"duration"\s*:\s*"([^"]+)"', window, 'duration', default=None)),
+        }
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
         webpage = self._download_webpage(url, display_id)
-        location_path = self._parse_json(self._html_search_regex(
-            r'data-state="({.+?})"', webpage, 'state'), display_id)['video']['locationUrl']
-        return self._extract_info(urljoin(url, location_path), display_id)
+        next_data = self._search_nextjs_data(webpage, display_id, default={})
+        app_id = traverse_obj(next_data, (
+            'props', 'pageProps', 'siteConfig', 'VIDEOPLAYER', 'mediaAppId', {str}))
+
+        media_id, player_meta = None, {}
+        for source in self._extract_page_sources(webpage, url, display_id):
+            media_id = self._search_regex(
+                r'["\']?mediaId["\']?\s*[:=]\s*["\'](me[0-9a-f]+)["\']',
+                source, 'media id', default=None)
+            if media_id:
+                player_meta = self._player_meta(source, media_id)
+                break
+
+        if not media_id:
+            raise ExtractorError('No video found', expected=True)
+        if not app_id:
+            raise ExtractorError('Unable to extract media app id')
+
+        media_data = self._download_json(
+            f'https://medium.ngtv.io/v2/media/{media_id}/desktop',
+            media_id, query={'appId': app_id})
+        m3u8_url = traverse_obj(media_data, (
+            'media', 'desktop', 'unprotected', 'unencrypted', 'url', {url_or_none}))
+        if not m3u8_url:
+            raise ExtractorError('No unprotected media formats available', expected=True)
+
+        formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+            m3u8_url, media_id, 'mp4', 'm3u8', m3u8_id='hls')
+
+        return {
+            'id': media_id,
+            'display_id': display_id,
+            'title': player_meta.get('title') or self._og_search_title(webpage),
+            'alt_title': player_meta.get('alt_title'),
+            'description': self._og_search_description(webpage),
+            'thumbnail': player_meta.get('thumbnail'),
+            'duration': traverse_obj(media_data, (
+                'media', 'desktop', 'unprotected', 'unencrypted',
+                'totalRuntime', {float_or_none})) or player_meta.get('duration'),
+            'formats': formats,
+            'subtitles': subtitles,
+        }
