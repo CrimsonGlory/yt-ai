@@ -4,6 +4,7 @@ from ..utils import (
     dict_get,
     try_get,
     unified_strdate,
+    urljoin,
 )
 
 
@@ -12,7 +13,6 @@ class CanalAlphaIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.canalalpha.ch/play/le-journal/episode/24520/jeudi-28-octobre-2021',
-        'skip': 'Request timed out',
         'info_dict': {
             'id': '24520',
             'ext': 'mp4',
@@ -37,7 +37,6 @@ class CanalAlphaIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://www.canalalpha.ch/play/eureka/episode/24484/ces-innovations-qui-veulent-rendre-lagriculture-plus-durable',
-        'skip': 'Request timed out',
         'info_dict': {
             'id': '24484',
             'ext': 'mp4',
@@ -50,7 +49,6 @@ class CanalAlphaIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://www.canalalpha.ch/play/avec-le-temps/episode/23516/redonner-de-leclat-grace-au-polissage',
-        'skip': 'Request timed out',
         'info_dict': {
             'id': '23516',
             'ext': 'mp4',
@@ -63,7 +61,6 @@ class CanalAlphaIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://www.canalalpha.ch/play/le-journal/topic/33500/encore-des-mesures-deconomie-dans-le-jura',
-        'skip': 'Request timed out',
         'info_dict': {
             'id': '33500',
             'ext': 'mp4',
@@ -77,14 +74,12 @@ class CanalAlphaIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
-        data_json = self._parse_json(self._search_regex(
-            r'window\.__SERVER_STATE__\s?=\s?({(?:(?!};)[^"]|"([^"]|\\")*")+})\s?;',
-            webpage, 'data_json'), video_id)['1']['data']['data']
+        data_json = self._download_json(
+            f'https://api.canalalpha.ch/v1/media/{video_id}', video_id)['data']
         manifests = try_get(data_json, lambda x: x['video']['manifests'], expected_type=dict) or {}
         subtitles = {}
         formats = [{
-            'url': video['$url'],
+            'url': urljoin('https:', video['$url']),
             'ext': 'mp4',
             'width': try_get(video, lambda x: x['res']['width'], expected_type=int),
             'height': try_get(video, lambda x: x['res']['height'], expected_type=int),
