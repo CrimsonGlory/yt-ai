@@ -1,6 +1,7 @@
 import re
 
 from .common import InfoExtractor
+from .youtube import YoutubeIE
 from ..compat import compat_etree_fromstring
 from ..utils import (
     int_or_none,
@@ -14,6 +15,47 @@ class FazIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?faz\.net/(?:[^/]+/)*.*?-(?P<id>\d+)\.html'
 
     _TESTS = [{
+        # Current FAZ video pages embed YouTube
+        'url': 'https://www.faz.net/video/aarke-filterkaffee-system-einfach-praktisch-oder-schoen-teuer-f-a-z-200995017.html',
+        'md5': '8a53426ea441494680719cfb75e7bb47',
+        'info_dict': {
+            'id': 'DFzezgdUR30',
+            'ext': 'mp4',
+            'title': 'Aarke Filterkaffee-System: Einfach praktisch oder schön teuer?',
+            'description': 'md5:a03676d62a5864582d8e6f8d11b9f6b1',
+            'duration': 617,
+            'uploader': 'faz',
+            'uploader_id': '@faz',
+            'uploader_url': 'https://www.youtube.com/@faz',
+            'channel': 'faz',
+            'channel_id': 'UCcPcua2PF7hzik2TeOBx3uw',
+            'channel_url': 'https://www.youtube.com/channel/UCcPcua2PF7hzik2TeOBx3uw',
+            'channel_follower_count': int,
+            'channel_is_verified': True,
+            'view_count': int,
+            'like_count': int,
+            'comment_count': int,
+            'age_limit': 0,
+            'timestamp': 1783076909,
+            'upload_date': '20260703',
+            'thumbnail': r're:https?://i\.ytimg\.com/.+',
+            'categories': ['News & Politics'],
+            'tags': ['Kaffeemaschine'],
+            'playable_in_embed': True,
+            'availability': 'public',
+            'live_status': 'not_live',
+            'media_type': 'video',
+        },
+        'add_ie': ['Youtube'],
+        'params': {
+            'format': 'bestvideo[protocol=https][ext=mp4]/best[protocol=https]',
+        },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'No supported JavaScript runtime',
+            'n challenge solving failed',
+        ],
+    }, {
         'url': 'http://www.faz.net/multimedia/videos/stockholm-chemie-nobelpreis-fuer-drei-amerikanische-forscher-12610585.html',
         'skip': 'video gone',
         'info_dict': {
@@ -43,6 +85,18 @@ class FazIE(InfoExtractor):
         video_id = self._match_id(url)
 
         webpage = self._download_webpage(url, video_id)
+
+        youtube_id = self._search_regex(
+            (r'"embedUrl"\s*:\s*"https?://(?:www\.)?youtube\.com/embed/(?P<id>[0-9A-Za-z_-]{11})',
+             r'"embeddedYoutube"\s*,\s*"(?P<id>[0-9A-Za-z_-]{11})"'),
+            webpage, 'youtube id', default=None, group='id')
+        if youtube_id:
+            return self.url_result(youtube_id, YoutubeIE, youtube_id)
+
+        youtube_url = YoutubeIE._extract_url(webpage)
+        if youtube_url:
+            return self.url_result(youtube_url, YoutubeIE)
+
         description = self._og_search_description(webpage)
         media = self._html_search_regex(
             r"data-videojs-media='([^']+)",
