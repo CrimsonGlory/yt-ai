@@ -9,11 +9,14 @@ from ..utils import (
 
 
 class MarkizaIE(InfoExtractor):
+    # videoarchiv.markiza.sk / www.markiza.sk / media.cms.markiza.sk are behind a
+    # Cloudflare managed challenge (cType=managed, challenges.cloudflare.com)
+    # from datacenter IPs; curl_cffi impersonation does not pass it.
     _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:www\.)?videoarchiv\.markiza\.sk/(?:video/(?:[^/]+/)*|embed/)(?P<id>\d+)(?:[_/]|$)'
     _TESTS = [{
         'url': 'http://videoarchiv.markiza.sk/video/oteckovia/84723_oteckovia-109',
-        'skip': 'HTTP Error 403',
+        'skip': 'Cloudflare managed challenge',
         'md5': 'ada4e9fad038abeed971843aa028c7b0',
         'info_dict': {
             'id': '139078',
@@ -25,7 +28,7 @@ class MarkizaIE(InfoExtractor):
         },
     }, {
         'url': 'http://videoarchiv.markiza.sk/video/televizne-noviny/televizne-noviny/85430_televizne-noviny',
-        'skip': 'HTTP Error 403',
+        'skip': 'Cloudflare managed challenge',
         'info_dict': {
             'id': '85430',
             'title': 'Televízne noviny',
@@ -70,11 +73,12 @@ class MarkizaIE(InfoExtractor):
 
 
 class MarkizaPageIE(InfoExtractor):
+    # www.markiza.sk HTML is behind a Cloudflare managed challenge from datacenter IPs.
     _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:www\.)?(?:(?:[^/]+\.)?markiza|tvnoviny)\.sk/(?:[^/]+/)*(?P<id>\d+)_'
     _TESTS = [{
         'url': 'http://www.markiza.sk/soubiz/zahranicny/1923705_oteckovia-maju-svoj-den-ti-slavni-nie-su-o-nic-menej-rozkosni',
-        'skip': 'HTTP Error 403',
+        'skip': 'Cloudflare managed challenge',
         'md5': 'ada4e9fad038abeed971843aa028c7b0',
         'info_dict': {
             'id': '139355',
