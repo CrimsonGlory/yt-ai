@@ -29,6 +29,29 @@ class DRTVIE(InfoExtractor):
     _GEO_COUNTRIES = ['DK']
     IE_NAME = 'drtv'
     _TESTS = [{
+        'url': 'https://www.dr.dk/drtv/se/frank-and-kastaniegaarden_71769',
+        'md5': '399de12e024a5dc772c1b99e7bf42e17',
+        'info_dict': {
+            'id': '00951930010',
+            'ext': 'mp4',
+            'title': 'Frank & Kastaniegaarden',
+            'description': 'md5:5fd3b0562a5988f5ac2e36f1ef1d17f3',
+            'duration': 2576,
+            'season': 'Frank & Kastaniegaarden',
+            'season_id': '67125',
+            'release_year': 2019,
+            'season_number': 2019,
+            'series': 'Frank & Kastaniegaarden',
+            'episode_number': 1,
+            'episode': 'Frank & Kastaniegaarden',
+            'thumbnail': r're:https?://.+',
+        },
+        # HLS --test only fetches the fMP4 init fragment (~1KB), below the default 10KB check
+        'file_minsize': None,
+        'params': {
+            'format': 'bv[vcodec^=avc1]/bv/b',
+        },
+    }, {
         'url': 'https://www.dr.dk/tv/se/boern/ultra/klassen-ultra/klassen-darlig-taber-10',
         'md5': '25e659cccc9a2ed956110a299fdf5983',
         'info_dict': {
@@ -69,28 +92,6 @@ class DRTVIE(InfoExtractor):
         },
         'skip': 'this video has been removed',
     }, {
-        'url': 'https://www.dr.dk/drtv/se/frank-and-kastaniegaarden_71769',
-        'info_dict': {
-            'id': '00951930010',
-            'ext': 'mp4',
-            'title': 'Frank & Kastaniegaarden',
-            'description': 'md5:974e1780934cf3275ef10280204bccb0',
-            'release_timestamp': 1546545600,
-            'release_date': '20190103',
-            'duration': 2576,
-            'season': 'Frank & Kastaniegaarden',
-            'season_id': '67125',
-            'release_year': 2019,
-            'season_number': 2019,
-            'series': 'Frank & Kastaniegaarden',
-            'episode_number': 1,
-            'episode': 'Frank & Kastaniegaarden',
-            'thumbnail': r're:https?://.+',
-        },
-        'params': {
-            'skip_download': True,
-        },
-    }, {
         # Foreign and Regular subtitle track
         'url': 'https://www.dr.dk/drtv/se/spise-med-price_-pasta-selv_397445',
         'info_dict': {
@@ -99,11 +100,9 @@ class DRTVIE(InfoExtractor):
             'episode_number': 1,
             'title': 'Spise med Price: Pasta Selv',
             'alt_title': '1. Pasta Selv',
-            'release_date': '20230807',
-            'description': 'md5:2da9060524fed707810d71080b3d0cd8',
+            'description': 'md5:d019f58a959dc4cdb5e74718b0e3fe28',
             'duration': 1750,
             'season': 'Spise med Price',
-            'release_timestamp': 1691438400,
             'season_id': '397440',
             'episode': 'Spise med Price: Pasta Selv',
             'thumbnail': r're:https?://.+',

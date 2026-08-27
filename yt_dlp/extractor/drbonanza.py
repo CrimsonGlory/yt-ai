@@ -19,6 +19,7 @@ class DRBonanzaIE(InfoExtractor):
             'thumbnail': r're:^https?://.*\.(?:gif|jpg)$',
             'duration': 4613,
         },
+        'skip': 'Bonanza closed in 2024 and is no longer available; replaced by Gensyn on DRTV',
     }
 
     def _real_extract(self, url):
