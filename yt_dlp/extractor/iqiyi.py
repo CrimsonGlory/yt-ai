@@ -214,6 +214,26 @@ class IqIE(InfoExtractor):
     IE_DESC = 'International version of iQiyi'
     _VALID_URL = r'https?://(?:www\.)?iq\.com/play/(?:[\w%-]*-)?(?P<id>\w+)'
     _TESTS = [{
+        'url': 'https://www.iq.com/play/knot-episode-1-c3hbjhxtcg',
+        'md5': 'dc0467fa44cf3d599653cdf132966ec1',
+        'info_dict': {
+            'ext': 'mp4',
+            'id': 'c3hbjhxtcg',
+            'title': 'KNOT',
+            'description': 'md5:1e49999e85e281867ea8dc78d8345764',
+            'duration': 2979,
+            'timestamp': 1782863701,
+            'upload_date': '20260630',
+            'episode_number': 1,
+            'episode': 'Episode 1',
+            'series': 'KNOT',
+            'age_limit': 18,
+            'average_rating': float,
+            'categories': [],
+            'cast': ['Boat Yongyut Termtuo', 'Oat Pasakorn Sanrattana', 'Mintthy Ploychayapa Piyarapeetouch', 'Theme Phubeth Atarunwong', 'Thee Teerawat Tanacom', 'Jame Supawit Wongfu', 'Folk Jakarin Sangruan'],
+        },
+        'expected_warnings': ['format is restricted'],
+    }, {
         'url': 'https://www.iq.com/play/one-piece-episode-1000-1ma1i6ferf4',
         'md5': '2d7caf6eeca8a32b407094b33b757d39',
         'info_dict': {
@@ -234,6 +254,7 @@ class IqIE(InfoExtractor):
             'format': '500',
         },
         'expected_warnings': ['format is restricted'],
+        'skip': 'Geo-restricted',
     }, {
         # VIP-restricted video
         'url': 'https://www.iq.com/play/mermaid-in-the-fog-2021-gbdpx13bs4',
@@ -386,112 +407,140 @@ class IqIE(InfoExtractor):
         cookie = self._get_cookies('https://iq.com/').get(name)
         return cookie.value if cookie else default
 
+    def _extract_program_formats(self, format_data, video_id, video_format):
+        bid = str_or_none(video_format.get('bid'))
+        extracted_formats = []
+        if video_format.get('m3u8Url'):
+            extracted_formats.extend(self._extract_m3u8_formats(
+                urljoin(format_data.get('dm3u8', 'https://cache-m.iq.com/dc/dt/'), video_format['m3u8Url']),
+                video_id, 'mp4', m3u8_id=bid, fatal=False))
+        if video_format.get('mpdUrl'):
+            # TODO: Properly extract mpd hostname
+            extracted_formats.extend(self._extract_mpd_formats(
+                urljoin(format_data.get('dm3u8', 'https://cache-m.iq.com/dc/dt/'), video_format['mpdUrl']),
+                video_id, mpd_id=bid, fatal=False))
+        if video_format.get('m3u8'):
+            ff = video_format.get('ff', 'ts')
+            if ff == 'ts':
+                m3u8_formats, _ = self._parse_m3u8_formats_and_subtitles(
+                    video_format['m3u8'], ext='mp4', m3u8_id=bid, fatal=False)
+                extracted_formats.extend(m3u8_formats)
+            elif ff == 'm4s':
+                mpd_data = traverse_obj(
+                    self._parse_json(video_format['m3u8'], video_id, fatal=False), ('payload', ..., 'data'), expected_type=str)
+                if mpd_data:
+                    mpd_formats, _ = self._parse_mpd_formats_and_subtitles(
+                        mpd_data, bid, format_data.get('dm3u8', 'https://cache-m.iq.com/dc/dt/'))
+                    extracted_formats.extend(mpd_formats)
+            else:
+                self.report_warning(f'{ff} formats are currently not supported')
+
+        for f in extracted_formats:
+            f.update({
+                'quality': qualities(list(self._BID_TAGS.keys()))(bid),
+                'format_note': self._BID_TAGS.get(bid),
+                'http_headers': {
+                    **(f.get('http_headers') or {}),
+                    'Referer': 'https://www.iq.com/',
+                },
+                **parse_resolution(video_format.get('scrsz')),
+            })
+        return extracted_formats
+
     def _real_extract(self, url):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
-        self._update_bid_tags(webpage, video_id)
 
         next_props = self._search_nextjs_data(webpage, video_id)['props']
         page_data = next_props['initialState']['play']
         video_info = page_data['curVideoInfo']
 
-        uid = traverse_obj(
-            self._parse_json(
-                self._get_cookie('I00002', '{}'), video_id, transform_source=urllib.parse.unquote, fatal=False),
-            ('data', 'uid'), default=0)
+        # iq.com SSR embeds a signed dash payload on geo-available titles.
+        # Use it when present so extraction does not depend on PhantomJS.
+        initial_format_data = traverse_obj(
+            next_props, ('initialProps', 'pageProps', 'prePlayerData', 'dash', 'data'),
+            expected_type=dict) or {}
+        ssr_st = int_or_none(initial_format_data.get('st'))
+        dash_paths = None
+        if not (ssr_st and 100 < ssr_st < 200 and traverse_obj(
+                initial_format_data, ('program', 'video', ...), expected_type=dict)):
+            self._update_bid_tags(webpage, video_id)
 
-        if uid:
-            vip_data = self._download_json(
-                'https://pcw-api.iq.com/api/vtype', video_id, note='Downloading VIP data', errnote='Unable to download VIP data', query={
-                    'batch': 1,
-                    'platformId': 3,
-                    'modeCode': self._get_cookie('mod', 'intl'),
-                    'langCode': self._get_cookie('lang', 'en_us'),
-                    'deviceId': self._get_cookie('QC005', ''),
-                }, fatal=False)
-            ut_list = traverse_obj(vip_data, ('data', 'all_vip', ..., 'vipType'), expected_type=str_or_none)
-        else:
-            ut_list = ['0']
+            uid = traverse_obj(
+                self._parse_json(
+                    self._get_cookie('I00002', '{}'), video_id, transform_source=urllib.parse.unquote, fatal=False),
+                ('data', 'uid'), default=0)
 
-        # bid 0 as an initial format checker
-        dash_paths = self._parse_json(PhantomJSwrapper(self, timeout=120_000).get(
-            url, note2='Executing signature code (this may take a couple minutes)',
-            html='<!DOCTYPE html>', video_id=video_id, jscode=self._DASH_JS % {
-                'tvid': video_info['tvId'],
-                'vid': video_info['vid'],
-                'src': traverse_obj(next_props, ('initialProps', 'pageProps', 'ptid'),
-                                    expected_type=str, default='04022001010011000000'),
-                'uid': uid,
-                'dfp': self._get_cookie('dfp', ''),
-                'mode': self._get_cookie('mod', 'intl'),
-                'lang': self._get_cookie('lang', 'en_us'),
-                'bid_list': '[' + ','.join(['0', *self._BID_TAGS.keys()]) + ']',
-                'ut_list': '[' + ','.join(ut_list) + ']',
-                'cmd5x_func': self._extract_cmd5x_function(webpage, video_id),
-            })[1].strip(), video_id)
+            if uid:
+                vip_data = self._download_json(
+                    'https://pcw-api.iq.com/api/vtype', video_id, note='Downloading VIP data', errnote='Unable to download VIP data', query={
+                        'batch': 1,
+                        'platformId': 3,
+                        'modeCode': self._get_cookie('mod', 'intl'),
+                        'langCode': self._get_cookie('lang', 'en_us'),
+                        'deviceId': self._get_cookie('QC005', ''),
+                    }, fatal=False)
+                ut_list = traverse_obj(vip_data, ('data', 'all_vip', ..., 'vipType'), expected_type=str_or_none)
+            else:
+                ut_list = ['0']
 
-        formats, subtitles = [], {}
-        initial_format_data = self._download_json(
-            urljoin('https://cache-video.iq.com', dash_paths['0']), video_id,
-            note='Downloading initial video format info', errnote='Unable to download initial video format info')['data']
+            # bid 0 as an initial format checker
+            dash_paths = self._parse_json(PhantomJSwrapper(self, timeout=120_000).get(
+                url, note2='Executing signature code (this may take a couple minutes)',
+                html='<!DOCTYPE html>', video_id=video_id, jscode=self._DASH_JS % {
+                    'tvid': video_info['tvId'],
+                    'vid': video_info['vid'],
+                    'src': traverse_obj(next_props, ('initialProps', 'pageProps', 'ptid'),
+                                        expected_type=str, default='04022001010011000000'),
+                    'uid': uid,
+                    'dfp': self._get_cookie('dfp', ''),
+                    'mode': self._get_cookie('mod', 'intl'),
+                    'lang': self._get_cookie('lang', 'en_us'),
+                    'bid_list': '[' + ','.join(['0', *self._BID_TAGS.keys()]) + ']',
+                    'ut_list': '[' + ','.join(ut_list) + ']',
+                    'cmd5x_func': self._extract_cmd5x_function(webpage, video_id),
+                })[1].strip(), video_id)
+
+            initial_format_data = self._download_json(
+                urljoin('https://cache-video.iq.com', dash_paths['0']), video_id,
+                note='Downloading initial video format info', errnote='Unable to download initial video format info')['data']
 
         preview_time = traverse_obj(
             initial_format_data, ('boss_ts', (None, 'data'), ('previewTime', 'rtime')), expected_type=float_or_none, get_all=False)
         if traverse_obj(initial_format_data, ('boss_ts', 'data', 'prv'), expected_type=int_or_none):
             self.report_warning('This preview video is limited{}'.format(format_field(preview_time, None, ' to %s seconds')))
 
+        formats, subtitles = [], {}
         # TODO: Extract audio-only formats
-        for bid in set(traverse_obj(initial_format_data, ('program', 'video', ..., 'bid'), expected_type=str_or_none)):
-            dash_path = dash_paths.get(bid)
-            if not dash_path:
-                self.report_warning(f'Unknown format id: {bid}. It is currently not being extracted')
-                continue
-            format_data = traverse_obj(self._download_json(
-                urljoin('https://cache-video.iq.com', dash_path), video_id,
-                note=f'Downloading format data for {self._BID_TAGS[bid]}', errnote='Unable to download format data',
-                fatal=False), 'data', expected_type=dict)
-
-            video_format = traverse_obj(format_data, ('program', 'video', lambda _, v: str(v['bid']) == bid),
-                                        expected_type=dict, get_all=False) or {}
-            extracted_formats = []
-            if video_format.get('m3u8Url'):
-                extracted_formats.extend(self._extract_m3u8_formats(
-                    urljoin(format_data.get('dm3u8', 'https://cache-m.iq.com/dc/dt/'), video_format['m3u8Url']),
-                    video_id, 'mp4', m3u8_id=bid, fatal=False))
-            if video_format.get('mpdUrl'):
-                # TODO: Properly extract mpd hostname
-                extracted_formats.extend(self._extract_mpd_formats(
-                    urljoin(format_data.get('dm3u8', 'https://cache-m.iq.com/dc/dt/'), video_format['mpdUrl']),
-                    video_id, mpd_id=bid, fatal=False))
-            if video_format.get('m3u8'):
-                ff = video_format.get('ff', 'ts')
-                if ff == 'ts':
-                    m3u8_formats, _ = self._parse_m3u8_formats_and_subtitles(
-                        video_format['m3u8'], ext='mp4', m3u8_id=bid, fatal=False)
-                    extracted_formats.extend(m3u8_formats)
-                elif ff == 'm4s':
-                    mpd_data = traverse_obj(
-                        self._parse_json(video_format['m3u8'], video_id, fatal=False), ('payload', ..., 'data'), expected_type=str)
-                    if not mpd_data:
-                        continue
-                    mpd_formats, _ = self._parse_mpd_formats_and_subtitles(
-                        mpd_data, bid, format_data.get('dm3u8', 'https://cache-m.iq.com/dc/dt/'))
-                    extracted_formats.extend(mpd_formats)
-                else:
-                    self.report_warning(f'{ff} formats are currently not supported')
-
-            if not extracted_formats:
-                if video_format.get('s'):
-                    self.report_warning(f'{self._BID_TAGS[bid]} format is restricted')
-                else:
-                    self.report_warning(f'Unable to extract {self._BID_TAGS[bid]} format')
-            for f in extracted_formats:
-                f.update({
-                    'quality': qualities(list(self._BID_TAGS.keys()))(bid),
-                    'format_note': self._BID_TAGS[bid],
-                    **parse_resolution(video_format.get('scrsz')),
-                })
-            formats.extend(extracted_formats)
+        if dash_paths:
+            for bid in set(traverse_obj(initial_format_data, ('program', 'video', ..., 'bid'), expected_type=str_or_none)):
+                dash_path = dash_paths.get(bid)
+                if not dash_path:
+                    self.report_warning(f'Unknown format id: {bid}. It is currently not being extracted')
+                    continue
+                format_data = traverse_obj(self._download_json(
+                    urljoin('https://cache-video.iq.com', dash_path), video_id,
+                    note=f'Downloading format data for {self._BID_TAGS.get(bid, bid)}', errnote='Unable to download format data',
+                    fatal=False), 'data', expected_type=dict)
+                video_format = traverse_obj(format_data, ('program', 'video', lambda _, v: str(v['bid']) == bid),
+                                            expected_type=dict, get_all=False) or {}
+                extracted_formats = self._extract_program_formats(format_data, video_id, video_format)
+                if not extracted_formats:
+                    tag = self._BID_TAGS.get(bid, bid)
+                    if video_format.get('s'):
+                        self.report_warning(f'{tag} format is restricted')
+                    else:
+                        self.report_warning(f'Unable to extract {tag} format')
+                formats.extend(extracted_formats)
+        else:
+            for video_format in traverse_obj(
+                    initial_format_data, ('program', 'video', ...), expected_type=dict):
+                extracted_formats = self._extract_program_formats(
+                    initial_format_data, video_id, video_format)
+                if not extracted_formats and video_format.get('s'):
+                    bid = str_or_none(video_format.get('bid'))
+                    self.report_warning(f'{self._BID_TAGS.get(bid, bid)} format is restricted')
+                formats.extend(extracted_formats)
 
         for sub_format in traverse_obj(initial_format_data, ('program', 'stl', ...), expected_type=dict):
             lang = self._LID_TAGS.get(str_or_none(sub_format.get('lid')), sub_format.get('_name'))
@@ -522,6 +571,14 @@ class IqAlbumIE(InfoExtractor):
     IE_NAME = 'iq.com:album'
     _VALID_URL = r'https?://(?:www\.)?iq\.com/album/(?:[\w%-]*-)?(?P<id>\w+)'
     _TESTS = [{
+        'url': 'https://www.iq.com/album/knot-2026-f5unp9qy15',
+        'info_dict': {
+            'id': 'f5unp9qy15',
+            'title': 'KNOT',
+            'description': 'md5:50805b750c76d5fb751c5d8142fe33fd',
+        },
+        'playlist_mincount': 8,
+    }, {
         'url': 'https://www.iq.com/album/one-piece-1999-1bk9icvr331',
         'info_dict': {
             'id': '1bk9icvr331',
@@ -529,6 +586,7 @@ class IqAlbumIE(InfoExtractor):
             'description': 'Subtitle available on Sunday 4PM（GMT+8）.',
         },
         'playlist_mincount': 238,
+        'skip': 'Geo-restricted',
     }, {
         # Movie/single video
         'url': 'https://www.iq.com/album/九龙城寨-2021-22yjnij099k',
@@ -546,6 +604,7 @@ class IqAlbumIE(InfoExtractor):
             'average_rating': float,
         },
         'expected_warnings': ['format is restricted'],
+        'skip': 'Geo-restricted',
     }]
 
     def _entries(self, album_id_num, page_ranges, album_id=None, mode_code='intl', lang_code='en_us'):
