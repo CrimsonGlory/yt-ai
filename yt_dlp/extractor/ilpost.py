@@ -1,17 +1,18 @@
-
 from .common import InfoExtractor
 from ..utils import (
     ExtractorError,
+    clean_html,
     float_or_none,
     int_or_none,
+    str_or_none,
+    unescapeHTML,
     url_or_none,
-    urlencode_postdata,
 )
 from ..utils.traversal import traverse_obj
 
 
 class IlPostIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?ilpost\.it/episodes/(?P<id>[^/?#]+)'
+    _VALID_URL = r'https?://(?:www\.)?ilpost\.it/(?:episodes|(?:podcasts/[^/?#]+))/(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://www.ilpost.it/episodes/1-avis-akvasas-ka/',
         'md5': '43649f002d85e1c2f319bb478d479c40',
@@ -20,49 +21,43 @@ class IlPostIE(InfoExtractor):
             'ext': 'mp3',
             'display_id': '1-avis-akvasas-ka',
             'title': '1. Avis akvasas ka',
+            'description': 'md5:57d147951b522c92095f64e28570cf4a',
             'url': 'https://www.ilpost.it/wp-content/uploads/2023/12/28/1703781217-l-invasione-pt1-v6.mp3',
+            'thumbnail': 'https://www.ilpost.it/wp-content/uploads/2023/12/22/1703238848-copertina500x500.jpg',
             'timestamp': 1703835014,
             'upload_date': '20231229',
             'duration': 2495.0,
             'availability': 'public',
+            'series': "L'invasione",
             'series_id': '235598',
-            'description': '',
         },
+    }, {
+        'url': 'https://www.ilpost.it/podcasts/l-invasione/1-avis-akvasas-ka',
+        'only_matching': True,
     }]
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
         webpage = self._download_webpage(url, display_id)
 
-        endpoint_metadata = self._search_json(
-            r'var\s+ilpostpodcast\s*=', webpage, 'metadata', display_id)
-        episode_id = endpoint_metadata['post_id']
-        podcast_id = endpoint_metadata['podcast_id']
-        podcast_metadata = self._download_json(
-            endpoint_metadata['ajax_url'], display_id, data=urlencode_postdata({
-                'action': 'checkpodcast',
-                'cookie': endpoint_metadata['cookie'],
-                'post_id': episode_id,
-                'podcast_id': podcast_id,
-            }))
-
-        episode = traverse_obj(podcast_metadata, (
-            'data', 'postcastList', lambda _, v: str(v['id']) == episode_id, {dict}), get_all=False)
+        episode = traverse_obj(self._search_nextjs_data(webpage, display_id), (
+            'props', 'pageProps', 'data', 'data', 'episode', 'data', 0, {dict}))
         if not episode:
             raise ExtractorError('Episode could not be extracted')
 
         return {
-            'id': episode_id,
             'display_id': display_id,
-            'series_id': podcast_id,
             'vcodec': 'none',
             **traverse_obj(episode, {
-                'title': ('title', {str}),
-                'description': ('description', {str}),
-                'url': ('podcast_raw_url', {url_or_none}),
+                'id': ('id', {str_or_none}),
+                'title': ('title', {unescapeHTML}),
+                'description': ('content_html', {clean_html}),
+                'url': ('episode_raw_url', {url_or_none}),
                 'thumbnail': ('image', {url_or_none}),
                 'timestamp': ('timestamp', {int_or_none}),
                 'duration': ('milliseconds', {float_or_none(scale=1000)}),
-                'availability': ('free', {lambda v: 'public' if v else 'subscriber_only'}),
+                'availability': ('access_level', {lambda v: 'public' if v == 'all' else 'subscriber_only'}),
+                'series_id': ('parent', 'id', {str_or_none}),
+                'series': ('parent', 'title', {str}),
             }),
         }
