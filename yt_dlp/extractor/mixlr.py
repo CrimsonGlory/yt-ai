@@ -8,6 +8,7 @@ class MixlrIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?P<username>[\w-]+)\.mixlr\.com/events/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://suncity-104-9fm.mixlr.com/events/4387115',
+        'skip': 'This event has ended',
         'info_dict': {
             'id': '4387115',
             'ext': 'mp3',
@@ -100,7 +101,22 @@ class MixlrIE(InfoExtractor):
 class MixlrRecoringIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?P<username>[\w-]+)\.mixlr\.com/recordings/(?P<id>\d+)'
     _TESTS = [{
+        'url': 'https://paroki-kebondalem.mixlr.com/recordings/3194193',
+        'md5': 'c9c2444fa9981500096e9a881ebfc206',
+        'info_dict': {
+            'id': '3194193',
+            'ext': 'mp3',
+            'title': 'Misa Harian 25 Agustus 2026.',
+            'description': '',
+            'uploader_id': '8633750',
+            'duration': 2155,
+            'thumbnail': r're:https://imagescdn\.mixlr\.com/4f0f405ee947565175776e0bee623982\.png',
+            'timestamp': 1787612595,
+            'upload_date': '20260824',
+        },
+    }, {
         'url': 'https://biblewayng.mixlr.com/recordings/2375193',
+        'skip': 'video gone',
         'info_dict': {
             'id': '2375193',
             'ext': 'mp3',
