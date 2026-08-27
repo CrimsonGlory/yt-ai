@@ -136,7 +136,7 @@ class KickVODIE(KickBaseIE):
             'upload_date': str,
             'live_status': 'is_live',
         },
-        'skip': 'live',
+        'skip': 'video gone',
     }]
 
     def _real_extract(self, url):
@@ -169,6 +169,7 @@ class KickClipIE(KickBaseIE):
     _VALID_URL = r'https?://(?:www\.)?kick\.com/[\w-]+(?:/clips/|/?\?(?:[^#]+&)?clip=)(?P<id>clip_[\w-]+)'
     _TESTS = [{
         'url': 'https://kick.com/mxddy?clip=clip_01GYXVB5Y8PWAPWCWMSBCFB05X',
+        'md5': 'a1014e8a26b6f45bc64bcef679dd19a7',
         'info_dict': {
             'id': 'clip_01GYXVB5Y8PWAPWCWMSBCFB05X',
             'ext': 'mp4',
@@ -186,7 +187,6 @@ class KickClipIE(KickBaseIE):
             'categories': ['VALORANT'],
             'age_limit': 18,
         },
-        'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://kick.com/destiny?clip=clip_01H9SKET879NE7N9RJRRDS98J3',
         'info_dict': {
@@ -223,7 +223,7 @@ class KickClipIE(KickBaseIE):
             'thumbnail': 'https://clips.kick.com/clips/f2/clip_01J8RGZRKHXHXXKJEHGRM932A5/thumbnail.webp',
             'view_count': int,
             'like_count': int,
-            'categories': ['Minecraft'],
+            'categories': ['Just Chatting'],
             'age_limit': 0,
         },
         'params': {'skip_download': 'm3u8'},
