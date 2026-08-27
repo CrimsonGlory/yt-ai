@@ -17,6 +17,19 @@ class MainStreamingIE(InfoExtractor):
     IE_DESC = 'MainStreaming Player'
 
     _TESTS = [{
+        'url': 'https://webtools-f5842579ff984c1c98d63b8d789673eb.msvdn.net/embed/u7kiX5DUaHYr',
+        'md5': 'a5e0548d1290b581e8327af112b857b1',
+        'info_dict': {
+            'id': 'u7kiX5DUaHYr',
+            'ext': 'mp4',
+            'title': 'I Santi Pietro e Paolo',
+            'description': 'md5:ff6be24916ba6b9ae990bf5f3df4911e',
+            'live_status': 'not_live',
+            'thumbnail': r're:https?://[\w-]+\.msvdn\.net/image/\w+/poster',
+            'duration': 1700,
+            'tags': '06/07/2025',
+        },
+    }, {
         # Live stream offline, has alternative content id
         'url': 'https://webtools-e18da6642b684f8aa9ae449862783a56.msvdn.net/embed/53EN6GxbWaJC',
         'info_dict': {
@@ -50,7 +63,7 @@ class MainStreamingIE(InfoExtractor):
             'ext': 'mp4',
             'thumbnail': r're:https?://[\w-]+\.msvdn\.net/image/\w+/poster',
         },
-        'skip': 'live stream',
+        'skip': 'video gone',
     }, {
         'url': 'https://webtools-f5842579ff984c1c98d63b8d789673eb.msvdn.net/embed/EUlZfGWkGpOd?autoPlay=false',
         'info_dict': {
