@@ -24,6 +24,29 @@ class DropoutIE(InfoExtractor):
     _VALID_URL = r'https?://(?:watch\.)?dropout\.tv/(?:[^/?#]+/)*videos/(?P<id>[^/?#]+)/?(?:[?#]|$)'
     _TESTS = [
         {
+            'url': 'https://watch.dropout.tv/videos/wtf101-trailer',
+            'note': 'Public trailer (no login required)',
+            'md5': 'bf014c974014443bc2ab89597a337640',
+            'info_dict': {
+                'id': '410493',
+                'display_id': 'wtf101-trailer',
+                'ext': 'mp4',
+                'title': 'WTF 101 Trailer',
+                'description': 'The people who brought you Adam Ruins Everything drop a new dose of freaky facts and horrifying history in all their cartoon glory. New clips on YouTube and new full episodes every week on DROPOUT.TV.',
+                'thumbnail': 'https://vhx.imgix.net/chuncensoredstaging/assets/9e9bce06-3536-4207-aa35-74dfd7f86866.png',
+                'duration': 60,
+                'uploader_id': 'user80538407',
+                'uploader_url': 'https://vimeo.com/user80538407',
+                'uploader': 'OTT Videos',
+            },
+            # HLS --test only fetches the fMP4 init fragment (~1KB), below the default 10KB check
+            'file_minsize': None,
+            'params': {
+                'format': 'bv[vcodec^=avc1]/bv/b',
+            },
+            'expected_warnings': ['Failed to parse XML: not well-formed'],
+        },
+        {
             'url': 'https://watch.dropout.tv/game-changer/season:2/videos/yes-or-no',
             'skip': 'Login required',
             'note': 'Episode in a series',
