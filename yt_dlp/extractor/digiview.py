@@ -8,7 +8,10 @@ class DigiviewIE(InfoExtractor):
     _TESTS = [{
         # normal video
         'url': 'https://ladigitale.dev/digiview/#/v/67a8e50aee2ec',
-        'skip': 'HTTP Error 403',
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'n challenge solving failed',
+        ],
         'info_dict': {
             'id': '67a8e50aee2ec',
             'ext': 'mp4',
@@ -28,7 +31,7 @@ class DigiviewIE(InfoExtractor):
             'channel_follower_count': int,
             'channel_url': 'https://www.youtube.com/channel/UCSMOQeBJ2RAnuFungnQOxLg',
             'uploader_id': '@BlenderOfficial',
-            'description': 'md5:8f3ed18a53a1bb36cbb3b70a15782fd0',
+            'description': 'md5:366a68ca9d486e9be5b0fc7ae7cfa93d',
             'categories': ['Film & Animation'],
             'channel_is_verified': True,
             'heatmap': 'count:100',
@@ -39,11 +42,15 @@ class DigiviewIE(InfoExtractor):
             'age_limit': 0,
             'section_start': 0,
             'availability': 'public',
+            'media_type': 'video',
         },
     }, {
         # cut video
         'url': 'https://ladigitale.dev/digiview/#/v/67a8e51d0dd58',
-        'skip': 'HTTP Error 403',
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'n challenge solving failed',
+        ],
         'info_dict': {
             'id': '67a8e51d0dd58',
             'ext': 'mp4',
@@ -63,7 +70,7 @@ class DigiviewIE(InfoExtractor):
             'channel_follower_count': int,
             'channel_url': 'https://www.youtube.com/channel/UCSMOQeBJ2RAnuFungnQOxLg',
             'uploader_id': '@BlenderOfficial',
-            'description': 'md5:8f3ed18a53a1bb36cbb3b70a15782fd0',
+            'description': 'md5:366a68ca9d486e9be5b0fc7ae7cfa93d',
             'categories': ['Film & Animation'],
             'channel_is_verified': True,
             'heatmap': 'count:100',
@@ -74,11 +81,15 @@ class DigiviewIE(InfoExtractor):
             'age_limit': 0,
             'section_start': 5,
             'availability': 'public',
+            'media_type': 'video',
         },
     }, {
         # changed title
         'url': 'https://ladigitale.dev/digiview/#/v/67a8ea5644d7a',
-        'skip': 'HTTP Error 403',
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'n challenge solving failed',
+        ],
         'info_dict': {
             'id': '67a8ea5644d7a',
             'ext': 'mp4',
@@ -98,7 +109,7 @@ class DigiviewIE(InfoExtractor):
             'channel_follower_count': int,
             'channel_url': 'https://www.youtube.com/channel/UCSMOQeBJ2RAnuFungnQOxLg',
             'uploader_id': '@BlenderOfficial',
-            'description': 'md5:8f3ed18a53a1bb36cbb3b70a15782fd0',
+            'description': 'md5:366a68ca9d486e9be5b0fc7ae7cfa93d',
             'categories': ['Film & Animation'],
             'channel_is_verified': True,
             'heatmap': 'count:100',
@@ -109,6 +120,7 @@ class DigiviewIE(InfoExtractor):
             'age_limit': 0,
             'section_start': 10,
             'availability': 'public',
+            'media_type': 'video',
         },
     }]
 
@@ -116,7 +128,8 @@ class DigiviewIE(InfoExtractor):
         video_id = self._match_id(url)
         video_data = self._download_json(
             'https://ladigitale.dev/digiview/inc/recuperer_video.php', video_id,
-            data=urlencode_postdata({'id': video_id}))
+            data=urlencode_postdata({'id': video_id}),
+            headers={'Origin': 'https://ladigitale.dev'})
 
         clip_id = video_data['videoId']
         return self.url_result(
