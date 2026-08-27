@@ -3,7 +3,16 @@ from .common import InfoExtractor
 
 class CaltransIE(InfoExtractor):
     _VALID_URL = r'https?://(?:[^/]+\.)?ca\.gov/vm/loc/[^/]+/(?P<id>[a-z0-9_]+)\.htm'
-    _TEST = {
+    _TESTS = [{
+        'url': 'https://cwwp2.dot.ca.gov/vm/loc/d11/c214sb5viadesanysidro.htm',
+        'info_dict': {
+            'id': 'c214sb5viadesanysidro',
+            'ext': 'ts',
+            'title': r're:I-5 : San Ysidro : \(C214\) SB 5 :\s+Via De San Ysidro \d{4}-\d{2}-\d{2} \d{2}:\d{2}$',
+            'live_status': 'is_live',
+            'thumbnail': 'https://cwwp2.dot.ca.gov/data/d11/cctv/image/c214sb5viadesanysidro/c214sb5viadesanysidro.jpg',
+        },
+    }, {
         'url': 'https://cwwp2.dot.ca.gov/vm/loc/d3/hwy50at24th.htm',
         'skip': 'video gone',
         'info_dict': {
@@ -13,7 +22,7 @@ class CaltransIE(InfoExtractor):
             'live_status': 'is_live',
             'thumbnail': 'https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50at24th/hwy50at24th.jpg',
         },
-    }
+    }]
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
