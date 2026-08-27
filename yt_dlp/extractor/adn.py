@@ -68,7 +68,7 @@ class ADNIE(ADNBaseIE):
     _VALID_URL = r'https?://(?:www\.)?animationdigitalnetwork\.com/(?:(?P<lang>de)/)?video/[^/?#]+/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://animationdigitalnetwork.com/video/558-fruits-basket/9841-episode-1-a-ce-soir',
-        'md5': '1f3d1139453194d699bb752c612feb0a',
+        'md5': '3999b7b235ffb3591a385d1913cd3cd1',
         'info_dict': {
             'id': '9841',
             'ext': 'mp4',
@@ -173,6 +173,8 @@ Format: Marked,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text'''
     def _real_extract(self, url):
         lang, video_id = self._match_valid_url(url).group('lang', 'id')
         self._HEADERS['X-Target-Distribution'] = lang or 'fr'
+        if 'Authorization' in self._HEADERS:
+            self._HEADERS['X-Profile-ID'] = self._configuration_arg('profile_id', ['1'])[0]
         video_base_url = self._PLAYER_BASE_URL + f'video/{video_id}/'
         player = self._download_player_json(
             video_base_url + 'configuration', video_id,

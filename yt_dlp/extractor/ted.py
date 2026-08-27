@@ -194,7 +194,7 @@ class TedPlaylistIE(TedBaseIE):
         'url': 'https://www.ted.com/playlists/171/the_most_popular_talks_of_all',
         'info_dict': {
             'id': '171',
-            'title': 'The most popular talks of all time',
+            'title': 'The most popular TED Talks of all time',
             'description': 'md5:5346ef094754d2edd7e1a4cd3a166168',
         },
         'playlist_mincount': 25,
