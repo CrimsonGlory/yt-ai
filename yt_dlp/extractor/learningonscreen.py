@@ -17,7 +17,7 @@ class LearningOnScreenIE(InfoExtractor):
     _VALID_URL = r'https?://learningonscreen\.ac\.uk/ondemand/index\.php/prog/(?P<id>\w+)'
     _TESTS = [{
         'url': 'https://learningonscreen.ac.uk/ondemand/index.php/prog/005D81B2?bcast=22757013',
-        'skip': 'Login required',
+        'skip': 'Requires UK institutional ERA membership login',
         'info_dict': {
             'id': '005D81B2',
             'ext': 'mp4',
