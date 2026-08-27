@@ -17,14 +17,14 @@ class MediaKlikkIE(InfoExtractor):
 
     _TESTS = [{
         # mediaklikk
-        'url': 'https://m4sport.hu/magyar-foci/cikk/2026/08/23/valamit-jol-csinalunk-juareznek-az-eredmenynel-fontosabb-az-eto-jelenlegi-teljesitmenye',
+        'url': 'https://mediaklikk.hu/video/2025/09/13/mediaklikk-mobil-szemelyes-profil/',
         'info_dict': {
-            'id': '10160439',
-            'title': 'Hévíz - dzsungel a víz alatt – Ajánló (08.10.)',
-            'display_id': 'heviz-dzsungel-a-viz-alatt-ajanlo-08-10',
+            'id': '8780727',
+            'title': 'Médiaklikk - MOBIL személyes profil',
+            'display_id': 'mediaklikk-mobil-szemelyes-profil',
             'ext': 'mp4',
-            'upload_date': '20250804',
-            'thumbnail': 'https://cdn.cms.mtv.hu/wp-content/uploads/sites/4/2025/08/vlcsnap-2025-08-04-13h48m24s336.jpg',
+            'upload_date': '20250913',
+            'thumbnail': 'https://cdn.cms.mtv.hu/wp-content/uploads/sites/4/2025/09/vlcsnap-2025-09-13-13h32m14s877.jpg',
         },
     }, {
         # mediaklikk - date in html
@@ -53,6 +53,7 @@ class MediaKlikkIE(InfoExtractor):
     }, {
         # hirado
         'url': 'https://hirado.hu/video/2025/08/09/idojaras-jelentes-2025-augusztus-9-2230',
+        'skip': 'video gone',
         'info_dict': {
             'id': '8592033',
             'title': 'Időjárás-jelentés, 2025. augusztus 9. 22:30',
