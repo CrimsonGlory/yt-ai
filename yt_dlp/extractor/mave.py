@@ -14,7 +14,7 @@ from ..utils.traversal import require, traverse_obj
 
 class MaveBaseIE(InfoExtractor):
     _API_BASE_URL = 'https://api.mave.digital/v1/website'
-    _API_BASE_STORAGE_URL = 'https://store.cloud.mts.ru/mave/'
+    _API_BASE_STORAGE_URL = 'https://cdn.mave.digital/'
 
     def _load_channel_meta(self, channel_id, display_id):
         return traverse_obj(self._download_json(
