@@ -5,16 +5,19 @@ from ..utils import traverse_obj, urljoin
 
 
 class IslamChannelIE(InfoExtractor):
-    _VALID_URL = r'https?://watch\.islamchannel\.tv/watch/(?P<id>\d+)'
+    _VALID_URL = r'https?://watch\.islamchannel\.tv/watch/(?:vod/)?(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://watch.islamchannel.tv/watch/38604310',
         'info_dict': {
             'id': '38604310',
-            'title': 'Omar - Young Omar',
+            'title': 'Islam Channel - Omar - Young Omar',
             'description': 'md5:5cc7ddecef064ea7afe52eb5e0e33b55',
             'thumbnail': r're:https?://.+',
             'ext': 'mp4',
         },
+    }, {
+        'url': 'https://watch.islamchannel.tv/watch/vod/38604310',
+        'only_matching': True,
     }]
 
     def _real_extract(self, url):
@@ -36,11 +39,14 @@ class IslamChannelIE(InfoExtractor):
                 'key': self._search_regex(r'data-key="([^"]+)"', webpage, 'data key'),
                 'platform': 'chrome',
             }, headers=headers)
-        # TODO: show_stream['stream'] and show_stream['drm'] may contain something interesting
-        streams = self._download_json(
-            traverse_obj(show_stream, ('response', 'tokenization', 'url')), video_id,
-            headers=headers)
-        formats, subs = self._extract_m3u8_formats_and_subtitles(traverse_obj(streams, ('Streams', 'Adaptive')), video_id, 'mp4')
+        # Newer responses expose a ready HLS URL; older ones need a tokenization hop
+        m3u8_url = traverse_obj(show_stream, ('response', 'stream'))
+        if not m3u8_url:
+            streams = self._download_json(
+                traverse_obj(show_stream, ('response', 'tokenization', 'url')), video_id,
+                headers=headers)
+            m3u8_url = traverse_obj(streams, ('Streams', 'Adaptive'))
+        formats, subs = self._extract_m3u8_formats_and_subtitles(m3u8_url, video_id, 'mp4')
 
         return {
             'id': video_id,
