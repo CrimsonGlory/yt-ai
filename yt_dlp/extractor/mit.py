@@ -7,6 +7,7 @@ from ..utils import (
     ExtractorError,
     clean_html,
     get_element_by_id,
+    url_or_none,
 )
 
 
@@ -66,21 +67,24 @@ class TechTVMITIE(InfoExtractor):
 
 class OCWMITIE(InfoExtractor):
     IE_NAME = 'ocw.mit.edu'
-    _VALID_URL = r'https?://ocw\.mit\.edu/courses/(?P<topic>[a-z0-9\-]+)'
+    _VALID_URL = r'https?://(?:www\.)?ocw\.mit\.edu/courses/(?:[^/?#]+/)*(?P<id>[^/?#]+)'
     _BASE_URL = 'http://ocw.mit.edu/'
 
     _TESTS = [
         {
-            'url': 'http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-041-probabilistic-systems-analysis-and-applied-probability-fall-2010/video-lectures/lecture-7-multiple-variables-expectations-independence/',
+            'url': 'https://ocw.mit.edu/courses/6-041-probabilistic-systems-analysis-and-applied-probability-fall-2010/resources/lecture-7-multiple-variables-expectations-independence/',
+            'md5': '4935dbfbedba8d4340ab02af35afd921',
             'info_dict': {
                 'id': 'EObHWIEKGjA',
-                'ext': 'webm',
+                'ext': 'mp4',
                 'title': 'Lecture 7: Multiple Discrete Random Variables: Expectations, Conditioning, Independence',
                 'description': 'In this lecture, the professor discussed multiple random variables, expectations, and binomial distribution.',
-                'upload_date': '20121109',
-                'uploader_id': 'MIT',
-                'uploader': 'MIT OpenCourseWare',
+                'display_id': 'lecture-7-multiple-variables-expectations-independence',
             },
+        },
+        {
+            'url': 'http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-041-probabilistic-systems-analysis-and-applied-probability-fall-2010/video-lectures/lecture-7-multiple-variables-expectations-independence/',
+            'only_matching': True,
         },
         {
             'url': 'http://ocw.mit.edu/courses/mathematics/18-01sc-single-variable-calculus-fall-2010/1.-differentiation/part-a-definition-and-basic-rules/session-1-introduction-to-derivatives/',
@@ -97,36 +101,53 @@ class OCWMITIE(InfoExtractor):
         },
     ]
 
+    def _extract_youtube(self, webpage):
+        youtube_id = self._search_regex(
+            r'(?:youtube\.com/embed/|video-player-)(?P<id>[\w-]{11})',
+            webpage, 'youtube id', default=None)
+        if youtube_id:
+            return youtube_id, f'https://www.youtube.com/watch?v={youtube_id}'
+
+        embed_media = re.search(r'ocw_embed_(?:chapter_)?media\((.+?)\)', webpage)
+        if not embed_media:
+            return None, None
+        metadata = re.split(r', ?', re.sub(r'[\'"]', '', embed_media.group(1)))
+        youtube_url = metadata[1]
+        return YoutubeIE.extract_id(youtube_url), youtube_url
+
     def _real_extract(self, url):
-        mobj = self._match_valid_url(url)
-        topic = mobj.group('topic')
+        display_id = self._match_id(url)
+        webpage = self._download_webpage(url, display_id)
 
-        webpage = self._download_webpage(url, topic)
-        title = self._html_search_meta('WT.cg_s', webpage)
-        description = self._html_search_meta('Description', webpage)
+        webpage_title = self._html_extract_title(webpage)
+        title = webpage_title.split('|')[0].strip() if webpage_title else None
+        description = clean_html(self._search_regex(
+            r'(?s)<strong>Description:</strong>\s*(.+?)</p>',
+            webpage, 'description', default=None)) or self._html_search_meta(
+            'Description', webpage)
 
-        # search for call to ocw_embed_chapter_media(container_id, media_url, provider, page_url, image_url, start, stop, captions_file)
-        embed_chapter_media = re.search(r'ocw_embed_chapter_media\((.+?)\)', webpage)
-        if embed_chapter_media:
-            metadata = re.sub(r'[\'"]', '', embed_chapter_media.group(1))
-            metadata = re.split(r', ?', metadata)
-            yt = metadata[1]
-        else:
-            # search for call to ocw_embed_chapter_media(container_id, media_url, provider, page_url, image_url, captions_file)
-            embed_media = re.search(r'ocw_embed_media\((.+?)\)', webpage)
-            if embed_media:
-                metadata = re.sub(r'[\'"]', '', embed_media.group(1))
-                metadata = re.split(r', ?', metadata)
-                yt = metadata[1]
-            else:
-                raise ExtractorError('Unable to find embedded YouTube video.')
-        video_id = YoutubeIE.extract_id(yt)
+        download_url = url_or_none(self._search_regex(
+            r'data-downloadlink\s*=\s*"([^"]+)"',
+            webpage, 'download url', default=None))
+        youtube_id, youtube_url = self._extract_youtube(webpage)
 
-        return {
-            '_type': 'url_transparent',
-            'id': video_id,
-            'title': title,
-            'description': description,
-            'url': yt,
-            'ie_key': 'Youtube',
-        }
+        if download_url:
+            return {
+                'id': youtube_id or display_id,
+                'display_id': display_id,
+                'title': title,
+                'description': description,
+                'url': download_url,
+            }
+
+        if youtube_url:
+            return {
+                '_type': 'url_transparent',
+                'id': youtube_id,
+                'title': title,
+                'description': description,
+                'url': youtube_url,
+                'ie_key': 'Youtube',
+            }
+
+        raise ExtractorError('Unable to find embedded video.')
