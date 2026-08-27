@@ -1,12 +1,11 @@
 from .common import InfoExtractor
 from ..utils import (
     int_or_none,
+    join_nonempty,
     remove_end,
     traverse_obj,
-    try_get,
     unified_timestamp,
     url_or_none,
-    urlencode_postdata,
 )
 
 
@@ -19,6 +18,50 @@ class HungamaBaseIE(InfoExtractor):
                 'platform': 'a',
                 'storeId': '1',
             }), ('data', {dict})) or {}
+
+    def _extract_playable_formats(self, content_id, content_type=None):
+        formats, subtitles, seen = [], {}, set()
+        query = {'user': 'free'}
+        if content_type is not None:
+            query['contentType'] = content_type
+
+        for device in ('web', None):
+            playable = self._download_json(
+                f'https://chraurls.api.hungama.com/v1/content/{content_id}/url/playable',
+                content_id, fatal=False,
+                query={**query, **({} if device is None else {'device': device})},
+                note='Downloading playable URL JSON' + ('' if device else ' (no device)'))
+            streams = []
+            for stream in traverse_obj(playable, (
+                'data', 'body', 'data', 'url', 'playable', ..., {dict},
+            )) or []:
+                if url_or_none(stream.get('data')):
+                    streams.append(stream)
+            # Previews are often 503; prefer full renditions when present
+            for stream in [s for s in streams if s.get('key') != 'preview'] or streams:
+                stream_url = stream['data']
+                if stream_url in seen:
+                    continue
+                seen.add(stream_url)
+                protocol = (stream.get('protocol') or '').lower()
+                if protocol == 'hls' or 'index.m3u8' in stream_url:
+                    fmts, subs = self._extract_m3u8_formats_and_subtitles(
+                        stream_url, content_id, 'mp4', m3u8_id='hls', fatal=False)
+                    formats.extend(fmts)
+                    self._merge_subtitles(subs, target=subtitles)
+                elif protocol == 'dash' or stream_url.endswith('.mpd'):
+                    fmts, subs = self._extract_mpd_formats_and_subtitles(
+                        stream_url, content_id, mpd_id='dash', fatal=False)
+                    formats.extend(fmts)
+                    self._merge_subtitles(subs, target=subtitles)
+                else:
+                    formats.append({
+                        'url': stream_url,
+                        'format_id': stream.get('key'),
+                    })
+            if formats:
+                break
+        return formats, subtitles
 
 
 class HungamaIE(HungamaBaseIE):
@@ -33,8 +76,7 @@ class HungamaIE(HungamaBaseIE):
                     '''
     _TESTS = [{
         'url': 'http://www.hungama.com/video/krishna-chants/39349649/',
-        'skip': 'HTTP Error 403',
-        'md5': '687c5f1e9f832f3b59f44ed0eb1f120a',
+        'md5': '5d2be70f908fde3ecd7b7c107b0ad4b1',
         'info_dict': {
             'id': '39349649',
             'ext': 'mp4',
@@ -44,13 +86,11 @@ class HungamaIE(HungamaBaseIE):
             'duration': 264,
             'timestamp': 1535500800,
             'view_count': int,
-            'thumbnail': 'https://images1.hungama.com/tr:n-a_169_m/c/1/0dc/2ca/39349649/39349649_350x197.jpg?v=8',
+            'thumbnail': r're:https://images1\.hungama\.com/.+',
             'tags': 'count:6',
         },
     }, {
         'url': 'https://un.hungama.com/short-film/adira/102524179/',
-        'skip': 'HTTP Error 403',
-        'md5': '2278463f5dc9db9054d0c02602d44666',
         'info_dict': {
             'id': '102524179',
             'ext': 'mp4',
@@ -59,9 +99,10 @@ class HungamaIE(HungamaBaseIE):
             'upload_date': '20230417',
             'timestamp': 1681689600,
             'view_count': int,
-            'thumbnail': 'https://images1.hungama.com/tr:n-a_23_m/c/1/197/ac9/102524179/102524179_350x525.jpg?v=1',
+            'thumbnail': r're:https://images1\.hungama\.com/.+',
             'tags': 'count:7',
         },
+        'params': {'skip_download': True},
     }, {
         'url': 'https://www.hungama.com/movie/kahaani-2/44129919/',
         'only_matching': True,
@@ -72,17 +113,11 @@ class HungamaIE(HungamaBaseIE):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        video_json = self._download_json(
-            'https://www.hungama.com/index.php', video_id,
-            data=urlencode_postdata({'content_id': video_id}), headers={
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'X-Requested-With': 'XMLHttpRequest',
-            }, query={
-                'c': 'common',
-                'm': 'get_video_mdn_url',
-            })
-        formats = self._extract_m3u8_formats(video_json['stream_url'], video_id, ext='mp4', m3u8_id='hls')
         metadata = self._call_api('movie', video_id)
+        formats, subtitles = self._extract_playable_formats(
+            video_id, traverse_obj(metadata, ('head', 'data', 'type', {int_or_none})))
+        if not formats:
+            self.raise_no_formats('No playable formats returned', expected=True, video_id=video_id)
 
         return {
             **traverse_obj(metadata, ('head', 'data', {
@@ -96,19 +131,15 @@ class HungamaIE(HungamaBaseIE):
             })),
             'id': video_id,
             'formats': formats,
-            'subtitles': {
-                'en': [{
-                    'url': video_json['sub_title'],
-                    'ext': 'vtt',
-                }],
-            } if video_json.get('sub_title') else None,
+            'subtitles': subtitles,
         }
 
 
-class HungamaSongIE(InfoExtractor):
+class HungamaSongIE(HungamaBaseIE):
     _VALID_URL = r'https?://(?:www\.|un\.)?hungama\.com/song/[^/]+/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.hungama.com/song/kitni-haseen-zindagi/2931166/',
+        'skip': 'No public playable URL',
         'md5': '964f46828e8b250aa35e5fdcfdcac367',
         'info_dict': {
             'id': '2931166',
@@ -121,6 +152,7 @@ class HungamaSongIE(InfoExtractor):
         },
     }, {
         'url': 'https://un.hungama.com/song/tum-kya-mile-from-rocky-aur-rani-kii-prem-kahaani/103553672',
+        'skip': 'No public playable URL',
         'md5': '964f46828e8b250aa35e5fdcfdcac367',
         'info_dict': {
             'id': '103553672',
@@ -136,36 +168,26 @@ class HungamaSongIE(InfoExtractor):
 
     def _real_extract(self, url):
         audio_id = self._match_id(url)
+        metadata = self._call_api('song', audio_id)
+        head = traverse_obj(metadata, ('head', 'data', {dict})) or {}
+        formats, _ = self._extract_playable_formats(
+            audio_id, traverse_obj(head, ('type', {int_or_none})))
+        if not formats:
+            self.raise_no_formats('No public playable URL', expected=True, video_id=audio_id)
 
-        data = self._download_json(
-            f'https://www.hungama.com/audio-player-data/track/{audio_id}',
-            audio_id, query={'_country': 'IN'})[0]
-        track = data['song_name']
-        artist = data.get('singer_name')
-        formats = []
-        media_json = self._download_json(data.get('file') or data['preview_link'], audio_id)
-        media_url = try_get(media_json, lambda x: x['response']['media_url'], str)
-        media_type = try_get(media_json, lambda x: x['response']['type'], str)
-
-        if media_url:
-            formats.append({
-                'url': media_url,
-                'ext': media_type,
-                'vcodec': 'none',
-                'acodec': media_type,
-            })
-
-        title = f'{artist} - {track}' if artist else track
-        thumbnail = data.get('img_src') or data.get('album_image')
+        track = head.get('title')
+        artist = join_nonempty(*traverse_obj(
+            head, ('misc', 'singerf', ..., {str})), delim=', ') or head.get('subtitle')
+        title = f'{artist} - {track}' if artist and track else track
 
         return {
             'id': audio_id,
             'title': title,
-            'thumbnail': thumbnail,
+            'thumbnail': url_or_none(head.get('image')) or url_or_none(head.get('playble_image')),
             'track': track,
-            'artist': artist,
-            'album': data.get('album_name') or None,
-            'release_year': int_or_none(data.get('date')),
+            'artist': artist or None,
+            'album': traverse_obj(head, ('misc', 'p_name', 0, {str})) or None,
+            'release_year': int_or_none(str(head.get('releasedate') or '')[:4]),
             'formats': formats,
         }
 
