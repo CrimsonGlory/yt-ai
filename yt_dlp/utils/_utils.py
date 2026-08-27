@@ -4961,7 +4961,7 @@ class Config:
                 continue
             location = os.path.join(directory, expand_path(location))
             if os.path.isdir(location):
-                location = os.path.join(location, 'yt-dlp.conf')
+                location = os.path.join(location, 'yt-ai.conf')
             if not os.path.exists(location):
                 self.parser.error(f'config location {location} does not exist')
             self.append_config(self.read_file(location), location)

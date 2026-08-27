@@ -48,29 +48,29 @@ def _generate_expected_groups():
     home_dir = compat_expanduser('~')
     return {
         'Portable': [
-            Path(get_executable_path(), 'yt-dlp.conf'),
+            Path(get_executable_path(), 'yt-ai.conf'),
         ],
         'Home': [
-            Path('yt-dlp.conf'),
+            Path('yt-ai.conf'),
         ],
         'User': [
-            Path(xdg_config_home, 'yt-dlp.conf'),
-            Path(xdg_config_home, 'yt-dlp', 'config'),
-            Path(xdg_config_home, 'yt-dlp', 'config.txt'),
+            Path(xdg_config_home, 'yt-ai.conf'),
+            Path(xdg_config_home, 'yt-ai', 'config'),
+            Path(xdg_config_home, 'yt-ai', 'config.txt'),
             *((
-                Path(appdata_dir, 'yt-dlp.conf'),
-                Path(appdata_dir, 'yt-dlp', 'config'),
-                Path(appdata_dir, 'yt-dlp', 'config.txt'),
+                Path(appdata_dir, 'yt-ai.conf'),
+                Path(appdata_dir, 'yt-ai', 'config'),
+                Path(appdata_dir, 'yt-ai', 'config.txt'),
             ) if appdata_dir else ()),
-            Path(home_dir, 'yt-dlp.conf'),
-            Path(home_dir, 'yt-dlp.conf.txt'),
-            Path(home_dir, '.yt-dlp', 'config'),
-            Path(home_dir, '.yt-dlp', 'config.txt'),
+            Path(home_dir, 'yt-ai.conf'),
+            Path(home_dir, 'yt-ai.conf.txt'),
+            Path(home_dir, '.yt-ai', 'config'),
+            Path(home_dir, '.yt-ai', 'config.txt'),
         ],
         'System': [
-            Path('/etc/yt-dlp.conf'),
-            Path('/etc/yt-dlp/config'),
-            Path('/etc/yt-dlp/config.txt'),
+            Path('/etc/yt-ai.conf'),
+            Path('/etc/yt-ai/config'),
+            Path('/etc/yt-ai/config.txt'),
         ],
     }
 

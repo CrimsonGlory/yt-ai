@@ -87,19 +87,19 @@ def default_plugin_paths():
             with contextlib.suppress(OSError):
                 yield from (config_dir / containing_folder).iterdir()
 
-    # Load from yt-dlp config folders
+    # Load from yt-ai config folders
     yield from _get_package_paths(
-        *get_user_config_dirs('yt-dlp'),
-        *get_system_config_dirs('yt-dlp'),
+        *get_user_config_dirs('yt-ai'),
+        *get_system_config_dirs('yt-ai'),
         containing_folder='plugins',
     )
 
-    # Load from yt-dlp-plugins folders
+    # Load from yt-ai-plugins folders
     yield from _get_package_paths(
         get_executable_path(),
         *get_user_config_dirs(''),
         *get_system_config_dirs(''),
-        containing_folder='yt-dlp-plugins',
+        containing_folder='yt-ai-plugins',
     )
 
     # Load from PYTHONPATH directories
@@ -116,7 +116,7 @@ def candidate_plugin_paths(candidate):
 class PluginFinder(importlib.abc.MetaPathFinder):
     """
     This class provides one or multiple namespace packages.
-    It searches in sys.path and yt-dlp config folders for
+    It searches in sys.path and yt-ai config folders for
     the existing subdirectories from which the modules can be imported
     """
 

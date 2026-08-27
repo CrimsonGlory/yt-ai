@@ -36,12 +36,15 @@ from .version import (
 )
 
 UPDATE_SOURCES = {
-    'stable': 'yt-dlp/yt-dlp',
-    'nightly': 'yt-dlp/yt-dlp-nightly-builds',
-    'master': 'yt-dlp/yt-dlp-master-builds',
+    'stable': 'CrimsonGlory/yt-ai',
+    'nightly': 'CrimsonGlory/yt-ai',
+    'master': 'CrimsonGlory/yt-ai',
 }
 REPOSITORY = UPDATE_SOURCES['stable']
-_INVERSE_UPDATE_SOURCES = {value: key for key, value in UPDATE_SOURCES.items()}
+# First channel wins if multiple channels share a repository (this fork).
+_INVERSE_UPDATE_SOURCES = {}
+for _channel, _repo in UPDATE_SOURCES.items():
+    _INVERSE_UPDATE_SOURCES.setdefault(_repo, _channel)
 
 _VERSION_RE = re.compile(r'(\d+\.)*\d+')
 _HASH_PATTERN = r'[\da-f]{40}'
@@ -146,10 +149,10 @@ _NON_UPDATEABLE_REASONS = {
     **dict.fromkeys(
         ['linux_armv7l_dir', *(f'{variant[:-4]}_dir' for variant in _FILE_SUFFIXES if variant.endswith('_exe'))],
         'Auto-update is not supported for unpackaged executables; Re-download the latest release'),
-    'py2exe': 'py2exe is no longer supported by yt-dlp; This executable cannot be updated',
+    'py2exe': 'py2exe is no longer supported by yt-ai; This executable cannot be updated',
     'source': 'You cannot update when running from source code; Use git to pull the latest changes',
-    'unknown': 'You installed yt-dlp from a manual build or with a package manager; Use that to update',
-    'other': 'You are using an unofficial build of yt-dlp; Build the executable again',
+    'unknown': 'You installed yt-ai from a manual build or with a package manager; Use that to update',
+    'other': 'You are using an unofficial build of yt-ai; Build the executable again',
 }
 
 
@@ -161,7 +164,7 @@ def is_non_updateable():
 
 
 def _get_binary_name():
-    return format_field(_FILE_SUFFIXES, detect_variant(), template='yt-dlp%s', ignore=None, default=None)
+    return format_field(_FILE_SUFFIXES, detect_variant(), template='yt-ai%s', ignore=None, default=None)
 
 
 def _get_system_deprecation():
@@ -200,9 +203,9 @@ def _get_outdated_warning():
         last_updated = dt.date(*version_tuple(__version__)[:3])
         if last_updated < dt.datetime.now(dt.timezone.utc).date() - dt.timedelta(days=90):
             return ('\n         '.join((
-                f'Your yt-dlp version ({__version__}) is older than 90 days!',
+                f'Your yt-ai version ({__version__}) is older than 90 days!',
                 'It is strongly recommended to always use the latest version.',
-                f'{is_non_updateable() or """Run "yt-dlp --update" or "yt-dlp -U" to update"""}.',
+                f'{is_non_updateable() or """Run "yt-ai --update" or "yt-ai -U" to update"""}.',
                 'To suppress this warning, add --no-update to your command/config.')))
     return None
 
@@ -392,7 +395,7 @@ class Updater:
                     continue
 
                 self._report_error(
-                    f'yt-dlp cannot be updated to {resolved_tag} since you are on an older Python version '
+                    f'yt-ai cannot be updated to {resolved_tag} since you are on an older Python version '
                     'or your operating system is not compatible with the requested build', True)
                 return None
 
@@ -440,7 +443,7 @@ class Updater:
         latest_or_requested = f'{"Latest" if self.requested_tag == "latest" else "Requested"} version: {requested_label}'
         if not has_update:
             if _output:
-                self.ydl.to_screen(f'{latest_or_requested}\nyt-dlp is up to date ({current_label})')
+                self.ydl.to_screen(f'{latest_or_requested}\nyt-ai is up to date ({current_label})')
             return None
 
         update_spec = self._download_update_spec(('latest', None) if requested_version else (None,))
@@ -489,7 +492,7 @@ class Updater:
             checksum=checksum)
 
     def update(self, update_info=NO_DEFAULT):
-        """Update yt-dlp executable to the latest version
+        """Update yt-ai executable to the latest version
         @param update_info  `UpdateInfo | None` as returned by query_update()
         """
         if update_info is NO_DEFAULT:
@@ -571,7 +574,7 @@ class Updater:
                 return self._report_error(
                     f'Unable to set permissions. Run: sudo chmod a+rx {shell_quote(self.filename)}')
 
-        self.ydl.to_screen(f'Updated yt-dlp to {update_label}')
+        self.ydl.to_screen(f'Updated yt-ai to {update_label}')
         return True
 
     @functools.cached_property
@@ -600,7 +603,7 @@ class Updater:
 
     def _block_restart(self, msg):
         def wrapper():
-            self._report_error(f'{msg}. Restart yt-dlp to use the updated version', expected=True)
+            self._report_error(f'{msg}. Restart yt-ai to use the updated version', expected=True)
             return self.ydl._download_retcode
         self.restart = wrapper
 

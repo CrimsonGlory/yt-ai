@@ -12,7 +12,8 @@ from test.helper import FakeYDL, report_warning
 from yt_dlp.update import UpdateInfo, Updater, UPDATE_SOURCES, _make_label
 
 
-# XXX: Keep in sync with yt_dlp.update.UPDATE_SOURCES
+# Canonical yt-dlp update channels, used by FakeUpdater lockfile/API tests.
+# The shipped UPDATE_SOURCES for this fork may differ (see yt_dlp.update).
 TEST_UPDATE_SOURCES = {
     'stable': 'yt-dlp/yt-dlp',
     'nightly': 'yt-dlp/yt-dlp-nightly-builds',
@@ -285,10 +286,13 @@ class TestUpdate(unittest.TestCase):
         NIGHTLY_REPO = UPDATE_SOURCES['nightly']
         MASTER_REPO = UPDATE_SOURCES['master']
 
+        def channel_for(repo):
+            return next(channel for channel, origin in UPDATE_SOURCES.items() if origin == repo)
+
         for inputs, expected in [
-            ([STABLE_REPO, '2025.09.02', '2025.09.02'], f'stable@2025.09.02 from {STABLE_REPO}'),
-            ([NIGHTLY_REPO, '2025.09.02.123456', '2025.09.02.123456'], f'nightly@2025.09.02.123456 from {NIGHTLY_REPO}'),
-            ([MASTER_REPO, '2025.09.02.987654', '2025.09.02.987654'], f'master@2025.09.02.987654 from {MASTER_REPO}'),
+            ([STABLE_REPO, '2025.09.02', '2025.09.02'], f'{channel_for(STABLE_REPO)}@2025.09.02 from {STABLE_REPO}'),
+            ([NIGHTLY_REPO, '2025.09.02.123456', '2025.09.02.123456'], f'{channel_for(NIGHTLY_REPO)}@2025.09.02.123456 from {NIGHTLY_REPO}'),
+            ([MASTER_REPO, '2025.09.02.987654', '2025.09.02.987654'], f'{channel_for(MASTER_REPO)}@2025.09.02.987654 from {MASTER_REPO}'),
             (['fork/yt-dlp', 'experimental', '2025.12.31.000000'], 'fork/yt-dlp@experimental build 2025.12.31.000000'),
             (['fork/yt-dlp', '2025.09.02', '2025.09.02'], 'fork/yt-dlp@2025.09.02'),
             ([STABLE_REPO, 'experimental', '2025.12.31.000000'], f'{STABLE_REPO}@experimental build 2025.12.31.000000'),

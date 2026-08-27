@@ -1,21 +1,21 @@
-# CONTRIBUTING TO YT-DLP
+# CONTRIBUTING TO YT-AI
 
 - [OPENING AN ISSUE](#opening-an-issue)
     - [Is the description of the issue itself sufficient?](#is-the-description-of-the-issue-itself-sufficient)
     - [Are you using the latest version?](#are-you-using-the-latest-version)
     - [Is the issue already documented?](#is-the-issue-already-documented)
     - [Why are existing options not enough?](#why-are-existing-options-not-enough)
-    - [Have you read and understood the changes, between youtube-dl and yt-dlp](#have-you-read-and-understood-the-changes-between-youtube-dl-and-yt-dlp)
+    - [Have you read and understood the changes, between youtube-dl and yt-ai](#have-you-read-and-understood-the-changes-between-youtube-dl-and-yt-ai)
     - [Is there enough context in your bug report?](#is-there-enough-context-in-your-bug-report)
     - [Does the issue involve one problem, and one problem only?](#does-the-issue-involve-one-problem-and-one-problem-only)
     - [Is anyone going to need the feature?](#is-anyone-going-to-need-the-feature)
-    - [Is your question about yt-dlp?](#is-your-question-about-yt-dlp)
+    - [Is your question about yt-ai?](#is-your-question-about-yt-ai)
     - [Are you willing to share account details if needed?](#are-you-willing-to-share-account-details-if-needed)
     - [Does the site use DRM for all videos?](#does-the-site-use-drm-for-all-videos)
 - [DEVELOPER INSTRUCTIONS](#developer-instructions)
     - [Adding new feature or making overarching changes](#adding-new-feature-or-making-overarching-changes)
     - [Adding support for a new site](#adding-support-for-a-new-site)
-    - [yt-dlp coding conventions](#yt-dlp-coding-conventions)
+    - [yt-ai coding conventions](#yt-ai-coding-conventions)
         - [Mandatory and optional metafields](#mandatory-and-optional-metafields)
         - [Provide fallbacks](#provide-fallbacks)
         - [Regular expressions](#regular-expressions)
@@ -26,28 +26,28 @@
         - [Trailing parentheses](#trailing-parentheses)
         - [Use convenience conversion and parsing functions](#use-convenience-conversion-and-parsing-functions)
     - [My pull request is labeled pending-fixes](#my-pull-request-is-labeled-pending-fixes)
-- [EMBEDDING YT-DLP](README.md#embedding-yt-dlp)
+- [EMBEDDING YT-AI](README.md#embedding-yt-ai)
 
 
 # OPENING AN ISSUE
 
-Bugs and suggestions should be reported at: [yt-dlp/yt-dlp/issues](https://github.com/yt-dlp/yt-dlp/issues). Unless you were prompted to or there is another pertinent reason (e.g. GitHub fails to accept the bug report), please do not send bug reports via personal email. For discussions, join us in our [discord server](https://discord.gg/H5MNcFW63r).
+Bugs and suggestions should be reported at: [CrimsonGlory/yt-ai/issues](https://github.com/CrimsonGlory/yt-ai/issues). Unless you were prompted to or there is another pertinent reason (e.g. GitHub fails to accept the bug report), please do not send bug reports via personal email. For discussions, join us in our [discord server](https://discord.gg/H5MNcFW63r).
 
-**Please include the full output of yt-dlp when run with `-vU`**, i.e. **add** `-vU` flag to **your command line**, copy the **whole** output and post it in the issue body wrapped in \`\`\` for better formatting. It should look similar to this:
+**Please include the full output of yt-ai when run with `-vU`**, i.e. **add** `-vU` flag to **your command line**, copy the **whole** output and post it in the issue body wrapped in \`\`\` for better formatting. It should look similar to this:
 ```
-$ yt-dlp -vU <your command line>
+$ yt-ai -vU <your command line>
 [debug] Command-line config: ['-vU', 'https://www.example.com/']
 [debug] Encodings: locale cp65001, fs utf-8, pref cp65001, out utf-8, error utf-8, screen utf-8
-[debug] yt-dlp version nightly@... from yt-dlp/yt-dlp-nightly-builds [1a176d874] (win_exe)
+[debug] yt-ai version nightly@... from yt-dlp/yt-dlp-nightly-builds [1a176d874] (win_exe)
 [debug] Python 3.10.11 (CPython AMD64 64bit) - Windows-10-10.0.20348-SP0 (OpenSSL 1.1.1t  7 Feb 2023)
 [debug] exe versions: ffmpeg 7.0.2 (setts), ffprobe 7.0.2
 [debug] Optional libraries: Cryptodome-3.21.0, brotli-1.1.0, certifi-2024.08.30, curl_cffi-0.5.10, mutagen-1.47.0, requests-2.32.3, sqlite3-3.40.1, urllib3-2.2.3, websockets-13.1
 [debug] Proxy map: {}
 [debug] Request Handlers: urllib, requests, websockets, curl_cffi
 [debug] Loaded 1838 extractors
-[debug] Fetching release info: https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest
+[debug] Fetching release info: https://api.github.com/repos/CrimsonGlory/yt-ai/releases/latest
 Latest version: nightly@... from yt-dlp/yt-dlp-nightly-builds
-yt-dlp is up to date (nightly@... from yt-dlp/yt-dlp-nightly-builds)
+yt-ai is up to date (nightly@... from yt-dlp/yt-dlp-nightly-builds)
 ...
 ```
 **Do not post screenshots of verbose logs; only plain text is acceptable.**
@@ -70,7 +70,7 @@ So please elaborate on what feature you are requesting, or what bug you want to 
 
 If your report is shorter than two lines, it is almost certainly missing some of these, which makes it hard for us to respond to it. We're often too polite to close the issue outright, but the missing info makes misinterpretation likely. We often get frustrated by these issues, since the only possible way for us to move forward on them is to ask for clarification over and over.
 
-For bug reports, this means that your report should contain the **complete** output of yt-dlp when called with the `-vU` flag. The error message you get for (most) bugs even says so, but you would not believe how many of our bug reports do not contain this information.
+For bug reports, this means that your report should contain the **complete** output of yt-ai when called with the `-vU` flag. The error message you get for (most) bugs even says so, but you would not believe how many of our bug reports do not contain this information.
 
 If the error is `ERROR: Unable to extract ...` and you cannot reproduce it from multiple countries, add `--write-pages` and upload the `.dump` files you get [somewhere](https://gist.github.com).
 
@@ -78,11 +78,11 @@ If the error is `ERROR: Unable to extract ...` and you cannot reproduce it from 
 
 ###  Are you using the latest version?
 
-Before reporting any issue, type `yt-dlp -U`. This should report that you're up-to-date. This goes for feature requests as well.
+Before reporting any issue, type `yt-ai -U`. This should report that you're up-to-date. This goes for feature requests as well.
 
 ###  Is the issue already documented?
 
-Make sure that someone has not already opened the issue you're trying to open. Search at the top of the window or browse the [GitHub Issues](https://github.com/yt-dlp/yt-dlp/search?type=Issues) of this repository. If there is an issue, subscribe to it to be notified when there is any progress. Unless you have something useful to add to the conversation, please refrain from commenting.
+Make sure that someone has not already opened the issue you're trying to open. Search at the top of the window or browse the [GitHub Issues](https://github.com/CrimsonGlory/yt-ai/search?type=Issues) of this repository. If there is an issue, subscribe to it to be notified when there is any progress. Unless you have something useful to add to the conversation, please refrain from commenting.
 
 Additionally, it is also helpful to see if the issue has already been documented in the [youtube-dl issue tracker](https://github.com/ytdl-org/youtube-dl/issues). If similar issues have already been reported in youtube-dl (but not in our issue tracker), links to them can be included in your issue report here.
 
@@ -90,9 +90,9 @@ Additionally, it is also helpful to see if the issue has already been documented
 
 Before requesting a new feature, please have a quick peek at [the list of supported options](README.md#usage-and-options). Many feature requests are for features that actually exist already! Please, absolutely do show off your work in the issue report and detail how the existing similar options do *not* solve your problem.
 
-###  Have you read and understood the changes, between youtube-dl and yt-dlp
+###  Have you read and understood the changes, between youtube-dl and yt-ai
 
-There are many changes between youtube-dl and yt-dlp [(changes to default behavior)](README.md#differences-in-default-behavior), and some of the options available have a different behaviour in yt-dlp, or have been removed all together [(list of changes to options)](README.md#deprecated-options). Make sure you have read and understand the differences in the options and how this may impact your downloads before opening an issue.
+There are many changes between youtube-dl and yt-ai [(changes to default behavior)](README.md#differences-in-default-behavior), and some of the options available have a different behaviour in yt-ai, or have been removed all together [(list of changes to options)](README.md#deprecated-options). Make sure you have read and understand the differences in the options and how this may impact your downloads before opening an issue.
 
 ###  Is there enough context in your bug report?
 
@@ -104,23 +104,23 @@ We are then presented with a very complicated request when the original problem 
 
 Some of our users seem to think there is a limit of issues they can or should open. There is no limit of issues they can or should open. While it may seem appealing to be able to dump all your issues into one ticket, that means that someone who solves one of your issues cannot mark the issue as closed. Typically, reporting a bunch of issues leads to the ticket lingering since nobody wants to attack that behemoth, until someone mercifully splits the issue into multiple ones.
 
-In particular, every site support request issue should only pertain to services at one site (generally under a common domain, but always using the same backend technology). Do not request support for vimeo user videos, White house podcasts, and Google Plus pages in the same issue. Also, make sure that you don't post bug reports alongside feature requests. As a rule of thumb, a feature request does not include outputs of yt-dlp that are not immediately related to the feature at hand. Do not post reports of a network error alongside the request for a new video service.
+In particular, every site support request issue should only pertain to services at one site (generally under a common domain, but always using the same backend technology). Do not request support for vimeo user videos, White house podcasts, and Google Plus pages in the same issue. Also, make sure that you don't post bug reports alongside feature requests. As a rule of thumb, a feature request does not include outputs of yt-ai that are not immediately related to the feature at hand. Do not post reports of a network error alongside the request for a new video service.
 
 ###  Is anyone going to need the feature?
 
 Only post features that you (or an incapacitated friend you can personally talk to) require. Do not post features because they seem like a good idea. If they are really useful, they will be requested by someone who requires them.
 
-###  Is your question about yt-dlp?
+###  Is your question about yt-ai?
 
-Some bug reports are completely unrelated to yt-dlp and relate to a different, or even the reporter's own, application. Please make sure that you are actually using yt-dlp. If you are using a UI for yt-dlp, report the bug to the maintainer of the actual application providing the UI. In general, if you are unable to provide the verbose log, you should not be opening the issue here.
+Some bug reports are completely unrelated to yt-ai and relate to a different, or even the reporter's own, application. Please make sure that you are actually using yt-ai. If you are using a UI for yt-ai, report the bug to the maintainer of the actual application providing the UI. In general, if you are unable to provide the verbose log, you should not be opening the issue here.
 
-If the issue is with `youtube-dl` (the upstream fork of yt-dlp) and not with yt-dlp, the issue should be raised in the youtube-dl project.
+If the issue is with `youtube-dl` (the upstream fork of yt-ai) and not with yt-ai, the issue should be raised in the youtube-dl project.
 
 ### Are you willing to share account details if needed?
 
 The maintainers and potential contributors of the project often do not have an account for the website you are asking support for. So any developer interested in solving your issue may ask you for account details. It is your personal discretion whether you are willing to share the account in order for the developer to try and solve your issue. However, if you are unwilling or unable to provide details, they obviously cannot work on the issue and it cannot be solved unless some developer who both has an account and is willing/able to contribute decides to solve it.
 
-By sharing an account with anyone, you agree to bear all risks associated with it. The maintainers and yt-dlp can't be held responsible for any misuse of the credentials.
+By sharing an account with anyone, you agree to bear all risks associated with it. The maintainers and yt-ai can't be held responsible for any misuse of the credentials.
 
 While these steps won't necessarily ensure that no misuse of the account takes place, these are still some good practices to follow.
 
@@ -135,12 +135,12 @@ We cannot support any service that serves only [DRM protected content](https://e
 
 # DEVELOPER INSTRUCTIONS
 
-Most users do not need to build yt-dlp and can [download the builds](https://github.com/yt-dlp/yt-dlp/releases), get them via [the other installation methods](README.md#installation) or directly run it using `python -m yt_dlp`.
+Most users do not need to build yt-ai and can [download the builds](https://github.com/CrimsonGlory/yt-ai/releases), get them via [the other installation methods](README.md#installation) or directly run it using `python -m yt_dlp`.
 
-`yt-dlp` uses [`hatch`](<https://hatch.pypa.io>) as a project management tool.
+`yt-ai` uses [`hatch`](<https://hatch.pypa.io>) as a project management tool.
 You can easily install it using [`pipx`](<https://pipx.pypa.io>) via `pipx install hatch`, or else via `pip` or your package manager of choice. Make sure you are using at least version `1.10.0`, otherwise some functionality might not work as expected.
 
-If you plan on contributing to `yt-dlp`, best practice is to start by running the following command:
+If you plan on contributing to `yt-ai`, best practice is to start by running the following command:
 
 ```shell
 $ hatch run setup
@@ -148,7 +148,7 @@ $ hatch run setup
 
 The above command will install a `pre-commit` hook so that required checks/fixes (linting, formatting) will run automatically before each commit. If any code needs to be linted or formatted, then the commit will be blocked and the necessary changes will be made; you should review all edits and re-commit the fixed version.
 
-After this you can use `hatch shell` to enable a virtual environment that has `yt-dlp` and its development dependencies installed.
+After this you can use `hatch shell` to enable a virtual environment that has `yt-ai` and its development dependencies installed.
 
 In addition, the following script commands can be used to run simple tasks such as linting or testing (without having to run `hatch shell` first):
 * `hatch fmt`: Automatically fix linter violations and apply required code formatting changes
@@ -158,7 +158,7 @@ In addition, the following script commands can be used to run simple tasks such 
 
 See item 6 of [new extractor tutorial](#adding-support-for-a-new-site) for how to run extractor specific test cases.
 
-While it is strongly recommended to use `hatch` for yt-dlp development, if you are unable to do so, alternatively you can manually create a virtual environment and use the following commands:
+While it is strongly recommended to use `hatch` for yt-ai development, if you are unable to do so, alternatively you can manually create a virtual environment and use the following commands:
 
 ```shell
 # To only install development dependencies:
@@ -182,7 +182,7 @@ $ ruff check .
 $ autopep8 --diff .
 ```
 
-If you want to create a build of yt-dlp yourself, you can follow the instructions [here](README.md#compile).
+If you want to create a build of yt-ai yourself, you can follow the instructions [here](README.md#compile).
 
 
 ## Adding new feature or making overarching changes
@@ -196,17 +196,17 @@ The same applies for changes to the documentation, code style, or overarching ch
 
 If you want to add support for a new site, you can follow this quick list (assuming your service is called `yourextractor`):
 
-1. [Fork this repository](https://github.com/yt-dlp/yt-dlp/fork)
+1. [Fork this repository](https://github.com/CrimsonGlory/yt-ai/fork)
 1. Check out the source code with:
 
     ```shell
-    $ git clone git@github.com:YOUR_GITHUB_USERNAME/yt-dlp.git
+    $ git clone git@github.com:YOUR_GITHUB_USERNAME/yt-ai.git
     ```
 
 1. Start a new git branch with
 
     ```shell
-    $ cd yt-dlp
+    $ cd yt-ai
     $ git checkout -b yourextractor
     ```
 
@@ -259,7 +259,7 @@ If you want to add support for a new site, you can follow this quick list (assum
 1. Run `hatch test YourExtractor`. This *may fail* at first, but you can continually re-run it until you're done. Upon failure, it will output the missing fields and/or correct values which you can copy. If you decide to add more than one test, the tests will then be named `YourExtractor`, `YourExtractor_1`, `YourExtractor_2`, etc. Note that tests with an `only_matching` key in the test's dict are not included in the count. You can also run all the tests in one go with `YourExtractor_all`
 1. Make sure you have at least one test for your extractor. Even if all videos covered by the extractor are expected to be inaccessible for automated testing, tests should still be added with a `skip` parameter indicating why the particular test is disabled from running.
 1. Have a look at [`yt_dlp/extractor/common.py`](yt_dlp/extractor/common.py) for possible helper methods and a [detailed description of what your extractor should and may return](yt_dlp/extractor/common.py#L119-L440). Add tests and code for as many as you want.
-1. Make sure your code follows [yt-dlp coding conventions](#yt-dlp-coding-conventions), passes [ruff](https://docs.astral.sh/ruff/tutorial/#getting-started) code checks and is properly formatted:
+1. Make sure your code follows [yt-ai coding conventions](#yt-ai-coding-conventions), passes [ruff](https://docs.astral.sh/ruff/tutorial/#getting-started) code checks and is properly formatted:
 
     ```shell
     $ hatch fmt --check
@@ -267,7 +267,7 @@ If you want to add support for a new site, you can follow this quick list (assum
 
     You can use `hatch fmt` to automatically fix problems. Rules that the linter/formatter enforces should not be disabled with `# noqa` unless a maintainer requests it. The only exception allowed is for old/printf-style string formatting in GraphQL query templates (use `# noqa: UP031`).
 
-1. Make sure your code works under all [Python](https://www.python.org/) versions supported by yt-dlp, namely CPython >=3.10 and PyPy >=3.11. Backward compatibility is not required for even older versions of Python.
+1. Make sure your code works under all [Python](https://www.python.org/) versions supported by yt-ai, namely CPython >=3.10 and PyPy >=3.11. Backward compatibility is not required for even older versions of Python.
 1. When the tests pass, [add](https://git-scm.com/docs/git-add) the new files, [commit](https://git-scm.com/docs/git-commit) them and [push](https://git-scm.com/docs/git-push) the result, like this:
 
     ```shell
@@ -289,16 +289,16 @@ In any case, thank you very much for your contributions!
 }
 ```
 
-## yt-dlp coding conventions
+## yt-ai coding conventions
 
 This section introduces a guide lines for writing idiomatic, robust and future-proof extractor code.
 
-Extractors are very fragile by nature since they depend on the layout of the source data provided by 3rd party media hosters out of your control and this layout tends to change. As an extractor implementer your task is not only to write code that will extract media links and metadata correctly but also to minimize dependency on the source's layout and even to make the code foresee potential future changes and be ready for that. This is important because it will allow the extractor not to break on minor layout changes thus keeping old yt-dlp versions working. Even though this breakage issue may be easily fixed by a new version of yt-dlp, this could take some time, during which the extractor will remain broken.
+Extractors are very fragile by nature since they depend on the layout of the source data provided by 3rd party media hosters out of your control and this layout tends to change. As an extractor implementer your task is not only to write code that will extract media links and metadata correctly but also to minimize dependency on the source's layout and even to make the code foresee potential future changes and be ready for that. This is important because it will allow the extractor not to break on minor layout changes thus keeping old yt-ai versions working. Even though this breakage issue may be easily fixed by a new version of yt-ai, this could take some time, during which the extractor will remain broken.
 
 
 ### Mandatory and optional metafields
 
-For extraction to work yt-dlp relies on metadata your extractor extracts and provides to yt-dlp expressed by an [information dictionary](yt_dlp/extractor/common.py#L119-L440) or simply *info dict*. Only the following meta fields in the *info dict* are considered mandatory for a successful extraction process by yt-dlp:
+For extraction to work yt-ai relies on metadata your extractor extracts and provides to yt-ai expressed by an [information dictionary](yt_dlp/extractor/common.py#L119-L440) or simply *info dict*. Only the following meta fields in the *info dict* are considered mandatory for a successful extraction process by yt-ai:
 
  - `id` (media identifier)
  - `url` (media download URL) or `formats`
@@ -768,5 +768,5 @@ view_count = int_or_none(video.get('views'))
 The `pending-fixes` label is added when there are changes requested to a PR. When the necessary changes are made, the label should be removed. However, despite our best efforts, it may sometimes happen that the maintainer did not see the changes or forgot to remove the label. If your PR is still marked as `pending-fixes` a few days after all requested changes have been made, feel free to ping the maintainer who labeled your issue and ask them to re-review and remove the label.
 
 
-# EMBEDDING YT-DLP
-See [README.md#embedding-yt-dlp](README.md#embedding-yt-dlp) for instructions on how to embed yt-dlp in another Python program
+# EMBEDDING YT-AI
+See [README.md#embedding-yt-ai](README.md#embedding-yt-ai) for instructions on how to embed yt-ai in another Python program

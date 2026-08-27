@@ -18,7 +18,7 @@ class Cache:
         res = self._ydl.params.get('cachedir')
         if res is None:
             cache_root = os.getenv('XDG_CACHE_HOME', '~/.cache')
-            res = os.path.join(cache_root, 'yt-dlp')
+            res = os.path.join(cache_root, 'yt-ai')
         return expand_path(res)
 
     def _get_cache_fn(self, section, key, dtype):

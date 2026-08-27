@@ -1,21 +1,21 @@
 # Maintainers
 
-This file lists the maintainers of yt-dlp and their major contributions. See the [Changelog](Changelog.md) for more details.
+This file lists the maintainers of yt-ai and their major contributions. See the [Changelog](Changelog.md) for more details.
 
-You can also find lists of all [contributors of yt-dlp](CONTRIBUTORS) and [authors of youtube-dl](https://github.com/ytdl-org/youtube-dl/blob/master/AUTHORS)
+You can also find lists of all [contributors of yt-ai](CONTRIBUTORS) and [authors of youtube-dl](https://github.com/ytdl-org/youtube-dl/blob/master/AUTHORS)
 
 ## Core Maintainers
 
 Core Maintainers are responsible for reviewing and merging contributions, publishing releases, and steering the overall direction of the project.
 
-**You can contact the core maintainers via `maintainers@yt-dlp.org`.** This email address is **NOT** a support channel. [Open an issue](https://github.com/yt-dlp/yt-dlp/issues/new/choose) if you need help or want to report a bug.
+**You can contact the core maintainers via `maintainers@yt-dlp.org`.** This email address is **NOT** a support channel. [Open an issue](https://github.com/CrimsonGlory/yt-ai/issues/new/choose) if you need help or want to report a bug.
 
 ### [coletdjnz](https://github.com/coletdjnz)
 
 [![gh-sponsor](https://img.shields.io/badge/_-Github-white.svg?logo=github&labelColor=555555&style=for-the-badge)](https://github.com/sponsors/coletdjnz)
 
 * Overhauled the networking stack and implemented support for `requests` and `curl_cffi` (`--impersonate`) HTTP clients
-* Reworked the plugin architecture to support installing plugins across all yt-dlp distributions (exe, pip, etc.)
+* Reworked the plugin architecture to support installing plugins across all yt-ai distributions (exe, pip, etc.)
 * Implemented support for external JavaScript runtimes/engines
 * Maintains support for YouTube
 * Added and fixed support for various other sites

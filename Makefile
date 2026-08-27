@@ -1,11 +1,13 @@
-all: lazy-extractors yt-dlp doc pypi-files
-all-extra: lazy-extractors yt-dlp-extra doc pypi-files
+PROGRAM = yt-ai
+
+all: lazy-extractors $(PROGRAM) doc pypi-files
+all-extra: lazy-extractors $(PROGRAM)-extra doc pypi-files
 clean: clean-test clean-dist
 clean-all: clean clean-cache
 completions: completion-bash completion-fish completion-zsh
 doc: README.md CONTRIBUTORS issuetemplates supportedsites
 ot: offlinetest
-tar: yt-dlp.tar.gz
+tar: $(PROGRAM).tar.gz
 
 # Keep this list in sync with pyproject.toml includes/artifacts
 # intended use: when building a source distribution,
@@ -17,7 +19,7 @@ pypi-files: AUTHORS Changelog.md LICENSE README.md README.txt supportedsites \
         completions completion-bash completion-fish completion-zsh \
         doc issuetemplates supportedsites ot offlinetest codetest test \
         tar pypi-files lazy-extractors install uninstall \
-        all-extra yt-dlp-extra current-ejs-version \
+        all-extra $(PROGRAM)-extra current-ejs-version \
         docker-dev docker-dev-test
 
 .IGNORE: current-ejs-version
@@ -30,9 +32,9 @@ clean-test:
 	*.mpg *.mpga *.oga *.ogg *.opus *.png *.sbv *.srt *.ssa *.swf *.tt *.ttml *.url *.vtt *.wav *.webloc *.webm *.webp \
 	test/testdata/sigs/player-*.js test/testdata/thumbnails/empty.webp "test/testdata/thumbnails/foo %d bar/foo_%d."*
 clean-dist:
-	rm -rf yt-dlp.1.temp.md yt-dlp.1 README.txt MANIFEST build/ dist/ .coverage cover/ yt-dlp.tar.gz completions/ \
-	yt_dlp/extractor/lazy_extractors.py *.spec yt-dlp yt-dlp.exe yt_dlp.egg-info/ AUTHORS \
-	yt-dlp.zip .ejs-* yt_dlp_ejs/
+	rm -rf yt-dlp.1.temp.md yt-dlp.1 README.txt MANIFEST build/ dist/ .coverage cover/ $(PROGRAM).tar.gz completions/ \
+	yt_dlp/extractor/lazy_extractors.py *.spec $(PROGRAM) $(PROGRAM).exe yt-dlp yt-dlp.exe yt_dlp.egg-info/ AUTHORS \
+	$(PROGRAM).zip yt-dlp.zip .ejs-* yt_dlp_ejs/
 clean-cache:
 	find . \( \
 		-type d -name ".*_cache" -o -type d -name __pycache__ -o -name "*.pyc" -o -name "*.class" \
@@ -58,9 +60,9 @@ MARKDOWN_CMD = if [ "$(PANDOC_VERSION)" = "1" -o "$(PANDOC_VERSION)" = "0" ]; th
 MARKDOWN != $(MARKDOWN_CMD)
 MARKDOWN ?= $(shell $(MARKDOWN_CMD))
 
-install: lazy-extractors yt-dlp yt-dlp.1 completions
+install: lazy-extractors $(PROGRAM) yt-dlp.1 completions
 	mkdir -p $(DESTDIR)$(BINDIR)
-	install -m755 yt-dlp $(DESTDIR)$(BINDIR)/yt-dlp
+	install -m755 $(PROGRAM) $(DESTDIR)$(BINDIR)/$(PROGRAM)
 	mkdir -p $(DESTDIR)$(MANDIR)/man1
 	install -m644 yt-dlp.1 $(DESTDIR)$(MANDIR)/man1/yt-dlp.1
 	mkdir -p $(DESTDIR)$(SHAREDIR)/bash-completion/completions
@@ -71,6 +73,7 @@ install: lazy-extractors yt-dlp yt-dlp.1 completions
 	install -m644 completions/fish/yt-dlp.fish $(DESTDIR)$(SHAREDIR)/fish/vendor_completions.d/yt-dlp.fish
 
 uninstall:
+	rm -f $(DESTDIR)$(BINDIR)/$(PROGRAM)
 	rm -f $(DESTDIR)$(BINDIR)/yt-dlp
 	rm -f $(DESTDIR)$(MANDIR)/man1/yt-dlp.1
 	rm -f $(DESTDIR)$(SHAREDIR)/bash-completion/completions/yt-dlp
@@ -104,7 +107,7 @@ JS_CODE_FILES_CMD = for f in $(JS_CODE_FOLDERS) ; do echo "$$f" | sed 's|$$|/*.j
 JS_CODE_FILES != $(JS_CODE_FILES_CMD)
 JS_CODE_FILES ?= $(shell $(JS_CODE_FILES_CMD))
 
-yt-dlp.zip: $(PY_CODE_FILES) $(JS_CODE_FILES)
+$(PROGRAM).zip: $(PY_CODE_FILES) $(JS_CODE_FILES)
 	mkdir -p zip
 	for d in $(PY_CODE_FOLDERS) ; do \
 	  mkdir -p zip/$$d ;\
@@ -116,18 +119,18 @@ yt-dlp.zip: $(PY_CODE_FILES) $(JS_CODE_FILES)
 	done
 	(cd zip && touch -t 200001010101 $(PY_CODE_FILES) $(JS_CODE_FILES))
 	rm -f zip/yt_dlp/__main__.py
-	(cd zip && zip -q ../yt-dlp.zip $(PY_CODE_FILES) $(JS_CODE_FILES))
+	(cd zip && zip -q ../$(PROGRAM).zip $(PY_CODE_FILES) $(JS_CODE_FILES))
 	rm -rf zip
 
-yt-dlp: yt-dlp.zip
+$(PROGRAM): $(PROGRAM).zip
 	mkdir -p zip
 	cp -pP yt_dlp/__main__.py zip/
 	touch -t 200001010101 zip/__main__.py
-	(cd zip && zip -q ../yt-dlp.zip __main__.py)
-	echo '#!$(PYTHON)' > yt-dlp
-	cat yt-dlp.zip >> yt-dlp
-	rm yt-dlp.zip
-	chmod a+x yt-dlp
+	(cd zip && zip -q ../$(PROGRAM).zip __main__.py)
+	echo '#!$(PYTHON)' > $(PROGRAM)
+	cat $(PROGRAM).zip >> $(PROGRAM)
+	rm $(PROGRAM).zip
+	chmod a+x $(PROGRAM)
 	rm -rf zip
 
 README.md: $(PY_CODE_FILES) devscripts/make_readme.py
@@ -170,8 +173,8 @@ _EXTRACTOR_FILES ?= $(shell $(_EXTRACTOR_FILES_CMD))
 yt_dlp/extractor/lazy_extractors.py: devscripts/make_lazy_extractors.py devscripts/lazy_load_template.py $(_EXTRACTOR_FILES)
 	$(PYTHON) devscripts/make_lazy_extractors.py $@
 
-yt-dlp.tar.gz: all
-	@$(GNUTAR) -czf yt-dlp.tar.gz --transform "s|^|yt-dlp/|" --owner 0 --group 0 \
+$(PROGRAM).tar.gz: all
+	@$(GNUTAR) -czf $(PROGRAM).tar.gz --transform "s|^|$(PROGRAM)/|" --owner 0 --group 0 \
 		--exclude '*.DS_Store' \
 		--exclude '*.kate-swp' \
 		--exclude '*.pyc' \
@@ -184,7 +187,7 @@ yt-dlp.tar.gz: all
 		README.md supportedsites.md Changelog.md LICENSE \
 		CONTRIBUTING.md Maintainers.md CONTRIBUTORS AUTHORS \
 		Makefile yt-dlp.1 README.txt completions .gitignore \
-		yt-dlp yt_dlp pyproject.toml devscripts test
+		$(PROGRAM) yt_dlp pyproject.toml devscripts test
 
 AUTHORS: Changelog.md
 	@if [ -d '.git' ] && command -v git > /dev/null ; then \
@@ -208,7 +211,7 @@ EJS_PY_FILES = yt_dlp_ejs/__init__.py yt_dlp_ejs/_version.py yt_dlp_ejs/yt/__ini
 EJS_JS_FOLDERS = yt_dlp_ejs/yt/solver
 EJS_JS_FILES = yt_dlp_ejs/yt/solver/core.min.js yt_dlp_ejs/yt/solver/lib.min.js
 
-yt-dlp-extra: current-ejs-version .ejs-$(EJS_VERSION) $(EJS_PY_FILES) $(EJS_JS_FILES) yt-dlp.zip
+$(PROGRAM)-extra: current-ejs-version .ejs-$(EJS_VERSION) $(EJS_PY_FILES) $(EJS_JS_FILES) $(PROGRAM).zip
 	mkdir -p zip
 	for d in $(EJS_PY_FOLDERS) ; do \
 	  mkdir -p zip/$$d ;\
@@ -219,14 +222,14 @@ yt-dlp-extra: current-ejs-version .ejs-$(EJS_VERSION) $(EJS_PY_FILES) $(EJS_JS_F
 	  cp -pPR $$d/*.js zip/$$d/ ;\
 	done
 	(cd zip && touch -t 200001010101 $(EJS_PY_FILES) $(EJS_JS_FILES))
-	(cd zip && zip -q ../yt-dlp.zip $(EJS_PY_FILES) $(EJS_JS_FILES))
+	(cd zip && zip -q ../$(PROGRAM).zip $(EJS_PY_FILES) $(EJS_JS_FILES))
 	cp -pP yt_dlp/__main__.py zip/
 	touch -t 200001010101 zip/__main__.py
-	(cd zip && zip -q ../yt-dlp.zip __main__.py)
-	echo '#!$(PYTHON)' > yt-dlp
-	cat yt-dlp.zip >> yt-dlp
-	rm yt-dlp.zip
-	chmod a+x yt-dlp
+	(cd zip && zip -q ../$(PROGRAM).zip __main__.py)
+	echo '#!$(PYTHON)' > $(PROGRAM)
+	cat $(PROGRAM).zip >> $(PROGRAM)
+	rm $(PROGRAM).zip
+	chmod a+x $(PROGRAM)
 	rm -rf zip
 
 .ejs-$(EJS_VERSION):

@@ -19,7 +19,7 @@ VERBOSE = '''
       description: |
         This is mandatory unless absolutely impossible to provide. If you are unable to provide the output, please explain why.
       options:
-        - label: Run **your** yt-dlp command with **-vU** flag added (`yt-dlp -vU <your command line>`)
+        - label: Run **your** yt-ai command with **-vU** flag added (`yt-ai -vU <your command line>`)
           required: true
         - label: "If using API, add `'verbose': True` to `YoutubeDL` params instead"
           required: false
@@ -34,16 +34,16 @@ VERBOSE = '''
       placeholder: |
         [debug] Command-line config: ['-vU', 'https://www.youtube.com/watch?v=YE7VzlLtp-4']
         [debug] Encodings: locale cp65001, fs utf-8, pref cp65001, out utf-8, error utf-8, screen utf-8
-        [debug] yt-dlp version nightly@... from yt-dlp/yt-dlp-nightly-builds [1a176d874] (win_exe)
+        [debug] yt-ai version nightly@... from yt-dlp/yt-dlp-nightly-builds [1a176d874] (win_exe)
         [debug] Python 3.10.11 (CPython AMD64 64bit) - Windows-10-10.0.20348-SP0 (OpenSSL 1.1.1t  7 Feb 2023)
         [debug] exe versions: ffmpeg 7.0.2 (setts), ffprobe 7.0.2
         [debug] Optional libraries: Cryptodome-3.21.0, brotli-1.1.0, certifi-2024.08.30, curl_cffi-0.5.10, mutagen-1.47.0, requests-2.32.3, sqlite3-3.40.1, urllib3-2.2.3, websockets-13.1
         [debug] Proxy map: {}
         [debug] Request Handlers: urllib, requests, websockets, curl_cffi
         [debug] Loaded 1838 extractors
-        [debug] Fetching release info: https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest
+        [debug] Fetching release info: https://api.github.com/repos/CrimsonGlory/yt-ai/releases/latest
         Latest version: nightly@... from yt-dlp/yt-dlp-nightly-builds
-        yt-dlp is up to date (nightly@... from yt-dlp/yt-dlp-nightly-builds)
+        yt-ai is up to date (nightly@... from yt-dlp/yt-dlp-nightly-builds)
         [youtube] Extracting URL: https://www.youtube.com/watch?v=YE7VzlLtp-4
         <more lines>
       render: shell

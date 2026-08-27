@@ -27,7 +27,7 @@ def main():
         opts.append('--onefile')
 
     name, final_file = exe(onedir)
-    print(f'Building yt-dlp v{version} for {OS_NAME} {platform.machine()} with options {opts}')
+    print(f'Building yt-ai v{version} for {OS_NAME} {platform.machine()} with options {opts}')
     print('Remember to update the version using  "devscripts/update-version.py"')
     if not os.path.isfile('yt_dlp/extractor/lazy_extractors.py'):
         print('WARNING: Building without lazy_extractors. Run  '
@@ -75,7 +75,7 @@ def exe(onedir):
     }.get(OS_NAME, (OS_NAME, MACHINE, None))
 
     name = '_'.join(filter(None, (
-        'yt-dlp',
+        'yt-ai',
         platform_name,
         machine,
     )))
@@ -129,13 +129,13 @@ def windows_set_version(exe, version):
         ),
         kids=[
             StringFileInfo([StringTable('040904B0', [
-                StringStruct('Comments', f'yt-dlp{suffix} Command Line Interface'),
-                StringStruct('CompanyName', 'https://github.com/yt-dlp'),
-                StringStruct('FileDescription', 'yt-dlp%s' % (MACHINE and f' ({MACHINE})')),
+                StringStruct('Comments', f'yt-ai{suffix} Command Line Interface'),
+                StringStruct('CompanyName', 'https://github.com/CrimsonGlory/yt-ai'),
+                StringStruct('FileDescription', 'yt-ai%s' % (MACHINE and f' ({MACHINE})')),
                 StringStruct('FileVersion', version),
-                StringStruct('InternalName', f'yt-dlp{suffix}'),
-                StringStruct('OriginalFilename', f'yt-dlp{suffix}.exe'),
-                StringStruct('ProductName', f'yt-dlp{suffix}'),
+                StringStruct('InternalName', f'yt-ai{suffix}'),
+                StringStruct('OriginalFilename', f'yt-ai{suffix}.exe'),
+                StringStruct('ProductName', f'yt-ai{suffix}'),
                 StringStruct(
                     'ProductVersion', f'{version}{suffix} on Python {platform.python_version()}'),
             ])]), VarFileInfo([VarStruct('Translation', [0, 1200])]),

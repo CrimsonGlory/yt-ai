@@ -20,15 +20,15 @@ from devscripts.utils import (
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 README_FILE = os.path.join(ROOT_DIR, 'README.md')
 
-PREFIX = r'''%yt-dlp(1)
+PREFIX = r'''%yt-ai(1)
 
 # NAME
 
-yt\-dlp \- A feature\-rich command\-line audio/video downloader
+yt\-ai \- A feature\-rich command\-line audio/video downloader
 
 # SYNOPSIS
 
-**yt-dlp** \[OPTIONS\] URL [URL...]
+**yt-ai** \[OPTIONS\] URL [URL...]
 
 # DESCRIPTION
 

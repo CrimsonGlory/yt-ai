@@ -41,7 +41,7 @@ from .version import CHANNEL, __version__
 
 
 def parseOpts(overrideArguments=None, ignore_config_files='if_override'):  # noqa: N803
-    PACKAGE_NAME = 'yt-dlp'
+    PACKAGE_NAME = 'yt-ai'
 
     root = Config(create_parser())
     if ignore_config_files == 'if_override':
@@ -73,7 +73,7 @@ def parseOpts(overrideArguments=None, ignore_config_files='if_override'):  # noq
             args, current_path = next(
                 filter(None, _load_from_config_dirs(func(PACKAGE_NAME))), (None, None))
         else:
-            current_path = os.path.join(path, 'yt-dlp.conf')
+            current_path = os.path.join(path, 'yt-ai.conf')
             args = Config.read_file(current_path, default=None)
         if args is not None:
             root.append_config(args, current_path, label=label)
@@ -166,10 +166,10 @@ class _YoutubeDLOptionParser(optparse.OptionParser):
 
     def __init__(self):
         super().__init__(
-            prog='yt-dlp' if detect_variant() == 'source' else None,
+            prog='yt-ai' if detect_variant() == 'source' else None,
             version=__version__,
             usage='%prog [OPTIONS] URL [URL...]',
-            epilog='See full documentation at  https://github.com/yt-dlp/yt-dlp#readme',
+            epilog='See full documentation at  https://github.com/CrimsonGlory/yt-ai#readme',
             formatter=_YoutubeDLHelpFormatter(),
             conflict_handler='resolve',
         )
@@ -231,7 +231,7 @@ class _YoutubeDLOptionParser(optparse.OptionParser):
         heading = formatter.format_heading('Preset Aliases')
         formatter.indent()
         description = formatter.format_description(
-            'Predefined aliases for convenience and ease of use. Note that future versions of yt-dlp '
+            'Predefined aliases for convenience and ease of use. Note that future versions of yt-ai '
             'may add or adjust presets, but the existing preset names will not be changed or removed')
         result = []
         for name, args in _PRESET_ALIASES.items():
@@ -417,7 +417,7 @@ def create_parser():
         help=(
             'Use this prefix for unqualified URLs. '
             'E.g. "gvsearch2:python" downloads two videos from google videos for the search term "python". '
-            'Use the value "auto" to let yt-dlp guess ("auto_warning" to emit a warning when guessing). '
+            'Use the value "auto" to let yt-ai guess ("auto_warning" to emit a warning when guessing). '
             '"error" just throws an error. The default value "fixup_error" repairs broken URLs, '
             'but emits an error if this is not possible instead of searching'))
     general.add_option(
@@ -487,7 +487,7 @@ def create_parser():
         callback_kwargs={'delim': None},
         default=[],
         help=(
-            'Remote components to allow yt-dlp to fetch when required. '
+            'Remote components to allow yt-ai to fetch when required. '
             'This option is currently not needed if you are using an official executable '
             'or have the requisite version of the yt-dlp-ejs package installed. '
             'You can use this option multiple times to allow multiple components. '
@@ -580,7 +580,7 @@ def create_parser():
             },
         }, help=(
             'Options that can help keep compatibility with youtube-dl or youtube-dlc '
-            'configurations by reverting some of the changes made in yt-dlp. '
+            'configurations by reverting some of the changes made in yt-ai. '
             'See "Differences in default behavior" for details'))
     general.add_option(
         '--alias', metavar='ALIASES OPTIONS', dest='_', type='str', nargs=2,
@@ -823,7 +823,7 @@ def create_parser():
     authentication.add_option(
         '-p', '--password',
         dest='password', metavar='PASSWORD',
-        help='Account password. If this option is left out, yt-dlp will ask interactively')
+        help='Account password. If this option is left out, yt-ai will ask interactively')
     authentication.add_option(
         '-2', '--twofactor',
         dest='twofactor', metavar='TWOFACTOR',
@@ -855,7 +855,7 @@ def create_parser():
     authentication.add_option(
         '--ap-password',
         dest='ap_password', metavar='PASSWORD',
-        help='Multiple-system operator account password. If this option is left out, yt-dlp will ask interactively')
+        help='Multiple-system operator account password. If this option is left out, yt-ai will ask interactively')
     authentication.add_option(
         '--ap-list-mso',
         action='store_true', dest='ap_list_mso', default=False,
@@ -872,7 +872,7 @@ def create_parser():
         '--client-certificate-password',
         dest='client_certificate_password', metavar='PASSWORD',
         help='Password for client certificate private key, if encrypted. '
-             'If not provided, and the key is encrypted, yt-dlp will ask interactively')
+             'If not provided, and the key is encrypted, yt-ai will ask interactively')
 
     video_format = optparse.OptionGroup(parser, 'Video Format Options')
     video_format.add_option(
@@ -1562,8 +1562,8 @@ def create_parser():
     filesystem.add_option(
         '--cache-dir', dest='cachedir', default=None, metavar='DIR',
         help=(
-            'Location in the filesystem where yt-dlp can store some downloaded information '
-            '(such as client ids and signatures) permanently. By default ${XDG_CACHE_HOME}/yt-dlp'))
+            'Location in the filesystem where yt-ai can store some downloaded information '
+            '(such as client ids and signatures) permanently. By default ${XDG_CACHE_HOME}/yt-ai'))
     filesystem.add_option(
         '--no-cache-dir', action='store_false', dest='cachedir',
         help='Disable filesystem caching')
