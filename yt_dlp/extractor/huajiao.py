@@ -1,53 +1,94 @@
 from .common import InfoExtractor
 from ..utils import (
-    parse_duration,
+    ExtractorError,
+    int_or_none,
     parse_iso8601,
+    str_or_none,
+    url_or_none,
 )
+from ..utils.traversal import traverse_obj
 
 
 class HuajiaoIE(InfoExtractor):
     IE_DESC = '花椒直播'
     _VALID_URL = r'https?://(?:www\.)?huajiao\.com/l/(?P<id>[0-9]+)'
-    _TEST = {
+    _TESTS = [{
+        'url': 'https://www.huajiao.com/l/350230246',
+        'md5': 'e7d738e01df37b15218d9cc4c6a18d5c',
+        'info_dict': {
+            'id': '350230246',
+            'ext': 'mp4',
+            'title': '小白牙...正在直播',
+            'duration': 28285,
+            'thumbnail': r're:^https?://.*\.(?:jpg|png|jpeg)',
+            'timestamp': 1787782322,
+            'upload_date': '20260826',
+            'uploader': '小白牙🎙️（lucky 版❤️）',
+            'uploader_id': '269174777',
+            'live_status': 'was_live',
+        },
+    }, {
         'url': 'http://www.huajiao.com/l/38941232',
-        'md5': 'd08bf9ac98787d24d1e4c0283f2d372d',
+        'skip': 'replay gone',
         'info_dict': {
             'id': '38941232',
             'ext': 'mp4',
-            'title': '#新人求关注#',
-            'description': 're:.*',
-            'duration': 2424.0,
-            'thumbnail': r're:^https?://.*\.jpg$',
-            'timestamp': 1475866459,
-            'upload_date': '20161007',
-            'uploader': 'Penny_余姿昀',
-            'uploader_id': '75206005',
         },
-    }
+    }]
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
+        json_data = self._download_json(
+            'https://live.huajiao.com/feed/getFeedInfo', video_id,
+            query={'relateid': video_id})
+        data = json_data.get('data') or {}
+        feed = data.get('feed') or {}
+        if json_data.get('errno') or not feed.get('sn'):
+            raise ExtractorError(
+                json_data.get('errmsg') or 'This live stream is unavailable',
+                expected=True)
 
-        feed_json = self._search_regex(
-            r'var\s+feed\s*=\s*({.+})', webpage, 'feed json')
-        feed = self._parse_json(feed_json, video_id)
+        is_live = str(feed.get('replay_status', '0')) == '0'
+        formats = []
+        m3u8_url = url_or_none(feed.get('m3u8'))
+        if m3u8_url:
+            formats.extend(self._extract_m3u8_formats(
+                m3u8_url, video_id, 'mp4', m3u8_id='hls', live=is_live))
 
-        description = self._html_search_meta(
-            'description', webpage, 'description', fatal=False)
-
-        def get(section, field):
-            return feed.get(section, {}).get(field)
+        if is_live or not formats:
+            stream = self._download_json(
+                'https://live.huajiao.com/live/substream', video_id,
+                query={
+                    'sn': feed['sn'],
+                    'uid': traverse_obj(data, ('author', 'uid', {str})),
+                    'liveid': video_id,
+                    'encode': feed.get('encode') or 'h265',
+                    'version': '1.0.0',
+                }, fatal=False)
+            stream_data = traverse_obj(stream, ('data', {dict})) or {}
+            hls = url_or_none(stream_data.get('pull_m3u8'))
+            if hls:
+                formats.extend(self._extract_m3u8_formats(
+                    hls, video_id, 'mp4', m3u8_id='hls', live=True, fatal=False))
+            flv = url_or_none(
+                stream_data.get('h264_url') or stream_data.get('main')
+                or feed.get('pull_url'))
+            if flv:
+                formats.append({
+                    'url': flv,
+                    'format_id': 'flv',
+                    'ext': 'flv',
+                })
 
         return {
             'id': video_id,
-            'title': feed['feed']['formated_title'],
-            'description': description,
-            'duration': parse_duration(get('feed', 'duration')),
-            'thumbnail': get('feed', 'image'),
-            'timestamp': parse_iso8601(feed.get('creatime'), ' '),
-            'uploader': get('author', 'nickname'),
-            'uploader_id': get('author', 'uid'),
-            'formats': self._extract_m3u8_formats(
-                feed['feed']['m3u8'], video_id, 'mp4', 'm3u8_native'),
+            'title': feed.get('title') or traverse_obj(data, ('author', 'nickname', {str})),
+            'duration': int_or_none(feed.get('duration')) or None,
+            'thumbnail': url_or_none(feed.get('image')),
+            'timestamp': parse_iso8601(data.get('creatime'), ' '),
+            'uploader': traverse_obj(data, ('author', 'nickname', {str})),
+            'uploader_id': str_or_none(traverse_obj(data, ('author', 'uid'))),
+            'is_live': is_live,
+            'was_live': not is_live,
+            'formats': formats,
         }
