@@ -77,6 +77,7 @@ class CSpanIE(InfoExtractor):
             'uploader': 'HouseCommittee',
             'uploader_id': '12987475',
         },
+        'skip': 'Ustream embed removed; page is now a JS shell without media',
     }, {
         # Audio Only
         'url': 'https://www.c-span.org/video/?437336-1/judiciary-antitrust-competition-policy-consumer-rights',
@@ -308,10 +309,14 @@ class CSpanCongressIE(InfoExtractor):
         'url': 'https://www.c-span.org/congress/?chamber=house&date=2017-12-13&t=1513208380',
         'info_dict': {
             'id': 'house_2017-12-13',
-            'title': 'Congressional Chronicle - Members of Congress, Hearings and More',
-            'description': 'md5:54c264b7a8f219937987610243305a84',
-            'thumbnail': r're:https://ximage.c-spanvideo.org/.+',
             'ext': 'mp4',
+            'title': 'Congressional Chronicle - Members of Congress, Hearings and More',
+            'description': 'The House met for Morning Hour, with members permitted to speak on any topic.',
+            'thumbnail': r're:https://cdn\.jwplayer\.com/v2/media/.+',
+            'timestamp': 1513141200,
+            'upload_date': '20171213',
+            'duration': 2464.0,
+            'channel': 'House Proceeding',
         },
     }]
 
@@ -324,17 +329,34 @@ class CSpanCongressIE(InfoExtractor):
             jwp_date = re.search(r'jwsetup.clipprogdate = \'(?P<date>\d{4}-\d{2}-\d{2})\';', webpage)
             if jwp_date:
                 video_id = f'{video_id}_{jwp_date.group("date")}'
-        jwplayer_data = self._parse_json(
-            self._search_regex(r'jwsetup\s*=\s*({(?:.|\n)[^;]+});', webpage, 'player config'),
-            video_id, transform_source=js_to_json)
+
+        player = self._search_regex(
+            r'(<div[^>]+id=[\'"]video-page-jwplayer-wrapper[\'"][^>]*>)',
+            webpage, 'jwplayer wrapper', default=None, flags=re.DOTALL)
+        media_id = extract_attributes(player).get('data-mediaid') if player else None
+        if media_id:
+            jwplayer_data = self._download_json(
+                f'https://cdn.jwplayer.com/v2/media/{media_id}', video_id)
+        else:
+            jwplayer_data = self._parse_json(
+                self._search_regex(r'jwsetup\s*=\s*({(?:.|\n)[^;]+});', webpage, 'player config'),
+                video_id, transform_source=js_to_json)
 
         title = self._generic_title('', webpage)
-        description = (self._og_search_description(webpage, default=None)
-                       or self._html_search_meta('description', webpage, 'description', default=None))
+        description = (
+            self._html_search_regex(
+                r'id=[\'"]chronicle-dashboard-video-description[\'"][^>]*>([^<]+)',
+                webpage, 'description', default=None)
+            or self._og_search_description(webpage, default=None)
+            or self._html_search_meta('description', webpage, 'description', default=None))
 
-        return {
-            **self._parse_jwplayer_data(jwplayer_data, video_id, False),
+        info = self._parse_jwplayer_data(jwplayer_data, video_id, False, m3u8_id='hls')
+        for f in info.get('formats') or []:
+            f.setdefault('http_headers', {})['Referer'] = 'https://www.c-span.org/'
+        info.update({
+            'id': video_id,
             'title': re.sub(r'\s+', ' ', title.split('|')[0]).strip(),
-            'description': description,
+            'description': description or info.get('description'),
             'http_headers': {'Referer': 'https://www.c-span.org/'},
-        }
+        })
+        return info
