@@ -9,8 +9,43 @@ from ..utils import (
 
 
 class CrackedIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?cracked\.com/video_(?P<id>\d+)_[\da-z-]+\.html'
+    _VALID_URL = r'https?://(?:www\.)?cracked\.com/(?:video|article)_(?P<id>\d+)_[\da-z-]+\.html'
     _TESTS = [{
+        # YouTube embed on a current article page
+        'url': 'https://www.cracked.com/article_49957_max-castillo-drops-a-rap-lullaby-on-cracked-comedy-club.html',
+        'md5': 'c54d9fdc9649702c5bdc44f19560bfda',
+        'info_dict': {
+            'id': 'mjrQRHXDfG4',
+            'ext': 'mp4',
+            'title': 'BIGTIMEMACA: The Tour From Hell | Max Castillo | Standup Comedy',
+            'description': 'md5:46152d1ca9bb1ea683c17f01d54ed54d',
+            'media_type': 'video',
+            'uploader': 'Cracked Comedy Club',
+            'uploader_id': '@CrackedComedyClub',
+            'uploader_url': 'https://www.youtube.com/@CrackedComedyClub',
+            'channel': 'Cracked Comedy Club',
+            'channel_id': 'UCeK0jhC7-Ot1bEaqvpr1Vaw',
+            'channel_url': 'https://www.youtube.com/channel/UCeK0jhC7-Ot1bEaqvpr1Vaw',
+            'channel_follower_count': int,
+            'comment_count': int,
+            'view_count': int,
+            'like_count': int,
+            'age_limit': 0,
+            'duration': 608,
+            'thumbnail': r're:https?://i\.ytimg\.com/.+',
+            'categories': ['People & Blogs'],
+            'tags': 'count:12',
+            'creators': ['Cracked Comedy Club', 'Big Time Maca'],
+            'timestamp': 1786201206,
+            'upload_date': '20260808',
+            'release_timestamp': 1786201206,
+            'release_date': '20260808',
+            'playable_in_embed': True,
+            'availability': 'public',
+            'live_status': 'not_live',
+        },
+        'add_ie': ['Youtube'],
+    }, {
         'url': 'http://www.cracked.com/video_19070_if-animal-actors-got-e21-true-hollywood-stories.html',
         'skip': 'video gone',
         'md5': '89b90b9824e3806ca95072c4d78f13f7',
