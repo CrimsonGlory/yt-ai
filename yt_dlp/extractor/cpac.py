@@ -11,9 +11,25 @@ from ..utils import (
 
 class CPACIE(InfoExtractor):
     IE_NAME = 'cpac'
-    _VALID_URL = r'https?://(?:www\.)?cpac\.ca/(?P<fr>l-)?episode\?id=(?P<id>[\da-f]{8}(?:-[\da-f]{4}){3}-[\da-f]{12})'
-    _TEST = {
-        # 'url': 'http://www.cpac.ca/en/programs/primetime-politics/episodes/65490909',
+    _VALID_URL = r'https?://(?:www\.)?cpac\.ca/(?:[^?#]+/)?(?P<fr>l-)?episode(?:/[^?#]*)?\?(?:[^#]*&)?id=(?P<id>[\da-f]{8}(?:-[\da-f]{4}){3}-[\da-f]{12})'
+    _TESTS = [{
+        'url': 'https://www.cpac.ca/headline-politics/episode/alberta-premier-danielle-smith-discusses-us-tariffs--august-26-2026?id=2ca18255-b9a3-451b-a018-b36f730de151',
+        'md5': 'b845e13ff1591d421c53b3b570a4b0e8',
+        'info_dict': {
+            'id': '2ca18255-b9a3-451b-a018-b36f730de151',
+            'ext': 'mp4',
+            'title': 'Alberta Premier Danielle Smith Discusses U.S. Tariffs – August 26, 2026',
+            'description': 'md5:7f335d3cca31e8977eb2aec9f59558e4',
+            'timestamp': 1787702400,
+            'upload_date': '20260826',
+            'thumbnail': 'https://images.cpac.ca/episode/thumbnail/2026/08/2ca18255-b9a3-451b-a018-b36f730de151/smith826.jpg',
+            'categories': ['Headline Politics'],
+        },
+        'params': {
+            'format': 'bestvideo',
+            'hls_prefer_native': True,
+        },
+    }, {
         'url': 'https://www.cpac.ca/episode?id=fc7edcae-4660-47e1-ba61-5b7f29a9db0f',
         'skip': 'video gone',
         'md5': 'e46ad699caafd7aa6024279f2614e8fa',
@@ -29,20 +45,25 @@ class CPACIE(InfoExtractor):
             'format': 'bestvideo',
             'hls_prefer_native': True,
         },
-    }
+    }, {
+        'url': 'https://www.cpac.ca/episode?id=2ca18255-b9a3-451b-a018-b36f730de151',
+        'only_matching': True,
+    }, {
+        'url': 'https://www.cpac.ca/a-la-une/l-episode/pm-de-lalberta-danielle-smith--tarifs-douaniers-americains?id=2ca18255-b9a3-451b-a018-b36f730de151',
+        'only_matching': True,
+    }]
 
     def _real_extract(self, url):
-        video_id = self._match_id(url)
-        url_lang = 'fr' if '/l-episode?' in url else 'en'
+        video_id, is_fr = self._match_valid_url(url).group('id', 'fr')
+        url_lang = 'fr' if is_fr else 'en'
 
         content = self._download_json(
-            'https://www.cpac.ca/api/1/services/contentModel.json?url=/site/website/episode/index.xml&crafterSite=cpacca&id=' + video_id,
-            video_id)
-        video_url = try_get(content, lambda x: x['page']['details']['videoUrl'], str)
+            'https://www.cpac.ca/api/1/services/episode-info.json',
+            video_id, query={'crafterSite': 'cpactv', 'id': video_id})
+        details = try_get(content, lambda x: x['component']['details'], dict) or {}
+        video_url = str_or_none(details.get('videoUrl'))
         formats = []
         if video_url:
-            content = content['page']
-            title = str_or_none(content['details'][f'title_{url_lang}_t'])
             formats = self._extract_m3u8_formats(video_url, video_id, m3u8_id='hls', ext='mp4')
             for fmt in formats:
                 # prefer language to match URL
@@ -54,20 +75,18 @@ class CPACIE(InfoExtractor):
                 else:
                     fmt['language_preference'] = -10
 
-        category = str_or_none(content['details'][f'category_{url_lang}_t'])
-
-        def is_live(v_type):
-            return (v_type == 'live') if v_type is not None else None
+        category = str_or_none(details.get(f'category_{url_lang}_t'))
+        v_type = details.get('type')
 
         return {
             'id': video_id,
             'formats': formats,
-            'title': title,
-            'description': str_or_none(content['details'].get(f'description_{url_lang}_t')),
-            'timestamp': unified_timestamp(content['details'].get('liveDateTime')),
+            'title': str_or_none(details.get(f'title_{url_lang}_t')),
+            'description': str_or_none(details.get(f'description_{url_lang}_t')),
+            'timestamp': unified_timestamp(details.get('liveDateTime')),
             'categories': [category] if category else None,
-            'thumbnail': urljoin(url, str_or_none(content['details'].get(f'image_{url_lang}_s'))),
-            'is_live': is_live(content['details'].get('type')),
+            'thumbnail': urljoin(url, str_or_none(details.get(f'image_{url_lang}_s'))),
+            'is_live': (v_type == 'live') if v_type is not None else None,
         }
 
 
