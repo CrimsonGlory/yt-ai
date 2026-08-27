@@ -1,5 +1,3 @@
-import re
-
 from .common import InfoExtractor
 from ..utils import (
     int_or_none,
@@ -22,10 +20,11 @@ class ITProTVBaseIE(InfoExtractor):
             headers={'Authorization': f'Bearer {self._fetch_jwt(webpage)}'})[ep]
 
     def _fetch_jwt(self, webpage):
-        return self._search_regex(r'{"passedToken":"([\w-]+\.[\w-]+\.[\w-]+)",', webpage, 'jwt')
+        return self._search_regex(
+            r'"passedToken"\s*:\s*"([\w-]+\.[\w-]+\.[\w-]+)"', webpage, 'jwt', default=None)
 
     def _check_if_logged_in(self, webpage):
-        if re.match(r'{\s*member\s*:\s*null', webpage):
+        if not self._fetch_jwt(webpage):
             self.raise_login_required()
 
 
@@ -48,8 +47,8 @@ class ITProTVIE(ITProTVBaseIE):
             'chapter_number': 1,
             'chapter_id': '5dbb3de426b46c0010b5d1b6',
         },
-    },
-        {
+        'skip': 'Requires ITProTV/ACI Learning account credentials',
+    }, {
         'url': 'https://app.itpro.tv/course/beyond-tech/job-interview-tips',
         'md5': '101a299b98c47ccf4c67f9f0951defa8',
         'info_dict': {
@@ -66,6 +65,7 @@ class ITProTVIE(ITProTVBaseIE):
             'chapter_number': 2,
             'chapter_id': '5f7c78d424330c000edf04d9',
         },
+        'skip': 'Requires ITProTV/ACI Learning account credentials',
     }]
 
     def _real_extract(self, url):
@@ -111,6 +111,7 @@ class ITProTVCourseIE(ITProTVBaseIE):
                 'title': 'ITProTV 101',
             },
             'playlist_count': 6,
+            'skip': 'Requires ITProTV/ACI Learning account credentials',
         },
         {
             'url': 'https://app.itpro.tv/course/beyond-tech',
@@ -120,6 +121,7 @@ class ITProTVCourseIE(ITProTVBaseIE):
                 'title': 'Beyond Tech',
             },
             'playlist_count': 15,
+            'skip': 'Requires ITProTV/ACI Learning account credentials',
         },
     ]
 
