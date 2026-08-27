@@ -1,4 +1,5 @@
 import hashlib
+import subprocess
 import time
 import urllib
 import uuid
@@ -7,8 +8,11 @@ from .common import InfoExtractor
 from .openload import PhantomJSwrapper
 from ..utils import (
     ExtractorError,
+    Popen,
     UserNotLive,
+    check_executable,
     determine_ext,
+    format_field,
     int_or_none,
     js_to_json,
     parse_resolution,
@@ -39,13 +43,36 @@ class DouyuBaseIE(InfoExtractor):
         return self.cache.load(
             'douyu', 'crypto-js-md5', min_ver='2024.07.04') or self._download_cryptojs_md5(video_id)
 
+    def _execute_js(self, jscode, video_id, *, note='Executing JS'):
+        # PhantomJS is unmaintained; prefer Node.js which is commonly available.
+        nodejs = check_executable('node', ['-v']) or check_executable('nodejs', ['-v'])
+        if nodejs:
+            self.to_screen(f'{format_field(video_id, None, "%s: ")}{note}')
+            try:
+                stdout, stderr, returncode = Popen.run(
+                    [nodejs, '-'], timeout=20, text=True, input=jscode,
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            except Exception as e:
+                raise ExtractorError(f'{note} failed: Unable to run Node.js', cause=e)
+            if returncode:
+                raise ExtractorError(
+                    f'{note} failed with returncode {returncode}:\n{stderr.strip()}')
+            return stdout
+
+        if check_executable('phantomjs', ['-v']):
+            phantom = PhantomJSwrapper(self)
+            return phantom.execute(jscode, video_id, note=note)
+
+        raise ExtractorError(
+            'Node.js or PhantomJS is required to extract Douyu videos. '
+            'Install Node.js from https://nodejs.org', expected=True)
+
     def _calc_sign(self, sign_func, video_id, a):
         b = uuid.uuid4().hex
         c = round(time.time())
         js_script = f'{self._get_cryptojs_md5(video_id)};{sign_func};console.log(ub98484234("{a}","{b}","{c}"))'
-        phantom = PhantomJSwrapper(self)
-        result = phantom.execute(js_script, video_id,
-                                 note='Executing JS signing script').strip()
+        result = self._execute_js(
+            js_script, video_id, note='Executing JS signing script').strip()
         return {i: v[0] for i, v in urllib.parse.parse_qs(result).items()}
 
     def _search_js_sign_func(self, webpage, fatal=True):
@@ -219,6 +246,7 @@ class DouyuShowIE(DouyuBaseIE):
 
     _TESTS = [{
         'url': 'https://v.douyu.com/show/mPyq7oVNe5Yv1gLY',
+        'md5': '8137f6fe485a69a886efa3e05c5b91d2',
         'info_dict': {
             'id': 'mPyq7oVNe5Yv1gLY',
             'ext': 'mp4',
