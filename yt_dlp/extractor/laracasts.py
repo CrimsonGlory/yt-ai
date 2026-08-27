@@ -1,17 +1,11 @@
-import json
-
 from .common import InfoExtractor
-from .vimeo import VimeoIE
 from ..utils import (
     clean_html,
-    extract_attributes,
-    get_element_html_by_id,
     int_or_none,
     parse_duration,
     str_or_none,
     unified_strdate,
     url_or_none,
-    urljoin,
 )
 from ..utils.traversal import traverse_obj
 
@@ -20,27 +14,45 @@ class LaracastsBaseIE(InfoExtractor):
     def _get_prop_data(self, url, display_id):
         webpage = self._download_webpage(url, display_id)
         return traverse_obj(
-            get_element_html_by_id('app', webpage),
-            ({extract_attributes}, 'data-page', {json.loads}, 'props'))
+            self._search_json(
+                r'<script[^>]+\bdata-page="app"[^>]*>', webpage, 'page data',
+                display_id, end_pattern='</script>'),
+            'props')
 
-    def _parse_episode(self, episode):
-        if not traverse_obj(episode, 'vimeoId'):
+    def _episode_meta(self, episode):
+        return traverse_obj(episode, {
+            'id': ('id', {int}, {str_or_none}),
+            'title': ('title', {clean_html}),
+            'season_number': ('chapter', {int_or_none}),
+            'episode_number': ('position', {int_or_none}),
+            'description': ('body', {clean_html}),
+            'thumbnail': ('largeThumbnail', {url_or_none}),
+            'duration': ('length', {int_or_none}),
+            'upload_date': ('dateSegments', 'published', {unified_strdate}),
+            'uploader': ('author', 'username', {str}),
+        })
+
+    def _extract_episode(self, episode):
+        video_id = str(episode['id'])
+        playback_url = traverse_obj(episode, ('cloudflarePlayback', 'src', {url_or_none}))
+        if not playback_url:
             self.raise_login_required('This video is only available for subscribers.')
-        return self.url_result(
-            VimeoIE._smuggle_referrer(
-                f'https://player.vimeo.com/video/{episode["vimeoId"]}', 'https://laracasts.com/'),
-            VimeoIE, url_transparent=True,
-            **traverse_obj(episode, {
-                'id': ('id', {int}, {str_or_none}),
-                'webpage_url': ('path', {urljoin('https://laracasts.com')}),
-                'title': ('title', {clean_html}),
-                'season_number': ('chapter', {int_or_none}),
-                'episode_number': ('position', {int_or_none}),
-                'description': ('body', {clean_html}),
-                'thumbnail': ('largeThumbnail', {url_or_none}),
-                'duration': ('length', {int_or_none}),
-                'upload_date': ('dateSegments', 'published', {unified_strdate}),
-            }))
+
+        formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+            playback_url, video_id, 'mp4', m3u8_id='hls')
+        for caption in traverse_obj(episode, (
+            'cloudflarePlayback', 'captions', lambda _, v: url_or_none(v['src']),
+        )):
+            subtitles.setdefault(caption.get('language') or 'en', []).append({
+                'url': caption['src'],
+                'name': caption.get('label'),
+            })
+        return {
+            **self._episode_meta(episode),
+            'id': video_id,
+            'formats': formats,
+            'subtitles': subtitles,
+        }
 
 
 class LaracastsIE(LaracastsBaseIE):
@@ -48,9 +60,9 @@ class LaracastsIE(LaracastsBaseIE):
     _VALID_URL = r'https?://(?:www\.)?laracasts\.com/series/(?P<id>[\w-]+/episodes/\d+)/?(?:[?#]|$)'
     _TESTS = [{
         'url': 'https://laracasts.com/series/30-days-to-learn-laravel-11/episodes/1',
-        'md5': 'c8f5e7b02ad0e438ef9280a08c8493dc',
+        'md5': '725fa1eb96c59aff8d9bb3a8d6160baf',
         'info_dict': {
-            'id': '922040563',
+            'id': '3118',
             'title': 'Hello, Laravel',
             'ext': 'mp4',
             'duration': 519,
@@ -61,16 +73,18 @@ class LaracastsIE(LaracastsBaseIE):
             'season': 'Season 1',
             'episode_number': 1,
             'episode': 'Episode 1',
-            'uploader': 'Laracasts',
-            'uploader_id': 'user20182673',
-            'uploader_url': 'https://vimeo.com/user20182673',
+            'uploader': 'JeffreyWay',
         },
-        'expected_warnings': ['Failed to parse XML'],  # TODO: Remove when vimeo extractor is fixed
+        # HLS --test only fetches the fMP4 init fragment (~1KB), below the default 10KB check
+        'file_minsize': None,
+        'params': {
+            'format': 'b[height=720]/b',
+        },
     }]
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        return self._parse_episode(self._get_prop_data(url, display_id)['lesson'])
+        return self._extract_episode(self._get_prop_data(url, display_id)['lesson'])
 
 
 class LaracastsPlaylistIE(LaracastsBaseIE):
@@ -81,9 +95,9 @@ class LaracastsPlaylistIE(LaracastsBaseIE):
         'info_dict': {
             'title': '30 Days to Learn Laravel',
             'id': '210',
-            'thumbnail': 'https://laracasts.s3.amazonaws.com/series/thumbnails/social-cards/30-days-to-learn-laravel-11.png?v=2',
+            'thumbnail': 'https://laracasts.s3.amazonaws.com/series/thumbnails/social-cards/30-days-to-learn-laravel-11.png',
             'duration': 30600.0,
-            'modified_date': '20240511',
+            'modified_date': '20240509',
             'description': 'md5:27c260a1668a450984e8f901579912dd',
             'categories': ['Frameworks'],
             'tags': ['Laravel'],
@@ -106,9 +120,17 @@ class LaracastsPlaylistIE(LaracastsBaseIE):
                 'duration': ('runTime', {parse_duration}),
                 'categories': ('taxonomy', 'name', {str}, all, filter),
                 'tags': ('topics', ..., 'name', {str}),
-                'modified_date': ('lastUpdated', {unified_strdate}),
+                'modified_date': (('lastUpdated', ('dates', 'lastUpdated')), {unified_strdate}, any),
             }),
         }
 
-        return self.playlist_result(traverse_obj(
-            series, ('chapters', ..., 'episodes', lambda _, v: v['vimeoId'], {self._parse_episode})), **metadata)
+        entries = []
+        for episode in traverse_obj(series, (
+            'chapters', ..., 'episodes',
+            lambda _, v: traverse_obj(v, ('cloudflarePlayback', 'src', {url_or_none})),
+        )):
+            entries.append(self.url_result(
+                f'https://laracasts.com/series/{display_id}/episodes/{episode["position"]}',
+                LaracastsIE, **self._episode_meta(episode)))
+
+        return self.playlist_result(entries, **metadata)
