@@ -7,7 +7,13 @@ from ..utils import (
     InAdvancePagedList,
     clean_html,
     get_element_by_id,
+    int_or_none,
+    js_to_json,
     remove_start,
+    traverse_obj,
+    unescapeHTML,
+    unified_strdate,
+    url_or_none,
 )
 
 
@@ -33,32 +39,56 @@ class KuwoBaseIE(InfoExtractor):
             }
 
             song_url = self._download_webpage(
-                'http://antiserver.kuwo.cn/anti.s',
-                song_id, note='Download {} url info'.format(file_format['format']),
+                'https://antiserver.kuwo.cn/anti.s',
+                song_id, note=f'Downloading {file_format["format"]} url info',
                 query=query, headers=self.geo_verification_headers(),
-            )
+                fatal=False)
 
             if song_url == 'IPDeny' and not tolerate_ip_deny:
                 raise ExtractorError('This song is blocked in this region', expected=True)
 
-            if song_url.startswith(('http://', 'https://')):
+            song_url = url_or_none((song_url or '').strip())
+            if song_url:
                 formats.append({
                     'url': song_url,
                     'format_id': file_format['format'],
                     'format': file_format['format'],
+                    'ext': file_format['ext'],
+                    'vcodec': 'none',
                     'quality': file_format['preference'],
                     'abr': file_format.get('abr'),
                 })
 
         return formats
 
+    def _decode_text(self, value):
+        if not value:
+            return None
+        return unescapeHTML(str(value)).replace('\xa0', ' ').strip() or None
+
 
 class KuwoIE(KuwoBaseIE):
     _WEB_FALLBACK = True
     IE_NAME = 'kuwo:song'
     IE_DESC = '酷我音乐'
-    _VALID_URL = r'https?://(?:www\.)?kuwo\.cn/yinyue/(?P<id>\d+)'
+    _VALID_URL = r'https?://(?:(?:www|m)\.)?kuwo\.cn/(?:(?:newh5app/)?play_detail|yinyue)/(?P<id>\d+)'
     _TESTS = [{
+        'url': 'https://www.kuwo.cn/play_detail/639883212',
+        'md5': 'a523c65653256f36635e6c924fa828d9',
+        'info_dict': {
+            'id': '639883212',
+            'ext': 'mp3',
+            'title': '今生劫换来生缘 (闽南对唱版)',
+            'creator': '咏春&еяхат музыка',
+            'creators': ['咏春&еяхат музыка'],
+            'album': '今生劫换来生缘(闽南对唱版)',
+            'duration': 196,
+            'upload_date': '20260824',
+        },
+        'params': {
+            'format': 'mp3-128',
+        },
+    }, {
         'url': 'http://www.kuwo.cn/yinyue/635632/',
         'info_dict': {
             'id': '635632',
@@ -71,7 +101,7 @@ class KuwoIE(KuwoBaseIE):
         'skip': 'this song has been offline because of copyright issues',
     }, {
         'url': 'http://www.kuwo.cn/yinyue/6446136/',
-        'skip': 'Site returned HTTP 5xx',
+        'skip': 'Legacy /yinyue/ pages return HTTP 5xx',
         'info_dict': {
             'id': '6446136',
             'ext': 'mp3',
@@ -86,50 +116,44 @@ class KuwoIE(KuwoBaseIE):
     }, {
         'url': 'http://www.kuwo.cn/yinyue/3197154?catalog=yueku2016',
         'only_matching': True,
+    }, {
+        'url': 'https://m.kuwo.cn/newh5app/play_detail/639883212',
+        'only_matching': True,
     }]
 
     def _real_extract(self, url):
         song_id = self._match_id(url)
-        webpage, urlh = self._download_webpage_handle(
-            url, song_id, note='Download song detail info',
-            errnote='Unable to get song detail info')
-        if song_id not in urlh.url or '对不起，该歌曲由于版权问题已被下线，将返回网站首页' in webpage:
-            raise ExtractorError('this song has been offline because of copyright issues', expected=True)
 
-        song_name = self._html_search_regex(
-            r'<p[^>]+id="lrcName">([^<]+)</p>', webpage, 'song name')
-        singer_name = remove_start(self._html_search_regex(
-            r'<a[^>]+href="http://www\.kuwo\.cn/artist/content\?name=([^"]+)">',
-            webpage, 'singer name', fatal=False), '歌手')
-        lrc_content = clean_html(get_element_by_id('lrcContent', webpage))
-        if lrc_content == '暂无':     # indicates no lyrics
-            lrc_content = None
+        # Desktop www.kuwo.cn pages currently 500; metadata is still public
+        # via the search API and audio via antiserver.kuwo.cn.
+        meta = self._download_json(
+            'https://search.kuwo.cn/r.s', song_id,
+            'Downloading song metadata',
+            query={
+                'rid': f'MUSIC_{song_id}',
+                'ft': 'music',
+                'rformat': 'json',
+                'encoding': 'utf8',
+                'rn': '1',
+                'pn': '0',
+            },
+            transform_source=js_to_json,
+            fatal=False)
+        song = traverse_obj(meta, ('abslist', 0, {dict})) or {}
+        if str(song.get('id') or '') != song_id:
+            song = {}
 
         formats = self._get_formats(song_id)
-
-        album_id = self._html_search_regex(
-            r'<a[^>]+href="http://www\.kuwo\.cn/album/(\d+)/"',
-            webpage, 'album id', fatal=False)
-
-        publish_time = None
-        if album_id is not None:
-            album_info_page = self._download_webpage(
-                f'http://www.kuwo.cn/album/{album_id}/', song_id,
-                note='Download album detail info',
-                errnote='Unable to get album detail info')
-
-            publish_time = self._html_search_regex(
-                r'发行时间：(\d{4}-\d{2}-\d{2})', album_info_page,
-                'publish time', fatal=False)
-            if publish_time:
-                publish_time = publish_time.replace('-', '')
+        if not formats:
+            raise ExtractorError('Unable to extract song URL', expected=True)
 
         return {
             'id': song_id,
-            'title': song_name,
-            'creator': singer_name,
-            'upload_date': publish_time,
-            'description': lrc_content,
+            'title': self._decode_text(song.get('SONGNAME') or song.get('name')) or song_id,
+            'creator': self._decode_text(song.get('ARTIST') or song.get('artist')),
+            'album': self._decode_text(song.get('ALBUM')),
+            'duration': int_or_none(song.get('DURATION')),
+            'upload_date': unified_strdate(self._decode_text(song.get('releasedate'))),
             'formats': formats,
         }
 
