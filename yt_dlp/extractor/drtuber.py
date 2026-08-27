@@ -21,10 +21,12 @@ class DrTuberIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'hot perky blonde naked golf',
             'like_count': int,
+            'dislike_count': int,
             'comment_count': int,
             'categories': ['Babe', 'Blonde', 'Erotic', 'Outdoor', 'Softcore', 'Solo'],
             'thumbnail': r're:https?://.*\.jpg$',
             'age_limit': 18,
+            'duration': 304,
         },
     }, {
         'url': 'http://www.drtuber.com/embed/489939',
@@ -43,26 +45,31 @@ class DrTuberIE(InfoExtractor):
             f'http://www.drtuber.com/video/{video_id}', display_id)
 
         video_data = self._download_json(
-            'http://www.drtuber.com/player_config_json/', video_id, query={
+            'https://www.drtuber.com/player_config_json/', video_id, query={
                 'vid': video_id,
                 'embed': 0,
                 'aid': 0,
                 'domain_id': 0,
-            })
+            }, headers={
+                # Without Accept: application/json the endpoint returns [].
+                'Accept': 'application/json, text/javascript, */*; q=0.01',
+            }) or {}
 
         formats = []
-        for format_id, video_url in video_data['files'].items():
-            if video_url:
-                formats.append({
-                    'format_id': format_id,
-                    'quality': 2 if format_id == 'hq' else 1,
-                    'url': video_url,
-                })
+        files = video_data.get('files')
+        if isinstance(files, dict):
+            for format_id, video_url in files.items():
+                if video_url:
+                    formats.append({
+                        'format_id': format_id,
+                        'quality': 2 if format_id == 'hq' else 1,
+                        'url': video_url,
+                    })
 
         duration = int_or_none(video_data.get('duration')) or parse_duration(
             video_data.get('duration_format'))
 
-        title = self._html_search_regex(
+        title = video_data.get('title') or self._html_search_regex(
             (r'<h1[^>]+class=["\']title[^>]+>([^<]+)',
              r'<title>([^<]+)\s*@\s+DrTuber',
              r'class="title_watch"[^>]*><(?:p|h\d+)[^>]*>([^<]+)<',
@@ -72,7 +79,7 @@ class DrTuberIE(InfoExtractor):
 
         thumbnail = self._html_search_regex(
             r'poster="([^"]+)"',
-            webpage, 'thumbnail', fatal=False)
+            webpage, 'thumbnail', fatal=False) or video_data.get('poster')
 
         def extract_count(id_, name, default=NO_DEFAULT):
             return str_to_int(self._html_search_regex(
@@ -86,8 +93,9 @@ class DrTuberIE(InfoExtractor):
         cats_str = self._search_regex(
             r'<div[^>]+class="categories_list">(.+?)</div>',
             webpage, 'categories', fatal=False)
-        categories = [] if not cats_str else re.findall(
-            r'<a title="([^"]+)"', cats_str)
+        categories = [] if not cats_str else (
+            re.findall(r'<a title="([^"]+)"', cats_str)
+            or re.findall(r'href="/categories/[^"]+"[^>]*>([^<]+)', cats_str))
 
         return {
             'id': video_id,
