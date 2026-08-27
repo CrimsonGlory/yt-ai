@@ -78,7 +78,6 @@ class NitterIE(InfoExtractor):
         'nitter.privacydev.net',
         'nitter.evil.site',
         'tweet.lambda.dance',
-        'nitter.kylrth.com',
         'nitter.foss.wtf',
         'nitter.priv.pw',
         'nitter.tokhmi.xyz',
@@ -184,6 +183,8 @@ class NitterIE(InfoExtractor):
         'nitter.notraxx.ch',
         'nitter.skrep.in',
         'nitter.snopyta.org',
+        # 307-redirects all paths to xcancel.com (shut down after X Corp C&D, 2026-08-24)
+        'nitter.kylrth.com',
     )
 
     INSTANCES = NON_HTTP_INSTANCES + HTTP_INSTANCES + DEAD_INSTANCES
@@ -286,6 +287,14 @@ class NitterIE(InfoExtractor):
             },
             'expected_warnings': ['Ignoring subtitle tracks found in the HLS manifest'],
             'params': {'skip_download': 'm3u8'},
+        }, {
+            # nitter.kylrth.com no longer hosts Nitter; nginx 307s every path to xcancel.com
+            'url': 'https://nitter.kylrth.com/firefox/status/1314279897502629888#m',
+            'skip': 'nitter.kylrth.com 307-redirects all paths to xcancel.com, which shut down after X Corp C&D (2026-08-24)',
+            'info_dict': {
+                'id': '1314279897502629888',
+                'ext': 'mp4',
+            },
         },
     ]
 
