@@ -1,30 +1,43 @@
+import json
+
+from .bunnycdn import BunnyCdnIE
 from .common import InfoExtractor
 from .rumble import RumbleEmbedIE
 from .youtube import YoutubeIE
-from ..utils import ExtractorError, clean_html, get_element_by_class, strip_or_none
+from ..utils import (
+    ExtractorError,
+    clean_html,
+    int_or_none,
+    parse_iso8601,
+    smuggle_url,
+    traverse_obj,
+    urljoin,
+)
 
 
 class Funker530IE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?funker530\.com/video/(?P<id>[^/?#]+)'
+    _API_URL = 'https://api.funker530.com/api/Get'
+    # Public Azure Functions key from the site's JS bundle
+    _API_CODE = 'sL3mjD-c0BJdI9b9h4s7WhIPU8ca9p6h3yiLyFczS-I9AzFupvbo9g=='
+    _BUNNY_LIBRARY_ID = '167129'
+    _THUMB_BASE = 'https://images.funker530.com/images/media/'
     _TESTS = [{
         'url': 'https://funker530.com/video/azov-patrol-caught-in-open-under-automatic-grenade-launcher-fire/',
         'md5': '085f50fea27523a388bbc22e123e09c8',
         'info_dict': {
-            'id': 'v2qbmu4',
+            'id': 'eeb9c731-fa9e-4c38-9200-46a243d282ac',
             'ext': 'mp4',
             'title': 'Azov Patrol Caught In Open Under Automatic Grenade Launcher Fire',
-            'thumbnail': r're:^https?://.*\.jpg$',
-            'uploader': 'Funker530',
-            'channel': 'Funker530',
-            'channel_url': 'https://rumble.com/c/c-1199543',
-            'width': 1280,
-            'height': 720,
-            'fps': 25,
-            'duration': 27,
+            'display_id': 'azov-patrol-caught-in-open-under-automatic-grenade-launcher-fire',
+            'description': 'md5:01cbda51742bcf848009f7f0a4cda844',
+            'thumbnail': r're:https?://images\.funker530\.com/.+',
+            'timestamp': 1686238080,
             'upload_date': '20230608',
-            'timestamp': 1686241321,
-            'live_status': 'not_live',
-            'description': 'md5:bea2e1f458095414e04b5ac189c2f980',
+            'view_count': int,
+            'like_count': int,
+            'comment_count': int,
+            'age_limit': 0,
         },
     }, {
         'url': 'https://funker530.com/video/my-friends-joined-the-russians-civdiv/',
@@ -32,49 +45,67 @@ class Funker530IE(InfoExtractor):
         'info_dict': {
             'id': 'k-pk4bOvoac',
             'ext': 'mp4',
-            'view_count': int,
-            'channel': 'Civ Div',
-            'comment_count': int,
-            'channel_follower_count': int,
-            'thumbnail': 'https://i.ytimg.com/vi/k-pk4bOvoac/maxresdefault.jpg',
-            'uploader_id': '@CivDiv',
-            'duration': 357,
-            'channel_url': 'https://www.youtube.com/channel/UCgsCiwJ88up-YyMHo7hL5-A',
-            'tags': [],
-            'uploader_url': 'https://www.youtube.com/@CivDiv',
-            'channel_id': 'UCgsCiwJ88up-YyMHo7hL5-A',
-            'like_count': int,
-            'description': 'md5:aef75ec3f59c07a0e39400f609b24429',
-            'live_status': 'not_live',
-            'age_limit': 0,
-            'uploader': 'Civ Div',
-            'categories': ['People & Blogs'],
             'title': 'My “Friends” joined the Russians.',
-            'availability': 'public',
-            'upload_date': '20230608',
-            'playable_in_embed': True,
-            'heatmap': 'count:100',
         },
+        'skip': 'Video gone',
     }]
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        webpage = self._download_webpage(url, display_id)
-        info = {}
-        rumble_url = list(RumbleEmbedIE._extract_embed_urls(url, webpage))
-        if rumble_url:
-            info = {'url': rumble_url[0], 'ie_key': RumbleEmbedIE.ie_key()}
-        else:
-            youtube_url = list(YoutubeIE._extract_embed_urls(url, webpage))
-            if youtube_url:
-                info = {'url': youtube_url[0], 'ie_key': YoutubeIE.ie_key()}
-        if not info:
-            raise ExtractorError('No videos found on webpage', expected=True)
+        videos = self._download_json(
+            self._API_URL, display_id,
+            query={
+                'code': self._API_CODE,
+                'slug': display_id,
+                'amount': 1,
+                'hideNSFW': 'false',
+            },
+            headers={
+                'Content-Type': 'application/json',
+                'GetType': 'Video',
+                'Origin': 'https://funker530.com',
+                'Referer': 'https://funker530.com/',
+            })
+        video = traverse_obj(videos, 0, expected_type=dict)
+        if not video:
+            raise ExtractorError('No videos found', expected=True)
 
-        return {
-            **info,
-            '_type': 'url_transparent',
-            'description': strip_or_none(self._search_regex(
-                r'(?s)(.+)About the Author', clean_html(get_element_by_class('video-desc-paragraph', webpage)),
-                'description', default=None)),
+        info = {
+            'display_id': display_id,
+            **traverse_obj(video, {
+                'title': ('title', {str}),
+                'description': ('ogDescription', {str}, filter),
+                'uploader': ('author', {str}, filter),
+                'view_count': ('viewCount', {int_or_none}),
+                'like_count': ('likes', {int_or_none}),
+                'comment_count': ('numberOfComments', {int_or_none}),
+                'timestamp': ('publicationDate', {parse_iso8601}),
+                'age_limit': ('mature', {lambda x: 18 if x else 0}),
+                'tags': ('keywords', {lambda x: [t.strip() for t in x.split(',') if t.strip()]}),
+                'thumbnail': ('thumbnail', 'file', {urljoin(self._THUMB_BASE)}),
+            }),
         }
+        if not info.get('description'):
+            info['description'] = clean_html(video.get('description'))
+
+        bunny_id = traverse_obj(video, ('bunnyId', {str}, filter))
+        if bunny_id:
+            return self.url_result(
+                smuggle_url(
+                    f'https://iframe.mediadelivery.net/embed/{self._BUNNY_LIBRARY_ID}/{bunny_id}',
+                    {'Referer': url}),
+                ie=BunnyCdnIE, video_id=bunny_id, url_transparent=True, **info)
+
+        rumble_id = traverse_obj(video, ('rumbleJson', {json.loads}, 'vid', {str}))
+        embed_html = video.get('connatixVid') or ''
+        rumble_url = rumble_id and f'https://rumble.com/embed/{rumble_id}'
+        if not rumble_url:
+            rumble_url = traverse_obj(list(RumbleEmbedIE._extract_embed_urls(url, embed_html)), 0)
+        if rumble_url:
+            return self.url_result(rumble_url, ie=RumbleEmbedIE, url_transparent=True, **info)
+
+        youtube_url = traverse_obj(list(YoutubeIE._extract_embed_urls(url, embed_html)), 0)
+        if youtube_url:
+            return self.url_result(youtube_url, ie=YoutubeIE, url_transparent=True, **info)
+
+        raise ExtractorError('No videos found', expected=True)
