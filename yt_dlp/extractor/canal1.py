@@ -5,6 +5,29 @@ class Canal1IE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.|noticias\.)?canal1\.com\.co/(?:[^?#&])+/(?P<id>[\w-]+)'
 
     _TESTS = [{
+        # Site now embeds Dailymotion instead of MediaStream
+        'url': 'https://canal1.com.co/noticias/internacional/video-madre-e-hija-ecuatorianas-fueron-detenidas-por-ice-tras-accidente-en-florida/',
+        'md5': '039c3bc8d89bae0a5f3f31514591e773',
+        'info_dict': {
+            'id': 'xb14c2e',
+            'ext': 'mp4',
+            'display_id': 'video-madre-e-hija-ecuatorianas-fueron-detenidas-por-ice-tras-accidente-en-florida',
+            'title': 'Madre e hija ecuatorianas fueron detenidas por ICE tras sufrir un accidente en Florida',
+            'description': '',
+            'thumbnail': r're:https?://s[12]\.dmcdn\.net/v/.+',
+            'duration': 162,
+            'timestamp': 1787790690,
+            'upload_date': '20260827',
+            'uploader': 'Canal 1 Colombia',
+            'uploader_id': 'x3l358c',
+            'view_count': int,
+            'like_count': int,
+            'age_limit': 0,
+            'tags': [],
+        },
+        # HLS --test only fetches the fMP4 init fragment (~1KB), below the default 10KB check
+        'file_minsize': None,
+    }, {
         'url': 'https://canal1.com.co/noticias/napa-i-una-cadena-de-produccion-de-arroz-que-se-quedo-en-veremos-y-abandonada-en-el-departamento-del-choco/',
         'skip': 'video gone',
         'info_dict': {
@@ -17,7 +40,7 @@ class Canal1IE(InfoExtractor):
         },
     }, {
         'url': 'https://noticias.canal1.com.co/noticias/tres-i-el-triste-record-que-impuso-elon-musk-el-dueno-de-tesla-y-de-twitter/',
-        'skip': 'Site no longer exists or is broken',
+        'skip': 'noticias.canal1.com.co subdomain no longer exists',
         'info_dict': {
             'id': '63b39e93f5fd223aa32250fb',
             'display_id': 'tres-i-el-triste-record-que-impuso-elon-musk-el-dueno-de-tesla-y-de-twitter',
