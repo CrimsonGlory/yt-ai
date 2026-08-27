@@ -13,7 +13,7 @@
 </div>
 <!-- MANPAGE: END EXCLUDED SECTION -->
 
-yt-ai is a feature-rich command-line audio/video downloader with support for [thousands of sites](supportedsites.md). The project is a fork of [youtube-dl](https://github.com/ytdl-org/youtube-dl) based on the now inactive [youtube-dlc](https://github.com/blackjack4494/yt-dlc).
+yt-ai is a feature-rich command-line audio/video downloader with support for [thousands of sites](supportedsites.md). The project is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp).
 
 <!-- MANPAGE: MOVE "USAGE AND OPTIONS" SECTION HERE -->
 
@@ -60,7 +60,7 @@ yt-ai is a feature-rich command-line audio/video downloader with support for [th
     * [Developing Plugins](#developing-plugins)
 * [EMBEDDING YT-AI](#embedding-yt-ai)
     * [Embedding examples](#embedding-examples)
-* [CHANGES FROM YOUTUBE-DL](#changes-from-youtube-dl)
+* [CHANGES FROM YT-DLP](#changes-from-yt-dlp)
     * [New features](#new-features)
     * [Differences in default behavior](#differences-in-default-behavior)
     * [Deprecated options](#deprecated-options)
@@ -2257,61 +2257,81 @@ with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 ```
 
 
-# CHANGES FROM YOUTUBE-DL
+# CHANGES FROM YT-DLP
+
+yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults, format selection, and most options are the same. This section lists the changes made in this fork.
 
 ### New features
 
-* Forked from [**yt-dlc@f9401f2**](https://github.com/blackjack4494/yt-dlc/commit/f9401f2a91987068139c5f757b12fc711d4c0cee) and merged with [**youtube-dl@a08f2b7**](https://github.com/ytdl-org/youtube-dl/commit/a08f2b7e4567cdc50c0614ee0a4ffdff49b8b6e6) ([exceptions](https://github.com/yt-dlp/yt-dlp/issues/21))
+* Forked from [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and periodically merged with upstream (currently through [**yt-dlp@94eba4c**](https://github.com/yt-dlp/yt-dlp/commit/94eba4c156af080e87caf10cf8ffbea03bd17407))
 
-* **[SponsorBlock Integration](#sponsorblock-options)**: You can mark/remove sponsor sections in YouTube videos by utilizing the [SponsorBlock](https://sponsor.ajay.app) API
+* **Independent branding**: Binaries, config, cache, and plugin paths use `yt-ai`, so yt-ai can be installed alongside yt-dlp. The Python import remains `yt_dlp`. See [CONFIGURATION](#configuration)
 
-* **[Format Sorting](#sorting-formats)**: The default format sorting options have been changed so that higher resolution and better codecs will be now preferred instead of simply using larger bitrate. Furthermore, you can now specify the sort order using `-S`. This allows for much easier format selection than what is possible by simply using `--format` ([examples](#format-selection-examples))
+* **AI/LLM contributions allowed**: yt-dlp's NO AI / NO LLM contribution ban (`.NO_AI`, issue/PR checkboxes, and auto-close workflow) has been removed
 
-* **Merged with animelover1984/youtube-dl**: You get most of the features and improvements from [animelover1984/youtube-dl](https://github.com/animelover1984/youtube-dl) including `--write-comments`, `BiliBiliSearch`, `BilibiliChannel`, Embedding thumbnail in mp4/ogg/opus, playlist infojson etc. See [#31](https://github.com/yt-dlp/yt-dlp/pull/31) for details.
+* **Restored extractors previously blocked as piracy**: The KnownPiracy refusal list is gone. Restored from git history (and youtube-dl for viewsb): DoodStream, viewsb (StreamSB), filemoon, HentaiStigma, ThisAV, XFileShare hosts, YourPorn (sxyprn), Jable, 91porn, Einthusan, YourUpload, Xanimu, Musicdex, duboku, and Gofile
 
-* **YouTube improvements**:
-    * Supports Clips, Stories (`ytstories:<channel UCID>`), Search (including filters)**\***, YouTube Music Search, Channel-specific search, Search prefix (`ytsearch:`)**\***, Mixes, and Feeds (`:ytfav`, `:ytwatchlater`, `:ytsubs`, `:ythistory`, `:ytrec`, `:ytnotif`)
-    * Fix for [n-sig based throttling](https://github.com/ytdl-org/youtube-dl/issues/29326) **\***
-    * Download livestreams from the start using `--live-from-start` (*experimental*)
-    * Channel URLs download all uploads of the channel, including shorts and live
+* **Restored extractors previously marked currently broken**: Sites that still publish media were rewritten against current pages/APIs. Notable reworks include DW, Europa, TFO, TeleMB, PlutoTV, and GDCVault. Extractors whose old APIs died can fall back to HTML5 / JSON-LD / JWPlayer / HLS on the webpage (`_WEB_FALLBACK`)
 
-* **Cookies from browser**: Cookies can be automatically extracted from all major web browsers using `--cookies-from-browser BROWSER[+KEYRING][:PROFILE][::CONTAINER]`
+* **New extractors**:
+    * [AnonMP4](https://github.com/CrimsonGlory/yt-ai/commit/7e1d8ceb53acea50102343d0cd3db56e1fc2dbc8) (`anonmp4.art` / `anonmp4.to`)
 
-* **Download time range**: Videos can be downloaded partially based on either timestamps or chapters using `--download-sections`
+* **Extractor fixes** (verified on live sites where possible):
+    * **20min**: Extract videos from the Unity API instead of the old podcast URLs
+    * **abcnews**: Read the current `story.story` JSON instead of everscroll
+    * **abc:iview**: Use the v3 video API and raise geo/login when unplayable
+    * **allocine**: Extract Dailymotion videos via `DailymotionIE`
+    * **bunnycdn**: Fall back to `playlist.m3u8` when JSON-LD is missing
+    * **cliprs**: Extract Ring Publishing embeds
+    * **cspan**: Fall back to JSON-LD / m3u8 when player JS is blocked
+    * **elpais**: Fall back to a YouTube embed when `url_cache` is missing
+    * **epicon**: Extract HLS from the page when `ajaxplayer` returns 405
+    * **globalplayer:live**: Fetch the stream from the guacamole playables API
+    * **gopro**: Fetch the download URL from the JWT `medium_id`
+    * **microsoft:medius**: Extract HLS manifests when Smooth Streaming is gone
+    * **newgrounds**: Update the audio player media URL regex
+    * **ninenews**: Parse Brightcove id/account from page markup
+    * **nosnl**: Treat nested `/video/` article URLs as videos
+    * **orf:on**: Raise geo-restriction when sources are empty
+    * **pbs**: Guard against missing `video_info` and title
+    * **radiofrance:live**: Use public HLS streams instead of `/api/live`
+    * **showroom**: Use the public room API instead of Nuxt + login cookie
+    * **tfo**: Fall back to Next.js v13 data
+    * **theguardian:podcast**: Extract audio URL and author from JSON-LD
+    * **videa**: Support player URLs with an `f=` parameter
+    * **vrt**: Parse `mediaReference` from Next.js / JSON-LD when `vrtvideo` is gone
+    * **wevidi**: Fall back to a YouTube embed when WVPlayer is missing
+    * **yandexdisk**: Support password-protected public files (`--video-password`)
 
-* **Split video by chapters**: Videos can be split into multiple files based on chapters using `--split-chapters`
+* **Ported live-verified upstream PRs** that had not been merged yet: TED `videoPlayerData`, HearThisAt API host, VGTV HTTPS API, RTVE Play clan URLs, and xHamster sources/pagination
 
-* **Multi-threaded fragment downloads**: Download multiple fragments of m3u8/mpd videos in parallel. Use `--concurrent-fragments` (`-N`) option to set the number of threads used
+* **Extractor internals**:
+    * `url_result` smuggles generic intent so the Generic extractor keeps the intended URL
+    * `subs_list_to_dict` copies entries and handles empty `id`/`ext`
+    * `download_range_func` equality/repr includes `from_info`
 
-* **New and fixed extractors**: Many new extractors have been added and a lot of existing ones have been fixed. See the [changelog](Changelog.md) or the [list of supported sites](supportedsites.md)
+* **Testing and developer workflow**:
+    * Offline coverage and extractor/CLI fixture tests
+    * Live byte-fetch tests from confirmed public URLs, plus many live extractor test updates
+    * Node as the JS runtime for download tests
+    * Skip dead / geo / login tests and refresh stale sample metadata
+    * [Development Docker workflow](https://github.com/CrimsonGlory/yt-ai/commit/13d780d260672007c07b37e4b5060a06c27d5b15) (`docker/Dockerfile` + compose) to run yt-ai and the offline suite in a container
 
-* **New MSOs**: Philo, Spectrum, SlingTV, Cablevision, RCN etc.
-
-* **Subtitle extraction from manifests**: Subtitles can be extracted from streaming media manifests. See [commit/be6202f](https://github.com/CrimsonGlory/yt-ai/commit/be6202f12b97858b9d716e608394b51065d0419f) for details
-
-* **Multiple paths and output templates**: You can give different [output templates](#output-template) and download paths for different types of files. You can also set a temporary path where intermediary files are downloaded to using `--paths` (`-P`)
-
-* **Portable Configuration**: Configuration files are automatically loaded from the home and root directories. See [CONFIGURATION](#configuration) for details
-
-* **Output template improvements**: Output templates can now have date-time formatting, numeric offsets, object traversal etc. See [output template](#output-template) for details. Even more advanced operations can also be done with the help of `--parse-metadata` and `--replace-in-metadata`
-
-* **Other new options**: Many new options have been added such as `--alias`, `--print`, `--concat-playlist`, `--wait-for-video`, `--retry-sleep`, `--sleep-requests`, `--convert-thumbnails`, `--force-download-archive`, `--force-overwrites`, `--break-match-filters` etc
-
-* **Improvements**: Regex and other operators in `--format`/`--match-filters`, multiple `--postprocessor-args` and `--downloader-args`, faster archive checking, more [format selection options](#format-selection), merge multi-video/audio, multiple `--config-locations`, `--exec` at different stages, etc
-
-* **Plugins**: Extractors and PostProcessors can be loaded from an external file. See [plugins](#plugins) for details
-
-* **Self updater**: The releases can be updated using `yt-ai -U`, and downgraded using `--update-to` if required
-
-* **Automated builds**: [Nightly/master builds](#update-channels) can be used with `--update-to nightly` and `--update-to master`
-
-See [changelog](Changelog.md) or [commits](https://github.com/CrimsonGlory/yt-ai/commits) for the full list of changes
-
-Features marked with a **\*** have been back-ported to youtube-dl
+See [commits](https://github.com/CrimsonGlory/yt-ai/commits) for the full list of changes
 
 ### Differences in default behavior
 
-Some of yt-ai's default options are different from that of youtube-dl and youtube-dlc:
+Relative to **yt-dlp**:
+
+* The command name and release binaries are `yt-ai` instead of `yt-dlp`
+* Config files are `yt-ai.conf` and live under `yt-ai` directories (`${XDG_CONFIG_HOME}/yt-ai`, `${APPDATA}/yt-ai`, `~/.yt-ai`, `/etc/yt-ai`). See [CONFIGURATION](#configuration)
+* Cache defaults to `${XDG_CACHE_HOME}/yt-ai` instead of `${XDG_CACHE_HOME}/yt-dlp`
+* Plugins are loaded from `yt-ai` config folders and `yt-ai-plugins` (not `yt-dlp-plugins`). See [plugins](#plugins)
+* The PyPI package is [`yt-ai`](https://pypi.org/project/yt-ai); embedding still uses `import yt_dlp`
+* Sites yt-dlp refused as piracy, and extractors it marked currently broken, are enabled again
+* AI / LLM contributions are allowed
+
+CLI defaults (format selection, output template, Python version, and so on) otherwise match yt-dlp. The following differences from youtube-dl / youtube-dlc, and the `--compat-options` that revert them, are inherited from yt-dlp:
 
 * yt-ai supports only [Python 3.10+](## "Windows 8"), and will remove support for more versions as they [become EOL](https://devguide.python.org/versions/#python-release-cycle); while [youtube-dl still supports Python 2.6+ and 3.2+](https://github.com/ytdl-org/youtube-dl/issues/30568#issue-1118238743)
 * The options `--auto-number` (`-A`), `--title` (`-t`) and `--literal` (`-l`), no longer work. See [removed options](#Removed) for details
