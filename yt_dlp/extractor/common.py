@@ -3899,7 +3899,7 @@ class InfoExtractor:
         """Get age limit from the testcases"""
         return max(traverse_obj(
             (*cls.get_testcases(include_onlymatching=False), *cls.get_webpage_testcases()),
-            (..., (('playlist', 0), None), 'info_dict', 'age_limit')) or [0])
+            (..., (('playlist', 0), None), 'info_dict', 'age_limit', {int})) or [0])
 
     @classproperty(cache=True)
     def _RETURN_TYPE(cls):
