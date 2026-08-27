@@ -1,10 +1,12 @@
+import random
+
 from .common import InfoExtractor
 from ..utils import (
     int_or_none,
     parse_age_limit,
     parse_iso8601,
+    strip_jsonp,
     time_seconds,
-    update_url_query,
 )
 
 
@@ -18,7 +20,6 @@ class IndavideoEmbedIE(InfoExtractor):
     _EMBED_REGEX = [r'<iframe[^>]+\bsrc=["\'](?P<url>(?:https?:)//embed\.indavideo\.hu/player/video/[\da-f]+)']
     _TESTS = [{
         'url': 'https://indavideo.hu/player/video/1bdc3c6d80/',
-        'skip': 'HTTP Error 403',
         'md5': 'c8a507a1c7410685f83a06eaeeaafeab',
         'info_dict': {
             'id': '1837039',
@@ -76,9 +77,14 @@ class IndavideoEmbedIE(InfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url)
 
+        headers = {'Referer': 'https://indavideo.hu/'}
+        # HTML5 player: GET .../getVideoData/{hash}/12///?{referrer}&callback=?
         video = self._download_json(
-            f'https://amfphp.indavideo.hu/SYm0json.php/player.playerHandler.getVideoData/{video_id}/',
-            video_id, query={'_': time_seconds()})['data']
+            f'https://amfphp.indavideo.hu/SYm0json.php/player.playerHandler.getVideoData/{video_id}/12///',
+            video_id, headers=headers, transform_source=strip_jsonp, query={
+                'https://indavideo.hu/': '',
+                'callback': f'jQuery{random.randrange(10 ** 16)}_{time_seconds()}',
+            })['data']
 
         video_urls = []
 
@@ -101,9 +107,11 @@ class IndavideoEmbedIE(InfoExtractor):
             token = filesh.get(str(height))
             if token is None:
                 continue
+            sep = '&' if '?' in video_url else '?'
             formats.append({
-                'url': update_url_query(video_url, {'token': token}),
+                'url': f'{video_url}{sep}token={token}',
                 'height': height,
+                'http_headers': headers,
             })
 
         timestamp = video.get('date')
