@@ -32,6 +32,23 @@ class MediasetIE(ThePlatformBaseIE):
         rf'<iframe[^>]+src=[\'"](?P<url>(?:https?:)?//(?:\w+\.)+mediaset\.it/player/(?:v\d+/)?index\.html\?\S*?programGuid={_GUID_RE})[\'"&]',
     ]
     _TESTS = [{
+        'url': 'https://mediasetinfinity.mediaset.it/video/yogaradioestate/green-o-red-flag_FD00000000540346',
+        'md5': '65d32af3dbc375b42aa975aef1a0e151',
+        'info_dict': {
+            'id': 'FD00000000540346',
+            'ext': 'mp4',
+            'title': 'Green o red flag?',
+            'description': 'md5:ae43119948cea5b69e5aedf35a6c7f94',
+            'thumbnail': r're:^https?://.*\.jpg$',
+            'duration': 40.001,
+            'upload_date': '20260805',
+            'timestamp': 1785930286,
+            'uploader': 'Italia 1',
+            'uploader_id': 'I1',
+            'episode': 'Green o red flag?',
+            'categories': ['Intrattenimento'],
+        },
+    }, {
         # full episode
         'url': 'https://mediasetinfinity.mediaset.it/video/mrwronglezionidamore/episodio-1_F310575103000102',
         'skip': 'Geo-restricted',
@@ -53,28 +70,6 @@ class MediasetIE(ThePlatformBaseIE):
             'season_number': 1,
             'episode_number': 1,
             'chapters': [{'start_time': 0.0, 'end_time': 439.88}, {'start_time': 439.88, 'end_time': 1685.84}, {'start_time': 1685.84, 'end_time': 2682.0}],
-        },
-    }, {
-        'url': 'https://mediasetinfinity.mediaset.it/video/yogaradioestate/green-o-red-flag_FD00000000540346',
-        'md5': '1276f966ac423d16ba255ce867de073e',
-        'info_dict': {
-            'id': 'FD00000000540346',
-            'ext': 'mp4',
-            'title': 'Puntata del 25 maggio',
-            'description': 'md5:ee2e456e3eb1dba5e814596655bb5296',
-            'thumbnail': r're:^https?://.*\.jpg$',
-            'duration': 6565.008,
-            'upload_date': '20200903',
-            'series': 'Matrix',
-            'timestamp': 1599172492,
-            'uploader': 'Canale 5',
-            'uploader_id': 'C5',
-            'season': 'Season 5',
-            'episode': 'Episode 5',
-            'season_number': 5,
-            'episode_number': 5,
-            'chapters': [{'start_time': 0.0, 'end_time': 3409.08}, {'start_time': 3409.08, 'end_time': 6565.008}],
-            'categories': ['Informazione'],
         },
     }, {
         # DRM
