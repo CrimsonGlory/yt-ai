@@ -26,7 +26,7 @@ class MediasiteIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://hitsmediaweb.h-its.org/mediasite/Play/2db6c271681e4f199af3c60d1f82869b1d',
-            'skip': 'Request timed out',
+            'skip': 'hitsmediaweb.h-its.org is unreachable (TCP 80/443 connection timeout); lectures moved to YouTube',
             'info_dict': {
                 'id': '2db6c271681e4f199af3c60d1f82869b1d',
                 'ext': 'mp4',
