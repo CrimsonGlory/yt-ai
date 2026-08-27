@@ -5,6 +5,7 @@ from .common import InfoExtractor
 from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
+    clean_html,
     determine_ext,
     extract_attributes,
     int_or_none,
@@ -35,30 +36,36 @@ class IGNBaseIE(InfoExtractor):
             raise
 
     def _extract_video_info(self, video, fatal=True):
-        video_id = video['videoId']
+        video_id = traverse_obj(video, 'videoId', ('content', 'id'))
+        if not video_id:
+            if fatal:
+                raise ExtractorError('Unable to extract video ID')
+            return {}
 
         formats = []
-        refs = traverse_obj(video, 'refs', expected_type=dict) or {}
-
-        m3u8_url = url_or_none(refs.get('m3uUrl'))
+        m3u8_url = traverse_obj(
+            video, ('refs', 'm3uUrl'), ('videoMetadata', 'm3uUrl'),
+            expected_type=url_or_none)
         if m3u8_url:
             formats.extend(self._extract_m3u8_formats(
                 m3u8_url, video_id, 'mp4', 'm3u8_native',
                 m3u8_id='hls', fatal=False))
 
-        f4m_url = url_or_none(refs.get('f4mUrl'))
+        f4m_url = traverse_obj(video, ('refs', 'f4mUrl'), expected_type=url_or_none)
         if f4m_url:
             formats.extend(self._extract_f4m_formats(
                 f4m_url, video_id, f4m_id='hds', fatal=False))
 
+        urls = set()
         for asset in (video.get('assets') or []):
             asset_url = url_or_none(asset.get('url'))
-            if not asset_url:
+            if not asset_url or asset_url in urls:
                 continue
+            urls.add(asset_url)
             formats.append({
                 'url': asset_url,
                 'tbr': int_or_none(asset.get('bitrate'), 1000),
-                'fps': int_or_none(asset.get('frame_rate')),
+                'fps': int_or_none(asset.get('fps') or asset.get('frame_rate')),
                 'height': int_or_none(asset.get('height')),
                 'width': int_or_none(asset.get('width')),
             })
@@ -75,21 +82,34 @@ class IGNBaseIE(InfoExtractor):
 
         thumbnails = traverse_obj(
             video, ('thumbnails', ..., {'url': 'url'}), expected_type=url_or_none)
+        thumb_url = url_or_none(video.get('image'))
+        if thumb_url and not thumbnails:
+            thumbnails = [{'url': thumb_url}]
         tags = traverse_obj(
             video, ('tags', ..., 'displayName'),
+            ('attributes', ..., 'attribute', 'name'),
             expected_type=lambda x: x.strip() or None)
 
         metadata = traverse_obj(video, 'metadata', expected_type=dict) or {}
         title = traverse_obj(
             metadata, 'longTitle', 'title', 'name',
+            expected_type=lambda x: x.strip() or None) or traverse_obj(
+            video, 'title', ('content', 'title'),
             expected_type=lambda x: x.strip() or None)
 
         return {
             'id': video_id,
             'title': title,
-            'description': strip_or_none(metadata.get('description')),
-            'timestamp': parse_iso8601(metadata.get('publishDate')),
-            'duration': int_or_none(metadata.get('duration')),
+            'description': (
+                strip_or_none(metadata.get('description'))
+                or clean_html(traverse_obj(video, ('videoMetadata', 'descriptionHtml')))
+                or strip_or_none(video.get('description'))),
+            'timestamp': parse_iso8601(
+                metadata.get('publishDate')
+                or traverse_obj(video, 'publishDate', ('content', 'publishDate'))),
+            'duration': int_or_none(
+                metadata.get('duration')
+                or traverse_obj(video, ('videoMetadata', 'duration'))),
             'thumbnails': thumbnails,
             'formats': formats,
             'tags': tags,
@@ -110,21 +130,22 @@ class IGNIE(IGNBaseIE):
 
     _TESTS = [{
         'url': 'http://www.ign.com/videos/2013/06/05/the-last-of-us-review',
-        'md5': 'd2e1586d9987d40fad7867bf96a018ea',
+        'md5': 'febda82c4bafecd2d44b6e1a18a595f8',
         'info_dict': {
-            'id': '8f862beef863986b2785559b9e1aa599',
+            'id': 'ea35d571-9756-48e3-bb54-ceb8b778af95',
             'ext': 'mp4',
             'title': 'The Last of Us Review',
-            'description': 'md5:c8946d4260a4d43a00d5ae8ed998870c',
+            'description': 'PlayStation 3 is known for its quality exclusives, but The Last of Us is the best one of them all.',
             'timestamp': 1370440800,
             'upload_date': '20130605',
-            'tags': 'count:9',
+            'tags': ['Action', 'PlayStation 3', 'naughty dog', 'PS3', 'ps3', 'the last of us'],
             'display_id': 'the-last-of-us-review',
-            'thumbnail': 'https://assets1.ignimgs.com/vid/thumbnails/user/2014/03/26/lastofusreviewmimig2.jpg',
+            'thumbnail': r're:https?://.*lastofusreviewmimig2\.jpg',
             'duration': 440,
         },
         'params': {
-            'nocheckcertificate': True,
+            # Prefer progressive HTTP over HLS so --test can fetch a stable 10KB sample
+            'format': 'best[protocol^=http]',
         },
     }, {
         'url': 'http://www.pcmag.com/videos/2015/01/06/010615-whats-new-now-is-gogo-snooping-on-your-data',
@@ -169,7 +190,22 @@ class IGNIE(IGNBaseIE):
             playlist_id=display_id)
 
     def _extract_video(self, url, display_id):
-        video = self._checked_call_api(display_id)
+        webpage = self._download_webpage(url, display_id)
+        nextjs_data = self._search_nextjs_data(webpage, display_id, default={})
+        page = traverse_obj(nextjs_data, ('props', 'pageProps', 'page'), expected_type=dict) or {}
+        modern_video = traverse_obj(page, 'video', expected_type=dict)
+        if modern_video:
+            video = merge_dicts(modern_video, {
+                'videoId': page.get('videoId') or traverse_obj(modern_video, ('content', 'id')),
+                'title': page.get('title'),
+                'description': page.get('description'),
+                'publishDate': page.get('publishDate'),
+                'image': page.get('image'),
+                'attributes': page.get('attributes') or traverse_obj(
+                    modern_video, ('content', 'attributes')),
+            })
+        else:
+            video = self._checked_call_api(display_id)
 
         info = self._extract_video_info(video)
 
@@ -182,20 +218,14 @@ class IGNVideoIE(IGNBaseIE):
     _VALID_URL = r'https?://.+?\.ign\.com/(?:[a-z]{2}/)?[^/]+/(?P<id>\d+)/(?:video|trailer)/'
     _TESTS = [{
         'url': 'http://me.ign.com/en/videos/112203/video/how-hitman-aims-to-be-different-than-every-other-s',
-        'md5': 'dd9aca7ed2657c4e118d8b261e5e9de1',
+        'md5': 'b6383f462996fb0e443c763901e7f097',
         'info_dict': {
-            'id': 'e9be7ea899a9bbfc0674accc22a36cc8',
+            'id': '112203',
             'ext': 'mp4',
-            'title': 'How Hitman Aims to Be Different Than Every Other Stealth Game - NYCC 2015',
-            'description': 'Taking out assassination targets in Hitman has never been more stylish.',
-            'timestamp': 1444665600,
-            'upload_date': '20151012',
+            'title': 'How Hitman Aims to Be Different Than Every Other Stealth Game',
             'display_id': '112203',
-            'thumbnail': 'https://sm.ign.com/ign_me/video/h/how-hitman/how-hitman-aims-to-be-different-than-every-other-s_8z14.jpg',
-            'duration': 298,
-            'tags': 'count:13',
+            'thumbnail': r're:https?://.*how-hitman.*\.jpg',
         },
-        'expected_warnings': ['HTTP Error 400: Bad Request'],
     }, {
         'url': 'http://me.ign.com/ar/angry-birds-2/106533/video/lrd-ldyy-lwl-lfylm-angry-birds',
         'only_matching': True,
@@ -225,15 +255,40 @@ class IGNVideoIE(IGNBaseIE):
             urllib.parse.urlparse(new_url).query).get('url', [None])[-1]
         if ign_url:
             return self.url_result(ign_url, IGNIE.ie_key())
-        video = self._search_regex(r'(<div\b[^>]+\bdata-video-id\s*=\s*[^>]+>)', webpage, 'video element', fatal=False)
+        video = self._search_regex(
+            r'(<(?:div|figure)\b[^>]+\bdata-(?:video-id|json|settings)\s*=\s*[^>]+>)',
+            webpage, 'video element', fatal=False)
         if not video:
             if new_url == url:
                 raise ExtractorError('Redirect loop: ' + url)
             return self.url_result(new_url)
         video = extract_attributes(video)
-        video_data = video.get('data-settings') or '{}'
-        video_data = self._parse_json(video_data, video_id)['video']
-        info = self._extract_video_info(video_data)
+        video_data = video.get('data-settings') or video.get('data-json') or '{}'
+        video_data = self._parse_json(video_data, video_id)
+        if traverse_obj(video_data, 'video'):
+            info = self._extract_video_info(video_data['video'])
+        else:
+            formats = []
+            for height, asset_url in (video_data.get('mediaFiles') or {}).items():
+                asset_url = url_or_none(asset_url)
+                if not asset_url:
+                    continue
+                formats.append({
+                    'url': asset_url,
+                    'height': int_or_none(height),
+                    'ext': determine_ext(asset_url, 'mp4'),
+                })
+            m3u8_url = url_or_none(video_data.get('m3u8'))
+            if m3u8_url:
+                formats.extend(self._extract_m3u8_formats(
+                    m3u8_url, video_id, 'mp4', 'm3u8_native',
+                    m3u8_id='hls', fatal=False))
+            info = {
+                'id': str(video_data.get('videoId') or video_id),
+                'title': video_data.get('title'),
+                'thumbnail': url_or_none(video_data.get('poster')),
+                'formats': formats,
+            }
 
         return merge_dicts({
             'display_id': video_id,
@@ -283,6 +338,7 @@ class IGNArticleIE(IGNBaseIE):
             'skip_download': True,
         },
         'expected_warnings': ['Backend fetch failed'],
+        'skip': 'Legacy article API unavailable',
     }, {
         'url': 'http://www.ign.com/articles/2014/08/15/rewind-theater-wild-trailer-gamescom-2014?watch',
         'info_dict': {
@@ -291,6 +347,7 @@ class IGNArticleIE(IGNBaseIE):
         },
         'playlist_count': 1,
         'expected_warnings': ['Backend fetch failed'],
+        'skip': 'Legacy article API unavailable',
     }, {
         # videoId pattern
         'url': 'http://www.ign.com/articles/2017/06/08/new-ducktales-short-donalds-birthday-doesnt-go-as-planned',
