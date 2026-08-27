@@ -17,6 +17,19 @@ class IviIE(InfoExtractor):
     _LIGHT_URL = 'https://api.ivi.ru/light/'
 
     _TESTS = [
+        # Free AVOD movie
+        {
+            'url': 'https://www.ivi.ru/watch/504638',
+            'md5': '0e19df3dc8fe57c3a17fdf1c0f15cacb',
+            'info_dict': {
+                'id': '504638',
+                'ext': 'mp4',
+                'title': 'Один настоящий день',
+                'description': 'md5:1ef955f1f002790b72cef657ea32e735',
+                'duration': 6249,
+                'thumbnail': r're:^https?://.*\.jpg$',
+            },
+        },
         # Single movie
         {
             'url': 'http://www.ivi.ru/watch/53141',
@@ -29,7 +42,7 @@ class IviIE(InfoExtractor):
                 'duration': 5498,
                 'thumbnail': r're:^https?://.*\.jpg$',
             },
-            'skip': 'Only works from Russia',
+            'skip': 'Requires ivi subscription',
         },
         # Serial's series
         {
@@ -47,7 +60,7 @@ class IviIE(InfoExtractor):
                 'duration': 2655,
                 'thumbnail': r're:^https?://.*\.jpg$',
             },
-            'skip': 'Only works from Russia',
+            'skip': 'Requires ivi subscription',
         },
         {
             # with MP4-HD720 format
@@ -61,7 +74,7 @@ class IviIE(InfoExtractor):
                 'duration': 5599,
                 'thumbnail': r're:^https?://.*\.jpg$',
             },
-            'skip': 'Only works from Russia',
+            'skip': 'Requires ivi subscription',
         },
         {
             'url': 'https://www.ivi.tv/watch/33560/',
@@ -84,6 +97,7 @@ class IviIE(InfoExtractor):
                     'site': 's%d',
                     'referrer': f'http://www.ivi.ru/watch/{video_id}',
                     'contentid': video_id,
+                    'app_version': 870,
                 },
             ],
         })
