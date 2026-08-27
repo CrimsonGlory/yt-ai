@@ -264,15 +264,28 @@ class CNNIndonesiaIE(InfoExtractor):
         upload_date, video_id, display_id = self._match_valid_url(url).group('upload_date', 'id', 'display_id')
         webpage = self._download_webpage(url, display_id)
 
-        json_ld_list = list(self._yield_json_ld(webpage, display_id))
+        json_ld_list = list(self._yield_json_ld(webpage, display_id, fatal=False))
         json_ld_data = self._json_ld(json_ld_list, display_id)
-        embed_url = next(
-            json_ld.get('embedUrl') for json_ld in json_ld_list if json_ld.get('@type') == 'VideoObject')
+        # VideoObject is nested under NewsArticle JSON-LD whose script tag is
+        # `type = "application/ld+json"` (spaces around =); JSON_LD_RE misses it.
+        video_ld = self._search_json(
+            r'"video"\s*:\s*', webpage, 'video json-ld', display_id, default={})
+        embed_url = traverse_obj(video_ld, ('embedUrl', {url_or_none})) or (
+            f'https://www.cnnindonesia.com/embed/video/{video_id}')
 
-        return merge_dicts(json_ld_data, {
+        return merge_dicts({
             '_type': 'url_transparent',
             'url': embed_url,
             'id': video_id,
             'upload_date': upload_date,
-            'tags': try_call(lambda: self._html_search_meta('keywords', webpage).split(', ')),
-        })
+            'age_limit': self._rta_search(webpage) or 0,
+            **traverse_obj(video_ld, {
+                'title': ('name', {str}),
+                'description': ('description', {str}),
+                'duration': ('duration', {parse_duration}),
+                'timestamp': ('uploadDate', {parse_iso8601}),
+                'thumbnail': ('thumbnailUrl', {url_or_none}),
+            }),
+            'tags': try_call(lambda: list(filter(None, re.split(
+                r'\s*,\s*', self._html_search_meta('keywords', webpage) or video_ld.get('keywords') or '')))),
+        }, json_ld_data)
