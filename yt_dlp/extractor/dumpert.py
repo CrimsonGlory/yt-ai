@@ -14,14 +14,13 @@ class DumpertIE(InfoExtractor):
         )(?P<id>[0-9]+[/_][0-9a-zA-Z]+)'''
     _TESTS = [{
         'url': 'https://www.dumpert.nl/item/6646981_951bc60f',
-        'skip': 'HTTP Error 403',
-        'md5': '1b9318d7d5054e7dcb9dc7654f21d643',
+        'md5': '725e9dbeec70d7ccdc71d3bd058ea5c4',
         'info_dict': {
             'id': '6646981/951bc60f',
             'ext': 'mp4',
             'title': 'Ik heb nieuws voor je',
             'description': 'Niet schrikken hoor',
-            'thumbnail': r're:^https?://.*\.jpg$',
+            'thumbnail': r're:^https?://.*\.(?:jpg|png|webp)$',
             'duration': 9,
             'view_count': int,
             'like_count': int,
@@ -37,13 +36,12 @@ class DumpertIE(InfoExtractor):
         'only_matching': True,
     }, {
         'url': 'https://www.dumpert.nl/item/100031688_b317a185',
-        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '100031688/b317a185',
             'ext': 'mp4',
             'title': 'Epic schijnbeweging',
             'description': '<p>Die zag je niet eh</p>',
-            'thumbnail': r're:^https?://.*\.(?:jpg|png)$',
+            'thumbnail': r're:^https?://.*\.(?:jpg|png|webp)$',
             'duration': 12,
             'view_count': int,
             'like_count': int,
@@ -66,8 +64,8 @@ class DumpertIE(InfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url).replace('_', '/')
         item = self._download_json(
-            'http://api-live.dumpert.nl/mobile_api/json/info/' + video_id.replace('/', '_'),
-            video_id)['items'][0]
+            'https://api-live.dumpert.nl/mobile_api/json/info/' + video_id.replace('/', '_'),
+            video_id, impersonate=True)['items'][0]
         title = item['title']
         media = next(m for m in item['media'] if m.get('mediatype') == 'VIDEO')
 
@@ -79,10 +77,11 @@ class DumpertIE(InfoExtractor):
                 continue
             version = variant.get('version')
             preference = quality(version)
-            if determine_ext(uri) == 'm3u8':
+            ext = determine_ext(uri)
+            if ext == 'm3u8':
                 formats.extend(self._extract_m3u8_formats(
                     uri, video_id, 'mp4', m3u8_id=version, quality=preference))
-            else:
+            elif ext in ('mp4', 'flv'):
                 formats.append({
                     'url': uri,
                     'format_id': version,
