@@ -16,6 +16,27 @@ from ..utils.traversal import traverse_obj, value
 class DuoplayIE(InfoExtractor):
     _VALID_URL = r'https?://duoplay\.ee/(?P<id>\d+)(?:[/?#]|$)'
     _TESTS = [{
+        'note': 'One-off programme',
+        'url': 'https://duoplay.ee/9747/taistunni-intervjuu.-onnelik-eesti',
+        'md5': '6ab0d4d880a3b956e3f3342e7a1d256d',
+        'info_dict': {
+            'id': '9747',
+            'ext': 'mp4',
+            'title': 'Täistunni intervjuu. Õnnelik Eesti',
+            'thumbnail': r're:https?://.+\.jpg',
+            'description': 'md5:0646320197999f6dcbdf53f399a044c7',
+            'upload_date': '20260224',
+            'timestamp': 1771912800,
+            'release_year': 2024,
+            'series': 'Täistunni intervjuu. Õnnelik Eesti',
+            'series_id': '9747',
+            'season': 'Season 0',
+            'season_number': 0,
+            'episode': 'Episode 0',
+            'episode_number': 0,
+            'episode_id': '0',
+        },
+    }, {
         'note': 'Siberi võmm S02E12',
         'url': 'https://duoplay.ee/4312/siberi-vomm?ep=24',
         'md5': '1ff59d535310ac9c5cf5f287d8f91b2d',
@@ -94,6 +115,7 @@ class DuoplayIE(InfoExtractor):
             'series': 'Telehommik',
             'series_id': '9644',
         },
+        'skip': 'video gone',
     }]
 
     def _real_extract(self, url):
@@ -108,7 +130,7 @@ class DuoplayIE(InfoExtractor):
 
         manifest_url = video_player['manifest-url']
         session_token = self._download_json(
-            'https://sts.postimees.ee/session/register', video_id, 'Registering session',
+            'https://sts.euddn.net/session/register', video_id, 'Registering session',
             'Unable to register session', headers={
                 'Accept': 'application/json',
                 'X-Original-URI': manifest_url,
