@@ -13,8 +13,7 @@ class JableIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?jable\.tv/videos/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://jable.tv/videos/pppd-812/',
-        'skip': 'HTTP Error 403',
-        'md5': 'f1537283a9bc073c31ff86ca35d9b2a6',
+        'md5': 'ec2969133f8c31af3e7e0b9b61402d93',
         'info_dict': {
             'id': 'pppd-812',
             'ext': 'mp4',
@@ -27,8 +26,7 @@ class JableIE(InfoExtractor):
         },
     }, {
         'url': 'https://jable.tv/videos/apak-220/',
-        'skip': 'HTTP Error 403',
-        'md5': '71f9239d69ced58ab74a816908847cc1',
+        'md5': 'ed239c25db971284359459e7e7832438',
         'info_dict': {
             'id': 'apak-220',
             'ext': 'mp4',
@@ -44,7 +42,7 @@ class JableIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
+        webpage = self._download_webpage(url, video_id, impersonate=True)
         formats = self._extract_m3u8_formats(
             self._search_regex(r'var\s+hlsUrl\s*=\s*\'([^\']+)', webpage, 'hls_url'), video_id, 'mp4', m3u8_id='hls')
 
@@ -58,7 +56,7 @@ class JableIE(InfoExtractor):
             'upload_date': unified_strdate(self._search_regex(
                 r'class="inactive-color">\D+\s+(\d{4}-\d+-\d+)', webpage, 'upload_date', default=None)),
             'view_count': int_or_none(self._search_regex(
-                r'#icon-eye"></use></svg>\n*<span class="mr-3">([\d ]+)',
+                r'#icon-eye"></use></svg>\s*<span class="mr-3">([\d ]+)',
                 webpage, 'view_count', default='').replace(' ', '')),
             'like_count': int_or_none(self._search_regex(
                 r'#icon-heart"></use></svg><span class="count">(\d+)', webpage, 'link_count', default=None)),
@@ -85,14 +83,14 @@ class JablePlaylistIE(InfoExtractor):
 
     def _real_extract(self, url):
         playlist_id = self._match_id(url)
-        webpage = self._download_webpage(url, playlist_id)
+        webpage = self._download_webpage(url, playlist_id, impersonate=True)
 
         def page_func(page_num):
             return [
                 self.url_result(player_url, JableIE)
                 for player_url in orderedSet(re.findall(
                     r'href="(https://jable.tv/videos/[\w-]+/?)"',
-                    self._download_webpage(url, playlist_id, query={
+                    self._download_webpage(url, playlist_id, impersonate=True, query={
                         'mode': 'async',
                         'from': page_num + 1,
                         'function': 'get_block',
