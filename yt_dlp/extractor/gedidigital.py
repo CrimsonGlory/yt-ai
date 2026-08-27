@@ -6,52 +6,61 @@ from ..utils import (
     determine_ext,
     int_or_none,
     url_basename,
+    url_or_none,
     urljoin,
 )
 
 
 class GediDigitalIE(InfoExtractor):
-    _VALID_URL = r'''(?x:(?P<base_url>(?:https?:)//video\.
-        (?:
+    _VALID_URL = [
+        r'''(?x:(?P<base_url>(?:https?:)//video\.
             (?:
-                (?:espresso\.)?repubblica
-                |lastampa
-                |ilsecoloxix
-                |huffingtonpost
-            )|
-            (?:
-                iltirreno
-                |messaggeroveneto
-                |ilpiccolo
-                |gazzettadimantova
-                |mattinopadova
-                |laprovinciapavese
-                |tribunatreviso
-                |nuovavenezia
-                |gazzettadimodena
-                |lanuovaferrara
-                |corrierealpi
-                |lasentinella
-            )\.gelocal
-        )\.it(?:/[^/]+){2,4}/(?P<id>\d+))(?:$|[?&].*))'''
+                (?:
+                    (?:espresso\.)?repubblica
+                    |lastampa
+                    |ilsecoloxix
+                    |huffingtonpost
+                )|
+                (?:
+                    iltirreno
+                    |messaggeroveneto
+                    |ilpiccolo
+                    |gazzettadimantova
+                    |mattinopadova
+                    |laprovinciapavese
+                    |tribunatreviso
+                    |nuovavenezia
+                    |gazzettadimodena
+                    |lanuovaferrara
+                    |corrierealpi
+                    |lasentinella
+                )\.gelocal
+            )\.it(?:/[^/]+){2,4}/(?P<id>\d+))(?:$|[?&].*))''',
+        r'''(?x:(?P<base_url>https?://(?:www\.)?lastampa\.it/(?:embed/)?(?:[^/?#]+/)+video/[^/?#]+-(?P<id>\d+)/?)(?:$|[?#].*))''',
+    ]
     _EMBED_REGEX = [rf'''(?x)
             (?:
                 data-frame-src=|
                 <iframe[^\n]+src=
             )
-            (["'])(?P<url>{_VALID_URL})\1''']
+            (["'])(?P<url>{pattern})\1''' for pattern in _VALID_URL]
     _TESTS = [{
-        'url': 'https://video.lastampa.it/politica/il-paradosso-delle-regionali-la-lega-vince-ma-sembra-aver-perso/121559/121683',
-        'skip': 'No video formats found',
-        'md5': '84658d7fb9e55a6e57ecc77b73137494',
+        'url': 'https://www.lastampa.it/cronaca/2026/08/26/video/napoli_furto_condizionatore_istituto_tumori_pascale-15722684/',
+        'md5': 'ab93e3a531bedc8f7388ab5fa93f7009',
         'info_dict': {
-            'id': '121683',
+            'id': '15722684',
             'ext': 'mp4',
-            'title': 'Il paradosso delle Regionali: ecco perché la Lega vince ma sembra aver perso',
-            'description': 'md5:de7f4d6eaaaf36c153b599b10f8ce7ca',
+            'title': 'Ruba un condizionatore all’Istituto tumori di Napoli: le telecamere riprendono tutto',
+            'description': 'md5:12809aa266eba1aa1c8dbdfcf2a79cbf',
             'thumbnail': r're:^https://www\.repstatic\.it/video/photo/.+?-thumb-full-.+?\.jpg$',
-            'duration': 125,
+            'duration': 93,
         },
+    }, {
+        'url': 'https://video.lastampa.it/politica/il-paradosso-delle-regionali-la-lega-vince-ma-sembra-aver-perso/121559/121683',
+        'only_matching': True,
+    }, {
+        'url': 'https://www.lastampa.it/embed/cronaca/2026/08/26/video/napoli_furto_condizionatore_istituto_tumori_pascale-15722684/',
+        'only_matching': True,
     }, {
         'url': 'https://video.huffingtonpost.it/embed/politica/cotticelli-non-so-cosa-mi-sia-successo-sto-cercando-di-capire-se-ho-avuto-un-malore/29312/29276?responsive=true&el=video971040871621586700',
         'only_matching': True,
@@ -126,7 +135,7 @@ class GediDigitalIE(InfoExtractor):
         clean_formats = []
         for f in formats:
             if f['url'] not in format_urls:
-                if f.get('audio_ext') != 'none' and not f.get('acodec'):
+                if f.get('audio_ext') not in (None, 'none') and not f.get('acodec'):
                     continue
                 format_urls.add(f['url'])
                 clean_formats.append(f)
@@ -185,6 +194,35 @@ class GediDigitalIE(InfoExtractor):
                     thumb = v
                 elif n == 'videoDuration':
                     duration = int_or_none(v)
+
+        if not formats:
+            sources = self._parse_json(self._search_regex(
+                r'videoSrc\s*:\s*([\'"])(?P<json>\[.*?])\1', webpage,
+                'video sources', default='[]', group='json'), video_id, fatal=False) or []
+            for src in sources:
+                video_url = url_or_none(src.get('src') if isinstance(src, dict) else src)
+                if not video_url:
+                    continue
+                if determine_ext(video_url) == 'm3u8':
+                    continue
+                f = {'url': video_url}
+                mobj = re.search(r'video-rrtv-(\d+)', video_url)
+                if mobj:
+                    f.update({
+                        'format_id': f'video-rrtv-{mobj.group(1)}',
+                        'height': int(mobj.group(1)),
+                    })
+                else:
+                    f['format_id'] = determine_ext(video_url) or 'http'
+                formats.append(f)
+            if not thumb:
+                thumb = url_or_none(self._search_regex(
+                    r'posterSrc\s*:\s*([\'"])(?P<url>https?://.+?)\1',
+                    webpage, 'thumbnail', default=None, group='url'))
+            if duration is None:
+                duration = int_or_none(self._search_regex(
+                    r'videoLenght\s*:\s*([\'"])(?P<dur>\d+)\1',
+                    webpage, 'duration', default=None, group='dur'))
 
         self._clean_formats(formats)
 
