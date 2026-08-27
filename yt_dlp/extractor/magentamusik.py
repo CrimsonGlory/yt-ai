@@ -7,7 +7,22 @@ class MagentaMusikIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?magentamusik\.de/(?P<id>[^/?#]+)'
 
     _TESTS = [{
+        'url': 'https://www.magentamusik.de/saxon-woa-2026-9208205928595568998',
+        'md5': 'd883a0cc06d4f2b9fe535fe9c28009ea',
+        'info_dict': {
+            'id': '9208205928595568998',
+            'display_id': 'saxon-woa-2026-9208205928595568998',
+            'ext': 'mp4',
+            'title': 'SAXON: W:O:A 2026',
+            'alt_title': 'Konzert vom: 31.07.2026 18:15',
+            'duration': 4320,
+            'categories': ['Musikkonzert'],
+            'release_year': 2026,
+            'location': 'Deutschland',
+        },
+    }, {
         'url': 'https://www.magentamusik.de/marty-friedman-woa-2023-9208205928595409235',
+        'skip': 'video gone',
         'md5': 'd82dd4748f55fc91957094546aaf8584',
         'info_dict': {
             'id': '9208205928595409235',
