@@ -1,21 +1,36 @@
-import json
-
 from .common import InfoExtractor
-from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
-    float_or_none,
-    parse_iso8601,
-    strip_or_none,
+    remove_end,
     traverse_obj,
-    try_get,
-    urljoin,
+    url_basename,
 )
 
 
 class CinetecaMilanoIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?cinetecamilano\.it/film/(?P<id>\d+)'
+    _VALID_URL = r'https?://(?:www\.)?cinetecamilano\.it/(?:film/)?(?P<id>\d+|dona-il-tuo-5x1000-a-cineteca-milano|restauro-film)/?'
     _TESTS = [{
+        'url': 'https://www.cinetecamilano.it/dona-il-tuo-5x1000-a-cineteca-milano/',
+        'md5': '63a4e590e7a283272e4d3e8374ce861f',
+        'info_dict': {
+            'id': '5x1000',
+            'ext': 'mp4',
+            'title': 'Dona il tuo 5x1000 a Cineteca Milano',
+            'description': 'Dona il tuo 5x1000 a Cineteca Milano e aiutaci a far scoprire tutto il bello del cinema alle nuove generazioni.',
+            'thumbnail': r're:https?://.+\.jpe?g',
+        },
+    }, {
+        'url': 'https://www.cinetecamilano.it/restauro-film/',
+        'info_dict': {
+            'id': 'restauro-film',
+            'title': 'Restauro film',
+            'description': 'md5:2bf15162f9d5b01671d976e117ea9196',
+        },
+        'playlist_mincount': 5,
+        'params': {
+            'skip_download': True,
+        },
+    }, {
         'url': 'https://www.cinetecamilano.it/film/1942',
         'skip': 'video gone',
         'info_dict': {
@@ -34,30 +49,48 @@ class CinetecaMilanoIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        try:
-            film_json = self._download_json(
-                f'https://www.cinetecamilano.it/api/catalogo/{video_id}/?',
-                video_id, headers={
-                    'Referer': url,
-                    'Authorization': try_get(self._get_cookies('https://www.cinetecamilano.it'), lambda x: f'Bearer {x["cnt-token"].value}') or '',
-                })
-        except ExtractorError as e:
-            if ((isinstance(e.cause, HTTPError) and e.cause.status == 500)
-                    or isinstance(e.cause, json.JSONDecodeError)):
-                self.raise_login_required(method='cookies')
-            raise
-        if not film_json.get('success') or not film_json.get('archive'):
-            raise ExtractorError('Video information not found')
-        archive = film_json['archive']
+        webpage = self._download_webpage(url, video_id)
 
-        return {
-            'id': video_id,
-            'title': archive.get('title'),
-            'description': strip_or_none(archive.get('description')),
-            'duration': float_or_none(archive.get('duration'), invscale=60),
-            'release_timestamp': parse_iso8601(archive.get('updated_at'), delimiter=' '),
-            'modified_timestamp': parse_iso8601(archive.get('created_at'), delimiter=' '),
-            'thumbnail': urljoin(url, try_get(archive, lambda x: x['thumb']['src'].replace('/public/', '/storage/'))),
-            'formats': self._extract_m3u8_formats(
-                urljoin(url, traverse_obj(archive, ('drm', 'hls'))), video_id, 'mp4'),
-        }
+        entries = self._parse_html5_media_entries(url, webpage, video_id)
+        if not entries:
+            raise ExtractorError('No video found', expected=True)
+
+        for entry in entries:
+            for fmt in entry.get('formats') or []:
+                if fmt.get('url'):
+                    fmt['url'] = fmt['url'].split('#')[0]
+            if entry.get('url'):
+                entry['url'] = entry['url'].split('#')[0]
+
+        title = remove_end(
+            self._og_search_title(webpage, default=None)
+            or self._html_extract_title(webpage),
+            ' | Cineteca Milano')
+        description = self._og_search_description(webpage, default=None)
+        thumbnail = self._og_search_thumbnail(webpage, default=None)
+
+        def clip_id_from_entry(entry, fallback):
+            src = traverse_obj(entry, ('formats', 0, 'url'), 'url')
+            if not src:
+                return fallback
+            name = url_basename(src.split('#')[0])
+            return name.rsplit('.', 1)[0] or fallback
+
+        if len(entries) == 1:
+            info = entries[0]
+            info.update({
+                'id': clip_id_from_entry(info, video_id),
+                'title': title,
+                'description': description,
+                'thumbnail': thumbnail,
+            })
+            return info
+
+        for i, entry in enumerate(entries, 1):
+            clip_id = clip_id_from_entry(entry, f'{video_id}-{i}')
+            entry.update({
+                'id': clip_id,
+                'title': clip_id.replace('_', ' '),
+                'description': description,
+            })
+        return self.playlist_result(entries, video_id, title, description)
