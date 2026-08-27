@@ -1380,9 +1380,10 @@ class DouyinIE(TikTokBaseIE):
             'description': '#杨超越  小小水手带你去远航❤️',
             'uploader': '6897520xka',
             'uploader_id': '110403406559',
-            'uploader_url': 'https://www.douyin.com/user/MS4wLjABAAAAEKnfa654JAJ_N5lgZDQluwsxmY0lhfmEYNQBBkwGG98',
+            'uploader_url': 'https://www.douyin.com/user/6897520xka',
             'channel_id': 'MS4wLjABAAAAEKnfa654JAJ_N5lgZDQluwsxmY0lhfmEYNQBBkwGG98',
             'channel': '杨超越',
+            'channel_url': 'https://www.douyin.com/user/MS4wLjABAAAAEKnfa654JAJ_N5lgZDQluwsxmY0lhfmEYNQBBkwGG98',
             'duration': 19,
             'timestamp': 1620905839,
             'upload_date': '20210513',
@@ -1405,9 +1406,10 @@ class DouyinIE(TikTokBaseIE):
             'description': '这个夏日和小羊@杨超越 一起遇见白色幻想',
             'uploader': '0731chaoyue',
             'uploader_id': '408654318141572',
-            'uploader_url': 'https://www.douyin.com/user/MS4wLjABAAAAZJpnglcjW2f_CMVcnqA_6oVBXKWMpH0F8LIHuUu8-lA',
+            'uploader_url': 'https://www.douyin.com/user/0731chaoyue',
             'channel_id': 'MS4wLjABAAAAZJpnglcjW2f_CMVcnqA_6oVBXKWMpH0F8LIHuUu8-lA',
             'channel': '杨超越工作室',
+            'channel_url': 'https://www.douyin.com/user/MS4wLjABAAAAZJpnglcjW2f_CMVcnqA_6oVBXKWMpH0F8LIHuUu8-lA',
             'duration': 42,
             'timestamp': 1625739481,
             'upload_date': '20210708',
@@ -1430,9 +1432,10 @@ class DouyinIE(TikTokBaseIE):
             'description': '#一起看海  出现在你的夏日里',
             'uploader': '6897520xka',
             'uploader_id': '110403406559',
-            'uploader_url': 'https://www.douyin.com/user/MS4wLjABAAAAEKnfa654JAJ_N5lgZDQluwsxmY0lhfmEYNQBBkwGG98',
+            'uploader_url': 'https://www.douyin.com/user/6897520xka',
             'channel_id': 'MS4wLjABAAAAEKnfa654JAJ_N5lgZDQluwsxmY0lhfmEYNQBBkwGG98',
             'channel': '杨超越',
+            'channel_url': 'https://www.douyin.com/user/MS4wLjABAAAAEKnfa654JAJ_N5lgZDQluwsxmY0lhfmEYNQBBkwGG98',
             'duration': 17,
             'timestamp': 1619098692,
             'upload_date': '20210422',
@@ -1473,9 +1476,10 @@ class DouyinIE(TikTokBaseIE):
             'description': '#哪个爱豆的105度最甜 换个角度看看我哈哈',
             'uploader': '6897520xka',
             'uploader_id': '110403406559',
-            'uploader_url': 'https://www.douyin.com/user/MS4wLjABAAAAEKnfa654JAJ_N5lgZDQluwsxmY0lhfmEYNQBBkwGG98',
+            'uploader_url': 'https://www.douyin.com/user/6897520xka',
             'channel_id': 'MS4wLjABAAAAEKnfa654JAJ_N5lgZDQluwsxmY0lhfmEYNQBBkwGG98',
             'channel': '杨超越',
+            'channel_url': 'https://www.douyin.com/user/MS4wLjABAAAAEKnfa654JAJ_N5lgZDQluwsxmY0lhfmEYNQBBkwGG98',
             'duration': 15,
             'timestamp': 1621261163,
             'upload_date': '20210517',
@@ -1498,7 +1502,12 @@ class DouyinIE(TikTokBaseIE):
         detail = traverse_obj(self._download_json(
             'https://www.douyin.com/aweme/v1/web/aweme/detail/', video_id,
             'Downloading web detail JSON', 'Failed to download web detail JSON',
-            query={'aweme_id': video_id}, fatal=False), ('aweme_detail', {dict}))
+            query={'aweme_id': video_id}, fatal=False, headers={
+                # Douyin serves signed web API JSON to search-engine crawlers without
+                # the a_bogus / s_v_web_id challenge required of browser clients
+                'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+                'Referer': self._WEBPAGE_HOST,
+            }), ('aweme_detail', {dict}))
         if not detail:
             # TODO: Run verification challenge code to generate signature cookies
             raise ExtractorError(
