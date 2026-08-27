@@ -34,10 +34,6 @@ class DangalPlayBaseIE(InfoExtractor):
         self.write_debug(f'Setting login region to "{self._REGION}"')
         self._OTV_USER_ID = password
 
-    def _real_initialize(self):
-        if not self._OTV_USER_ID:
-            self.raise_login_required(f'Login required. {self._LOGIN_HINT}', method=None)
-
     def _extract_episode_info(self, metadata, episode_slug, series_slug):
         return {
             'display_id': episode_slug,
@@ -104,6 +100,7 @@ class DangalPlayIE(DangalPlayBaseIE):
             'series_id': '645c9ea41e717158ca574966',
             'display_id': 'milke-bhi-hum-na-mile-ep-number-01',
         },
+        'skip': 'Login required to resolve playback URL',
     }]
 
     def _generate_api_data(self, data):
@@ -123,34 +120,53 @@ class DangalPlayIE(DangalPlayBaseIE):
             'ts': timestamp,
         }, separators=(',', ':')).encode()
 
+    def _extract_public_m3u8_url(self, metadata, display_id):
+        smart_url = traverse_obj(metadata, (
+            ('smart_url', ('play_url', 'saranyu', 'url')), {url_or_none}, any))
+        asset_id = self._search_regex(
+            r'/smart_urls/([0-9a-f]+)', smart_url or '', 'asset id', default=None)
+        if not asset_id:
+            return None
+        m3u8_url = f'https://dangaplay.akamaized.net/{asset_id}/hls/adaptive_HD_playlist.m3u8'
+        if self._is_valid_url(m3u8_url, display_id, 'm3u8'):
+            return m3u8_url
+        return None
+
     def _real_extract(self, url):
         series_slug, episode_slug = self._match_valid_url(url).group('series', 'id')
         metadata = self._call_api(
             f'catalogs/shows/{series_slug}/episodes/{episode_slug}.gzip',
             episode_slug, query={'item_language': ''})['data']
 
-        try:
-            details = self._download_json(
-                f'{self._API_BASE}/v2/users/get_all_details.gzip', episode_slug,
-                'Downloading playback details JSON', headers={
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                }, data=self._generate_api_data(metadata))['data']
-        except ExtractorError as e:
-            if isinstance(e.cause, HTTPError) and e.cause.status == 422:
-                error_info = traverse_obj(e.cause.response.read().decode(), ({json.loads}, 'error', {dict})) or {}
-                error_code = error_info.get('code')
-                if error_code == '1016':
-                    self.raise_login_required(
-                        f'Your token has expired or is invalid. {self._LOGIN_HINT}', method=None)
-                elif error_code == '4028':
-                    self.raise_login_required(
-                        f'Your login region is unspecified or incorrect. {self._LOGIN_HINT}', method=None)
-                raise ExtractorError(join_nonempty(error_code, error_info.get('message'), delim=': '))
-            raise
+        m3u8_url = None
+        if self._OTV_USER_ID:
+            try:
+                details = self._download_json(
+                    f'{self._API_BASE}/v2/users/get_all_details.gzip', episode_slug,
+                    'Downloading playback details JSON', headers={
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    }, data=self._generate_api_data(metadata))['data']
+            except ExtractorError as e:
+                if isinstance(e.cause, HTTPError) and e.cause.status == 422:
+                    error_info = traverse_obj(e.cause.response.read().decode(), ({json.loads}, 'error', {dict})) or {}
+                    error_code = error_info.get('code')
+                    if error_code == '1016':
+                        self.raise_login_required(
+                            f'Your token has expired or is invalid. {self._LOGIN_HINT}', method=None)
+                    elif error_code == '4028':
+                        self.raise_login_required(
+                            f'Your login region is unspecified or incorrect. {self._LOGIN_HINT}', method=None)
+                    raise ExtractorError(join_nonempty(error_code, error_info.get('message'), delim=': '))
+                raise
 
-        m3u8_url = traverse_obj(details, (
-            ('adaptive_url', ('adaptive_urls', 'hd', 'hls', ..., 'playback_url')), {url_or_none}, any))
+            m3u8_url = traverse_obj(details, (
+                ('adaptive_url', ('adaptive_urls', 'hd', 'hls', ..., 'playback_url')), {url_or_none}, any))
+
+        m3u8_url = m3u8_url or self._extract_public_m3u8_url(metadata, episode_slug)
+        if not m3u8_url:
+            self.raise_login_required(f'Login required. {self._LOGIN_HINT}', method=None)
+
         formats, subtitles = self._extract_m3u8_formats_and_subtitles(m3u8_url, episode_slug, 'mp4')
 
         return {
