@@ -16,36 +16,34 @@ class ListenNotesIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?listennotes\.com/podcasts/[^/]+/[^/]+-(?P<id>.+)/'
     _TESTS = [{
         'url': 'https://www.listennotes.com/podcasts/thriving-on-overload/tim-oreilly-on-noticing-KrDgvNb_u1n/',
-        'skip': 'HTTP Error 403',
         'md5': '5b91a32f841e5788fb82b72a1a8af7f7',
         'info_dict': {
             'id': 'KrDgvNb_u1n',
             'ext': 'mp3',
-            'title': r're:Tim O’Reilly on noticing things other people .{113}',
-            'description': r're:(?s)‘’We shape reality by what we notice and .{27459}',
-            'duration': 2215.0,
-            'channel': 'Amplifying Cognition',
+            'title': 'Tim O’Reilly on noticing things other people don’t notice, the value of soft focus, framing open source and Web 2.0, and patience in building narratives (Ep1)',
+            'description': 'md5:f2c789a1a973ff744408c9b0ccf210ac',
+            'duration': 2215,
+            'channel': 'Humans + AI',
             'channel_id': 'ed84wITivxF',
             'episode_id': 'e1312583fa7b4e24acfbb5131050be00',
-            'thumbnail': 'https://cdn-images-3.listennotes.com/podcasts/amplifying-cognition-ross-dawson-Iemft4Gdr0k-ed84wITivxF.300x300.jpg',
-            'channel_url': 'https://www.listennotes.com/podcasts/amplifying-cognition-ross-dawson-ed84wITivxF/',
+            'thumbnail': 'https://cdn-images-3.listennotes.com/podcasts/humans-ai-formerly-amplifying-cognition-zLgIvBwMdCl-ed84wITivxF.300x300.jpg',
+            'channel_url': 'https://www.listennotes.com/podcasts/humans-ai-ross-dawson-ed84wITivxF/',
             'cast': ['Tim O’Reilly', 'Cookie Monster', 'Lao Tzu', 'Wallace Steven', 'Eric Raymond', 'Christine Peterson', 'John Maynard Keyne', 'Ross Dawson'],
         },
     }, {
         'url': 'https://www.listennotes.com/podcasts/ask-noah-show/episode-177-wireguard-with-lwEA3154JzG/',
-        'skip': 'HTTP Error 403',
         'md5': '62fb4ffe7fc525632a1138bf72a5ce53',
         'info_dict': {
             'id': 'lwEA3154JzG',
             'ext': 'mp3',
             'title': 'Episode 177: WireGuard with Jason Donenfeld',
             'description': r're:(?s)Jason Donenfeld lead developer joins us this hour to discuss WireGuard, .{3169}',
-            'duration': 3861.0,
+            'duration': 3861,
             'channel': 'Ask Noah Show',
             'channel_id': '4DQTzdS5-j7',
             'episode_id': '8c8954b95e0b4859ad1eecec8bf6d3a4',
             'channel_url': 'https://www.listennotes.com/podcasts/ask-noah-show-noah-j-chelliah-4DQTzdS5-j7/',
-            'thumbnail': 'https://cdn-images-3.listennotes.com/podcasts/ask-noah-show-noah-j-chelliah-gD7vG150cxf-4DQTzdS5-j7.300x300.jpg',
+            'thumbnail': 'https://cdn-images-3.listennotes.com/podcasts/ask-noah-show-noah-j-chelliah-avReXk_z2CJ-4DQTzdS5-j7.300x300.jpg',
             'cast': ['noah showlink', 'noah show', 'noah dashboard', 'jason donenfeld'],
         },
     }]
@@ -55,7 +53,7 @@ class ListenNotesIE(InfoExtractor):
 
     def _real_extract(self, url):
         audio_id = self._match_id(url)
-        webpage = self._download_webpage(url, audio_id)
+        webpage = self._download_webpage(url, audio_id, impersonate=True)
         data = self._search_json(
             r'<script id="original-content"[^>]+\btype="application/json">', webpage, 'content', audio_id)
         data.update(extract_attributes(get_element_html_by_id(
