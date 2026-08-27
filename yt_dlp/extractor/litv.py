@@ -19,6 +19,22 @@ class LiTVIE(InfoExtractor):
     _URL_TEMPLATE = 'https://www.litv.tv/%s/watch/%s'
     _GEO_COUNTRIES = ['TW']
     _TESTS = [{
+        'url': 'https://www.litv.tv/drama/watch/VOD00409578',
+        'md5': '238bb0a31f443dbda8b4e4584ebae27b',
+        'info_dict': {
+            'id': 'VOD00409578',
+            'ext': 'mp4',
+            'title': '野狗骨頭第1集',
+            'thumbnail': r're:https?://.*\.jpg$',
+            'description': '2011年藤城，陳異在心理諮詢師引導下，他想起最想見到的人—苗靖。此時苗靖正從海城返回藤城，兩人的命運再次交會。1997年，年幼的苗靖跟隨母親來到藤城。進入陳家後，苗靖用善良試圖融入家庭。一次意外中卻遭陳異誤會並失手將她推入河中，埋下多年後仍未解開的心結。',
+            'categories': ['愛情', '時裝'],
+            'episode': 'Episode 1',
+            'episode_number': 1,
+        },
+        'params': {
+            'noplaylist': True,
+        },
+    }, {
         'url': 'https://www.litv.tv/drama/watch/VOD00041610',
         'skip': 'video gone',
         'info_dict': {
@@ -83,14 +99,31 @@ class LiTVIE(InfoExtractor):
             media_type = program_info['content_type']
         puid = try_call(lambda: self._get_cookies('https://www.litv.tv/')['PUID'].value)
         if puid:
-            endpoint = 'get-urls'
+            video_data = self._download_json(
+                'https://www.litv.tv/api/get-urls', video_id,
+                data=json.dumps({
+                    'AssetId': asset_id,
+                    'MediaType': media_type,
+                    'puid': puid,
+                }).encode(),
+                headers={'Content-Type': 'application/json'})
         else:
-            puid = str(uuid.uuid4())
-            endpoint = 'get-urls-no-auth'
-        video_data = self._download_json(
-            f'https://www.litv.tv/api/{endpoint}', video_id,
-            data=json.dumps({'AssetId': asset_id, 'MediaType': media_type, 'puid': puid}).encode(),
-            headers={'Content-Type': 'application/json'})
+            video_data = self._download_json(
+                'https://proxy.svc.litv.tv/cdi/v2/rpc', video_id,
+                data=json.dumps({
+                    'jsonrpc': '2.0',
+                    'id': 0,
+                    'method': 'LoadService.GetURLsNoAuth',
+                    'params': {
+                        'AssetId': asset_id,
+                        'MediaType': media_type,
+                        'DeviceId': str(uuid.uuid4()),
+                        'puid': str(uuid.uuid4()),
+                        'ProjectNum': 'LTWEB00',
+                        'DeviceType': 'pc',
+                    },
+                }).encode(),
+                headers={'Content-Type': 'application/json'})
 
         if error := traverse_obj(video_data, ('error', {dict})):
             error_msg = traverse_obj(error, ('message', {str}))
