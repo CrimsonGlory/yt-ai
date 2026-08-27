@@ -8,7 +8,6 @@ from ..utils import (
     get_element_by_id,
     int_or_none,
     join_nonempty,
-    js_to_json,
     qualities,
     url_or_none,
     urljoin,
@@ -19,6 +18,18 @@ from ..utils.traversal import traverse_obj
 class KukuluLiveIE(InfoExtractor):
     _VALID_URL = r'https?://live\.erinn\.biz/live\.php\?h(?P<id>\d+)'
     _TESTS = [{
+        'url': 'https://live.erinn.biz/live.php?h390454797',
+        'md5': '9466bd17538547e460698188dba43d2f',
+        'info_dict': {
+            'id': '390454797',
+            'ext': 'mp4',
+            'title': 'かくよ！',
+            'description': 'おしゅうじをね。',
+            'timestamp': 1787796440,
+            'upload_date': '20260827',
+            'thumbnail': r're:^https?://.*',
+        },
+    }, {
         'url': 'https://live.erinn.biz/live.php?h675134569',
         'skip': 'video gone',
         'md5': 'e380fa6a47fc703d91cea913ab44ec2e',
@@ -52,7 +63,7 @@ class KukuluLiveIE(InfoExtractor):
     def _get_quality_meta(self, video_id, desc, code, force_h264=None):
         desc += ' (force_h264)' if force_h264 else ''
         qs = self._download_webpage(
-            'https://live.erinn.biz/live.player.fplayer.php', video_id,
+            'https://live.erinn.biz/live.player.php', video_id,
             f'Downloading {desc} quality metadata', f'Unable to download {desc} quality metadata',
             query=filter_dict({
                 'hash': video_id,
@@ -113,13 +124,18 @@ class KukuluLiveIE(InfoExtractor):
             }
 
         # VOD extraction
-        player_html = self._download_webpage(
-            'https://live.erinn.biz/live.timeshift.fplayer.php', video_id,
-            'Downloading player html', 'Unable to download player html', query={'hash': video_id})
+        stream_data = self._download_json(
+            'https://live.erinn.biz/live.player.php', video_id,
+            'Downloading stream metadata', query={
+                'hash': video_id,
+                'action': 'getStreamAddr',
+            })
+        if traverse_obj(stream_data, 'result') != 'OK':
+            raise ExtractorError(
+                traverse_obj(stream_data, 'msg', default='Unable to load timeshift') or 'Unable to load timeshift',
+                expected=True)
 
-        sources = traverse_obj(self._search_json(
-            r'var\s+fplayer_source\s*=', player_html, 'stream data', video_id,
-            contains_pattern=r'\[(?s:.+)\]', transform_source=js_to_json), lambda _, v: v['file'])
+        sources = traverse_obj(stream_data, ('fplayer_source', lambda _, v: v['file'])) or []
 
         def entries(segments, playlist=True):
             for i, segment in enumerate(segments, 1):
