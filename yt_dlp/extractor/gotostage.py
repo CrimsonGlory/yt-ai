@@ -15,6 +15,7 @@ class GoToStageIE(InfoExtractor):
             'title': 'What is GoToStage?',
             'thumbnail': r're:^https?://.*\.jpg$',
             'duration': 93.924711,
+            'categories': ['EDUCATION'],
         },
     }, {
         'url': 'https://www.gotostage.com/channel/bacc3d3535b34bafacc3f4ef8d4df78a/recording/831e74cd3e0042be96defba627b6f676/watch?source=HOMEPAGE',
@@ -24,7 +25,7 @@ class GoToStageIE(InfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url)
         metadata = self._download_json(
-            f'https://api.gotostage.com/contents?ids={video_id}',
+            f'https://api-contentservice.services.goto.com/contentservice/contents?ids={video_id}',
             video_id,
             note='Downloading video metadata',
             errnote='Unable to download video metadata')[0]
@@ -39,7 +40,7 @@ class GoToStageIE(InfoExtractor):
         }
 
         registration_response = self._download_json(
-            'https://api-registrations.logmeininc.com/registrations',
+            'https://api-regserviceregistrationservice.services.goto.com/regserviceregistrationservice/registrations',
             video_id,
             data=json.dumps(registration_data).encode(),
             expected_status=409,
@@ -48,7 +49,7 @@ class GoToStageIE(InfoExtractor):
             errnote='Unable to register user')
 
         content_response = self._download_json(
-            f'https://api.gotostage.com/contents/{video_id}/asset',
+            f'https://api-contentservice.services.goto.com/contentservice/contents/{video_id}/asset',
             video_id,
             headers={'x-registrantkey': registration_response['registrationKey']},
             note='Get download url',
