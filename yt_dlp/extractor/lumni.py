@@ -4,6 +4,18 @@ from .francetv import FranceTVBaseInfoExtractor
 class LumniIE(FranceTVBaseInfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?lumni\.fr/video/(?P<id>[\w-]+)'
     _TESTS = [{
+        # Worldwide (_monde) VOD; many Lumni titles are France-only
+        'url': 'https://www.lumni.fr/video/3-infos-sur-lia',
+        'md5': 'cbcad5c6c9c9c82cb703679ed4cea2ca',
+        'info_dict': {
+            'id': '766c3f67-0caf-466f-94a7-455b919a4932',
+            'ext': 'mp4',
+            'title': "Les sciences de Nicolas Chateauneuf - 3 infos sur l'IA",
+            'duration': 104,
+            'timestamp': 1761920176,
+            'upload_date': '20251031',
+        },
+    }, {
         'url': 'https://www.lumni.fr/video/l-homme-et-son-environnement-dans-la-revolution-industrielle',
         'skip': 'video gone',
         'md5': '960e8240c4f2c7a20854503a71e52f5e',
