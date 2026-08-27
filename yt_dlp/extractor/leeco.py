@@ -22,6 +22,19 @@ class LeIE(InfoExtractor):
     _URL_TEMPLATE = 'http://www.le.com/ptv/vplay/%s.html'
 
     _TESTS = [{
+        'url': 'http://www.le.com/ptv/vplay/774649.html',
+        'md5': '09647e122730d6f59f47e3bef3b11661',
+        'info_dict': {
+            'id': '774649',
+            'ext': 'mp4',
+            'title': '征服01',
+            'description': 'md5:b309cb42d89fccb6bbdafeb03209d2ce',
+            'thumbnail': r're:https?://.+\.jpg',
+        },
+        'params': {
+            'hls_prefer_native': True,
+        },
+    }, {
         'url': 'http://www.le.com/ptv/vplay/22005890.html',
         'md5': 'edadcfe5406976f42f9f266057ee5e40',
         'info_dict': {
@@ -33,6 +46,7 @@ class LeIE(InfoExtractor):
         'params': {
             'hls_prefer_native': True,
         },
+        'skip': 'video gone',
     }, {
         'url': 'http://www.le.com/ptv/vplay/1415246.html',
         'info_dict': {
@@ -44,6 +58,7 @@ class LeIE(InfoExtractor):
         'params': {
             'hls_prefer_native': True,
         },
+        'skip': 'video gone',
     }, {
         'note': 'This video is available only in Mainland China, thus a proxy is needed',
         'url': 'http://www.le.com/ptv/vplay/1118082.html',
@@ -57,6 +72,7 @@ class LeIE(InfoExtractor):
         'params': {
             'hls_prefer_native': True,
         },
+        'skip': 'video gone',
     }, {
         'url': 'http://sports.le.com/video/25737697.html',
         'only_matching': True,
@@ -101,14 +117,12 @@ class LeIE(InfoExtractor):
         return bytes(_loc7_)
 
     def _check_errors(self, play_json):
-        # Check for errors
         playstatus = play_json['msgs']['playstatus']
-        if playstatus['status'] == 0:
-            flag = playstatus['flag']
+        if int_or_none(playstatus.get('status')) == 0:
+            flag = playstatus.get('flag')
             if flag == 1:
                 self.raise_geo_restricted()
-            else:
-                raise ExtractorError('Generic error. flag = %d' % flag, expected=True)
+            raise ExtractorError(f'Generic error. flag = {flag}', expected=True)
 
     def _real_extract(self, url):
         media_id = self._match_id(url)
