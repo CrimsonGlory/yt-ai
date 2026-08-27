@@ -1,4 +1,5 @@
 import itertools
+import urllib.parse
 
 from .common import InfoExtractor
 from ..networking.exceptions import HTTPError
@@ -248,45 +249,44 @@ class MujRozhlasIE(RozhlasBaseIE):
     _TESTS = [{
         # single episode extraction
         'url': 'https://www.mujrozhlas.cz/vykopavky/ach-jo-zase-teleci-rizek-je-mnohem-min-cesky-nez-jsme-si-mysleli',
-        'skip': 'HTTP Error 403',
         'md5': '6f8fd68663e64936623e67c152a669e0',
         'info_dict': {
             'id': '10787730',
             'ext': 'mp3',
-            'title': 'Ach jo, zase to telecí! Řízek je mnohem míň český, než jsme si mysleli',
+            'title': 'Vykopávky: Ach jo, zase to telecí! Řízek je mnohem míň český, než jsme si mysleli',
             'description': 'md5:db7141e9caaedc9041ec7cefb9a62908',
             'timestamp': 1684915200,
-            'modified_timestamp': 1687550432,
-            'series': 'Vykopávky',
-            'thumbnail': 'https://portal.rozhlas.cz/sites/default/files/images/84377046610af6ddc54d910b1dd7a22b.jpg',
+            'modified_timestamp': 1763046746,
+            'series': 'Chudáčci',
+            'thumbnail': 'https://portal.rozhlas.cz/sites/default/files/images/ec630486d201fff8ce3b955f20070620.jpg',
             'channel_id': 'radio-wave',
             'upload_date': '20230524',
-            'modified_date': '20230623',
+            'modified_date': '20251113',
         },
     }, {
         # serial extraction
         'url': 'https://www.mujrozhlas.cz/radiokniha/jaroslava-janackova-pribeh-tajemneho-psani-o-pramenech-genezi-babicky',
-        'skip': 'HTTP Error 403',
         'playlist_mincount': 7,
         'info_dict': {
             'id': 'bb2b5f4e-ffb4-35a6-a34a-046aa62d6f6b',
             'title': 'Jaroslava Janáčková: Příběh tajemného psaní. O pramenech a genezi Babičky',
             'description': 'md5:7434d8fac39ac9fee6df098e11dfb1be',
         },
+        'params': {'skip_download': True},
     }, {
         # show extraction
         'url': 'https://www.mujrozhlas.cz/nespavci',
-        'skip': 'HTTP Error 403',
         'playlist_mincount': 14,
         'info_dict': {
             'id': '09db9b37-d0f4-368c-986a-d3439f741f08',
             'title': 'Nespavci',
             'description': 'md5:c430adcbf9e2b9eac88b745881e814dc',
         },
+        'params': {'skip_download': True},
     }, {
         # serialPart
         'url': 'https://www.mujrozhlas.cz/povidka/gustavo-adolfo-becquer-hora-duchu',
-        'skip': 'HTTP Error 403',
+        'skip': 'No audio formats',
         'info_dict': {
             'id': '8889035',
             'ext': 'm4a',
@@ -312,7 +312,7 @@ class MujRozhlasIE(RozhlasBaseIE):
             note=f'Downloading {msg}', errnote=f'Failed to download {msg}')['data']
 
     def _extract_audio_entry(self, entry):
-        audio_id = entry['meta']['ga']['contentId']
+        audio_id = traverse_obj(entry, ('meta', 'ga', 'contentId'), 'id')
 
         return {
             'id': audio_id,
@@ -342,23 +342,45 @@ class MujRozhlasIE(RozhlasBaseIE):
             if not api_url:
                 break
 
+    def _resolve_entity(self, url, display_id):
+        # HTML pages are behind a Cloudflare JS challenge; the public search API
+        # still resolves episode/show/serial slugs without that page.
+        results = traverse_obj(
+            self._download_json(
+                'https://api.mujrozhlas.cz/search', display_id,
+                query={'query': display_id, 'page[limit]': 30},
+                note='Resolving slug via search API',
+                errnote='Failed to resolve slug via search API'),
+            ('data', lambda _, v: v['type'] and v['id']))
+        if not results:
+            raise ExtractorError(
+                f'Unable to resolve mujRozhlas slug "{display_id}"', expected=True)
+        if len(results) == 1:
+            return results[0]['type'], results[0]['id']
+
+        path_depth = len([p for p in urllib.parse.urlparse(url).path.split('/') if p])
+        preferred_types = (
+            ('show', 'serial') if path_depth == 1
+            else ('episode', 'serialPart', 'serial', 'show'))
+        for etype in preferred_types:
+            match = next((entry for entry in results if entry['type'] == etype), None)
+            if match:
+                return etype, match['id']
+        return results[0]['type'], results[0]['id']
+
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        webpage = self._download_webpage(url, display_id)
-        info = self._search_json(r'\bvar\s+dl\s*=', webpage, 'info json', display_id)
-
-        entity = info['siteEntityBundle']
+        entity, item_id = self._resolve_entity(url, display_id)
 
         if entity in ('episode', 'serialPart'):
             return self._extract_audio_entry(self._call_api(
-                'episodes', info['contentId'], 'episode info API JSON'))
+                'episodes', item_id, 'episode info API JSON'))
 
         elif entity in ('show', 'serial'):
-            playlist_id = info['contentShow'].split(':')[0] if entity == 'show' else info['contentId']
-            data = self._call_api(f'{entity}s', playlist_id, f'{entity} playlist JSON')
+            data = self._call_api(f'{entity}s', item_id, f'{entity} playlist JSON')
             api_url = data['relationships']['episodes']['links']['related']
             return self.playlist_result(
-                self._entries(api_url, playlist_id), playlist_id,
+                self._entries(api_url, item_id), item_id,
                 **traverse_obj(data, ('attributes', {
                     'title': 'title',
                     'description': 'description',
