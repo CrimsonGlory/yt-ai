@@ -1,5 +1,6 @@
 from .common import InfoExtractor
 from ..utils import (
+    ExtractorError,
     clean_html,
     format_field,
     int_or_none,
@@ -11,14 +12,23 @@ from ..utils import (
 class MindsBaseIE(InfoExtractor):
     _VALID_URL_BASE = r'https?://(?:www\.)?minds\.com/'
 
-    def _call_api(self, path, video_id, resource, query=None):
+    def _call_api(self, path, video_id, resource, query=None, **kwargs):
         api_url = 'https://www.minds.com/api/' + path
         token = self._get_cookies(api_url).get('XSRF-TOKEN')
         return self._download_json(
             api_url, video_id, f'Downloading {resource} JSON metadata', headers={
                 'Referer': 'https://www.minds.com/',
                 'X-XSRF-TOKEN': token.value if token else '',
-            }, query=query)
+            }, query=query, **kwargs)
+
+    def _fetch_entity(self, entity_id, urn_type='activity'):
+        data = self._call_api(
+            'v2/entities/', entity_id, 'entity', query={
+                'urns': f'urn:{urn_type}:{entity_id}',
+                'as_activities': '0',
+            })
+        entities = data.get('entities') if isinstance(data, dict) else None
+        return entities[0] if entities else None
 
 
 class MindsIE(MindsBaseIE):
@@ -26,8 +36,7 @@ class MindsIE(MindsBaseIE):
     _VALID_URL = MindsBaseIE._VALID_URL_BASE + r'(?:media|newsfeed|archive/view)/(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'https://www.minds.com/media/100000000000086822',
-        'skip': 'HTTP Error 403',
-        'md5': '215a658184a419764852239d4970b045',
+        'md5': '564fde8f0b5c4ed3596ea7e026748648',
         'info_dict': {
             'id': '100000000000086822',
             'ext': 'mp4',
@@ -43,12 +52,12 @@ class MindsIE(MindsBaseIE):
             'tags': ['animation'],
             'comment_count': int,
             'license': 'attribution-cc',
+            'uploader_url': 'https://www.minds.com/ottman',
         },
     }, {
         # entity.type == 'activity' and empty title
         'url': 'https://www.minds.com/newsfeed/798025111988506624',
-        'skip': 'HTTP Error 403',
-        'md5': 'b2733a74af78d7fd3f541c4cbbaa5950',
+        'md5': '35b6ed189d60a96cf8c067d15114a9ea',
         'info_dict': {
             'id': '798022190320226304',
             'ext': 'mp4',
@@ -57,6 +66,12 @@ class MindsIE(MindsBaseIE):
             'upload_date': '20180111',
             'timestamp': 1515639316,
             'uploader_id': 'ColinFlaherty',
+            'uploader_url': 'https://www.minds.com/ColinFlaherty',
+            'comment_count': int,
+            'view_count': int,
+            'like_count': int,
+            'dislike_count': int,
+            'thumbnail': r're:https?://.+\.png',
         },
     }, {
         'url': 'https://www.minds.com/archive/view/715172106794442752',
@@ -69,32 +84,32 @@ class MindsIE(MindsBaseIE):
 
     def _real_extract(self, url):
         entity_id = self._match_id(url)
-        entity = self._call_api(
-            'v1/entities/entity/' + entity_id, entity_id, 'entity')['entity']
+        entity = self._fetch_entity(entity_id)
+        if not entity:
+            raise ExtractorError('Unable to fetch entity metadata', expected=True)
+
         if entity.get('type') == 'activity':
             if entity.get('custom_type') == 'video':
-                video_id = entity['entity_guid']
+                custom_data = entity.get('custom_data')
+                video_id = str_or_none(
+                    custom_data.get('guid') if isinstance(custom_data, dict) else None,
+                ) or str_or_none(entity.get('entity_guid')) or entity_id
+                if video_id != entity_id:
+                    video_entity = self._fetch_entity(video_id, 'video') or self._fetch_entity(video_id)
+                    if video_entity:
+                        entity = video_entity
             else:
                 return self.url_result(entity['perma_url'])
         else:
-            assert entity['subtype'] == 'video'
             video_id = entity_id
-        # 1080p and webm formats available only on the sources array
-        video = self._call_api(
-            'v2/media/video/' + video_id, video_id, 'video')
 
-        formats = []
-        for source in (video.get('sources') or []):
-            src = source.get('src')
-            if not src:
-                continue
-            formats.append({
-                'format_id': source.get('label'),
-                'height': int_or_none(source.get('size')),
-                'url': src,
-            })
+        # v2/media/video is login-gated; public downloads use this redirect
+        formats = [{
+            'format_id': 'source',
+            'url': f'https://www.minds.com/api/v3/media/video/download/{video_id}',
+            'ext': 'mp4',
+        }]
 
-        entity = video.get('entity') or entity
         owner = entity.get('ownerObj') or {}
         uploader_id = owner.get('username')
 
@@ -103,7 +118,7 @@ class MindsIE(MindsBaseIE):
             tags = [tags]
 
         thumbnail = None
-        poster = video.get('poster') or entity.get('thumbnail_src')
+        poster = entity.get('thumbnail_src')
         if poster:
             urlh = self._request_webpage(poster, video_id, fatal=False)
             if urlh:
@@ -114,7 +129,7 @@ class MindsIE(MindsBaseIE):
             'title': entity.get('title') or video_id,
             'formats': formats,
             'description': clean_html(entity.get('description')) or None,
-            'license': str_or_none(entity.get('license')),
+            'license': str_or_none(entity.get('license') or None),
             'timestamp': int_or_none(entity.get('time_created')),
             'uploader': strip_or_none(owner.get('name')),
             'uploader_id': uploader_id,
@@ -160,7 +175,7 @@ class MindsFeedBaseIE(MindsBaseIE):
         return self.playlist_result(
             self._entries(feed['guid']), feed_id,
             strip_or_none(feed.get('name')),
-            feed.get('briefdescription'))
+            strip_or_none(feed.get('briefdescription')))
 
 
 class MindsChannelIE(MindsFeedBaseIE):
