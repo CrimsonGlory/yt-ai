@@ -1,27 +1,33 @@
+import urllib.parse
+
 from .common import InfoExtractor
 from ..utils import (
-    dict_get,
+    ExtractorError,
     int_or_none,
+    url_or_none,
 )
+from ..utils.traversal import traverse_obj
 
 
 class KinoPoiskIE(InfoExtractor):
     _GEO_COUNTRIES = ['RU']
-    _VALID_URL = r'https?://(?:www\.)?kinopoisk\.ru/film/(?P<id>\d+)'
+    _VALID_URL = r'https?://(?:(?:www\.)?kinopoisk\.ru/film/|widgets\.kinopoisk\.ru/discovery/film/)(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.kinopoisk.ru/film/81041/watch/',
-        'md5': '4f71c80baea10dfa54a837a46111d326',
+        'md5': 'e935791dbe0fcce557778e2a5cbc148d',
         'info_dict': {
             'id': '81041',
             'ext': 'mp4',
-            'title': 'Алеша попович и тугарин змей',
-            'description': 'md5:43787e673d68b805d0aa1df5a5aea701',
-            'thumbnail': r're:^https?://.*',
-            'duration': 4533,
-            'age_limit': 12,
+            'title': 'Алеша Попович и Тугарин Змей',
+            'thumbnail': r're:https?://avatars\.mds\.yandex\.net/.*',
+            'view_count': int,
+            'release_year': 2004,
         },
     }, {
         'url': 'https://www.kinopoisk.ru/film/81041',
+        'only_matching': True,
+    }, {
+        'url': 'https://widgets.kinopoisk.ru/discovery/film/81041',
         'only_matching': True,
     }]
 
@@ -29,35 +35,48 @@ class KinoPoiskIE(InfoExtractor):
         video_id = self._match_id(url)
 
         webpage = self._download_webpage(
-            'https://ott-widget.kinopoisk.ru/v1/kp/', video_id,
-            query={'kpId': video_id})
+            f'https://widgets.kinopoisk.ru/discovery/film/{video_id}', video_id)
 
         data = self._parse_json(
             self._search_regex(
-                r'(?s)<script[^>]+\btype=["\']application/json[^>]+>(.+?)<',
+                r'<script[^>]+\btype=["\']application/json[^>]*>([^<]+)',
                 webpage, 'data'),
-            video_id)['models']
+            video_id, transform_source=urllib.parse.unquote)
 
-        film = data['filmStatus']
-        title = film.get('title') or film['originalTitle']
+        trailers = traverse_obj(data, ('models', 'trailers', {dict})) or {}
+        preferred_id = str(traverse_obj(data, ('page', 'trailerId')) or '')
+        trailer = trailers.get(preferred_id) or {}
+        if str(trailer.get('filmId')) != video_id or not url_or_none(trailer.get('streamUrl')):
+            trailer = next((
+                t for t in trailers.values()
+                if str(t.get('filmId')) == video_id and url_or_none(t.get('streamUrl'))
+            ), None) or {}
 
-        formats = self._extract_m3u8_formats(
-            data['playlistEntity']['uri'], video_id, 'mp4',
-            entry_protocol='m3u8_native', m3u8_id='hls')
+        stream_url = url_or_none(trailer.get('streamUrl'))
+        if not stream_url:
+            raise ExtractorError('Unable to extract trailer stream', expected=True)
 
-        description = dict_get(
-            film, ('descriptscription', 'description',
-                   'shortDescriptscription', 'shortDescription'))
-        thumbnail = film.get('coverUrl') or film.get('posterUrl')
-        duration = int_or_none(film.get('duration'))
-        age_limit = int_or_none(film.get('restrictionAge'))
+        formats = [
+            fmt for fmt in self._extract_m3u8_formats(
+                stream_url, video_id, 'mp4', 'm3u8_native', m3u8_id='hls')
+            if 'redundant=' not in (fmt.get('url') or '')
+        ]
+
+        film = trailer.get('film') or {}
+        thumbnail = self._proto_relative_url(traverse_obj(
+            trailer,
+            ('img', 'bigPreviewUrl', 'x2', {url_or_none}),
+            ('img', 'bigPreviewUrl', 'x1', {url_or_none}),
+            ('img', 'mediumPreviewUrl', 'x2', {url_or_none}),
+            ('film', 'img', 'posterMedium', 'x2', {url_or_none}),
+            ('film', 'img', 'poster', 'x2', {url_or_none}),
+        ))
 
         return {
             'id': video_id,
-            'title': title,
-            'description': description,
+            'title': film.get('title') or film.get('displayTitle') or film.get('originalTitle'),
             'thumbnail': thumbnail,
-            'duration': duration,
-            'age_limit': age_limit,
+            'view_count': int_or_none(trailer.get('views')),
+            'release_year': int_or_none(film.get('year')),
             'formats': formats,
         }
