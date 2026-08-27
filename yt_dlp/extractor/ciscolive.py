@@ -2,6 +2,7 @@ import itertools
 
 from .common import InfoExtractor
 from ..utils import (
+    ExtractorError,
     clean_html,
     float_or_none,
     int_or_none,
@@ -15,19 +16,29 @@ class CiscoLiveBaseIE(InfoExtractor):
     # These appear to be constant across all Cisco Live presentations
     # and are not tied to any user session or event
     RAINFOCUS_API_URL = 'https://events.rainfocus.com/api/%s'
-    RAINFOCUS_API_PROFILE_ID = 'Na3vqYdAlJFSxhYTYQGuMbpafMqftalz'
-    RAINFOCUS_WIDGET_ID = 'n6l4Lo05R8fiy3RpUBm447dZN8uNWoye'
-    BRIGHTCOVE_URL_TEMPLATE = 'http://players.brightcove.net/5647924234001/SyK2FdqjM_default/index.html?videoId=%s'
+    RAINFOCUS_API_PROFILE_ID = 'HEedDIRblcZk7Ld3KHm1T0VUtZog9eG9'
+    RAINFOCUS_WIDGET_ID = 'M7n14I8sz0pklW1vybwVRdKrgdREj8sR'
+    BRIGHTCOVE_URL_TEMPLATE = 'https://players.brightcove.net/5647924234001/SyK2FdqjM_default/index.html?videoId=%s'
 
     HEADERS = {
-        'Origin': 'https://ciscolive.cisco.com',
+        'Origin': 'https://www.ciscolive.com',
         'rfApiProfileId': RAINFOCUS_API_PROFILE_ID,
         'rfWidgetId': RAINFOCUS_WIDGET_ID,
     }
 
+    def _get_rf_jwt(self):
+        for cookie_url in ('https://www.ciscolive.com/', 'https://ciscolive.cisco.com/'):
+            jwt = self._get_cookies(cookie_url).get('rfjwt')
+            if jwt:
+                return jwt.value
+        return None
+
     def _call_api(self, ep, rf_id, query, referrer, note=None):
         headers = self.HEADERS.copy()
         headers['Referer'] = referrer
+        jwt = self._get_rf_jwt()
+        if jwt:
+            headers['rfAuthToken'] = jwt
         return self._download_json(
             self.RAINFOCUS_API_URL % ep, rf_id, note=note,
             data=urlencode_postdata(query), headers=headers)
@@ -37,9 +48,15 @@ class CiscoLiveBaseIE(InfoExtractor):
         title = rf_item['title']
         description = clean_html(rf_item.get('abstract'))
         presenter_name = try_get(rf_item, lambda x: x['participants'][0]['fullName'])
-        bc_id = rf_item['videos'][0]['url']
+        bc_id = try_get(rf_item, lambda x: x['videos'][0]['url'])
+        if not bc_id:
+            if not self._get_rf_jwt():
+                self.raise_login_required(method='cookies')
+            raise ExtractorError('No video recording is available for this session', expected=True)
         bc_url = self.BRIGHTCOVE_URL_TEMPLATE % bc_id
         duration = float_or_none(try_get(rf_item, lambda x: x['times'][0]['length']))
+        if duration is None:
+            duration = float_or_none(rf_item.get('length'))
         location = try_get(rf_item, lambda x: x['times'][0]['room'])
 
         if duration:
@@ -73,11 +90,23 @@ class CiscoLiveSessionIE(CiscoLiveBaseIE):
             'uploader_id': '5647924234001',
             'location': '16B Mezz.',
         },
+        'skip': 'login required',
+    }, {
+        'url': 'https://www.ciscolive.com/on-demand/on-demand-library.html?#/session/1780362822192001q6AP',
+        'info_dict': {
+            'id': '1780362822192001q6AP',
+            'ext': 'mp4',
+            'title': 'Opening Keynote: Lead in the Agentic Era  - KEYGEN-1001',
+        },
+        'skip': 'login required',
     }, {
         'url': 'https://www.ciscolive.com/global/on-demand-library.html?search.event=ciscoliveemea2019#/session/15361595531500013WOU',
         'only_matching': True,
     }, {
         'url': 'https://www.ciscolive.com/global/on-demand-library.html?#/session/1490051371645001kNaS',
+        'only_matching': True,
+    }, {
+        'url': 'https://www.ciscolive.com/on-demand/on-demand-library.html?#/session/1770242986894001vDNE',
         'only_matching': True,
     }]
 
@@ -88,18 +117,22 @@ class CiscoLiveSessionIE(CiscoLiveBaseIE):
 
 
 class CiscoLiveSearchIE(CiscoLiveBaseIE):
-    _VALID_URL = r'https?://(?:www\.)?ciscolive(?:\.cisco)?\.com/(?:global/)?on-demand-library(?:\.html|/)'
+    _VALID_URL = r'https?://(?:www\.)?ciscolive(?:\.cisco)?\.com/(?:(?:global|on-demand)/)?on-demand-library(?:\.html|/)'
     _TESTS = [{
         'url': 'https://ciscolive.cisco.com/on-demand-library/?search.event=ciscoliveus2018&search.technicallevel=scpsSkillLevel_aintroductory&search.focus=scpsSessionFocus_designAndDeployment#/',
         'info_dict': {
             'title': 'Search query',
         },
         'playlist_count': 5,
+        'skip': 'login required',
     }, {
         'url': 'https://ciscolive.cisco.com/on-demand-library/?search.technology=scpsTechnology_applicationDevelopment&search.technology=scpsTechnology_ipv6&search.focus=scpsSessionFocus_troubleshootingTroubleshooting#/',
         'only_matching': True,
     }, {
         'url': 'https://www.ciscolive.com/global/on-demand-library.html?search.technicallevel=scpsSkillLevel_aintroductory&search.event=ciscoliveemea2019&search.technology=scpsTechnology_dataCenter&search.focus=scpsSessionFocus_bestPractices#/',
+        'only_matching': True,
+    }, {
+        'url': 'https://www.ciscolive.com/on-demand/on-demand-library.html?search.sessiontype=Keynote#/',
         'only_matching': True,
     }]
 
@@ -109,7 +142,7 @@ class CiscoLiveSearchIE(CiscoLiveBaseIE):
 
     @staticmethod
     def _check_bc_id_exists(rf_item):
-        return int_or_none(try_get(rf_item, lambda x: x['videos'][0]['url'])) is not None
+        return bool(try_get(rf_item, lambda x: x['videos'][0]['url']))
 
     def _entries(self, query, url):
         query['size'] = 50
