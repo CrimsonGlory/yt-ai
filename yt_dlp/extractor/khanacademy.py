@@ -15,8 +15,6 @@ from ..utils import (
 class KhanAcademyBaseIE(InfoExtractor):
     _VALID_URL_TEMPL = r'https?://(?:www\.)?khanacademy\.org/(?P<id>(?:[^/]+/){%s}%s[^?#/&]+)'
 
-    _PUBLISHED_CONTENT_VERSION = 'dc34750f0572c80f5effe7134082fe351143c1e4'
-
     def _parse_video(self, video):
         return {
             '_type': 'url_transparent',
@@ -34,29 +32,36 @@ class KhanAcademyBaseIE(InfoExtractor):
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        content = self._download_json(
-            'https://www.khanacademy.org/api/internal/graphql/ContentForPath', display_id,
-            query={
-                'fastly_cacheable': 'persist_until_publish',
-                'pcv': self._PUBLISHED_CONTENT_VERSION,
-                'hash': '3712657851',
-                'variables': json.dumps({
-                    'path': display_id,
-                    'countryCode': 'US',
-                    'kaLocale': 'en',
-                    'clientPublishedContentVersion': self._PUBLISHED_CONTENT_VERSION,
-                }),
-                'lang': 'en',
-            })['data']['contentRoute']['listedPathData']
+        pcv = traverse_obj(self._download_json(
+            'https://www.khanacademy.org/_fastly/published-content-version/en',
+            display_id, 'Downloading published content version', fatal=False),
+            ('publishedContentVersion', {str}))
+        query = {
+            'fastly_cacheable': 'persist_until_publish',
+            'hash': self._GRAPHQL_HASH,
+            'variables': json.dumps({
+                'path': display_id,
+                'countryCode': 'US',
+            }),
+            'lang': 'en',
+        }
+        if pcv:
+            query['pcv'] = pcv
+        content = traverse_obj(self._download_json(
+            f'https://www.khanacademy.org/api/internal/graphql/{self._GRAPHQL_OPERATION}',
+            display_id, query=query),
+            ('data', 'contentRoute', ('listedPathData', 'unlistedPathData'), any))
         return self._parse_component_props(content, display_id)
 
 
 class KhanAcademyIE(KhanAcademyBaseIE):
     IE_NAME = 'khanacademy'
     _VALID_URL = KhanAcademyBaseIE._VALID_URL_TEMPL % ('4', 'v/')
+    _GRAPHQL_OPERATION = 'ContentRouteLessonAndContentData'
+    _GRAPHQL_HASH = '183983073'
     _TEST = {
         'url': 'https://www.khanacademy.org/computing/computer-science/cryptography/crypt/v/one-time-pad',
-        'md5': '1d5c2e70fa6aa29c38eca419f12515ce',
+        'md5': 'a23b02ebfe243e169c2b6121f65bea46',
         'info_dict': {
             'id': 'FlIG3TvQCBQ',
             'ext': 'mp4',
@@ -87,6 +92,7 @@ class KhanAcademyIE(KhanAcademyBaseIE):
             'view_count': int,
             'like_count': int,
             'heatmap': list,
+            'media_type': 'video',
         },
         'add_ie': ['Youtube'],
     }
@@ -106,6 +112,8 @@ class KhanAcademyIE(KhanAcademyBaseIE):
 class KhanAcademyUnitIE(KhanAcademyBaseIE):
     IE_NAME = 'khanacademy:unit'
     _VALID_URL = (KhanAcademyBaseIE._VALID_URL_TEMPL % ('1,2', '')) + '/?(?:[?#&]|$)'
+    _GRAPHQL_OPERATION = 'ContentRouteCourseData'
+    _GRAPHQL_HASH = '1718276862'
     _TESTS = [{
         'url': 'https://www.khanacademy.org/computing/computer-science/cryptography',
         'info_dict': {
@@ -121,7 +129,7 @@ class KhanAcademyUnitIE(KhanAcademyBaseIE):
         'info_dict': {
             'id': 'x301707a0',
             'title': 'Computer science theory',
-            'description': 'md5:4b472a4646e6cf6ec4ccb52c4062f8ba',
+            'description': 'md5:20a0c2d331e5d0e609872629079e6ec8',
             'display_id': 'computing/computer-science',
             '_old_archive_ids': ['khanacademyunit computer-science'],
         },
