@@ -6,21 +6,21 @@ class KickStarterIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?kickstarter\.com/projects/(?P<id>[^/]*)/.*'
     _TESTS = [{
         'url': 'https://www.kickstarter.com/projects/1404461844/intersection-the-story-of-josh-grant/description',
-        'skip': 'HTTP Error 403',
         'md5': 'c81addca81327ffa66c642b5d8b08cab',
         'info_dict': {
             'id': '1404461844',
             'ext': 'mp4',
-            'title': 'Intersection: The Story of Josh Grant by Kyle Cowling',
+            'title': 'Intersection: The Story of Josh Grant by Kyle Cowling » Intersection: The Story of Josh Grant by Kyle Cowling',
             'description': (
                 'A unique motocross documentary that examines the '
                 'life and mind of one of sports most elite athletes: Josh Grant.'
             ),
+            'thumbnail': r're:https://i\.kickstarter\.com/.+',
         },
     }, {
         'note': 'Embedded video (not using the native kickstarter video service)',
         'url': 'https://www.kickstarter.com/projects/597507018/pebble-e-paper-watch-for-iphone-and-android/posts/659178',
-        'skip': 'HTTP Error 403',
+        'skip': 'embedded video no longer present',
         'info_dict': {
             'id': '78704821',
             'ext': 'mp4',
@@ -31,17 +31,18 @@ class KickStarterIE(InfoExtractor):
         'add_ie': ['Vimeo'],
     }, {
         'url': 'https://www.kickstarter.com/projects/1420158244/power-drive-2000/widget/video.html',
-        'skip': 'HTTP Error 403',
+        'md5': 'f8b4610e2c9a8c671905b7bdc9b62d5f',
         'info_dict': {
             'id': '1420158244',
             'ext': 'mp4',
             'title': 'Power Drive 2000',
+            'thumbnail': r're:https://i\.kickstarter\.com/.+',
         },
     }]
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
+        webpage = self._download_webpage(url, video_id, impersonate=True)
 
         title = self._html_search_regex(
             r'<title>\s*(.*?)(?:\s*&mdash;\s*Kickstarter)?\s*</title>',
@@ -68,4 +69,5 @@ class KickStarterIE(InfoExtractor):
             'title': title,
             'description': self._og_search_description(webpage, default=None),
             'thumbnail': thumbnail,
+            'impersonate': True,
         }
