@@ -1,3 +1,4 @@
+import re
 import urllib.parse
 
 from .common import InfoExtractor
@@ -6,16 +7,36 @@ from .youtube import YoutubeIE
 from ..utils import (
     NO_DEFAULT,
     determine_ext,
+    extract_attributes,
     int_or_none,
     parse_iso8601,
     smuggle_url,
+    unified_timestamp,
+    urljoin,
     xpath_text,
 )
 
 
 class HeiseIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?heise\.de/(?:[^/]+/)+[^/]+-(?P<id>[0-9]+)\.html'
+    _TARGETVIDEO_PARTNER_ID = '28579'
     _TESTS = [{
+        # TargetVideo / Brid.tv embed
+        'url': 'https://www.heise.de/multimediadatei/Der-Speicherkrise-entkommen-durch-Gebrauchtkaeufe-fuer-Uni-Schule-Daheim-Buero-c-t-uplink-11420980.html',
+        'md5': '156b15708d4fdf7a97c0264e96664b50',
+        'info_dict': {
+            'id': '2776939',
+            'ext': 'mp4',
+            'title': 'Der Speicherkrise entkommen durch Gebrauchtkäufe für Uni, Schule, Daheim, Büro | c’t uplink',
+            'description': 'md5:9182b484cfd074014a48d2c7de4089a4',
+            'thumbnail': 'https://www.heise.de/imgs/71/5/1/5/0/7/1/0/Uplink_gebrauchteNotebooks_V1-59e9d58c0e516a04.jpg',
+            'timestamp': 1787379300,
+            'upload_date': '20260822',
+        },
+        'params': {
+            'format': 'http-hd',
+        },
+    }, {
         # kaltura embed
         'url': 'http://www.heise.de/video/artikel/Podcast-c-t-uplink-3-3-Owncloud-Tastaturen-Peilsender-Smartphone-2404147.html',
         'info_dict': {
@@ -32,6 +53,7 @@ class HeiseIE(InfoExtractor):
         'params': {
             'skip_download': True,
         },
+        'skip': 'No longer a Kaltura embed; site migrated to TargetVideo',
     }, {
         # YouTube embed
         'url': 'http://www.heise.de/newsticker/meldung/Netflix-In-20-Jahren-vom-Videoverleih-zum-TV-Revolutionaer-3814130.html',
@@ -43,7 +65,7 @@ class HeiseIE(InfoExtractor):
             'description': 'md5:d6852d1f96bb80760608eed3b907437c',
             'upload_date': '20170830',
             'uploader': 'Netflix Deutschland, Österreich und Schweiz',
-            'uploader_id': 'netflixdach',
+            'uploader_id': '@Netflixdach',
             'categories': ['Entertainment'],
             'tags': 'count:27',
             'age_limit': 0,
@@ -51,7 +73,7 @@ class HeiseIE(InfoExtractor):
             'comment_count': int,
             'channel_id': 'UCZqgRlLcvO3Fnx_npQJygcQ',
             'thumbnail': 'https://i.ytimg.com/vi_webp/6kmWbXleKW4/maxresdefault.webp',
-            'uploader_url': 'http://www.youtube.com/user/netflixdach',
+            'uploader_url': 'https://www.youtube.com/@Netflixdach',
             'playable_in_embed': True,
             'live_status': 'not_live',
             'channel_url': 'https://www.youtube.com/channel/UCZqgRlLcvO3Fnx_npQJygcQ',
@@ -60,6 +82,10 @@ class HeiseIE(InfoExtractor):
             'channel_follower_count': int,
             'like_count': int,
             'duration': 67,
+            'media_type': 'video',
+            'channel_is_verified': True,
+            'chapters': 'count:5',
+            'timestamp': 1504099415,
         },
         'params': {
             'skip_download': True,
@@ -80,6 +106,7 @@ class HeiseIE(InfoExtractor):
         'params': {
             'skip_download': True,
         },
+        'skip': 'No longer a Kaltura embed; site migrated to TargetVideo',
     }, {
         # FIXME: Video m3u8 fails to download; issue with Kaltura extractor
         'url': 'https://www.heise.de/ct/artikel/c-t-uplink-20-8-Staubsaugerroboter-Xiaomi-Vacuum-2-AR-Brille-Meta-2-und-Android-rooten-3959893.html',
@@ -94,6 +121,7 @@ class HeiseIE(InfoExtractor):
         'params': {
             'skip_download': True,
         },
+        'skip': 'No longer a Kaltura embed; site migrated to TargetVideo',
     }, {
         # videout
         'url': 'https://www.heise.de/ct/artikel/c-t-uplink-3-8-Anonyme-SIM-Karten-G-Sync-Monitore-Citizenfour-2440327.html',
@@ -106,6 +134,7 @@ class HeiseIE(InfoExtractor):
             'timestamp': 1414825200,
             'upload_date': '20141101',
         },
+        'skip': 'Old JWPlayer/videout feed no longer provides media',
     }, {
         'url': 'http://www.heise.de/ct/artikel/c-t-uplink-3-3-Owncloud-Tastaturen-Peilsender-Smartphone-2403911.html',
         'only_matching': True,
@@ -148,12 +177,42 @@ class HeiseIE(InfoExtractor):
                 'description': description,
             }
 
+        # Current player: <a-video type="targetvideo" entry-id="...">
+        for video_el in re.findall(r'<a-video\b[^>]*>', webpage):
+            attrs = extract_attributes(video_el)
+            if attrs.get('type') != 'targetvideo':
+                continue
+            entry_id = attrs.get('entry-id')
+            if not entry_id:
+                continue
+            formats = []
+            for format_id, quality in (('sd', 0), ('hd', 1)):
+                formats.append({
+                    'url': f'https://cdn-uc.brid.tv/live/partners/{self._TARGETVIDEO_PARTNER_ID}/{format_id}/{entry_id}.mp4',
+                    'format_id': f'http-{format_id}',
+                    'ext': 'mp4',
+                    'quality': quality,
+                })
+            formats.extend(self._extract_m3u8_formats(
+                f'https://cdn-uc.brid.tv/live/partners/{self._TARGETVIDEO_PARTNER_ID}/streaming/{entry_id}/{entry_id}.m3u8',
+                entry_id, 'mp4', m3u8_id='hls', fatal=False) or [])
+            thumbnail = attrs.get('preview-image-url') or None
+            return {
+                'id': entry_id,
+                'title': title or extract_title(),
+                'description': description,
+                'thumbnail': urljoin(url, thumbnail) if thumbnail else self._og_search_thumbnail(webpage),
+                'timestamp': unified_timestamp(
+                    self._html_search_meta('date', webpage)),
+                'formats': formats,
+            }
+
         kaltura_url = KalturaIE._extract_url(webpage)
         if kaltura_url:
             return _make_kaltura_result(kaltura_url)
 
         kaltura_id = self._search_regex(
-            r'entry-id=(["\'])(?P<id>(?:(?!\1).)+)\1', webpage, 'kaltura id',
+            r'entry-id=(["\'])(?P<id>1_[^"\']+)\1', webpage, 'kaltura id',
             default=None, group='id')
         if kaltura_id:
             return _make_kaltura_result(f'kaltura:2238431:{kaltura_id}')
