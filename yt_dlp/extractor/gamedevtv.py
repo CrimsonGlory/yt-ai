@@ -1,5 +1,6 @@
 import json
 
+from .bunnycdn import BunnyCdnIE
 from .common import InfoExtractor
 from ..networking.exceptions import HTTPError
 from ..utils import (
@@ -8,16 +9,36 @@ from ..utils import (
     int_or_none,
     join_nonempty,
     parse_iso8601,
+    smuggle_url,
     str_or_none,
     url_or_none,
 )
-from ..utils.traversal import traverse_obj
+from ..utils.traversal import require, traverse_obj
 
 
 class GameDevTVDashboardIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?gamedev\.tv/dashboard/courses/(?P<course_id>\d+)(?:/(?P<lecture_id>\d+))?'
+    _VALID_URL = r'https?://(?:www\.)?gamedev\.tv/(?:dashboard/courses/(?P<course_id>\d+)(?:/(?P<lecture_id>\d+))?|courses/(?P<id>[\w-]+))'
     _NETRC_MACHINE = 'gamedevtv'
     _TESTS = [{
+        'url': 'https://gamedev.tv/courses/get-started-unity',
+        'md5': '1e5c52d15a0c3bb94d85a02df89f7832',
+        'info_dict': {
+            'id': '6e4152e1-9645-415a-9efb-d20abebb1f85',
+            'ext': 'mp4',
+            'title': 'Get Started With Unity - FREE Course',
+            'display_id': 'get-started-unity',
+            'description': 'md5:ef85f81edd87c328070c4bb133b453c3',
+            'thumbnail': 'https://vz-23691c65-6fa.b-cdn.net/6e4152e1-9645-415a-9efb-d20abebb1f85/thumbnail.jpg',
+            'categories': ['Unity', 'Coding'],
+            'uploader': 'Stephen Hubbard',
+            'duration': 51,
+            'timestamp': 1767381176,
+            'upload_date': '20260102',
+        },
+    }, {
+        'url': 'https://gamedev.tv/courses/get-started-godot',
+        'only_matching': True,
+    }, {
         'url': 'https://www.gamedev.tv/dashboard/courses/25',
         'skip': 'Login required',
         'info_dict': {
@@ -78,10 +99,26 @@ class GameDevTVDashboardIE(InfoExtractor):
 
         self._API_HEADERS['Authorization'] = f'{response["token_type"]} {response["access_token"]}'
 
-    def _real_initialize(self):
-        if not self._API_HEADERS.get('Authorization'):
-            self.raise_login_required(
-                'This content is only available with purchase', method='password')
+    def _extract_public_course(self, url, slug):
+        data = self._download_json(
+            f'https://gamedev.tv/api/products/Course/{slug}/sales-data', slug)['data']
+        embed_url = traverse_obj(data, (
+            (
+                ('heroGallery', 'media', ..., 'url'),
+                ('sections', ..., 'lectures', lambda _, v: v.get('isPreviewable'), 'video', 'url'),
+            ), {url_or_none},
+            {lambda u: u if u and BunnyCdnIE.suitable(u) else None}, any,
+            {require('public video URL')}))
+
+        return self.url_result(
+            smuggle_url(embed_url, {'Referer': url}), ie=BunnyCdnIE, url_transparent=True,
+            display_id=slug, **traverse_obj(data, {
+                'title': ('title', {str}),
+                'description': ('description', {clean_html}),
+                'thumbnail': (('heroGallery', 'media', ..., 'thumbnail'), 'image', {url_or_none}, any),
+                'categories': ('categories', ..., 'name', {str}),
+                'uploader': ('instructors', 0, 'name', {str}),
+            }))
 
     def _entries(self, data, course_id, course_info, selected_lecture):
         for section in traverse_obj(data, ('sections', ..., {dict})):
@@ -120,7 +157,13 @@ class GameDevTVDashboardIE(InfoExtractor):
                 }
 
     def _real_extract(self, url):
-        course_id, lecture_id = self._match_valid_url(url).group('course_id', 'lecture_id')
+        course_id, lecture_id, slug = self._match_valid_url(url).group(
+            'course_id', 'lecture_id', 'id')
+        if slug:
+            return self._extract_public_course(url, slug)
+        if not self._API_HEADERS.get('Authorization'):
+            self.raise_login_required(
+                'This content is only available with purchase', method='password')
         data = self._download_json(
             f'https://api.gamedev.tv/api/courses/my/{course_id}', course_id,
             headers=self._API_HEADERS)['data']
