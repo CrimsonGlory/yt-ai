@@ -6,10 +6,12 @@ from ..networking import HEADRequest
 from ..utils import (
     InAdvancePagedList,
     clean_html,
+    determine_ext,
     js_to_json,
     parse_iso8601,
     parse_qs,
     str_or_none,
+    url_or_none,
 )
 from ..utils.traversal import require, traverse_obj
 
@@ -33,8 +35,25 @@ class LocipoIE(LocipoBaseIE):
         fr'https?://locipo\.jp/embed/?\?(?:[^#]+&)?id=(?P<id>{LocipoBaseIE._UUID_RE})',
     ]
     _TESTS = [{
+        # News/press creative: source MP4 is public (Streaks VOD is JP-geo-restricted)
+        'url': 'https://locipo.jp/creative/a4db5450-24aa-4108-b8d7-15710ff25709',
+        'md5': 'a0712dda7609a33787cb02c07e0e344d',
+        'info_dict': {
+            'id': 'a4db5450-24aa-4108-b8d7-15710ff25709',
+            'ext': 'mp4',
+            'title': '愛知・蒲郡 土砂崩れから２年 市長ら追悼',
+            'display_id': 'bbc38641571d48cead0f21028b16f86d',
+            'live_status': 'not_live',
+            'release_timestamp': 1787843580,
+            'release_date': '20260827',
+            'series': 'ニュース',
+            'series_id': '57',
+            'uploader': '中京テレビ',
+            'uploader_id': 'locipo-prod',
+        },
+    }, {
         'url': 'https://locipo.jp/creative/fb5ffeaa-398d-45ce-bb49-0e221b5f94f1',
-        'skip': 'Geo-restricted',
+        'skip': 'Geo-restricted to Japan',
         'info_dict': {
             'id': 'fb5ffeaa-398d-45ce-bb49-0e221b5f94f1',
             'ext': 'mp4',
@@ -87,7 +106,7 @@ class LocipoIE(LocipoBaseIE):
         'playlist_mincount': 3,
     }, {
         'url': 'https://locipo.jp/creative/a0751a7f-c7dd-4a10-a7f1-e12720bdf16c?list=006cff3f-ba74-42f0-b4fd-241486ebda2b',
-        'skip': 'Geo-restricted',
+        'skip': 'Geo-restricted to Japan',
         'info_dict': {
             'id': 'a0751a7f-c7dd-4a10-a7f1-e12720bdf16c',
             'ext': 'mp4',
@@ -119,18 +138,31 @@ class LocipoIE(LocipoBaseIE):
                 f'{self._BASE_URL}/playlist/{playlist_id}', LocipoPlaylistIE)
 
         creatives = self._call_api(f'creatives/{video_id}', video_id, 'Creatives')
-        media_id = traverse_obj(creatives, ('media_id', {str}, {require('Streaks media ID')}))
+        media_id = traverse_obj(creatives, ('media_id', {str}))
+        # Press/news clips publish a public progressive MP4; Streaks playback is JP-only
+        direct_url = traverse_obj(creatives, ('video_file_name', {url_or_none}))
 
-        webpage = self._download_webpage(url, video_id)
-        config = self._search_json(
-            r'window\.__NUXT__\.config\s*=', webpage, 'config', video_id, transform_source=js_to_json)
-        api_key = traverse_obj(config, ('public', 'streaksVodPlaybackApiKey', {str}, {require('api key')}))
-
-        return {
-            **self._extract_from_streaks_api('locipo-prod', media_id, headers={
+        if direct_url:
+            streaks_info = {
+                'url': direct_url,
+                'ext': determine_ext(direct_url, 'mp4'),
+                'display_id': media_id,
+                'live_status': 'not_live',
+                'uploader_id': 'locipo-prod',
+            }
+        else:
+            media_id = traverse_obj(creatives, ('media_id', {str}, {require('Streaks media ID')}))
+            webpage = self._download_webpage(url, video_id)
+            config = self._search_json(
+                r'window\.__NUXT__\.config\s*=', webpage, 'config', video_id, transform_source=js_to_json)
+            api_key = traverse_obj(config, ('public', 'streaksVodPlaybackApiKey', {str}, {require('api key')}))
+            streaks_info = self._extract_from_streaks_api('locipo-prod', media_id, headers={
                 'Origin': 'https://locipo.jp',
                 'X-Streaks-Api-Key': api_key,
-            }),
+            })
+
+        return {
+            **streaks_info,
             **traverse_obj(creatives, {
                 'title': ('name', {clean_html}),
                 'description': ('description', {clean_html}, filter),
