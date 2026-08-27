@@ -613,6 +613,26 @@ class HGTVUsaIE(DiscoveryPlusBaseIE):
 class FoodNetworkIE(DiscoveryPlusBaseIE):
     _VALID_URL = r'https?://(?:watch\.)?foodnetwork\.com/video' + DPlayBaseIE._PATH_REGEX
     _TESTS = [{
+        'url': 'https://watch.foodnetwork.com/video/duff-takes-the-cake-food-network/baked-sealed-and-delivered',
+        'info_dict': {
+            'id': '2151062',
+            'display_id': 'duff-takes-the-cake-food-network/baked-sealed-and-delivered',
+            'ext': 'mp4',
+            'title': 'Baked, Sealed and Delivered',
+            'description': 'Duff and his crew make 21 bird-themed cakes for a deserving group of kids.',
+            'season_number': 1,
+            'season': 'Season 1',
+            'episode_number': 1,
+            'episode': 'Episode 1',
+            'series': 'Duff Takes The Cake',
+            'duration': 2230.666,
+            'upload_date': '20220129',
+            'timestamp': 1643432400,
+            'tags': [],
+            'creators': ['Food Network'],
+            'thumbnail': 'https://us1-prod-images.disco-api.com/2020/05/08/2ec60331-703f-343f-b96a-569ec8162a22.jpeg',
+        },
+    }, {
         'url': 'https://watch.foodnetwork.com/video/guys-grocery-games-food-network/wild-in-the-aisles',
         'skip': 'video gone',
         'info_dict': {
