@@ -626,6 +626,26 @@ class FoodNetworkIE(DiscoveryPlusBaseIE):
 class DestinationAmericaIE(DiscoveryPlusBaseIE):
     _VALID_URL = r'https?://(?:www\.)?destinationamerica\.com/video' + DPlayBaseIE._PATH_REGEX
     _TESTS = [{
+        'url': 'https://www.destinationamerica.com/video/bbq-pit-wars-destination-america/georgia-big-pig-jig',
+        'info_dict': {
+            'id': '2346991',
+            'display_id': 'bbq-pit-wars-destination-america/georgia-big-pig-jig',
+            'ext': 'mp4',
+            'title': 'Georgia Big Pig Jig',
+            'description': 'Competitors tackle the biggest challenge in all of BBQ -- the whole hog.',
+            'season_number': 1,
+            'season': 'Season 1',
+            'episode_number': 3,
+            'episode': 'Episode 3',
+            'series': 'BBQ Pit Wars',
+            'tags': [],
+            'creators': ['Destination America'],
+            'duration': 2610.975,
+            'upload_date': '20230623',
+            'timestamp': 1687492800,
+            'thumbnail': 'https://us1-prod-images.disco-api.com/2021/04/14/17126602-bde6-303d-bf6f-572381c38872.jpeg',
+        },
+    }, {
         'url': 'https://www.destinationamerica.com/video/bbq-pit-wars-destination-america/smoke-on-the-water',
         'skip': 'Login required',
         'info_dict': {
