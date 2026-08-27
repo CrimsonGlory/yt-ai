@@ -13,11 +13,10 @@ class FlickrIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.|secure\.)?flickr\.com/photos/[\w\-_@]+/(?P<id>\d+)'
     _TEST = {
         'url': 'http://www.flickr.com/photos/forestwander-nature-pictures/5645318632/in/photostream/',
-        'skip': 'Site returned HTTP 5xx',
-        'md5': '164fe3fa6c22e18d448d4d5af2330f31',
+        'md5': '885dda3c519ed122fe8457dbe2a6aefa',
         'info_dict': {
             'id': '5645318632',
-            'ext': 'mpg',
+            'ext': 'mp4',
             'description': 'Waterfalls in the Springtime at Dark Hollow Waterfalls. These are located just off of Skyline Drive in Virginia. They are only about 6/10 of a mile hike but it is a pretty steep hill and a good climb back up.',
             'title': 'Dark Hollow Waterfalls',
             'duration': 19,
@@ -68,7 +67,7 @@ class FlickrIE(InfoExtractor):
 
         api_key = self._download_json(
             'https://www.flickr.com/hermes_error_beacon.gne', video_id,
-            'Downloading api key')['site_key']
+            'Downloading api key', impersonate=True)['site_key']
 
         video_info = self._call_api(
             'photos.getInfo', video_id, api_key, 'Downloading video info')['photo']
