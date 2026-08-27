@@ -1,10 +1,11 @@
 import re
 
 from .common import InfoExtractor
-from ..networking import HEADRequest
+from ..networking import Request
 from ..utils import (
     get_element_by_class,
     int_or_none,
+    parse_http_range,
     try_call,
     url_or_none,
     urlhandle_detect_ext,
@@ -36,40 +37,47 @@ class Mx3BaseIE(InfoExtractor):
         formats = []
         for fmt in self._FORMATS:
             format_url = f'https://{self._DOMAIN}/tracks/{track_id}/{fmt["url"]}'
+            # Site rejects HEAD (HTTP 403) but serves media on ranged GET
             urlh = self._request_webpage(
-                HEADRequest(format_url), track_id, fatal=False, expected_status=404,
+                Request(format_url, headers={'Range': 'bytes=0-0'}),
+                track_id, fatal=False, expected_status=404,
                 note=f'Checking for format {fmt["format_id"]}')
-            if urlh and urlh.status == 200:
+            if urlh and urlh.status in (200, 206):
+                _, _, filesize = parse_http_range(urlh.headers.get('Content-Range'))
                 formats.append({
                     **fmt,
                     'url': format_url,
                     'ext': urlhandle_detect_ext(urlh),
-                    'filesize': int_or_none(urlh.headers.get('Content-Length')),
+                    'filesize': filesize or int_or_none(urlh.headers.get('Content-Length')),
                 })
         return formats
 
     def _real_extract(self, url):
         track_id = self._match_id(url)
         webpage = self._download_webpage(url, track_id)
-        more_info = get_element_by_class('single-more-info', webpage)
+        more_info = get_element_by_class('single-more-info', webpage) or webpage
         data = self._download_json(f'https://{self._DOMAIN}/t/{track_id}.json', track_id, fatal=False)
 
         def get_info_field(name):
             return self._html_search_regex(
                 rf'<dt[^>]*>\s*{name}\s*</dt>\s*<dd[^>]*>(.*?)</dd>',
-                more_info, name, default=None, flags=re.DOTALL)
+                more_info, name, default=None, flags=re.DOTALL) or self._html_search_regex(
+                rf'<span[^>]*>\s*{re.escape(name)}\s*</span>\s*([^<]+)',
+                more_info, name, default=None)
 
         return {
             'id': track_id,
             'formats': self._extract_formats(track_id),
             'genre': self._html_search_regex(
-                r'<div\b[^>]+class="single-band-genre"[^>]*>([^<]+)</div>', webpage, 'genre', default=None),
+                r'<div\b[^>]+class="single-band-genre"[^>]*>([^<]+)</div>', webpage, 'genre', default=None)
+            or self._html_search_regex(
+                r'plays\s*[—-]\s*([^<]+?)\s*,\s*\d{4}', webpage, 'genre', default=None),
             'release_year': int_or_none(get_info_field('Year of creation')),
             'description': get_info_field('Description'),
-            'tags': try_call(lambda: get_info_field('Tag').split(', '), list),
+            'tags': try_call(lambda: (get_info_field('Tags') or get_info_field('Tag')).split(', '), list) or [],
             **traverse_obj(data, {
                 'title': ('title', {str}),
-                'artist': (('performer_name', 'artist'), {str}),
+                'artist': (('performer_name', 'performerships', 'artist'), {str}, filter),
                 'album_artist': ('artist', {str}),
                 'composer': ('composer_name', {str}),
                 'thumbnail': (('picture_url_xlarge', 'picture_url'), {url_or_none}),
@@ -82,49 +90,51 @@ class Mx3IE(Mx3BaseIE):
     _VALID_URL = Mx3BaseIE._VALID_URL_TMPL % re.escape(_DOMAIN)
     _TESTS = [{
         'url': 'https://mx3.ch/t/1Cru',
-        'skip': 'HTTP Error 403',
         'md5': '7ba09e9826b4447d4e1ce9d69e0e295f',
         'info_dict': {
             'id': '1Cru',
             'ext': 'wav',
             'artist': 'Godina',
+            'artists': ['Godina'],
             'album_artist': 'Tortue Tortue',
-            'composer': 'Olivier Godinat',
+            'album_artists': ['Tortue Tortue'],
             'genre': 'Rock',
-            'thumbnail': 'https://mx3.ch/pictures/mx3/file/0101/4643/square_xlarge/1-s-envoler-1.jpg?1630272813',
+            'genres': ['Rock'],
+            'thumbnail': r're:https?://mx3\.ch/.+1-s-envoler-1\.jpg',
             'title': "S'envoler",
             'release_year': 2021,
             'tags': [],
         },
     }, {
         'url': 'https://mx3.ch/t/1LIY',
-        'skip': 'HTTP Error 403',
         'md5': '48293cb908342547827f963a5a2e9118',
         'info_dict': {
             'id': '1LIY',
             'ext': 'mov',
             'artist': 'Tania Kimfumu',
+            'artists': ['Tania Kimfumu'],
             'album_artist': 'The Broots',
-            'composer': 'Emmanuel Diserens',
+            'album_artists': ['The Broots'],
             'genre': 'Electro',
-            'thumbnail': 'https://mx3.ch/pictures/mx3/file/0110/0003/video_xlarge/frame_0000.png?1686963670',
+            'genres': ['Electro'],
+            'thumbnail': r're:https?://mx3\.ch/.+frame_0000\.png',
             'title': 'The Broots-Larytta remix "Begging For Help"',
             'release_year': 2023,
             'tags': ['the broots', 'cassata records', 'larytta'],
-            'description': '"Begging for Help" Larytta Remix Official Video\nRealized By Kali Donkilie in 2023',
         },
     }, {
         'url': 'https://mx3.ch/t/1C6E',
-        'skip': 'HTTP Error 403',
         'md5': '1afcd578493ddb8e5008e94bb6d97e25',
         'info_dict': {
             'id': '1C6E',
             'ext': 'wav',
             'artist': 'Alien Bubblegum',
+            'artists': ['Alien Bubblegum'],
             'album_artist': 'Alien Bubblegum',
-            'composer': 'Alien Bubblegum',
+            'album_artists': ['Alien Bubblegum'],
             'genre': 'Punk',
-            'thumbnail': 'https://mx3.ch/pictures/mx3/file/0101/1551/square_xlarge/pandora-s-box-cover-with-title.png?1627054733',
+            'genres': ['Punk'],
+            'thumbnail': r're:https?://mx3\.ch/.+pandora-s-box-cover-with-title\.png',
             'title': 'Wide Awake',
             'release_year': 2021,
             'tags': ['alien bubblegum', 'bubblegum', 'alien', 'pop punk', 'poppunk'],
@@ -137,17 +147,20 @@ class Mx3NeoIE(Mx3BaseIE):
     _VALID_URL = Mx3BaseIE._VALID_URL_TMPL % re.escape(_DOMAIN)
     _TESTS = [{
         'url': 'https://neo.mx3.ch/t/1hpd',
-        'skip': 'HTTP Error 403',
         'md5': '6d9986bbae5cac3296ec8813bf965eb2',
         'info_dict': {
             'id': '1hpd',
             'ext': 'wav',
-            'artist': 'Baptiste Lopez',
+            'artist': 'Kammerorchester Basel +1',
+            'artists': ['Kammerorchester Basel +1'],
             'album_artist': 'Kammerorchester Basel',
+            'album_artists': ['Kammerorchester Basel'],
             'composer': 'Jannik Giger',
+            'composers': ['Jannik Giger'],
             'genre': 'Composition, Orchestra',
+            'genres': ['Composition', 'Orchestra'],
             'title': 'Troisième œil. Für Kammerorchester (2023)',
-            'thumbnail': 'https://neo.mx3.ch/pictures/neo/file/0000/0241/square_xlarge/kammerorchester-basel-group-photo-2_c_-lukasz-rajchert.jpg?1560341252',
+            'thumbnail': r're:https?://neo\.mx3\.ch/.+kammerorchester-basel-group-photo-2_c_-lukasz-rajchert\.jpg',
             'release_year': 2023,
             'tags': [],
         },
@@ -159,17 +172,20 @@ class Mx3VolksmusikIE(Mx3BaseIE):
     _VALID_URL = Mx3BaseIE._VALID_URL_TMPL % re.escape(_DOMAIN)
     _TESTS = [{
         'url': 'https://volksmusik.mx3.ch/t/Zx',
-        'skip': 'HTTP Error 403',
         'md5': 'dd967a7b0c1ef898f3e072cf9c2eae3c',
         'info_dict': {
             'id': 'Zx',
             'ext': 'mp3',
             'artist': 'Ländlerkapelle GrischArt',
+            'artists': ['Ländlerkapelle GrischArt'],
             'album_artist': 'Ländlerkapelle GrischArt',
+            'album_artists': ['Ländlerkapelle GrischArt'],
             'composer': 'Urs Glauser',
+            'composers': ['Urs Glauser'],
             'genre': 'Instrumental, Graubünden',
+            'genres': ['Instrumental', 'Graubünden'],
             'title': 'Chämilouf',
-            'thumbnail': 'https://volksmusik.mx3.ch/pictures/vxm/file/0000/3815/square_xlarge/grischart1.jpg?1450530120',
+            'thumbnail': r're:https?://volksmusik\.mx3\.ch/.+grischart1\.jpg',
             'release_year': 2012,
             'tags': [],
         },
