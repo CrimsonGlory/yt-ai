@@ -20,17 +20,19 @@ class GoProIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://gopro.com/v/ZNVvED8QDzR5V',
+        'md5': 'cbe57429ecd2ea069e9ab14a52f1a27b',
         'info_dict': {
             'id': 'ZNVvED8QDzR5V',
+            'ext': 'mp4',
             'title': 'My GoPro Adventure - 9/19/21',
             'thumbnail': r're:https?://.+',
-            'ext': 'mp4',
-            'timestamp': int,
-            'upload_date': r're:\d{8}',
-            'uploader_id': str,
+            'timestamp': 1632071663,
+            'upload_date': '20210919',
+            'uploader_id': 'cefac45d-9eb2-482f-bf85-36f8e64b7151',
         },
     }, {
         'url': 'https://gopro.com/v/KRm6Vgp2peg4e',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'KRm6Vgp2peg4e',
             'title': 'じゃがいも カリカリ オーブン焼き',
@@ -44,17 +46,13 @@ class GoProIE(InfoExtractor):
         },
     }, {
         'url': 'https://gopro.com/v/kVrK9wlJvBMwn',
+        'md5': 'a5084c90889680050e6d762cd2ad8bfa',
         'info_dict': {
             'id': 'kVrK9wlJvBMwn',
+            'ext': 'mp4',
             'title': 'DARKNESS',
             'thumbnail': r're:https?://.+',
-            'ext': 'mp4',
-            'timestamp': 1594183735,
-            'upload_date': '20200708',
-            'uploader_id': '闇夜乃皇帝',
-            'duration': 313075,
-            'track': 'Battery (Live)',
-            'artist': 'Metallica',
+            'uploader_id': '55b50340-069e-49c5-8d51-04c76f7694f8',
         },
     }]
 
