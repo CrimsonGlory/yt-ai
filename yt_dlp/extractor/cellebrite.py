@@ -3,9 +3,22 @@ from ..utils import ExtractorError, make_archive_id, url_basename
 
 
 class CellebriteIE(VidyardBaseIE):
-    _VALID_URL = r'https?://cellebrite\.com/(?:\w+)?/(?P<id>[\w-]+)'
+    _VALID_URL = r'https?://(?:www\.)?cellebrite\.com/(?:[a-z]{2}/)?(?:[\w-]+/)*(?P<id>[\w-]+)/?(?:[?#]|$)'
     _TESTS = [{
+        'url': 'https://cellebrite.com/en/resources/webinars/the-ai-advantage-evidence-review/',
+        'info_dict': {
+            'id': 'msZ1hLy22NtktreiJZqp1Z',
+            'display_id': '47603526',
+            'ext': 'mp4',
+            'title': 'Webinar: The AI Advantage - Evidence Review',
+            'description': 'md5:e1b209e036d12adf3dc1e0e5bc408ee7',
+            'thumbnail': r're:https?://.+\.(?:jpg|png)',
+            'duration': 3732.67,
+            '_old_archive_ids': ['cellebrite 47603526'],
+        },
+    }, {
         'url': 'https://cellebrite.com/en/how-to-lawfully-collect-the-maximum-amount-of-data-from-android-devices/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'QV1U8a2yzcxigw7VFnqKyg',
             'display_id': '29018255',
@@ -20,7 +33,7 @@ class CellebriteIE(VidyardBaseIE):
 
     def _real_extract(self, url):
         slug = self._match_id(url)
-        webpage = self._download_webpage(url, slug)
+        webpage = self._download_webpage(url, slug, impersonate=True)
         vidyard_url = next(VidyardIE._extract_embed_urls(url, webpage), None)
         if not vidyard_url:
             raise ExtractorError('No Vidyard video embeds found on page')
