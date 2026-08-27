@@ -3,8 +3,17 @@ from .common import InfoExtractor
 
 class GlideIE(InfoExtractor):
     IE_DESC = 'Glide mobile video messages (glide.me)'
-    _VALID_URL = r'https?://share\.glide\.me/(?P<id>[A-Za-z0-9\-=_+]+)'
-    _TEST = {
+    _VALID_URL = r'https?://share\.glide\.me/(?P<id>[^/?#]+(?:/[^/?#]+)?)'
+    _TESTS = [{
+        'url': 'https://share.glide.me/yoav/v0wmhcm3',
+        'md5': 'c0312f55c68584c5a9a4b235593a91e4',
+        'info_dict': {
+            'id': 'yoav/v0wmhcm3',
+            'ext': 'mp4',
+            'title': "Yoav's message",
+            'thumbnail': r're:https?://.+\.jpg',
+        },
+    }, {
         'url': 'http://share.glide.me/UZF8zlmuQbe4mr+7dCiQ0w==',
         'skip': 'video gone',
         'md5': '4466372687352851af2d131cfaa8a4c7',
@@ -14,7 +23,7 @@ class GlideIE(InfoExtractor):
             'title': "Damon's Glide message",
             'thumbnail': r're:^https?://.*?\.cloudfront\.net/.*\.jpg$',
         },
-    }
+    }]
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
