@@ -1,21 +1,60 @@
+import base64
 import itertools
 import urllib.parse
 
 from .common import InfoExtractor
-from ..utils import parse_qs
+from ..utils import (
+    int_or_none,
+    join_nonempty,
+    parse_qs,
+    str_or_none,
+    traverse_obj,
+    unified_timestamp,
+    url_or_none,
+)
 
 
 class DaumBaseIE(InfoExtractor):
     _KAKAO_EMBED_BASE = 'http://tv.kakao.com/embed/player/cliplink/'
+    _HOMI_API = 'https://m.daum.net/api/view/video/node/key'
 
 
 class DaumIE(DaumBaseIE):
-    _VALID_URL = r'https?://(?:(?:m\.)?tvpot\.daum\.net/v/|videofarm\.daum\.net/controller/player/VodPlayer\.swf\?vid=)(?P<id>[^?#&]+)'
+    _VALID_URL = r'''(?x)
+        https?://(?:
+            (?:(?:m\.)?tvpot\.daum\.net/v/|videofarm\.daum\.net/controller/player/VodPlayer\.swf\?vid=)
+            |(?:(?:www\.)?daum\.net|video\.daum\.net)/video/(?:v|vod|loop|preview)/
+            |video\.daum\.net/s/
+        )(?P<id>[^/?#&]+)'''
     IE_NAME = 'daum.net'
 
     _TESTS = [{
+        'url': 'https://www.daum.net/video/v/6pqckdh4fr0wzdww',
+        'md5': 'e260eebc0d860aeea2854e5effa6e9a8',
+        'info_dict': {
+            'id': '6pqckdh4fr0wzdww',
+            'ext': 'mp4',
+            'title': '\'해결사 김하성\' 9회 말 끝내기 안타 폭발...애틀랜타, 다저스에 6-5 승리 [스포타임#뉴스]',
+            'thumbnail': r're:https?://.*',
+            'duration': 171,
+            'view_count': int,
+            'uploader': '스포티비뉴스',
+            'uploader_id': '346051',
+            'timestamp': 1787833112,
+            'upload_date': '20260827',
+        },
+        'params': {
+            'format': 'preview',
+        },
+    }, {
+        'url': 'https://www.daum.net/video/loop/r5bf3438v154thbq',
+        'only_matching': True,
+    }, {
+        'url': 'https://video.daum.net/s/1010238803',
+        'only_matching': True,
+    }, {
         'url': 'http://tvpot.daum.net/v/vab4dyeDBysyBssyukBUjBz',
-        'skip': 'No video formats found',
+        'skip': 'tvpot shut down; video no longer available',
         'info_dict': {
             'id': 'vab4dyeDBysyBssyukBUjBz',
             'ext': 'mp4',
@@ -52,6 +91,7 @@ class DaumIE(DaumBaseIE):
         'only_matching': True,
     }, {
         'url': 'http://videofarm.daum.net/controller/player/VodPlayer.swf?vid=vwIpVpCQsT8%24&ref=',
+        'skip': 'videofarm/tvpot shut down; video no longer available',
         'info_dict': {
             'id': 'vwIpVpCQsT8$',
             'ext': 'flv',
@@ -83,12 +123,113 @@ class DaumIE(DaumBaseIE):
         },
     }]
 
+    def _homi_contents(self, key, video_id, note, query):
+        data = self._download_json(
+            f'{self._HOMI_API}/{key}', video_id, note, query=query)
+        return traverse_obj(data, ('frames', 0, 'contents')) or {}
+
+    def _jwt_payload(self, token, video_id):
+        if not token or token.count('.') < 2:
+            return {}
+        payload = token.split('.', 2)[1]
+        payload += '=' * ((4 - len(payload) % 4) % 4)
+        try:
+            decoded = base64.urlsafe_b64decode(payload)
+        except (ValueError, TypeError):
+            return {}
+        return self._parse_json(decoded, video_id, fatal=False) or {}
+
+    def _extract_kamp_formats(self, src_vid, tid, token, video_id):
+        playinfo = self._download_json(
+            f'https://kamp.daum.net/vod/v1/src/{src_vid}', video_id,
+            'Downloading video formats', fatal=False,
+            query={'tid': tid, 'auth_type': 'query'},
+            headers={
+                'X-Kamp-Player': 'kamp-player-web',
+                'X-Kamp-Version': '2.0.21',
+                'X-Kamp-Auth': f'Bearer {token}',
+            }, expected_status=(401, 403, 404))
+        if not isinstance(playinfo, dict) or not playinfo.get('streams'):
+            return []
+
+        profiles = {
+            p['name']: p
+            for p in traverse_obj(playinfo, ('profiles', ..., {dict})) or []
+            if p.get('name')
+        }
+        formats = []
+        for stream in traverse_obj(playinfo, ('streams', ..., {dict})) or []:
+            stream_url = url_or_none(stream.get('url'))
+            if not stream_url:
+                continue
+            proto = stream.get('protocol')
+            profile = profiles.get(stream.get('profile')) or {}
+            fmt = {
+                'url': stream_url,
+                'format_id': join_nonempty(proto, stream.get('profile')),
+                'width': int_or_none(profile.get('width')),
+                'height': int_or_none(profile.get('height')),
+                'tbr': int_or_none(profile.get('video_bps'), scale=1000),
+                'filesize': int_or_none(profile.get('filesize')),
+                'ext': 'mp4',
+            }
+            if proto in ('hls', 'll_hls'):
+                fmt['protocol'] = 'm3u8_native'
+            formats.append(fmt)
+        return formats
+
     def _real_extract(self, url):
         video_id = urllib.parse.unquote(self._match_id(url))
-        if not video_id.isdigit():
-            video_id += '@my'
-        return self.url_result(
-            self._KAKAO_EMBED_BASE + video_id, 'Kakao', video_id)
+        if 'tvpot.daum.net' in url or 'videofarm.daum.net' in url:
+            if not video_id.isdigit():
+                video_id += '@my'
+            return self.url_result(
+                self._KAKAO_EMBED_BASE + video_id, 'Kakao', video_id)
+
+        clip_link = {}
+        if video_id.isdigit():
+            clip_link = self._homi_contents(
+                'cliplink', video_id, 'Downloading clip metadata',
+                {'clipLinkId': video_id}).get('clipLink') or {}
+            video_id = traverse_obj(clip_link, ('clip', 'id')) or video_id
+
+        play_token = self._homi_contents(
+            'play_token', video_id, 'Downloading play token',
+            {'id': video_id}).get('playToken') or {}
+        if not clip_link:
+            clip_link_id = traverse_obj(
+                self._jwt_payload(play_token.get('token'), video_id),
+                ('custom_data', 'cd3'))
+            if clip_link_id:
+                clip_link = self._homi_contents(
+                    'cliplink', video_id, 'Downloading clip metadata',
+                    {'clipLinkId': clip_link_id}).get('clipLink') or {}
+
+        clip = traverse_obj(clip_link, ('clip', {dict})) or {}
+        preview_url = url_or_none(clip.get('peekViewUrl')) or f'https://www.daum.net/video/preview/{video_id}'
+        formats = [{
+            'url': preview_url,
+            'format_id': 'preview',
+            'ext': 'mp4',
+            'quality': -10,
+            'format_note': 'preview',
+        }]
+        src_vid, tid, token = play_token.get('vid'), play_token.get('tid'), play_token.get('token')
+        if src_vid and tid and token:
+            formats.extend(self._extract_kamp_formats(src_vid, tid, token, video_id))
+
+        return {
+            'id': video_id,
+            'title': clip.get('title'),
+            'thumbnail': url_or_none(clip.get('thumbnailUrl')),
+            'duration': int_or_none(clip.get('duration')),
+            'view_count': int_or_none(clip.get('playCount') or clip_link.get('playCount')),
+            'uploader': traverse_obj(clip_link, ('channel', 'name')),
+            'uploader_id': str_or_none(clip_link.get('channelId') or clip.get('channelId')),
+            'timestamp': unified_timestamp(clip.get('createTime')),
+            'tags': clip.get('tagList') or None,
+            'formats': formats,
+        }
 
 
 class DaumClipIE(DaumBaseIE):
