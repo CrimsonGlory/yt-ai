@@ -23,6 +23,17 @@ class VrSquareIE(InfoExtractor):
     _BASE_URL = 'https://livr.jp'
     _VALID_URL = r'https?://livr\.jp/contents/(?P<id>[\w-]+)'
     _TESTS = [{
+        'url': 'https://livr.jp/contents/P262452119',
+        'md5': '7ff6143127a66a2354d4b36738e7d3fb',
+        'info_dict': {
+            'id': 'P262452119',
+            'ext': 'mp4',
+            'title': '①3840-2160.mp4 2D 360°Equirectangular',
+            'description': '3840-2160.mp4 2D 360°Equirectangular',
+            'duration': 15,
+            'thumbnail': '',
+        },
+    }, {
         'url': 'https://livr.jp/contents/P470896661',
         'skip': 'video gone',
         'info_dict': {
