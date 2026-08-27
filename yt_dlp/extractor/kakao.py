@@ -17,7 +17,7 @@ class KakaoIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://tv.kakao.com/channel/2671005/cliplink/301965083',
-        'skip': 'No video formats found',
+        'skip': 'KakaoTV shut down 2026-06-30; tv.kakao.com serves a service-ended page and the readyNplay CDN API is dead',
         'md5': '702b2fbdeb51ad82f5c904e8c0766340',
         'info_dict': {
             'id': '301965083',
@@ -37,7 +37,7 @@ class KakaoIE(InfoExtractor):
         },
     }, {
         'url': 'http://tv.kakao.com/channel/2653210/cliplink/300103180',
-        'skip': 'No video formats found',
+        'skip': 'KakaoTV shut down 2026-06-30; tv.kakao.com serves a service-ended page and the readyNplay CDN API is dead',
         'md5': 'a8917742069a4dd442516b86e7d66529',
         'info_dict': {
             'id': '300103180',
@@ -122,6 +122,11 @@ class KakaoIE(InfoExtractor):
                 'filesize': int_or_none(fmt.get('filesize')),
                 'tbr': int_or_none(fmt.get('kbps')),
             })
+
+        if not formats:
+            self.raise_no_formats(
+                'KakaoTV shut down on 2026-06-30; no video formats are available',
+                expected=True, video_id=video_id)
 
         thumbs = []
         for thumb in clip.get('clipChapterThumbnailList') or []:
