@@ -80,8 +80,22 @@ class CBSSportsBaseIE(InfoExtractor):
 class CBSSportsIE(CBSSportsBaseIE):
     _WEB_FALLBACK = True
     IE_NAME = 'cbssports'
-    _VALID_URL = r'https?://(?:www\.)?cbssports\.com/[^/]+/video/(?P<id>[^/?#&]+)'
+    _VALID_URL = r'https?://(?:www\.)?cbssports\.com/(?:watch/)?[^/]+/video/(?P<id>[^/?#&]+)'
     _TESTS = [{
+        'url': 'https://www.cbssports.com/watch/nfl/video/nfl-game-preview-49ers-at-raiders',
+        'md5': 'a6e449b5ec625fa7e81652a467187537',
+        'info_dict': {
+            'id': 'f75fe24a-62b0-4ddf-899d-a63abe21e924',
+            'ext': 'mp4',
+            'display_id': 'nfl-game-preview-49ers-at-raiders',
+            'title': 'NFL Game Preview: 49ers at Raiders',
+            'description': 'Ryan Wilson and Ran Carthon join Hailey Sutton to preview the 49ers and Raiders preseason game.',
+            'thumbnail': r're:https?://.+\.jpg',
+            'timestamp': 1787770345,
+            'upload_date': '20260826',
+            'duration': 591,
+        },
+    }, {
         'url': 'https://www.cbssports.com/college-football/video/cover-3-stanford-spring-gleaning/',
         'info_dict': {
             'id': 'b56c03a6-231a-4bbe-9c55-af3c8a8e9636',
@@ -92,7 +106,38 @@ class CBSSportsIE(CBSSportsBaseIE):
             'upload_date': '20210331',
             'duration': 502,
         },
+        'skip': 'This video is no longer available',
     }]
+
+    def _real_extract(self, url):
+        display_id = self._match_id(url)
+        webpage = self._download_webpage(url, display_id, impersonate=True)
+        video = traverse_obj(
+            self._search_nextjs_data(webpage, display_id, default={}),
+            ('props', 'pageProps', 'videoItem', {dict}))
+        if not video:
+            iframe_url = self._search_regex(
+                r'<iframe[^>]+(?:data-)?src="(https?://[^/]+/player/embed[^"]+)"',
+                webpage, 'embed url')
+            return self.url_result(iframe_url, CBSSportsEmbedIE.ie_key())
+
+        video_id = video['id']
+        formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+            video['url'], video_id, 'mp4', m3u8_id='hls')
+
+        return {
+            'id': video_id,
+            'display_id': display_id,
+            'formats': formats,
+            'subtitles': subtitles,
+            **traverse_obj(video, {
+                'title': ('title', {str}),
+                'description': ('description', {str}),
+                'thumbnail': ('thumbnail', {url_or_none}),
+                'timestamp': ('publishedOn', {int_or_none}),
+                'duration': ('duration', {int_or_none}),
+            }),
+        }
 
 
 class TwentyFourSevenSportsIE(CBSSportsBaseIE):
