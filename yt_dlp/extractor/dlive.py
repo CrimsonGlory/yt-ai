@@ -9,7 +9,7 @@ class DLiveVODIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?dlive\.tv/p/(?P<uploader_id>.+?)\+(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://dlive.tv/p/pdp+3mTzOl4WR',
-        'skip': 'Site no longer exists or is broken',
+        'skip': 'DLive shut down 2026-04-27; GraphQL API graphigo.prd.dlive.tv no longer resolves',
         'info_dict': {
             'id': '3mTzOl4WR',
             'ext': 'mp4',
@@ -56,6 +56,14 @@ class DLiveVODIE(InfoExtractor):
 class DLiveStreamIE(InfoExtractor):
     IE_NAME = 'dlive:stream'
     _VALID_URL = r'https?://(?:www\.)?dlive\.tv/(?!p/)(?P<id>[\w.-]+)'
+    _TESTS = [{
+        'url': 'https://dlive.tv/pdp',
+        'skip': 'DLive shut down 2026-04-27; live HLS host live.prd.dlive.tv no longer resolves',
+        'info_dict': {
+            'id': 'pdp',
+            'ext': 'mp4',
+        },
+    }]
 
     def _real_extract(self, url):
         display_name = self._match_id(url)
