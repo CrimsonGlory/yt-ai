@@ -313,7 +313,7 @@ class FranceTVSiteIE(FranceTVBaseInfoExtractor):
         },
         'params': {'skip_download': 'livestream'},
     }, {
-        # Not geo-restricted
+        # Films are typically geo-restricted to France
         'url': 'https://www.france.tv/films/films-comedie/8734809-comme-un-prince.html',
         'info_dict': {
             'id': '6061509a-e1a8-46ed-b44e-34772c18f525',
@@ -325,6 +325,20 @@ class FranceTVSiteIE(FranceTVBaseInfoExtractor):
             'upload_date': '20231221',
         },
         'params': {'skip_download': 'm3u8'},
+        'skip': 'geo-restricted',
+    }, {
+        # Journaux télévisés are available worldwide
+        'url': 'https://www.france.tv/france-2/journal-20h00/8738337-edition-du-mercredi-26-aout-2026.html',
+        'info_dict': {
+            'id': 'ca80fd03-c608-4f5b-96ca-5a22779dc190',
+            'ext': 'mp4',
+            'title': 'Journal 20h00 - Édition du mercredi 26 août 2026',
+            'duration': 3089,
+            'thumbnail': r're:https?://.+/.+\.jpg',
+            'timestamp': 1787767069,
+            'upload_date': '20260826',
+        },
+        'expected_warnings': [r'pycryptodomex'],
     }, {
         # france3
         'url': 'https://www.france.tv/france-3/des-chiffres-et-des-lettres/139063-emission-du-mardi-9-mai-2017.html',
