@@ -11,7 +11,26 @@ from ..utils import (
 class STVPlayerIE(InfoExtractor):
     IE_NAME = 'stv:player'
     _VALID_URL = r'https?://player\.stv\.tv/(?P<type>episode|video)/(?P<id>[a-z0-9]{4})'
+    # Brightcove playback API accepts X-Forwarded-For, but stv-vod.brightcovecdn.com
+    # geo-blocks by real client IP (HTTP 403 ARG outside the UK).
+    _GEO_COUNTRIES = ['GB']
     _TESTS = [{
+        'url': 'https://player.stv.tv/episode/4t9k/trigger-point/episode-1',
+        'info_dict': {
+            'id': '6403694049112',
+            'ext': 'mp4',
+            'title': 'Trigger Point - Series 1 - Episode 1',
+            'description': 'Explosives Officers Lana Washington and Joel Nutkins are called to investigate a potential bomb factory in a London housing estate.',
+            'timestamp': 1787130182,
+            'upload_date': '20260819',
+            'uploader_id': '1486976045',
+            'duration': 2722.922,
+            'series': 'Trigger Point',
+            'thumbnail': r're:https?://.+\.jpg',
+            'tags': ['vp-trigger-point'],
+        },
+        'skip': 'geo-restricted to the UK; Brightcove CDN returns HTTP 403 ARG (X-Forwarded-For is ignored)',
+    }, {
         # shortform
         'url': 'https://player.stv.tv/video/4gwd/emmerdale/60-seconds-on-set-with-laura-norton/',
         'md5': '5adf9439c31d554f8be0707c7abe7e0a',
@@ -24,7 +43,7 @@ class STVPlayerIE(InfoExtractor):
             'timestamp': 1488388054,
             'uploader_id': '1486976045',
         },
-        'skip': 'this resource is unavailable outside of the UK',
+        'skip': 'video gone',
     }, {
         # episodes
         'url': 'https://player.stv.tv/episode/4125/jennifer-saunders-memory-lane',
