@@ -1,18 +1,16 @@
 import itertools
-import urllib.parse
 
 from .common import InfoExtractor
-from ..utils import clean_html, traverse_obj, unescapeHTML
+from ..utils import clean_html, traverse_obj, unescapeHTML, unified_strdate
 
 
 class RadioKapitalBaseIE(InfoExtractor):
     def _call_api(self, resource, video_id, note='Downloading JSON metadata', qs={}):
         return self._download_json(
-            f'https://www.radiokapital.pl/wp-json/kapital/v1/{resource}?{urllib.parse.urlencode(qs)}',
-            video_id, note=note)
+            f'https://api.radiokapital.pl/wp-json/kapital/v1/{resource}',
+            video_id, note=note, query=qs)
 
     def _parse_episode(self, data):
-        release = '{}{}{}'.format(data['published'][6:11], data['published'][3:6], data['published'][:3])
         return {
             '_type': 'url_transparent',
             'url': data['mixcloud_url'],
@@ -20,7 +18,7 @@ class RadioKapitalBaseIE(InfoExtractor):
             'title': unescapeHTML(data['title']),
             'description': clean_html(data.get('content')),
             'tags': traverse_obj(data, ('tags', ..., 'name')),
-            'release_date': release,
+            'release_date': unified_strdate(data.get('published')),
             'series': traverse_obj(data, ('show', 'title')),
         }
 
@@ -30,6 +28,30 @@ class RadioKapitalIE(RadioKapitalBaseIE):
     _VALID_URL = r'https?://(?:www\.)?radiokapital\.pl/shows/[a-z\d-]+/(?P<id>[a-z\d-]+)'
 
     _TESTS = [{
+        'url': 'https://radiokapital.pl/shows/bez-cisnienia/odc-65-czynnik-psi',
+        'md5': '0d58cfba527098d258c7f6cf47c5360f',
+        'info_dict': {
+            'id': 'radiokapital_radio-kapitał-bez-ciśnienia-odc65-czynnik-psi-2026-08-24',
+            'ext': 'm4a',
+            'title': 'ODC.65 Czynnik PSI',
+            'description': 'md5:9259e4393b50096ebc09bfa53a2e771f',
+            'uploader': 'Radio Kapitał',
+            'uploader_id': 'radiokapital',
+            'uploader_url': 'https://www.mixcloud.com/radiokapital/',
+            'timestamp': 1787580000,
+            'upload_date': '20260824',
+            'release_date': '20260824',
+            'duration': 3601,
+            'series': 'bez ciśnienia',
+            'comment_count': int,
+            'view_count': int,
+            'like_count': int,
+            'repost_count': int,
+            'thumbnail': r're:https?://.*',
+            'tags': ['bass', 'breaks', 'glitch', 'trip hop'],
+        },
+        'params': {'format': 'http'},
+    }, {
         'url': 'https://radiokapital.pl/shows/tutaj-sa-smoki/5-its-okay-to-be-immaterial',
         'skip': 'video gone',
         'info_dict': {
@@ -57,11 +79,10 @@ class RadioKapitalShowIE(RadioKapitalBaseIE):
 
     _TESTS = [{
         'url': 'https://radiokapital.pl/shows/wesz',
-        'skip': 'video gone',
         'info_dict': {
             'id': '100',
             'title': 'WĘSZ',
-            'description': 'md5:3a557a1e0f31af612b0dcc85b1e0ca5c',
+            'description': 'md5:5f76d18d560cb14663e4f1ea02003bac',
         },
         'playlist_mincount': 17,
     }]
