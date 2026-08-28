@@ -26,6 +26,7 @@ class RozhlasIE(InfoExtractor):
             'title': 'Echo Pavla Klusáka (30.06.2015 21:00)',
             'description': 'Osmdesátiny Terryho Rileyho jsou skvělou příležitostí proletět se elektronickými i akustickými díly zakladatatele minimalismu, který je aktivní už přes padesát let',
         },
+        'skip': 'This audio is no longer available',
     }, {
         'url': 'http://prehravac.rozhlas.cz/audio/3421320/embed',
         'only_matching': True,
@@ -94,94 +95,84 @@ class RozhlasVltavaIE(RozhlasBaseIE):
     _VALID_URL = r'https?://(?:\w+\.rozhlas|english\.radio)\.cz/[\w-]+-(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://wave.rozhlas.cz/papej-masicko-porcujeme-a-bilancujeme-filmy-a-serialy-ktere-letos-zabily-8891337',
-        'md5': 'ba2fdbc1242fc16771c7695d271ec355',
+        'md5': 'c80937b545274646dd6ca3326e73d58d',
         'info_dict': {
-            'id': '8891337',
-            'title': 'md5:21f99739d04ab49d8c189ec711eef4ec',
-            'artists': list,
+            'id': '10520988',
+            'ext': 'mp3',
+            'title': 'Papej masíčko! Porcujeme a bilancujeme filmy a seriály, které to letos zabily',
+            'description': 'md5:1c6d29fb9564e1f17fc1bb83ae7da0bc',
+            'duration': 1574,
+            'artists': ['Aleš Stuchlý'],
+            'channel_id': 'radio-wave',
         },
-        'playlist_count': 1,
-        'playlist': [{
-            'md5': 'ba2fdbc1242fc16771c7695d271ec355',
-            'info_dict': {
-                'id': '10520988',
-                'ext': 'mp3',
-                'title': 'Papej masíčko! Porcujeme a bilancujeme filmy a seriály, které to letos zabily',
-                'description': 'md5:1c6d29fb9564e1f17fc1bb83ae7da0bc',
-                'duration': 1574,
-                'artist': 'Aleš Stuchlý',
-                'channel_id': 'radio-wave',
-            },
-        }],
     }, {
         'url': 'https://wave.rozhlas.cz/poslechnete-si-neklid-podcastovy-thriller-o-vine-strachu-a-vztahu-ktery-zasel-8554744',
         'info_dict': {
             'id': '8554744',
             'title': 'Poslechněte si Neklid. Podcastový thriller o vině, strachu a vztahu, který zašel příliš daleko',
-            'artists': list,
         },
         'playlist_count': 5,
         'playlist': [{
-            'md5': '93d4109cf8f40523699ae9c1d4600bdd',
+            'md5': '38983b7bde245d27325b9609c5b236b8',
             'info_dict': {
                 'id': '9890713',
                 'ext': 'mp3',
                 'title': 'Neklid #1',
                 'description': '1. díl: Neklid: 1. díl',
                 'duration': 1025,
-                'artist': 'Josef Kokta',
+                'artists': ['Josef Kokta'],
                 'channel_id': 'radio-wave',
                 'chapter': 'Neklid #1',
                 'chapter_number': 1,
             },
         }, {
-            'md5': 'e9763235be4a6dcf94bc8a5bac1ca126',
+            'md5': '6f54eec774eec2644c7d80f525fd672d',
             'info_dict': {
                 'id': '9890716',
                 'ext': 'mp3',
                 'title': 'Neklid #2',
                 'description': '2. díl: Neklid: 2. díl',
                 'duration': 768,
-                'artist': 'Josef Kokta',
+                'artists': ['Josef Kokta'],
                 'channel_id': 'radio-wave',
                 'chapter': 'Neklid #2',
                 'chapter_number': 2,
             },
         }, {
-            'md5': '00b642ea94b78cc949ac84da09f87895',
+            'md5': '52e13c54e784d9a9858ae9c81053868e',
             'info_dict': {
                 'id': '9890722',
                 'ext': 'mp3',
                 'title': 'Neklid #3',
                 'description': '3. díl: Neklid: 3. díl',
                 'duration': 607,
-                'artist': 'Josef Kokta',
+                'artists': ['Josef Kokta'],
                 'channel_id': 'radio-wave',
                 'chapter': 'Neklid #3',
                 'chapter_number': 3,
             },
         }, {
-            'md5': 'faef97b1b49da7df874740f118c19dea',
+            'md5': '3401162b8b45629a63ec0b3718ea71b8',
             'info_dict': {
                 'id': '9890728',
                 'ext': 'mp3',
                 'title': 'Neklid #4',
                 'description': '4. díl: Neklid: 4. díl',
                 'duration': 621,
-                'artist': 'Josef Kokta',
+                'artists': ['Josef Kokta'],
                 'channel_id': 'radio-wave',
                 'chapter': 'Neklid #4',
                 'chapter_number': 4,
             },
         }, {
-            'md5': '6e729fa39b647325b868d419c76f3efa',
+            'md5': 'cdadb7db11b06a19bb834c046fc562b1',
             'info_dict': {
                 'id': '9890734',
                 'ext': 'mp3',
                 'title': 'Neklid #5',
                 'description': '5. díl: Neklid: 5. díl',
                 'duration': 908,
-                'artist': 'Josef Kokta',
+                'artists': ['Josef Kokta'],
                 'channel_id': 'radio-wave',
                 'chapter': 'Neklid #5',
                 'chapter_number': 5,
@@ -202,7 +193,7 @@ class RozhlasVltavaIE(RozhlasBaseIE):
                 'title': 'Karel Šiktanc: Černý jezdec, bílý kůň. Napínavá pohádka o tajemném přízraku',
                 'description': 'Karel Šiktanc: Černý jezdec, bílý kůň',
                 'duration': 2656,
-                'artist': 'Tvůrčí skupina Drama a literatura',
+                'artists': ['Tvůrčí skupina Drama a literatura'],
                 'channel_id': 'dvojka',
             },
         }],
@@ -236,12 +227,12 @@ class RozhlasVltavaIE(RozhlasBaseIE):
             r'(<div class="mujRozhlasPlayer" data-player=\'[^\']+\'>)',
             webpage, 'player'))['data-player'], video_id)['data']
 
-        return {
-            '_type': 'playlist',
-            'id': str_or_none(data.get('embedId')) or video_id,
-            'title': traverse_obj(data, ('series', 'title')),
-            'entries': map(self._extract_video, data['playlist']),
-        }
+        entries = [self._extract_video(entry) for entry in data['playlist']]
+        if len(entries) == 1:
+            return entries[0]
+        return self.playlist_result(
+            entries, str_or_none(data.get('embedId')) or video_id,
+            traverse_obj(data, ('series', 'title')))
 
 
 class MujRozhlasIE(RozhlasBaseIE):

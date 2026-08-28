@@ -2444,7 +2444,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **redbulltv**: Play `api.redbull.tv` products via rrn content IDs and `dms.redbull.tv` HLS
     * **reuters**: Read Fusion `globalContent` HLS on current `/video/watch/` pages (impersonate for DataDome)
     * **rockstargames**: Read v4 player JSON (`/v4/{id}/data/{locale}.json`) instead of the dead get-video.json API
-    * **rozhlas**: Resolve slugs via the search API
+    * **rozhlas**: Resolve slugs via the search API; unwrap single-item station playlists
     * **showroom**: Use the public room API instead of Nuxt + login cookie
     * **tfo**: Fall back to Next.js v13 data
     * **theguardian:podcast**: Extract audio URL and author from JSON-LD
