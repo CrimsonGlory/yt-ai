@@ -2466,6 +2466,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **sky:news**: Impersonate the browser and extract Brightcove IDs from the video sitemap / iframe widget when Akamai blocks the page
     * **sky:sports**: Fetch a Condatis Brightcove JWT and match current `/{sport}/video/` clip URLs
     * **slideshare**: Extract public slide images from the GraphQL API after the Next.js rebrand
+    * **slutload**: Impersonate the browser and extract HLS from CamSoda `/porn/video/` preloaded JSON
     * **tfo**: Fall back to Next.js v13 data
     * **theguardian:podcast**: Extract audio URL and author from JSON-LD
     * **tiktok**: Googlebot headers on aweme detail
