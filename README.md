@@ -2284,11 +2284,101 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **bunnycdn**: Fall back to `playlist.m3u8` when JSON-LD is missing
     * **cliprs**: Extract Ring Publishing embeds
     * **cspan**: Fall back to JSON-LD / m3u8 when player JS is blocked
-    * **elpais**: Fall back to a YouTube embed when `url_cache` is missing
-    * **epicon**: Extract HLS from the page when `ajaxplayer` returns 405
+    * **cybrary**: Call the catalog API without requiring a login token
+    * **dailywire**: Use the GraphQL API instead of Next.js page data
+    * **dangalplay**: Extract public Akamai HLS from `smart_url` without login
+    * **daum**: Extract the current Kakao/Daum VOD player instead of the dead tvpot embed
+    * **daystar**: Read Lightcast `configUrl` from the player iframe (including `/live/` URLs)
+    * **dfb**: Follow YouTube embeds and match `dfb.de` news video URLs
+    * **dhm**: Support journal articles and JWPlayer/HLS when the XSPF playlist is gone
+    * **digiview**: Send an `Origin` header on the player POST
+    * **doodstream**: Impersonate the browser and join relative `pass_md5` URLs
+    * **douyu**: Sign streams with Node instead of PhantomJS
+    * **dplay**: Use Disco playback v3
+    * **drtalks**: Follow BunnyCDN embeds from Next.js v13 instead of Brightcove
+    * **drtuber**: Use HTTPS `player_config_json` and tolerate missing files
+    * **dtube**: Support `/watch/` URLs and current IPFS/media hosts
+    * **dumpert**: Use the HTTPS API and impersonate the browser
+    * **duoplay**: Register sessions on `sts.euddn.net`
+    * **ebaumsworld**: Parse the current HTML/JSON player instead of the old XML API
+    * **elpais**: Fall back to JSON-LD media, then a YouTube embed, when `url_cache` is missing
+    * **epicon**: Extract HLS from the page when `ajaxplayer` returns 405 or has no trailer cid
+    * **erocast**: Impersonate the browser
+    * **ettutv**: Match live/videos player URLs and extract current streams
+    * **fancode**: Support current GraphQL / public video pages
+    * **faz**: Follow YouTube embeds
+    * **filmweb**: GraphQL clip query and YouTube embeds; broader article URLs
+    * **flickr**: Impersonate the browser when fetching the API key
+    * **fptplay**: Sign the v7.1 API
+    * **freespeech**: Zype embeds, live-tv URLs, and browser impersonation
+    * **freetv**: Use the current playback API instead of WordPress admin-ajax
+    * **funker530**: Follow BunnyCDN / current embeds instead of Rumble-only
+    * **gamedevtv**: Extract public course preview media via sales-data / BunnyCDN without login
+    * **gamespot**: JW Platform embeds and slug URLs
+    * **gamestar**: Dailymotion player config (impersonate Firefox)
+    * **gazeta**: Extract current article video embeds
+    * **gedidigital**: Broader lastampa / repubblica video URLs
+    * **giantbomb**: JW Platform on current show/video slugs
+    * **glide**: Nested share path IDs
     * **globalplayer:live**: Fetch the stream from the guacamole playables API
+    * **godtube**: Schema.org `contentUrl` instead of player XML
     * **gopro**: Fetch the download URL from the JWT `medium_id`
+    * **gotostage**: New Goto contentservice API hosts
+    * **hbo**: Current HBO.com video/embed JSON instead of the old XML player
+    * **heise**: Targetvideo `<a-video>` embeds
+    * **historicfilms**: OG video URL and `?reel=` search URLs
+    * **hotnewhiphop**: YouTube embeds instead of the old `data-path` player
+    * **huajiao**: `feed/getFeedInfo` API
+    * **hungama**: Playable API with web/free devices
+    * **icareus**: `/video/details/` and `/event/details/` URLs
+    * **ign**: Tolerate missing `videoId` and extra m3u8 paths
+    * **ilpost**: Next.js episode data and podcast path URLs
+    * **imdb**: GraphQL `VideoPlayback` API
+    * **indavideo**: Referer + JSONP callback on `playerHandler`
+    * **iqiyi**: Current IQ/iQIYI playback (bid quality tags and signed play URLs)
+    * **islamchannel**: VOD paths and a fallback stream URL
+    * **ixigua**: Decode play URLs and fetch with a Googlebot UA
+    * **jable**: Impersonate the browser
+    * **jeuxvideo**: Dailymotion embeds (impersonate)
+    * **jixie**: Kompas `jixie-stream` API
+    * **joj**: `play.joj.sk` player/videos URLs
+    * **jove**: Current video/HLS pages
+    * **kakao**: Raise an expected error that KakaoTV shut down on 2026-06-30
+    * **kankanews**: Current page media JSON
+    * **khanacademy**: Fetch `published-content-version` instead of a hardcoded hash
+    * **kicker**: RSS media feeds (and optional `www`)
+    * **kickstarter**: Impersonate the browser to avoid 403s
+    * **kinopoisk**: Discovery widget JSON instead of `ott-widget`
+    * **ku6**: `video/detail?id=` pages
+    * **kukululive**: `live.player.php` `getStreamAddr` API
+    * **kuwo**: HTTPS antiserver + current song pages
+    * **laracasts**: Inertia `data-page` JSON
+    * **leeco**: Guard missing `playstatus`
+    * **lefigaro**: JW Platform on non-embed video URLs
+    * **lemonde**: Dailymotion / YouTube / Digiteka provider map
+    * **lifenews**: Next.js `pData` VIDEO blocks and `/p/` URLs
+    * **likee**: Raise an expected error that public web pages are gone (app-only)
+    * **listennotes**: Impersonate the browser
+    * **litv**: Authenticated `get-urls` API
+    * **livejournal**: Current video JSON
+    * **loc**: `media.loc.gov` IDs and loc JSON media
+    * **locipo**: Direct `video_file_name` when the Streaks API key is gone
+    * **maoritv**: maoriplus.co.nz, live/movie URLs, and a dynamic Brightcove account
+    * **mave**: `cdn.mave.digital` storage
+    * **meipai**: Signed media API instead of `encodeURIComponent` m3u8 on the page
+    * **metacritic**: JW Platform on movie/game/tv pages
     * **microsoft:medius**: Extract HLS manifests when Smooth Streaming is gone
+    * **minds**: v2 entities API
+    * **mirrorcouk**: JSON-LD media
+    * **mit**: YouTube embeds on current OCW course URLs
+    * **mocha**: Current mocha.com.vn API
+    * **murrtube**: Current app JSON
+    * **museai**: skiv.com rebrand
+    * **musescore**: New auth token + impersonate
+    * **mx3**: Range request for filesize
+    * **myspass**: CDN77 media URLs and current clip/folge paths
+    * **myvidster**: Follow YouTube (and other) embeds from current video pages
+    * **n-joy**: JSON-LD / `data-config` ARD player media
     * **n-tv.de**: Extract Next.js player streams and current `-id` video URLs
     * **nba**: Extract public team-site WordPress MP4s from Next.js `videoAssets`
     * **nbcsports**: Extract ThePlatform JWPlayer links when the old vplayer embed is gone
@@ -2300,9 +2390,12 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **orf:on**: Raise geo-restriction when sources are empty
     * **pbs**: Guard against missing `video_info` and title
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
+    * **rozhlas**: Resolve slugs via the search API
     * **showroom**: Use the public room API instead of Nuxt + login cookie
     * **tfo**: Fall back to Next.js v13 data
     * **theguardian:podcast**: Extract audio URL and author from JSON-LD
+    * **tiktok**: Googlebot headers on aweme detail
+    * **tnaflix**: Impersonate the browser (including Empflix)
     * **videa**: Support player URLs with an `f=` parameter
     * **vrt**: Parse `mediaReference` from Next.js / JSON-LD when `vrtvideo` is gone
     * **wevidi**: Fall back to a YouTube embed when WVPlayer is missing
@@ -2314,12 +2407,14 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * `url_result` smuggles generic intent so the Generic extractor keeps the intended URL
     * `subs_list_to_dict` copies entries and handles empty `id`/`ext`
     * `download_range_func` equality/repr includes `from_info`
+    * Skip non-numeric `age_limit` test values when listing extractors so `make_supportedsites` does not crash
 
 * **Testing and developer workflow**:
     * Offline coverage and extractor/CLI fixture tests
-    * Live byte-fetch tests from confirmed public URLs, plus many live extractor test updates
+    * Live byte-fetch tests from confirmed public URLs, plus many live extractor test updates (`live-site-status.csv`)
     * Node as the JS runtime for download tests
     * Skip dead / geo / login tests and refresh stale sample metadata
+    * `make_changelog` attributes fork commits to the git author and `CrimsonGlory/yt-ai`
     * [Development Docker workflow](https://github.com/CrimsonGlory/yt-ai/commit/13d780d260672007c07b37e4b5060a06c27d5b15) (`docker/Dockerfile` + compose) to run yt-ai and the offline suite in a container
 
 See [commits](https://github.com/CrimsonGlory/yt-ai/commits) for the full list of changes
