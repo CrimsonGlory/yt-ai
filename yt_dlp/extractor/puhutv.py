@@ -2,6 +2,7 @@ from .common import InfoExtractor
 from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
+    determine_ext,
     float_or_none,
     int_or_none,
     parse_resolution,
@@ -18,6 +19,27 @@ class PuhuTVIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?puhutv\.com/(?P<id>[^/?#&]+)-izle'
     IE_NAME = 'puhutv'
     _TESTS = [{
+        'url': 'https://puhutv.com/binlerce-yillik-klasik-eserler-5-bolum-izle',
+        'md5': 'bae202aeca93947ce457a704d689a4c7',
+        'info_dict': {
+            'id': '36685',
+            'display_id': 'binlerce-yillik-klasik-eserler-5-bolum',
+            'ext': 'mp4',
+            'title': '5. Bölüm 5. Bölüm',
+            'description': 'Binlerce yıllık klasik eserler, Çin düşünce dünyasının farklı yönlerini yansıtan derin felsefi fikirler barındırır.',
+            'thumbnail': r're:^https?://.*\.jpg$',
+            'duration': 200.0,
+            'timestamp': 1782827864,
+            'upload_date': '20260630',
+            'season_id': '837',
+            'season_number': 1,
+            'season': 'Season 1',
+            'episode_number': 5,
+            'episode': 'Episode 5',
+            'view_count': int,
+            'tags': ['Belgesel'],
+        },
+    }, {
         # film
         'url': 'https://puhutv.com/bi-kucuk-eylul-meselesi-izle',
         'md5': '4de98170ccb84c05779b1f046b3c86f8',
@@ -37,6 +59,7 @@ class PuhuTVIE(InfoExtractor):
             'view_count': int,
             'tags': list,
         },
+        'skip': 'video gone',
     }, {
         # episode, geo restricted, bypassable with --geo-verification-proxy
         'url': 'https://puhutv.com/jet-sosyete-1-bolum-izle',
@@ -59,7 +82,9 @@ class PuhuTVIE(InfoExtractor):
             urljoin(url, f'/api/slug/{display_id}-izle'),
             display_id)['data']
 
-        video_id = str(info['id'])
+        video_id = str_or_none(info.get('id'))
+        if not video_id:
+            raise ExtractorError('Unable to extract video id', expected=True)
         show = info.get('title') or {}
         title = info.get('name') or show['name']
         if info.get('display_name'):
@@ -85,7 +110,9 @@ class PuhuTVIE(InfoExtractor):
             urls.append(media_url)
 
             playlist = video.get('is_playlist')
-            if (video.get('stream_type') == 'hls' and playlist is True) or 'playlist.m3u8' in media_url:
+            if (playlist is True
+                    or video.get('stream_type') == 'hls'
+                    or determine_ext(media_url) == 'm3u8'):
                 formats.extend(self._extract_m3u8_formats(
                     media_url, video_id, 'mp4', entry_protocol='m3u8_native',
                     m3u8_id='hls', fatal=False))
