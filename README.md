@@ -2472,6 +2472,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **sporteurope**: Use the public asset and web-player APIs for signed Mux HLS
     * **smotrim**: Use the `player-api.smotrim.ru` v1 API instead of the old iframe `datavideo` JSON
     * **softwhiteunderbelly**: Treat anonymous VHX `_session` cookies as logged-out and require a subscribed account
+    * **sr:mediathek**: Join relative ARD player collection URLs
     * **tfo**: Fall back to Next.js v13 data
     * **theguardian:podcast**: Extract audio URL and author from JSON-LD
     * **tiktok**: Googlebot headers on aweme detail

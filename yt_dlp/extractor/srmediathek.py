@@ -6,6 +6,7 @@ from ..utils import (
     parse_duration,
     parse_qs,
     unified_strdate,
+    urljoin,
 )
 from ..utils.traversal import (
     find_element,
@@ -22,7 +23,7 @@ class SRMediathekIE(ARDMediathekBaseIE):
     _VALID_URL = r'https?://(?:www\.)?sr-mediathek\.de/index\.php\?.*?&id=(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.sr-mediathek.de/index.php?seite=7&id=141317',
-        'skip': 'Unsupported URL / extractor broken',
+        'md5': '63a6a01f2df30afe95b8873d6d4201e6',
         'info_dict': {
             'id': '141317',
             'ext': 'mp4',
@@ -35,9 +36,10 @@ class SRMediathekIE(ARDMediathekBaseIE):
             'series_id': 'DWIH',
             'thumbnail': r're:https?://.+\.jpg',
         },
+        'params': {'format': 'best[protocol=https]'},
     }, {
         'url': 'https://www.sr-mediathek.de/index.php?seite=7&id=153853',
-        'skip': 'Unsupported URL / extractor broken',
+        'md5': 'b6d9f24609e59b06738749b4b16ae75a',
         'info_dict': {
             'id': '153853',
             'ext': 'mp3',
@@ -52,6 +54,7 @@ class SRMediathekIE(ARDMediathekBaseIE):
         },
     }, {
         'url': 'https://www.sr-mediathek.de/index.php?seite=7&id=31406&pnr=&tbl=pf',
+        'skip': 'This video is no longer available',
         'info_dict': {
             'id': '31406',
             'ext': 'mp3',
@@ -70,17 +73,18 @@ class SRMediathekIE(ARDMediathekBaseIE):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
         description = self._og_search_description(webpage)
+        article = traverse_obj(webpage, (
+            {find_element(cls='article__content')},
+            {find_element(tag='p')}, {clean_html}))
 
-        if description == 'Der gewünschte Beitrag ist leider nicht mehr vorhanden.':
+        if ((article and article.startswith('Der gewünschte Beitrag ist leider nicht mehr'))
+                or description == 'Der gewünschte Beitrag ist leider nicht mehr vorhanden.'):
             raise ExtractorError(f'Video {video_id} is no longer available', expected=True)
 
         player_url = traverse_obj(webpage, (
             {find_element(tag='div', id=f'player{video_id}', html=True)},
             {extract_attributes}, 'data-mediacollection-ardplayer',
-            {self._proto_relative_url}, {require('player URL')}))
-        article = traverse_obj(webpage, (
-            {find_element(cls='article__content')},
-            {find_element(tag='p')}, {clean_html}))
+            {lambda u: self._proto_relative_url(urljoin(url, u))}, {require('player URL')}))
 
         return {
             **self._extract_media_info(player_url, webpage, video_id),
