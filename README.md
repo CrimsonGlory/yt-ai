@@ -2442,6 +2442,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **tiktok**: Googlebot headers on aweme detail
     * **tnaflix**: Impersonate the browser (including Empflix)
     * **urort**: Extract S3 `data-trackurl` from current `/track/` pages
+    * **vqq:video**: Fall back to the union / float_vinfo2 APIs when pinia/OG metadata is gone
     * **videa**: Support player URLs with an `f=` parameter
     * **vrt**: Parse `mediaReference` from Next.js / JSON-LD when `vrtvideo` is gone
     * **wevidi**: Fall back to a YouTube embed when WVPlayer is missing

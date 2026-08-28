@@ -12,6 +12,7 @@ from ..utils import (
     int_or_none,
     js_to_json,
     traverse_obj,
+    url_or_none,
     urljoin,
 )
 
@@ -164,7 +165,35 @@ class VQQBaseIE(TencentBaseIE):
     def _get_webpage_metadata(self, webpage, video_id):
         return self._search_json(
             r'<script[^>]*>[^<]*window\.__(?:pinia|PINIA__)\s*=',
-            webpage, 'pinia data', video_id, transform_source=js_to_json, fatal=False)
+            webpage, 'pinia data', video_id, transform_source=js_to_json,
+            fatal=False, default=None)
+
+    def _get_video_detail(self, video_id):
+        # Play pages are a SPA without OG/pinia; this public union API still
+        # returns episode title, description and thumbnail.
+        return traverse_obj(self._search_json(
+            r'QZOutputJson=', self._download_webpage(
+                'https://union.video.qq.com/fcgi-bin/data', video_id,
+                'Downloading video info', query={
+                    'tid': '682',
+                    'appid': '20001238',
+                    'appkey': '6c03bbe9658448a4',
+                    'unionid': '7',
+                    'otype': 'json',
+                    'idlist': video_id,
+                }, fatal=False) or '',
+            'video info', video_id, fatal=False, default={}),
+            ('results', 0, 'fields', {dict})) or {}
+
+    def _get_cover_detail(self, video_id, series_id):
+        if not series_id:
+            return {}
+        return traverse_obj(self._download_json(
+            'https://node.video.qq.com/x/api/float_vinfo2', video_id,
+            'Downloading series info', query={
+                'cid': series_id,
+                'vid': video_id,
+            }, fatal=False), ('c', {dict})) or {}
 
 
 class VQQVideoIE(VQQBaseIE):
@@ -189,7 +218,6 @@ class VQQVideoIE(VQQBaseIE):
             'id': 'o3013za7cse',
             'ext': 'mp4',
             'title': '欧阳娜娜VLOG',
-            'description': 'md5:29fe847497a98e04a8c3826e499edd2e',
             'thumbnail': r're:^https?://[^?#]+o3013za7cse',
             'format_id': r're:^shd',
         },
@@ -229,19 +257,31 @@ class VQQVideoIE(VQQBaseIE):
         video_id, series_id = self._match_valid_url(url).group('id', 'series_id')
         webpage = self._download_webpage(url, video_id)
         webpage_metadata = self._get_webpage_metadata(webpage, video_id)
+        video_detail = self._get_video_detail(video_id)
+        cover_detail = self._get_cover_detail(video_id, series_id)
 
         formats, subtitles = self._extract_all_video_formats_and_subtitles(url, video_id, series_id)
         return {
             'id': video_id,
-            'title': self._get_clean_title(self._og_search_title(webpage)
-                                           or traverse_obj(webpage_metadata, ('global', 'videoInfo', 'title'))),
-            'description': (self._og_search_description(webpage)
-                            or traverse_obj(webpage_metadata, ('global', 'videoInfo', 'desc'))),
+            'title': self._get_clean_title(
+                self._og_search_title(webpage, default=None)
+                or traverse_obj(webpage_metadata, ('global', 'videoInfo', 'title', {str}))
+                or traverse_obj(video_detail, ('title', {str}))),
+            'description': (
+                self._og_search_description(webpage, default=None)
+                or traverse_obj(webpage_metadata, ('global', 'videoInfo', 'desc', {str}))
+                or traverse_obj(video_detail, ('desc', {str}))
+                or traverse_obj(cover_detail, ('description', {str}))),
             'formats': formats,
             'subtitles': subtitles,
-            'thumbnail': (self._og_search_thumbnail(webpage)
-                          or traverse_obj(webpage_metadata, ('global', 'videoInfo', 'pic160x90'))),
-            'series': traverse_obj(webpage_metadata, ('global', 'coverInfo', 'title')),
+            'thumbnail': (
+                self._og_search_thumbnail(webpage, default=None)
+                or traverse_obj(webpage_metadata, ('global', 'videoInfo', 'pic160x90', {url_or_none}))
+                or traverse_obj(video_detail, ('pic160x90', {url_or_none}))),
+            'series': (
+                traverse_obj(webpage_metadata, ('global', 'coverInfo', 'title', {str}))
+                or traverse_obj(video_detail, ('series_name', {str}))
+                or traverse_obj(cover_detail, ('title', {str}))),
         }
 
 
