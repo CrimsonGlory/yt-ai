@@ -2439,6 +2439,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
     * **radiojavan**: Use the public play.radiojavan.com video API instead of the old `video_host` page scrape
     * **radiokapital**: Use the `api.radiokapital.pl` WordPress REST API
+    * **rds**: Read Jasper embed / Fusion Axis ids on current Arc video pages
     * **rozhlas**: Resolve slugs via the search API
     * **showroom**: Use the public room API instead of Nuxt + login cookie
     * **tfo**: Fall back to Next.js v13 data
