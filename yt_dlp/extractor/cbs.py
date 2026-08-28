@@ -175,7 +175,50 @@ class CBSIE(CBSBaseIE):
 
 class ParamountPressExpressIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?paramountpressexpress\.com(?:/[\w-]+)+/(?P<yt>yt-)?video/?\?watch=(?P<id>[\w-]+)'
+    # Press site geo-blocks by real client IP; X-Forwarded-For is ignored.
+    _GEO_BYPASS = False
+    _GEO_COUNTRIES = ['US']
     _TESTS = [{
+        'url': 'https://www.paramountpressexpress.com/paramount-plus/yt-video/?watch=zJ0swZr6-tg',
+        'md5': '1a42b5ca518c3b5128cb777109e4a672',
+        'info_dict': {
+            'id': 'zJ0swZr6-tg',
+            'ext': 'mp4',
+            'title': 'Little Disasters | Official Trailer | Paramount+',
+            'description': 'md5:71340597a48ced7669a3570916a6a656',
+            'uploader': 'Paramount Plus',
+            'uploader_id': '@paramountplus',
+            'uploader_url': 'https://www.youtube.com/@paramountplus',
+            'channel': 'Paramount Plus',
+            'channel_id': 'UCrRttZIypNTA1Mrfwo745Sg',
+            'channel_url': 'https://www.youtube.com/channel/UCrRttZIypNTA1Mrfwo745Sg',
+            'channel_is_verified': True,
+            'upload_date': '20251112',
+            'timestamp': 1762977564,
+            'duration': 100,
+            'age_limit': 0,
+            'availability': 'public',
+            'live_status': 'not_live',
+            'playable_in_embed': True,
+            'media_type': 'video',
+            'view_count': int,
+            'like_count': int,
+            'comment_count': int,
+            'channel_follower_count': int,
+            'thumbnail': r're:https?://i\.ytimg\.com/.+',
+            'categories': ['Entertainment'],
+            'tags': ['Little Disasters'],
+            'heatmap': 'count:100',
+        },
+        'params': {
+            'format': 'bestvideo[protocol=https][ext=mp4]/best[protocol=https]',
+        },
+        'add_ie': ['Youtube'],
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'No supported JavaScript runtime',
+        ],
+    }, {
         'url': 'https://www.paramountpressexpress.com/cbs-entertainment/shows/survivor/video/?watch=pnzew7e2hx',
         'md5': '56631dbcadaab980d1fc47cb7b76cba4',
         'info_dict': {
@@ -190,6 +233,7 @@ class ParamountPressExpressIE(InfoExtractor):
             'thumbnail': r're:^https://.+\.jpg',
             'tags': [],
         },
+        'skip': 'geo-restricted; site returns /location-not-allowed (X-Forwarded-For is ignored)',
     }, {
         'url': 'https://www.paramountpressexpress.com/cbs-entertainment/video/?watch=2s5eh8kppc',
         'md5': 'edcb03e3210b88a3e56c05aa863e0e5b',
@@ -205,8 +249,10 @@ class ParamountPressExpressIE(InfoExtractor):
             'thumbnail': r're:^https://.+\.jpg',
             'tags': [],
         },
+        'skip': 'geo-restricted; site returns /location-not-allowed (X-Forwarded-For is ignored)',
     }, {
         'url': 'https://www.paramountpressexpress.com/paramount-plus/yt-video/?watch=OX9wJWOcqck',
+        'skip': 'private video',
         'info_dict': {
             'id': 'OX9wJWOcqck',
             'ext': 'mp4',
@@ -237,27 +283,38 @@ class ParamountPressExpressIE(InfoExtractor):
             'id': '_ljssSoDLkw',
             'ext': 'mp4',
             'title': 'Lavell Crawford: THEE Lavell Crawford Comedy Special Official Trailer | SHOWTIME',
-            'description': 'md5:39581bcc3fd810209b642609f448af70',
+            'description': 'md5:29e3b0e2f97bdb88372853929fd90010',
             'uploader': 'SHOWTIME',
             'uploader_id': '@Showtime',
-            'uploader_url': 'http://www.youtube.com/@Showtime',
+            'uploader_url': 'https://www.youtube.com/@Showtime',
             'channel': 'SHOWTIME',
             'channel_id': 'UCtwMWJr2BFPkuJTnSvCESSQ',
             'channel_url': 'https://www.youtube.com/channel/UCtwMWJr2BFPkuJTnSvCESSQ',
+            'channel_is_verified': True,
             'upload_date': '20230209',
+            'timestamp': 1675962014,
             'duration': 49,
             'age_limit': 0,
             'availability': 'public',
             'live_status': 'not_live',
             'playable_in_embed': True,
+            'media_type': 'video',
             'view_count': int,
             'like_count': int,
             'comment_count': int,
             'channel_follower_count': int,
-            'thumbnail': 'https://i.ytimg.com/vi_webp/_ljssSoDLkw/maxresdefault.webp',
+            'thumbnail': r're:https?://i\.ytimg\.com/.+',
             'categories': ['People & Blogs'],
             'tags': 'count:27',
         },
+        'params': {
+            'format': 'bestvideo[protocol=https][ext=mp4]/best[protocol=https]',
+        },
+        'add_ie': ['Youtube'],
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'No supported JavaScript runtime',
+        ],
     }]
 
     def _real_extract(self, url):
@@ -266,6 +323,8 @@ class ParamountPressExpressIE(InfoExtractor):
             return self.url_result(display_id, YoutubeIE)
 
         webpage = self._download_webpage(url, display_id)
+        if 'Your geographic location is not allowed access' in webpage:
+            self.raise_geo_restricted(countries=self._GEO_COUNTRIES)
         video_id = self._search_regex(
             r'\bvideo_id\s*=\s*["\'](\d+)["\']\s*,', webpage, 'Brightcove ID')
         token = self._search_regex(r'\btoken\s*=\s*["\']([\w.-]+)["\']', webpage, 'token')
