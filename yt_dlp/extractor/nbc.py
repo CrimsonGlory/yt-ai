@@ -359,20 +359,23 @@ class NBCSportsIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?nbcsports\.com//?(?!vplayer/)(?:[^/]+/)+(?P<id>[0-9a-z-]+)'
 
     _TESTS = [{
-        # iframe src
+        # Brightspot JWPlayer ThePlatform link
         'url': 'https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/unpacking-addisons-reckless-driving-citation',
+        'md5': 'fec6603998f871412b4814730efa9e6f',
         'info_dict': {
-            'id': 'PHJSaFWbrTY9',
+            'id': '_5VvAd4hk2Vg',
             'ext': 'mp4',
-            'title': 'Tom Izzo, Michigan St. has \'so much respect\' for Duke',
-            'description': 'md5:ecb459c9d59e0766ac9c7d5d0eda8113',
+            'title': "Unpacking Addison's reckless driving citation",
+            'description': "Mike Florio comments on Minnesota Vikings rookie Jordan Addison's reckless driving citation.",
             'uploader': 'NBCU-SPORTS',
-            'upload_date': '20150330',
-            'timestamp': 1427726529,
-            'chapters': [],
-            'thumbnail': 'https://hdliveextra-a.akamaihd.net/HD/image_sports/NBCU_Sports_Group_-_nbcsports/253/303/izzodps.jpg',
-            'duration': 528.395,
+            'upload_date': '20230721',
+            'timestamp': 1689960112,
+            'thumbnail': 'https://hdliveextra-a.akamaihd.net/HD/image_sports/NBCU_Sports_Group_-_nbcsports/369/667/nbc_pft_jordanaddison_230721.jpg',
+            'duration': 127.661,
+            'series': 'PFT PM',
+            'episode': "Unpacking Addison's reckless driving citation",
         },
+        'add_ie': ['ThePlatform'],
     }, {
         # data-mpx-src
         'url': 'https://www.nbcsports.com/philadelphia/philadelphia-phillies/bruce-bochy-hector-neris-hes-idiot',
@@ -395,8 +398,17 @@ class NBCSportsIE(InfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
-        return self.url_result(
-            NBCSportsVPlayerIE._extract_url(webpage), 'NBCSportsVPlayer')
+        embed_url = NBCSportsVPlayerIE._extract_url(webpage)
+        if embed_url:
+            return self.url_result(embed_url, 'NBCSportsVPlayer')
+        jwplayer = get_element_html_by_class('jwplayer', webpage)
+        embed_url = url_or_none(
+            extract_attributes(jwplayer).get('data-mp4') if jwplayer else None)
+        if not embed_url:
+            embed_url = self._search_regex(
+                r'(https?://link\.theplatform\.com/s/[^"\'?\s]+)',
+                webpage, 'theplatform url')
+        return self.url_result(embed_url, 'ThePlatform')
 
 
 class NBCSportsStreamIE(AdobePassIE):
