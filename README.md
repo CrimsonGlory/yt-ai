@@ -2386,6 +2386,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **netapp**: Extract YouTube embeds from current video pages (Brightcove API gone); impersonate for Akamai
     * **netzkino**: Raise geo-restriction when CloudFront blocks the PMD CDN (DE/AT/CH; X-Forwarded-For is ignored)
     * **newgrounds**: Solve NG Guard argon2id/sha256 proof-of-work; update the audio player media URL regex
+    * **nhl.com**: Extract Brightcove embeds from current video pages (bamcontent API gone)
     * **ninenews**: Parse Brightcove id/account from page markup
     * **nosnl**: Treat nested `/video/` article URLs as videos
     * **orf:on**: Raise geo-restriction when sources are empty
