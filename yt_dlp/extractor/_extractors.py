@@ -1901,6 +1901,7 @@ from .tbsjp import (
     TBSJPEpisodeIE,
     TBSJPPlaylistIE,
     TBSJPProgramIE,
+    TBSNewsDigIE,
 )
 from .teachable import (
     TeachableCourseIE,

@@ -1,7 +1,9 @@
 from .streaks import StreaksBaseIE
 from ..utils import (
+    ExtractorError,
     clean_html,
     int_or_none,
+    parse_iso8601,
     str_or_none,
     unified_timestamp,
     url_or_none,
@@ -18,7 +20,7 @@ class TBSJPEpisodeIE(TBSJPBaseIE):
     _VALID_URL = r'https?://cu\.tbs\.co\.jp/episode/(?P<id>[\d_]+)'
     _TESTS = [{
         'url': 'https://cu.tbs.co.jp/episode/14694_2094162_1000123656',
-        'skip': 'geo-blocked to japan + 7-day expiry',
+        'skip': 'video gone',
         'info_dict': {
             'title': 'クロちゃん、寝て起きたら川のほとりにいてその向こう岸に亡くなった父親がいたら死の淵にいるかと思う説 ほか',
             'id': '14694_2094162_1000123656',
@@ -45,6 +47,11 @@ class TBSJPEpisodeIE(TBSJPBaseIE):
             'modified_date': '20250730',
             'live_status': 'not_live',
         },
+    }, {
+        # Current catch-up episodes still exist, but Streaks playback geo-blocks
+        # by real client IP (X-Forwarded-For is ignored). Japan only.
+        'url': 'https://cu.tbs.co.jp/episode/14694_2121879_1000165092',
+        'only_matching': True,
     }]
 
     def _real_extract(self, url):
@@ -151,3 +158,57 @@ class TBSJPPlaylistIE(TBSJPBaseIE):
                     self.report_warning(f'Skipping "{content_id}" with unsupported content_type "{content_type}"')
 
         return self.playlist_result(entries(), playlist_id, traverse_obj(playlist, ('display_name', 'value')))
+
+
+class TBSNewsDigIE(StreaksBaseIE):
+    IE_NAME = 'tbs:newsdig'
+    IE_DESC = 'TBS NEWS DIG'
+    _VALID_URL = r'https?://newsdig\.tbs\.co\.jp/articles/(?:[^/?#]+/)?(?P<id>\d+)'
+    _TESTS = [{
+        'url': 'https://newsdig.tbs.co.jp/articles/-/2905774',
+        'md5': '373aa0e4425661b72a6e73e3633bc568',
+        'info_dict': {
+            'id': '34c5ea397ad549088ba2f7e7f3ddca93',
+            'ext': 'mp4',
+            'title': '【熊本地震から1か月】政府の“1500億円”支援パッケージとは？“九州応援割”1泊6割補助も【Nスタ解説】',
+            'display_id': '2905774',
+            'description': 'md5:9eec5d920839f207d247d152e41f7ce0',
+            'duration': 287.154,
+            'thumbnail': r're:https?://.+\.jpg',
+            'timestamp': 1787913180,
+            'upload_date': '20260828',
+            'modified_timestamp': 1787913421,
+            'modified_date': '20260828',
+            'live_status': 'not_live',
+            'uploader_id': 'tbsnews-prod',
+        },
+    }, {
+        'url': 'https://newsdig.tbs.co.jp/articles/-/2905774?display=1',
+        'only_matching': True,
+    }]
+    _STREAKS_PROJECT_ID = 'tbsnews-prod'
+    _STREAKS_API_KEY = '7d7cc1dc87b84e1b8f7b00487ae33ded'
+
+    def _real_extract(self, url):
+        article_id = self._match_id(url)
+        webpage = self._download_webpage(url, article_id)
+        media_id = self._search_regex(
+            r'data-mw-play-id=["\']([\da-f]{32})', webpage, 'media id', default=None)
+        if not media_id:
+            raise ExtractorError('This article does not contain a video', expected=True)
+
+        info = self._extract_from_streaks_api(
+            self._STREAKS_PROJECT_ID, media_id, headers={
+                'Origin': 'https://newsdig.tbs.co.jp',
+                'X-Streaks-Api-Key': self._STREAKS_API_KEY,
+            })
+        info['display_id'] = article_id
+        info.setdefault('description', self._og_search_description(webpage, default=None))
+        if not info.get('thumbnail'):
+            info['thumbnail'] = self._og_search_thumbnail(webpage)
+        timestamp = parse_iso8601(self._html_search_regex(
+            r'<time[^>]+datetime=["\']([^"\']+)', webpage, 'timestamp', default=None))
+        if timestamp:
+            info['timestamp'] = timestamp
+        return info
+

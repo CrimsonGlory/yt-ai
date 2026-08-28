@@ -2482,6 +2482,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **t-online.de**: Extract Next.js / JSON-LD HLS (and CMAF HTTP) on current `/video/` URLs instead of the dead `tid_json_video` API
     * **tarangplus**: Use the catalog API and public preview HLS instead of the old SSR iframe
     * **tass**: Use the public TBP content API (impersonate) instead of JWPlayer sources
+    * **tbs:newsdig**: Extract public Streaks HLS from NEWS DIG articles
     * **tele13**: Follow rudo.video (and YouTube) embeds instead of the old JWPlayer setup
     * **tfo**: Fall back to Next.js v13 data
     * **theguardian:podcast**: Extract audio URL and author from JSON-LD
