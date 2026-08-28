@@ -2428,6 +2428,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **pornovoisines**: Extract Revma pack MP4s and JSON-LD trailers instead of the dead settings API
     * **pornoxo**: Impersonate the browser and extract HLS from `playerConfig`
     * **pr0gramm**: Request SFW-only API flags unless logged in
+    * **premiershiprugby**: Follow YouTube highlight embeds from the article CMS; keep StreamAMG HLS for native full matches
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
     * **rozhlas**: Resolve slugs via the search API
     * **showroom**: Use the public room API instead of Nuxt + login cookie
