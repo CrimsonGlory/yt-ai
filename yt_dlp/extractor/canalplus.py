@@ -30,6 +30,8 @@ class CanalplusIE(InfoExtractor):
             'description': 'md5:7d97039d455cb29cdba0d652a0efaa5e',
             'upload_date': '20160602',
         },
+        # mycanal.fr now redirects to canalplus.com; media requires a Canal+ account
+        'skip': 'Requires a Canal+ account',
     }, {
         # geo restricted, bypassed
         'url': 'http://www.piwiplus.fr/videos-piwi/pid1405-le-labyrinthe-boing-super-ranger.html?vid=1108190',
@@ -42,6 +44,7 @@ class CanalplusIE(InfoExtractor):
             'upload_date': '20140724',
         },
         'expected_warnings': ['HTTP Error 403: Forbidden'],
+        'skip': 'Requires a Canal+ account',
     }]
 
     def _real_extract(self, url):
