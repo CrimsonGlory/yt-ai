@@ -1,19 +1,50 @@
+import json
+
 from .common import InfoExtractor
-from .youtube import YoutubeIE
 from ..utils import (
+    ExtractorError,
     clean_html,
     int_or_none,
     strip_or_none,
     traverse_obj,
     unified_timestamp,
+    url_or_none,
     urljoin,
 )
 
 
 class ParlerIE(InfoExtractor):
     IE_DESC = 'Posts on parler.com'
-    _VALID_URL = r'https?://parler\.com/feed/(?P<id>[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12})'
+    _VALID_URL = [
+        r'https?://(?:(?:www|app|play)\.)?parler\.com/(?:feed|post|watch|v|b)/(?P<id>[0-9A-Za-z]{26})',
+        r'https?://(?:(?:www|app)\.)?parler\.com/feed/(?P<id>[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12})',
+    ]
     _TESTS = [
+        {
+            'url': 'https://app.parler.com/post/01k2jgdzymnfc8xp9qrfz9xcw7',
+            'md5': 'd8dbae02bd7e17659ec201520cc681fd',
+            'info_dict': {
+                'id': '01k2jgdzymnfc8xp9qrfz9xcw7',
+                'ext': 'mp4',
+                'title': 'Parler Is Back! Big Tech Can’t Touch Us',
+                'description': '',
+                'thumbnail': r're:https://m\.cdnparler\.com/.+',
+                'timestamp': 1755097356,
+                'upload_date': '20250813',
+                'uploader': 'Parler',
+                'uploader_id': 'parler',
+                'uploader_url': 'https://app.parler.com/parler',
+                'duration': 33,
+                'view_count': int,
+                'comment_count': int,
+                'repost_count': int,
+                'tags': ['Parler', 'Play TV'],
+            },
+        },
+        {
+            'url': 'https://play.parler.com/watch/01k2jgdzymnfc8xp9qrfz9xcw7',
+            'only_matching': True,
+        },
         {
             'url': 'https://parler.com/feed/df79fdba-07cc-48fe-b085-3293897520d7',
             'skip': 'video gone',
@@ -68,24 +99,52 @@ class ParlerIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        data = self._download_json(f'https://api.parler.com/v0/public/parleys/{video_id}',
-                                   video_id)['data']
-        if data.get('link'):
-            return self.url_result(data['link'], YoutubeIE)
+        data = traverse_obj(self._download_json(
+            'https://api.parler.com/public/v4/posts/map', video_id,
+            data=json.dumps({'ulids': [video_id]}).encode(),
+            headers={
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }), ('data', 0))
+        if not data:
+            raise ExtractorError('Unable to extract post', expected=True)
+        if data.get('isDeleted'):
+            raise ExtractorError('This post has been deleted', expected=True)
 
-        return {
+        embed_url = url_or_none(data.get('embedUrl') or data.get('link'))
+        video_url = traverse_obj(data, ('videos', 0, 'url', {url_or_none}))
+        hls_url = traverse_obj(data, ('videos', 0, 'thumbnail', 'm3u8_name', {url_or_none}))
+        if not video_url and not hls_url:
+            if embed_url:
+                return self.url_result(embed_url)
+            raise ExtractorError('This post has no video', expected=True)
+
+        uploader_id = traverse_obj(data, 'username', ('user', 'username'), expected_type=str)
+        info = {
             'id': video_id,
-            'title': strip_or_none(data.get('title')) or '',
+            'title': (strip_or_none(data.get('title'))
+                      or strip_or_none(clean_html(data.get('body')))
+                      or f'Parler video #{video_id}'),
+            'url': video_url,
+            'thumbnail': (
+                traverse_obj(data, ('videos', 0, 'thumbnail', 'additionalResources',
+                                    'large', 'url', {url_or_none}))
+                or traverse_obj(data, ('videos', 0, 'thumbnail', 'url', {url_or_none}))),
             **traverse_obj(data, {
-                'url': ('video', 'videoSrc'),
-                'thumbnail': ('video', 'thumbnailUrl'),
                 'description': ('body', {clean_html}),
-                'timestamp': ('date_created', {unified_timestamp}),
-                'uploader': ('user', 'name', {strip_or_none}),
-                'uploader_id': ('user', 'username', {str}),
-                'uploader_url': ('user', 'username', {urljoin('https://parler.com/')}),
-                'view_count': ('views', {int_or_none}),
-                'comment_count': ('total_comments', {int_or_none}),
-                'repost_count': ('echos', {int_or_none}),
+                'timestamp': ('createdAt', {unified_timestamp}),
+                'uploader': ('name', {strip_or_none}),
+                'duration': ('videos', 0, 'duration', {int_or_none}),
+                'view_count': ('postEngagement', 'views', {int_or_none}),
+                'comment_count': ('postEngagement', 'totalCommentCount', {int_or_none}),
+                'repost_count': ('postEngagement', 'repostCount', {int_or_none}),
+                'tags': ('tags', ..., 'name'),
             }),
+            'uploader_id': uploader_id,
+            'uploader_url': urljoin('https://app.parler.com/', uploader_id),
         }
+        if not video_url and hls_url:
+            info['formats'] = self._extract_m3u8_formats(
+                hls_url, video_id, 'mp4', m3u8_id='hls')
+            info.pop('url', None)
+        return info

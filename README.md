@@ -2407,6 +2407,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **orf:on**: Raise geo-restriction when sources are empty
     * **packtpub**: Use the subscription products API for public S3 preview MP4s
     * **paramountpressexpress**: Raise geo-restriction when Brightcove press pages return location-not-allowed (X-Forwarded-For is ignored); YouTube-hosted press videos still extract
+    * **parler**: Use the public v4 posts API for app/play post URLs
     * **pbs**: Guard against missing `video_info` and title
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
     * **rozhlas**: Resolve slugs via the search API
