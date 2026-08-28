@@ -2461,6 +2461,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **sbs.co.kr**: Use the current `apis.sbs.co.kr/play-api` host instead of the dead `api.play.sbs.co.kr` endpoint
     * **screencastomatic**: Extract ScreenPal `player/stream` MP4s after the Screencast-O-Matic rebrand
     * **scrolller**: Use the current `api.scrolller.com/admin` GraphQL `getPost` query
+    * **sexu**: Use `/api/video-info` (HLS + MP4) and JSON-LD instead of the old JWPlayer setup
     * **showroom**: Use the public room API instead of Nuxt + login cookie
     * **tfo**: Fall back to Next.js v13 data
     * **theguardian:podcast**: Extract audio URL and author from JSON-LD
