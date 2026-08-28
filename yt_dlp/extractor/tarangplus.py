@@ -1,82 +1,103 @@
-import base64
-import binascii
 import functools
-import re
-import urllib.parse
 
 from .common import InfoExtractor
-from ..dependencies import Cryptodome
 from ..utils import (
-    ExtractorError,
     OnDemandPagedList,
     clean_html,
-    extract_attributes,
+    int_or_none,
+    parse_duration,
     url_or_none,
     urljoin,
 )
-from ..utils.traversal import (
-    find_element,
-    find_elements,
-    require,
-    traverse_obj,
-)
+from ..utils.traversal import traverse_obj
 
 
 class TarangPlusBaseIE(InfoExtractor):
     _BASE_URL = 'https://tarangplus.in'
+    _API_BASE = 'https://api.tarangplus.in'
+    # from https://tarangplus.in/main.*.js environment config
+    _AUTH_TOKEN = '3zZmzoHg8z6SM3wpDoyw'
+
+    def _call_api(self, path, video_id, note='Downloading JSON metadata', fatal=True, query=None):
+        return self._download_json(
+            f'{self._API_BASE}/{path}', video_id, note, fatal=fatal,
+            headers={'Accept': 'application/json'}, query={
+                'auth_token': self._AUTH_TOKEN,
+                'region': 'IN',
+                **(query or {}),
+            })
+
+    def _extract_item_info(self, metadata, display_id):
+        return {
+            'display_id': display_id,
+            **traverse_obj(metadata, {
+                'id': ('content_id', {str}),
+                'title': (('display_title', 'title'), {str}, filter, any),
+                'description': (('description', 'short_description'), {clean_html}, filter, any),
+                'thumbnail': ('thumbnails', (
+                    'xl_image_16_9', 'large_16_9', 'medium_16_9', 'xl_image_16_7', 'l_large',
+                ), 'url', {url_or_none}, any),
+                'timestamp': (('release_date_uts', 'publish_date_uts'), {int_or_none}, any),
+                'media_type': (('media_type', 'theme'), {str}, filter, any),
+                'categories': ('display_genres', ..., {str}),
+            }),
+            'duration': int_or_none(traverse_obj(metadata, 'duration')) or parse_duration(
+                traverse_obj(metadata, ('duration_string', {str}))),
+        }
+
+    def _item_url(self, item, catalog=None, show=None):
+        seo = traverse_obj(item, ('seo_web_url', {str}))
+        if seo:
+            return urljoin(self._BASE_URL, seo)
+        item_id = traverse_obj(item, ('friendly_id', {str}))
+        show = show or traverse_obj(item, ('show_object', 'friendly_id', {str}))
+        catalog = catalog or traverse_obj(item, ('catalog_object', 'friendly_id', {str}))
+        if catalog and show and item_id:
+            return f'{self._BASE_URL}/{catalog}/{show}/{item_id}'
+        if catalog and item_id:
+            return f'{self._BASE_URL}/{catalog}/{item_id}'
+        return urljoin(self._BASE_URL, item_id)
 
 
 class TarangPlusVideoIE(TarangPlusBaseIE):
     IE_NAME = 'tarangplus:video'
-    _VALID_URL = r'https?://(?:www\.)?tarangplus\.in/(?:movies|[^#?/]+/[^#?/]+)/(?!episodes)(?P<id>[^#?/]+)'
+    _VALID_URL = r'https?://(?:www\.)?tarangplus\.in/(?:(?P<catalog>movies)|(?P<type>[^#?/]+)/(?P<show>[^#?/]+))/(?!episodes)(?P<id>[^#?/]+)'
     _TESTS = [{
+        'url': 'https://tarangplus.in/movies/swayambara',
+        'md5': 'bb0a52996321b2eba22e910c58880a8e',
+        'info_dict': {
+            'id': '67e7e1fd19521d054c006b42',
+            'display_id': 'swayambara',
+            'ext': 'mp4',
+            'title': 'Swayambara',
+            'description': 'md5:48b08d17887dacc6ffbc071ff417d2ce',
+            'thumbnail': r're:https?://.+\.jpg',
+            'duration': 9420,
+            'timestamp': 1753263078,
+            'upload_date': '20250723',
+            'media_type': 'movie',
+            'categories': ['Familydrama'],
+        },
+    }, {
         'url': 'https://tarangplus.in/tarangaplus-originals/khitpit/khitpit-ep-10',
-        'md5': '78ce056cee755687b8a48199909ecf53',
+        'skip': 'This video is no longer available',
         'info_dict': {
             'id': '67b8206719521d054c0059b7',
-            'display_id': 'khitpit-ep-10',
             'ext': 'mp4',
-            'title': 'Khitpit Ep-10',
-            'description': 'md5:a45b805cb628e15c853d78b0406eab48',
-            'thumbnail': r're:https?://.+/.+\.jpg',
-            'duration': 756.0,
-            'timestamp': 1740355200,
-            'upload_date': '20250224',
-            'media_type': 'episode',
-            'categories': ['Originals'],
         },
     }, {
         'url': 'https://tarangplus.in/tarang-serials/bada-bohu/bada-bohu-ep-233',
-        'md5': 'b4f9beb15172559bb362203b4f48382e',
+        'skip': 'Login required to resolve playback URL',
         'info_dict': {
             'id': '680b9d6c19521d054c007782',
-            'display_id': 'bada-bohu-ep-233',
             'ext': 'mp4',
-            'title': 'Bada Bohu  | Ep -233',
-            'description': 'md5:e6b8e7edc9e60b92c1b390f8789ecd69',
-            'thumbnail': r're:https?://.+/.+\.jpg',
-            'duration': 1392.0,
-            'timestamp': 1745539200,
-            'upload_date': '20250425',
-            'media_type': 'episode',
-            'categories': ['Prime'],
         },
     }, {
-        # Decrypted m3u8 URL has trailing control characters that need to be stripped
         'url': 'https://tarangplus.in/tarangaplus-originals/ichha/ichha-teaser-1',
-        'md5': '16ee43fe21ad8b6e652ec65eba38a64e',
+        'skip': 'This video is no longer available',
         'info_dict': {
             'id': '5f0f252d3326af0720000342',
             'ext': 'mp4',
-            'display_id': 'ichha-teaser-1',
-            'title': 'Ichha Teaser',
-            'description': 'md5:c724b0b0669a2cefdada3711cec792e6',
-            'media_type': 'episode',
-            'duration': 21.0,
-            'thumbnail': r're:https?://.+/.+\.jpg',
-            'categories': ['Originals'],
-            'timestamp': 1758153600,
-            'upload_date': '20250918',
         },
     }, {
         'url': 'https://tarangplus.in/short/ai-maa/ai-maa',
@@ -90,53 +111,50 @@ class TarangPlusVideoIE(TarangPlusBaseIE):
     }, {
         'url': 'https://tarangplus.in/kids-shows/chhota-jaga/chhota-jaga-ep-33-jamidar-ra-khajana-adaya',
         'only_matching': True,
-    }, {
-        'url': 'https://tarangplus.in/movies/swayambara',
-        'only_matching': True,
     }]
 
-    def decrypt(self, data, key):
-        if not Cryptodome.AES:
-            raise ExtractorError('pycryptodomex not found. Please install', expected=True)
-        iv = binascii.unhexlify('00000000000000000000000000000000')
-        cipher = Cryptodome.AES.new(base64.b64decode(key), Cryptodome.AES.MODE_CBC, iv)
-        return cipher.decrypt(base64.b64decode(data)).decode('utf-8')
+    def _fetch_metadata(self, display_id, catalog, url_type, show):
+        if show:
+            data = self._call_api(
+                f'catalogs/shows/{show}/episodes/{display_id}.gzip',
+                display_id, query={'item_language': ''}, fatal=False)
+            if traverse_obj(data, 'data'):
+                return data['data']
+            if url_type:
+                data = self._call_api(
+                    f'catalogs/{url_type}/items/{show}/episodes/{display_id}.gzip',
+                    display_id, query={'item_language': ''}, fatal=False)
+                if traverse_obj(data, 'data'):
+                    return data['data']
+        catalog = catalog or url_type or 'movies'
+        return self._call_api(
+            f'catalogs/{catalog}/items/{display_id}.gzip',
+            display_id, query={'item_language': ''})['data']
+
+    def _extract_public_m3u8_url(self, metadata, display_id):
+        m3u8_url = traverse_obj(metadata, (
+            (('preview', 'preview_url'), 'preview_url'), {url_or_none}, any))
+        if m3u8_url and self._is_valid_url(m3u8_url, display_id, 'm3u8'):
+            return m3u8_url
+        return None
 
     def _real_extract(self, url):
-        display_id = self._match_id(url)
-        webpage = self._download_webpage(url, display_id)
-        hidden_inputs_data = self._hidden_inputs(webpage)
-        json_ld_data = self._search_json_ld(webpage, display_id)
-        json_ld_data.pop('url', None)
+        catalog, url_type, show, display_id = self._match_valid_url(url).group(
+            'catalog', 'type', 'show', 'id')
+        metadata = self._fetch_metadata(display_id, catalog, url_type, show)
 
-        iframe_url = traverse_obj(webpage, (
-            {find_element(tag='iframe', attr='src', value=r'.+[?&]contenturl=.+', html=True, regex=True)},
-            {extract_attributes}, 'src', {require('iframe URL')}))
-        # Can't use parse_qs here since it would decode the encrypted base64 `+` chars to spaces
-        content = self._search_regex(r'[?&]contenturl=(.+)', iframe_url, 'content')
-        encrypted_data, _, attrs = content.partition('|')
-        metadata = {
-            m.group('k'): m.group('v')
-            for m in re.finditer(r'(?:^|\|)(?P<k>[a-z_]+)=(?P<v>(?:(?!\|[a-z_]+=).)+)', attrs)
-        }
-        m3u8_url = urllib.parse.unquote(
-            self.decrypt(encrypted_data, metadata['key'])).rstrip('\x0e\x0f')
+        m3u8_url = self._extract_public_m3u8_url(metadata, display_id)
+        if not m3u8_url:
+            self.raise_login_required(
+                'Login required to resolve the full playback URL; public preview HLS is not available',
+                method=None)
 
+        formats, subtitles = self._extract_m3u8_formats_and_subtitles(m3u8_url, display_id, 'mp4')
         return {
-            'id': display_id,  # Fallback
-            'display_id': display_id,
-            **json_ld_data,
-            **traverse_obj(metadata, {
-                'id': ('content_id', {str}),
-                'title': ('title', {str}),
-                'thumbnail': ('image', {url_or_none}),
-            }),
-            **traverse_obj(hidden_inputs_data, {
-                'id': ('content_id', {str}),
-                'media_type': ('theme_type', {str}),
-                'categories': ('genre', {str}, filter, all, filter),
-            }),
-            'formats': self._extract_m3u8_formats(m3u8_url, display_id),
+            'id': display_id,
+            'formats': formats,
+            'subtitles': subtitles,
+            **self._extract_item_info(metadata, display_id),
         }
 
 
@@ -149,7 +167,7 @@ class TarangPlusEpisodesIE(TarangPlusBaseIE):
             'id': 'balijatra',
             'title': 'Balijatra',
         },
-        'playlist_mincount': 7,
+        'playlist_mincount': 5,
     }, {
         'url': 'https://tarangplus.in/tarang-serials/bada-bohu/episodes',
         'info_dict': {
@@ -165,26 +183,25 @@ class TarangPlusEpisodesIE(TarangPlusBaseIE):
         },
         'playlist_mincount': 15,
     }]
-    _PAGE_SIZE = 20
-
-    def _entries(self, playlist_url, playlist_id, page):
-        data = self._download_json(
-            playlist_url, playlist_id, f'Downloading playlist JSON page {page + 1}',
-            query={'page_no': page})
-        for item in traverse_obj(data, ('items', ..., {str})):
-            yield self.url_result(
-                urljoin(self._BASE_URL, item.split('$')[3]), TarangPlusVideoIE)
 
     def _real_extract(self, url):
         url_type, display_id = self._match_valid_url(url).group('type', 'id')
-        series_url = f'{self._BASE_URL}/{url_type}/{display_id}'
-        webpage = self._download_webpage(series_url, display_id)
-
-        entries = OnDemandPagedList(
-            functools.partial(self._entries, f'{series_url}/episodes', display_id),
-            self._PAGE_SIZE)
+        data = self._call_api(
+            f'catalogs/{url_type}/items/{display_id}/episodes.gzip',
+            display_id, query={
+                'order_by': 'desc',
+                'item_language': '',
+                'status': 'published',
+            })['data']
+        entries = [
+            self.url_result(
+                self._item_url(ep, catalog=url_type, show=display_id),
+                TarangPlusVideoIE, **self._extract_item_info(ep, ep['friendly_id']))
+            for ep in traverse_obj(data, ('items', lambda _, v: v['friendly_id']))
+        ]
         return self.playlist_result(
-            entries, display_id, self._hidden_inputs(webpage).get('title'))
+            entries, display_id,
+            traverse_obj(data, (('display_title', 'title'), {str}, filter, any)))
 
 
 class TarangPlusPlaylistIE(TarangPlusBaseIE):
@@ -210,7 +227,7 @@ class TarangPlusPlaylistIE(TarangPlusBaseIE):
             'id': 'trailer',
             'title': 'Trailer',
         },
-        'playlist_mincount': 57,
+        'playlist_mincount': 50,
     }, {
         'url': 'https://tarangplus.in/latest-songs/all',
         'info_dict': {
@@ -226,19 +243,35 @@ class TarangPlusPlaylistIE(TarangPlusBaseIE):
         },
         'playlist_mincount': 100,
     }]
+    _PAGE_SIZE = 100
 
-    def _entries(self, webpage):
-        for url_path in traverse_obj(webpage, (
-            {find_elements(cls='item')}, ...,
-            {find_elements(tag='a', attr='href', value='/.+', html=True, regex=True)},
-            ..., {extract_attributes}, 'href',
-        )):
-            yield self.url_result(urljoin(self._BASE_URL, url_path), TarangPlusVideoIE)
+    def _entries(self, playlist_id, page):
+        data = self._call_api(
+            f'catalog_lists/{playlist_id}.gzip', playlist_id,
+            note=f'Downloading playlist JSON page {page + 1}', query={
+                'page': 0,
+                'page_size': self._PAGE_SIZE,
+                'start_count': page * self._PAGE_SIZE,
+                'pagination': 'true',
+                'item_language': '',
+            })
+        for item in traverse_obj(data, ('data', 'catalog_list_items', lambda _, v: v['friendly_id'])):
+            yield self.url_result(
+                self._item_url(item), TarangPlusVideoIE,
+                **self._extract_item_info(item, item['friendly_id']))
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        webpage = self._download_webpage(url, display_id)
-
+        data = self._call_api(
+            f'catalog_lists/{display_id}.gzip', display_id, query={
+                'page': 0,
+                'page_size': 1,
+                'start_count': 0,
+                'pagination': 'true',
+                'item_language': '',
+            })['data']
+        entries = OnDemandPagedList(
+            functools.partial(self._entries, display_id), self._PAGE_SIZE)
         return self.playlist_result(
-            self._entries(webpage), display_id,
-            traverse_obj(webpage, ({find_element(id='al_title')}, {clean_html})))
+            entries, display_id,
+            traverse_obj(data, (('display_title', 'title'), {str}, filter, any)))
