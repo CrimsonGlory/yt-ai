@@ -1,61 +1,70 @@
-import urllib.parse
+import re
 
 from .common import InfoExtractor
-from ..utils import unified_strdate
+from ..utils import (
+    clean_html,
+    determine_ext,
+    extract_attributes,
+    url_or_none,
+)
 
 
 class UrortIE(InfoExtractor):
     _WEB_FALLBACK = True
     IE_DESC = 'NRK P3 Urørt'
-    _VALID_URL = r'https?://(?:www\.)?urort\.p3\.no/#!/Band/(?P<id>[^/]+)$'
-
-    _TEST = {
-        'url': 'https://urort.p3.no/#!/Band/Gerilja',
-        'skip': 'video gone',
-        'md5': '5ed31a924be8a05e47812678a86e127b',
+    _VALID_URL = r'https?://(?:www\.)?urort\.p3\.no/track/(?:embed/(?P<embed_id>\d+)|(?P<artist>[^/?#]+)/(?P<id>[^/?#]+))'
+    _TESTS = [{
+        'url': 'https://urort.p3.no/track/iben-1/disjointed',
+        'md5': 'd1fe3aeb30833d2a42ff65216d3ceed5',
         'info_dict': {
-            'id': '33124-24',
-            'ext': 'mp3',
-            'title': 'The Bomb',
-            'thumbnail': r're:^https?://.+\.jpg',
-            'uploader': 'Gerilja',
-            'uploader_id': 'Gerilja',
-            'upload_date': '20100323',
+            'id': '232483',
+            'ext': 'wav',
+            'title': 'Disjointed',
+            'display_id': 'disjointed',
+            'uploader': 'Iben',
+            'thumbnail': r're:https?://.+',
+            'description': 'Hør Disjointed fra Iben',
         },
-        'params': {
-            'matchtitle': '^The Bomb$',  # To test, we want just one video
-        },
-    }
+    }, {
+        'url': 'https://urort.p3.no/track/embed/232483',
+        'only_matching': True,
+    }]
 
     def _real_extract(self, url):
-        playlist_id = self._match_id(url)
+        mobj = self._match_valid_url(url)
+        display_id = mobj.group('id') or mobj.group('embed_id')
+        webpage = self._download_webpage(url, display_id)
 
-        fstr = urllib.parse.quote(f"InternalBandUrl eq '{playlist_id}'")
-        json_url = f'http://urort.p3.no/breeze/urort/TrackDTOViews?$filter={fstr}&$orderby=Released%20desc&$expand=Tags%2CFiles'
-        songs = self._download_json(json_url, playlist_id)
-        entries = []
-        for s in songs:
-            formats = [{
-                'tbr': f.get('Quality'),
-                'ext': f['FileType'],
-                'format_id': '{}-{}'.format(f['FileType'], f.get('Quality', '')),
-                'url': 'http://p3urort.blob.core.windows.net/tracks/{}'.format(f['FileRef']),
-                'quality': 3 if f['FileType'] == 'mp3' else 2,
-            } for f in s['Files']]
-            e = {
-                'id': '%d-%s' % (s['BandId'], s['$id']),
-                'title': s['Title'],
-                'uploader_id': playlist_id,
-                'uploader': s.get('BandName', playlist_id),
-                'thumbnail': 'http://urort.p3.no/cloud/images/{}'.format(s['Image']),
-                'upload_date': unified_strdate(s.get('Released')),
-                'formats': formats,
-            }
-            entries.append(e)
+        info_el = self._search_regex(
+            r'(<div[^>]+\bdata-trackurl="[^"]+"[^>]*>)', webpage, 'track info')
+        attrs = extract_attributes(info_el)
+        track_url = url_or_none(attrs.get('data-trackurl'))
+        if not track_url:
+            self.raise_no_formats('No track URL found', expected=True)
+        track_id = attrs.get('data-trackid') or display_id
+
+        title = clean_html(self._search_regex(
+            r'<h1[^>]*\bclass="title"[^>]*>(.*?)</h1>',
+            webpage, 'title', default=None, flags=re.DOTALL))
+        if not title:
+            title = self._html_search_regex(
+                r'<div class="title"[^>]*>\s*(?:<span[^>]*>.*?</span>)?\s*<a[^>]+>([^<]+)</a>',
+                webpage, 'title', default=None)
+        if not title:
+            title = self._og_search_title(webpage)
+
+        uploader = self._html_search_regex(
+            r'<div class="artist"><a[^>]+>([^<]+)</a>',
+            webpage, 'artist', default=None)
 
         return {
-            '_type': 'playlist',
-            'id': playlist_id,
-            'title': playlist_id,
-            'entries': entries,
+            'id': track_id,
+            'display_id': display_id,
+            'url': track_url,
+            'title': title,
+            'uploader': uploader,
+            'thumbnail': self._og_search_thumbnail(webpage),
+            'description': self._og_search_description(webpage),
+            'ext': determine_ext(track_url, 'wav'),
+            'vcodec': 'none',
         }
