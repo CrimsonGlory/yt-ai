@@ -2393,6 +2393,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **noice**: Fetch catalog-api HLS/MP4 with the page guest token
     * **noodlemagazine**: Impersonate the browser
     * **nosnl**: Treat nested `/video/` article URLs as videos
+    * **nova**: Fall back to a Wayback Machine snapshot and OTT preview MP4s when the live page is blocked
     * **orf:on**: Raise geo-restriction when sources are empty
     * **pbs**: Guard against missing `video_info` and title
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
