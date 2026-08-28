@@ -153,12 +153,18 @@ class CineverseIE(CineverseBaseIE):
 class CineverseDetailsIE(CineverseBaseIE):
     _VALID_URL = rf'{CineverseBaseIE._VALID_URL_BASE}/details/(?P<id>[A-Z0-9]+)'
     _TESTS = [{
-        'url': 'https://www.retrocrush.tv/details/1000000023012/Space-Adventure-COBRA-(Original-Japanese)',
-        'skip': 'episode list no longer embedded in page',
-        'playlist_mincount': 30,
+        'url': 'https://www.retrocrush.tv/details/1000000022918/Little-Nemo-Adventures-in-Slumberland',
+        'md5': 'dfec4212569a31103c06a6abd2e4b5c1',
         'info_dict': {
-            'title': 'Space Adventure COBRA (Original Japanese)',
-            'id': '1000000023012',
+            'id': '1000000022918',
+            'ext': 'mp4',
+            'title': 'Little Nemo: Adventures in Slumberland',
+            'description': 'md5:b07ac6e5278ff348c42d61cfdbb16699',
+            'cast': ['Gabriel Damon', 'Mickey Rooney', 'Danny Mann'],
+            'duration': 5694.613,
+            'age_limit': 0,
+            'modified_timestamp': 1772821878691,
+            'thumbnail': r're:https://cdn\.matchpoint\.tv/.+/1000000022918_1900x850\.jpg',
         },
     }, {
         'url': 'https://www.asiancrush.com/details/NNVG4938/Hansel-and-Gretel',
@@ -171,6 +177,14 @@ class CineverseDetailsIE(CineverseBaseIE):
             'duration': 7030.732,
             'age_limit': 14,
             'thumbnail': r're:https://cdn\.matchpoint\.tv/.+/NNVG4938_1900x850\.jpg',
+        },
+    }, {
+        'url': 'https://www.retrocrush.tv/details/1000000023012/Space-Adventure-COBRA-(Original-Japanese)',
+        'skip': 'episode list no longer embedded in page',
+        'playlist_mincount': 30,
+        'info_dict': {
+            'title': 'Space Adventure COBRA (Original Japanese)',
+            'id': '1000000023012',
         },
     }]
 
