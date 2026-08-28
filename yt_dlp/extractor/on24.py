@@ -22,6 +22,17 @@ class On24IE(InfoExtractor):
     ]
 
     _TESTS = [{
+        'url': 'https://event.on24.com/wcc/r/5191983/7547FB0CBC3FC4BD5D090E785E6271FB',
+        'md5': '323b08aad62f1ee6bb1ad93b186c7473',
+        'info_dict': {
+            'id': '5191983',
+            'ext': 'mp4',
+            'title': 'Where IT Service is Headed Next — and How to Get Ahead',
+            'upload_date': '20260205',
+            'timestamp': 1770259500,
+            'view_count': int,
+        },
+    }, {
         'url': 'https://event.on24.com/eventRegistration/console/EventConsoleApollo.jsp?uimode=nextgeneration&eventid=2197467&sessionid=1&key=5DF57BE53237F36A43B478DD36277A84&contenttype=A&eventuserid=305999&playerwidth=1000&playerheight=650&caller=previewLobby&text_language_id=en&format=fhaudio&newConsole=false',
         'info_dict': {
             'id': '2197467',
@@ -31,6 +42,7 @@ class On24IE(InfoExtractor):
             'timestamp': 1582149600.0,
             'view_count': int,
         },
+        'skip': 'HTTP Error 418',
     }, {
         'url': 'https://event.on24.com/wcc/r/2639291/82829018E813065A122363877975752E?mode=login&email=johnsmith@gmail.com',
         'only_matching': True,
