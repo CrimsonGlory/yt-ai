@@ -2,6 +2,7 @@ import re
 
 from .common import InfoExtractor
 from ..utils import (
+    ExtractorError,
     int_or_none,
     remove_end,
     remove_start,
@@ -13,8 +14,24 @@ from ..utils import (
 class PinkbikeIE(InfoExtractor):
     _VALID_URL = r'https?://(?:(?:www\.)?pinkbike\.com/video/|es\.pinkbike\.org/i/kvid/kvid-y5\.swf\?id=)(?P<id>[0-9]+)'
     _TESTS = [{
+        'url': 'https://www.pinkbike.com/video/536791/',
+        'md5': '1792984b5e41ac246f14941b8c90e3fe',
+        'info_dict': {
+            'id': '536791',
+            'ext': 'mp4',
+            'title': 'Ecuador - POV Video',
+            'description': 'A couple of POV clips I got during my time back home!',
+            'thumbnail': r're:^https?://.*\.jpg$',
+            'duration': 115,
+            'upload_date': '20210516',
+            'uploader': 'philip-bertogg',
+            'location': 'Quito, Ecuador',
+            'view_count': int,
+            'comment_count': int,
+        },
+    }, {
         'url': 'http://www.pinkbike.com/video/402811/',
-        'skip': 'HTTP Error 403',
+        'skip': 'password protected',
         'md5': '4814b8ca7651034cd87e3361d5c2155a',
         'info_dict': {
             'id': '402811',
@@ -38,11 +55,16 @@ class PinkbikeIE(InfoExtractor):
         video_id = self._match_id(url)
 
         webpage = self._download_webpage(
-            f'http://www.pinkbike.com/video/{video_id}', video_id)
+            f'https://www.pinkbike.com/video/{video_id}/', video_id,
+            impersonate=True)
+
+        if 'This video is password protected' in webpage:
+            raise ExtractorError('This video is password protected', expected=True)
 
         formats = []
-        for _, format_id, src in re.findall(
-                r'data-quality=((?:\\)?["\'])(.+?)\1[^>]+src=\1(.+?)\1', webpage):
+        for format_id, src in re.findall(
+                r'data-quality=["\']([^"\']+)["\'][^>]+src=["\']([^"\']+)["\']',
+                webpage):
             height = int_or_none(self._search_regex(
                 r'^(\d+)[pP]$', format_id, 'height', default=None))
             formats.append({
@@ -51,7 +73,7 @@ class PinkbikeIE(InfoExtractor):
                 'height': height,
             })
 
-        title = remove_end(self._og_search_title(webpage), ' Video - Pinkbike')
+        title = remove_end(self._og_search_title(webpage), ' - Pinkbike')
         description = self._html_search_regex(
             r'(?s)id="media-description"[^>]*>(.+?)<',
             webpage, 'description', default=None) or remove_start(
@@ -91,4 +113,5 @@ class PinkbikeIE(InfoExtractor):
             'view_count': view_count,
             'comment_count': comment_count,
             'formats': formats,
+            'impersonate': True,
         }
