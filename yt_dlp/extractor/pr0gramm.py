@@ -20,6 +20,7 @@ class Pr0grammIE(InfoExtractor):
     _VALID_URL = r'https?://pr0gramm\.com\/(?:[^/?#]+/)+(?P<id>[\d]+)(?:[/?#:]|$)'
     _TESTS = [{
         'url': 'https://pr0gramm.com/new/video/5466437',
+        'md5': '52fa540d70d3edc286846f8ca85938aa',
         'info_dict': {
             'id': '5466437',
             'ext': 'mp4',
@@ -70,6 +71,7 @@ class Pr0grammIE(InfoExtractor):
             'thumbnail': r're:^https://thumb\.pr0gramm\.com/.*\.jpg',
             '_old_archive_ids': ['pr0grammstatic 5848332'],
         },
+        'skip': 'Requires verified account',
     }, {
         'url': 'https://pr0gramm.com/top/5895149',
         'info_dict': {
@@ -87,6 +89,7 @@ class Pr0grammIE(InfoExtractor):
             'thumbnail': 'https://thumb.pr0gramm.com/2023/10/18/db47bb3db5e1a1b3.jpg',
             '_old_archive_ids': ['pr0grammstatic 5895149'],
         },
+        'skip': 'Login required',
     }, {
         'url': 'https://pr0gramm.com/static/5466437',
         'only_matching': True,
@@ -109,9 +112,10 @@ class Pr0grammIE(InfoExtractor):
         # We need to guess the flags for the content otherwise the api will raise an error
         # We can guess the maximum allowed flags for the account from the cookies
         # Bitflags are (msbf): pol, nsfp, nsfl, nsfw, sfw
-        flags = 0b10001
+        # Anonymous users may only request SFW; POL/NSFP now return 403.
+        flags = 0b00001
         if self._is_logged_in:
-            flags |= 0b01000
+            flags |= 0b11000
             cookies = self._get_cookies(self.BASE_URL)
             if 'me' not in cookies:
                 self._download_webpage(self.BASE_URL, None, 'Refreshing verification information')
@@ -126,10 +130,10 @@ class Pr0grammIE(InfoExtractor):
             video_id, note, query=query, expected_status=403)
 
         error = traverse_obj(data, ('error', {str}))
-        if error in ('nsfwRequired', 'nsflRequired', 'nsfpRequired', 'verificationRequired'):
+        if error in ('nsfwRequired', 'nsflRequired', 'nsfpRequired', 'polRequired', 'verificationRequired'):
             if not self._is_logged_in:
                 self.raise_login_required()
-            raise ExtractorError(f'Unverified account cannot access NSFW/NSFL ({error})', expected=True)
+            raise ExtractorError(f'Unverified account cannot access NSFW/NSFL/POL ({error})', expected=True)
         elif error:
             message = traverse_obj(data, ('msg', {str})) or error
             raise ExtractorError(f'API returned error: {message}', expected=True)
