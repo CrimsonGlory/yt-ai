@@ -2421,6 +2421,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **polsatgo**: Use the Polsat Box Go `pbg` portal after Polsat Go shutdown; raise login when playback is denied
     * **podbayfm**: Impersonate the browser
     * **podomatic**: Use the public v2 episode API and enclosure MP3s instead of the dead embed_params JSON
+    * **popcorntimes**: Follow public trailer YouTube/Dailymotion embeds; raise geo-restriction for DACH-only feature films (X-Forwarded-For is ignored)
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
     * **rozhlas**: Resolve slugs via the search API
     * **showroom**: Use the public room API instead of Nuxt + login cookie
