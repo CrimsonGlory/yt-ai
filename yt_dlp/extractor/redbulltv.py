@@ -8,10 +8,29 @@ from ..utils import (
 
 
 class RedBullTVIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?redbull(?:\.tv|\.com(?:/[^/]+)?(?:/tv)?)(?:/events/[^/]+)?/(?:videos?|live|(?:film|episode)s)/(?P<id>AP-\w+)'
+    _VALID_URL = [
+        r'https?://(?:www\.)?redbull(?:\.tv|\.com(?:/[^/]+)?(?:/tv)?)(?:/events/[^/]+)?/(?:videos?|live|(?:film|episode)s)/(?P<id>AP-\w+)',
+        r'https?://(?:www\.)?redbull\.tv/(?:[a-z]{2}(?:_[A-Z]{2,3})?/)?(?:(?:videos?|live|(?:film|episode)s|page)/)?(?:page:)?(?P<id>rrn:content:(?:(?:(?:episode|live|recap|trailer)-)?videos|films):[\da-f]{8}(?:-[\da-f]{4}){3}-[\da-f]{12})',
+    ]
     _TESTS = [{
+        'url': 'https://www.redbull.tv/en_INT/page/rrn:content:films:066029c6-623f-5406-8de1-4bd4aaaa6d2f/lessons-from-the-edge',
+        'md5': 'd6c0fa9d70ccfec3367c101782d83fcf',
+        'info_dict': {
+            'id': 'rrn:content:films:066029c6-623f-5406-8de1-4bd4aaaa6d2f',
+            'ext': 'mp4',
+            'title': 'Lessons from the Edge - Running the Great Himalaya Trail',
+            'description': 'md5:61c3c355553ab577ab64f745b5406e5f',
+            'duration': 1865.0,
+        },
+        # HLS --test only fetches the fMP4 init fragment (~1KB), below the default 10KB check
+        'file_minsize': None,
+        'params': {
+            'format': 'bv',
+        },
+    }, {
         # film
         'url': 'https://www.redbull.tv/video/AP-1Q6XCDTAN1W11',
+        'skip': 'video gone',
         'md5': 'fb0445b98aa4394e504b413d98031d1f',
         'info_dict': {
             'id': 'AP-1Q6XCDTAN1W11',
@@ -23,6 +42,7 @@ class RedBullTVIE(InfoExtractor):
     }, {
         # episode
         'url': 'https://www.redbull.tv/video/AP-1PMHKJFCW1W11',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'AP-1PMHKJFCW1W11',
             'ext': 'mp4',
@@ -48,6 +68,12 @@ class RedBullTVIE(InfoExtractor):
     }, {
         'url': 'https://www.redbull.com/int-en/episodes/AP-1TQWK7XE11W11',
         'only_matching': True,
+    }, {
+        'url': 'https://www.redbull.tv/en/video/rrn:content:videos:d6a87584-4ca5-4892-ac3f-455315c56eb7/red-bull-erzbergrodeo-2026-highlights',
+        'only_matching': True,
+    }, {
+        'url': 'https://www.redbull.tv/en_US/page/page:rrn:content:videos:d6a87584-4ca5-4892-ac3f-455315c56eb7/red-bull-erzbergrodeo-2026-highlights',
+        'only_matching': True,
     }]
 
     def extract_info(self, video_id):
@@ -70,15 +96,18 @@ class RedBullTVIE(InfoExtractor):
             )
         except ExtractorError as e:
             if isinstance(e.cause, HTTPError) and e.cause.status == 404:
-                error_message = self._parse_json(
-                    e.cause.response.read().decode(), video_id)['error']
-                raise ExtractorError(f'{self.IE_NAME} said: {error_message}', expected=True)
+                error = self._parse_json(
+                    e.cause.response.read().decode(), video_id, fatal=False) or {}
+                raise ExtractorError(
+                    f'{self.IE_NAME} said: {error.get("error") or error.get("err") or "not found"}',
+                    expected=True)
             raise
 
         title = video['title'].strip()
+        product_id = video.get('id') or video_id
 
         formats, subtitles = self._extract_m3u8_formats_and_subtitles(
-            f'https://dms.redbull.tv/v3/{video_id}/{token}/playlist.m3u8',
+            f'https://dms.redbull.tv/v3/{product_id}/{token}/playlist.m3u8',
             video_id, 'mp4', entry_protocol='m3u8_native', m3u8_id='hls')
 
         for resource in video.get('resources', []):
@@ -86,7 +115,7 @@ class RedBullTVIE(InfoExtractor):
                 splitted_resource = resource.split('_')
                 if splitted_resource[2]:
                     subtitles.setdefault('en', []).append({
-                        'url': f'https://resources.redbull.tv/{video_id}/{resource}',
+                        'url': f'https://resources.redbull.tv/{product_id}/{resource}',
                         'ext': splitted_resource[2],
                     })
 
