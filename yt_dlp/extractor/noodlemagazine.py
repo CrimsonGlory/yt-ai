@@ -11,10 +11,9 @@ from ..utils.traversal import traverse_obj
 
 class NoodleMagazineIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www|adult\.)?noodlemagazine\.com/watch/(?P<id>[0-9-_]+)'
-    _TEST = {
+    _TESTS = [{
         'url': 'https://adult.noodlemagazine.com/watch/-67421364_456239604',
-        'skip': 'HTTP Error 403',
-        'md5': '9e02aa763612929d0b4b850591a9248b',
+        'md5': 'f26aeaaaf57e0fb829b528eaaee562f8',
         'info_dict': {
             'id': '-67421364_456239604',
             'title': 'Aria alexander manojob',
@@ -28,11 +27,11 @@ class NoodleMagazineIE(InfoExtractor):
             'upload_date': '20190218',
             'age_limit': 18,
         },
-    }
+    }]
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
+        webpage = self._download_webpage(url, video_id, impersonate=True)
         title = self._og_search_title(webpage)
         duration = parse_duration(self._html_search_meta('video:duration', webpage, 'duration', default=None))
         description = self._og_search_property('description', webpage, default='').replace(' watch online hight quality video', '')
@@ -72,4 +71,5 @@ class NoodleMagazineIE(InfoExtractor):
             'like_count': like_count,
             'upload_date': upload_date,
             'age_limit': 18,
+            'impersonate': True,
         }
