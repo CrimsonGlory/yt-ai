@@ -1,83 +1,73 @@
-import json
+import re
+import urllib.parse
 
 from .common import InfoExtractor
-from ..utils import int_or_none
+from ..utils import (
+    int_or_none,
+    urlencode_postdata,
+)
 
 
 class PornotubeIE(InfoExtractor):
     _VALID_URL = r'https?://(?:\w+\.)?pornotube\.com/(?:[^?#]*?)/video/(?P<id>[0-9]+)'
-    _TEST = {
+    _TESTS = [{
         'url': 'http://www.pornotube.com/orientation/straight/video/4964/title/weird-hot-and-wet-science',
-        'skip': 'video gone',
-        'md5': '60fc5a4f0d93a97968fc7999d98260c9',
+        'md5': 'a9e6a915debd0ce3de32d190974b9d3a',
         'info_dict': {
             'id': '4964',
             'ext': 'mp4',
-            'upload_date': '20141203',
             'title': 'Weird Hot and Wet Science',
             'description': 'md5:a8304bef7ef06cb4ab476ca6029b01b0',
             'categories': ['Adult Humor', 'Blondes'],
             'uploader': 'Alpha Blue Archives',
-            'thumbnail': r're:^https?://.*\.jpg$',
-            'timestamp': 1417582800,
+            'thumbnail': r're:https?://.*\.jpg',
+            'duration': 300,
             'age_limit': 18,
         },
-    }
+    }]
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
+        self._set_cookie(urllib.parse.urlparse(url).hostname, 'ageGated', 'true')
+        webpage = self._download_webpage(url, video_id)
 
-        token = self._download_json(
-            'https://api.aebn.net/auth/v2/origins/authenticate',
-            video_id, note='Downloading token',
-            data=json.dumps({'credentials': 'Clip Application'}).encode(),
+        confirm_url = self._search_regex(
+            r'<a[^>]+id="avs-confirm-btn"[^>]+href="([^"]+)"',
+            webpage, 'age confirmation url', default=None)
+        if confirm_url:
+            webpage = self._download_webpage(
+                urllib.parse.urljoin(url, confirm_url), video_id,
+                note='Confirming age gate')
+
+        delivery = self._download_json(
+            'https://www.pornotube.com/deliver', video_id,
+            note='Downloading delivery information',
+            data=urlencode_postdata({
+                'clipId': video_id,
+                'format': 'HLS',
+            }),
             headers={
-                'Content-Type': 'application/json',
-                'Origin': 'http://www.pornotube.com',
-            })['tokenKey']
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'Origin': 'https://www.pornotube.com',
+                'Referer': url,
+            })
 
-        video_url = self._download_json(
-            f'https://api.aebn.net/delivery/v1/clips/{video_id}/MP4',
-            video_id, note='Downloading delivery information',
-            headers={'Authorization': token})['mediaUrl']
-
-        FIELDS = (
-            'title', 'description', 'startSecond', 'endSecond', 'publishDate',
-            'studios{name}', 'categories{name}', 'movieId', 'primaryImageNumber',
-        )
-
-        info = self._download_json(
-            'https://api.aebn.net/content/v2/clips/{}?fields={}'.format(video_id, ','.join(FIELDS)), video_id,
-            note='Downloading metadata',
-            headers={'Authorization': token})
-
-        if isinstance(info, list):
-            info = info[0]
-
-        title = info['title']
-
-        timestamp = int_or_none(info.get('publishDate'), scale=1000)
-        uploader = info.get('studios', [{}])[0].get('name')
-        movie_id = info.get('movieId')
-        primary_image_number = info.get('primaryImageNumber')
-        thumbnail = None
-        if movie_id and primary_image_number:
-            thumbnail = 'http://pic.aebn.net/dis/t/%s/%s_%08d.jpg' % (
-                movie_id, movie_id, primary_image_number)
-        start = int_or_none(info.get('startSecond'))
-        end = int_or_none(info.get('endSecond'))
-        duration = end - start if start and end else None
-        categories = [c['name'] for c in info.get('categories', []) if c.get('name')]
+        formats = self._extract_m3u8_formats(
+            delivery['mediaUrl'], video_id, 'mp4', m3u8_id='hls')
 
         return {
             'id': video_id,
-            'url': video_url,
-            'title': title,
-            'description': info.get('description'),
-            'duration': duration,
-            'timestamp': timestamp,
-            'uploader': uploader,
-            'thumbnail': thumbnail,
-            'categories': categories,
+            'title': self._html_search_regex(
+                r'<h1[^>]*class="[^"]*pageTitle[^"]*"[^>]*>([^<]+)',
+                webpage, 'title'),
+            'description': self._html_search_meta('description', webpage),
+            'duration': int_or_none(delivery.get('clipDurationSeconds')),
+            'uploader': self._html_search_regex(
+                r'/search/studio/id/\d+/[^>]*>([^<]+)', webpage,
+                'uploader', default=None),
+            'thumbnail': self._html_search_meta('twitter:image', webpage),
+            'categories': re.findall(
+                r'<a[^>]+/search/category/id/\d+/[^>]*>([^<]+)', webpage),
             'age_limit': 18,
+            'formats': formats,
         }

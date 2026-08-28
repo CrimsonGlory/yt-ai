@@ -2424,6 +2424,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **popcorntimes**: Follow public trailer YouTube/Dailymotion embeds; raise geo-restriction for DACH-only feature films (X-Forwarded-For is ignored)
     * **popcorntv**: Match `/streaming/` URLs, fetch via `www` to avoid the apex's expired TLS cert, and follow YouTube trailer embeds
     * **pornbox**: Extract public trailer streams when the full scene requires login
+    * **pornotube**: Use the site `/deliver` HLS endpoint instead of the dead AEBN clips API
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
     * **rozhlas**: Resolve slugs via the search API
     * **showroom**: Use the public room API instead of Nuxt + login cookie
