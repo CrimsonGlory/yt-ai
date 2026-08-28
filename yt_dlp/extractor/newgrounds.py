@@ -1,5 +1,11 @@
+import base64
+import ctypes
 import functools
+import hashlib
+import json
 import re
+import time
+from ctypes.util import find_library
 
 from .common import InfoExtractor
 from ..networking.exceptions import HTTPError
@@ -20,12 +26,151 @@ from ..utils import (
 from ..utils.traversal import traverse_obj
 
 
-class NewgroundsIE(InfoExtractor):
+def _leading_zero_bits(digest):
+    n = 0
+    for b in digest:
+        if b:
+            return n + 8 - b.bit_length()
+        n += 8
+    return n
+
+
+def _b64url_decode(value):
+    return base64.urlsafe_b64decode(value + '=' * ((4 - len(value) % 4) % 4))
+
+
+_ARGON2_LIB = False
+
+
+def _load_argon2_lib():
+    global _ARGON2_LIB
+    if _ARGON2_LIB is not False:
+        return _ARGON2_LIB
+    lib = None
+    for candidate in (find_library('argon2'), 'libargon2.so.1', 'libargon2.so', 'argon2'):
+        if not candidate:
+            continue
+        try:
+            lib = ctypes.CDLL(candidate)
+            break
+        except OSError:
+            continue
+    if lib is not None:
+        lib.argon2id_hash_raw.argtypes = (
+            ctypes.c_uint32, ctypes.c_uint32, ctypes.c_uint32,
+            ctypes.c_char_p, ctypes.c_size_t,
+            ctypes.c_char_p, ctypes.c_size_t,
+            ctypes.c_char_p, ctypes.c_size_t)
+        lib.argon2id_hash_raw.restype = ctypes.c_int
+    _ARGON2_LIB = lib
+    return lib
+
+
+def _argon2id_hash_raw(password, salt, time_cost, memory_cost, parallelism, hash_len):
+    try:
+        from argon2.low_level import Type, hash_secret_raw
+    except ImportError:
+        pass
+    else:
+        return hash_secret_raw(
+            secret=password, salt=salt, time_cost=time_cost,
+            memory_cost=memory_cost, parallelism=parallelism,
+            hash_len=hash_len, type=Type.ID)
+
+    lib = _load_argon2_lib()
+    if lib is None:
+        raise ExtractorError(
+            'Newgrounds NG Guard uses argon2id; install libargon2 or the argon2-cffi Python package',
+            expected=True)
+
+    buf = ctypes.create_string_buffer(hash_len)
+    rc = lib.argon2id_hash_raw(
+        time_cost, memory_cost, parallelism,
+        password, len(password), salt, len(salt), buf, hash_len)
+    if rc:
+        raise ExtractorError(f'argon2id hashing failed with code {rc}')
+    return buf.raw
+
+
+class NewgroundsBaseIE(InfoExtractor):
+    _NG_GUARD_ORIGIN = 'https://www.newgrounds.com'
+    _solving_ng_guard = False
+
+    def _request_webpage(self, url_or_request, video_id, *args, **kwargs):
+        try:
+            return super()._request_webpage(url_or_request, video_id, *args, **kwargs)
+        except ExtractorError as e:
+            if self._solving_ng_guard or not self._is_ng_guard_block(e):
+                raise
+            self._unlock_ng_guard(video_id)
+            return super()._request_webpage(url_or_request, video_id, *args, **kwargs)
+
+    def _is_ng_guard_block(self, err):
+        cause = err.cause
+        if not isinstance(cause, HTTPError) or cause.status != 403:
+            return False
+        url = getattr(cause.response, 'url', '') or ''
+        if '/_guard/' in url:
+            return False
+        try:
+            peek = cause.response.read(512)
+        except OSError:
+            peek = b''
+        return b'NG Guard' in peek or b'/_guard/' in peek
+
+    def _unlock_ng_guard(self, video_id):
+        NewgroundsBaseIE._solving_ng_guard = True
+        try:
+            challenge = self._download_json(
+                f'{self._NG_GUARD_ORIGIN}/_guard/api/v1/challenge', video_id,
+                'Downloading NG Guard challenge')
+            bits, algo = challenge['bits'], challenge.get('algo') or 'sha256'
+            self.to_screen(f'{video_id}: Solving NG Guard {algo} challenge ({bits} bits)')
+            payload = _b64url_decode(challenge['payload'])
+            t0 = time.monotonic()
+            nonce = 0
+            while time.monotonic() - t0 < 120:
+                msg = payload + b':' + str(nonce).encode()
+                if algo == 'argon2id':
+                    params = challenge['params']
+                    digest = _argon2id_hash_raw(
+                        msg, b'\x00' * 8, params['iterations'], params['memorySize'],
+                        params['parallelism'], params['hashLength'])
+                else:
+                    digest = hashlib.sha256(msg).digest()
+                if _leading_zero_bits(digest) >= bits:
+                    break
+                nonce += 1
+            else:
+                raise ExtractorError('Timed out solving NG Guard challenge', expected=True)
+
+            verify_payload = {
+                'algo': algo,
+                'bits': bits,
+                'demo': False,
+                'nonce': str(nonce),
+                'payload': challenge['payload'],
+                'sig': challenge['sig'],
+                'solveTimeMs': int((time.monotonic() - t0) * 1000),
+            }
+            if algo == 'argon2id':
+                verify_payload['params'] = challenge['params']
+            verify = self._download_json(
+                f'{self._NG_GUARD_ORIGIN}/_guard/api/v1/verify', video_id,
+                'Submitting NG Guard solution',
+                data=json.dumps(verify_payload).encode(),
+                headers={'Content-Type': 'application/json'})
+            if not traverse_obj(verify, ('ok', {bool})):
+                raise ExtractorError('NG Guard verification failed', expected=True)
+        finally:
+            NewgroundsBaseIE._solving_ng_guard = False
+
+
+class NewgroundsIE(NewgroundsBaseIE):
     _NETRC_MACHINE = 'newgrounds'
     _VALID_URL = r'https?://(?:www\.)?newgrounds\.com/(?:audio/listen|portal/view)/(?P<id>\d+)(?:/format/flash)?'
     _TESTS = [{
         'url': 'https://www.newgrounds.com/audio/listen/549479',
-        'skip': 'Site blocks automated access',
         'md5': 'fe6033d297591288fa1c1f780386f07a',
         'info_dict': {
             'id': '549479',
@@ -42,7 +187,6 @@ class NewgroundsIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.newgrounds.com/portal/view/1',
-        'skip': 'Site blocks automated access',
         'md5': 'fbfb40e2dc765a7e830cb251d370d981',
         'info_dict': {
             'id': '1',
@@ -59,7 +203,6 @@ class NewgroundsIE(InfoExtractor):
     }, {
         # source format unavailable, additional mp4 formats
         'url': 'http://www.newgrounds.com/portal/view/689400',
-        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': '689400',
             'ext': 'mp4',
@@ -68,7 +211,7 @@ class NewgroundsIE(InfoExtractor):
             'timestamp': 1487983183,
             'upload_date': '20170225',
             'view_count': int,
-            'description': 'md5:aff9b330ec2e78ed93b1ad6d017accc6',
+            'description': 'md5:217d396f2786c6df11a4c9d34e12deaf',
             'age_limit': 17,
             'thumbnail': r're:^https://picon\.ngfiles\.com/689000/flash_689400_card\.png',
         },
@@ -77,7 +220,6 @@ class NewgroundsIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.newgrounds.com/portal/view/297383',
-        'skip': 'Site blocks automated access',
         'md5': '2c11f5fd8cb6b433a63c89ba3141436c',
         'info_dict': {
             'id': '297383',
@@ -93,7 +235,7 @@ class NewgroundsIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.newgrounds.com/portal/view/297383/format/flash',
-        'skip': 'Site blocks automated access',
+        'skip': 'Flash format no longer available',
         'md5': '5d05585a9a0caca059f5abfbd3865524',
         'info_dict': {
             'id': '297383',
@@ -109,7 +251,7 @@ class NewgroundsIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.newgrounds.com/portal/view/823109',
-        'skip': 'Site blocks automated access',
+        'skip': 'Age-restricted',
         'info_dict': {
             'id': '823109',
             'ext': 'mp4',
@@ -159,7 +301,9 @@ class NewgroundsIE(InfoExtractor):
         media_url_string = self._search_regex(
             r'NgAudioPlayer\.fromListenPage\(\{[^})]+\'url\'\s*:\s*("[^"]+"),', webpage, 'media url', default=None)
         if media_url_string:
-            uploader = None
+            uploader = self._search_regex(
+                r'fromListenPage\([^;]+[\'"]author[\'"]\s*:\s*["\']([^"\']+)',
+                webpage, 'uploader', default=None)
             formats = [{
                 'url': self._parse_json(media_url_string, media_id),
                 'format_id': 'source',
@@ -185,7 +329,8 @@ class NewgroundsIE(InfoExtractor):
 
         if not uploader:
             uploader = self._html_search_regex(
-                (r'(?s)<h4[^>]*>(.+?)</h4>.*?<em>\s*(?:Author|Artist)\s*</em>',
+                (r'<div class="item-details-main">\s*<h4>\s*<a[^>]+>([^<]+)</a>',
+                 r'(?s)<h4[^>]*>(.+?)</h4>.*?<em>\s*(?:Author|Artist)\s*</em>',
                  r'(?:Author|Writer)\s*<a[^>]+>([^<]+)'), webpage, 'uploader',
                 fatal=False)
 
@@ -207,7 +352,7 @@ class NewgroundsIE(InfoExtractor):
                 r'itemprop="(?:uploadDate|datePublished)"\s+content="([^"]+)"',
                 webpage, 'timestamp', default=None)),
             'duration': parse_duration(self._html_search_regex(
-                r'"duration"\s*:\s*["\']?(\d+)["\']?', webpage, 'duration', default=None)),
+                r'["\']duration["\']\s*:\s*["\']?(\d+)', webpage, 'duration', default=None)),
             'formats': formats,
             'thumbnail': self._og_search_thumbnail(webpage),
             'description': (
@@ -221,12 +366,12 @@ class NewgroundsIE(InfoExtractor):
         }
 
 
-class NewgroundsPlaylistIE(InfoExtractor):
+class NewgroundsPlaylistIE(NewgroundsBaseIE):
     IE_NAME = 'Newgrounds:playlist'
     _VALID_URL = r'https?://(?:www\.)?newgrounds\.com/(?:collection|[^/]+/search/[^/]+)/(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://www.newgrounds.com/collection/cats',
-        'skip': 'Site blocks automated access',
+        'skip': 'Collection items are no longer in the page HTML',
         'info_dict': {
             'id': 'cats',
             'title': 'Cats',
@@ -234,7 +379,7 @@ class NewgroundsPlaylistIE(InfoExtractor):
         'playlist_mincount': 45,
     }, {
         'url': 'https://www.newgrounds.com/collection/dogs',
-        'skip': 'Site blocks automated access',
+        'skip': 'Collection items are no longer in the page HTML',
         'info_dict': {
             'id': 'dogs',
             'title': 'Dogs',
@@ -272,26 +417,23 @@ class NewgroundsPlaylistIE(InfoExtractor):
         return self.playlist_result(entries, playlist_id, title)
 
 
-class NewgroundsUserIE(InfoExtractor):
+class NewgroundsUserIE(NewgroundsBaseIE):
     IE_NAME = 'Newgrounds:user'
     _VALID_URL = r'https?://(?P<id>[^\.]+)\.newgrounds\.com/(?:movies|audio)/?(?:[#?]|$)'
     _TESTS = [{
         'url': 'https://burn7.newgrounds.com/audio',
-        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': 'burn7',
         },
         'playlist_mincount': 150,
     }, {
         'url': 'https://burn7.newgrounds.com/movies',
-        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': 'burn7',
         },
-        'playlist_mincount': 2,
+        'playlist_mincount': 1,
     }, {
         'url': 'https://brian-beaton.newgrounds.com/movies',
-        'skip': 'Site blocks automated access',
         'info_dict': {
             'id': 'brian-beaton',
         },
