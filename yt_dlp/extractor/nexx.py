@@ -25,46 +25,9 @@ class NexxIE(InfoExtractor):
                         (?P<id>\d+)
                     '''
     _TESTS = [{
-        # movie
-        'url': 'https://api.nexx.cloud/v3/748/videos/byid/128907',
-        'md5': '31899fd683de49ad46f4ee67e53e83fe',
-        'info_dict': {
-            'id': '128907',
-            'ext': 'mp4',
-            'title': 'Stiftung Warentest',
-            'alt_title': 'Wie ein Test abläuft',
-            'description': 'md5:d1ddb1ef63de721132abd38639cc2fd2',
-            'creator': 'SPIEGEL TV',
-            'thumbnail': r're:^https?://.*\.jpg$',
-            'duration': 2509,
-            'timestamp': 1384264416,
-            'upload_date': '20131112',
-        },
-        'skip': 'Spiegel nexx CDNs are now disabled',
-    }, {
-        # episode with captions
-        'url': 'https://api.nexx.cloud/v3.1/741/videos/byid/1701834',
-        'info_dict': {
-            'id': '1701834',
-            'ext': 'mp4',
-            'title': 'Mein Leben mit \'nem TikTok E-Boy 😤',
-            'alt_title': 'Mein Leben mit \'nem TikTok E-Boy 😤',
-            'description': 'md5:f84f395a881fd143f952c892deab528d',
-            'thumbnail': r're:^https?://.*\.jpg$',
-            'duration': 770,
-            'timestamp': 1595600027,
-            'upload_date': '20200724',
-            'episode_number': 2,
-            'season_number': 2,
-            'episode': 'Episode 2',
-            'season': 'Season 2',
-        },
-        'params': {
-            'skip_download': True,
-        },
-    }, {
-        'url': 'nexx:741:1269984',
-        'md5': 'd5f14e14b592501e51addd5abef95a7f',
+        # 3q CDN progressive HTTP (funk.net domain 741)
+        'url': 'https://api.nexx.cloud/v3/741/videos/byid/1269984',
+        'md5': 'a5c04eda9ae7d0620b230de275143813',
         'info_dict': {
             'id': '1269984',
             'ext': 'mp4',
@@ -81,6 +44,48 @@ class NexxIE(InfoExtractor):
             'season': str,
             'season_number': int,
         },
+        'params': {
+            'format': 'best[protocol=http]',
+        },
+    }, {
+        # episode with captions
+        'url': 'https://api.nexx.cloud/v3.1/741/videos/byid/1701834',
+        'info_dict': {
+            'id': '1701834',
+            'ext': 'mp4',
+            'title': 'Mein Leben mit \'nem TikTok E-Boy ?',
+            'alt_title': 'Mein Leben mit \'nem TikTok E-Boy ?',
+            'description': 'md5:bfd87d6c84ad563ced69c3c9e49b8a9b',
+            'thumbnail': r're:^https?://.*\.jpg$',
+            'duration': 770,
+            'timestamp': 1595600027,
+            'upload_date': '20200724',
+            'episode_number': 0,
+            'season_number': 0,
+            'episode': 'Episode 0',
+            'season': 'Season 0',
+            'cast': list,
+        },
+        'params': {
+            'skip_download': True,
+        },
+    }, {
+        # movie
+        'url': 'https://api.nexx.cloud/v3/748/videos/byid/128907',
+        'md5': '31899fd683de49ad46f4ee67e53e83fe',
+        'info_dict': {
+            'id': '128907',
+            'ext': 'mp4',
+            'title': 'Stiftung Warentest',
+            'alt_title': 'Wie ein Test abläuft',
+            'description': 'md5:d1ddb1ef63de721132abd38639cc2fd2',
+            'creator': 'SPIEGEL TV',
+            'thumbnail': r're:^https?://.*\.jpg$',
+            'duration': 2509,
+            'timestamp': 1384264416,
+            'upload_date': '20131112',
+        },
+        'skip': 'Spiegel nexx CDNs are now disabled',
     }, {
         # free cdn from http://www.spiegel.de/video/eifel-zoo-aufregung-um-ausgebrochene-raubtiere-video-99018031.html
         'url': 'nexx:747:1533779',
@@ -99,6 +104,9 @@ class NexxIE(InfoExtractor):
         'skip': 'Spiegel nexx CDNs are now disabled',
     }, {
         'url': 'https://api.nexxcdn.com/v3/748/videos/byid/128907',
+        'only_matching': True,
+    }, {
+        'url': 'nexx:741:1269984',
         'only_matching': True,
     }, {
         'url': 'nexx:748:128907',
@@ -494,6 +502,27 @@ class NexxEmbedIE(InfoExtractor):
     # Reference. https://nx-s.akamaized.net/files/201510/44.pdf
     _EMBED_REGEX = [r'<iframe[^>]+\bsrc=(["\'])(?P<url>(?:https?:)?//embed\.nexx(?:\.cloud|cdn\.com)/\d+/(?:(?!\1).)+)\1']
     _TESTS = [{
+        'url': 'https://embed.nexx.cloud/741/video/71269984GMIR7QA',
+        'info_dict': {
+            'id': '1269984',
+            'ext': 'mp4',
+            'title': '1 TAG ohne KLO... wortwörtlich! ?',
+            'alt_title': '1 TAG ohne KLO... wortwörtlich! ?',
+            'description': 'md5:2016393a31991a900946432ccdd09a6f',
+            'thumbnail': r're:^https?://.*\.jpg$',
+            'duration': 607,
+            'timestamp': 1518614955,
+            'upload_date': '20180214',
+            'cast': list,
+            'episode': str,
+            'episode_number': int,
+            'season': str,
+            'season_number': int,
+        },
+        'params': {
+            'skip_download': True,
+        },
+    }, {
         'url': 'http://embed.nexx.cloud/748/KC1614647Z27Y7T?autoplay=1',
         'md5': '16746bfc28c42049492385c989b26c4a',
         'info_dict': {
@@ -508,9 +537,7 @@ class NexxEmbedIE(InfoExtractor):
             'timestamp': 1394021479,
             'upload_date': '20140305',
         },
-        'params': {
-            'skip_download': True,
-        },
+        'skip': 'Spiegel nexx CDNs are now disabled',
     }, {
         'url': 'https://embed.nexx.cloud/11888/video/DSRTO7UVOX06S7',
         'only_matching': True,
@@ -520,5 +547,8 @@ class NexxEmbedIE(InfoExtractor):
         embed_id = self._match_id(url)
 
         webpage = self._download_webpage(url, embed_id)
+        nexx_url = NexxIE._extract_url(webpage)
+        if not nexx_url:
+            raise ExtractorError('Unable to extract Nexx video URL', expected=True)
 
-        return self.url_result(NexxIE._extract_url(webpage), ie=NexxIE.ie_key())
+        return self.url_result(nexx_url, ie=NexxIE.ie_key())
