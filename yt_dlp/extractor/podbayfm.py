@@ -29,10 +29,9 @@ class PodbayFMIE(InfoExtractor):
     _VALID_URL = r'https?://podbay\.fm/p/[^/?#]+/e/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://podbay.fm/p/behind-the-bastards/e/1647338400',
-        'skip': 'HTTP Error 403',
-        'md5': '895ac8505de349515f5ee8a4a3195c93',
+        'md5': '3d4642297b6e20c4e7d8f761c05a5bff',
         'info_dict': {
-            'id': '62306451f4a48e58d0c4d6a8',
+            'id': '618e55de-c833-5a1d-8ada-af996f319e8a',
             'title': 'Part One: Kissinger',
             'ext': 'mp3',
             'description': r're:^We begin our epic six part series on Henry Kissinger.+',
@@ -45,7 +44,7 @@ class PodbayFMIE(InfoExtractor):
 
     def _real_extract(self, url):
         episode_id = self._match_id(url)
-        webpage = self._download_webpage(url, episode_id)
+        webpage = self._download_webpage(url, episode_id, impersonate=True)
         data = self._search_nextjs_data(webpage, episode_id)
         return result_from_props(data['props']['pageProps']['episode'])
 
@@ -54,7 +53,6 @@ class PodbayFMChannelIE(InfoExtractor):
     _VALID_URL = r'https?://podbay\.fm/p/(?P<id>[^/?#]+)/?(?:$|[?#])'
     _TESTS = [{
         'url': 'https://podbay.fm/p/behind-the-bastards',
-        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': 'behind-the-bastards',
             'title': 'Behind the Bastards',
@@ -66,7 +64,8 @@ class PodbayFMChannelIE(InfoExtractor):
     def _fetch_page(self, channel_id, pagenum):
         return self._download_json(
             f'https://podbay.fm/api/podcast?reverse=true&page={pagenum}&slug={channel_id}',
-            f'Downloading channel JSON page {pagenum + 1}', channel_id)['podcast']
+            f'Downloading channel JSON page {pagenum + 1}', channel_id,
+            impersonate=True)['podcast']
 
     @staticmethod
     def _results_from_page(channel_id, page):
