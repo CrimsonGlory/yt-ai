@@ -7,17 +7,18 @@ class NovaPlayIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://play.nova.bg/video/ochakvaite/season-0/ochakvaite-2026-08-18-dolinata-na-liubovta-np/665491',
-            'md5': 'd79dff2d09d196c595a7290f48e33399',
+            'md5': '89db78d1346a56b4a9a527bc6d1adedd',
             'info_dict': {
                 'id': '665491',
                 'ext': 'mp4',
-                'title': 'Събуди се - събота по NOVA (23.07.2022)',
-                'alt_title': 'ochakvaite/season-0/ochakvaite-2022-07-22-sybudi-se-sat',
-                'duration': 29.0,
-                'timestamp': 1658491547,
-                'upload_date': '20220722',
-                'thumbnail': 'https://nbg-img.fite.tv/img/606627_460x260.jpg',
-                'description': '29 сек',
+                'title': 'Долината на любовта | гледай в NOVA PLAY',
+                'alt_title': 'ochakvaite/season-0/ochakvaite-2026-08-18-dolinata-na-liubovta-np',
+                'duration': 20,
+                'timestamp': 1787035924,
+                'upload_date': '20260818',
+                'thumbnail': 'https://nbg-img.fite.tv/img/665491_1200x675.jpg',
+                'description': 'Всичко любимо от NOVA на едно място. Гледай сериали, предавания, новини, спорт, подкасти и телевизия на живо с Nova Play – онлайн, когато пожелаеш.',
+                'view_count': int,
             },
         },
         {
@@ -66,3 +67,4 @@ class NovaPlayIE(InfoExtractor):
             'timestamp': parse_iso8601(video_props['published_at']),
             'view_count': int_or_none(video_props['view_count']),
         }
+
