@@ -2411,6 +2411,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **pbs**: Guard against missing `video_info` and title
     * **pbskids**: Extract Next.js `/videos/watch/` pages and PBS URS HLS/MP4
     * **peekvids**: Read the numeric ID from the thumbnail URL and fall back to the page HLS source
+    * **peer.tv**: Read JSON-LD `contentUrl` MP4s and match `/video/` slug URLs
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
     * **rozhlas**: Resolve slugs via the search API
     * **showroom**: Use the public room API instead of Nuxt + login cookie

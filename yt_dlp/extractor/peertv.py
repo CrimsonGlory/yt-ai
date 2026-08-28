@@ -1,54 +1,56 @@
 from .common import InfoExtractor
-from ..utils import js_to_json
+from ..utils import (
+    ExtractorError,
+    url_or_none,
+)
 
 
 class PeerTVIE(InfoExtractor):
     IE_NAME = 'peer.tv'
-    _VALID_URL = r'https?://(?:www\.)?peer\.tv/(?:de|it|en)/(?P<id>\d+)'
+    _VALID_URL = [
+        r'https?://(?:www\.)?peer\.tv/(?:de|it|en)/video/(?P<id>[\w-]+)',
+        r'https?://(?:www\.)?peer\.tv/(?:de|it|en)/(?P<id>\d+)',
+    ]
     _TESTS = [{
-        'url': 'https://www.peer.tv/de/841',
-        'skip': 'HTTP Error 403',
+        'url': 'https://www.peer.tv/de/video/die-geislergruppe-aus-der-luft',
+        'md5': 'ee402a51e0ded4430821fc5c9138f54c',
         'info_dict': {
-            'id': '841',
+            'id': '825',
             'ext': 'mp4',
-            'title': 'Die Brunnenburg',
-            'description': 'md5:4395f6142b090338340ab88a3aae24ed',
+            'title': 'Die Geislergruppe aus der Luft',
+            'description': 'md5:a8759dfa8f590d4c61a959b2e6d7a08f',
+            'duration': 63,
+            'timestamp': 1565164627,
+            'upload_date': '20190807',
+            'thumbnail': 'https://player.peer.tv/img/thumbs/903c7ec4d523fafec880db965296f766/hd-preview-n.jpg',
         },
     }, {
+        'url': 'https://www.peer.tv/de/841',
+        'only_matching': True,
+    }, {
         'url': 'https://www.peer.tv/it/404',
-        'skip': 'HTTP Error 403',
-        'info_dict': {
-            'id': '404',
-            'ext': 'mp4',
-            'title': 'Cascate di ghiaccio in Val Gardena',
-            'description': 'md5:e8e5907f236171842674e8090e3577b8',
-        },
+        'only_matching': True,
+    }, {
+        'url': 'https://www.peer.tv/it/video/cascate-di-ghiaccio-in-val-gardena',
+        'only_matching': True,
     }]
 
     def _real_extract(self, url):
-        video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
+        display_id = self._match_id(url)
+        webpage = self._download_webpage(url, display_id)
+        info = self._search_json_ld(webpage, display_id, expected_type='VideoObject')
+        video_url = url_or_none(info.get('url'))
+        if not video_url:
+            raise ExtractorError('Unable to extract video URL', expected=True)
 
-        video_key = self._html_search_regex(r'player\.peer\.tv/js/([a-zA-Z0-9]+)', webpage, 'video key')
-
-        js = self._download_webpage(f'https://player.peer.tv/js/{video_key}/', video_id,
-                                    headers={'Referer': 'https://www.peer.tv/'}, note='Downloading session id')
-
-        session_id = self._search_regex(r'["\']session_id["\']:\s*["\']([a-zA-Z0-9]+)["\']', js, 'session id')
-
-        player_webpage = self._download_webpage(
-            f'https://player.peer.tv/jsc/{video_key}/{session_id}?jsr=aHR0cHM6Ly93d3cucGVlci50di9kZS84NDE=&cs=UTF-8&mq=2&ua=0&webm=p&mp4=p&hls=1',
-            video_id, note='Downloading player webpage')
-
-        m3u8_url = self._search_regex(r'["\']playlist_url["\']:\s*(["\'][^"\']+["\'])', player_webpage, 'm3u8 url')
-        m3u8_url = self._parse_json(m3u8_url, video_id, transform_source=js_to_json)
-
-        formats = self._extract_m3u8_formats(m3u8_url, video_id, m3u8_id='hls')
+        video_id = self._search_regex(
+            r'/public-mp4/(\d+)-', video_url, 'numeric id', default=display_id)
 
         return {
+            **info,
             'id': video_id,
-            'title': self._html_search_regex(r'<h1>(.+?)</h1>', webpage, 'title').replace('\xa0', ' '),
-            'formats': formats,
-            'description': self._html_search_meta(('og:description', 'description'), webpage),
-            'thumbnail': self._html_search_meta(('og:image', 'image'), webpage),
+            'url': video_url,
+            'title': info.get('title') or self._og_search_title(webpage),
+            'description': info.get('description') or self._og_search_description(webpage),
+            'thumbnail': self._og_search_thumbnail(webpage),
         }
