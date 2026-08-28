@@ -21,8 +21,19 @@ class PacktPubIE(PacktPubBaseIE):
     _VALID_URL = r'https?://(?:(?:www\.)?packtpub\.com/mapt|subscription\.packtpub\.com)/video/[^/]+/(?P<course_id>\d+)/(?P<chapter_id>[^/]+)/(?P<id>[^/]+)(?:/(?P<display_id>[^/?&#]+))?'
 
     _TESTS = [{
+        'url': 'https://subscription.packtpub.com/video/programming/9781837024155/p1/video1_1/intro-to-rust',
+        'md5': '49582345e6225394d1d2deedb22cd3a5',
+        'info_dict': {
+            'id': 'video1_1',
+            'ext': 'mp4',
+            'title': 'Intro to Rust',
+            'thumbnail': r're:(?i)^https?://.*\.(?:jpg|jpeg|png)',
+            'timestamp': 1732752000,
+            'upload_date': '20241128',
+        },
+    }, {
         'url': 'https://www.packtpub.com/mapt/video/web-development/9781787122215/20528/20530/Project+Intro',
-        'skip': 'HTTP Error 403',
+        'skip': 'video gone',
         'md5': '1e74bd6cfd45d7d07666f4684ef58f70',
         'info_dict': {
             'id': '20530',
@@ -63,33 +74,51 @@ class PacktPubIE(PacktPubBaseIE):
         if self._TOKEN:
             headers['Authorization'] = 'Bearer ' + self._TOKEN
         try:
-            video_url = self._download_json(
-                f'https://services.packtpub.com/products-v1/products/{course_id}/{chapter_id}/{video_id}', video_id,
-                'Downloading JSON video', headers=headers)['data']
+            video = self._download_json(
+                f'https://subscription.packtpub.com/api/products/{course_id}/{chapter_id}/{video_id}',
+                video_id, 'Downloading JSON video', headers=headers)
         except ExtractorError as e:
-            if isinstance(e.cause, HTTPError) and e.cause.status == 400:
+            if isinstance(e.cause, HTTPError) and e.cause.status in (400, 401, 403):
                 self.raise_login_required('This video is locked')
             raise
 
-        # TODO: find a better way to avoid duplicating course requests
-        # metadata = self._download_json(
-        #     '%s/products/%s/chapters/%s/sections/%s/metadata'
-        #     % (self._MAPT_REST, course_id, chapter_id, video_id),
-        #     video_id)['data']
+        video_url = video.get('data')
+        if not video_url:
+            self.raise_login_required('This video is locked')
 
-        # title = metadata['pageTitle']
-        # course_title = metadata.get('title')
-        # if course_title:
-        #     title = remove_end(title, ' - %s' % course_title)
-        # timestamp = unified_timestamp(metadata.get('publicationDate'))
-        # thumbnail = urljoin(self._PACKT_BASE, metadata.get('filepath'))
+        title = display_id or video_id
+        toc = self._download_json(
+            self._STATIC_PRODUCTS_BASE + f'{course_id}/toc', video_id, fatal=False)
+        for chapter in (toc or {}).get('chapters') or []:
+            if str_or_none(chapter.get('id')) != chapter_id:
+                continue
+            for section in chapter.get('sections') or []:
+                if str_or_none(section.get('id')) == video_id:
+                    title = strip_or_none(section.get('title')) or title
+                    break
+            break
+
+        metadata = self._download_json(
+            self._STATIC_PRODUCTS_BASE + f'{course_id}/summary',
+            video_id, fatal=False) or {}
+
+        subtitles = {}
+        for caption in video.get('captions') or []:
+            caption_url = caption.get('location')
+            if not caption_url:
+                continue
+            subtitles.setdefault('en', []).append({
+                'url': caption_url,
+                'ext': caption.get('type'),
+            })
 
         return {
             'id': video_id,
             'url': video_url,
-            'title': display_id or video_id,  # title,
-            # 'thumbnail': thumbnail,
-            # 'timestamp': timestamp,
+            'title': title,
+            'thumbnail': metadata.get('coverImage'),
+            'timestamp': unified_timestamp(metadata.get('publicationDate')),
+            'subtitles': subtitles,
         }
 
 
