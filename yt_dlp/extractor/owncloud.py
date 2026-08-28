@@ -1,12 +1,16 @@
+import base64
+import json
 import re
-import urllib.parse
 
 from .common import InfoExtractor
 from ..utils import (
     ExtractorError,
     determine_ext,
+    parse_qs,
+    update_url_query,
     url_or_none,
     urlencode_postdata,
+    urljoin,
 )
 
 
@@ -18,6 +22,15 @@ class OwnCloudIE(InfoExtractor):
     _VALID_URL = rf'https?://(?:{_INSTANCES_RE})/s/(?P<id>[\w.-]+)'
 
     _TESTS = [
+        {
+            'url': 'https://uni-bonn.sciebo.de/s/6WRsKd2itCDyIAw?path=/AdditionalVideos&files=LeafletMapTradeFlows.mkv',
+            'md5': 'b27565ffc81f932cf36619207cad6d0d',
+            'info_dict': {
+                'id': '6WRsKd2itCDyIAw',
+                'ext': 'mkv',
+                'title': 'LeafletMapTradeFlows.mkv',
+            },
+        },
         {
             'url': 'https://ruhr-uni-bochum.sciebo.de/s/wWhqZzh9jTumVFN',
             'skip': 'video gone',
@@ -41,6 +54,16 @@ class OwnCloudIE(InfoExtractor):
         },
     ]
 
+    @staticmethod
+    def _decode_nextcloud_state(value):
+        if not value:
+            return None
+        try:
+            padded = value + '=' * (-len(value) % 4)
+            return json.loads(base64.b64decode(padded))
+        except (ValueError, json.JSONDecodeError):
+            return None
+
     def _real_extract(self, url):
         video_id = self._match_id(url)
         webpage, urlh = self._download_webpage_handle(url, video_id)
@@ -48,15 +71,34 @@ class OwnCloudIE(InfoExtractor):
         if re.search(r'<label[^>]+for="password"', webpage):
             webpage = self._verify_video_password(webpage, urlh.url, video_id)
 
+        query = parse_qs(url)
+        file_path = (query.get('path') or [''])[0]
+        file_name = (query.get('files') or [''])[0]
+        if file_path and not file_name:
+            base = file_path.rstrip('/').rsplit('/', 1)[-1]
+            if determine_ext(base, default_ext=None):
+                file_name = base
+                file_path = file_path[:file_path.rstrip('/').rfind('/') + 1] or '/'
+
         hidden_inputs = self._hidden_inputs(webpage)
-        title = hidden_inputs.get('filename')
-        parsed_url = urllib.parse.urlparse(url)
+        title = (
+            file_name
+            or hidden_inputs.get('filename')
+            or self._decode_nextcloud_state(
+                hidden_inputs.get('initial-state-files_sharing-filename')))
+
+        download_url = url_or_none(hidden_inputs.get('downloadURL')) or urljoin(
+            urlh.url, f'/s/{video_id}/download')
+        if file_name:
+            download_url = update_url_query(download_url, {
+                'path': file_path or '/',
+                'files': file_name,
+            })
 
         return {
             'id': video_id,
             'title': title,
-            'url': url_or_none(hidden_inputs.get('downloadURL')) or parsed_url._replace(
-                path=urllib.parse.urljoin(parsed_url.path, 'download')).geturl(),
+            'url': download_url,
             'ext': determine_ext(title),
         }
 

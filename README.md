@@ -2405,6 +2405,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **onet.pl**: Extract PulseEmbed JSON-LD and Ring Publishing MP4 instead of the old CKM API
     * **onet.tv**: Map clip URLs onto the video.onet.pl successor and extract via OnetPl
     * **orf:on**: Raise geo-restriction when sources are empty
+    * **owncloud**: Build Nextcloud public download URLs (`/s/{id}/download` and folder `path`/`files`) after sciebo's ownCloud-to-Nextcloud migration
     * **packtpub**: Use the subscription products API for public S3 preview MP4s
     * **paramountpressexpress**: Raise geo-restriction when Brightcove press pages return location-not-allowed (X-Forwarded-For is ignored); YouTube-hosted press videos still extract
     * **parler**: Use the public v4 posts API for app/play post URLs
