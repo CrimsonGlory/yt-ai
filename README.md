@@ -2415,6 +2415,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **performgroup**: Use the DAZN feeds VOD API instead of the dead Perform Feeds ep3 host
     * **photobucket**: Extract sharing-link videos via GraphQL instead of the old `Pb.Data.Shared` page JSON
     * **pinkbike**: Impersonate the browser and extract current Video.js sources
+    * **playtvak**: Call the public `servix.idnes.cz` player API and match current iDNES.tv URLs
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
     * **rozhlas**: Resolve slugs via the search API
     * **showroom**: Use the public room API instead of Nuxt + login cookie
