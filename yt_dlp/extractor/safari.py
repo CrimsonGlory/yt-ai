@@ -81,8 +81,24 @@ class SafariIE(SafariBaseIE):
                     '''
 
     _TESTS = [{
+        'url': 'https://www.safaribooksonline.com/videos/hadoop-fundamentals-livelessons/9780133392838/9780133392838-00_SeriesIntro',
+        'md5': '592d0e6d0b03d9b981b3f7306ffc5ca9',
+        'info_dict': {
+            'id': '0_qbqx90ic',
+            'ext': 'mp4',
+            'title': 'Introduction to Hadoop Fundamentals LiveLessons',
+            'duration': 149,
+            'timestamp': 1437758058,
+            'upload_date': '20150724',
+            'uploader_id': 'stork',
+            'view_count': int,
+            'thumbnail': r're:https?://.+',
+        },
+        'params': {'format': 'best[protocol=http]'},
+        'add_ie': ['Kaltura'],
+    }, {
         'url': 'https://www.safaribooksonline.com/library/view/hadoop-fundamentals-livelessons/9780133392838/part00.html',
-        'skip': 'HTTP Error 403',
+        'skip': 'library/view pages return HTTP 403 without login',
         'md5': 'dcc5a425e79f2564148652616af1f2a3',
         'info_dict': {
             'id': '0_qbqx90ic',
