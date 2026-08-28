@@ -1,14 +1,17 @@
-import contextlib
-import json
-
 from .common import InfoExtractor
-from ..utils import int_or_none
+from ..utils import (
+    clean_html,
+    int_or_none,
+    unified_timestamp,
+    url_or_none,
+)
+from ..utils.traversal import traverse_obj
 
 
 class PodomaticIE(InfoExtractor):
     IE_NAME = 'podomatic'
     _VALID_URL = r'''(?x)
-                    (?P<proto>https?)://
+                    https?://
                         (?:
                             (?P<channel>[^.]+)\.podomatic\.com/entry|
                             (?:www\.)?podomatic\.com/podcasts/(?P<channel_2>[^/]+)/episodes
@@ -17,6 +20,21 @@ class PodomaticIE(InfoExtractor):
                 '''
 
     _TESTS = [{
+        'url': 'https://www.podomatic.com/podcasts/judgejules/episodes/2026-08-27T21_17_53-07_00',
+        'md5': '9ad35fa3b52a62789af982c5ed683285',
+        'info_dict': {
+            'id': '2026-08-27T21_17_53-07_00',
+            'ext': 'mp3',
+            'title': 'JUDGE JULES PRESENTS THE GLOBAL WARM UP EPISODE 1173',
+            'description': 'md5:d4d892d5fb52e5686d12bd36025cd788',
+            'uploader': 'JUDGE JULES PRESENTS THE GLOBAL WARM UP',
+            'uploader_id': 'judgejules',
+            'thumbnail': 'https://assets.podomatic.net/ts/5b/af/4e/judgejules/300x300_17860488.jpg',
+            'duration': 7200,
+            'timestamp': 1787890673,
+            'upload_date': '20260828',
+        },
+    }, {
         'url': 'http://scienceteachingtips.podomatic.com/entry/2009-01-02T16_03_35-08_00',
         'skip': 'video gone',
         'md5': '84bb855fcf3429e6bf72460e1eed782d',
@@ -50,39 +68,52 @@ class PodomaticIE(InfoExtractor):
         video_id = mobj.group('id')
         channel = mobj.group('channel') or mobj.group('channel_2')
 
-        json_url = ('{}://{}.podomatic.com/entry/embed_params/{}?permalink=true&rtmp=0'.format(
-            mobj.group('proto'), channel, video_id))
-        data_json = self._download_webpage(
-            json_url, video_id, 'Downloading video info', fatal=False)
-        data = {}
-        if data_json:
-            with contextlib.suppress(ValueError, TypeError, json.JSONDecodeError):
-                data = json.loads(data_json)
+        webpage = self._download_webpage(url, video_id)
+        episode_guid = self._search_regex(
+            r'(?:podomatic://episode/|/embed/html5/episode/)(\d+)',
+            webpage, 'episode id', default=None)
 
-        video_url = data.get('downloadLink')
-        if not video_url and data.get('streamer') and data.get('mediaLocation'):
-            video_url = '{}/{}'.format(data['streamer'].replace('rtmp', 'http'), data['mediaLocation'])
+        episode = {}
+        if episode_guid:
+            api = self._download_json(
+                f'https://www.podomatic.com/v2/episodes/{episode_guid}',
+                video_id, query={'podcast': 'true'}, fatal=False)
+            episode = traverse_obj(api, ('episode', {dict})) or {}
 
-        webpage = None
-        if not video_url:
-            webpage = self._download_webpage(url, video_id)
-            json_ld = self._search_json_ld(webpage, video_id, default={})
-            video_url = (
-                json_ld.get('url') or json_ld.get('contentUrl')
-                or self._og_search_property('og:audio', webpage, default=None)
-                or self._og_search_video_url(webpage, default=None)
-                or self._search_regex(
-                    r'(https?://[^"\']+\.(?:mp3|m4a|mp4)[^"\']*)', webpage, 'media url', default=None))
-            data.setdefault('title', json_ld.get('title') or self._og_search_title(webpage, default=video_id))
-            data.setdefault('imageLocation', json_ld.get('thumbnails') or self._og_search_thumbnail(webpage))
-            data.setdefault('podcast', self._og_search_property('og:site_name', webpage, default=channel))
+        json_ld = self._search_json_ld(webpage, video_id, default={})
+        video_url = (
+            url_or_none(episode.get('download_media_url'))
+            or url_or_none(episode.get('media_url'))
+            or url_or_none(json_ld.get('url') or json_ld.get('contentUrl'))
+            or self._og_search_property('audio', webpage, default=None)
+            or self._og_search_video_url(webpage, default=None)
+            or f'https://{channel}.podomatic.com/enclosure/{video_id}.mp3')
 
         return {
             'id': video_id,
             'url': video_url,
-            'title': data.get('title') or video_id,
-            'uploader': data.get('podcast'),
-            'uploader_id': channel,
-            'thumbnail': data.get('imageLocation'),
-            'duration': int_or_none(data.get('length'), 1000),
+            'vcodec': 'none',
+            'title': (
+                episode.get('title')
+                or json_ld.get('title')
+                or self._og_search_title(webpage, default=video_id)),
+            'description': (
+                clean_html(episode.get('description_html'))
+                or episode.get('description')
+                or json_ld.get('description')
+                or self._og_search_description(webpage)),
+            'uploader': (
+                episode.get('podcast_title')
+                or traverse_obj(episode, ('profile', 'profile_name', {str}))
+                or json_ld.get('uploader')
+                or channel),
+            'uploader_id': episode.get('podcast_subdomain') or channel,
+            'thumbnail': (
+                url_or_none(episode.get('large_image_url'))
+                or url_or_none(episode.get('xl_image_url'))
+                or url_or_none(episode.get('image_url'))
+                or json_ld.get('thumbnails')
+                or self._og_search_thumbnail(webpage)),
+            'duration': int_or_none(episode.get('duration')),
+            'timestamp': unified_timestamp(episode.get('published_datetime')),
         }
