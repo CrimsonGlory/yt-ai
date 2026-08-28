@@ -2426,6 +2426,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **pornbox**: Extract public trailer streams when the full scene requires login
     * **pornotube**: Use the site `/deliver` HLS endpoint instead of the dead AEBN clips API
     * **pornovoisines**: Extract Revma pack MP4s and JSON-LD trailers instead of the dead settings API
+    * **pornoxo**: Impersonate the browser and extract HLS from `playerConfig`
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
     * **rozhlas**: Resolve slugs via the search API
     * **showroom**: Use the public room API instead of Nuxt + login cookie
