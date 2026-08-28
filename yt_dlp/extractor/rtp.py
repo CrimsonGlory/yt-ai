@@ -3,7 +3,7 @@ import json
 import re
 import urllib.parse
 
-from .common import InfoExtractor, Request
+from .common import InfoExtractor
 from ..utils import (
     determine_ext,
     int_or_none,
@@ -19,6 +19,23 @@ from ..utils.traversal import traverse_obj
 class RTPIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?rtp\.pt/play/(?:[^/#?]+/)?(?P<program_id>p\d+)/(?P<episode_id>e\d+)(?:/[^/#?]+/(?P<asset_id>\d+))?'
     _TESTS = [{
+        'url': 'https://www.rtp.pt/play/p253/e950165/portugalia',
+        'md5': 'e389f29614f46c2ef691a750589f3f1e',
+        'info_dict': {
+            'id': '1463967',
+            'ext': 'mp3',
+            'title': 'Portugália',
+            'description': 'md5:2138d8d42d37c66367fa577ff6b0fac1',
+            'thumbnail': r're:https://cdn-images\.rtp\.pt/EPG/radio/imagens/.*',
+            'episode_id': 'e950165',
+            'series_id': 'p253',
+            '_old_archive_ids': ['rtp e950165'],
+        },
+        'expected_warnings': [
+            'Could not fetch guest auth token',
+            'Auth token not found in API response; falling back to web extraction',
+        ],
+    }, {
         'url': 'http://www.rtp.pt/play/p405/e174042/paixoes-cruzadas',
         'skip': 'video gone',
         'md5': 'e736ce0c665e459ddb818546220b4ef8',
@@ -147,16 +164,14 @@ class RTPIE(InfoExtractor):
     def _fetch_auth_token(self):
         if self._AUTH_TOKEN:
             return self._AUTH_TOKEN
-        self._AUTH_TOKEN = traverse_obj(self._download_json(Request(
-            'https://rtpplayapi.rtp.pt/play/api/2/token-manager',
-            headers={
+        self._AUTH_TOKEN = traverse_obj(self._download_json(
+            'https://rtpplayapi.rtp.pt/play/api/2/token-manager', None, headers={
                 'Accept': '*/*',
                 'rtp-play-auth': 'RTPPLAY_MOBILE_IOS',
                 'rtp-play-auth-hash': 'fac9c328b2f27e26e03d7f8942d66c05b3e59371e16c2a079f5c83cc801bd3ee',
                 'rtp-play-auth-timestamp': '2145973229682',
                 'User-Agent': self._USER_AGENT,
-            }, extensions={'keep_header_casing': True}), None,
-            note='Fetching guest auth token', errnote='Could not fetch guest auth token',
+            }, note='Fetching guest auth token', errnote='Could not fetch guest auth token',
             fatal=False), ('token', 'token', {str}))
         return self._AUTH_TOKEN
 
