@@ -30,6 +30,18 @@ class SBSIE(InfoExtractor):
             (["\'])(?P<url>https?://(?:www\.)?sbs\.com\.au/ondemand/video/.+?)\1''']
 
     _TESTS = [{
+        'url': 'https://www.sbs.com.au/ondemand/video/single/2512072259641',
+        'md5': 'd093f72aeeb3b13c0bcbbdb8f8e51d35',
+        'info_dict': {
+            'id': '2512072259641',
+            'ext': 'mp4',
+            'title': 'Forecast reveals impact of data centres on power grid',
+            'description': '',
+            'thumbnail': r're:https?://.*\.jpg',
+            'duration': 153.0,
+            'uploader': 'SBSC',
+        },
+    }, {
         # Original URL is handled by the generic IE which finds the iframe:
         # http://www.sbs.com.au/thefeed/blog/2014/08/21/dingo-conservation
         'url': 'http://www.sbs.com.au/ondemand/video/single/320403011771/?source=drupal&vertical=thefeed',
@@ -95,11 +107,29 @@ class SBSIE(InfoExtractor):
         'R18+': 18,
     }
     _PLAYER_API = 'https://www.sbs.com.au/api/v3'
+    _FOS_API = 'https://fos.sbs.com.au'
+    _CATALOGUE_API = 'https://catalogue.pr.sbsod.com'
+    _CATALOGUE_API_KEY = '49a46461-b9eb-4904-b519-176c59c386ef'
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        formats, subtitles = self._extract_smil_formats_and_subtitles(
-            update_url_query(f'{self._PLAYER_API}/video_smil', {'id': video_id}), video_id)
+
+        # News clips are served from FOS as un-geo-locked /VOD/open/ HLS.
+        # The old video_smil API is 410 Gone; remaining On Demand titles are AU-only.
+        fos = traverse_obj(self._download_json(
+            f'{self._FOS_API}/mpx/video/stream/{video_id}',
+            video_id, fatal=False), ('videoPlayer', {dict})) or {}
+
+        formats, subtitles = [], {}
+        fos_src = traverse_obj(fos, ('src', {url_or_none}))
+        if fos_src:
+            formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+                fos_src, video_id, 'mp4', fatal=False)
+
+        if not formats:
+            formats, subtitles = self._extract_smil_formats_and_subtitles(
+                update_url_query(f'{self._PLAYER_API}/video_smil', {'id': video_id}),
+                video_id, fatal=False)
 
         if not formats:
             urlh = self._request_webpage(
@@ -111,13 +141,27 @@ class SBSIE(InfoExtractor):
                     self.raise_geo_restricted(countries=['AU'])
             self.raise_no_formats('No formats are available', video_id=video_id)
 
-        media = traverse_obj(self._download_json(
-            f'{self._PLAYER_API}/video_stream', video_id, fatal=False,
-            query={'id': video_id, 'context': 'tv'}), ('video_object', {dict})) or {}
+        media = traverse_obj(fos, {
+            'name': ('title', {str}),
+            'description': ('description', {str}),
+            'duration': ('duration', {float_or_none}),
+            'liveStream': ('isLiveVideo', {bool}),
+            'thumbnailUrl': ('thumbnailUrl', {url_or_none}),
+        })
 
-        media.update(self._download_json(
-            f'https://catalogue.pr.sbsod.com/mpx-media/{video_id}',
-            video_id, fatal=not media) or {})
+        if not media.get('name'):
+            media.update(traverse_obj(self._download_json(
+                f'{self._PLAYER_API}/video_stream', video_id, fatal=False,
+                query={'id': video_id, 'context': 'tv'}), ('video_object', {dict})) or {})
+
+        # News clips are in FOS but not the On Demand catalogue (empty 404).
+        if not media.get('name'):
+            media.update(self._download_json(
+                f'{self._CATALOGUE_API}/mpx-media/{video_id}',
+                video_id, fatal=False, headers={
+                    'x-api-key': self._CATALOGUE_API_KEY,
+                    'Accept-Language': 'en',
+                }) or {})
 
         # For named episodes, use the catalogue's title to set episode, rather than generic 'Episode N'.
         if traverse_obj(media, ('partOfSeries', {dict})):
@@ -132,10 +176,10 @@ class SBSIE(InfoExtractor):
                     fixed_lang += '-forced'
                 fixed_subtitles.setdefault(fixed_lang, []).append(sub)
 
-        return {
+        info = {
             'id': video_id,
             **traverse_obj(media, {
-                'title': ('name', {str}),
+                'title': (('name', 'title'), {str}),
                 'description': ('description', {str}),
                 'channel': ('taxonomy', 'channel', 'name', {str}),
                 'series': ((('partOfSeries', 'name'), 'seriesTitle'), {str}),
@@ -164,3 +208,6 @@ class SBSIE(InfoExtractor):
             'subtitles': fixed_subtitles,
             'uploader': 'SBSC',
         }
+        if not info.get('thumbnails') and traverse_obj(media, ('thumbnailUrl', {url_or_none})):
+            info['thumbnail'] = media['thumbnailUrl']
+        return info

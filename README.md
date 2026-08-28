@@ -2456,6 +2456,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Ruutu**: Use the public MCC media API instead of the retired gatling XML cache
     * **samplefocus**: Parse SampleHero React JSON and JSON-LD AudioObject instead of removed hidden form fields
     * **sangiin**: Extract HLS from the MediaSP player instead of the old `videopath` variable
+    * **sbs**: Fall back to the public FOS `mpx/video/stream` HLS API when `video_smil` is gone
     * **sbs.co.kr**: Use the current `apis.sbs.co.kr/play-api` host instead of the dead `api.play.sbs.co.kr` endpoint
     * **showroom**: Use the public room API instead of Nuxt + login cookie
     * **tfo**: Fall back to Next.js v13 data
