@@ -1,19 +1,15 @@
 import json
 import re
-import urllib.parse
 
 from .common import InfoExtractor
 from ..utils import (
     ExtractorError,
     determine_ext,
-    find_xpath_attr,
     int_or_none,
     traverse_obj,
     try_call,
     unified_strdate,
     url_or_none,
-    xpath_attr,
-    xpath_text,
 )
 
 
@@ -27,236 +23,242 @@ class RuutuIE(InfoExtractor):
                         )
                         (?P<id>\d+)
                     '''
-    _TESTS = [{
-        'url': 'http://www.ruutu.fi/video/2058907',
-        'md5': 'ab2093f39be1ca8581963451b3c0234f',
-        'info_dict': {
-            'id': '2058907',
-            'ext': 'mp4',
-            'title': 'Oletko aina halunnut tietää mitä tapahtuu vain hetki ennen lähetystä? - Nyt se selvisi!',
-            'description': 'md5:cfc6ccf0e57a814360df464a91ff67d6',
-            'thumbnail': r're:^https?://.*\.jpg$',
-            'duration': 114,
-            'age_limit': 0,
-            'upload_date': '20150508',
+    _TESTS = [
+        {
+            'url': 'https://www.ruutu.fi/video/100276183',
+            'md5': '119a568b0f6505d1ea9a9048e45b05c9',
+            'info_dict': {
+                'id': '100276183',
+                'ext': 'mp4',
+                'title': '"Moraali alennusmyynnissä" – Tältä näyttää Selviytyjät Suomen 30.8. alkava uusi kausi!',
+                'description': 'md5:db4f321d26c6071a568117bc2e71291a',
+                'thumbnail': r're:^https?://.*',
+                'duration': 232,
+                'upload_date': '20260809',
+                'series': 'Selviytyjät Suomi',
+            },
+            'params': {
+                'format': 'http',
+            },
         },
-    }, {
-        'url': 'http://www.ruutu.fi/video/2057306',
-        'md5': '065a10ae4d5b8cfd9d0c3d332465e3d9',
-        'info_dict': {
-            'id': '2057306',
-            'ext': 'mp4',
-            'title': 'Superpesis: katso koko kausi Ruudussa',
-            'description': 'md5:bfb7336df2a12dc21d18fa696c9f8f23',
-            'thumbnail': r're:^https?://.*\.jpg$',
-            'duration': 40,
-            'age_limit': 0,
-            'upload_date': '20150507',
-            'series': 'Superpesis',
-            'categories': ['Urheilu'],
+        {
+            'url': 'http://www.ruutu.fi/video/2057306',
+            'info_dict': {
+                'id': '2057306',
+                'ext': 'mp4',
+                'title': 'Superpesis: katso koko kausi Ruudussa',
+                'description': 'md5:bfb7336df2a12dc21d18fa696c9f8f23',
+                'thumbnail': r're:^https?://.*',
+                'duration': 40,
+                'upload_date': '20150507',
+                'series': 'Superpesis',
+                'categories': ['Pesäpallo', 'Urheilu'],
+            },
+            'params': {
+                'skip_download': True,
+            },
         },
-    }, {
-        'url': 'http://www.supla.fi/supla/2231370',
-        'md5': 'df14e782d49a2c0df03d3be2a54ef949',
-        'info_dict': {
-            'id': '2231370',
-            'ext': 'mp4',
-            'title': 'Osa 1: Mikael Jungner',
-            'description': 'md5:7d90f358c47542e3072ff65d7b1bcffe',
-            'thumbnail': r're:^https?://.*\.jpg$',
-            'age_limit': 0,
-            'upload_date': '20151012',
-            'series': 'Läpivalaisu',
+        {
+            'url': 'http://www.ruutu.fi/video/2058907',
+            'skip': 'video gone',
+            'info_dict': {
+                'id': '2058907',
+                'ext': 'mp4',
+                'title': 'Oletko aina halunnut tietää mitä tapahtuu vain hetki ennen lähetystä? - Nyt se selvisi!',
+            },
         },
-    }, {
-        # Episode where <SourceFile> is "NOT-USED", but has other
-        # downloadable sources available.
-        'url': 'http://www.ruutu.fi/video/3193728',
-        'only_matching': True,
-    }, {
-        # audio podcast
-        'url': 'https://www.supla.fi/supla/3382410',
-        'md5': 'b9d7155fed37b2ebf6021d74c4b8e908',
-        'info_dict': {
-            'id': '3382410',
-            'ext': 'mp3',
-            'title': 'Mikä ihmeen poltergeist?',
-            'description': 'md5:bbb6963df17dfd0ecd9eb9a61bf14b52',
-            'thumbnail': r're:^https?://.*\.jpg$',
-            'age_limit': 0,
-            'upload_date': '20190320',
-            'series': 'Mysteeritarinat',
-            'duration': 1324,
+        {
+            'url': 'http://www.supla.fi/supla/2231370',
+            'skip': 'video gone',
+            'info_dict': {
+                'id': '2231370',
+                'ext': 'mp4',
+                'title': 'Osa 1: Mikael Jungner',
+            },
         },
-        'expected_warnings': [
-            'HTTP Error 502: Bad Gateway',
-            'Failed to download m3u8 information',
-        ],
-    }, {
-        'url': 'http://www.supla.fi/audio/2231370',
-        'only_matching': True,
-    }, {
-        'url': 'https://static.nelonenmedia.fi/player/misc/embed_player.html?nid=3618790',
-        'only_matching': True,
-    }, {
-        # episode
-        'url': 'https://www.ruutu.fi/video/3401964',
-        'info_dict': {
-            'id': '3401964',
-            'ext': 'mp4',
-            'title': 'Temptation Island Suomi - Kausi 5 - Jakso 17',
-            'description': 'md5:87cf01d5e1e88adf0c8a2937d2bd42ba',
-            'thumbnail': r're:^https?://.*\.jpg$',
-            'duration': 2582,
-            'age_limit': 12,
-            'upload_date': '20190508',
-            'series': 'Temptation Island Suomi',
-            'season_number': 5,
-            'episode_number': 17,
-            'categories': ['Reality ja tositapahtumat', 'Kotimaiset suosikit', 'Romantiikka ja parisuhde'],
+        {
+            # Episode where <SourceFile> is "NOT-USED", but has other
+            # downloadable sources available.
+            'url': 'http://www.ruutu.fi/video/3193728',
+            'only_matching': True,
         },
-        'params': {
-            'skip_download': True,
+        {
+            # audio podcast
+            'url': 'https://www.supla.fi/supla/3382410',
+            'skip': 'video gone',
+            'info_dict': {
+                'id': '3382410',
+                'ext': 'mp3',
+                'title': 'Mikä ihmeen poltergeist?',
+            },
         },
-    }, {
-        # premium
-        'url': 'https://www.ruutu.fi/video/3618715',
-        'only_matching': True,
-    }]
-    _WEBPAGE_TESTS = [{
-        # FIXME: Broken IE
-        'url': 'https://www.hs.fi/maailma/art-2000011353059.html',
-        'info_dict': {
-            'id': '4746675',
-            'ext': 'mp4',
-            'title': 'Yhdysvaltojen Texasin osavaltiota ovat koetelleet tuhoisat tulvat',
+        {
+            'url': 'http://www.supla.fi/audio/2231370',
+            'only_matching': True,
         },
-    }]
-    _API_BASE = 'https://gatling.nelonenmedia.fi'
+        {
+            'url': 'https://static.nelonenmedia.fi/player/misc/embed_player.html?nid=3618790',
+            'only_matching': True,
+        },
+        {
+            # episode
+            'url': 'https://www.ruutu.fi/video/3401964',
+            'skip': 'video gone',
+            'info_dict': {
+                'id': '3401964',
+                'ext': 'mp4',
+                'title': 'Temptation Island Suomi - Kausi 5 - Jakso 17',
+            },
+        },
+        {
+            # premium
+            'url': 'https://www.ruutu.fi/video/3618715',
+            'only_matching': True,
+        },
+    ]
+    _WEBPAGE_TESTS = [
+        {
+            # FIXME: Broken IE
+            'url': 'https://www.hs.fi/maailma/art-2000011353059.html',
+            'skip': 'hs.fi embed extraction is broken',
+            'info_dict': {
+                'id': '4746675',
+                'ext': 'mp4',
+                'title': 'Yhdysvaltojen Texasin osavaltiota ovat koetelleet tuhoisat tulvat',
+            },
+        },
+    ]
+    _API_BASE = 'https://mcc.nm-ovp.nelonenmedia.fi/v2'
 
     @classmethod
     def _extract_embed_urls(cls, url, webpage):
         # nelonen.fi
         settings = try_call(
-            lambda: json.loads(re.search(
-                r'jQuery\.extend\(Drupal\.settings, ({.+?})\);', webpage).group(1), strict=False))
+            lambda: json.loads(
+                re.search(r'jQuery\.extend\(Drupal\.settings, ({.+?})\);', webpage).group(1),
+                strict=False,
+            ),
+        )
         if settings:
-            video_id = traverse_obj(settings, (
-                'mediaCrossbowSettings', 'file', 'field_crossbow_video_id', 'und', 0, 'value'))
+            video_id = traverse_obj(
+                settings,
+                ('mediaCrossbowSettings', 'file', 'field_crossbow_video_id', 'und', 0, 'value'),
+            )
             if video_id:
                 return [f'http://www.ruutu.fi/video/{video_id}']
         # hs.fi and is.fi
         settings = try_call(
-            lambda: json.loads(re.search(
-                '(?s)<script[^>]+id=[\'"]__NEXT_DATA__[\'"][^>]*>([^<]+)</script>',
-                webpage).group(1), strict=False))
+            lambda: json.loads(
+                re.search("(?s)<script[^>]+id=['\"]__NEXT_DATA__['\"][^>]*>([^<]+)</script>", webpage).group(1),
+                strict=False,
+            ),
+        )
         if settings:
-            video_ids = set(traverse_obj(settings, (
-                'props', 'pageProps', 'page', 'assetData', 'splitBody', ..., 'video', 'sourceId')) or [])
+            video_ids = set(
+                traverse_obj(
+                    settings,
+                    ('props', 'pageProps', 'page', 'assetData', 'splitBody', ..., 'video', 'sourceId'),
+                )
+                or [],
+            )
             if video_ids:
                 return [f'http://www.ruutu.fi/video/{v}' for v in video_ids]
-            video_id = traverse_obj(settings, (
-                'props', 'pageProps', 'page', 'assetData', 'mainVideo', 'sourceId'))
+            video_id = traverse_obj(settings, ('props', 'pageProps', 'page', 'assetData', 'mainVideo', 'sourceId'))
             if video_id:
                 return [f'http://www.ruutu.fi/video/{video_id}']
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
 
-        video_xml = self._download_xml(
-            f'{self._API_BASE}/media-xml-cache', video_id,
-            query={'id': video_id})
+        data = self._download_json(f'{self._API_BASE}/media/{video_id}', video_id, expected_status=404)
+        if not traverse_obj(data, 'success'):
+            raise ExtractorError(traverse_obj(data, 'message') or 'Video not found', expected=True)
+
+        clip = data['clip']
+        playback = clip['playback']
+        metadata = clip.get('metadata') or {}
+        pv = clip.get('passthroughVariables') or {}
+        stream_urls = traverse_obj(playback, ('media', 'streamUrls'), default={})
+
+        if traverse_obj(playback, ('drm', 'enabled')):
+            self.report_drm(video_id)
 
         formats = []
-        processed_urls = []
+        processed_urls = set()
 
-        def extract_formats(node):
-            for child in node:
-                if child.tag.endswith('Files'):
-                    extract_formats(child)
-                elif child.tag.endswith('File'):
-                    video_url = child.text
-                    if (not video_url or video_url in processed_urls
-                            or any(p in video_url for p in ('NOT_USED', 'NOT-USED'))):
-                        continue
-                    processed_urls.append(video_url)
-                    ext = determine_ext(video_url)
-                    auth_video_url = url_or_none(self._download_webpage(
-                        f'{self._API_BASE}/auth/access/v2', video_id,
-                        note=f'Downloading authenticated {ext} stream URL',
-                        fatal=False, query={'stream': video_url}))
-                    if auth_video_url:
-                        processed_urls.append(auth_video_url)
-                        video_url = auth_video_url
-                    if ext == 'm3u8':
-                        formats.extend(self._extract_m3u8_formats(
-                            video_url, video_id, 'mp4',
-                            entry_protocol='m3u8_native', m3u8_id='hls',
-                            fatal=False))
-                    elif ext == 'f4m':
-                        formats.extend(self._extract_f4m_formats(
-                            video_url, video_id, f4m_id='hds', fatal=False))
-                    elif ext == 'mpd':
-                        # video-only and audio-only streams are of different
-                        # duration resulting in out of sync issue
-                        continue
-                        formats.extend(self._extract_mpd_formats(
-                            video_url, video_id, mpd_id='dash', fatal=False))
-                    elif ext == 'mp3' or child.tag == 'AudioMediaFile':
-                        formats.append({
-                            'format_id': 'audio',
-                            'url': video_url,
-                            'vcodec': 'none',
-                        })
-                    else:
-                        proto = urllib.parse.urlparse(video_url).scheme
-                        if not child.tag.startswith('HTTP') and proto != 'rtmp':
-                            continue
-                        preference = -1 if proto == 'rtmp' else 1
-                        label = child.get('label')
-                        tbr = int_or_none(child.get('bitrate'))
-                        format_id = f'{proto}-{label if label else tbr}' if label or tbr else proto
-                        if not self._is_valid_url(video_url, video_id, format_id):
-                            continue
-                        width, height = (int_or_none(x) for x in child.get('resolution', 'x').split('x')[:2])
-                        formats.append({
-                            'format_id': format_id,
-                            'url': video_url,
-                            'width': width,
-                            'height': height,
-                            'tbr': tbr,
-                            'preference': preference,
-                        })
+        def add_stream(stream, format_id):
+            video_url = url_or_none(traverse_obj(stream, 'url'))
+            if not video_url or video_url in processed_urls:
+                return
+            processed_urls.add(video_url)
+            ext = determine_ext(video_url)
+            if ext == 'm3u8':
+                formats.extend(
+                    self._extract_m3u8_formats(
+                        video_url,
+                        video_id,
+                        'mp4',
+                        entry_protocol='m3u8_native',
+                        m3u8_id=format_id,
+                        fatal=False,
+                    ),
+                )
+            elif ext == 'mpd':
+                # video-only and audio-only streams are of different
+                # duration resulting in out of sync issue
+                return
+            elif ext == 'mp3' or format_id == 'audio':
+                formats.append(
+                    {
+                        'format_id': format_id or 'audio',
+                        'url': video_url,
+                        'vcodec': 'none',
+                    },
+                )
+            else:
+                formats.append(
+                    {
+                        'format_id': format_id or ext,
+                        'url': video_url,
+                    },
+                )
 
-        extract_formats(video_xml.find('./Clip'))
-
-        def pv(name):
-            value = try_call(lambda: find_xpath_attr(
-                video_xml, './Clip/PassthroughVariables/variable', 'name', name).get('value'))
-            if value != 'NA':
-                return value or None
+        for key, format_id in (
+            ('webHls', 'hls'),
+            ('apple', 'hls-apple'),
+            ('audioHls', 'hls-audio'),
+            ('http', 'http'),
+            ('audioMp3', 'audio'),
+        ):
+            add_stream(stream_urls.get(key), format_id)
 
         if not formats:
-            if (not self.get_param('allow_unplayable_formats')
-                    and xpath_text(video_xml, './Clip/DRM', default=None)):
-                self.report_drm(video_id)
-            ns_st_cds = pv('ns_st_cds')
-            if ns_st_cds != 'free':
-                raise ExtractorError(f'This video is {ns_st_cds}.', expected=True)
+            if metadata.get('paid') or pv.get('paid'):
+                raise ExtractorError('This video is paid.', expected=True)
+            if traverse_obj(playback, ('geoblock', 'enabled')):
+                self.raise_geo_restricted(countries=['FI'])
 
-        themes = pv('themes')
+        themes = pv.get('themes')
+        thumbnail = traverse_obj(playback, ('media', 'images', 'thumbnail', '1920x1080'), expected_type=url_or_none)
+        if not thumbnail:
+            thumbnail = traverse_obj(
+                playback,
+                ('media', 'images', 'thumbnail', ...),
+                get_all=False,
+                expected_type=url_or_none,
+            )
 
         return {
             'id': video_id,
-            'title': xpath_attr(video_xml, './/Behavior/Program', 'program_name', 'title', fatal=True),
-            'description': xpath_attr(video_xml, './/Behavior/Program', 'description', 'description'),
-            'thumbnail': xpath_attr(video_xml, './/Behavior/Startpicture', 'href', 'thumbnail'),
-            'duration': int_or_none(xpath_text(video_xml, './/Runtime', 'duration')) or int_or_none(pv('runtime')),
-            'age_limit': int_or_none(xpath_text(video_xml, './/AgeLimit', 'age limit')),
-            'upload_date': unified_strdate(pv('date_start')),
-            'series': pv('series_name'),
-            'season_number': int_or_none(pv('season_number')),
-            'episode_number': int_or_none(pv('episode_number')),
+            'title': metadata.get('programName') or pv.get('program_name'),
+            'description': metadata.get('description'),
+            'thumbnail': thumbnail,
+            'duration': int_or_none(playback.get('runtime')) or int_or_none(pv.get('runtime')),
+            'age_limit': int_or_none(metadata.get('ageLimit')),
+            'upload_date': unified_strdate(traverse_obj(metadata, ('online_rights', 0, 'start_date'))),
+            'series': metadata.get('seriesName') or pv.get('series_name'),
+            'season_number': int_or_none(metadata.get('seasonNumber')),
+            'episode_number': int_or_none(metadata.get('episodeNumber')),
             'categories': themes.split(',') if themes else None,
             'formats': formats,
         }
