@@ -2410,6 +2410,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **parler**: Use the public v4 posts API for app/play post URLs
     * **pbs**: Guard against missing `video_info` and title
     * **pbskids**: Extract Next.js `/videos/watch/` pages and PBS URS HLS/MP4
+    * **peekvids**: Read the numeric ID from the thumbnail URL and fall back to the page HLS source
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
     * **rozhlas**: Resolve slugs via the search API
     * **showroom**: Use the public room API instead of Nuxt + login cookie

@@ -22,29 +22,39 @@ class PeekVidsBaseIE(InfoExtractor):
         title = self._html_search_regex(r'(?s)<h1\b[^>]*>(.+?)</h1>', webpage, 'title')
 
         display_id = video_id
-        video_id = self._search_regex(r'(?s)<video\b[^>]+\bdata-id\s*=\s*["\']?([\w-]+)', webpage, 'short video ID')
+        video_id = self._search_regex(
+            (r'(?s)<video\b[^>]+\bdata-id\s*=\s*["\']?([\w-]+)',
+             r'/vid/\d+/(\d+)\.(?:jpe?g|png|webp)'),
+            webpage, 'short video ID', default=None) or display_id
         srcs = self._download_json(
             f'https://www.{domain}/v-alt/{video_id}', video_id,
-            note='Downloading list of source files')
+            note='Downloading list of source files', fatal=False)
 
         formats = []
-        for k, v in srcs.items():
-            f_url = url_or_none(v)
-            if not f_url:
-                continue
+        if isinstance(srcs, dict):
+            for k, v in srcs.items():
+                f_url = url_or_none(v)
+                if not f_url:
+                    continue
 
-            height = self._search_regex(r'^data-src(\d{3,})$', k, 'height', default=None)
-            if not height:
-                continue
+                height = self._search_regex(r'^data-src(\d{3,})$', k, 'height', default=None)
+                if not height:
+                    continue
 
-            formats.append({
-                'url': f_url,
-                'format_id': height,
-                'height': int_or_none(height),
-            })
+                formats.append({
+                    'url': f_url,
+                    'format_id': height,
+                    'height': int_or_none(height),
+                })
+
+            if not formats:
+                formats = [{'url': u} for u in map(url_or_none, srcs.values()) if u]
 
         if not formats:
-            formats = [{'url': url} for url in srcs.values()]
+            hls_url = self._html_search_regex(
+                r'<source[^>]+\bsrc=["\']([^"\']+\.m3u8[^"\']*)',
+                webpage, 'hls url')
+            formats = self._extract_m3u8_formats(hls_url, video_id, 'mp4', m3u8_id='hls')
 
         info = self._search_json_ld(webpage, video_id, expected_type='VideoObject', default={})
         info.pop('url', None)
