@@ -2443,6 +2443,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **redbull**: Use GraphQL `v1:pageConfig` and `api-player.redbull.com` HLS instead of the dead crepo GraphQL / `v1:hero` schema
     * **redbulltv**: Play `api.redbull.tv` products via rrn content IDs and `dms.redbull.tv` HLS
     * **reuters**: Read Fusion `globalContent` HLS on current `/video/watch/` pages (impersonate for DataDome)
+    * **rockstargames**: Read v4 player JSON (`/v4/{id}/data/{locale}.json`) instead of the dead get-video.json API
     * **rozhlas**: Resolve slugs via the search API
     * **showroom**: Use the public room API instead of Nuxt + login cookie
     * **tfo**: Fall back to Next.js v13 data

@@ -1,15 +1,31 @@
 from .common import InfoExtractor
 from ..utils import (
-    int_or_none,
     parse_iso8601,
+    parse_resolution,
+    unified_timestamp,
+    url_or_none,
 )
+from ..utils.traversal import traverse_obj
 
 
 class RockstarGamesIE(InfoExtractor):
     _WEB_FALLBACK = True
     _VALID_URL = r'https?://(?:www\.)?rockstargames\.com/(?:[a-z]{2}/)?videos(?:/video/|#?/?\?.*\bvideo=|/)(?P<id>[\w-]+)/?'
     _TESTS = [{
+        'url': 'https://www.rockstargames.com/videos/rk721912',
+        'md5': 'd1af5ab1f2c8aafef38e4f76bea66741',
+        'info_dict': {
+            'id': 'rk721912',
+            'ext': 'mp4',
+            'title': 'An Extended Look',
+            'description': 'md5:ca83aaedaf5f75b68ce1273b8415ce60',
+            'thumbnail': r're:https?://.+\.jpg',
+            'timestamp': 1787788800,
+            'upload_date': '20260827',
+        },
+    }, {
         'url': 'https://www.rockstargames.com/videos/sok93cc8',
+        'skip': 'video gone',
         'md5': '03b5caa6e357a4bd50e3143fc03e5733',
         'info_dict': {
             'id': 'sok93cc8',
@@ -25,31 +41,40 @@ class RockstarGamesIE(InfoExtractor):
         'only_matching': True,
     }]
 
+    def _parse_video_files(self, files):
+        formats = []
+        for v in files or []:
+            src = url_or_none(self._proto_relative_url(v.get('src')))
+            if not src:
+                continue
+            resolution = v.get('resolution')
+            formats.append({
+                'url': src,
+                'format_id': resolution,
+                **parse_resolution(resolution),
+            })
+        return formats
+
     def _real_extract(self, url):
         video_id = self._match_id(url)
 
-        video = self._download_json(
-            'https://www.rockstargames.com/videoplayer/videos/get-video.json',
-            video_id, fatal=False, query={
-                'id': video_id,
-                'locale': 'en_us',
-            }) or {}
-        video = video.get('video') or {}
+        video = traverse_obj(self._download_json(
+            f'https://videos.rockstargames.com/v4/{video_id}/data/en_us.json',
+            video_id, fatal=False), ('data', 'video', {dict})) or {}
 
-        formats = []
-        for v in (video.get('files_processed') or {}).get('video/mp4') or []:
-            if not v.get('src'):
-                continue
-            resolution = v.get('resolution')
-            height = int_or_none(self._search_regex(
-                r'^(\d+)[pP]$', resolution or '', 'height', default=None))
-            formats.append({
-                'url': self._proto_relative_url(v['src']),
-                'format_id': resolution,
-                'height': height,
-            })
+        if not video:
+            video = traverse_obj(self._download_json(
+                'https://www.rockstargames.com/videoplayer/videos/get-video.json',
+                video_id, fatal=False, query={
+                    'id': video_id,
+                    'locale': 'en_us',
+                }), ('video', {dict})) or {}
 
-        youtube_id = video.get('youtube_id')
+        formats = self._parse_video_files(video.get('files'))
+        formats.extend(self._parse_video_files(
+            traverse_obj(video, ('files_processed', 'video/mp4'))))
+
+        youtube_id = video.get('youtubeId') or video.get('youtube_id')
         if not formats and youtube_id:
             return self.url_result(youtube_id, 'Youtube')
 
@@ -57,18 +82,18 @@ class RockstarGamesIE(InfoExtractor):
         if not formats:
             webpage = self._download_webpage(url, video_id)
             json_ld = self._search_json_ld(webpage, video_id, default={})
-            content_url = json_ld.get('url') or json_ld.get('contentUrl') or self._og_search_video_url(webpage, default=None)
+            content_url = (
+                json_ld.get('url')
+                or json_ld.get('contentUrl')
+                or self._og_search_video_url(webpage, default=None))
             if content_url:
                 formats.append({'url': content_url})
             m3u8_url = self._search_regex(
                 rf'(https?://videos\.rockstargames\.com/v4/{video_id}[^"\']*\.m3u8[^"\']*)',
                 webpage, 'm3u8', default=None)
-            if not m3u8_url:
-                # HLS master used by the current player
-                m3u8_url = f'https://videos.rockstargames.com/v4/{video_id}/index.m3u8'
-            m3u8_fmts = self._extract_m3u8_formats(
-                m3u8_url, video_id, 'mp4', m3u8_id='hls', fatal=False)
-            formats.extend(m3u8_fmts or [])
+            if m3u8_url:
+                formats.extend(self._extract_m3u8_formats(
+                    m3u8_url, video_id, 'mp4', m3u8_id='hls', fatal=False) or [])
             youtube_url = self._search_regex(
                 r'(https?://(?:www\.)?youtube\.com/watch\?v=[\w-]+)',
                 webpage, 'youtube', default=None)
@@ -80,12 +105,25 @@ class RockstarGamesIE(InfoExtractor):
             webpage = webpage or self._download_webpage(url, video_id)
             title = self._og_search_title(webpage, default=video_id)
 
+        subtitles = {}
+        for track in traverse_obj(video, ('tracks', ..., {dict})) or []:
+            captions = url_or_none(track.get('captions'))
+            lang = track.get('lang')
+            if not captions or not lang:
+                continue
+            subtitles.setdefault(lang, []).append({
+                'url': captions,
+                'ext': 'vtt',
+            })
+
         return {
             'id': video_id,
             'title': title,
             'description': video.get('description'),
             'thumbnail': self._proto_relative_url(video.get('screencap')) or (
                 self._og_search_thumbnail(webpage) if webpage else None),
-            'timestamp': parse_iso8601(video.get('created')),
+            'timestamp': parse_iso8601(video.get('created')) or unified_timestamp(
+                video.get('createdFormatted')),
             'formats': formats,
+            'subtitles': subtitles,
         }
