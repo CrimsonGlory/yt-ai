@@ -7,7 +7,24 @@ from ..utils import (
 
 class RadioZetPodcastIE(InfoExtractor):
     _VALID_URL = r'https?://player\.radiozet\.pl\/Podcasty/.*?/(?P<id>.+)'
-    _TEST = {
+    _TESTS = [{
+        'url': 'https://player.radiozet.pl/Podcasty/Gosc-Radia-ZET/Rafal-Leskiewicz-o-aferze-Zondacrypto-Mamy-bardzo-duzo-znakow-zapytania',
+        'md5': '5a45137aa2528c9b1923e7950ec61523',
+        'info_dict': {
+            'id': '877865',
+            'display_id': 'Rafal-Leskiewicz-o-aferze-Zondacrypto-Mamy-bardzo-duzo-znakow-zapytania',
+            'title': 'Rafał Leśkiewicz o aferze Zondacrypto: Mamy bardzo dużo znaków zapytania',
+            'description': 'md5:d8ca3dbb8e78d1971e26efa8ca2712dc',
+            'release_timestamp': 1787815080,
+            'ext': 'mp3',
+            'thumbnail': r're:^https?://.*\.png$',
+            'duration': 2912,
+            'series': 'Gość Radia ZET',
+            'creator': 'Beata Lubecka',
+            'creators': ['Beata Lubecka'],
+            'release_date': '20260827',
+        },
+    }, {
         'url': 'https://player.radiozet.pl/Podcasty/Nie-Ma-Za-Co/O-przedmiotach-szkolnych-ktore-przydaja-sie-w-zyciu',
         'skip': 'video gone',
         'md5': 'e03665c316b4fbc5f6a8f232948bbba3',
@@ -23,7 +40,7 @@ class RadioZetPodcastIE(InfoExtractor):
             'series': 'Nie Ma Za Co',
             'creator': 'Katarzyna Pakosińska',
         },
-    }
+    }]
 
     def _call_api(self, podcast_id, display_id):
         return self._download_json(
