@@ -764,8 +764,34 @@ class PBSIE(InfoExtractor):
 
 
 class PBSKidsIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?pbskids\.org/video/[\w-]+/(?P<id>\d+)'
+    _VALID_URL = r'https?://(?:www\.)?pbskids\.org/(?:video|videos/watch)/(?:[\w-]+/)*(?P<id>\d+)'
+    _GEO_COUNTRIES = ['US']
     _TESTS = [
+        {
+            'url': 'https://pbskids.org/videos/watch/everyone-gets-a-valentine/62156',
+            'md5': 'b8928d5bed555bd957945f88ed860250',
+            'info_dict': {
+                'id': '62156',
+                'ext': 'mp4',
+                'title': 'Everyone Gets a Valentine!',
+                'description': 'md5:5dbced525c5870374bf28e753ea68bcd',
+                'duration': 113,
+                'channel': 'pinkalicious-and-peterrific',
+                'series': 'Pinkalicious & Peterrific',
+                'categories': ['clip'],
+                'timestamp': 1549655186,
+                'upload_date': '20190208',
+                'thumbnail': r're:https?://image\.pbs\.org/.+',
+                'episode_number': 27,
+                'episode': 'Episode 27',
+                'season_number': 1,
+                'season': 'Season 1',
+            },
+            'params': {
+                # Progressive MP4 so --test writes a stable first 10KB (HLS is audio+video)
+                'format': 'best[protocol=https]',
+            },
+        },
         {
             'url': 'https://pbskids.org/video/molly-of-denali/3030407927',
             'skip': 'video gone',
@@ -798,11 +824,22 @@ class PBSKidsIE(InfoExtractor):
                 'upload_date': '20140302',
             },
         },
+        {
+            'url': 'https://pbskids.org/videos/watch/pinkalicious-peterrific-full-episodes/1385815/petercadabra-sleepless-in-pinkville/111652',
+            'only_matching': True,
+        },
     ]
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
+
+        video_data = traverse_obj(
+            self._search_nextjs_data(webpage, video_id, default={}),
+            ('props', 'pageProps', 'videoData', {dict}))
+        if video_data:
+            return self._extract_from_nextjs(video_id, video_data)
+
         meta = self._search_json(r'window\._PBS_KIDS_DEEPLINK\s*=', webpage, 'video info', video_id)
         formats, subtitles = self._extract_m3u8_formats_and_subtitles(
             traverse_obj(meta, ('video_obj', 'URI', {url_or_none})), video_id, ext='mp4')
@@ -819,5 +856,82 @@ class PBSKidsIE(InfoExtractor):
                 'series': ('video_obj', 'program_title', {str}),
                 'title': ('video_obj', 'title', {str}),
                 'upload_date': ('video_obj', 'air_date', {unified_strdate}),
+            }),
+        }
+
+    def _extract_from_nextjs(self, video_id, video_data):
+        asset = traverse_obj(video_data, ('mediaManagerAsset', {dict})) or {}
+        if asset.get('drm_enabled'):
+            self.report_drm(video_id)
+
+        formats, subtitles, geo_error = [], {}, None
+        seen, have_hls = set(), False
+        videos = sorted(
+            traverse_obj(asset, ('videos', lambda _, v: url_or_none(v.get('url')))) or [],
+            key=lambda v: (
+                0 if 'hls' in (v.get('profile') or '') else 1,
+                0 if '1080' in (v.get('profile') or '') else 1,
+            ))
+
+        for video in videos:
+            profile = video.get('profile') or ''
+            if profile in seen:
+                continue
+            seen.add(profile)
+            is_hls = 'hls' in profile
+            if have_hls and is_hls:
+                continue
+
+            redirect_info = self._download_json(
+                video['url'], video_id, f'Downloading {profile} url info',
+                query={'format': 'json'}, fatal=False)
+            if not redirect_info:
+                continue
+            if redirect_info.get('status') == 'error':
+                if redirect_info.get('http_code') == 403:
+                    geo_error = redirect_info.get('message')
+                else:
+                    self.report_warning(redirect_info.get('message') or 'PBS redirect failed')
+                continue
+
+            format_url = url_or_none(redirect_info.get('url'))
+            if not format_url:
+                continue
+            if determine_ext(format_url) == 'm3u8' or is_hls:
+                fmts, subs = self._extract_m3u8_formats_and_subtitles(
+                    format_url, video_id, 'mp4', m3u8_id='hls', fatal=False)
+                formats.extend(fmts)
+                self._merge_subtitles(subs, target=subtitles)
+                have_hls = bool(fmts)
+            else:
+                formats.append({
+                    'url': format_url,
+                    'format_id': profile,
+                    'ext': 'mp4',
+                    'height': int_or_none(self._search_regex(
+                        r'(\d+)p', profile, 'height', default=None)),
+                })
+
+        if not formats and geo_error:
+            self.raise_geo_restricted(msg=geo_error, countries=self._GEO_COUNTRIES)
+
+        return {
+            'id': video_id,
+            'formats': formats,
+            'subtitles': subtitles,
+            'thumbnail': traverse_obj(asset, ('images', 0, 'image', {url_or_none})),
+            **traverse_obj(video_data, {
+                'title': ('title', {str}),
+                'timestamp': ('dateCreated', {int_or_none}),
+                'channel': ('properties', 0, 'slug', {str}),
+                'series': ('properties', 0, 'title', {str}),
+                'categories': ('videoType', {str}, {lambda x: [x] if x else None}),
+            }),
+            **traverse_obj(asset, {
+                'title': ('title', {str}),
+                'description': ('description_short', {str}),
+                'duration': ('duration', {int_or_none}),
+                'episode_number': ('episode_number', {int_or_none}),
+                'season_number': ('season_number', {int_or_none}),
             }),
         }

@@ -2409,6 +2409,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **paramountpressexpress**: Raise geo-restriction when Brightcove press pages return location-not-allowed (X-Forwarded-For is ignored); YouTube-hosted press videos still extract
     * **parler**: Use the public v4 posts API for app/play post URLs
     * **pbs**: Guard against missing `video_info` and title
+    * **pbskids**: Extract Next.js `/videos/watch/` pages and PBS URS HLS/MP4
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
     * **rozhlas**: Resolve slugs via the search API
     * **showroom**: Use the public room API instead of Nuxt + login cookie
