@@ -30,6 +30,7 @@ class TeleQuebecIE(TeleQuebecBaseIE):
     _TESTS = [{
         # available till 01.01.2023
         'url': 'http://zonevideo.telequebec.tv/media/37578/un-petit-choc-et-puis-repart/un-chef-a-la-cabane',
+        'skip': 'video gone',
         'info_dict': {
             'id': '6155972771001',
             'ext': 'mp4',
@@ -42,6 +43,7 @@ class TeleQuebecIE(TeleQuebecBaseIE):
         'add_ie': ['BrightcoveNew'],
     }, {
         'url': 'https://zonevideo.telequebec.tv/media/55267/le-soleil/passe-partout',
+        'skip': 'video gone',
         'info_dict': {
             'id': '6167180337001',
             'ext': 'mp4',
@@ -85,6 +87,7 @@ class TeleQuebecSquatIE(InfoExtractor):
     _VALID_URL = r'https?://squat\.telequebec\.tv/videos/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://squat.telequebec.tv/videos/9314',
+        'skip': 'site gone',
         'info_dict': {
             'id': 'd59ae78112d542e793d83cc9d3a5b530',
             'ext': 'mp4',
@@ -127,7 +130,7 @@ class TeleQuebecSquatIE(InfoExtractor):
         }
 
 
-class TeleQuebecEmissionIE(InfoExtractor):
+class TeleQuebecEmissionIE(TeleQuebecBaseIE):
     _VALID_URL = r'''(?x)
                     https?://
                         (?:
@@ -137,6 +140,24 @@ class TeleQuebecEmissionIE(InfoExtractor):
                         (?P<id>[^?#&]+)
                     '''
     _TESTS = [{
+        'url': 'https://telequebec.tv/regarder/marie-antoinette',
+        'md5': '66d5b1d4e107260c990081ff177da323',
+        'info_dict': {
+            'id': 'ref:100695678',
+            'ext': 'mp4',
+            'title': 'Marie-Antoinette',
+            'description': 'md5:4a9f554b97708efb15b604401b2bc903',
+            'timestamp': 1718826283,
+            'upload_date': '20240619',
+            'uploader_id': '6150020952001',
+            'duration': 7372.181,
+            'thumbnail': r're:https?://.+\.jpg',
+        },
+        'add_ie': ['BrightcoveNew'],
+    }, {
+        'url': 'https://telequebec.tv/regarder/qui-a-pousse-melodie/1/1',
+        'only_matching': True,
+    }, {
         'url': 'http://lindicemcsween.telequebec.tv/emissions/100430013/des-soins-esthetiques-a-377-d-interets-annuels-ca-vous-tente',
         'skip': 'video gone',
         'info_dict': {
@@ -161,12 +182,18 @@ class TeleQuebecEmissionIE(InfoExtractor):
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
-
         webpage = self._download_webpage(url, display_id)
 
         media_id = self._search_regex(
-            r'mediaId\s*:\s*(?P<id>\d+)', webpage, 'media id')
+            r'\\?"mediaId\\?"\s*,\s*\\?"(\d+)\\?"', webpage, 'media id', default=None)
+        if media_id:
+            player_id = self._search_regex(
+                r'\\?"playerId\\?"\s*,\s*\\?"([^"\\]+)\\?"', webpage, 'player id',
+                default='ja7RtbSne')
+            return self._brightcove_result(f'ref:{media_id}', player_id)
 
+        media_id = self._search_regex(
+            r'mediaId\s*:\s*(\d+)', webpage, 'media id')
         return self.url_result(
             'http://zonevideo.telequebec.tv/media/' + media_id,
             TeleQuebecIE.ie_key())
