@@ -2480,6 +2480,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **sverigesradio**: Extract `playAudio` / episode audio from Next.js App Router data instead of the dead playerajax API
     * **sztvhu**: Follow YouTube embeds instead of the old media.sztv.hu VOD player
     * **t-online.de**: Extract Next.js / JSON-LD HLS (and CMAF HTTP) on current `/video/` URLs instead of the dead `tid_json_video` API
+    * **tele13**: Follow rudo.video (and YouTube) embeds instead of the old JWPlayer setup
     * **tfo**: Fall back to Next.js v13 data
     * **theguardian:podcast**: Extract audio URL and author from JSON-LD
     * **tiktok**: Googlebot headers on aweme detail

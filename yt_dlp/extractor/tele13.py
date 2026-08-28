@@ -1,84 +1,63 @@
 from .common import InfoExtractor
+from .rudovideo import RudoVideoIE
 from .youtube import YoutubeIE
-from ..utils import (
-    determine_ext,
-    js_to_json,
-    qualities,
-)
+from ..utils import ExtractorError
 
 
 class Tele13IE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?t13\.cl/videos(?:/[^/]+)+/(?P<id>[\w-]+)'
-    _TESTS = [
-        {
-            'url': 'http://www.t13.cl/videos/actualidad/el-circulo-de-hierro-de-michelle-bachelet-en-su-regreso-a-la-moneda',
-            'md5': '4cb1fa38adcad8fea88487a078831755',
-            'info_dict': {
-                'id': 'el-circulo-de-hierro-de-michelle-bachelet-en-su-regreso-a-la-moneda',
-                'ext': 'mp4',
-                'title': 'El círculo de hierro de Michelle Bachelet en su regreso a La Moneda',
-            },
-            'params': {
-                # HTTP Error 404: Not Found
-                'skip_download': True,
-            },
+    _TESTS = [{
+        'url': 'https://www.t13.cl/videos/politica/el-gobierno-va-dejar-morir-reforma-constitucional-senador-bianchi-por-agenda-27-8-2026',
+        'md5': 'e0932483b08a6f78a89c9f8acbb3bbb1',
+        'info_dict': {
+            'id': 'bWZJm4',
+            'ext': 'mp4',
+            'title': 'Entrevista Karim Bianchi',
+            'thumbnail': r're:https?://.*\.(?:jpg|png)',
+            'creators': ['T13.cl'],
         },
-        {
-            'url': 'http://www.t13.cl/videos/mundo/tendencias/video-captan-misteriosa-bola-fuego-cielos-bangkok',
-            'md5': '867adf6a3b3fef932c68a71d70b70946',
-            'info_dict': {
-                'id': 'rOoKv2OMpOw',
-                'ext': 'mp4',
-                'title': 'Shooting star seen on 7-Sep-2015',
-                'description': 'md5:7292ff2a34b2f673da77da222ae77e1e',
-                'uploader': 'Porjai Jaturongkhakun',
-                'upload_date': '20150906',
-                'uploader_id': 'UCnLY_3ezwNcDSC_Wc6suZxw',
-            },
-            'add_ie': ['Youtube'],
+        'add_ie': ['RudoVideo'],
+    }, {
+        'url': 'http://www.t13.cl/videos/actualidad/el-circulo-de-hierro-de-michelle-bachelet-en-su-regreso-a-la-moneda',
+        'md5': '4cb1fa38adcad8fea88487a078831755',
+        'info_dict': {
+            'id': 'el-circulo-de-hierro-de-michelle-bachelet-en-su-regreso-a-la-moneda',
+            'ext': 'mp4',
+            'title': 'El círculo de hierro de Michelle Bachelet en su regreso a La Moneda',
         },
-    ]
+        'skip': 'video gone',
+    }, {
+        'url': 'http://www.t13.cl/videos/mundo/tendencias/video-captan-misteriosa-bola-fuego-cielos-bangkok',
+        'md5': '867adf6a3b3fef932c68a71d70b70946',
+        'info_dict': {
+            'id': 'rOoKv2OMpOw',
+            'ext': 'mp4',
+            'title': 'Shooting star seen on 7-Sep-2015',
+            'description': 'md5:7292ff2a34b2f673da77da222ae77e1e',
+            'uploader': 'Porjai Jaturongkhakun',
+            'upload_date': '20150906',
+            'uploader_id': 'UCnLY_3ezwNcDSC_Wc6suZxw',
+        },
+        'add_ie': ['Youtube'],
+        'skip': 'Youtube embed; live test uses native rudo.video',
+    }]
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
         webpage = self._download_webpage(url, display_id)
 
-        setup_js = self._search_regex(
-            r"(?s)jwplayer\('player-vivo'\).setup\((\{.*?\})\)",
-            webpage, 'setup code')
-        sources = self._parse_json(self._search_regex(
-            r'sources\s*:\s*(\[[^\]]+\])', setup_js, 'sources'),
-            display_id, js_to_json)
+        # Current T13 VOD pages inject a rudo.video player (JWPlayer is gone).
+        rudo_url = self._search_regex(
+            r'(https?://rudo\.video/(?:vod|podcast|live)/[0-9a-zA-Z]+)',
+            webpage, 'rudo url', default=None)
+        if rudo_url:
+            return self.url_result(rudo_url, RudoVideoIE)
 
-        preference = qualities(['Móvil', 'SD', 'HD'])
-        formats = []
-        urls = []
-        for f in sources:
-            format_url = f['file']
-            if format_url and format_url not in urls:
-                ext = determine_ext(format_url)
-                if ext == 'm3u8':
-                    formats.extend(self._extract_m3u8_formats(
-                        format_url, display_id, 'mp4', 'm3u8_native',
-                        m3u8_id='hls', fatal=False))
-                elif YoutubeIE.suitable(format_url):
-                    return self.url_result(format_url, 'Youtube')
-                else:
-                    formats.append({
-                        'url': format_url,
-                        'format_id': f.get('label'),
-                        'quality': preference(f.get('label')),
-                        'ext': ext,
-                    })
-                urls.append(format_url)
+        yt_id = self._search_regex(
+            r'youtube(?:-nocookie)?\.com/embed/(?P<id>[\w-]{11})',
+            webpage, 'youtube id', default=None)
+        if yt_id:
+            return self.url_result(
+                f'https://www.youtube.com/watch?v={yt_id}', YoutubeIE, yt_id)
 
-        return {
-            'id': display_id,
-            'title': self._search_regex(
-                r'title\s*:\s*"([^"]+)"', setup_js, 'title'),
-            'description': self._html_search_meta(
-                'description', webpage, 'description'),
-            'thumbnail': self._search_regex(
-                r'image\s*:\s*"([^"]+)"', setup_js, 'thumbnail', default=None),
-            'formats': formats,
-        }
+        raise ExtractorError('No video embed found', expected=True)
