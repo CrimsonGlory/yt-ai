@@ -16,7 +16,6 @@ class SBSCoKrIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://programs.sbs.co.kr/enter/dongsang2/clip/52007/OC467706746?div=main_pop_clip',
-        'skip': 'Site no longer exists or is broken',
         'md5': 'c3f6d45e1fb5682039d94cda23c36f19',
         'info_dict': {
             'id': 'OC467706746',
@@ -36,8 +35,7 @@ class SBSCoKrIE(InfoExtractor):
         },
     }, {
         'url': 'https://allvod.sbs.co.kr/allvod/vodPackageEndPage.do?mdaId=22000489324&combiId=PA000000284&packageType=A&isFreeYN=',
-        'skip': 'Site no longer exists or is broken',
-        'md5': 'bf46b2e89fda7ae7de01f5743cef7236',
+        'md5': '0feff6e0ada85243d6b276ee36e46ab2',
         'info_dict': {
             'id': '22000489324',
             'ext': 'mp4',
@@ -56,8 +54,7 @@ class SBSCoKrIE(InfoExtractor):
         },
     }, {
         'url': 'https://programs.sbs.co.kr/enter/fourman/vod/69625/22000508948',
-        'skip': 'Site no longer exists or is broken',
-        'md5': '41e8ae4cc6c8424f4e4d76661a4becbf',
+        'md5': '4df38e234c1eecf4e729f0de6c0b67c4',
         'info_dict': {
             'id': '22000508948',
             'ext': 'mp4',
@@ -78,7 +75,7 @@ class SBSCoKrIE(InfoExtractor):
 
     def _call_api(self, video_id, rscuse=''):
         return self._download_json(
-            f'https://api.play.sbs.co.kr/1.0/sbs_vodall/{video_id}', video_id,
+            f'https://apis.sbs.co.kr/play-api/1.0/sbs_vodall/{video_id}', video_id,
             note=f'Downloading m3u8 information {rscuse}',
             query={
                 'platform': 'pcweb',
@@ -147,6 +144,7 @@ class SBSCoKrAllvodProgramIE(InfoExtractor):
             'id': '22000010159',
         },
         'playlist_count': 18,
+        'skip': 'allvod listing API is gone',
     }, {
         'url': 'https://allvod.sbs.co.kr/allvod/vodProgramDetail.do?pgmId=P460810577',
         'info_dict': {
@@ -154,6 +152,7 @@ class SBSCoKrAllvodProgramIE(InfoExtractor):
             'id': 'P460810577',
         },
         'playlist_count': 13,
+        'skip': 'allvod listing API is gone',
     }]
 
     def _real_extract(self, url):
@@ -183,6 +182,7 @@ class SBSCoKrProgramsVodIE(InfoExtractor):
             'id': '00000210215',
         },
         'playlist_mincount': 9782,
+        'skip': 'allvod listing API is gone',
     }, {
         'url': 'https://programs.sbs.co.kr/enter/dongsang2/vods/52006',
         'info_dict': {
@@ -190,6 +190,7 @@ class SBSCoKrProgramsVodIE(InfoExtractor):
             'id': '22000010476',
         },
         'playlist_mincount': 312,
+        'skip': 'allvod listing API is gone',
     }]
 
     def _real_extract(self, url):
