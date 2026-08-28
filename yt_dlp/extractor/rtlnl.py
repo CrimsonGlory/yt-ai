@@ -148,9 +148,20 @@ class RtlNlIE(InfoExtractor):
 
 class RTLLuBaseIE(InfoExtractor):
     _MEDIA_REGEX = {
-        'video': r'<rtl-player\s[^>]*\bhls\s*=\s*"([^"]+)',
-        'audio': r'<rtl-audioplayer\s[^>]*\bsrc\s*=\s*"([^"]+)',
-        'thumbnail': r'<rtl-player\s[^>]*\bposter\s*=\s*"([^"]+)',
+        # Legacy custom elements, plus Brightspot/Next.js ReplayVideo + ReplayAudio payloads
+        'video': [
+            r'<rtl-player\s[^>]*\bhls\s*=\s*"([^"]+)',
+            r'(https?://stream\.rtl\.lu/data/ondemand/video/e/hls/amlst:\d+/playlist\.m3u8)',
+            r'\\?"hls\\?"\s*:\s*\\?"(https?://stream\.rtl\.lu/[^"\\]+\.m3u8)',
+        ],
+        'audio': [
+            r'<rtl-audioplayer\s[^>]*\bsrc\s*=\s*"([^"]+)',
+            r'(https?://replayaudio\.rtl\.lu/[^"\\]+\.mp3)',
+        ],
+        'thumbnail': [
+            r'<rtl-player\s[^>]*\bposter\s*=\s*"([^"]+)',
+            r'"poster"\s*:\s*\{[^}]*?"url"\s*:\s*"([^"]+)',
+        ],
     }
 
     def get_media_url(self, webpage, video_id, media_type):
@@ -216,22 +227,25 @@ class RTLLuTeleVODIE(RTLLuBaseIE):
 
 class RTLLuArticleIE(RTLLuBaseIE):
     IE_NAME = 'rtl.lu:article'
-    _VALID_URL = r'https?://(?:(www|5minutes|today)\.)rtl\.lu/(?:[\w-]+)/(?:[\w-]+)/a/(?P<id>\d+)\.html'
+    _VALID_URL = r'https?://(?:(?:www|5minutes|today|infos)\.)rtl\.lu/(?:[\w-]+/)+(?:a/|(?:[\w-]+-))(?P<id>\d+)(?:\.html)?'
     _TESTS = [{
-        # Audio-only
-        'url': 'https://www.rtl.lu/sport/news/a/1934360.html',
-        'skip': 'No video formats found',
+        'url': 'https://www.rtl.lu/news/national/kann-een-als-premier-eigentlech-richteg-ofschalten-1774577552',
+        'md5': '7400d306a1c660458f1dc09590bebe51',
         'info_dict': {
-            'id': '1934360',
-            'ext': 'mp3',
-            'thumbnail': 'https://static.rtl.lu/rtl2008.lu/nt/p/2022/06/28/19/e4b37d66ddf00bab4c45617b91a5bb9b.jpeg',
-            'description': 'md5:5eab4a2a911c1fff7efc1682a38f9ef7',
-            'title': 'md5:40aa85f135578fbd549d3c9370321f99',
+            'id': '1774577552',
+            'ext': 'mp4',
+            'title': 'Summerinterview - Luc Frieden: Kann een als Premier eigentlech richteg ofschalten?',
+            'description': 'md5:9d7fc27d2ebec6420b02cd2106e40867',
+            'thumbnail': r're:https://static-prod\.rtl\.lu/.+',
         },
+    }, {
+        # Audio-only (legacy /a/ID.html URL)
+        'url': 'https://www.rtl.lu/sport/news/a/1934360.html',
+        'only_matching': True,
     }, {
         # 5minutes
         'url': 'https://5minutes.rtl.lu/espace-frontaliers/frontaliers-en-questions/a/1853173.html',
-        'skip': 'No video formats found',
+        'skip': 'redirects to infos.rtl.lu homepage',
         'info_dict': {
             'id': '1853173',
             'ext': 'mp4',
