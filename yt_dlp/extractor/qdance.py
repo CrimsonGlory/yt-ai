@@ -15,8 +15,21 @@ from ..utils import (
 
 class QDanceIE(InfoExtractor):
     _NETRC_MACHINE = 'qdance'
-    _VALID_URL = r'https?://(?:www\.)?q-dance\.com/network/(?:library|live)/(?P<id>[\w-]+)'
+    _VALID_URL = (
+        r'https?://(?:www\.)?q-dance\.com/(?:[a-z]{2}/)?(?P<id>radio)/?(?:$|[?#])',
+        r'https?://(?:www\.)?q-dance\.com/network/(?:library|live)/(?P<id>[\w-]+)',
+    )
+    _RADIO_STREAM_URL = 'https://playerservices.streamtheworld.com/api/livestream-redirect/Q_DANCE.mp3'
     _TESTS = [{
+        'note': 'public radio livestream',
+        'url': 'https://www.q-dance.com/en/radio/',
+        'info_dict': {
+            'id': 'radio',
+            'ext': 'mp3',
+            'title': r're:^Q-dance Radio',
+            'live_status': 'is_live',
+        },
+    }, {
         'note': 'vod',
         'url': 'https://www.q-dance.com/network/library/146542138',
         'skip': 'Login required',
@@ -53,7 +66,7 @@ class QDanceIE(InfoExtractor):
             'live_status': 'is_live',
             'channel_id': 'qdancenetwork.video_149170353',
         },
-        'skip': 'Completed livestream',
+        'skip': 'Q-dance Network is offline',
     }, {
         'note': 'vod with alphanumeric id',
         'url': 'https://www.q-dance.com/network/library/WhDleSIWSfeT3Q9ObBKBeA',
@@ -75,6 +88,9 @@ class QDanceIE(InfoExtractor):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.q-dance.com/network/library/-uRFKXwmRZGVnve7av9uqA',
+        'only_matching': True,
+    }, {
+        'url': 'https://www.q-dance.com/nl/radio',
         'only_matching': True,
     }]
 
@@ -114,8 +130,17 @@ class QDanceIE(InfoExtractor):
         cookies = self._get_cookies('https://www.q-dance.com/')
         self._refresh_token = try_call(lambda: cookies['_id-t-accounts-refresh'].value)
         self._access_token = try_call(lambda: cookies['_id-t-accounts-token'].value)
-        if not self._access_token:
-            self.raise_login_required()
+
+    def _extract_radio(self):
+        return {
+            'id': 'radio',
+            'title': 'Q-dance Radio',
+            'url': self._RADIO_STREAM_URL,
+            'ext': 'mp3',
+            'acodec': 'mp3',
+            'vcodec': 'none',
+            'is_live': True,
+        }
 
     def _get_auth(self):
         if (try_call(lambda: jwt_decode_hs256(self._access_token)['exp']) or 0) <= int(time.time() - 120):
@@ -129,6 +154,10 @@ class QDanceIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
+        if video_id == 'radio':
+            return self._extract_radio()
+        if not self._access_token:
+            self.raise_login_required()
         webpage = self._download_webpage(url, video_id)
         data = self._search_nuxt_data(webpage, video_id, traverse=('data', 0, 'data'))
 

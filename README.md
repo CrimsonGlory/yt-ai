@@ -2433,6 +2433,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **projectveritas**: Extract Mux playback from Next.js App Router instead of Gatsby page-data
     * **prx**: Fall back to public Exchange piece pages and signed MP3 streams when the CMS API requires authorization
     * **puhutv**: Extract current Akamai HLS `master.m3u8` streams from the video API
+    * **qdance**: Extract public Q-dance Radio from StreamTheWorld when Network VOD requires login
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
     * **rozhlas**: Resolve slugs via the search API
     * **showroom**: Use the public room API instead of Nuxt + login cookie
