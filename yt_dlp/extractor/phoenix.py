@@ -12,6 +12,22 @@ class PhoenixIE(ZDFBaseIE):
     IE_NAME = 'phoenix.de'
     _VALID_URL = r'https?://(?:www\.)?phoenix\.de/(?:[^/?#]+/)*[^/?#&]*-a-(?P<id>\d+)\.html'
     _TESTS = [{
+        'url': 'https://www.phoenix.de/sendungen/dokumentationen/marokkos-verlorene-kinder-a-5223903.html',
+        'md5': '1e68ad7c98f1b178f764eb95783ce4b0',
+        'info_dict': {
+            'id': '260731_phx_marokkoskinder_logo',
+            'ext': 'mp4',
+            'title': 'Harraga - Marokkos verlorene Kinder',
+            'description': 'Im spanischen Melilla in Marokko stranden Hunderte von marokkanischen Kindern, um nach Europa zu kommen. Sie wachsen in einem Dauerzustand des Wartens auf, mitten in der Pubertät, ohne Eltern. Sie nennen sich Harragas.',
+            'duration': 3588.0,
+            'timestamp': 1785496380,
+            'upload_date': '20260731',
+            'uploader': 'Phoenix',
+            'thumbnail': 'https://www.phoenix.de/sixcms/media.php/21/backdrop-stage-16-9-marokko-verlorene-kinder.jpg',
+            'series': 'Dokumentationen',
+            'episode': 'Harraga - Marokkos verlorene Kinder',
+        },
+    }, {
         'url': 'https://www.phoenix.de/sendungen/dokumentationen/spitzbergen-a-893349.html',
         'skip': 'HTTP Error 403',
         'md5': 'a79e86d9774d0b3f2102aff988a0bd32',
