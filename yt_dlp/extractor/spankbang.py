@@ -1,12 +1,16 @@
 import re
+import urllib.parse
 
 from .common import InfoExtractor
 from ..utils import (
     ExtractorError,
     clean_html,
     determine_ext,
+    int_or_none,
+    js_to_json,
     merge_dicts,
     parse_duration,
+    parse_iso8601,
     parse_resolution,
     str_to_int,
     url_or_none,
@@ -26,6 +30,28 @@ class SpankBangIE(InfoExtractor):
                         )
                     '''
     _TESTS = [{
+        'url': 'https://spankbang.com/a4xu2/video/alex+starr+cannot+say+no+to+her+dildo',
+        'md5': '7984ba2104b04d90a732c35b1a1f37b7',
+        'info_dict': {
+            'id': 'a4xu2',
+            'ext': 'mp4',
+            'title': 'Alex Starr Cannot Say No To Her Dildo',
+            'description': 'Curvy brunette Alex Starr cannot stop fucking herself with her huge dildo.Nice,passionate, and joyful masturbation scene.',
+            'thumbnail': r're:https?://.*\.jpg',
+            'uploader': 'Yanks',
+            'uploader_id': 'yanks',
+            'timestamp': 1785256325,
+            'upload_date': '20260728',
+            'duration': 361,
+            'age_limit': 18,
+        },
+        'params': {
+            'format': 'best[protocol=https]',
+        },
+        'expected_warnings': [
+            r'Failed to download m3u8 information',
+        ],
+    }, {
         'url': 'https://spankbang.com/56b3d/video/the+slut+maker+hmv',
         'skip': 'video gone',
         'md5': '2D13903DE4ECC7895B5D55930741650A',
@@ -112,6 +138,19 @@ class SpankBangIE(InfoExtractor):
                 rf'{STREAM_URL_PREFIX}(?P<id>[^\s=]+)\s*=\s*(["\'])(?P<url>(?:(?!\2).)+)\2', webpage):
             extract_format(*mobj.group('id', 'url'))
 
+        stream_data = self._search_json(
+            r'\bstream_data\s*=', webpage, 'stream data', video_id,
+            contains_pattern=r'\{[^{}]+\}', transform_source=js_to_json, default={})
+        skip_stream_keys = {
+            'cover_image', 'thumbnail', 'stream_raw_id', 'stream_sheet', 'length', 'main',
+        }
+        for format_id, format_url in stream_data.items():
+            if format_id in skip_stream_keys or format_id.startswith('m3u8_'):
+                continue
+            if format_url and isinstance(format_url, list):
+                format_url = format_url[0]
+            extract_format(format_id, format_url)
+
         if not formats:
             stream_key = self._search_regex(
                 r'data-streamkey\s*=\s*(["\'])(?P<value>(?:(?!\1).)+)\1',
@@ -134,21 +173,35 @@ class SpankBangIE(InfoExtractor):
 
         info = self._search_json_ld(webpage, video_id, default={})
 
-        title = self._html_search_regex(
+        title = traverse_obj(webpage, (
+            {find_element(attr='data-testid', value='video-title')}, {clean_html})) or self._html_search_regex(
             r'(?s)<h1[^>]+\btitle=["\']([^"]+)["\']>', webpage, 'title', default=None)
-        description = self._search_regex(
+        description = traverse_obj(webpage, (
+            {find_element(attr='data-testid', value='video-description')}, {clean_html})) or self._search_regex(
             r'<div[^>]+\bclass=["\']bottom[^>]+>\s*<p>[^<]*</p>\s*<p>([^<]+)',
             webpage, 'description', default=None)
         thumbnail = self._og_search_thumbnail(webpage, default=None)
-        uploader = self._html_search_regex(
+        uploader = traverse_obj(webpage, (
+            {find_element(attr='data-testid', value='profile')},
+            {find_element(tag='p')}, {clean_html})) or self._html_search_regex(
             r'<svg[^>]+\bclass="(?:[^"]*?user[^"]*?)">.*?</svg>([^<]+)', webpage, 'uploader', default=None)
-        uploader_id = self._html_search_regex(
+        uploader_id = self._search_regex(
+            r'<div[^>]+data-testid="profile"[^>]*>[\s\S]+?href="/[^/]+/channel/([^/"?]+)',
+            webpage, 'uploader_id', default=None) or self._html_search_regex(
             r'<a[^>]+href="/profile/([^"]+)"', webpage, 'uploader_id', default=None)
-        duration = parse_duration(self._search_regex(
-            r'<div[^>]+\bclass=["\']right_side[^>]+>\s*<span>([^<]+)',
-            webpage, 'duration', default=None))
+        if uploader_id:
+            uploader_id = urllib.parse.unquote(uploader_id)
+        duration = (
+            int_or_none(stream_data.get('length'))
+            or int_or_none(self._og_search_property('video:duration', webpage, default=None))
+            or parse_duration(self._search_regex(
+                r'<div[^>]+\bclass=["\']right_side[^>]+>\s*<span>([^<]+)',
+                webpage, 'duration', default=None)))
         view_count = str_to_int(self._search_regex(
             r'([\d,.]+)\s+plays', webpage, 'view count', default=None))
+        timestamp = parse_iso8601(self._html_search_regex(
+            r'<time[^>]+datetime=(["\'])(?P<t>.+?)\1', webpage, 'timestamp',
+            default=None, group='t'))
 
         age_limit = self._rta_search(webpage)
 
@@ -160,6 +213,7 @@ class SpankBangIE(InfoExtractor):
             'uploader': uploader,
             'uploader_id': uploader_id,
             'duration': duration,
+            'timestamp': timestamp,
             'view_count': view_count,
             'formats': formats,
             'age_limit': age_limit,
