@@ -2491,6 +2491,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **TheIntercept**: Follow YouTube/Vimeo embeds and native HTML5 video on current article pages
     * **theplatform**: Treat `link.theplatform.com` `/guid/` release URLs as SMIL instead of scraping a player page that now 302s to media
     * **thisamericanlife**: Parse playlist JSON for MP3/HLS instead of the old hardcoded stream path
+    * **thisav**: Raise an expected error that thisav.com was seized by FANZA in 2025 and no longer hosts videos
     * **tiktok**: Googlebot headers on aweme detail
     * **tnaflix**: Impersonate the browser (including Empflix)
     * **tvp**: Fall back to the original TVPlayer object id when retired portals such as swipeto.pl 301 to the VOD homepage
