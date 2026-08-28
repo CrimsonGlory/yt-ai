@@ -675,7 +675,7 @@ podbay.fm,true,2026-08-26,false,false
 podchaser.com,true,2026-08-24,false,false
 podomatic.com,true,2026-08-26,false,false
 pokergo.com,false,NULL,false,false
-polsatgo.pl,true,NULL,false,false
+polsatgo.pl,true,NULL,true,false
 polskieradio.pl,true,2026-08-24,false,false
 popcorntimes.tv,true,NULL,false,false
 popcorntv.it,true,NULL,false,false
