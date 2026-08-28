@@ -1,4 +1,3 @@
-
 from .common import InfoExtractor
 from ..utils import (
     int_or_none,
@@ -34,28 +33,23 @@ class PornboxIE(InfoExtractor):
         },
     }, {
         'url': 'https://pornbox.com/application/watch-page/216045',
+        'md5': '7f8b100d38cd242ce08856a98596332e',
         'info_dict': {
             'id': '216045',
+            'ext': 'mp4',
             'title': 'md5:3e48528e73a9a2b12f7a2772ed0b26a2',
             'description': 'md5:3e631dcaac029f15ed434e402d1b06c7',
             'uploader': 'VK Studio',
             'timestamp': 1618264800,
             'upload_date': '20210412',
             'age_limit': 18,
-            'availability': 'premium_only',
+            'availability': 'public',
             'duration': 2710,
             'cast': 'count:3',
-            'tags': 'count:29',
+            'tags': 'count:26',
             'thumbnail': r're:https?://.*',
             'subtitles': 'count:6',
         },
-        'params': {
-            'skip_download': True,
-            'ignore_no_formats_error': True,
-        },
-        'expected_warnings': [
-            'You are either not logged in or do not have access to this scene',
-            'No video formats found', 'Requested format is not available'],
     }]
 
     def _real_extract(self, url):
@@ -70,6 +64,16 @@ class PornboxIE(InfoExtractor):
 
         is_free_scene = traverse_obj(
             public_data, ('price', 'is_available_for_free', {bool}), default=False)
+        is_purchased = public_data.get('is_purchased')
+
+        media_id = None
+        if is_purchased:
+            media_id = traverse_obj(public_data, (
+                'medias', lambda _, v: v['title'] == 'Full video', 'media_id', {int}), get_all=False)
+        if not media_id:
+            # Full scenes need an account; trailers are public
+            media_id = traverse_obj(public_data, (
+                'medias', lambda _, v: v['title'] == 'Trailer', 'media_id', {int}), get_all=False)
 
         metadata = {
             'id': video_id,
@@ -85,19 +89,19 @@ class PornboxIE(InfoExtractor):
             'age_limit': 18,
             'timestamp': parse_iso8601(traverse_obj(
                 public_data, ('studios', 'release_date'), 'publish_date')),
-            'availability': self._availability(needs_auth=True, needs_premium=not is_free_scene),
+            'availability': self._availability(
+                is_private=False,
+                needs_premium=bool(is_purchased and not is_free_scene),
+                needs_subscription=False,
+                needs_auth=not media_id,
+                is_unlisted=False),
             'subtitles': subtitles,
         }
 
-        if not public_data.get('is_purchased') or not is_free_scene:
+        if not media_id:
             self.raise_login_required(
                 'You are either not logged in or do not have access to this scene', metadata_available=True)
             return metadata
-
-        media_id = traverse_obj(public_data, (
-            'medias', lambda _, v: v['title'] == 'Full video', 'media_id', {int}), get_all=False)
-        if not media_id:
-            self.raise_no_formats('Could not find stream id', video_id=video_id)
 
         stream_data = self._download_json(
             f'https://pornbox.com/media/{media_id}/stream', video_id=video_id, note='Getting manifest urls')
