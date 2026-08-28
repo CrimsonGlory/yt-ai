@@ -2417,6 +2417,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **pinkbike**: Impersonate the browser and extract current Video.js sources
     * **playtvak**: Call the public `servix.idnes.cz` player API and match current iDNES.tv URLs
     * **playvids**: Read the numeric ID from `get_related_videos` when the player has no `data-id`
+    * **plutotv**: Match current `/movies/` and `/shows/` VOD URLs
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
     * **rozhlas**: Resolve slugs via the search API
     * **showroom**: Use the public room API instead of Nuxt + login cookie

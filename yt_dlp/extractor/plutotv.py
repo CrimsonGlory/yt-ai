@@ -88,46 +88,65 @@ class PlutoTVBase(InfoExtractor):
 
 class PlutoTVIE(PlutoTVBase):
     _VALID_URL = r'''(?x)
-        https?://(?:www\.)?pluto\.tv(?:/[^/]+)?/on-demand
-        /(movies|series)
+        https?://(?:www\.)?pluto\.tv(?:/[^/]+)?
+        (?:/on-demand)?
+        /(?:movies|series|shows)
         /(?P<slug>[^/]+)
         (?:
             (?:/seasons?/(?P<season>\d+))?
             (?:/episode/(?P<episode>[^/]+))?
         )?'''
     _TESTS = [{
+        'url': 'https://pluto.tv/latam/movies/60c8abd636537d0013320b2a',
+        'md5': 'be40d25a355188967edda51992bac4aa',
+        'info_dict': {
+            'id': '60c8abd636537d0013320b2a',
+            'ext': 'mp4',
+            'episode_id': '60c8abd636537d0013320b2a',
+            'description': 'md5:c3ea906e4b37d032ab94ef25921326fa',
+            'episode': 'Caída Libre',
+            'thumbnail': r're:https?://images\.pluto\.tv/episodes/60c8abd636537d0013320b2a/.+',
+            'display_id': 'caida-libre-2010-1-1',
+            'genres': ['Drama'],
+            'title': 'Caída Libre',
+            'duration': 6600.0,
+        },
+    }, {
         'url': 'https://pluto.tv/it/on-demand/movies/6246b0adef11000014d220c3',
-        'md5': '966ed552cf5500b23b7eee66b6890cad',
+        'skip': 'video gone',
         'info_dict': {
             'id': '6246b0adef11000014d220c3',
             'ext': 'mp4',
-            'episode_id': '6246b0adef11000014d220c3',
-            'description': 'md5:c9a412d330d3d73a527e9ba981c0ddb8',
-            'episode': 'Non Bussate A Quella Porta',
-            'thumbnail': 'http://images.pluto.tv/episodes/6246b0adef11000014d220c3/poster.jpg?fm=png&q=100',
-            'display_id': 'dont-knock-twice-it-2016-1-1',
-            'genres': ['Horror'],
-            'title': 'Non Bussate A Quella Porta',
-            'duration': 5940,
         },
     }, {
-        'url': 'https://pluto.tv/on-demand/movies/6246b0adef11000014d220c3',
+        'url': 'https://pluto.tv/on-demand/movies/60c8abd636537d0013320b2a',
+        'only_matching': True,
+    }, {
+        'url': 'https://pluto.tv/latam/shows/csi-miami-las-ptv1',
+        'info_dict': {
+            'id': '63bc1f45a6bb3b001475e802',
+            'title': 'CSI: Miami',
+            'description': 'md5:cfab9e4e5f83e019f24dacbdfccadfb6',
+        },
+        'playlist_mincount': 200,
+    }, {
+        'url': 'https://pluto.tv/latam/shows/csi-miami-las-ptv1/season/1',
+        'info_dict': {
+            'id': '63bc1f45a6bb3b001475e802-1',
+            'title': 'CSI: Miami - Season 1',
+        },
+        'playlist_count': 24,
+    }, {
+        'url': 'https://pluto.tv/latam/shows/2790194/episode/63bc1f52a6bb3b001475ebc5',
         'only_matching': True,
     }, {
         'url': 'https://pluto.tv/on-demand/series/6655b0c5cceea000134aee27',
+        'skip': 'series gone',
         'info_dict': {
             'id': '6655b0c5cceea000134aee27',
             'title': 'Mission Impossible',
-            'description': 'md5:2b4a80beff586df77238775a5a67f7bd',
         },
         'playlist_mincount': 113,
-    }, {
-        'url': 'https://pluto.tv/on-demand/series/66ab6d80b20e79001338fe4c/season/5',
-        'info_dict': {
-            'id': '66ab6d80b20e79001338fe4c-5',
-            'title': 'Squadra Speciale Cobra 11 - Season 5',
-        },
-        'playlist_count': 17,
     }, {
         'note': 'Video doesn\'t exist, but API returns another one',
         'url': 'https://pluto.tv/it/on-demand/movies/00000000000000000000000000000000',
@@ -192,21 +211,27 @@ class PlutoTVIE(PlutoTVBase):
         video_json = self._download_json('https://boot.pluto.tv/v4/start', slug, 'Downloading info json', query=query)
         series = video_json['VOD'][0]
 
+        def matches(item, ident):
+            return ident and item and ident in (item.get('id'), item.get('_id'), item.get('slug'))
+
         # sometimes if the link is not valid the API returns a random video as result
-        # we have to check if the id is what we expect
-        if (series.get('id') or series.get('_id')) != slug and series.get('slug') != slug:
+        # we have to check if the id is what we expect. Current episode URLs put a
+        # numeric catalog id in the series slot; the API then returns the episode as VOD[0].
+        if not matches(series, slug) and not matches(series, episode_id):
             query['drmCapabilities'] = 'widevine:L3'
             video_json = self._download_json('https://boot.pluto.tv/v4/start', slug, 'Checking if video is DRM protected', query=query)
             series = video_json['VOD'][0]
-            if (series.get('id') or series.get('_id')) != slug and series.get('slug') != slug:
+            if not matches(series, slug) and not matches(series, episode_id):
                 raise ExtractorError('Failed to find movie or series', expected=True)
             self.report_drm(slug)
 
         if episode_id:
             episode = traverse_obj(video_json, ('VOD', 1))
-            if not episode or ((episode.get('id') or episode.get('_id')) != episode_id and episode.get('slug') != episode_id):
-                raise ExtractorError('Failed to find episode', expected=True)
-            return {**self._get_video_info(episode, series, season_number), **self._extract_formats(self._resolve_data(video_json, episode))}
+            if matches(episode, episode_id):
+                return {**self._get_video_info(episode, series, season_number), **self._extract_formats(self._resolve_data(video_json, episode))}
+            if matches(series, episode_id):
+                return {**self._get_video_info(series), **self._extract_formats(self._resolve_data(video_json, series))}
+            raise ExtractorError('Failed to find episode', expected=True)
 
         if season_number:
             season = next((s for s in series['seasons'] if s['number'] == int(season_number)), None)
