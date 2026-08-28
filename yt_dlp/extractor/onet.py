@@ -114,10 +114,27 @@ class OnetMVPIE(OnetBaseIE):
 
 
 class OnetIE(OnetBaseIE):
-    _VALID_URL = OnetBaseIE._URL_BASE_RE + r'[a-z]+/(?P<display_id>[0-9a-z-]+)/(?P<id>[0-9a-z]+)'
+    # onet.tv now redirects to video.onet.pl; clip paths dropped the old /x/ prefix
+    _VALID_URL = r'https?://(?:(?:www\.)?onet\.tv|onet100\.vod\.pl)/(?:[a-z]/)?(?P<channel>[0-9a-z-]+)/(?P<display_id>[0-9a-z-]+)/(?P<id>[0-9a-z]+)'
     IE_NAME = 'onet.tv'
 
     _TESTS = [{
+        'url': 'https://onet.tv/zielony-onet/climate-facts-matter-unia-europejska-walczy-z-dezinformacja-klimatyczna/7nzsf9l',
+        'md5': 'ca5a76525edeb2c436597dde04c0b904',
+        'info_dict': {
+            'id': '2449258.2021405591',
+            'ext': 'mp4',
+            'title': 'Climate Facts Matter. Unia Europejska walczy z dezinformacją klimatyczną.',
+            'description': 'md5:107db8722dae06931e3a81af12b53c84',
+            'duration': 1879,
+            'timestamp': 1774940754,
+            'upload_date': '20260331',
+            'thumbnail': r're:https?://.*\.(?:jpg|jpeg)',
+            'width': 1920,
+            'height': 1080,
+        },
+        'add_ie': ['OnetPl'],
+    }, {
         'url': 'http://onet.tv/k/openerfestival/open-er-festival-2016-najdziwniejsze-wymagania-gwiazd/qbpyqc',
         'skip': 'video gone',
         'md5': '436102770fb095c75b8bb0392d3da9ff',
@@ -136,20 +153,12 @@ class OnetIE(OnetBaseIE):
     }]
 
     def _real_extract(self, url):
-        mobj = self._match_valid_url(url)
-        display_id, video_id = mobj.group('display_id', 'id')
-
-        webpage = self._download_webpage(url, display_id)
-
-        mvp_id = self._search_mvp_id(webpage)
-
-        info_dict = self._extract_from_id(mvp_id, webpage)
-        info_dict.update({
-            'id': video_id,
-            'display_id': display_id,
-        })
-
-        return info_dict
+        channel, display_id, video_id = self._match_valid_url(url).group(
+            'channel', 'display_id', 'id')
+        # Clip pages now live on video.onet.pl (same Ring Publishing player as onet.pl)
+        return self.url_result(
+            f'https://video.onet.pl/{channel}/{display_id}/{video_id}',
+            OnetPlIE.ie_key(), video_id)
 
 
 class OnetChannelIE(OnetBaseIE):

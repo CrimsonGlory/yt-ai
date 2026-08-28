@@ -2402,6 +2402,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **oftv**: Extract HLS from the current `api.of.tv` player instead of Zype
     * **ondemandchina**: Use US/CA X-Forwarded-For on the ODC playback API
     * **onet.pl**: Extract PulseEmbed JSON-LD and Ring Publishing MP4 instead of the old CKM API
+    * **onet.tv**: Map clip URLs onto the video.onet.pl successor and extract via OnetPl
     * **orf:on**: Raise geo-restriction when sources are empty
     * **pbs**: Guard against missing `video_info` and title
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
@@ -2431,6 +2432,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * Skip dead / geo / login tests and refresh stale sample metadata
     * `make_changelog` attributes fork commits to the git author and `CrimsonGlory/yt-ai`
     * [Development Docker workflow](https://github.com/CrimsonGlory/yt-ai/commit/13d780d260672007c07b37e4b5060a06c27d5b15) (`docker/Dockerfile` + compose) to run yt-ai and the offline suite in a container
+    * `release.sh` crontab helper: dispatch the GitHub `Release` workflow only when `master` has commits after the latest GitHub release (no nightly/stable channel)
 
 See [commits](https://github.com/CrimsonGlory/yt-ai/commits) for the full list of changes
 
