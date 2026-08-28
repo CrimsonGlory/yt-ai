@@ -24,7 +24,8 @@ class PeekVidsBaseIE(InfoExtractor):
         display_id = video_id
         video_id = self._search_regex(
             (r'(?s)<video\b[^>]+\bdata-id\s*=\s*["\']?([\w-]+)',
-             r'/vid/\d+/(\d+)\.(?:jpe?g|png|webp)'),
+             r'/vid/\d+/(\d+)\.(?:jpe?g|png|webp)',
+             r'/api/get_related_videos/(\d+)'),
             webpage, 'short video ID', default=None) or display_id
         srcs = self._download_json(
             f'https://www.{domain}/v-alt/{video_id}', video_id,
