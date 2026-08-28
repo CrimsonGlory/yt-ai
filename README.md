@@ -2430,6 +2430,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **pr0gramm**: Request SFW-only API flags unless logged in
     * **premiershiprugby**: Follow YouTube highlight embeds from the article CMS; keep StreamAMG HLS for native full matches
     * **presstv**: Extract JWPlayer HLS and preview MP4 from current article pages; match presstv.co.uk
+    * **projectveritas**: Extract Mux playback from Next.js App Router instead of Gatsby page-data
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
     * **rozhlas**: Resolve slugs via the search API
     * **showroom**: Use the public room API instead of Nuxt + login cookie
