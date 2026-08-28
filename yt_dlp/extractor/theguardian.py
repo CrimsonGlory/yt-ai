@@ -29,7 +29,6 @@ class TheGuardianPodcastIE(InfoExtractor):
             'thumbnail': r're:https?://.*',
             'release_date': '20231103',
         },
-        'params': {'skip_download': True},
     }, {
         'url': 'https://www.theguardian.com/news/audio/2023/oct/30/the-trials-of-robert-habeck-is-the-worlds-most-powerful-green-politician-doomed-to-fail-podcast',
         'md5': 'd1771744681789b4cd7da2a08e487702',
