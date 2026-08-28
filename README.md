@@ -2473,6 +2473,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **smotrim**: Use the `player-api.smotrim.ru` v1 API instead of the old iframe `datavideo` JSON
     * **softwhiteunderbelly**: Treat anonymous VHX `_session` cookies as logged-out and require a subscribed account
     * **sr:mediathek**: Join relative ARD player collection URLs
+    * **startrek**: Parse Next.js App Router flight data instead of `__NEXT_DATA__`
     * **tfo**: Fall back to Next.js v13 data
     * **theguardian:podcast**: Extract audio URL and author from JSON-LD
     * **tiktok**: Googlebot headers on aweme detail
