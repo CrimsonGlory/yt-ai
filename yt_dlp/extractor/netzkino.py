@@ -1,5 +1,7 @@
 from .common import InfoExtractor
+from ..networking.exceptions import HTTPError
 from ..utils import (
+    ExtractorError,
     clean_html,
     int_or_none,
     url_or_none,
@@ -9,11 +11,13 @@ from ..utils.traversal import traverse_obj
 
 
 class NetzkinoIE(InfoExtractor):
-    _GEO_COUNTRIES = ['DE']
-    _VALID_URL = r'https?://(?:www\.)?netzkino\.de/details/(?P<id>[^/?#]+)'
+    _GEO_COUNTRIES = ['DE', 'AT', 'CH']
+    # CloudFront on the PMD CDN geo-blocks by real client IP; X-Forwarded-For is ignored
+    _GEO_BYPASS = False
+    _VALID_URL = r'https?://(?:www\.)?netzkino\.de/(?:details|watch)/(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://www.netzkino.de/details/snow-beast',
-        'skip': 'HTTP Error 403',
+        'skip': 'geo-restricted to DE/AT/CH; CloudFront PMD CDN blocks this country (X-Forwarded-For is ignored)',
         'md5': '1a4c90fe40d3ccabce163287e45e56dd',
         'info_dict': {
             'id': 'snow-beast',
@@ -29,6 +33,9 @@ class NetzkinoIE(InfoExtractor):
             'release_year': 2011,
             'thumbnail': r're:https?://.+\.jpg',
         },
+    }, {
+        'url': 'https://www.netzkino.de/watch/snow-beast',
+        'only_matching': True,
     }]
 
     def _real_extract(self, url):
@@ -41,6 +48,18 @@ class NetzkinoIE(InfoExtractor):
             'data', 'data', lambda _, v: v['__typename'] == 'CmsMovie', any))
         if 'DRM' in traverse_obj(query, ('licenses', 'nodes', ..., 'properties', {str})):
             self.report_drm(video_id)
+
+        video_url = traverse_obj(query, (
+            'videoSource', 'pmdUrl', {urljoin('https://pmd.netzkino-seite.netzkino.de/')}))
+        if video_url:
+            try:
+                self._request_webpage(
+                    video_url, video_id, note='Checking video availability',
+                    headers={'Range': 'bytes=0-0'})
+            except ExtractorError as e:
+                if isinstance(e.cause, HTTPError) and e.cause.status == 403:
+                    self.raise_geo_restricted(countries=self._GEO_COUNTRIES)
+                raise
 
         return {
             'id': video_id,
@@ -56,6 +75,6 @@ class NetzkinoIE(InfoExtractor):
                 'location': ('productionCountry', {clean_html}, filter),
                 'release_year': ('productionYear', {int_or_none}),
                 'thumbnail': ('coverImage', 'masterUrl', {url_or_none}),
-                'url': ('videoSource', 'pmdUrl', {urljoin('https://pmd.netzkino-seite.netzkino.de/')}),
             }),
+            'url': video_url,
         }
