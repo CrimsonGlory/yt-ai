@@ -2455,6 +2455,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **rumble**: Impersonate the browser for embedJS, video pages, and media downloads
     * **Ruutu**: Use the public MCC media API instead of the retired gatling XML cache
     * **samplefocus**: Parse SampleHero React JSON and JSON-LD AudioObject instead of removed hidden form fields
+    * **sangiin**: Extract HLS from the MediaSP player instead of the old `videopath` variable
     * **showroom**: Use the public room API instead of Nuxt + login cookie
     * **tfo**: Fall back to Next.js v13 data
     * **theguardian:podcast**: Extract audio URL and author from JSON-LD

@@ -210,6 +210,7 @@ class SangiinIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.webtv.sangiin.go.jp/webtv/detail.php?sid=7052',
+        'md5': '419158f12a8a424c59c6920241863d8b',
         'info_dict': {
             'id': '7052',
             'title': '2022年10月7日 本会議',
@@ -262,7 +263,20 @@ class SangiinIE(InfoExtractor):
 
         m3u8_url = self._search_regex(
             r'var\s+videopath\s*=\s*(["\'])([^"\']+)\1', webpage,
-            'm3u8 url', group=2)
+            'm3u8 url', group=2, default=None)
+        if not m3u8_url:
+            player_hash = self._search_regex(
+                r'public\.mediasp\.jp/v1/player\?hash=([\w-]+)',
+                webpage, 'player hash')
+            player_js = self._download_webpage(
+                f'https://public.mediasp.jp/v1/player?hash={player_hash}',
+                video_id, note='Downloading MediaSP player')
+            m3u8_url = self._search_regex(
+                r'\burl\s*:\s*(["\'])(?P<url>https?://[^"\']+\.m3u8(?:\?[^"\']*)?)\1',
+                player_js, 'm3u8 url', group='url')
+            if not is_live:
+                is_live = bool(self._search_regex(
+                    r'\bisLive\s*:\s*!0\b', player_js, 'is_live', default=None))
 
         formats, subs = self._extract_m3u8_formats_and_subtitles(m3u8_url, video_id, 'mp4')
 
