@@ -2293,6 +2293,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **nba**: Extract public team-site WordPress MP4s from Next.js `videoAssets`
     * **nbcsports**: Extract ThePlatform JWPlayer links when the old vplayer embed is gone
     * **nbcolympics**: Mark VOD as US geo-restricted (ThePlatform; X-Forwarded-For is ignored)
+    * **netapp**: Extract YouTube embeds from current video pages (Brightcove API gone); impersonate for Akamai
     * **newgrounds**: Update the audio player media URL regex
     * **ninenews**: Parse Brightcove id/account from page markup
     * **nosnl**: Treat nested `/video/` article URLs as videos
