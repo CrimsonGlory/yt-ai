@@ -1,5 +1,8 @@
+import json
+
 from .common import InfoExtractor
 from ..utils import (
+    ExtractorError,
     determine_ext,
     parse_duration,
     traverse_obj,
@@ -22,6 +25,7 @@ class RuvIE(InfoExtractor):
             'timestamp': 1494963600,
             'upload_date': '20170516',
         },
+        'skip': 'sarpurinn URLs redirect to the current /sjonvarp player',
     }, {
         # mp3
         'url': 'http://ruv.is/sarpurinn/ras-2/morgunutvarpid/20170619',
@@ -35,6 +39,7 @@ class RuvIE(InfoExtractor):
             'timestamp': 1497855000,
             'upload_date': '20170619',
         },
+        'skip': 'sarpurinn URLs redirect to the current /sjonvarp player',
     }, {
         'url': 'http://ruv.is/sarpurinn/ruv/frettir/20170614',
         'only_matching': True,
@@ -104,6 +109,20 @@ class RuvSpilaIE(InfoExtractor):
     IE_NAME = 'ruv.is:spila'
     _VALID_URL = r'https?://(?:www\.)?ruv\.is/(?:(?:sjon|ut)varp|(?:krakka|ung)ruv)/spila/.+/(?P<series_id>[0-9]+)/(?P<id>[a-z0-9]+)'
     _TESTS = [{
+        'url': 'https://www.ruv.is/sjonvarp/spila/svepparikid/33431/9uqaji',
+        'info_dict': {
+            'id': '9uqaji',
+            'ext': 'mp4',
+            'title': 'Matur',
+            'description': 'md5:5337bca4ea78819d604be8291aea91be',
+            'timestamp': 1755459900,
+            'upload_date': '20250817',
+            'thumbnail': r're:https://myndir\.ruv\.is/.+',
+            'age_limit': 0,
+            'chapters': [],
+        },
+        'expected_warnings': ['Ignoring subtitle tracks found in the HLS manifest'],
+    }, {
         'url': 'https://www.ruv.is/sjonvarp/spila/ithrottir/30657/9jcnd4',
         'info_dict': {
             'id': '9jcnd4',
@@ -116,6 +135,7 @@ class RuvSpilaIE(InfoExtractor):
             'description': 'Íþróttafréttir.',
             'age_limit': 0,
         },
+        'skip': 'video gone',
     }, {
         'url': 'https://www.ruv.is/utvarp/spila/i-ljosi-sogunnar/23795/7hqkre',
         'info_dict': {
@@ -129,6 +149,7 @@ class RuvSpilaIE(InfoExtractor):
             'title': 'Nellie Bly II',
             'age_limit': 0,
         },
+        'skip': 'video gone',
     }, {
         'url': 'https://www.ruv.is/ungruv/spila/ungruv/28046/8beuph',
         'only_matching': True,
@@ -140,7 +161,7 @@ class RuvSpilaIE(InfoExtractor):
     def _real_extract(self, url):
         display_id, series_id = self._match_valid_url(url).group('id', 'series_id')
         program = self._download_json(
-            'https://www.ruv.is/gql/', display_id, query={'query': '''{
+            'https://www.ruv.is/gql/', display_id, data=json.dumps({'query': '''{
                 Program(id: %s){
                     title image description short_description
                     episodes(id: {value: "%s"}) {
@@ -153,15 +174,21 @@ class RuvSpilaIE(InfoExtractor):
                         }
                     }
                 }
-            }''' % (series_id, display_id)})['data']['Program']  # noqa: UP031
-        episode = program['episodes'][0]
+            }''' % (series_id, display_id)}).encode(), headers={
+                'Content-Type': 'application/json',
+            })['data']['Program']  # noqa: UP031
+        episode = traverse_obj(program, ('episodes', 0, {dict}))
+        if not episode:
+            raise ExtractorError('Episode is unavailable', expected=True)
 
         subs = {}
-        for trk in episode.get('subtitles'):
+        for trk in episode.get('subtitles') or []:
             if trk.get('name') and trk.get('value'):
                 subs.setdefault(trk['name'], []).append({'url': trk['value'], 'ext': 'vtt'})
 
-        media_url = episode['file']
+        media_url = episode.get('file')
+        if not media_url:
+            raise ExtractorError('No media URL available', expected=True)
         if determine_ext(media_url) == 'm3u8':
             formats = self._extract_m3u8_formats(media_url, display_id)
         else:
@@ -178,7 +205,7 @@ class RuvSpilaIE(InfoExtractor):
                 program, ('episodes', 0, 'description'), 'description', 'short_description',
                 expected_type=lambda x: x or None),
             'subtitles': subs,
-            'thumbnail': episode.get('image', '').replace('$$IMAGESIZE$$', '1960') or None,
+            'thumbnail': (episode.get('image') or '').replace('$$IMAGESIZE$$', '1960') or None,
             'timestamp': unified_timestamp(episode.get('firstrun')),
             'formats': formats,
             'age_limit': episode.get('rating'),
