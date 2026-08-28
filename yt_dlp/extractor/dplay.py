@@ -1001,6 +1001,27 @@ class AnimalPlanetIE(DiscoveryPlusBaseIE):
 class TLCIE(DiscoveryPlusBaseIE):
     _VALID_URL = r'https?://(?:go\.)?tlc\.com/video' + DPlayBaseIE._PATH_REGEX
     _TESTS = [{
+        'url': 'https://go.tlc.com/video/baylen-out-loud-censored-tlc-atve-us/airport-is-a-tic-disaster',
+        'md5': 'd0b912897b35ffd1c95e5ca57febeb3a',
+        'info_dict': {
+            'id': '5435621',
+            'display_id': 'baylen-out-loud-censored-tlc-atve-us/airport-is-a-tic-disaster',
+            'ext': 'mp4',
+            'title': '"Airport is a Tic Disaster"',
+            'description': 'Baylen learns what Colin\'s work relocation means for their relationship.',
+            'season_number': 1,
+            'season': 'Season 1',
+            'episode_number': 2,
+            'episode': 'Episode 2',
+            'series': 'Baylen Out Loud',
+            'duration': 2490.621,
+            'upload_date': '20250121',
+            'timestamp': 1737424800,
+            'creators': ['TLC'],
+            'tags': [],
+            'thumbnail': 'https://us1-prod-images.disco-api.com/2025/01/15/8dc0e411-ef3f-3810-ab46-bf2690052d4d.jpeg',
+        },
+    }, {
         'url': 'https://go.tlc.com/video/90-day-the-last-resort-tlc-atve-us/the-last-chance',
         'skip': 'video gone',
         'info_dict': {
@@ -1032,7 +1053,7 @@ class TLCIE(DiscoveryPlusBaseIE):
             'season_number': 1,
             'episode_number': 1,
         },
-        'skip': 'Available for Premium users',
+        'skip': 'video gone',
     }, {
         'url': 'https://go.tlc.com/video/my-600-lb-life-tlc/melissas-story-part-1',
         'only_matching': True,
