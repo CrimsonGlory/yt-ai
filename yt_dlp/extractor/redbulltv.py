@@ -3,6 +3,7 @@ from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
     float_or_none,
+    int_or_none,
 )
 
 
@@ -108,35 +109,36 @@ class RedBullTVIE(InfoExtractor):
         return self.extract_info(video_id)
 
 
-class RedBullEmbedIE(RedBullTVIE):  # XXX: Do not subclass from concrete IE
+class RedBullEmbedIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?redbull\.com/embed/(?P<id>rrn:content:[^:]+:[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}:[a-z]{2}-[A-Z]{2,3})'
     _TESTS = [{
-        # HLS manifest accessible only using assetId
         'url': 'https://www.redbull.com/embed/rrn:content:episode-videos:f3021f4f-3ed4-51ac-915a-11987126e405:en-INT',
         'only_matching': True,
     }]
-    _VIDEO_ESSENSE_TMPL = '''... on %s {
-      videoEssence {
-        attributes
-      }
-    }'''
 
     def _real_extract(self, url):
         rrn_id = self._match_id(url)
-        asset_id = self._download_json(
-            'https://edge-graphql.crepo-production.redbullaws.com/v1/graphql',
-            rrn_id, headers={
-                'Accept': 'application/json',
-                'API-KEY': 'e90a1ff11335423998b100c929ecc866',
-            }, query={
-                'query': '''{
-  resource(id: "%s", enforceGeoBlocking: false) {
-    %s
-    %s
-  }
-}''' % (rrn_id, self._VIDEO_ESSENSE_TMPL % 'LiveVideo', self._VIDEO_ESSENSE_TMPL % 'VideoResource'),  # noqa: UP031
-            })['data']['resource']['videoEssence']['attributes']['assetId']
-        return self.extract_info(asset_id)
+        video = self._download_json(
+            'https://api-player.redbull.com/rbcom/videoresource',
+            rrn_id, query={'videoId': rrn_id})
+        errors = video.get('playabilityErrors') or []
+        if 'GEO_BLOCKED' in errors:
+            self.raise_geo_restricted()
+        if errors:
+            raise ExtractorError(
+                f'{self.IE_NAME} said: {", ".join(map(str, errors))}', expected=True)
+
+        video_id = video['assetId']
+        formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+            video['videoUrl'], video_id, 'mp4', m3u8_id='hls')
+        return {
+            'id': video_id,
+            'title': video.get('title'),
+            'description': video.get('description') or None,
+            'duration': int_or_none(video.get('duration')),
+            'formats': formats,
+            'subtitles': subtitles,
+        }
 
 
 class RedBullTVRrnContentIE(InfoExtractor):
@@ -163,6 +165,20 @@ class RedBullTVRrnContentIE(InfoExtractor):
 class RedBullIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?redbull\.com/(?P<region>[a-z]{2,3})-(?P<lang>[a-z]{2})/(?P<type>(?:episode|film|(?:(?:recap|trailer)-)?video)s|live)/(?!AP-|rrn:content:)(?P<id>[^/?#&]+)'
     _TESTS = [{
+        'url': 'https://www.redbull.com/int-en/videos/red-bull-can-you-make-it-highlights',
+        'md5': '0bbcff5279e53e803b06210a73a7dbe3',
+        'info_dict': {
+            'id': 'AAPBX9EIPJJ2ISWEL12S',
+            'ext': 'mp4',
+            'title': 'The adventure of a lifetime',
+            'duration': 179,
+        },
+        # HLS --test only fetches the fMP4 init fragment (~1KB), below the default 10KB check
+        'file_minsize': None,
+        'params': {
+            'format': 'bv',
+        },
+    }, {
         'url': 'https://www.redbull.com/int-en/episodes/grime-hashtags-s02-e04',
         'skip': 'video gone',
         'md5': 'db8271a7200d40053a1809ed0dd574ff',
@@ -198,6 +214,7 @@ class RedBullIE(InfoExtractor):
 
     def _real_extract(self, url):
         region, lang, filter_type, display_id = self._match_valid_url(url).groups()
+        page_type = filter_type
         if filter_type == 'episodes':
             filter_type = 'episode-videos'
         elif filter_type == 'live':
@@ -216,7 +233,8 @@ class RedBullIE(InfoExtractor):
             display_id, query={
                 'filter[type]': filter_type,
                 'filter[uriSlug]': display_id,
-                'rb3Schema': 'v1:hero',
+                'rb3Schema': 'v1:pageConfig',
+                'rb3PageUrl': f'/{region}-{lang}/{page_type}/{display_id}',
             })['data']['id']
 
         return self.url_result(
