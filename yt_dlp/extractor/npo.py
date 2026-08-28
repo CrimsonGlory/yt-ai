@@ -1,4 +1,4 @@
-import random
+import json
 import re
 import urllib.parse
 
@@ -9,10 +9,8 @@ from ..utils import (
     merge_dicts,
     orderedSet,
     str_or_none,
-    try_call,
-    unified_timestamp,
+    traverse_obj,
     url_or_none,
-    urlencode_postdata,
 )
 
 
@@ -58,22 +56,25 @@ class NPOIE(InfoExtractor):
         },
         'skip': 'Video was removed',
     }, {
-        'url': 'http://www.npo.nl/tegenlicht/25-02-2013/VPWON_1169289',
-        'md5': '1b279c0547f6b270e014c576415268c5',
+        'url': 'https://npo.nl/start/afspelen/zwart-geld-de-toekomst-komt-uit-afrika',
+        'md5': '8c30593a81ac80d65b531eaf2a92ac02',
         'info_dict': {
             'id': 'VPWON_1169289',
             'ext': 'mp4',
             'title': 'Zwart geld: de toekomst komt uit Afrika',
-            'description': 'md5:dffaf3d628a9c36f78ca48d834246261',
+            'description': 'md5:52cf4eefbc96fffcbdc06d024147abea',
             'upload_date': '20130225',
             'duration': 3000,
-            'creator': 'NED2',
-            'series': 'Tegenlicht',
+            'creators': ['NED2'],
+            'series': 'VPRO Tegenlicht',
             'timestamp': 1361822340,
-            'thumbnail': 'https://images.npo.nl/tile/1280x720/142854.jpg',
+            'thumbnail': r're:https://assets-start\.npo\.nl/resources/.+',
             'episode': 'Zwart geld: de toekomst komt uit Afrika',
             'episode_number': 18,
         },
+    }, {
+        'url': 'http://www.npo.nl/tegenlicht/25-02-2013/VPWON_1169289',
+        'only_matching': True,
     }, {
         'url': 'http://www.npo.nl/de-nieuwe-mens-deel-1/21-07-2010/WO_VPRO_043706',
         'info_dict': {
@@ -81,12 +82,10 @@ class NPOIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'De nieuwe mens - Deel 1',
             'description': 'md5:518ae51ba1293ffb80d8d8ce90b74e4b',
-            'duration': 4680,
+            'duration': 4680.0,
             'episode': 'De nieuwe mens - Deel 1',
-            'thumbnail': 'https://images.npo.nl/tile/1280x720/6289.jpg',
-            'timestamp': 1279716057,
+            'thumbnail': 'https://images.poms.omroep.nl/image/s1080/6289',
             'series': 'De nieuwe mens - Deel 1',
-            'upload_date': '20100721',
         },
         'params': {
             'skip_download': True,
@@ -110,12 +109,11 @@ class NPOIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'Aap, poot, pies',
             'description': 'md5:4b46b1b9553b4c036a04d2a532a137e6',
-            'upload_date': '20150508',
-            'duration': 599,
+            'duration': 599.98,
             'episode': 'Aap, poot, pies',
-            'thumbnail': 'https://images.poms.omroep.nl/image/s1280/c1280x720/608118.jpg',
-            'timestamp': 1431064200,
+            'thumbnail': 'https://images.poms.omroep.nl/image/s1080/608116',
             'series': 'Aap, poot, pies',
+            'creators': ['NED3'],
         },
         'params': {
             'skip_download': True,
@@ -176,18 +174,21 @@ class NPOIE(InfoExtractor):
         'url': 'https://npo.nl/KN_1698996',
         'only_matching': True,
     }, {
+        'url': 'https://npo.nl/start/afspelen/nos-journaal_106198',
+        'only_matching': True,
+    }, {
         'url': 'https://www.npo3.nl/the-genius/21-11-2022/VPWON_1341105',
         'info_dict': {
             'id': 'VPWON_1341105',
             'ext': 'mp4',
             'duration': 2658,
             'series': 'The Genius',
-            'description': 'md5:db02f1456939ca63f7c408f858044e94',
+            'description': 'md5:b5b23d0c9bc0092055146fa5e2a81629',
             'title': 'The Genius',
             'timestamp': 1669062000,
-            'creator': 'NED3',
+            'creators': ['NED3'],
             'episode': 'The Genius',
-            'thumbnail': 'https://images.npo.nl/tile/1280x720/1827650.jpg',
+            'thumbnail': 'https://assets-start.npo.nl/resources/2023/07/01/2e062997-ad28-4788-970c-bf60d7c8ebf4.jpg',
             'episode_number': 8,
             'upload_date': '20221121',
         },
@@ -203,67 +204,83 @@ class NPOIE(InfoExtractor):
                 else super().suitable(url))
 
     def _real_extract(self, url):
-        video_id = self._match_id(url)
-        if urllib.parse.urlparse(url).netloc in ['www.ntr.nl', 'ntr.nl']:
-            player = self._download_json(
-                f'https://www.ntr.nl/ajax/player/embed/{video_id}', video_id,
-                'Downloading player JSON', query={
-                    'parameters[elementId]': f'npo{random.randint(0, 999)}',
-                    'parameters[sterReferralUrl]': url,
-                    'parameters[autoplay]': 0,
+        display_id = self._match_id(url)
+        program = {}
+        if re.fullmatch(r'[A-Z]{2,}_\w+', display_id):
+            video_id = display_id
+            search = self._download_json(
+                'https://npo.nl/start/api/domain/search-collection-items',
+                video_id, 'Downloading program search JSON', fatal=False, query={
+                    'searchQuery': video_id,
+                    'searchType': 'broadcasts',
+                    'subscriptionType': 'anonymous',
                 })
+            program = traverse_obj(search, (
+                'items', lambda _, v: v.get('productId') == video_id),
+                get_all=False) or {}
         else:
-            self._request_webpage(
-                'https://www.npostart.nl/api/token', video_id,
-                'Downloading token', headers={
-                    'Referer': url,
-                    'X-Requested-With': 'XMLHttpRequest',
-                })
-            player = self._download_json(
-                f'https://www.npostart.nl/player/{video_id}', video_id,
-                'Downloading player JSON', data=urlencode_postdata({
-                    'autoplay': 0,
-                    'share': 1,
-                    'pageUrl': url,
-                    'hasAdConsent': 0,
-                }), headers={
-                    'x-xsrf-token': try_call(lambda: urllib.parse.unquote(
-                        self._get_cookies('https://www.npostart.nl')['XSRF-TOKEN'].value)),
-                })
+            program = self._download_json(
+                f'https://npo.nl/start/api/domain/program-detail?slug={display_id}',
+                display_id, 'Downloading program details JSON')
+            video_id = program['productId']
 
-        player_token = player['token']
+        token = self._download_json(
+            f'https://npo.nl/start/api/domain/player-token?productId={video_id}',
+            video_id, 'Downloading token')['jwt']
 
         drm = False
+        geo = False
+        is_live = False
         format_urls = set()
         formats = []
-        for profile in ('hls', 'dash-widevine', 'dash-playready', 'smooth'):
-            streams = self._download_json(
-                f'https://start-player.npo.nl/video/{video_id}/streams',
-                video_id, f'Downloading {profile} profile JSON', fatal=False,
-                query={
-                    'profile': profile,
-                    'quality': 'npoplus',
-                    'tokenId': player_token,
-                    'streamType': 'broadcast',
-                }, data=b'')  # endpoint requires POST
-            if not streams:
+        stream_meta = {}
+        subtitles = {}
+        for profile_name in ('hls', 'dash', 'smooth'):
+            profile = self._download_json(
+                'https://prod.npoplayer.nl/stream-link', video_id,
+                f'Downloading {profile_name} profile JSON', fatal=False,
+                data=json.dumps({
+                    'profileName': profile_name,
+                    'referrerUrl': url,
+                }).encode(), headers={
+                    'Authorization': token,
+                    'Content-Type': 'application/json',
+                    'Origin': 'https://npo.nl',
+                    'Referer': 'https://npo.nl/',
+                }, expected_status=(400, 401, 403, 404, 451, 500))
+            if not isinstance(profile, dict):
                 continue
-            stream = streams.get('stream')
+            if profile.get('status') == 451:
+                geo = True
+                continue
+            if not stream_meta and isinstance(profile.get('metadata'), dict):
+                stream_meta = profile['metadata']
+            for cc in traverse_obj(profile, ('assets', 'subtitles', ...)):
+                cc_url = url_or_none(cc.get('location'))
+                if not cc_url:
+                    continue
+                lang = str_or_none(cc.get('iso')) or 'nl'
+                subtitles.setdefault(lang, []).append({
+                    'url': cc_url,
+                    'name': cc.get('name'),
+                })
+            stream = profile.get('stream')
             if not isinstance(stream, dict):
                 continue
-            stream_url = url_or_none(stream.get('src'))
+            stream_url = url_or_none(stream.get('streamURL') or stream.get('src'))
             if not stream_url or stream_url in format_urls:
                 continue
             format_urls.add(stream_url)
-            if stream.get('protection') is not None or stream.get('keySystemOptions') is not None:
+            if stream.get('isLiveStream'):
+                is_live = True
+            if stream.get('drmType') or stream.get('drmToken') or stream.get('drm') or stream.get('protection') or stream.get('keySystemOptions'):
                 drm = True
                 continue
-            stream_type = stream.get('type')
             stream_ext = determine_ext(stream_url)
-            if stream_type == 'application/dash+xml' or stream_ext == 'mpd':
+            if stream_ext == 'mpd':
                 formats.extend(self._extract_mpd_formats(
                     stream_url, video_id, mpd_id='dash', fatal=False))
-            elif stream_type == 'application/vnd.apple.mpegurl' or stream_ext == 'm3u8':
+            elif stream_ext == 'm3u8':
                 formats.extend(self._extract_m3u8_formats(
                     stream_url, video_id, ext='mp4',
                     entry_protocol='m3u8_native', m3u8_id='hls', fatal=False))
@@ -276,63 +293,49 @@ class NPOIE(InfoExtractor):
                 })
 
         if not formats:
+            if geo:
+                self.raise_geo_restricted(countries=['NL'])
             if not self.get_param('allow_unplayable_formats') and drm:
                 self.report_drm(video_id)
 
-        info = {
+        duration = int_or_none(stream_meta.get('duration'))
+        if duration and duration > 10000:
+            duration /= 1000
+
+        return merge_dicts(traverse_obj(program, {
+            'title': ('title', {str}),
+            'episode': ('title', {str}),
+            'episode_number': ('programKey', {int_or_none}),
+            'duration': ('durationInSeconds', {int_or_none}),
+            'description': ('synopsis', ('long', 'short', 'brief'), {str}, any),
+            'series': ('series', 'title', {str}),
+            'timestamp': (('firstBroadcastDate', 'publishedDateTime'), {int_or_none}, any),
+            'thumbnail': ('images', 0, 'url', {url_or_none}),
+        }), {
+            'title': stream_meta.get('subTitle') or stream_meta.get('title'),
+            'episode': stream_meta.get('subTitle'),
+            'description': stream_meta.get('description'),
+            'duration': duration,
+            'creator': stream_meta.get('channel'),
+            'series': stream_meta.get('title'),
+            'thumbnail': url_or_none(stream_meta.get('poster')),
+            'is_live': is_live or None,
+        }, {
             'id': video_id,
-            'title': video_id,
             'formats': formats,
-        }
-
-        embed_url = url_or_none(player.get('embedUrl'))
-        if embed_url:
-            webpage = self._download_webpage(
-                embed_url, video_id, 'Downloading embed page', fatal=False)
-            if webpage:
-                video = self._parse_json(
-                    self._search_regex(
-                        r'\bvideo\s*=\s*({.+?})\s*;', webpage, 'video',
-                        default='{}'), video_id)
-                if video:
-                    title = video.get('episodeTitle')
-                    subtitles = {}
-                    subtitles_list = video.get('subtitles')
-                    if isinstance(subtitles_list, list):
-                        for cc in subtitles_list:
-                            cc_url = url_or_none(cc.get('src'))
-                            if not cc_url:
-                                continue
-                            lang = str_or_none(cc.get('language')) or 'nl'
-                            subtitles.setdefault(lang, []).append({
-                                'url': cc_url,
-                            })
-                    return merge_dicts({
-                        'title': title,
-                        'description': video.get('description'),
-                        'thumbnail': url_or_none(
-                            video.get('still_image_url') or video.get('orig_image_url')),
-                        'duration': int_or_none(video.get('duration')),
-                        'timestamp': unified_timestamp(video.get('broadcastDate')),
-                        'creator': video.get('channel'),
-                        'series': video.get('title'),
-                        'episode': title,
-                        'episode_number': int_or_none(video.get('episodeNumber')),
-                        'subtitles': subtitles,
-                    }, info)
-
-        return info
+            'subtitles': subtitles,
+        })
 
 
 class NPOLiveIE(InfoExtractor):
     IE_NAME = 'npo.nl:live'
-    _VALID_URL = r'https?://(?:www\.)?npo(?:start)?\.nl/live(?:/(?P<id>[^/?#&]+))?'
+    _VALID_URL = r'https?://(?:www\.)?npo(?:start)?\.nl/(?:start/)?live(?:/(?P<id>[^/?#&]+))?'
 
     _TESTS = [{
         'url': 'http://www.npo.nl/live/npo-1',
         'info_dict': {
             'id': 'LI_NL1_4188102',
-            'display_id': 'npo-1',
+            'display_id': 'npo1',
             'ext': 'mp4',
             'title': 're:^NPO 1 [0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$',
             'is_live': True,
@@ -340,21 +343,38 @@ class NPOLiveIE(InfoExtractor):
         'params': {
             'skip_download': True,
         },
+        'skip': 'geo restricted',
     }, {
         'url': 'http://www.npo.nl/live',
         'only_matching': True,
     }, {
         'url': 'https://www.npostart.nl/live/npo-1',
         'only_matching': True,
+    }, {
+        'url': 'https://npo.nl/start/live?channel=NPO1',
+        'only_matching': True,
     }]
 
     def _real_extract(self, url):
-        display_id = self._match_id(url) or 'npo-1'
+        display_id = self._match_id(url)
+        if not display_id:
+            display_id = urllib.parse.parse_qs(
+                urllib.parse.urlparse(url).query).get('channel', [None])[0]
+        display_id = re.sub(r'^npo-', 'npo', (display_id or 'npo1').lower())
 
-        webpage = self._download_webpage(url, display_id)
-
-        live_id = self._search_regex(
-            [r'media-id="([^"]+)"', r'data-prid="([^"]+)"'], webpage, 'live id')
+        channels = self._download_json(
+            'https://npo.nl/start/api/domain/guide-channels', display_id,
+            'Downloading live channels JSON')
+        live_id = None
+        for channel in channels or []:
+            livestream = channel.get('livestream') or {}
+            if livestream.get('slug') == display_id or (channel.get('title') or '').lower() == display_id:
+                live_id = livestream.get('productId') or channel.get('externalId')
+                break
+        if not live_id:
+            live_id = traverse_obj(channels, (0, 'livestream', 'productId', {str}))
+        if not live_id:
+            self.raise_no_formats('Unable to extract live id', expected=True)
 
         return {
             '_type': 'url_transparent',
