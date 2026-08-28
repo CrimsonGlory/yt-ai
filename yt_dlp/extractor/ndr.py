@@ -9,9 +9,59 @@ from ..utils import (
     merge_dicts,
     parse_iso8601,
     qualities,
+    traverse_obj,
     try_get,
+    unescapeHTML,
+    url_or_none,
     urljoin,
 )
+
+
+def _extract_ndr_ard_media(ie, webpage, video_id, display_id=None):
+    """Extract media from current NDR / N-JOY ARD player pages (JSON-LD or data-config)."""
+    json_ld = ie._search_json_ld(webpage, video_id, default={}) or {}
+    media_url = url_or_none(json_ld.get('url'))
+    extra = {}
+
+    if not media_url:
+        for raw in re.findall(r'\bdata-config="([^"]+)"', webpage):
+            config = ie._parse_json(unescapeHTML(raw), video_id, fatal=False)
+            media_url = traverse_obj(config, (
+                'mc', 'streams', ..., 'media', ..., 'url', {url_or_none}), get_all=False)
+            if not media_url:
+                continue
+            extra = {
+                'title': traverse_obj(config, ('mc', 'meta', 'title', {str})),
+                'description': traverse_obj(config, ('mc', 'meta', 'synopsis', {str})),
+                'duration': traverse_obj(config, ('mc', 'meta', 'durationSeconds', {int_or_none})),
+                'timestamp': parse_iso8601(traverse_obj(
+                    config, ('mc', 'meta', 'broadcastedOnDateTime', {str}))),
+            }
+            break
+
+    if not media_url:
+        return None
+
+    ext = determine_ext(media_url, 'mp4')
+    info = merge_dicts(json_ld, extra, {
+        'id': video_id,
+        'display_id': display_id or video_id,
+        'title': extra.get('title') or json_ld.get('title') or display_id or video_id,
+        'description': extra.get('description') or json_ld.get('description'),
+        'thumbnail': ie._og_search_thumbnail(webpage),
+        'duration': extra.get('duration') or json_ld.get('duration'),
+        'timestamp': extra.get('timestamp') or json_ld.get('timestamp'),
+    })
+    if ext == 'm3u8':
+        info['formats'] = ie._extract_m3u8_formats(
+            media_url, video_id, 'mp4', m3u8_id='hls', fatal=False)
+        info.pop('url', None)
+    else:
+        info['url'] = media_url
+        info['ext'] = ext
+        if ext == 'mp3':
+            info['vcodec'] = 'none'
+    return info
 
 
 class NDRBaseIE(InfoExtractor):
@@ -157,8 +207,23 @@ class NDRIE(NDRBaseIE):
 class NJoyIE(NDRBaseIE):
     IE_NAME = 'njoy'
     IE_DESC = 'N-JOY'
-    _VALID_URL = r'https?://(?:www\.)?n-joy\.de/(?:[^/]+/)*(?:(?P<display_id>[^/?#]+),)?(?P<id>[\da-z]+)\.html'
+    _VALID_URL = r'https?://(?:www\.)?n-joy\.de/(?:[^/]+/)*(?:(?P<display_id>[^/?#]+),)?(?P<id>[\da-z]+(?:-[\da-z]+)*)\.html'
     _TESTS = [{
+        'url': 'https://www.n-joy.de/n-joy-residents-mit-hugel-22082026,audio-3433290.html',
+        'md5': 'b456fa0a50c3f40b4baea2564033000e',
+        'info_dict': {
+            'id': 'audio-3433290',
+            'display_id': 'n-joy-residents-mit-hugel-22082026',
+            'ext': 'mp3',
+            'title': 'N-JOY Residents mit HUGEL (22.08.2026)',
+            'description': "Hier gibt's die N-JOY Residents zum Nachhören!",
+            'uploader': 'Autorecorder',
+            'timestamp': 1787432405,
+            'upload_date': '20260822',
+            'duration': 3405,
+            'thumbnail': r're:https://images\.ndr\.de/.+',
+        },
+    }, {
         # httpVideo, same content id
         'url': 'http://www.n-joy.de/entertainment/comedy/comedy_contest/Benaissa-beim-NDR-Comedy-Contest,comedycontest2480.html',
         'md5': 'cb63be60cd6f9dd75218803146d8dc67',
@@ -199,12 +264,22 @@ class NJoyIE(NDRBaseIE):
     }]
 
     def _extract_embed(self, webpage, display_id, url=None):
-        # find tell-tale URL with the actual ID, or ...
+        video_id = self._match_id(url) if url else display_id
+        info = _extract_ndr_ard_media(self, webpage, video_id, display_id)
+        if info:
+            if not info.get('description'):
+                info['description'] = (
+                    self._html_search_meta('description', webpage)
+                    or self._search_regex(
+                        r'<div[^>]+class="subline"[^>]*>[^<]+</div>\s*<p>([^<]+)</p>',
+                        webpage, 'description', fatal=False))
+            return info
+
+        # Legacy NDR ppjson player
         video_id = self._search_regex(
             (r'''\bsrc\s*=\s*["']?(?:/\w+)+/([a-z]+\d+)(?!\.)\b''',
              r'<iframe[^>]+id="pp_([\da-z]+)"'),
-            webpage, 'NDR id', default=None)
-
+            webpage, 'NDR id')
         description = (
             self._html_search_meta('description', webpage)
             or self._search_regex(
@@ -418,7 +493,7 @@ class NDREmbedIE(NDREmbedBaseIE):  # XXX: Do not subclass from concrete IE
 
 class NJoyEmbedIE(NDREmbedBaseIE):  # XXX: Do not subclass from concrete IE
     IE_NAME = 'njoy:embed'
-    _VALID_URL = r'https?://(?:www\.)?n-joy\.de/(?:[^/]+/)*(?P<id>[\da-z]+)-(?:player|externalPlayer)_[^/]+\.html'
+    _VALID_URL = r'https?://(?:www\.)?n-joy\.de/(?:[^/]+/)*(?P<id>[\da-z]+(?:-[\da-z]+)*)(?:-(?:player|externalPlayer)_[^/]+|~player)\.html'
     _TESTS = [{
         # httpVideo
         'url': 'http://www.n-joy.de/events/reeperbahnfestival/doku948-player_image-bc168e87-5263-4d6d-bd27-bb643005a6de_theme-n-joy.html',
@@ -474,4 +549,16 @@ class NJoyEmbedIE(NDREmbedBaseIE):  # XXX: Do not subclass from concrete IE
     }, {
         'url': 'http://www.n-joy.de/entertainment/comedy/krudetv290-player_image-ab261bfe-51bf-4bf3-87ba-c5122ee35b3d_theme-n-joy.html',
         'only_matching': True,
+    }, {
+        'url': 'https://www.n-joy.de/audio-3433290~player.html',
+        'only_matching': True,
     }]
+
+    def _real_extract(self, url):
+        video_id = self._match_id(url)
+        webpage = self._download_webpage(url, video_id, fatal=False)
+        if webpage:
+            info = _extract_ndr_ard_media(self, webpage, video_id)
+            if info:
+                return info
+        return super()._real_extract(url)
