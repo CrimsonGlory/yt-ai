@@ -1,11 +1,15 @@
+import base64
 import re
 
 from .common import InfoExtractor
 from ..utils import (
     ExtractorError,
     extract_attributes,
+    smuggle_url,
     strip_or_none,
+    try_call,
     url_or_none,
+    urlencode_postdata,
 )
 
 
@@ -14,6 +18,46 @@ class SkyBaseIE(InfoExtractor):
     _SDC_EL_REGEX = r'(?s)(<div[^>]+data-(?:component-name|fn)="sdc-(?:articl|sit)e-video"[^>]*>)'
     _PLAYER_EL_REGEX = r"(?s)(<div[^>]*\bui-video-player\b[^>]*>)"
     _UUID_RE = re.compile(r"[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}\Z", re.I)
+
+    def _fetch_sdc_brightcove_token(self, sdc, video_id):
+        auth_config_raw = sdc.get("data-auth-config")
+        if not auth_config_raw:
+            return None
+        auth_config = self._parse_json(auth_config_raw, video_id, fatal=False)
+        if not auth_config or not auth_config.get("tokenRequired"):
+            return None
+        token_url = url_or_none(auth_config.get("url"))
+        if not token_url:
+            return None
+        fetch_options = auth_config.get("fetchOptions") or {}
+        headers = {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-SkyGDP-Platform": "web",
+            **(auth_config.get("headers") or {}),
+        }
+        authorization = headers.get("Authorization")
+        if fetch_options.get("encoded") and authorization:
+            headers["Authorization"] = try_call(lambda: base64.b64decode(authorization).decode()) or authorization
+        token = self._download_json(
+            token_url,
+            video_id,
+            "Downloading Brightcove token",
+            fatal=False,
+            data=urlencode_postdata(
+                {
+                    "fileReference": sdc.get("data-sdc-video-id") or sdc.get("data-asset-id") or video_id,
+                    "v": fetch_options.get("v") or 1,
+                    "originatorHandle": sdc.get("data-originator-handle") or "",
+                },
+            ),
+            headers=headers,
+        )
+        if isinstance(token, str):
+            return token
+        if isinstance(token, dict):
+            return token.get("token") or token.get("access_token")
+        return None
 
     def _process_video_element(self, webpage, sdc_el, url):
         sdc = extract_attributes(sdc_el)
@@ -24,10 +68,15 @@ class SkyBaseIE(InfoExtractor):
             video_id = f"ref:{video_id}"
         account_id = sdc.get("data-account-id") or "6058004172001"
         player_id = sdc.get("data-player-id") or "RC9PQUaJ6"
+        bc_url = self.BRIGHTCOVE_URL_TEMPLATE % (account_id, player_id, video_id)
+        smuggled = {"referrer": url}
+        token = self._fetch_sdc_brightcove_token(sdc, video_id)
+        if token:
+            smuggled["token"] = token
         return {
             "_type": "url_transparent",
             "id": video_id,
-            "url": self.BRIGHTCOVE_URL_TEMPLATE % (account_id, player_id, video_id),
+            "url": smuggle_url(bc_url, smuggled),
             "ie_key": "BrightcoveNew",
         }
 
@@ -51,25 +100,32 @@ class SkyBaseIE(InfoExtractor):
             {
                 "title": self._og_search_title(webpage),
                 "description": strip_or_none(self._og_search_description(webpage)),
-            }
+            },
         )
         return info
 
 
 class SkySportsIE(SkyBaseIE):
     IE_NAME = "sky:sports"
-    _VALID_URL = r"https?://(?:www\.)?skysports\.com/watch/video/([^/]+/)*(?P<id>[0-9]+)"
+    _VALID_URL = r"https?://(?:www\.)?skysports\.com/(?:watch/video(?:/[^/?#]+)*/|(?:[^/?#]+/)?video/\d+/)(?P<id>\d+)"
+    # Brightcove playback is UK-only; CLIENT_GEO checks the real client IP.
+    _GEO_COUNTRIES = ["GB", "IE"]
+    _GEO_BYPASS = False
     _TESTS = [
         {
-            "url": "http://www.skysports.com/watch/video/10328419/bale-its-our-time-to-shine",
-            "md5": "77d59166cddc8d3cb7b13e35eaf0f5ec",
+            "url": "https://www.skysports.com/cricket/video/30998/13578120/england-vs-pakistan-second-test-day-two-highlights",
+            "skip": "geo-restricted to UK; Brightcove CLIENT_GEO (X-Forwarded-For is ignored)",
             "info_dict": {
-                "id": "o3eWJnNDE6l7kfNO8BOoBlRxXRQ4ANNQ",
+                "id": "ref:66ae6baa-85fb-4243-a338-6a6e395ea66f",
                 "ext": "mp4",
-                "title": "Bale: It's our time to shine",
-                "description": "md5:e88bda94ae15f7720c5cb467e777bb6d",
+                "title": "England vs Pakistan Second Test - Day two highlights",
+                "description": "Highlights from the second day of the second Test between England and Pakistan at Lord’s.",
             },
             "add_ie": ["BrightcoveNew"],
+        },
+        {
+            "url": "http://www.skysports.com/watch/video/10328419/bale-its-our-time-to-shine",
+            "only_matching": True,
         },
         {
             "url": "https://www.skysports.com/watch/video/sports/f1/12160544/abu-dhabi-gp-the-notebook",
@@ -77,6 +133,10 @@ class SkySportsIE(SkyBaseIE):
         },
         {
             "url": "https://www.skysports.com/watch/video/tv-shows/12118508/rainford-brent-how-ace-programme-helps",
+            "only_matching": True,
+        },
+        {
+            "url": "https://www.skysports.com/football/video/30998/13578146/unai-emery-confirms-ollie-watkins-departure-and-imminent-nicolas-jackson-arrival",
             "only_matching": True,
         },
     ]
@@ -126,7 +186,10 @@ class SkyNewsIE(SkyBaseIE):
 
     def _widget_url_from_sitemap(self, url, video_id):
         index = self._download_xml(
-            self._VIDEO_SITEMAP_INDEX, video_id, note="Downloading video sitemap index", impersonate=True
+            self._VIDEO_SITEMAP_INDEX,
+            video_id,
+            note="Downloading video sitemap index",
+            impersonate=True,
         )
         ns = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
         sitemaps = sorted(
@@ -143,7 +206,11 @@ class SkyNewsIE(SkyBaseIE):
             if not sitemap_url:
                 continue
             sitemap = self._download_webpage(
-                sitemap_url, video_id, fatal=False, impersonate=True, note="Downloading video sitemap"
+                sitemap_url,
+                video_id,
+                fatal=False,
+                impersonate=True,
+                note="Downloading video sitemap",
             )
             if not sitemap:
                 continue
