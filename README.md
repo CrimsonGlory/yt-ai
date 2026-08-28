@@ -2489,6 +2489,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **tfo**: Extract JWPlayer HLS from the episode API / watch-page player (geo-restricted to Canada; X-Forwarded-For is ignored)
     * **theguardian:podcast**: Extract audio URL and author from JSON-LD
     * **TheIntercept**: Follow YouTube/Vimeo embeds and native HTML5 video on current article pages
+    * **theplatform**: Treat `link.theplatform.com` `/guid/` release URLs as SMIL instead of scraping a player page that now 302s to media
     * **tiktok**: Googlebot headers on aweme detail
     * **tnaflix**: Impersonate the browser (including Empflix)
     * **tvp**: Fall back to the original TVPlayer object id when retired portals such as swipeto.pl 301 to the VOD homepage

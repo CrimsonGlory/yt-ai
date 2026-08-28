@@ -132,6 +132,26 @@ class ThePlatformIE(ThePlatformBaseIE):
     ]
 
     _TESTS = [{
+        # Public Scripps/Cooking Channel clip (guid release URL)
+        'url': 'https://link.theplatform.com/s/ip77QC/media/guid/2433005105/0260338?mbr=true',
+        'md5': 'b22faf67211bbee980ebae1b12dd63d6',
+        'info_dict': {
+            'id': '0260338',
+            'ext': 'mp4',
+            'title': 'The Best of the Best',
+            'description': 'Catch a new episode of MasterChef Canada Tuedsay at 9/8c.',
+            'duration': 29.995,
+            'thumbnail': r're:^https?://.*\.jpg$',
+            'timestamp': 1475678834,
+            'upload_date': '20161005',
+            'uploader': 'SCNI-SCND',
+            'creators': ['Cooking Channel'],
+            'tags': 'count:10',
+            'age_limit': 0,
+            'episode': 'The Best of the Best',
+        },
+        'expected_warnings': ['No HLS formats found'],
+    }, {
         # from http://www.metacafe.com/watch/cb-e9I_cZgTgIPd/blackberrys_big_bold_z30/
         'url': 'http://link.theplatform.com/s/dJ5BDC/e9I_cZgTgIPd/meta.smil?format=smil&Tracking=true&mbr=true',
         'info_dict': {
@@ -262,7 +282,9 @@ class ThePlatformIE(ThePlatformBaseIE):
             return self.url_result('http://feed.theplatform.com/f/{}/{}?byGuid={}'.format(
                 provider_id, feed_id, qs_dict['guid'][0]))
 
-        if smuggled_data.get('force_smil_url', False):
+        if smuggled_data.get('force_smil_url', False) or (
+                '/guid/' in url and '://link.theplatform.com/' in url):
+            # link.theplatform.com /guid/ release URLs 302 to media unless format=SMIL
             smil_url = url
         # Explicitly specified SMIL (see https://github.com/ytdl-org/youtube-dl/issues/7385)
         elif '/guid/' in url:
@@ -335,6 +357,7 @@ class ThePlatformFeedIE(ThePlatformBaseIE):
             'categories': ['MSNBC/Issues/Democrats', 'MSNBC/Issues/Elections/Election 2016'],
             'uploader': 'NBCU-NEWS',
         },
+        'skip': 'Feed PID msnbc_video-p-test is no longer enabled',
     }, {
         'url': 'http://feed.theplatform.com/f/2E2eJC/nnd_NBCNews?byGuid=nn_netcast_180306.Copy.01',
         'only_matching': True,
