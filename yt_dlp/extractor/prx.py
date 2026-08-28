@@ -1,8 +1,11 @@
 import itertools
+import re
 
 from .common import InfoExtractor, SearchInfoExtractor
 from ..utils import (
     clean_html,
+    extract_attributes,
+    get_element_by_class,
     int_or_none,
     mimetype2ext,
     str_or_none,
@@ -16,9 +19,11 @@ from ..utils import (
 class PRXBaseIE(InfoExtractor):
     PRX_BASE_URL_RE = r'https?://(?:(?:beta|listen)\.)?prx.org/%s'
 
-    def _call_api(self, item_id, path, query=None, fatal=True, note='Downloading CMS API JSON'):
+    def _call_api(self, item_id, path, query=None, fatal=True, note='Downloading CMS API JSON',
+                  expected_status=None):
         return self._download_json(
-            urljoin('https://cms.prx.org/api/v1/', path), item_id, query=query, fatal=fatal, note=note)
+            urljoin('https://cms.prx.org/api/v1/', path), item_id, query=query,
+            fatal=fatal, note=note, expected_status=expected_status)
 
     @staticmethod
     def _get_prx_embed_response(response, section):
@@ -160,10 +165,27 @@ class PRXBaseIE(InfoExtractor):
 
 
 class PRXStoryIE(PRXBaseIE):
-    _VALID_URL = PRXBaseIE.PRX_BASE_URL_RE % r'stories/(?P<id>\d+)'
+    _VALID_URL = r'https?://(?:(?:beta|listen|exchange)\.)?prx.org/(?:stories|pieces)/(?P<id>\d+)'
 
     _TESTS = [
         {
+            # Public Exchange piece with a single combined MP3
+            'url': 'https://beta.prx.org/stories/628082',
+            'md5': '1bcb368da38b60dc391b45d5710675b6',
+            'info_dict': {
+                'id': '628082',
+                'ext': 'mp3',
+                'title': 'Living Planet 08/28/2026',
+                'description': 'md5:d78d805608a362aa77f5d1357f1c6e90',
+                'thumbnail': 'https://s3.amazonaws.com/production.mediajoint.prx.org/public/series_images/29765/61296882_7_medium.jpg',
+                'duration': 1799,
+                'channel': 'DW - Deutsche Welle',
+                'channel_id': '14894',
+                'channel_url': 'https://exchange.prx.org/group_accounts/14894-dw',
+                'series': 'Living Planet: Environment Matters ~ from DW',
+                'series_id': '33575',
+            },
+        }, {
             # Story with season and episode details
             'url': 'https://beta.prx.org/stories/399200',
             'skip': 'Login required',
@@ -280,6 +302,9 @@ class PRXStoryIE(PRXBaseIE):
         }, {
             'url': 'https://listen.prx.org/stories/399200',
             'only_matching': True,
+        }, {
+            'url': 'https://exchange.prx.org/pieces/628082-living-planet-08-28-2026',
+            'only_matching': True,
         },
     ]
 
@@ -321,10 +346,92 @@ class PRXStoryIE(PRXBaseIE):
             **info,
         }
 
+    def _extract_exchange_audio_pieces(self, webpage):
+        pieces = []
+        for li in re.findall(r'<li[^>]+data-audio_file_id="[^"]+"[^>]*>', webpage):
+            attrs = extract_attributes(li)
+            audio_id, expires, token = (
+                attrs.get('data-audio_file_id'),
+                attrs.get('data-expires'),
+                attrs.get('data-token'))
+            if not audio_id or not expires or not token:
+                continue
+            domain = attrs.get('data-domain') or 'https://exchange.prx.org/'
+            pieces.append({
+                'format_id': audio_id,
+                'format_note': attrs.get('title') or attrs.get('data-derivative'),
+                'url': urljoin(domain, '/'.join((
+                    'pub',
+                    attrs.get('data-type') or 'audio_file',
+                    audio_id,
+                    attrs.get('data-use') or 'prxplayer',
+                    expires,
+                    token,
+                    attrs.get('data-derivative') or 'broadcast.mp3',
+                ))),
+                'ext': 'mp3',
+                'vcodec': 'none',
+                'duration': int_or_none(attrs.get('data-duration')),
+            })
+        return pieces
+
+    def _extract_exchange_story(self, story_id):
+        webpage = self._download_webpage(
+            f'https://exchange.prx.org/pieces/{story_id}', story_id, query={'m': 'false'})
+        audio_pieces = self._extract_exchange_audio_pieces(webpage)
+        if not audio_pieces:
+            self.raise_login_required('This PRX piece is not publicly streamable')
+
+        channel_url = self._html_search_regex(
+            r'From:\s*<a[^>]+href="([^"]+)"', webpage, 'channel_url', default=None)
+        series_url = self._html_search_regex(
+            r'Series:\s*<strong><a[^>]+href="([^"]+)"', webpage, 'series_url', default=None)
+        info = {
+            'id': story_id,
+            'title': self._og_search_title(webpage),
+            'description': (
+                clean_html(get_element_by_class('piece-description-lead', webpage))
+                or self._og_search_description(webpage, default=None)),
+            'thumbnail': self._og_search_thumbnail(webpage, default=None),
+            'channel': self._html_search_regex(
+                r'From:\s*<a[^>]+>([^<]+)</a>', webpage, 'channel', default=None),
+            'channel_url': channel_url,
+            'channel_id': self._search_regex(
+                r'/(?:group_accounts|station_accounts|accounts)/(\d+)',
+                channel_url or '', 'channel_id', default=None),
+            'series': self._html_search_regex(
+                r'Series:\s*<strong><a[^>]+>([^<]+)</a>', webpage, 'series', default=None),
+            'series_id': self._search_regex(
+                r'/series/(\d+)', series_url or '', 'series_id', default=None),
+        }
+
+        if len(audio_pieces) == 1:
+            return {
+                **info,
+                'duration': audio_pieces[0].get('duration'),
+                'formats': audio_pieces,
+            }
+
+        return {
+            '_type': 'multi_video',
+            'entries': [{
+                **info,
+                'id': f'{story_id}_part{idx + 1}',
+                'title': fmt.get('format_note') or info.get('title'),
+                'duration': fmt.get('duration'),
+                'formats': [fmt],
+            } for idx, fmt in enumerate(audio_pieces)],
+            **info,
+        }
+
     def _real_extract(self, url):
         story_id = self._match_id(url)
-        response = self._call_api(story_id, f'stories/{story_id}')
-        return self._extract_story(response)
+        response = self._call_api(
+            story_id, f'stories/{story_id}', fatal=False, expected_status=(401, 403))
+        story = self._extract_story(response)
+        if story and (story.get('formats') or story.get('entries')):
+            return story
+        return self._extract_exchange_story(story_id)
 
 
 class PRXSeriesIE(PRXBaseIE):
