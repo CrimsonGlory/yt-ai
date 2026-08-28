@@ -2437,6 +2437,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **r7**: Read Fusion `globalContent` streams on current video pages; scrape `player.r7.com` HTML when `player-api` is gone
     * **radlive**: Extract HLS from the 12core GraphQL API and match `/watch/` feature/episode URLs
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
+    * **radiojavan**: Use the public play.radiojavan.com video API instead of the old `video_host` page scrape
     * **rozhlas**: Resolve slugs via the search API
     * **showroom**: Use the public room API instead of Nuxt + login cookie
     * **tfo**: Fall back to Next.js v13 data
