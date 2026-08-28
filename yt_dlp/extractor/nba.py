@@ -5,11 +5,13 @@ import urllib.parse
 from .turner import TurnerBaseIE
 from ..utils import (
     OnDemandPagedList,
+    float_or_none,
     int_or_none,
     merge_dicts,
     parse_duration,
     parse_iso8601,
     parse_qs,
+    traverse_obj,
     try_get,
     update_url_query,
     urljoin,
@@ -369,9 +371,23 @@ class NBAEmbedIE(NBABaseIE):
 class NBAIE(NBABaseIE):
     _WEB_FALLBACK = True
     IE_NAME = 'nba'
-    _VALID_URL = NBABaseIE._VALID_URL_BASE + f'(?!{NBABaseIE._CHANNEL_PATH_REGEX})video/(?P<id>(?:[^/]+/)*[^/?#&]+)'
+    _VALID_URL = NBABaseIE._VALID_URL_BASE + f'(?!{NBABaseIE._CHANNEL_PATH_REGEX})videos?/(?P<id>(?:[^/]+/)*[^/?#&]+)'
     _TESTS = [{
+        'url': 'https://www.nba.com/lakers/videos/when-luka-scored-100-points-in-24-hours',
+        'md5': '8afaac10f105bf725c6c1a9a08bfe7e2',
+        'info_dict': {
+            'id': '1090593',
+            'ext': 'mp4',
+            'display_id': 'when-luka-scored-100-points-in-24-hours',
+            'title': 'When Luka Scored 100 Points in 24 Hours',
+            'thumbnail': r're:https://cdn\.nba\.com/.+',
+            'duration': 393,
+            'timestamp': 1774292064,
+            'upload_date': '20260323',
+        },
+    }, {
         'url': 'https://www.nba.com/bulls/video/teams/bulls/2020/12/04/3478774/1607105587854-20201204schedulereleasefinaldrupal-3478774',
+        'skip': 'video gone',
         'info_dict': {
             'id': '45039',
             'ext': 'mp4',
@@ -392,6 +408,51 @@ class NBAIE(NBABaseIE):
 
     def _extract_url_results(self, team, content_id):
         return self._embed_url_result(team, content_id)
+
+    def _real_extract(self, url):
+        team, display_id = self._match_valid_url(url).groups()
+        if '/play#/' in url:
+            return self._extract_url_results(team, urllib.parse.unquote(display_id))
+
+        webpage = self._download_webpage(url, display_id)
+        page = traverse_obj(
+            self._search_nextjs_data(webpage, display_id, default={}),
+            ('props', 'pageProps', 'pageObject'), default={})
+        formats = []
+        duration = thumbnail = None
+        for quality, asset in (page.get('videoAssets') or {}).items():
+            if not isinstance(asset, dict):
+                continue
+            video_url = asset.get('video')
+            if not video_url:
+                continue
+            formats.append({
+                'url': video_url,
+                'width': int_or_none(asset.get('width')),
+                'height': int_or_none(asset.get('height')),
+                'format_id': str(quality),
+            })
+            duration = duration or float_or_none(asset.get('duration'), scale=1000)
+            thumbnail = thumbnail or asset.get('thumbnail')
+        if formats:
+            return {
+                'id': str(page.get('id') or display_id),
+                'display_id': page.get('slug') or display_id,
+                'title': page.get('title'),
+                'description': page.get('excerpt') or page.get('description') or None,
+                'thumbnail': page.get('featuredImage') or thumbnail,
+                'duration': (
+                    int_or_none(page.get('videoDurationSeconds'))
+                    or parse_duration(page.get('videoDuration'))
+                    or duration),
+                'timestamp': parse_iso8601(page.get('date')) or int_or_none(
+                    page.get('timestamp'), scale=1000),
+                'formats': formats,
+            }
+
+        content_id = self._search_regex(
+            self._CONTENT_ID_REGEX + r'\s*:\s*"([^"]+)"', webpage, 'video id')
+        return self._extract_url_results(team, content_id)
 
 
 class NBAChannelIE(NBABaseIE):

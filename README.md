@@ -2290,6 +2290,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **gopro**: Fetch the download URL from the JWT `medium_id`
     * **microsoft:medius**: Extract HLS manifests when Smooth Streaming is gone
     * **n-tv.de**: Extract Next.js player streams and current `-id` video URLs
+    * **nba**: Extract public team-site WordPress MP4s from Next.js `videoAssets`
     * **newgrounds**: Update the audio player media URL regex
     * **ninenews**: Parse Brightcove id/account from page markup
     * **nosnl**: Treat nested `/video/` article URLs as videos
