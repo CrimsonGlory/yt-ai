@@ -472,8 +472,29 @@ class GoDiscoveryIE(DiscoveryPlusBaseIE):
 
 
 class TravelChannelIE(DiscoveryPlusBaseIE):
-    _VALID_URL = r'https?://(?:watch\.)?travelchannel\.com/video' + DPlayBaseIE._PATH_REGEX
+    _VALID_URL = r'https?://(?:(?:www|watch)\.)?travelchannel\.com/video' + DPlayBaseIE._PATH_REGEX
     _TESTS = [{
+        'url': 'https://www.travelchannel.com/video/paranormal-caught-on-camera-travel-channel/uninvited-ghoul-and-more',
+        'md5': '2278ba09d3a298749b0cc81a20d5943d',
+        'info_dict': {
+            'id': '2147248',
+            'display_id': 'paranormal-caught-on-camera-travel-channel/uninvited-ghoul-and-more',
+            'ext': 'mp4',
+            'title': 'Uninvited Ghoul and More',
+            'description': 'A paranormal presence follows a man home, and a UFO plays chicken.',
+            'season_number': 2,
+            'season': 'Season 2',
+            'episode_number': 8,
+            'episode': 'Episode 8',
+            'series': 'Paranormal Caught on Camera',
+            'duration': 2524.655,
+            'timestamp': 1622178000,
+            'upload_date': '20210528',
+            'tags': [],
+            'creators': ['Travel Channel'],
+            'thumbnail': 'https://us1-prod-images.disco-api.com/2020/05/08/d61c8a97-e369-3def-b28f-df764855d2c0.jpeg',
+        },
+    }, {
         'url': 'https://watch.travelchannel.com/video/the-dead-files-travel-channel/protect-the-children',
         'skip': 'Login required',
         'info_dict': {
