@@ -2486,7 +2486,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **tele13**: Follow rudo.video (and YouTube) embeds instead of the old JWPlayer setup
     * **tele5**: Play VOD via the Aurora sonic API (`public.aurora.enhanced.live`, realm `de`) instead of disco-api dmaxde
     * **telequebec**: Extract Brightcove `ref:` media IDs from current `/regarder/` pages
-    * **tfo**: Fall back to Next.js v13 data
+    * **tfo**: Extract JWPlayer HLS from the episode API / watch-page player (geo-restricted to Canada; X-Forwarded-For is ignored)
     * **theguardian:podcast**: Extract audio URL and author from JSON-LD
     * **tiktok**: Googlebot headers on aweme detail
     * **tnaflix**: Impersonate the browser (including Empflix)

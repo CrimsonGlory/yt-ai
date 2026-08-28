@@ -1,140 +1,105 @@
-import urllib.parse
-
 from .common import InfoExtractor
 from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
     clean_html,
+    extract_attributes,
+    get_element_html_by_class,
     int_or_none,
-    parse_iso8601,
+    parse_age_limit,
+    parse_duration,
     str_or_none,
+    unified_timestamp,
     url_or_none,
     urljoin,
-    variadic,
 )
-from ..utils.traversal import require, traverse_obj
+from ..utils.traversal import traverse_obj
 
 
 class TFOBaseIE(InfoExtractor):
     _BASE_URL = 'https://www.tfo.org'
     _GEO_COUNTRIES = ['CA']
+    # JWPlayer CloudFront geo-blocks by real client IP; X-Forwarded-For is ignored
+    _GEO_BYPASS = False
 
 
 class TFOIE(TFOBaseIE):
     IE_NAME = 'tfo'
     IE_DESC = 'Télévision française de l\'Ontario'
 
-    _VALID_URL = r'https?://(?:www\.)?tfo\.org/(?:episode|film|regarder|titre)(?:/[\w-]+)+/(?P<id>(?:GP)?\d{6})'
+    _VALID_URL = (
+        r'https?://(?:www\.)?tfo\.org/(?:bande-annonce|episode|film|regarder|titre)(?:/[\w-]+)+/(?P<id>(?:GP|P)?\d+)')
     _TESTS = [{
         'url': 'https://www.tfo.org/regarder/pouletosaure-rex-partie-1-2/GP639511',
+        'skip': 'geo-restricted to Canada; JWPlayer CDN returns HTTP 403 Unauthorized request location (X-Forwarded-For is ignored)',
         'info_dict': {
             'id': 'GP639511',
             'ext': 'mp4',
             'title': 'Pouletosaure Rex - Partie 1 & 2',
-            'age_limit': 6,
+            'age_limit': 0,
             'alt_title': 'pouletosaure-rex-partie-1-2',
-            'description': 'md5:24e1b629fab54d537eb40a0ef6630afa',
+            'description': 'md5:15b91dc31a5ebd91c2baf6e69c88e268',
+            'duration': 1320,
             'episode': 'Pouletosaure Rex - Partie 1 & 2',
             'episode_id': 'episode-1',
             'episode_number': 1,
             'genres': ['6 à 9 ans'],
             'release_date': '20250406',
-            'release_timestamp': 1743912000,
-            'release_year': 2025,
+            'release_timestamp': 1743897600,
+            'release_year': 2023,
             'season': 'Saison 1',
             'season_id': 'saison-1',
             'season_number': 1,
             'series': 'Dino Dex',
             'series_id': '003051136',
             'tags': ['G'],
-            'thumbnail': r're:https?://.+\.(?:jpg|png)',
+            'thumbnail': r're:https?://.+\.(?:jpg|png|webp)',
         },
     }, {
         'url': 'https://www.tfo.org/episode/passeport-pour-le-monde/saison-2/episode-1/vietnam-dans-loeil-du-dragon/GP938523',
-        'info_dict': {
-            'id': 'GP938523',
-            'ext': 'mp4',
-            'title': 'VIETNAM : Dans l\'oeil du dragon',
-            'age_limit': 18,
-            'alt_title': 'vietnam-dans-loeil-du-dragon',
-            'description': 'md5:ca182241d021ba832680ccbc09dc70fd',
-            'episode': 'VIETNAM : Dans l\'oeil du dragon',
-            'episode_id': 'episode-1',
-            'episode_number': 1,
-            'genres': ['Voyage et découverte'],
-            'release_date': '20250331',
-            'release_timestamp': 1743393600,
-            'release_year': 2025,
-            'season': 'Saison 2',
-            'season_id': 'saison-2',
-            'season_number': 2,
-            'series': 'Passeport pour le monde',
-            'series_id': '002968508',
-            'tags': ['G'],
-            'thumbnail': r're:https?://.+\.(?:jpg|png)',
-        },
+        'only_matching': True,
     }, {
         'url': 'https://www.tfo.org/titre/entre-les-lignes/GP704192',
-        'info_dict': {
-            'id': 'GP704192',
-            'ext': 'mp4',
-            'title': 'Entre les lignes',
-            'age_limit': 0,
-            'alt_title': 'entre-les-lignes',
-            'genres': ['Société'],
-            'release_date': '20231105',
-            'release_timestamp': 1699146000,
-            'release_year': 2008,
-            'series': 'Entre les lignes',
-            'tags': ['G'],
-            'thumbnail': r're:https?://.+\.(?:jpg|png)',
-        },
+        'only_matching': True,
     }, {
         'url': 'https://www.tfo.org/film/a-nous-la-liberte/852897',
-        'info_dict': {
-            'id': '852897',
-            'ext': 'mp4',
-            'title': 'À nous la liberté',
-            'age_limit': 0,
-            'alt_title': 'a-nous-la-liberte',
-            'description': 'md5:2e7d617f0b7451b9f31c1bfb62d6f33b',
-            'genres': ['Comédie', 'Satirique'],
-            'release_date': '20250811',
-            'release_timestamp': 1754874007,
-            'release_year': 1931,
-            'series': 'À nous la liberté',
-            'tags': ['G'],
-            'thumbnail': r're:https?://.+\.(?:jpg|png)',
-        },
+        'only_matching': True,
+    }, {
+        'url': 'https://www.tfo.org/bande-annonce/dino-dex/P3052261',
+        'only_matching': True,
     }]
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        slug = urllib.parse.urlparse(url).path.rstrip('/').split('/')[-2]
-        webpage = self._download_webpage(
-            f'{self._BASE_URL}/regarder/{slug}/{video_id}', video_id)
-        nextjs_data = self._search_nextjs_data(webpage, video_id, default=None)
-        if not nextjs_data:
-            nextjs_data = self._search_nextjs_v13_data(webpage, video_id, fatal=False)
-        if not isinstance(nextjs_data, dict) or 'props' not in nextjs_data:
-            raise ExtractorError('Unable to extract next.js data')
+        product = self._download_json(
+            f'{self._BASE_URL}/endpoints/episode/{video_id}', video_id)
 
-        build_id, locale = traverse_obj(nextjs_data, (('buildId', 'locale'), {str}, all))
-        path = urllib.parse.urlparse(self._og_search_url(webpage)).path
+        if traverse_obj(product, ('type', {str})) == 'Collection':
+            slug = traverse_obj(product, ('slug', {str})) or video_id
+            return self.url_result(
+                f'{self._BASE_URL}/serie/{slug}/{video_id}', TFOSeriesIE, video_id)
+
+        m3u8_url = traverse_obj(product, ('playlist_url', {url_or_none}))
+        if not m3u8_url:
+            webpage = self._download_webpage(
+                urljoin(self._BASE_URL, traverse_obj(product, ('videoUrl', {str})) or url),
+                video_id)
+            m3u8_url = url_or_none(extract_attributes(
+                get_element_html_by_class('full-screen-video-player', webpage) or '',
+            ).get('data-video-playlist'))
+        if not m3u8_url:
+            raise ExtractorError('Unable to extract m3u8 URL', expected=True)
 
         try:
-            video_data = self._download_json(
-                f'{self._BASE_URL}/_next/data/{build_id}/{locale}{path}.json', video_id)
+            formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+                m3u8_url, video_id, 'mp4')
         except ExtractorError as e:
-            if isinstance(e.cause, HTTPError) and e.cause.status == 404:
-                return self.url_result(url, self.ie_key())
-        product = traverse_obj(video_data, (
-            'pageProps', 'product', {require('video information')}))
+            if isinstance(e.cause, HTTPError) and e.cause.status == 403:
+                self.raise_geo_restricted(countries=self._GEO_COUNTRIES)
+            raise
 
-        page_props = nextjs_data['props']['pageProps']
-        season_id = traverse_obj(page_props, ('seasonId', {str_or_none}))
-        m3u8_url = traverse_obj(page_props, ('metadata', 'video', {url_or_none}))
-        formats, subtitles = self._extract_m3u8_formats_and_subtitles(m3u8_url, video_id, 'mp4')
+        def season_label(prefix):
+            return lambda x: f'{prefix}{x}' if x else None
 
         return {
             'id': video_id,
@@ -142,50 +107,35 @@ class TFOIE(TFOBaseIE):
             'subtitles': subtitles,
             **traverse_obj(product, {
                 'title': ('name', {clean_html}, filter),
-                'age_limit': ('ratingCode', {int_or_none}),
+                'age_limit': (
+                    'rating', {lambda x: x[0] if isinstance(x, list) and x else x},
+                    {parse_age_limit}),
                 'alt_title': ('slug', {str_or_none}),
-                'description': ('longDescription', {clean_html}, filter),
-                'genres': ('genres', ..., {clean_html}, filter),
-                'release_timestamp': ('begin', {parse_iso8601}),
-                'release_year': ('productionYear', {int_or_none}),
-                'series': ('name', {clean_html}),
-                'series_id': ('serieId', {str_or_none}),
-                'tags': ('tags', ..., 'label', {clean_html}, filter),
-                'thumbnail': ('bannerUrl', {url_or_none}),
+                'description': (('longDescription', 'description'), {clean_html}, filter, any),
+                'duration': ('duration', {parse_duration}),
+                'episode': ('episodeName', {clean_html}, filter),
+                'episode_id': ('episodeNumber', {int_or_none}, {season_label('episode-')}),
+                'episode_number': ('episodeNumber', {int_or_none}),
+                'genres': ('genres', ..., {clean_html}, {lambda x: x if x and x != '-' else None}, filter),
+                'release_timestamp': ('state', 'begin', {unified_timestamp}),
+                'release_year': ('production_year', -1, {int_or_none}),
+                'season': ('seasonNumber', {int_or_none}, {season_label('Saison ')}),
+                'season_id': ('seasonNumber', {int_or_none}, {season_label('saison-')}),
+                'season_number': ('seasonNumber', {int_or_none}),
+                'series': ((('collection', 'name'), ('serie', 'name'), 'name'), {clean_html}, filter, any),
+                'series_id': ('collection', 'id', {str_or_none}),
+                'tags': (
+                    'rating', {lambda x: [x] if isinstance(x, str) else x},
+                    ..., {clean_html}, filter),
+                'thumbnail': (('bannerUrl', 'imageUrl'), {url_or_none}, any),
             }),
-            **traverse_obj(product, (
-                'seasons', ..., 'episodes',
-                lambda _, v: v.get('id') == video_id, any, {
-                    'title': ('name', {clean_html}, filter),
-                    'age_limit': ('ageRangeCode', {int_or_none}),
-                    'alt_title': ('slug', {str_or_none}),
-                    'description': ('description', {clean_html}, filter),
-                    'episode': ('episodeName', {clean_html}, filter),
-                    'episode_id': (
-                        'episodeNumber', {str_or_none},
-                        {lambda x: f'episode-{x}' if x else None},
-                    ),
-                    'episode_number': ('episodeNumber', {int_or_none}),
-                    'genres': ('genres', ..., {clean_html}, filter),
-                    'release_timestamp': ('begin', {parse_iso8601}),
-                    'tags': ('tags', ..., 'label', {clean_html}, filter),
-                    'thumbnail': ('imageUrl', {url_or_none}),
-                },
-            )),
-            **traverse_obj(product, (
-                'seasons', lambda _, v: v.get('id') == season_id, any, {
-                    'season': ('slug', {str_or_none}, {lambda x: f'Saison {x}' if x else None}),
-                    'season_id': ('slug', {str_or_none}, {lambda x: f'saison-{x}' if x else None}),
-                    'season_number': ('seasonNumber', {int_or_none}),
-                },
-            )),
         }
 
 
 class TFOSeriesIE(TFOBaseIE):
     IE_NAME = 'tfo:series'
 
-    _VALID_URL = r'https?://(?:www\.)?tfo\.org/serie/[\w-]+(?:/saison-(?P<season>\d+))?/(?P<id>\d{9})'
+    _VALID_URL = r'https?://(?:www\.)?tfo\.org/series?/[\w-]+(?:/saison-(?P<season>\d+))?/(?P<id>(?:GP)?\d+)'
     _TESTS = [{
         'url': 'https://www.tfo.org/serie/super-mini-monstres/002748228',
         'info_dict': {
@@ -193,6 +143,9 @@ class TFOSeriesIE(TFOBaseIE):
             'title': 'Super mini monstres',
         },
         'playlist_count': 44,
+    }, {
+        'url': 'https://www.tfo.org/series/super-mini-monstres/002748228',
+        'only_matching': True,
     }, {
         'url': 'https://www.tfo.org/serie/chacun-son-ile/saison-2/002981471',
         'skip': 'video gone',
@@ -206,16 +159,23 @@ class TFOSeriesIE(TFOBaseIE):
     def _real_extract(self, url):
         season_number, series_id = self._match_valid_url(url).group('season', 'id')
         webpage = self._download_webpage(url, series_id)
-        nextjs_data = self._search_nextjs_data(webpage, series_id)
-        path = (lambda _, v: v['seasonNumber'] == season_number) if season_number else ...
+        series = self._parse_json(extract_attributes(
+            get_element_html_by_class('episode-listing-container', webpage) or '',
+        ).get('data-series') or '{}', series_id)
 
+        season_path = (
+            lambda _, v: str(v.get('season_name')) == season_number
+        ) if season_number else ...
         entries = [
             self.url_result(x, TFOIE)
-            for x in traverse_obj(nextjs_data, (
-                'props', 'pageProps', 'product', 'seasons', *variadic(path),
-                'episodes', ..., 'canonicalUrl', {urljoin(f'{self._BASE_URL}/')},
+            for x in traverse_obj(series, (
+                'seasons', season_path, 'products', ...,
+                'videoUrl', {urljoin(f'{self._BASE_URL}/')},
             ))
         ]
 
-        return self.playlist_result(
-            entries, series_id, self._html_search_meta(['og:image:alt', 'twitter:image:alt'], webpage))
+        title = traverse_obj(series, ('name', {clean_html}))
+        if season_number and title:
+            title = f'{title} | Saison {season_number}'
+
+        return self.playlist_result(entries, series_id, title)
