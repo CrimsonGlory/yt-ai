@@ -1,24 +1,48 @@
 from .common import InfoExtractor
 from ..utils import (
+    ExtractorError,
     int_or_none,
-    parse_duration,
+    parse_iso8601,
+    traverse_obj,
+    url_or_none,
 )
 
 
 class RtlNlIE(InfoExtractor):
     IE_NAME = 'rtl.nl'
     IE_DESC = 'rtl.nl and rtlxl.nl'
-    _EMBED_REGEX = [r'<iframe[^>]+?\bsrc=(?P<q1>[\'"])(?P<url>(?:https?:)?//(?:(?:www|static)\.)?rtl\.nl/(?:system/videoplayer/[^"]+(?:video_)?)?embed[^"]+)(?P=q1)']
+    _EMBED_REGEX = [
+        r'<iframe[^>]+?\bsrc=(?P<q1>[\'"])(?P<url>(?:https?:)?//(?:(?:www|static)\.)?rtl\.nl/(?:system/videoplayer/[^"]+(?:video_)?)?embed[^"]+)(?P=q1)',
+        r'<iframe[^>]+?\bsrc=(?P<q1>[\'"])(?P<url>(?:https?:)?//embed\.rtl\.nl/[^"]+)(?P=q1)',
+    ]
     _VALID_URL = r'''(?x)
         https?://(?:(?:www|static)\.)?
         (?:
             rtlxl\.nl/(?:[^\#]*\#!|programma)/[^/]+/|
-            rtl\.nl/(?:(?:system/videoplayer/(?:[^/]+/)+(?:video_)?embed\.html|embed)\b.+?\buuid=|video/)|
-            embed\.rtl\.nl/\#uuid=
+            rtl\.nl/(?:
+                (?:system/videoplayer/(?:[^/]+/)+(?:video_)?embed\.html|embed)\b.+?\buuid=|
+                (?:[^/?#]+/)*video/
+            )|
+            embed\.rtl\.nl/?\S*?[\#?&]uuid=
         )
         (?P<id>[0-9a-f-]+)'''
 
     _TESTS = [{
+        # Current RTL XL / rtl.nl VOD (FairPlay HLS + Widevine DASH)
+        'url': 'https://www.rtlxl.nl/programma/rtl-nieuws/9ce11b6e-3aaa-4d29-b16b-f5a7dd544282',
+        'info_dict': {
+            'id': '9ce11b6e-3aaa-4d29-b16b-f5a7dd544282',
+            'ext': 'mp4',
+            'title': 'RTL Nieuws - Fleur Agema maakte statement voor enquetecommissie: \'Ik zoek een baan, wil burgemeester worden\'',
+            'description': 'md5:b4a2e01756f963b7d2e443e7c10664ef',
+            'timestamp': 1787744812,
+            'upload_date': '20260826',
+            'duration': 61,
+            'series': 'RTL Nieuws',
+            'thumbnail': r're:https://(?:covers|screenshots)\.rtl\.nl/.+',
+        },
+        'skip': 'DRM protected (FairPlay SAMPLE-AES HLS / Widevine DASH)',
+    }, {
         # new URL schema
         'url': 'https://www.rtlxl.nl/programma/rtl-nieuws/0bd1384d-d970-3086-98bb-5c104e10c26f',
         'skip': 'video gone',
@@ -97,51 +121,79 @@ class RtlNlIE(InfoExtractor):
         # new embed URL schema
         'url': 'https://embed.rtl.nl/#uuid=84ae5571-ac25-4225-ae0c-ef8d9efb2aed/autoplay=false',
         'only_matching': True,
+    }, {
+        'url': 'https://www.rtl.nl/nieuws/politiek/video/9ce11b6e-3aaa-4d29-b16b-f5a7dd544282/fleur-agema-maakte-statement-voor',
+        'only_matching': True,
+    }, {
+        'url': 'https://embed.rtl.nl?uuid=9ce11b6e-3aaa-4d29-b16b-f5a7dd544282&publicatiepunt=rtlnieuwsshare&autoplay=false',
+        'only_matching': True,
     }]
 
     def _real_extract(self, url):
         uuid = self._match_id(url)
-        info = self._download_json(
-            f'http://www.rtl.nl/system/s4m/vfd/version=2/uuid={uuid}/fmt=adaptive/',
-            uuid)
 
-        material = info['material'][0]
-        title = info['abstracts'][0]['name']
-        subtitle = material.get('title')
-        if subtitle:
-            title += f' - {subtitle}'
-        description = material.get('synopsis')
+        metadata = self._download_json(
+            f'https://api.rtl.nl/rtlxl/metadata/api/metadata/{uuid}',
+            uuid, fatal=False)
 
-        meta = info.get('meta', {})
+        token = self._download_json(
+            'https://api.rtl.nl/rtlxl/token/api/token', uuid,
+            note='Downloading access token')['accessToken']
+        play = self._download_json(
+            f'https://api.rtl.nl/watch/play/api/v2/play/xl/{uuid}',
+            uuid, query={'device': 'web'}, headers={
+                'Authorization': f'Bearer {token}',
+                'rtl-platform': 'web',
+            })
 
-        videopath = material['videopath']
-        m3u8_url = meta.get('videohost', 'http://manifest.us.rtl.nl') + videopath
+        formats = []
+        hls_url = traverse_obj(play, ('manifests', 'hls', {url_or_none}))
+        if hls_url:
+            formats.extend(self._extract_m3u8_formats(
+                hls_url, uuid, 'mp4', m3u8_id='hls', fatal=False))
+        mpd_url = traverse_obj(play, ('manifests', 'dash', {url_or_none}))
+        if mpd_url:
+            formats.extend(self._extract_mpd_formats(
+                mpd_url, uuid, mpd_id='dash', fatal=False))
 
-        formats = self._extract_m3u8_formats(
-            m3u8_url, uuid, 'mp4', m3u8_id='hls', fatal=False)
+        # Play API always attaches FairPlay/Widevine/PlayReady; HLS keys live on
+        # media playlists so the master m3u8 is not enough to set has_drm.
+        if traverse_obj(play, 'drm'):
+            for f in formats:
+                f['has_drm'] = True
+
+        if not formats:
+            error = traverse_obj(play, ('error', ('description', 'code'), {str}), get_all=False)
+            error_l = (error or '').lower()
+            if 'ipblocked' in error_l:
+                self.raise_geo_restricted(countries=['NL'])
+            if 'subscription' in error_l:
+                self.raise_login_required(error)
+            if not play.get('canPlay'):
+                raise ExtractorError(error or 'Video unavailable', expected=True)
+            self.report_drm(uuid)
+
+        series = traverse_obj(metadata, ('series', 'title', {str}))
+        title = traverse_obj(metadata, ('title', {str}))
+        if series and title:
+            full_title = f'{series} - {title}'
+        else:
+            full_title = title or series or uuid
 
         thumbnails = []
-
-        for p in ('poster_base_url', '"thumb_base_url"'):
-            if not meta.get(p):
-                continue
-
-            thumbnails.append({
-                'url': self._proto_relative_url(meta[p] + uuid),
-                'width': int_or_none(self._search_regex(
-                    r'/sz=([0-9]+)', meta[p], 'thumbnail width', fatal=False)),
-                'height': int_or_none(self._search_regex(
-                    r'/sz=[0-9]+x([0-9]+)',
-                    meta[p], 'thumbnail height', fatal=False)),
-            })
+        for asset in traverse_obj(metadata, ('assets', ..., {dict})) or []:
+            asset_url, asset_type = url_or_none(asset.get('url')), asset.get('type')
+            if asset_url and asset_type in ('Cover', 'Poster', 'Still'):
+                thumbnails.append({'id': asset_type.lower(), 'url': asset_url})
 
         return {
             'id': uuid,
-            'title': title,
+            'title': full_title,
+            'description': traverse_obj(metadata, ('synopsis', {str})),
+            'duration': int_or_none(traverse_obj(metadata, 'duration')),
+            'timestamp': parse_iso8601(traverse_obj(metadata, ('broadcastDateTime', {str}))),
+            'series': series,
             'formats': formats,
-            'timestamp': material['original_date'],
-            'description': description,
-            'duration': parse_duration(material.get('duration')),
             'thumbnails': thumbnails,
         }
 

@@ -2448,6 +2448,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **rte:radio**: Extract current `/radio/.../episodes/` catch-up from getplaylist (HLS and Omny MP3)
     * **rtbf**: Use the Auvio BFF and anonymous RedBee play for current `auvio.rtbf.be` URLs
     * **rtl.lu**: Extract ReplayVideo HLS and ReplayAudio MP3 from current Brightspot/Next.js article pages
+    * **rtl.nl**: Use the RTL XL token and watch/play v2 APIs for current video UUIDs (FairPlay/Widevine DRM)
     * **showroom**: Use the public room API instead of Nuxt + login cookie
     * **tfo**: Fall back to Next.js v13 data
     * **theguardian:podcast**: Extract audio URL and author from JSON-LD
