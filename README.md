@@ -2482,6 +2482,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **theguardian:podcast**: Extract audio URL and author from JSON-LD
     * **tiktok**: Googlebot headers on aweme detail
     * **tnaflix**: Impersonate the browser (including Empflix)
+    * **tvp**: Fall back to the original TVPlayer object id when retired portals such as swipeto.pl 301 to the VOD homepage
     * **urort**: Extract S3 `data-trackurl` from current `/track/` pages
     * **vqq:video**: Fall back to the union / float_vinfo2 APIs when pinia/OG metadata is gone
     * **videa**: Support player URLs with an `f=` parameter

@@ -24,8 +24,21 @@ class TVPIE(InfoExtractor):
     _VALID_URL = r'https?://(?:[^/]+\.)?(?:tvp(?:parlament)?\.(?:pl|info)|tvpworld\.com|swipeto\.pl)/(?:(?!\d+/)[^/]+/)*(?P<id>\d+)(?:[/?#]|$)'
 
     _TESTS = [{
+        # TVPlayer 2 in js wrapper. swipeto.pl frontend 301s to vod.tvp.pl
+        # but the numeric id is still a public TVP player object.
+        'url': 'https://swipeto.pl/75545925/ferment-on-tour-shepard-fairey-jak-street-art-moglby-sie-bez-niego-obeysc',
+        'info_dict': {
+            'id': '75545925',
+            'ext': 'mp4',
+            'title': 'Ferment on Tour — Shepard Fairey. Jak street art mógłby się bez niego OBEYść? ',
+            'age_limit': 0,
+            'duration': 831,
+            'thumbnail': r're:https://.+',
+        },
+    }, {
         # TVPlayer 2 in js wrapper
         'url': 'https://swipeto.pl/64095316/uliczny-foxtrot-wypozyczalnia-kaset-kto-pamieta-dvdvideo',
+        'skip': 'video gone',
         'info_dict': {
             'id': '64095316',
             'ext': 'mp4',
@@ -238,6 +251,15 @@ class TVPIE(InfoExtractor):
         for ie_cls in (TVPVODSeriesIE, TVPVODVideoIE):
             if ie_cls.suitable(urlh.url):
                 return self.url_result(urlh.url, ie=ie_cls.ie_key(), video_id=page_id)
+
+        # Retired TVP portals (e.g. swipeto.pl) 301 every path to the VOD homepage.
+        # Keep the original object id; do not inherit vod.tvp.pl chrome metadata.
+        if re.fullmatch(r'https?://vod\.tvp\.pl/?', urlh.url.split('#')[0].split('?')[0]):
+            return {
+                '_type': 'url_transparent',
+                'url': 'tvp:' + page_id,
+                'ie_key': 'TVPEmbed',
+            }
 
         if re.search(
                 r'window\.__(?:video|news|website|directory)Data\s*=',
