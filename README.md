@@ -2484,6 +2484,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **tass**: Use the public TBP content API (impersonate) instead of JWPlayer sources
     * **tbs:newsdig**: Extract public Streaks HLS from NEWS DIG articles
     * **tele13**: Follow rudo.video (and YouTube) embeds instead of the old JWPlayer setup
+    * **tele5**: Play VOD via the Aurora sonic API (`public.aurora.enhanced.live`, realm `de`) instead of disco-api dmaxde
     * **tfo**: Fall back to Next.js v13 data
     * **theguardian:podcast**: Extract audio URL and author from JSON-LD
     * **tiktok**: Googlebot headers on aweme detail

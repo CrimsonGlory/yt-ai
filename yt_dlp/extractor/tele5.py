@@ -1,15 +1,32 @@
-import functools
-
 from .dplay import DiscoveryPlusBaseIE
-from ..utils import join_nonempty
+from ..utils import ExtractorError, join_nonempty
 from ..utils.traversal import traverse_obj
 
 
 class Tele5IE(DiscoveryPlusBaseIE):
     _VALID_URL = r'https?://(?:www\.)?tele5\.de/(?P<parent_slug>[\w-]+)/(?P<slug_a>[\w-]+)(?:/(?P<slug_b>[\w-]+))?'
+    _GEO_COUNTRIES = ['DE']
     _TESTS = [{
+        # slug_a only (movie)
+        'url': 'https://tele5.de/mediathek/mord-im-orient-express',
+        'info_dict': {
+            'id': '26347',
+            'ext': 'mp4',
+            'title': 'Mord im Orient-Express',
+            'description': 'md5:603d8f0ae7c35be0fbb1fdc540056dde',
+            'duration': 7335.36,
+            'thumbnail': r're:https://images\.aurora\.enhanced\.live/.+\.jpe?g',
+            'tags': [],
+            'creators': ['TELE 5'],
+            'series': 'Mord im Orient-Express',
+            'timestamp': 1787517900,
+            'upload_date': '20260823',
+        },
+        'skip': 'geo-restricted to Germany; Aurora CloudFront playback returns access.denied.geoblocked (X-Forwarded-For is ignored)',
+    }, {
         # slug_a and slug_b
         'url': 'https://tele5.de/mediathek/star-trek-enterprise/vox-sola',
+        'skip': 'video gone',
         'info_dict': {
             'id': '4140114',
             'ext': 'mp4',
@@ -71,15 +88,23 @@ class Tele5IE(DiscoveryPlusBaseIE):
             endpoint = f'shows/{slug_a}'
             query['filter[video.slug]'] = slug_b
 
-        cms_data = self._download_json(f'https://public.aurora.enhanced.live/site/{endpoint}/', playlist_id, query=query)
+        cms_data = self._download_json(
+            f'https://public.aurora.enhanced.live/site/{endpoint}/', playlist_id, query=query)
 
-        return self.playlist_result(map(
-            functools.partial(self._get_disco_api_info, url, disco_host='eu1-prod.disco-api.com', realm='dmaxde', country='DE'),
-            traverse_obj(cms_data, ('blocks', ..., 'videoId', {str}))), playlist_id)
+        video_ids = list(dict.fromkeys(traverse_obj(cms_data, (
+            'blocks', ..., ('videoId', 'ctaVideoId'), {str}))))
+        if not video_ids:
+            raise ExtractorError('No playable videos found', expected=True)
+
+        return self.playlist_result((
+            self._get_disco_api_info(
+                url, video_id, 'public.aurora.enhanced.live', 'de', 'DE')
+            for video_id in video_ids), playlist_id)
 
     def _update_disco_api_headers(self, headers, disco_base, display_id, realm):
         headers.update({
+            'Content-Type': 'application/json',
             'x-disco-params': f'realm={realm}',
-            'x-disco-client': 'Alps:HyogaPlayer:0.0.0',
+            'x-disco-client': 'WEB:UNKNOWN:wbdatv:2.1.9',
             'Authorization': self._get_auth(disco_base, display_id, realm),
         })
