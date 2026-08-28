@@ -80,6 +80,17 @@ class OpenRecBaseIE(InfoExtractor):
             f'{self._API_BASE}/{path}', item_id,
             headers=self._api_headers, expected_status=401)
 
+    def _get_movie_detail(self, video_id):
+        if self._api_headers:
+            detail = self._call_api(f'movies/{video_id}/detail', video_id)
+            if traverse_obj(detail, ('data', 'items', ..., {dict}, any)):
+                return detail
+
+        movie = self._download_json(
+            f'{self._PUBLIC_API_BASE}/movies/{video_id}', video_id,
+            'Downloading public movie metadata')
+        return {'data': {'items': [movie]}} if movie else {}
+
     def _parse_openrec_metadata(self, page_store, video_id):
         info = traverse_obj(page_store, ('v8', 'movie', {dict}))
 
@@ -88,13 +99,13 @@ class OpenRecBaseIE(InfoExtractor):
         needs_subscription = target_members == 'subscription'
         needs_auth = target_members == 'ppv'
 
-        me = self._call_api('users/me', video_id)
+        me = self._call_api('users/me', video_id) if self._api_headers else {}
         needs_premium = traverse_obj(info, (
             'publicType', {str}, filter)) == 'premium'
         is_premium = traverse_obj(me, (
             'data', 'items', ..., 'is_premium', {bool}, any)) or False
 
-        detail = self._call_api(f'movies/{video_id}/detail', video_id)
+        detail = self._get_movie_detail(video_id)
         is_member = traverse_obj(detail, (
             'data', 'items', ..., 'membership', 'is_active', {bool}, any)) or False
         has_ppv = traverse_obj(detail, (
@@ -147,6 +158,27 @@ class OpenRecIE(OpenRecBaseIE):
 
     _VALID_URL = r'https?://(?:www\.)?(?:mellow-fan\.com|openrec\.tv)/(?:m/)?live/(?P<id>[^/?#]+)'
     _TESTS = [{
+        'url': 'https://www.mellow-fan.com/live/zxl0u2qvl4r',
+        'info_dict': {
+            'id': 'zxl0u2qvl4r',
+            'ext': 'mp4',
+            'title': '佐々木佑紀の秘密基地#236',
+            'availability': 'public',
+            'categories': ['雑談'],
+            'channel': '佐々木佑紀の秘密基地',
+            'channel_follower_count': int,
+            'channel_id': 'sasaki_secretbase',
+            'channel_is_verified': True,
+            'comment_count': int,
+            'description': '佐々木佑紀の秘密基地#236',
+            'duration': 151,
+            'live_status': 'was_live',
+            'thumbnail': r're:https?://.+',
+            'timestamp': 1787828621,
+            'upload_date': '20260827',
+            'view_count': int,
+        },
+    }, {
         'url': 'https://www.openrec.tv/live/e2zwj0mp6ro',
         'info_dict': {
             'id': 'e2zwj0mp6ro',
@@ -369,7 +401,9 @@ class OpenRecIE(OpenRecBaseIE):
 
         formats = []
         is_dvr = live_status == 'is_live' and self.get_param('live_from_start')
-        media_keys = ('url_dvr', 'url_dvr_audio') if is_dvr else ('url', 'url_audio')
+        media_keys = (
+            ('url_dvr', 'url_dvr_audio', 'url', 'url_audio', 'url_public')
+            if is_dvr else ('url', 'url_audio', 'url_public'))
         for m3u8_url in traverse_obj(detail, (
             'data', 'items', ...,
             ('media', 'subs_trial_media'), media_keys, {url_or_none},
@@ -458,7 +492,6 @@ class OpenRecMovieIE(OpenRecBaseIE):
     _VALID_URL = r'https?://(?:www\.)?(?:mellow-fan\.com|openrec\.tv)/(?:m/)?movie/(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://www.mellow-fan.com/movie/e5rk9k4o6zv',
-        'skip': 'No video formats found',
         'info_dict': {
             'id': 'e5rk9k4o6zv',
             'ext': 'mp4',
@@ -526,7 +559,7 @@ class OpenRecMovieIE(OpenRecBaseIE):
         formats = []
         for m3u8_url in traverse_obj(detail, (
             'data', 'items', ..., 'media',
-            ('url', 'url_audio'), {url_or_none},
+            ('url', 'url_audio', 'url_public'), {url_or_none},
         )):
             formats.extend(self._extract_m3u8_formats(
                 m3u8_url, video_id, 'mp4', headers=self._HEADERS))

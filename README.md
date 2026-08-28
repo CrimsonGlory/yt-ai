@@ -2366,6 +2366,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **locipo**: Direct `video_file_name` when the Streaks API key is gone
     * **maoritv**: maoriplus.co.nz, live/movie URLs, and a dynamic Brightcove account
     * **mave**: `cdn.mave.digital` storage
+    * **mellowfan**: Fall back to the public movies API and `url_public` HLS when the authenticated detail API requires login
     * **meipai**: Signed media API instead of `encodeURIComponent` m3u8 on the page
     * **metacritic**: JW Platform on movie/game/tv pages
     * **microsoft:medius**: Extract HLS manifests when Smooth Streaming is gone
