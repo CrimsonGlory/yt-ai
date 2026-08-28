@@ -1,103 +1,113 @@
+import re
+
 from .common import InfoExtractor
 from ..utils import (
-    float_or_none,
     int_or_none,
-    unified_strdate,
+    parse_resolution,
+    remove_end,
+    str_or_none,
+    url_or_none,
 )
+from ..utils.traversal import traverse_obj
 
 
 class PornoVoisinesIE(InfoExtractor):
     _WEB_FALLBACK = True
-    _VALID_URL = r'https?://(?:www\.)?pornovoisines\.com/videos/show/(?P<id>\d+)/(?P<display_id>[^/.]+)'
+    _VALID_URL = r'https?://(?:www\.)?pornovoisines\.com/videos/show/(?P<id>[\da-fA-F]+)/(?P<display_id>[^/?#]+)'
 
-    _TEST = {
+    _TESTS = [{
         'url': 'http://www.pornovoisines.com/videos/show/32698/irogenia-31ans-se-sentait-prete-a-passer-un-grand-cap-dans-sa-sexualite',
-        'md5': '6f8aca6a058592ab49fe701c8ba8317b',
+        'md5': 'df36eb3401dabaac54f031839bf7da56',
         'info_dict': {
             'id': '32698',
-            'display_id': 'recherche-appartement',
+            'display_id': 'irogenia-31ans-se-sentait-prete-a-passer-un-grand-cap-dans-sa-sexualite',
             'ext': 'mp4',
-            'title': 'Recherche appartement',
-            'description': 'md5:fe10cb92ae2dd3ed94bb4080d11ff493',
-            'thumbnail': r're:^https?://.*\.jpg$',
-            'upload_date': '20140925',
-            'duration': 120,
+            'title': 'Irogenia, 31ans, se sentait prête à passer un grand cap dans sa sexualité...',
+            'description': 'md5:0a1c54508fcc62d9c12021cc28933d12',
+            'thumbnail': r're:https?://.*',
+            'upload_date': '20260821',
+            'timestamp': 1787284800,
+            'duration': 2504,
             'view_count': int,
-            'average_rating': float,
-            'categories': ['Débutante', 'Débutantes', 'Scénario', 'Sodomie'],
+            'categories': list,
             'age_limit': 18,
             'subtitles': {
-                'fr': [{
-                    'ext': 'vtt',
-                }],
+                'fr': [{'ext': 'vtt'}],
             },
         },
-    }
+    }, {
+        'url': 'https://www.pornovoisines.com/videos/show/6a686495d0d62268d9052bf5/jade-decouvre-la-soumission-et-prend-son-pied',
+        'only_matching': True,
+    }]
 
     def _real_extract(self, url):
-        mobj = self._match_valid_url(url)
-        video_id = mobj.group('id')
-        display_id = mobj.group('display_id')
-
-        settings_url = self._download_json(
-            f'http://www.pornovoisines.com/api/video/{video_id}/getsettingsurl/',
-            video_id, note='Getting settings URL')['video_settings_url']
-        settings = self._download_json(settings_url, video_id)['data']
-
-        formats = []
-        for kind, data in settings['variants'].items():
-            if kind == 'HLS':
-                formats.extend(self._extract_m3u8_formats(
-                    data, video_id, ext='mp4', entry_protocol='m3u8_native', m3u8_id='hls'))
-            elif kind == 'MP4':
-                for item in data:
-                    formats.append({
-                        'url': item['url'],
-                        'height': item.get('height'),
-                        'bitrate': item.get('bitrate'),
-                    })
-
+        video_id, display_id = self._match_valid_url(url).group('id', 'display_id')
         webpage = self._download_webpage(url, video_id)
 
-        title = self._og_search_title(webpage)
-        description = self._og_search_description(webpage)
+        info = self._search_json_ld(
+            webpage, video_id, expected_type='VideoObject', default={})
+        trailer_url = url_or_none(info.pop('url', None))
+        info.pop('ext', None)
 
-        # The webpage has a bug - there's no space between "thumb" and src=
-        thumbnail = self._html_search_regex(
-            r'<img[^>]+class=([\'"])thumb\1[^>]*src=([\'"])(?P<url>[^"]+)\2',
-            webpage, 'thumbnail', fatal=False, group='url')
+        formats = []
+        pack_url = self._search_regex(
+            r'''pack-url=(["'])(?P<url>https?://[^"']+)\1''',
+            webpage, 'pack url', group='url', default=None)
+        pack = {}
+        if pack_url:
+            pack = self._download_json(pack_url, video_id, 'Downloading player pack')
 
-        upload_date = unified_strdate(self._search_regex(
-            r'Le\s*<b>([\d/]+)', webpage, 'upload date', fatal=False))
-        duration = settings.get('main', {}).get('duration')
-        view_count = int_or_none(self._search_regex(
-            r'(\d+) vues', webpage, 'view count', fatal=False))
-        average_rating = self._search_regex(
-            r'Note\s*:\s*(\d+(?:,\d+)?)', webpage, 'average rating', fatal=False)
-        if average_rating:
-            average_rating = float_or_none(average_rating.replace(',', '.'))
+        for item in traverse_obj(pack, ('sources', 'mp4', lambda _, v: url_or_none(v.get('file')))):
+            label = str_or_none(item.get('label'))
+            formats.append({
+                'url': item['file'],
+                'format_id': label,
+                'ext': 'mp4',
+                **parse_resolution(label),
+            })
+        if not formats:
+            hls_url = traverse_obj(pack, ('sources', 'hls', {url_or_none}))
+            if hls_url:
+                formats.extend(self._extract_m3u8_formats(
+                    hls_url, video_id, 'mp4', m3u8_id='hls', fatal=False))
+        if not formats:
+            mpd_url = traverse_obj(pack, ('sources', 'dash', {url_or_none}))
+            if mpd_url:
+                formats.extend(self._extract_mpd_formats(
+                    mpd_url, video_id, mpd_id='dash', fatal=False))
 
-        categories = self._html_search_regex(
-            r'(?s)Catégories\s*:\s*<b>(.+?)</b>', webpage, 'categories', fatal=False)
-        if categories:
-            categories = [category.strip() for category in categories.split(',')]
+        if not formats and trailer_url:
+            formats.append({
+                'url': trailer_url,
+                'ext': 'mp4',
+                'format_id': 'trailer',
+            })
+        if not formats:
+            self.raise_no_formats('No video formats found', expected=True, video_id=video_id)
 
-        subtitles = {'fr': [{
-            'url': subtitle,
-        } for subtitle in settings.get('main', {}).get('vtt_tracks', {}).values()]}
+        vtt = traverse_obj(pack, ('vtt', {url_or_none}))
+        categories = traverse_obj(
+            list(self._yield_json_ld(webpage, video_id, default=[])),
+            (..., '@graph', ..., 'keywords', ..., {str}))
+        if not categories:
+            categories = [c.strip() for c in re.findall(
+                r'<li class="content-detail__tag">\s*<a[^>]+href="/categorie/[^"]+"[^>]*>([^<]+)',
+                webpage) if c.strip()]
+        view_count = int_or_none(re.sub(r'\D', '', self._search_regex(
+            r'([\d\s\u00a0\u202f]+)\s*vues', webpage, 'view count', default='') or '') or None)
 
         return {
+            **info,
             'id': video_id,
             'display_id': display_id,
+            'title': info.get('title') or remove_end(
+                self._og_search_title(webpage), ' | Pornovoisines'),
+            'description': info.get('description') or self._og_search_description(webpage),
+            'thumbnail': self._og_search_thumbnail(webpage) or traverse_obj(
+                info, ('thumbnails', 0, 'url', {url_or_none})),
             'formats': formats,
-            'title': title,
-            'description': description,
-            'thumbnail': thumbnail,
-            'upload_date': upload_date,
-            'duration': duration,
+            'subtitles': {'fr': [{'url': vtt, 'ext': 'vtt'}]} if vtt else None,
+            'categories': categories or None,
             'view_count': view_count,
-            'average_rating': average_rating,
-            'categories': categories,
             'age_limit': 18,
-            'subtitles': subtitles,
         }
