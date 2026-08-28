@@ -1,14 +1,34 @@
 from .common import InfoExtractor
 from ..utils import (
+    ExtractorError,
+    determine_ext,
     int_or_none,
-    parse_duration,
-    xpath_text,
+    unified_timestamp,
+    urljoin,
 )
+from ..utils.traversal import traverse_obj
 
 
 class MySpassIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?myspass\.de/(?:[^/]+/)*(?P<id>\d+)/?[^/]*$'
+    _VALID_URL = r'https?://(?:www\.)?myspass\.de/(?:[^/?#]+/)*(?:(?:\d+-)+)?(?P<id>\d+)/?(?:$|[?#])'
+    _MEDIA_BASE = 'https://1754936693.rsc.cdn77.org'
+    _IMAGE_BASE = 'https://1403103913.rsc.cdn77.org'
     _TESTS = [{
+        'url': 'https://www.myspass.de/clips/tv-total/puffi-verwoehnt-die-frauen/1-4763',
+        'md5': '45653f1c72b68374b26884f9410db833',
+        'info_dict': {
+            'id': '4763',
+            'ext': 'mp4',
+            'title': 'Puffi verwöhnt die Frauen',
+            'description': 'Happy internationalen Frauentag! Heute hat sich Puffi mal eine ganz besonderere Aufgabe gestellt: Die Damenwelt gerecht zu huldigen. Ob ihm das gelingt? Eva und Regina scheinen überzeugt!',
+            'thumbnail': r're:https?://.*\.jpg',
+            'duration': 564,
+            'series': 'TV total',
+        },
+    }, {
+        'url': 'https://www.myspass.de/folge/stromberg/stromberg-staffel-1/der-letzte-tag/2-1-38',
+        'only_matching': True,
+    }, {
         'url': 'http://www.myspass.de/myspass/shows/tvshows/absolute-mehrheit/Absolute-Mehrheit-vom-17022013-Die-Highlights-Teil-2--/11741/',
         'skip': 'video gone',
         'md5': '0b49f4844a068f8b33f4b7c88405862b',
@@ -26,8 +46,7 @@ class MySpassIE(InfoExtractor):
             'season_number': 2,
             'season': 'Season 2',
         },
-    },
-        {
+    }, {
         'url': 'https://www.myspass.de/shows/tvshows/tv-total/Novak-Puffovic-bei-bester-Laune--/44996/',
         'skip': 'video gone',
         'md5': 'eb28b7c5e254192046e86ebaf7deac8f',
@@ -45,8 +64,7 @@ class MySpassIE(InfoExtractor):
             'duration': 2941.0,
             'season_number': 19,
         },
-    },
-        {
+    }, {
         'url': 'https://www.myspass.de/channels/tv-total-raabigramm/17033/20831/',
         'skip': 'video gone',
         'md5': '7b293a6b9f3a7acdd29304c8d0dbb7cc',
@@ -68,27 +86,35 @@ class MySpassIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
+        webpage = self._download_webpage(url, video_id)
+        video = traverse_obj(
+            self._search_nextjs_data(webpage, video_id),
+            ('props', 'pageProps', 'videoData', {dict}))
+        if not video:
+            raise ExtractorError('Unable to extract video data', expected=True)
 
-        metadata = self._download_xml('http://www.myspass.de/myspass/includes/apps/video/getvideometadataxml.php?id=' + video_id, video_id)
+        video_id = str(video.get('id') or video_id)
+        media_path = video.get('videoUrl')
+        if not media_path:
+            raise ExtractorError('Unable to extract video URL', expected=True)
+        media_url = urljoin(self._MEDIA_BASE, media_path)
+        ext = determine_ext(media_url)
+        if ext == 'm3u8':
+            formats = self._extract_m3u8_formats(media_url, video_id, 'mp4', m3u8_id='hls')
+        else:
+            formats = [{'url': media_url, 'ext': ext or 'mp4'}]
 
-        title = xpath_text(metadata, 'title', fatal=True)
-        video_url = xpath_text(metadata, 'url_flv', 'download url', True)
-        video_id_int = int(video_id)
-        for group in self._search_regex(r'/myspass2009/\d+/(\d+)/(\d+)/(\d+)/', video_url, 'myspass', group=(1, 2, 3), default=[]):
-            group_int = int(group)
-            if group_int > video_id_int:
-                video_url = video_url.replace(group, str(group_int // video_id_int))
+        broadcast_date = video.get('broadcastDate')
+        if broadcast_date in ('1970-01-01', '0000-00-00'):
+            broadcast_date = None
 
         return {
             'id': video_id,
-            'url': video_url,
-            'title': title,
-            'thumbnail': xpath_text(metadata, 'imagePreview'),
-            'description': xpath_text(metadata, 'description'),
-            'duration': parse_duration(xpath_text(metadata, 'duration')),
-            'series': xpath_text(metadata, 'format'),
-            'season_number': int_or_none(xpath_text(metadata, 'season')),
-            'season_id': xpath_text(metadata, 'season_id'),
-            'episode': title,
-            'episode_number': int_or_none(xpath_text(metadata, 'episode')),
+            'formats': formats,
+            'title': video.get('name'),
+            'description': video.get('description'),
+            'thumbnail': urljoin(self._IMAGE_BASE, video['imageUrl']) if video.get('imageUrl') else None,
+            'duration': int_or_none(video.get('playLength')),
+            'series': video.get('formatName'),
+            'timestamp': unified_timestamp(broadcast_date),
         }
