@@ -30,6 +30,7 @@ class SoftWhiteUnderbellyIE(InfoExtractor):
             'duration': 512,
         },
         'expected_warnings': ['Failed to parse XML: not well-formed'],
+        'skip': 'Login required',
     }, {
         'url': 'https://www.softwhiteunderbelly.com/videos/tj-2-final-2160p',
         'note': 'A single Soft White Underbelly Episode',
@@ -47,6 +48,7 @@ class SoftWhiteUnderbellyIE(InfoExtractor):
             'uploader_id': 'user80538407',
         },
         'expected_warnings': ['Failed to parse XML: not well-formed'],
+        'skip': 'Login required',
     }]
 
     def _perform_login(self, username, password):
@@ -67,9 +69,13 @@ class SoftWhiteUnderbellyIE(InfoExtractor):
 
         webpage = self._download_webpage(url, display_id)
         if '<div id="watch-unauthorized"' in webpage:
-            if self._get_cookies('https://www.softwhiteunderbelly.com').get('_session'):
-                raise ExtractorError('This account is not subscribed to this content', expected=True)
-            self.raise_login_required()
+            # Anonymous visitors still get a Rails `_session` cookie
+            if self._search_regex(
+                    r'window\._current_user\s*=\s*(undefined)', webpage,
+                    'login status', default=None):
+                self.raise_login_required(
+                    'This video is only available for Soft White Underbelly subscribers')
+            raise ExtractorError('This account is not subscribed to this content', expected=True)
 
         embed_url, embed_id = self._html_search_regex(
             r'embed_url:\s*["\'](?P<url>https?://embed\.vhx\.tv/videos/(?P<id>\d+)[^"\']*)',

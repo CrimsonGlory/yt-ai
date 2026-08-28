@@ -2468,6 +2468,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **slideshare**: Extract public slide images from the GraphQL API after the Next.js rebrand
     * **slutload**: Impersonate the browser and extract HLS from CamSoda `/porn/video/` preloaded JSON
     * **smotrim**: Use the `player-api.smotrim.ru` v1 API instead of the old iframe `datavideo` JSON
+    * **softwhiteunderbelly**: Treat anonymous VHX `_session` cookies as logged-out and require a subscribed account
     * **tfo**: Fall back to Next.js v13 data
     * **theguardian:podcast**: Extract audio URL and author from JSON-LD
     * **tiktok**: Googlebot headers on aweme detail
