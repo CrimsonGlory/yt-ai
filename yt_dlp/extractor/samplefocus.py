@@ -2,9 +2,12 @@ import re
 
 from .common import InfoExtractor
 from ..utils import (
-    extract_attributes,
     get_element_by_attribute,
     int_or_none,
+    parse_iso8601,
+    str_or_none,
+    traverse_obj,
+    url_or_none,
 )
 
 
@@ -19,11 +22,15 @@ class SampleFocusIE(InfoExtractor):
             'ext': 'mp3',
             'title': 'Lil Peep Sad Emo Guitar',
             'thumbnail': r're:^https?://.+\.png',
-            'license': 'Standard License',
+            'license': 'Standard Licensing',
             'uploader': 'CapsCtrl',
             'uploader_id': 'capsctrl',
             'like_count': int,
             'comment_count': int,
+            'view_count': int,
+            'duration': 31,
+            'timestamp': 1592304245,
+            'upload_date': '20200616',
             'categories': ['Samples', 'Guitar', 'Electric guitar'],
         },
     }, {
@@ -38,46 +45,35 @@ class SampleFocusIE(InfoExtractor):
         display_id = self._match_id(url)
         webpage = self._download_webpage(url, display_id, impersonate=True)
 
-        sample_id = self._search_regex(
-            r'<input[^>]+id=(["\'])sample_id\1[^>]+value=(?:["\'])(?P<id>\d+)',
-            webpage, 'sample id', group='id')
+        data = self._search_json(
+            r'<script[^>]+data-component-name=["\']SampleHero["\'][^>]*>',
+            webpage, 'sample data', display_id, fatal=False)
+        sample = traverse_obj(data, ('sample', {dict})) or {}
+        json_ld = self._search_json_ld(
+            webpage, display_id, expected_type='AudioObject', default={})
 
-        title = self._og_search_title(webpage, fatal=False) or self._html_search_regex(
-            r'<h1>(.+?)</h1>', webpage, 'title')
+        sample_id = str_or_none(sample.get('id')) or self._search_regex(
+            r'/samples/sample_files/(\d+)/', webpage, 'sample id')
+        title = (
+            traverse_obj(sample, ('name', {str}))
+            or json_ld.get('title')
+            or self._og_search_title(webpage, fatal=False)
+            or self._html_search_regex(r'<h1>(.+?)</h1>', webpage, 'title'))
+        mp3_url = traverse_obj(sample, ('sample_mp3_url', {url_or_none})) or json_ld.get('url')
+        if not mp3_url:
+            self.raise_no_formats('Unable to extract mp3 URL', video_id=sample_id)
 
-        mp3_url = self._search_regex(
-            r'<input[^>]+id=(["\'])sample_mp3\1[^>]+value=(["\'])(?P<url>(?:(?!\2).)+)',
-            webpage, 'mp3', fatal=False, group='url') or extract_attributes(self._search_regex(
-                r'<meta[^>]+itemprop=(["\'])contentUrl\1[^>]*>',
-                webpage, 'mp3 url', group=0))['content']
-
-        thumbnail = self._og_search_thumbnail(webpage) or self._html_search_regex(
-            r'<img[^>]+class=(?:["\'])waveform responsive-img[^>]+src=(["\'])(?P<url>(?:(?!\1).)+)',
-            webpage, 'mp3', fatal=False, group='url')
-
-        comments = []
-        for author_id, author, body in re.findall(r'(?s)<p[^>]+class="comment-author"><a[^>]+href="/users/([^"]+)">([^"]+)</a>.+?<p[^>]+class="comment-body">([^>]+)</p>', webpage):
-            comments.append({
-                'author': author,
-                'author_id': author_id,
-                'text': body,
-            })
-
-        uploader_id = uploader = None
-        mobj = re.search(r'>By <a[^>]+href="/users/([^"]+)"[^>]*>([^<]+)', webpage)
-        if mobj:
-            uploader_id, uploader = mobj.groups()
+        comments = traverse_obj(data, ('comments', ..., {
+            'author': ('commentor_user_name', {str}),
+            'author_id': ('commentor_slug', {str}),
+            'text': ('body', {str}),
+        })) or []
 
         breadcrumb = get_element_by_attribute('typeof', 'BreadcrumbList', webpage)
         categories = []
         if breadcrumb:
             for _, name in re.findall(r'<span[^>]+property=(["\'])name\1[^>]*>([^<]+)', breadcrumb):
                 categories.append(name)
-
-        def extract_count(klass):
-            return int_or_none(self._html_search_regex(
-                rf'<span[^>]+class=(?:["\'])?{klass}-count[^>]*>(\d+)',
-                webpage, klass, fatal=False))
 
         return {
             'id': sample_id,
@@ -92,14 +88,24 @@ class SampleFocusIE(InfoExtractor):
                 },
             }],
             'display_id': display_id,
-            'thumbnail': thumbnail,
-            'uploader': uploader,
+            'thumbnail': (
+                traverse_obj(sample, ('sample_waveform_url', {url_or_none}))
+                or self._og_search_thumbnail(webpage)),
+            'uploader': (
+                traverse_obj(data, ('uploader', 'display_name', {str}))
+                or traverse_obj(sample, ('user_display_name_truncated', {str}))
+                or json_ld.get('uploader')),
             'license': self._html_search_regex(
                 r'<a[^>]+href=(["\'])/license\1[^>]*>(?P<license>[^<]+)<',
                 webpage, 'license', fatal=False, group='license'),
-            'uploader_id': uploader_id,
-            'like_count': extract_count(f'sample-{sample_id}-favorites'),
-            'comment_count': extract_count('comments'),
+            'uploader_id': (
+                traverse_obj(data, ('uploader', 'slug', {str}))
+                or traverse_obj(sample, ('user_slug', {str}))),
+            'like_count': traverse_obj(sample, ('favorites_count', {int_or_none})),
+            'comment_count': len(comments),
+            'view_count': traverse_obj(sample, ('plays_count', {int_or_none})),
+            'duration': int_or_none(sample.get('approximate_duration')) or json_ld.get('duration'),
+            'timestamp': parse_iso8601(sample.get('published_at')) or json_ld.get('timestamp'),
             'comments': comments,
             'categories': categories,
         }
