@@ -2477,6 +2477,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **startv**: Call the DYG `video_info` API using the page `referenceId`
     * **stv:player**: Mark playback as UK geo-restricted (Brightcove CDN; X-Forwarded-For is ignored)
     * **sunporno**: Decode KVS `get_file` hashes on current `/v/` and `/embed/` pages
+    * **sverigesradio**: Extract `playAudio` / episode audio from Next.js App Router data instead of the dead playerajax API
     * **tfo**: Fall back to Next.js v13 data
     * **theguardian:podcast**: Extract audio URL and author from JSON-LD
     * **tiktok**: Googlebot headers on aweme detail
