@@ -27,7 +27,7 @@ class PlaySuisseIE(InfoExtractor):
         {
             # episode in a series
             'url': 'https://www.playsuisse.ch/watch/763182?episodeId=763211',
-            'skip': 'Login required',
+            'skip': 'Requires a free Play Suisse account',
             'md5': 'e20d1ede6872a03b41905ca1060a1ef2',
             'info_dict': {
                 'id': '763211',
@@ -45,7 +45,7 @@ class PlaySuisseIE(InfoExtractor):
         }, {
             # film
             'url': 'https://www.playsuisse.ch/detail/2573198',
-            'skip': 'Login required',
+            'skip': 'Requires a free Play Suisse account',
             'md5': '1f115bb0a5191477b1a5771643a4283d',
             'info_dict': {
                 'id': '2573198',
@@ -63,7 +63,7 @@ class PlaySuisseIE(InfoExtractor):
         }, {
             # series (treated as a playlist)
             'url': 'https://www.playsuisse.ch/detail/1115687',
-            'skip': 'Login required',
+            'skip': 'Requires a free Play Suisse account',
             'info_dict': {
                 'id': '1115687',
                 'series': 'They all came out to Montreux',
