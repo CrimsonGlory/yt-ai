@@ -2396,6 +2396,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **nova**: Fall back to a Wayback Machine snapshot and OTT preview MP4s when the live page is blocked
     * **noz**: Follow 3Q SDN embeds on current `/video/` article pages
     * **npo**: Use the NPO Start `player-token` and `npoplayer` stream-link APIs
+    * **npr**: Fall back to JSON-LD JWPlayer media when the query API is blocked
     * **orf:on**: Raise geo-restriction when sources are empty
     * **pbs**: Guard against missing `video_info` and title
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`

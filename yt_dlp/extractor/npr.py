@@ -1,9 +1,16 @@
 from .common import InfoExtractor
-from ..utils import int_or_none, qualities, traverse_obj, url_or_none
+from ..utils import (
+    ExtractorError,
+    determine_ext,
+    int_or_none,
+    qualities,
+    traverse_obj,
+    url_or_none,
+)
 
 
 class NprIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?npr\.org/(?:sections/[^/]+/)?\d{4}/\d{2}/\d{2}/(?P<id>\d+)'
+    _VALID_URL = r'https?://(?:www\.)?npr\.org/(?:sections/[^/]+/)?\d{4}/\d{2}/\d{2}/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://www.npr.org/sections/allsongs/2015/10/21/449974205/new-music-from-beach-house-chairlift-cmj-discoveries-and-more',
         'skip': 'HTTP Error 403',
@@ -52,26 +59,81 @@ class NprIE(InfoExtractor):
         'only_matching': True,
     }, {
         'url': 'https://www.npr.org/2022/03/15/1084896560/bonobo-tiny-desk-home-concert',
-        'skip': 'HTTP Error 403',
+        'md5': '43d5eebbe13a463da72255814431f0a0',
         'info_dict': {
-            'id': '1086468851',
+            'id': '1084896560',
             'ext': 'mp4',
             'title': 'Bonobo: Tiny Desk (Home) Concert',
-            'duration': 1061,
-            'thumbnail': r're:^https?://media.npr.org/assets/img/.*\.jpg$',
+            'description': 'md5:d3423705cde0fd76a3dedabda5726a9a',
+            'thumbnail': r're:^https?://.+\.(?:jpg|jpeg)',
+            'duration': 1061.0,
+            'timestamp': 1647337020,
+            'upload_date': '20220315',
         },
+        'params': {
+            'format': '1080p/best[ext=mp4][protocol=https]/best',
+        },
+    }, {
+        'url': 'https://www.npr.org/2026/08/27/g-s1-139808/e-u-tiny-desk-concert',
+        'only_matching': True,
+    }, {
+        'url': 'https://www.npr.org/2026/08/27/nx-s1-5946375/ratko-mladic-dead',
+        'only_matching': True,
     }]
+
+    def _extract_json_ld_media(self, url, video_id):
+        webpage = self._download_webpage(url, video_id)
+        json_ld_list = list(self._yield_json_ld(webpage, video_id, fatal=False))
+        media_url = traverse_obj(json_ld_list, (
+            ..., 'subjectOf', ..., ('embedUrl', 'contentUrl'), {url_or_none}), get_all=False)
+        if not media_url:
+            return None
+
+        info = self._search_json_ld(webpage, video_id, default={})
+        info.pop('url', None)
+        info.pop('ext', None)
+
+        jw_id = self._search_regex(
+            r'cdn\.jwplayer\.com/manifests/(\w+)', media_url, 'jwplayer id', default=None)
+        if jw_id:
+            jw_info = self._parse_jwplayer_data(
+                self._download_json(f'https://cdn.jwplayer.com/v2/media/{jw_id}', video_id),
+                video_id, require_title=False, m3u8_id='hls')
+            info['formats'] = jw_info.get('formats')
+            info['duration'] = jw_info.get('duration')
+            info['subtitles'] = jw_info.get('subtitles') or info.get('subtitles')
+        elif determine_ext(media_url) == 'm3u8':
+            info['formats'] = self._extract_m3u8_formats(
+                media_url, video_id, 'mp4', m3u8_id='hls')
+        else:
+            info['formats'] = [{'url': media_url}]
+
+        info.update({
+            'id': video_id,
+            'title': info.get('title') or self._og_search_title(webpage),
+            'description': info.get('description') or self._og_search_description(webpage),
+            'thumbnail': (info.get('thumbnail')
+                          or traverse_obj(info, ('thumbnails', 0, 'url'))
+                          or self._og_search_thumbnail(webpage)),
+        })
+        return info
 
     def _real_extract(self, url):
         playlist_id = self._match_id(url)
 
-        story = self._download_json(
-            'http://api.npr.org/query', playlist_id, query={
+        webpage_info = self._extract_json_ld_media(url, playlist_id)
+        if webpage_info:
+            return webpage_info
+
+        story = traverse_obj(self._download_json(
+            'https://api.npr.org/query', playlist_id, fatal=False, query={
                 'id': playlist_id,
                 'fields': 'audio,multimedia,title',
                 'format': 'json',
                 'apiKey': 'MDAzMzQ2MjAyMDEyMzk4MTU1MDg3ZmM3MQ010',
-            })['list']['story'][0]
+            }), ('list', 'story', 0))
+        if not story:
+            raise ExtractorError('No media found', expected=True)
         playlist_title = story.get('title', {}).get('$text')
 
         KNOWN_FORMATS = ('threegp', 'm3u8', 'smil', 'mp4', 'mp3')
