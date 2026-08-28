@@ -1,13 +1,32 @@
 import re
 
 from .common import InfoExtractor
+from ..utils import (
+    int_or_none,
+    strip_or_none,
+    url_or_none,
+    urljoin,
+)
 
 
 class ToypicsIE(InfoExtractor):
     _WEB_FALLBACK = True
     IE_DESC = 'Toypics video'
-    _VALID_URL = r'https?://videos\.toypics\.net/view/(?P<id>[0-9]+)'
-    _TEST = {
+    _VALID_URL = r'https?://(?:videos\.)?toypics\.net/(?:view|(?:u/(?P<uploader>[^/?#&]+)))/(?P<id>\d+)'
+    _TESTS = [{
+        'url': 'https://toypics.net/u/Philly/3218',
+        'md5': 'd2ba2ab8487137e85a04c6dbcc71dbd7',
+        'info_dict': {
+            'id': '3218',
+            'ext': 'mp4',
+            'title': 'Juicy pullout',
+            'description': 'Just enjoying my loose hole but so need to get it looser',
+            'thumbnail': r're:https?://static\.toypics\.net/.+\.jpg',
+            'uploader': 'Philly',
+            'age_limit': 18,
+            'view_count': int,
+        },
+    }, {
         'url': 'http://videos.toypics.net/view/514/chancebulged,-2-1/',
         'skip': 'video gone',
         'md5': '16e806ad6d6f58079d210fe30985e08b',
@@ -18,29 +37,37 @@ class ToypicsIE(InfoExtractor):
             'age_limit': 18,
             'uploader': 'kidsune',
         },
-    }
+    }, {
+        'url': 'https://videos.toypics.net/u/Philly/3218',
+        'only_matching': True,
+    }]
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-
         webpage = self._download_webpage(url, video_id)
 
-        formats = self._parse_html5_media_entries(
-            url, webpage, video_id)[0]['formats']
-        title = self._html_search_regex([
-            r'<h1[^>]+class=["\']view-video-title[^>]+>([^<]+)</h',
-            r'<title>([^<]+) - Toypics</title>',
-        ], webpage, 'title')
+        video_url = url_or_none(self._og_search_video_url(
+            webpage, default=None)) or url_or_none(self._html_search_meta(
+            'twitter:player:stream', webpage)) or self._search_regex(
+            r'''file:\s*['"](https?://[^'"]+\.mp4)['"]''', webpage, 'video URL')
 
-        uploader = self._html_search_regex(
-            r'More videos from <strong>([^<]+)</strong>', webpage, 'uploader',
-            fatal=False)
+        title = strip_or_none(
+            self._html_search_regex(r'<h4>([^<]+)</h4>', webpage, 'title', default=None)
+            or self._og_search_title(webpage))
+
+        uploader = self._match_valid_url(url).group('uploader') or strip_or_none(
+            self._html_search_regex(
+                r'<h5 class="text-danger">([^<]+)</h5>', webpage, 'uploader', default=None))
 
         return {
             'id': video_id,
-            'formats': formats,
+            'url': video_url,
             'title': title,
+            'description': strip_or_none(self._og_search_description(webpage)),
+            'thumbnail': self._og_search_thumbnail(webpage),
             'uploader': uploader,
+            'view_count': int_or_none(self._search_regex(
+                r'(\d+)\s*views', webpage, 'view count', default=None)),
             'age_limit': 18,
         }
 
@@ -48,44 +75,19 @@ class ToypicsIE(InfoExtractor):
 class ToypicsUserIE(InfoExtractor):
     _WEB_FALLBACK = True
     IE_DESC = 'Toypics user profile'
-    _VALID_URL = r'https?://videos\.toypics\.net/(?!view)(?P<id>[^/?#&]+)'
+    _VALID_URL = r'https?://(?:videos\.)?toypics\.net/u/(?P<id>[^/?#&]+)/?(?:$|[?#])'
     _TEST = {
-        'url': 'http://videos.toypics.net/u/Philly/3218',
+        'url': 'https://toypics.net/u/Philly',
         'info_dict': {
-            'id': 'u',
+            'id': 'Philly',
         },
-        'playlist_mincount': 19,
+        'playlist_mincount': 5,
     }
 
     def _real_extract(self, url):
         username = self._match_id(url)
-
-        profile_page = self._download_webpage(
+        webpage = self._download_webpage(
             url, username, note='Retrieving profile page')
-
-        video_count = int(self._search_regex(
-            r'public/">Public Videos \(([0-9]+)\)</a></li>', profile_page,
-            'video count'))
-
-        PAGE_SIZE = 8
-        urls = []
-        page_count = (video_count + PAGE_SIZE + 1) // PAGE_SIZE
-        for n in range(1, page_count + 1):
-            lpage_url = url + f'/public/{n}'
-            lpage = self._download_webpage(
-                lpage_url, username,
-                note=f'Downloading page {n}/{page_count}')
-            urls.extend(
-                re.findall(
-                    r'<div[^>]+class=["\']preview[^>]+>\s*<a[^>]+href="(https?://videos\.toypics\.net/view/[^"]+)"',
-                    lpage))
-
-        return {
-            '_type': 'playlist',
-            'id': username,
-            'entries': [{
-                '_type': 'url',
-                'url': eurl,
-                'ie_key': 'Toypics',
-            } for eurl in urls],
-        }
+        return self.playlist_from_matches(
+            re.findall(rf'href="(/u/{re.escape(username)}/\d+)"', webpage),
+            username, getter=lambda path: urljoin(url, path), ie='Toypics')
