@@ -72,6 +72,25 @@ class VoxMediaIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?:(?:theverge|vox|sbnation|eater|polygon|curbed|racked|funnyordie)\.com|recode\.net)/(?:[^/]+/)*(?P<id>[^/?]+)'
     _EMBED_REGEX = [r'<iframe[^>]+?src="(?P<url>https?://(?:www\.)?funnyordie\.com/embed/[^"]+)"']
     _TESTS = [{
+        # Volume embed from JSON-LD contentUrl
+        'url': 'https://www.theverge.com/featured-video/892850/i-was-interviewed-by-an-ai-bot-for-a-job',
+        'md5': 'd9652c4c6104f6c7bf803baa6566699b',
+        'info_dict': {
+            'id': '1f62a6012',
+            'ext': 'mp4',
+            'title': 'What it’s like to have an AI bot as your job interviewer',
+            'description': 'md5:3cd2a891b0c2696ac1fa1b1f60cf415d',
+            'thumbnail': r're:https?://i\.ytimg\.com/.+',
+            'timestamp': 1773151200,
+            'upload_date': '20260310',
+            'duration': 553,
+        },
+        'params': {
+            'format': 'http',
+        },
+        'expected_warnings': ['Ignoring subtitle tracks found in the HLS manifest'],
+        'add_ie': ['VoxMediaVolume'],
+    }, {
         # FIXME: Unsupported iframe embed
         # Volume embed, Youtube
         'url': 'http://www.theverge.com/2014/6/27/5849272/material-world-how-google-discovered-what-software-is-made-of',
@@ -85,6 +104,7 @@ class VoxMediaIE(InfoExtractor):
             'uploader': 'The Verge',
         },
         'add_ie': ['Youtube'],
+        'skip': 'video gone',
     }, {
         # Volume embed, Youtube
         'url': 'http://www.theverge.com/2014/10/21/7025853/google-nexus-6-hands-on-photos-video-android-phablet',
@@ -202,9 +222,20 @@ class VoxMediaIE(InfoExtractor):
                         video_data.get('title'), video_data.get('description')))
 
         volume_uuid = self._search_regex(
-            r'data-volume-uuid="([^"]+)"', webpage, 'volume uuid', default=None)
+            r'(?:data-volume-uuid="|volume\.vox-cdn\.com/embed/)([0-9a-f]{9})',
+            webpage, 'volume uuid', default=None)
         if volume_uuid:
             entries.append(create_entry(volume_uuid, 'volume'))
+
+        if not entries:
+            youtube_id = self._search_regex(
+                r'''(?x)(?:
+                    youtube(?:-nocookie)?\.com/(?:embed/|shorts/|watch\?v=)|
+                    youtu\.be/
+                )([0-9A-Za-z_-]{11})''',
+                webpage, 'youtube id', default=None)
+            if youtube_id:
+                entries.append(create_entry(youtube_id, 'youtube'))
 
         if len(entries) == 1:
             return entries[0]
