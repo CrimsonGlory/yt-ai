@@ -2469,6 +2469,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **slutload**: Impersonate the browser and extract HLS from CamSoda `/porn/video/` preloaded JSON
     * **spankbang**: Parse `stream_data` and current `data-testid` video-page metadata
     * **sport5**: Extract Akamai HLS from current article player embeds
+    * **sporteurope**: Use the public asset and web-player APIs for signed Mux HLS
     * **smotrim**: Use the `player-api.smotrim.ru` v1 API instead of the old iframe `datavideo` JSON
     * **softwhiteunderbelly**: Treat anonymous VHX `_session` cookies as logged-out and require a subscribed account
     * **tfo**: Fall back to Next.js v13 data
