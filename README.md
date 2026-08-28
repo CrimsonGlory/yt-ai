@@ -2263,7 +2263,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 
 ### New features
 
-* Forked from [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and periodically merged with upstream (currently through [**yt-dlp@94eba4c**](https://github.com/yt-dlp/yt-dlp/commit/94eba4c156af080e87caf10cf8ffbea03bd17407))
+* Forked from [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and periodically merged with upstream (currently through [**yt-dlp@8377aa955**](https://github.com/yt-dlp/yt-dlp/commit/8377aa9555c308ca95630a28c1f91decd6c2235a))
 
 * **Independent branding**: Binaries, config, cache, and plugin paths use `yt-ai`, so yt-ai can be installed alongside yt-dlp. The Python import remains `yt_dlp`. See [CONFIGURATION](#configuration)
 
