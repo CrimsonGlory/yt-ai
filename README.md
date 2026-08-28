@@ -2388,6 +2388,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **newgrounds**: Solve NG Guard argon2id/sha256 proof-of-work; update the audio player media URL regex
     * **nhl.com**: Extract Brightcove embeds from current video pages (bamcontent API gone)
     * **ninenews**: Parse Brightcove id/account from page markup
+    * **nintendo**: Read Direct metadata from Next.js Apollo state instead of the dead GraphQL API
     * **nosnl**: Treat nested `/video/` article URLs as videos
     * **orf:on**: Raise geo-restriction when sources are empty
     * **pbs**: Guard against missing `video_info` and title
