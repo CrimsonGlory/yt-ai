@@ -615,11 +615,13 @@ class NBCNewsIE(ThePlatformIE):  # XXX: Do not subclass from concrete IE
 class NBCOlympicsIE(InfoExtractor):
     IE_NAME = 'nbcolympics'
     _VALID_URL = r'https?://www\.nbcolympics\.com/videos?/(?P<id>[0-9a-z-]+)'
+    _GEO_COUNTRIES = ['US']
+    _GEO_BYPASS = False  # ThePlatform checks the real client IP
 
     _TESTS = [{
-        # Geo-restricted to US
+        # Site JW player allowlists US/PR/GU/AS/MP/VI; ThePlatform SMIL is geo-blocked
         'url': 'https://www.nbcolympics.com/videos/watch-final-minutes-team-usas-mens-basketball-gold',
-        'skip': 'Geo-restricted',
+        'skip': 'Geo-restricted to the US',
         'info_dict': {
             'id': 'SAwGfPlQ1q01',
             'ext': 'mp4',
