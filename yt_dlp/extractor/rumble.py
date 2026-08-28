@@ -26,7 +26,6 @@ class RumbleEmbedIE(InfoExtractor):
     _EMBED_REGEX = [fr'(?:<(?:script|iframe)[^>]+\bsrc=|["\']embedUrl["\']\s*:\s*)["\'](?P<url>{_VALID_URL})']
     _TESTS = [{
         'url': 'https://rumble.com/embed/v5pv5f',
-        'skip': 'HTTP Error 403',
         'md5': '36a18a049856720189f30977ccbb2c34',
         'info_dict': {
             'id': 'v5pv5f',
@@ -173,7 +172,8 @@ class RumbleEmbedIE(InfoExtractor):
         video_id = self._match_id(url)
         video = self._download_json(
             'https://rumble.com/embedJS/u3/', video_id,
-            query={'request': 'video', 'ver': 2, 'v': video_id})
+            query={'request': 'video', 'ver': 2, 'v': video_id},
+            impersonate=True)
 
         sys_msg = traverse_obj(video, ('sys', 'msg'))
         if sys_msg:
@@ -256,6 +256,7 @@ class RumbleEmbedIE(InfoExtractor):
             'duration': duration,
             'uploader': author.get('name'),
             'live_status': live_status,
+            'impersonate': True,
         }
 
 
@@ -267,7 +268,6 @@ class RumbleIE(InfoExtractor):
     _TESTS = [{
         'add_ie': ['RumbleEmbed'],
         'url': 'https://rumble.com/vdmum1-moose-the-dog-helps-girls-dig-a-snow-fort.html',
-        'skip': 'HTTP Error 403',
         'md5': '53af34098a7f92c4e51cf0bd1c33f009',
         'info_dict': {
             'id': 'vb0ofn',
@@ -367,7 +367,7 @@ class RumbleIE(InfoExtractor):
 
     def _real_extract(self, url):
         page_id = self._match_id(url)
-        webpage = self._download_webpage(url, page_id)
+        webpage = self._download_webpage(url, page_id, impersonate=True)
         url_info = next(RumbleEmbedIE.extract_from_webpage(self._downloader, url, webpage), None)
         if not url_info:
             raise UnsupportedError(url)
@@ -410,7 +410,8 @@ class RumbleChannelIE(InfoExtractor):
     def entries(self, url, playlist_id):
         for page in itertools.count(1):
             try:
-                webpage = self._download_webpage(f'{url}?page={page}', playlist_id, note=f'Downloading page {page}')
+                webpage = self._download_webpage(
+                    f'{url}?page={page}', playlist_id, note=f'Downloading page {page}', impersonate=True)
             except ExtractorError as e:
                 if isinstance(e.cause, HTTPError) and e.cause.status == 404:
                     break

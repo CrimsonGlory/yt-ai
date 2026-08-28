@@ -2451,6 +2451,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **rtl.nl**: Use the RTL XL token and watch/play v2 APIs for current video UUIDs (FairPlay/Widevine DRM)
     * **rtp**: Fall back to webpage player URLs when the mobile guest token API 404s
     * **rtrfm**: Read restream episode metadata from the current show page instead of the removed `.playShow` JS
+    * **rumble**: Impersonate the browser for embedJS, video pages, and media downloads
     * **showroom**: Use the public room API instead of Nuxt + login cookie
     * **tfo**: Fall back to Next.js v13 data
     * **theguardian:podcast**: Extract audio URL and author from JSON-LD
