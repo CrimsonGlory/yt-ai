@@ -1,5 +1,7 @@
 from .streaks import StreaksBaseIE
+from ..networking.exceptions import HTTPError
 from ..utils import (
+    ExtractorError,
     int_or_none,
     parse_iso8601,
     str_or_none,
@@ -12,9 +14,18 @@ class NTVCoJpCUIE(StreaksBaseIE):
     IE_NAME = 'cu.ntv.co.jp'
     IE_DESC = '日テレ無料TADA!'
     _VALID_URL = r'https?://cu\.ntv\.co\.jp/(?!program-list|search)(?P<id>[\w-]+)/?(?:[?#]|$)'
+    # CloudFront on the catchup site and Streaks playback geo-block by real client IP;
+    # X-Forwarded-For is ignored. Official FAQ: Japan only.
     _TESTS = [{
+        'url': 'https://cu.ntv.co.jp/q_20260823/',
+        'skip': 'geo-restricted to Japan; CloudFront and Streaks playback block this country (X-Forwarded-For is ignored)',
+        'info_dict': {
+            'id': 'q_20260823',
+            'ext': 'mp4',
+        },
+    }, {
         'url': 'https://cu.ntv.co.jp/gaki_20250525/',
-        'skip': 'HTTP Error 403',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'gaki_20250525',
             'ext': 'mp4',
@@ -44,7 +55,12 @@ class NTVCoJpCUIE(StreaksBaseIE):
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        webpage = self._download_webpage(url, display_id)
+        try:
+            webpage = self._download_webpage(url, display_id)
+        except ExtractorError as e:
+            if isinstance(e.cause, HTTPError) and e.cause.status == 403:
+                self.raise_geo_restricted(countries=self._GEO_COUNTRIES)
+            raise
 
         info = self._search_json(
             r'window\.app\s*=', webpage, 'video info',

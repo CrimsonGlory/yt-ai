@@ -2284,6 +2284,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **bunnycdn**: Fall back to `playlist.m3u8` when JSON-LD is missing
     * **cliprs**: Extract Ring Publishing embeds
     * **cspan**: Fall back to JSON-LD / m3u8 when player JS is blocked
+    * **cu.ntv.co.jp**: Raise geo-restriction when CloudFront / Streaks block playback outside Japan
     * **cybrary**: Call the catalog API without requiring a login token
     * **dailywire**: Use the GraphQL API instead of Next.js page data
     * **dangalplay**: Extract public Akamai HLS from `smart_url` without login
