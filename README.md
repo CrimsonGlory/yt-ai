@@ -2435,6 +2435,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **puhutv**: Extract current Akamai HLS `master.m3u8` streams from the video API
     * **qdance**: Extract public Q-dance Radio from StreamTheWorld when Network VOD requires login
     * **r7**: Read Fusion `globalContent` streams on current video pages; scrape `player.r7.com` HTML when `player-api` is gone
+    * **radlive**: Extract HLS from the 12core GraphQL API and match `/watch/` feature/episode URLs
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
     * **rozhlas**: Resolve slugs via the search API
     * **showroom**: Use the public room API instead of Nuxt + login cookie
