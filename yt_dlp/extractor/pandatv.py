@@ -16,6 +16,20 @@ class PandaTvIE(InfoExtractor):
     IE_DESC = 'pandalive.co.kr (팬더티비)'
     _VALID_URL = r'https?://(?:www\.|m\.)?pandalive\.co\.kr/play/(?P<id>\w+)'
     _TESTS = [{
+        'url': 'https://www.pandalive.co.kr/play/mickey94',
+        'info_dict': {
+            'id': 'mickey94',
+            'ext': 'mp4',
+            'channel': '미키™',
+            'title': r're:미키™❤음악힐링&열혈BJ홍보 \d{4}-\d{2}-\d{2} \d{2}:\d{2}',
+            'thumbnail': r're:https://cdn\.pandalive\.co\.kr/ivs/v1/.+/thumb\.jpg',
+            'concurrent_view_count': int,
+            'like_count': int,
+            'live_status': 'is_live',
+            'release_date': str,
+            'release_timestamp': int,
+        },
+    }, {
         'url': 'https://www.pandalive.co.kr/play/bebenim',
         'info_dict': {
             'id': 'bebenim',
