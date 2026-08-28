@@ -13,6 +13,7 @@ from ..utils import (
     remove_start,
     strip_or_none,
     url_basename,
+    url_or_none,
 )
 
 
@@ -200,6 +201,21 @@ class OnetPlIE(InfoExtractor):
     IE_NAME = 'onet.pl'
 
     _TESTS = [{
+        'url': 'https://video.onet.pl/zielony-onet/climate-facts-matter-unia-europejska-walczy-z-dezinformacja-klimatyczna/7nzsf9l',
+        'md5': 'ca5a76525edeb2c436597dde04c0b904',
+        'info_dict': {
+            'id': '2449258.2021405591',
+            'ext': 'mp4',
+            'title': 'Climate Facts Matter. Unia Europejska walczy z dezinformacją klimatyczną.',
+            'description': 'md5:107db8722dae06931e3a81af12b53c84',
+            'duration': 1879,
+            'timestamp': 1774940754,
+            'upload_date': '20260331',
+            'thumbnail': r're:https?://.*\.(?:jpg|jpeg)',
+            'width': 1920,
+            'height': 1080,
+        },
+    }, {
         'url': 'http://eurosport.onet.pl/zimowe/skoki-narciarskie/ziobro-wygral-kwalifikacje-w-pjongczangu/9ckrly',
         'skip': 'video gone',
         'md5': 'b94021eb56214c3969380388b6e73cb0',
@@ -241,8 +257,8 @@ class OnetPlIE(InfoExtractor):
 
     def _search_mvp_id(self, webpage, default=NO_DEFAULT):
         return self._search_regex(
-            r'data-(?:params-)?mvp=["\'](\d+\.\d+)', webpage, 'mvp id',
-            default=default)
+            r'data-(?:params-)?mvp=["\'](\d+\.\d+|[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12})',
+            webpage, 'mvp id', default=default)
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
@@ -250,14 +266,61 @@ class OnetPlIE(InfoExtractor):
         webpage = self._download_webpage(url, video_id)
 
         mvp_id = self._search_mvp_id(webpage, default=None)
+        media_webpage = webpage
 
-        if not mvp_id:
-            pulsembed_url = self._search_regex(
-                r'data-src=(["\'])(?P<url>(?:https?:)?//pulsembed\.eu/.+?)\1',
-                webpage, 'pulsembed url', group='url')
-            webpage = self._download_webpage(
-                pulsembed_url, video_id, 'Downloading pulsembed webpage')
-            mvp_id = self._search_mvp_id(webpage)
+        pulsembed_url = self._search_regex(
+            r'data-src=(["\'])(?P<url>(?:https?:)?//pulsembed\.eu/.+?)\1',
+            webpage, 'pulsembed url', default=None, group='url')
+        if pulsembed_url:
+            media_webpage = self._download_webpage(
+                self._proto_relative_url(pulsembed_url), video_id,
+                'Downloading pulsembed webpage')
+            mvp_id = mvp_id or self._search_mvp_id(media_webpage, default=None)
 
-        return self.url_result(
-            f'onetmvp:{mvp_id}', OnetMVPIE.ie_key(), video_id=mvp_id)
+        json_ld = self._search_json_ld(
+            media_webpage, mvp_id or video_id, expected_type='VideoObject', default={})
+        content_url = url_or_none(json_ld.pop('url', None))
+        json_ld.pop('ext', None)
+
+        embed_url = None
+        for e in self._yield_json_ld(media_webpage, mvp_id or video_id, fatal=False, default=[]):
+            if isinstance(e, dict) and e.get('@type') == 'VideoObject':
+                embed_url = url_or_none(e.get('embedUrl'))
+                if embed_url:
+                    break
+        if not embed_url and mvp_id:
+            embed_url = f'https://grupa-onet.embed.videos.ringpublishing.com/{mvp_id}'
+
+        formats = []
+        if embed_url:
+            embed_page = self._download_webpage(
+                embed_url, mvp_id or video_id,
+                'Downloading Ring Publishing embed', fatal=False)
+            if embed_page:
+                video_url = self._search_regex(
+                    r'\bsrc:\s*["\']([^"\']+)["\']', embed_page, 'video url',
+                    default=None)
+                if video_url:
+                    formats.append({'url': video_url})
+
+        if not formats and content_url:
+            if determine_ext(content_url) == 'm3u8':
+                formats.extend(self._extract_m3u8_formats(
+                    content_url, mvp_id or video_id, 'mp4', m3u8_id='hls'))
+            else:
+                formats.append({'url': content_url})
+
+        if not formats:
+            if mvp_id:
+                return self.url_result(
+                    f'onetmvp:{mvp_id}', OnetMVPIE.ie_key(), video_id=mvp_id)
+            raise ExtractorError('No video found', expected=True)
+
+        return {
+            **json_ld,
+            'id': mvp_id or video_id,
+            'title': json_ld.get('title') or self._og_search_title(webpage),
+            'description': json_ld.get('description') or self._og_search_description(
+                webpage, default=None),
+            'formats': formats,
+        }

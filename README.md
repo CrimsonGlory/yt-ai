@@ -2401,6 +2401,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **nubilesporn**: Impersonate the browser, prime a tour session to bypass Turnstile, and extract public shorts MP4s
     * **oftv**: Extract HLS from the current `api.of.tv` player instead of Zype
     * **ondemandchina**: Use US/CA X-Forwarded-For on the ODC playback API
+    * **onet.pl**: Extract PulseEmbed JSON-LD and Ring Publishing MP4 instead of the old CKM API
     * **orf:on**: Raise geo-restriction when sources are empty
     * **pbs**: Guard against missing `video_info` and title
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
