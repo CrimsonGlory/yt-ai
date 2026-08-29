@@ -2499,6 +2499,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **trtworld**: Extract Next.js v13 CMS media (HLS/MP4) and YouTube fallbacks on current `/video/{slug}` URLs
     * **trunews**: Raise an expected error that trunews.com is a coming-soon landing page and no longer hosts videos
     * **tube8**: Extract playervars HLS/MP4 from current `/porn-video/` pages
+    * **tubitv**: Raise geo-restriction when CloudFront redirects to gdpr.tubi.tv (X-Forwarded-For is ignored)
     * **TravelChannel**: Match `www.travelchannel.com` video URLs after `watch.` redirected
     * **tvp**: Fall back to the original TVPlayer object id when retired portals such as swipeto.pl 301 to the VOD homepage
     * **urort**: Extract S3 `data-trackurl` from current `/track/` pages

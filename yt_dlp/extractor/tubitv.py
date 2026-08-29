@@ -8,8 +8,25 @@ from ..utils import (
 )
 from ..utils.traversal import require, traverse_obj
 
+_GEO_SKIP = (
+    'geo-restricted; CloudFront redirects to gdpr.tubi.tv outside supported '
+    'countries (X-Forwarded-For is ignored)')
 
-class TubiTvIE(InfoExtractor):
+
+class TubiTvBaseIE(InfoExtractor):
+    _GEO_COUNTRIES = ['AU', 'CA', 'CR', 'EC', 'GB', 'GT', 'MX', 'NZ', 'PA', 'PR', 'SV', 'US']
+    # CloudFront redirects unsupported countries to gdpr.tubi.tv by real client IP
+    _GEO_BYPASS = False
+
+    def _download_tubi_webpage(self, url, video_id):
+        webpage, urlh = self._download_webpage_handle(
+            url, video_id, headers=self.geo_verification_headers())
+        if 'gdpr.tubi.tv' in urlh.url or 'not currently available in your area' in webpage:
+            self.raise_geo_restricted(countries=self._GEO_COUNTRIES)
+        return webpage
+
+
+class TubiTvIE(TubiTvBaseIE):
     IE_NAME = 'tubitv'
     _VALID_URL = r'https?://(?:www\.)?tubitv\.com/(?:[a-z]{2}-[a-z]{2}/)?(?P<type>video|movies|tv-shows)/(?P<id>\d+)'
     _TESTS = [{
@@ -24,7 +41,7 @@ class TubiTvIE(InfoExtractor):
             'thumbnail': r're:^https?://canvas-lb\.tubitv\.com/.+',
             'duration': 5187,
         },
-        'params': {'skip_download': 'm3u8'},
+        'skip': _GEO_SKIP,
     }, {
         'url': 'https://tubitv.com/tv-shows/554628/s01-e01-rise-of-the-snakes',
         'info_dict': {
@@ -41,7 +58,7 @@ class TubiTvIE(InfoExtractor):
             'thumbnail': r're:^https?://canvas-lb\.tubitv\.com/.+',
             'duration': 1376,
         },
-        'params': {'skip_download': 'm3u8'},
+        'skip': _GEO_SKIP,
     }, {
         'url': 'http://tubitv.com/video/283829/the_comedian_at_the_friday',
         'md5': '43ac06be9326f41912dc64ccf7a80320',
@@ -78,9 +95,8 @@ class TubiTvIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id, video_type = self._match_valid_url(url).group('id', 'type')
-        webpage = self._download_webpage(
-            f'https://tubitv.com/{video_type}/{video_id}/', video_id,
-            headers=self.geo_verification_headers())
+        webpage = self._download_tubi_webpage(
+            f'https://tubitv.com/{video_type}/{video_id}/', video_id)
         video_data = self._search_json(
             r'window\.__data\s*=', webpage, 'data', video_id,
             transform_source=js_to_json)['video']['byId'][video_id]
@@ -137,7 +153,7 @@ class TubiTvIE(InfoExtractor):
         }
 
 
-class TubiTvShowIE(InfoExtractor):
+class TubiTvShowIE(TubiTvBaseIE):
     IE_NAME = 'tubitv:series'
     _VALID_URL = r'https?://(?:www\.)?tubitv\.com/series/\d+/(?P<show_name>[^/?#]+)(?:/season-(?P<season>\d+))?'
     _TESTS = [{
@@ -146,28 +162,32 @@ class TubiTvShowIE(InfoExtractor):
         'info_dict': {
             'id': 'the-joy-of-painting-with-bob-ross',
         },
+        'skip': _GEO_SKIP,
     }, {
         'url': 'https://tubitv.com/series/300000435/the-saddle-club/season-1',
         'playlist_count': 26,
         'info_dict': {
             'id': 'the-saddle-club-season-1',
         },
+        'skip': _GEO_SKIP,
     }, {
         'url': 'https://tubitv.com/series/300000435/the-saddle-club/season-2',
         'playlist_count': 26,
         'info_dict': {
             'id': 'the-saddle-club-season-2',
         },
+        'skip': _GEO_SKIP,
     }, {
         'url': 'https://tubitv.com/series/300000435/the-saddle-club/',
         'playlist_mincount': 52,
         'info_dict': {
             'id': 'the-saddle-club',
         },
+        'skip': _GEO_SKIP,
     }]
 
     def _entries(self, show_url, playlist_id, selected_season):
-        webpage = self._download_webpage(show_url, playlist_id, headers=self.geo_verification_headers())
+        webpage = self._download_tubi_webpage(show_url, playlist_id)
 
         react_query_state = self._search_json(
             r'window\.__REACT_QUERY_STATE__\s*=', webpage,
