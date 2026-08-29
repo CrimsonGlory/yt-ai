@@ -1394,11 +1394,20 @@ class TwitterIE(TwitterBaseIE):
 
 class TwitterAmplifyIE(TwitterBaseIE):
     IE_NAME = 'twitter:amplify'
-    _VALID_URL = r'https?://amp\.twimg\.com/v/(?P<id>[0-9a-f\-]{36})'
+    _VALID_URL = r'https?://(?:amp\.twimg\.com/v|video\.twimg\.com/amplify_video(?:/vmap)?)/(?P<id>[\da-f-]+)'
 
-    _TEST = {
+    _TESTS = [{
+        'url': 'https://video.twimg.com/amplify_video/vmap/1409214978637271040.vmap',
+        'md5': 'b116fd221acefa62b0bafd56ae1c8a80',
+        'info_dict': {
+            'id': '1409214978637271040',
+            'ext': 'mp4',
+            'title': 'Twitter Video',
+        },
+        'params': {'format': '[protocol=https]'},
+    }, {
         'url': 'https://amp.twimg.com/v/0ba0c3c7-0af3-4c0a-bed5-7efd1ffa2951',
-        'skip': 'Site returned HTTP 5xx',
+        'skip': 'amp.twimg.com AMP player decommissioned (Fastly unknown domain)',
         'md5': 'fec25801d18a4557c5c9f33d2c379ffa',
         'info_dict': {
             'id': '0ba0c3c7-0af3-4c0a-bed5-7efd1ffa2951',
@@ -1407,40 +1416,50 @@ class TwitterAmplifyIE(TwitterBaseIE):
             'thumbnail': 're:^https?://.*',
         },
         'params': {'format': '[protocol=https]'},
-    }
+    }, {
+        'url': 'https://video.twimg.com/amplify_video/1409214978637271040/vid/1280x720/dNN9_335iJ8yf8UV.mp4',
+        'only_matching': True,
+    }]
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
+        thumbnails = []
+        webpage = None
 
-        vmap_url = self._html_search_meta(
-            'twitter:amplify:vmap', webpage, 'vmap url')
+        if video_id.isdigit():
+            vmap_url = f'https://video.twimg.com/amplify_video/vmap/{video_id}.vmap'
+        else:
+            webpage = self._download_webpage(url, video_id)
+            vmap_url = self._html_search_meta(
+                'twitter:amplify:vmap', webpage, 'vmap url')
+
         formats, _ = self._extract_formats_from_vmap_url(vmap_url, video_id)
 
-        thumbnails = []
-        thumbnail = self._html_search_meta(
-            'twitter:image:src', webpage, 'thumbnail', fatal=False)
+        if webpage:
+            thumbnail = self._html_search_meta(
+                'twitter:image:src', webpage, 'thumbnail', fatal=False)
 
-        def _find_dimension(target):
-            w = int_or_none(self._html_search_meta(
-                f'twitter:{target}:width', webpage, fatal=False))
-            h = int_or_none(self._html_search_meta(
-                f'twitter:{target}:height', webpage, fatal=False))
-            return w, h
+            def _find_dimension(target):
+                w = int_or_none(self._html_search_meta(
+                    f'twitter:{target}:width', webpage, fatal=False))
+                h = int_or_none(self._html_search_meta(
+                    f'twitter:{target}:height', webpage, fatal=False))
+                return w, h
 
-        if thumbnail:
-            thumbnail_w, thumbnail_h = _find_dimension('image')
-            thumbnails.append({
-                'url': thumbnail,
-                'width': thumbnail_w,
-                'height': thumbnail_h,
-            })
+            if thumbnail:
+                thumbnail_w, thumbnail_h = _find_dimension('image')
+                thumbnails.append({
+                    'url': thumbnail,
+                    'width': thumbnail_w,
+                    'height': thumbnail_h,
+                })
 
-        video_w, video_h = _find_dimension('player')
-        formats[0].update({
-            'width': video_w,
-            'height': video_h,
-        })
+            if formats:
+                video_w, video_h = _find_dimension('player')
+                formats[0].update({
+                    'width': video_w,
+                    'height': video_h,
+                })
 
         return {
             'id': video_id,
