@@ -879,6 +879,7 @@ from .kaltura import KalturaIE
 from .kamtape import KamTapeIE
 from .kankanews import KankaNewsIE
 from .karaoketv import KaraoketvIE
+from .karuseltv import KaruselTVIE
 from .kelbyone import KelbyOneIE
 from .kenh14 import (
     Kenh14PlaylistIE,

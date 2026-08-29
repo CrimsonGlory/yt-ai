@@ -634,6 +634,7 @@ The only reliable way to check if a site is supported is to try it.
  - **KamTape**
  - **KankaNews**
  - **Karaoketv**
+ - **karusel-tv**: Карусель
  - **Katsomo**
  - **KelbyOne**
  - **Kenh14Playlist**
