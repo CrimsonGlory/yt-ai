@@ -2534,6 +2534,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **vtv**: Extract HLS from classic `data-vid` and shorts `data-file` CDN paths
     * **weiqitv**: Extract `/v/` Clappr MP4 and `/l/` NetEase live HLS; raise login when `_vu` is withheld
     * **wevidi**: Raise an expected error when Cloudflare 302s the entire domain to YouTube; fall back to a YouTube embed when WVPlayer is missing
+    * **wimbledon**: Extract current `/video/{slug}` pages via GraphQL and Adobe Scene7 HLS; keep Brightcove for legacy `/video/media/` IDs
     * **xfileshare**: Match current Uqload TLDs (`uqload.vc` and related mirrors) after `uqload.com` started redirecting
     * **yandexdisk**: Support password-protected public files (`--video-password`)
 
