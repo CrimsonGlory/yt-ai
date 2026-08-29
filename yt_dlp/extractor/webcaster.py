@@ -11,6 +11,16 @@ from ..utils import (
 class WebcasterIE(InfoExtractor):
     _VALID_URL = r'https?://bl\.webcaster\.pro/(?:quote|media)/start/free_(?P<id>[^/]+)'
     _TESTS = [{
+        # https://otr.webcaster.pro/
+        'url': 'https://bl.webcaster.pro/media/start/free_2689e8cc10e002cd5bd5df023700541e_hd/2_9028444105/dfbbc633edf34af7254dec8baccd7a59/4652352931?sr%3D197%26type_id%3D18',
+        'md5': '2e7bd94ab83426f26eec60a4101ef49f',
+        'info_dict': {
+            'id': '2689e8cc10e002cd5bd5df023700541e_hd',
+            'ext': 'mp4',
+            'title': 'Мастер-шоу КХЛ 2017',
+            'thumbnail': r're:^https?://.*\.jpg$',
+        },
+    }, {
         # http://video.khl.ru/quotes/393859
         'url': 'http://bl.webcaster.pro/quote/start/free_c8cefd240aa593681c8d068cff59f407_hd/q393859/eb173f99dd5f558674dae55f4ba6806d/1480289104?sr%3D105%26fa%3D1%26type_id%3D18',
         'md5': '0c162f67443f30916ff1c89425dcd4cd',
@@ -20,6 +30,7 @@ class WebcasterIE(InfoExtractor):
             'title': 'Сибирь - Нефтехимик. Лучшие моменты первого периода',
             'thumbnail': r're:^https?://.*\.jpg$',
         },
+        'skip': 'expired URL',
     }, {
         'url': 'http://bl.webcaster.pro/media/start/free_6246c7a4453ac4c42b4398f840d13100_hd/2_2991109016/e8d0d82587ef435480118f9f9c41db41/4635726126',
         'only_matching': True,
@@ -65,7 +76,7 @@ class WebcasterFeedIE(InfoExtractor):
     _VALID_URL = r'https?://bl\.webcaster\.pro/feed/start/free_(?P<id>[^/]+)'
     _EMBED_REGEX = [r'<(?:object|a[^>]+class=["\']webcaster-player["\'])[^>]+data(?:-config)?=(["\']).*?config=(?P<url>https?://bl\.webcaster\.pro/feed/start/free_.*?)(?:[?&]|\1)']
     _TEST = {
-        'url': 'http://bl.webcaster.pro/feed/start/free_c8cefd240aa593681c8d068cff59f407_hd/q393859/eb173f99dd5f558674dae55f4ba6806d/1480289104',
+        'url': 'https://bl.webcaster.pro/feed/start/free_2689e8cc10e002cd5bd5df023700541e_hd/2_9028444105/dfbbc633edf34af7254dec8baccd7a59/4652352931',
         'only_matching': True,
     }
 
