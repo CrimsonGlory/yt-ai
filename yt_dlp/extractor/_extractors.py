@@ -148,6 +148,7 @@ from .audius import (
 )
 from .azmedien import AZMedienIE
 from .baidu import BaiduVideoIE
+from .balapan import BalapanIE
 from .banbye import (
     BanByeChannelIE,
     BanByeIE,

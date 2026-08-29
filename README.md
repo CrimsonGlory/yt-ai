@@ -2275,6 +2275,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 
 * **New extractors**:
     * [AnonMP4](https://github.com/CrimsonGlory/yt-ai/commit/7e1d8ceb53acea50102343d0cd3db56e1fc2dbc8) (`anonmp4.art` / `anonmp4.to`)
+    * **Balapan** (`balapan.tv`): Clappr HLS from the `player.rtrk.kz` live iframe. Request: [yt-dlp/yt-dlp#17241](https://github.com/yt-dlp/yt-dlp/issues/17241)
     * **Hobune** (`hobune.stream`): HTML5 video pages and static channel listings. Request: [yt-dlp/yt-dlp#17541](https://github.com/yt-dlp/yt-dlp/issues/17541)
     * **KamTape** (`kamtape.com`): VLPlayer `get_video` (HTML5 MP4) from watch pages. Request: [yt-dlp/yt-dlp#17508](https://github.com/yt-dlp/yt-dlp/issues/17508)
     * **Pillows** (`pillows.su`): SvelteKit `__data.json` (devalue) metadata and `api.pillows.su` original-file downloads. Request: [yt-dlp/yt-dlp#17426](https://github.com/yt-dlp/yt-dlp/issues/17426)

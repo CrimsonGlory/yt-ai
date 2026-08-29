@@ -117,6 +117,7 @@ The only reliable way to check if a site is supported is to try it.
  - **audius:track**: Audius track ID or API link. Prepend with "audius:"
  - **AZMedien**: AZ Medien videos
  - **BaiduVideo**: 百度视频
+ - **Balapan**: Balapan TV livestream
  - **BanBye**
  - **BanByeChannel**
  - **Bandcamp**
