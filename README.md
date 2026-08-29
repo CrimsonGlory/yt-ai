@@ -2545,6 +2545,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **yandexdisk**: Support password-protected public files (`--video-password`)
     * **yandexvideo**: Read preview player JSON from `<noframes>` and follow the host video URL
     * **yapfiles**: Parse the current yaplayer load URL and `file`/`file_hd` from the API instead of the old `player.init` playlist
+    * **younow**: Raise an expected error that live playback is WebRTC (Props SFU) and that public HLS/moments are gone
 
 * **Ported live-verified upstream PRs** that had not been merged yet: TED `videoPlayerData`, HearThisAt API host, VGTV HTTPS API, RTVE Play clan URLs, and xHamster sources/pagination
 

@@ -30,7 +30,7 @@ class YouNowLiveIE(InfoExtractor):
             'uploader_url': 'https://www.younow.com/AmandaPadeezy',
             'creator': 'AmandaPadeezy',
         },
-        'skip': True,
+        'skip': 'YouNow live streams use WebRTC (Props SFU); public HLS videoPath is gone',
     }
 
     @classmethod
@@ -46,7 +46,17 @@ class YouNowLiveIE(InfoExtractor):
             f'https://api.younow.com/php/api/broadcast/info/curId=0/user={username}', username)
 
         if data.get('errorCode') != 0:
-            raise ExtractorError(data['errorMsg'], expected=True)
+            raise ExtractorError(
+                data.get('errorMsg') or 'Unable to extract broadcast', expected=True)
+
+        # Live playback moved to PropsVideo WebRTC. The old HLS endpoint
+        # (`broadcast/videoPath`) now returns JSON `{"errorCode":0}` rather
+        # than an m3u8 playlist, and hls.younow.com archive segments are
+        # S3 AccessDenied.
+        if data.get('media') is None:
+            raise ExtractorError(
+                'YouNow live streams use WebRTC and cannot be downloaded',
+                expected=True)
 
         uploader = try_get(
             data, lambda x: x['user']['profileUrlString'],
@@ -66,7 +76,8 @@ class YouNowLiveIE(InfoExtractor):
             'view_count': int_or_none(data.get('viewers')),
             'like_count': int_or_none(data.get('likes')),
             'formats': [{
-                'url': '{}/broadcast/videoPath/hls=1/broadcastId={}/channelId={}'.format(CDN_API_BASE, data['broadcastId'], data['userId']),
+                'url': '{}/broadcast/videoPath/hls=1/broadcastId={}/channelId={}'.format(
+                    CDN_API_BASE, data['broadcastId'], data['userId']),
                 'ext': 'mp4',
                 'protocol': 'm3u8',
             }],
@@ -119,6 +130,7 @@ class YouNowChannelIE(InfoExtractor):
             'title': 'its_Kateee_ moments',
         },
         'playlist_mincount': 8,
+        'skip': 'channel user gone; YouNow moments HLS CDN returns S3 AccessDenied',
     }
 
     def _entries(self, username, channel_id):
@@ -180,6 +192,7 @@ class YouNowMomentIE(InfoExtractor):
             'uploader': 'GABO...',
             'uploader_id': '35917228',
         },
+        'skip': 'sample moment gone; YouNow moments HLS CDN (hls.younow.com) returns S3 AccessDenied',
     }
 
     @classmethod
@@ -191,4 +204,10 @@ class YouNowMomentIE(InfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url)
         item = self._download_json(MOMENT_URL_FORMAT % video_id, video_id)
-        return _extract_moment(item['item'])
+        moment = item.get('item') if isinstance(item, dict) else None
+        if not moment:
+            raise ExtractorError(
+                (item.get('errorMsg') if isinstance(item, dict) else None)
+                or 'Unable to extract moment',
+                expected=True)
+        return _extract_moment(moment)
