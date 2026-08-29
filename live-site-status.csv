@@ -1080,7 +1080,7 @@ youtube:subscriptions,false,NULL,false,false
 youtube:user,false,NULL,false,false
 youtube:watchlater,false,NULL,false,false
 zaiko.io,false,NULL,false,false
-zan-live.com,true,NULL,false,false
+zan-live.com,true,NULL,true,false
 zapiks.fr,true,2026-08-24,false,false
 zattoo.com,false,NULL,false,false
 zdf.de,true,2026-08-24,false,false
