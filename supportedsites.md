@@ -1101,6 +1101,7 @@ The only reliable way to check if a site is supported is to try it.
  - **QuantumTVRecordings**: [*quantumtv*](## "netrc machine")
  - **R7**
  - **R7Article**
+ - **racingtv**: Racing TV
  - **Radiko**
  - **RadikoRadio**
  - **radio.de**

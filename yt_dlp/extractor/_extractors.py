@@ -1527,6 +1527,7 @@ from .r7 import (
     R7IE,
     R7ArticleIE,
 )
+from .racingtv import RacingTVIE
 from .radiko import (
     RadikoIE,
     RadikoRadioIE,

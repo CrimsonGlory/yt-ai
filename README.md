@@ -2278,6 +2278,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Hobune** (`hobune.stream`): HTML5 video pages and static channel listings. Request: [yt-dlp/yt-dlp#17541](https://github.com/yt-dlp/yt-dlp/issues/17541)
     * **KamTape** (`kamtape.com`): VLPlayer `get_video` (HTML5 MP4) from watch pages. Request: [yt-dlp/yt-dlp#17508](https://github.com/yt-dlp/yt-dlp/issues/17508)
     * **PreserveTube** (`preservetube.com`): Public `/video/{id}` JSON API and HTML5 fallback; channel archives from `/channel/{id}/videos`. Request: [yt-dlp/yt-dlp#17540](https://github.com/yt-dlp/yt-dlp/issues/17540)
+    * **RacingTV** (`racingtv.com`): Public `api.racingtv.com` on-demand JSON (client `API-KEY`) and HLS after the preroll token wait. Request: [yt-dlp/yt-dlp#17503](https://github.com/yt-dlp/yt-dlp/issues/17503)
 
 * **Extractor fixes** (verified on live sites where possible):
     * **20min**: Extract videos from the Unity API instead of the old podcast URLs
