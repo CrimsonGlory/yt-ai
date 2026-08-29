@@ -1,18 +1,34 @@
 from .common import InfoExtractor
 from ..utils import (
+    ExtractorError,
     int_or_none,
     str_or_none,
-    try_get,
     url_or_none,
 )
+from ..utils.traversal import traverse_obj
 
 
 class XinpianchangIE(InfoExtractor):
     _VALID_URL = r'https?://(www\.)?xinpianchang\.com/(?P<id>a\d+)'
     IE_DESC = '新片场'
     _TESTS = [{
+        'url': 'https://www.xinpianchang.com/a13798806',
+        'md5': '2118d84226070b2c95406832783301d6',
+        'info_dict': {
+            'id': 'a13798806',
+            'ext': 'mp4',
+            'title': '「无人驾驶」Driverless｜AIGC短片',
+            'description': 'md5:ab84697f661cce8adf52dcf3c0c59c1e',
+            'duration': 519,
+            'thumbnail': r're:^https?://oss-xpc0\.xpccdn\.com/',
+            'uploader': '田',
+            'uploader_id': '10054991',
+            'categories': ['剧情短片', '科幻', 'AIGC', '创意'],
+            'tags': ['AIGC', 'AI短片', '剧情短片', 'AI'],
+        },
+    }, {
         'url': 'https://www.xinpianchang.com/a11766551',
-        'skip': 'HTTP Error 403',
+        'md5': '0db6e8566cb82c01ec12b587b4a78cf8',
         'info_dict': {
             'id': 'a11766551',
             'ext': 'mp4',
@@ -27,7 +43,7 @@ class XinpianchangIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.xinpianchang.com/a11762904',
-        'skip': 'HTTP Error 403',
+        'skip': 'DASH audio URL has no host',
         'info_dict': {
             'id': 'a11762904',
             'ext': 'mp4',
@@ -45,16 +61,29 @@ class XinpianchangIE(InfoExtractor):
         'only_matching': True,
     }]
 
+    def _extract_video_data(self, url, video_id):
+        # Article HTML is gated by a Wangsu JS challenge; Next.js data is public.
+        homepage = self._download_webpage(
+            'https://www.xinpianchang.com/', video_id, note='Downloading homepage')
+        build_id = self._search_nextjs_data(homepage, video_id)['buildId']
+        article = self._download_json(
+            f'https://www.xinpianchang.com/_next/data/{build_id}/{video_id}.json',
+            video_id, note='Downloading article data',
+            headers={'Referer': url, 'X-Nextjs-Data': '1'})
+        video_data = traverse_obj(article, ('pageProps', 'detail', 'video', {dict}))
+        if not traverse_obj(video_data, 'vid'):
+            raise ExtractorError('Unable to extract video data', expected=True)
+        return video_data
+
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id=video_id, headers={'Referer': url})
-        video_data = self._search_nextjs_data(webpage, video_id)['props']['pageProps']['detail']['video']
+        video_data = self._extract_video_data(url, video_id)
 
         data = self._download_json(
             f'https://mod-api.xinpianchang.com/mod/api/v2/media/{video_data["vid"]}', video_id,
             query={'appKey': video_data['appKey']})['data']
         formats, subtitles = [], {}
-        for k, v in data.get('resource').items():
+        for k, v in (data.get('resource') or {}).items():
             if k in ('dash', 'hls'):
                 v_url = v.get('url')
                 if not v_url:
@@ -72,10 +101,11 @@ class XinpianchangIE(InfoExtractor):
                     'height': int_or_none(prog.get('height')),
                     'ext': 'mp4',
                     'http_headers': {
-                        # NB: Server returns 403 without the Range header
+                        # CDN auth requires Range + Referer
                         'Range': 'bytes=0-',
+                        'Referer': 'https://www.xinpianchang.com/',
                     },
-                } for prog in v if prog.get('url') or []])
+                } for prog in v if url_or_none(prog.get('url'))])
 
         return {
             'id': video_id,
@@ -85,8 +115,11 @@ class XinpianchangIE(InfoExtractor):
             'categories': data.get('categories'),
             'tags': data.get('keywords'),
             'thumbnail': data.get('cover'),
-            'uploader': try_get(data, lambda x: x['owner']['username']),
-            'uploader_id': str_or_none(try_get(data, lambda x: x['owner']['id'])),
+            'uploader': traverse_obj(data, ('owner', 'username', {str})),
+            'uploader_id': traverse_obj(data, ('owner', 'id', {str_or_none})),
             'formats': formats,
             'subtitles': subtitles,
+            'http_headers': {
+                'Referer': 'https://www.xinpianchang.com/',
+            },
         }
