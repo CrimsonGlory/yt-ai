@@ -19,6 +19,22 @@ class UstreamIE(InfoExtractor):
     IE_NAME = 'ustream'
     _EMBED_REGEX = [r'<iframe[^>]+?src=(["\'])(?P<url>https?://(?:www\.)?(?:ustream\.tv|video\.ibm\.com)/embed/.+?)\1']
     _TESTS = [{
+        'url': 'https://video.ibm.com/recorded/132935304',
+        'md5': '70d045c82d3712f9ce282b8d3f51f735',
+        'info_dict': {
+            'id': '132935304',
+            'ext': 'mp4',
+            'title': 'IBM Video Streaming: Demo',
+            'description': 'md5:0c0e702bbf8b5c53604bd52bf0a02477',
+            'timestamp': 1690543925,
+            'upload_date': '20230728',
+            'uploader': 'Master Demo',
+            'uploader_id': '41977162',
+            'duration': 821.909,
+            'view_count': int,
+            'thumbnail': r're:https?://.*\.jpg',
+        },
+    }, {
         'url': 'http://www.ustream.tv/recorded/20274954',
         'skip': 'video gone',
         'md5': '088f151799e8f572f84eb62f17d73e5c',
@@ -82,7 +98,7 @@ class UstreamIE(InfoExtractor):
             extra_note = ''
 
         conn_info = self._download_json(
-            f'http://r{rnd(1e8)}-1-{video_id}-recorded-lp-live.ums.ustream.tv/1/ustream',
+            f'https://r{rnd(1e8)}-1-{video_id}-recorded-lp-live.ums.ustream.tv/1/ustream',
             video_id, note='Downloading connection info' + extra_note,
             query={
                 'type': 'viewer',
@@ -98,7 +114,7 @@ class UstreamIE(InfoExtractor):
         connection_id = conn_info[0]['args'][0]['connectionId']
 
         return self._download_json(
-            f'http://{host}/1/ustream?connectionId={connection_id}',
+            f'https://{host}/1/ustream?connectionId={connection_id}',
             video_id, note='Downloading stream info' + extra_note)
 
     def _get_streams(self, url, video_id, app_id_ver):
@@ -107,8 +123,10 @@ class UstreamIE(InfoExtractor):
             stream_info = self._get_stream_info(
                 url, video_id, app_id_ver,
                 extra_note=f' (try {trial_count + 1})' if trial_count > 0 else '')
-            if 'stream' in stream_info[0]['args'][0]:
-                return stream_info[0]['args'][0]['stream']
+            for item in stream_info or []:
+                stream = (item.get('args') or [{}])[0].get('stream')
+                if stream:
+                    return stream
         return []
 
     def _parse_segmented_mp4(self, dash_stream_info):
@@ -164,7 +182,7 @@ class UstreamIE(InfoExtractor):
         # some sites use this embed format (see: https://github.com/ytdl-org/youtube-dl/issues/2990)
         if m.group('type') == 'embed/recorded':
             video_id = m.group('id')
-            desktop_url = 'http://www.ustream.tv/recorded/' + video_id
+            desktop_url = 'https://video.ibm.com/recorded/' + video_id
             return self.url_result(desktop_url, 'Ustream')
         if m.group('type') == 'embed':
             video_id = m.group('id')

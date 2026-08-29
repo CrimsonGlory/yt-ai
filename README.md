@@ -2516,6 +2516,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **unity**: Follow YouTube embeds on current Unity Learn tutorial pages (including `learn.unity.com`)
     * **urort**: Extract S3 `data-trackurl` from current `/track/` pages
     * **usatoday**: Extract Gannett CDN HLS from `data-c-vpd` instead of Brightcove
+    * **ustream**: Fetch IBM Video Streaming HLS over HTTPS UMS when `media_urls` is empty
     * **vqq:video**: Fall back to the union / float_vinfo2 APIs when pinia/OG metadata is gone
     * **videa**: Support player URLs with an `f=` parameter
     * **voxmedia**: Follow Volume embeds from JSON-LD / `volume.vox-cdn.com`, then YouTube
