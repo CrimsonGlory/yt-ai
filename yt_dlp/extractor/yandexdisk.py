@@ -34,6 +34,19 @@ class YandexDiskIE(InfoExtractor):
         )/(?:[di]/|public.*?\bhash=)(?P<id>[^/?#&]+)'''
 
     _TESTS = [{
+        'url': 'https://yadi.sk/i/TM2xsIVsgjY4uw',
+        'md5': '00fb49914c05b038ab64784d54bf09fb',
+        'info_dict': {
+            'id': 'TM2xsIVsgjY4uw',
+            'ext': 'mp4',
+            'title': 'Cars для суперсет 18.07.2025 14-19-50 - запись.mp4',
+            'duration': 704.672,
+            'uploader': 'Nikolai Andreev',
+            'uploader_id': '1130000069560621',
+            'view_count': int,
+        },
+        'expected_warnings': ['Unable to download JSON metadata'],
+    }, {
         'url': 'https://yadi.sk/i/VdOeDou8eZs6Y',
         'skip': 'video gone',
         'md5': 'a4a8d52958c8fddcf9845935070402ae',
