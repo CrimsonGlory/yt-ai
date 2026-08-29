@@ -21,6 +21,10 @@ class ZingMp3BaseIE(InfoExtractor):
     _GEO_COUNTRIES = ['VN']
     _DOMAIN = 'https://zingmp3.vn'
     _PER_PAGE = 50
+    _API_KEY = 'X5BM3w8N7MKozC0B85o4KMlzLZKhV00y'
+    _API_SECRET = b'acOrvUS15XRW2o9JksiK1KgQ6Vbds8ZW'
+    _API_VERSION = '1.20.4'
+    _SIGNED_PARAMS = ('ctime', 'id', 'type', 'page', 'count', 'version')
     _API_SLUGS = {
         # Audio/video
         'bai-hat': '/api/v2/page/get/song',
@@ -57,14 +61,23 @@ class ZingMp3BaseIE(InfoExtractor):
 
     def _api_url(self, url_type, params):
         api_slug = self._API_SLUGS[url_type]
-        params.update({'ctime': '1'})
-        sha256 = hashlib.sha256(
-            ''.join(f'{k}={v}' for k, v in sorted(params.items())).encode()).hexdigest()
+        params = {
+            **params,
+            'ctime': '1',
+            'version': self._API_VERSION,
+        }
+        sign_params = {
+            k: v for k, v in sorted(params.items())
+            if k in self._SIGNED_PARAMS and v not in (None, '')
+        }
+        hash_input = ''.join(
+            f'{urllib.parse.quote(str(k), safe="")}={urllib.parse.quote(str(v), safe="")}'
+            for k, v in sign_params.items())
+        sha256 = hashlib.sha256(hash_input.encode()).hexdigest()
         data = {
             **params,
-            'apiKey': 'X5BM3w8N7MKozC0B85o4KMlzLZKhV00y',
-            'sig': hmac.new(b'acOrvUS15XRW2o9JksiK1KgQ6Vbds8ZW',
-                            f'{api_slug}{sha256}'.encode(), hashlib.sha512).hexdigest(),
+            'apiKey': self._API_KEY,
+            'sig': hmac.new(self._API_SECRET, f'{api_slug}{sha256}'.encode(), hashlib.sha512).hexdigest(),
         }
         return f'{self._DOMAIN}{api_slug}?{urllib.parse.urlencode(data)}'
 
@@ -105,7 +118,7 @@ class ZingMp3IE(ZingMp3BaseIE):
         'url': 'https://mp3.zing.vn/bai-hat/Xa-Mai-Xa-Bao-Thy/ZWZB9WAB.html',
         'md5': 'ead7ae13693b3205cbc89536a077daed',
         'info_dict': {
-            'id': 'ZWZB9WAB',
+            'id': 'LJx39Fls9Z37',
             'title': 'Xa Mãi Xa',
             'ext': 'mp3',
             'thumbnail': r're:^https?://.+\.jpg',
@@ -119,6 +132,8 @@ class ZingMp3IE(ZingMp3BaseIE):
             'artist': 'Bảo Thy',
             'album': 'Special Album',
             'album_artist': 'Bảo Thy',
+            'artists': ['Bảo Thy'],
+            'album_artists': ['Bảo Thy'],
         },
     }, {
         'url': 'https://zingmp3.vn/video-clip/Suong-Hoa-Dua-Loi-K-ICM-RYO/ZO8ZF7C7.html',
@@ -139,18 +154,21 @@ class ZingMp3IE(ZingMp3BaseIE):
         'url': 'https://zingmp3.vn/bai-hat/Nguoi-Yeu-Toi-Lanh-Lung-Sat-Da-Mr-Siro/ZZ6IW7OU.html',
         'md5': '3e9f7a9bd0d965573dbff8d7c68b629d',
         'info_dict': {
-            'id': 'ZZ6IW7OU',
+            'id': '2j1pTAIC3fob',
             'title': 'Người Yêu Tôi Lạnh Lùng Sắt Đá',
             'ext': 'mp3',
             'thumbnail': r're:^https?://.+\.jpg',
             'duration': 303,
             'track': 'Người Yêu Tôi Lạnh Lùng Sắt Đá',
             'artist': 'Mr. Siro',
-            'album': 'Người Yêu Tôi Lạnh Lùng Sắt Đá (Single)',
+            'album': 'Việt Nam',
             'album_artist': 'Mr. Siro',
+            'artists': ['Mr. Siro'],
+            'album_artists': ['Mr. Siro'],
         },
     }, {
         'url': 'https://zingmp3.vn/eps/Cham-x-Ban-Noi-Goi-La-Nha/ZZD9ACWI.html',
+        'skip': 'Podcasts are no longer supported',
         'md5': 'd52f9f63e2631e004e4f15188eedcf80',
         'info_dict': {
             'id': 'ZZD9ACWI',
