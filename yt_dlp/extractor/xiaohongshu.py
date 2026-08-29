@@ -14,6 +14,19 @@ class XiaoHongShuIE(InfoExtractor):
     _VALID_URL = r'https?://www\.xiaohongshu\.com/(?:explore|discovery/item)/(?P<id>[\da-f]+)'
     IE_DESC = '小红书'
     _TESTS = [{
+        'url': 'https://www.xiaohongshu.com/explore/6a659058000000001102f1e0?xsec_token=ABUgG3KfS3vZg1s5gjDbRERjrojNlutU67j2MvIkDz3lw=',
+        'md5': '8b932b0f5a9f52448f12edef3e4c358e',
+        'info_dict': {
+            'id': '6a659058000000001102f1e0',
+            'ext': 'mp4',
+            'uploader_id': '5b9767cffc027700014d8f4c',
+            'description': '希望奥德赛出来打脸我。\n#奥德赛[话题]# #tomholland[话题]# #安妮海瑟薇[话题]#',
+            'title': '这…小蜘蛛的演技…？？？',
+            'tags': ['奥德赛', 'tomholland', '安妮海瑟薇'],
+            'duration': 22.491,
+            'thumbnail': r're:https?://sns-webpic-qc\.xhscdn\.com/\d+/[\da-f]+/[^/]+',
+        },
+    }, {
         'url': 'https://www.xiaohongshu.com/explore/6411cf99000000001300b6d9',
         'md5': '2a87a77ddbedcaeeda8d7eae61b61228',
         'info_dict': {
@@ -26,6 +39,7 @@ class XiaoHongShuIE(InfoExtractor):
             'duration': 101.726,
             'thumbnail': r're:https?://sns-webpic-qc\.xhscdn\.com/\d+/[a-z0-9]+/[\w]+',
         },
+        'skip': 'video gone',
     }, {
         'url': 'https://www.xiaohongshu.com/discovery/item/674051740000000007027a15?xsec_token=CBgeL8Dxd1ZWBhwqRd568gAZ_iwG-9JIf9tnApNmteU2E=',
         'info_dict': {
@@ -38,6 +52,7 @@ class XiaoHongShuIE(InfoExtractor):
             'thumbnail': r're:https?://sns-webpic-qc\.xhscdn\.com/\d+/[\da-f]+/[^/]+',
             'tags': ['广州', '深圳', '香港', '街头采访', '是你喜欢的类型'],
         },
+        'skip': 'video gone',
     }]
 
     def _real_extract(self, url):
