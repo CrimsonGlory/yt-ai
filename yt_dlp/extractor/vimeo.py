@@ -1850,9 +1850,25 @@ class VimeoProIE(VimeoBaseInfoExtractor):
     IE_NAME = 'vimeo:pro'
     _VALID_URL = r'https?://(?:www\.)?vimeopro\.com/[^/?#]+/(?P<slug>[^/?#]+)(?:(?:/videos?/(?P<id>[0-9]+)))?'
     _TESTS = [{
+        'url': 'https://vimeopro.com/videopaper/main/video/8757295',
+        'md5': 'dc8d59f2ca68646c1248d802bd8d326e',
+        'info_dict': {
+            'id': '8757295',
+            'ext': 'mp4',
+            'title': 'Rungis',
+            'description': 'md5:e4e235f28310eecc94f0e1ae03bd0a58',
+            'uploader': 'Didier Feldmann',
+            'uploader_id': 'videopaper',
+            'uploader_url': 'https://vimeo.com/videopaper',
+            'duration': 125,
+            'thumbnail': r're:https?://i\.vimeocdn\.com/video/.+',
+        },
+        'params': {'format': 'best[protocol=https]'},
+        'expected_warnings': ['Failed to parse XML: not well-formed'],
+    }, {
         # Vimeo URL derived from video_id
         'url': 'http://vimeopro.com/openstreetmapus/state-of-the-map-us-2013/video/68093876',
-        'skip': 'Login required',
+        'skip': 'portfolio lapsed',
         'md5': '3b5ca6aa22b60dfeeadf50b72e44ed82',
         'note': 'Vimeo Pro video (#1197)',
         'info_dict': {
