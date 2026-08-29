@@ -5,7 +5,6 @@ from ..utils import (
     bug_reports_message,
     determine_ext,
     int_or_none,
-    lowercase_escape,
     parse_qs,
     qualities,
     try_get,
@@ -150,19 +149,27 @@ class YandexVideoIE(InfoExtractor):
 class YandexVideoPreviewIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?yandex\.\w{2,3}(?:\.(?:am|ge|il|tr))?/video/preview(?:/?\?.*?filmId=|/)(?P<id>\d+)'
     _TESTS = [{  # Odnoklassniki
+        'url': 'https://yandex.ru/video/preview/11632508363907059672',
+        'md5': 'e5addfff7648307947655cec35859ead',
+        'info_dict': {
+            'id': '2567073041049',
+            'ext': 'mp4',
+            'title': 'Calvin Harris - Summer (Official Video)',
+            'duration': 234,
+            'upload_date': '20210730',
+            'age_limit': 0,
+            'like_count': int,
+            'thumbnail': r're:https?://.*okcdn\.ru/',
+        },
+        'params': {'format': 'mobile'},
+    }, {  # Odnoklassniki
         'url': 'https://yandex.ru/video/preview/?filmId=10682852472978372885&text=summer',
         'info_dict': {
             'id': '1352565459459',
             'ext': 'mp4',
-            'like_count': int,
-            'upload_date': '20191202',
-            'age_limit': 0,
-            'duration': 196,
-            'thumbnail': 'https://i.mycdn.me/videoPreview?id=544866765315&type=37&idx=13&tkn=TY5qjLYZHxpmcnK8U2LgzYkgmaU&fn=external_8',
-            'uploader_id': '481054701571',
             'title': 'LOFT - summer, summer, summer HD',
-            'uploader': 'АРТЁМ КУДРОВ',
         },
+        'skip': 'video gone',
     }, {  # youtube
         'url': 'https://yandex.ru/video/preview/?filmId=4479424425337895262&source=main_redirect&text=видео&utm_source=main_stripe_big',
         'only_matching': True,
@@ -183,9 +190,15 @@ class YandexVideoPreviewIE(InfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
-        data_raw = self._search_regex(r'window.Ya.__inline_params__\s*=\s*JSON.parse\(\'([^"]+?\\u0022video\\u0022:[^"]+?})\'\);', webpage, 'data_raw')
-        data_json = self._parse_json(data_raw, video_id, transform_source=lowercase_escape)
-        return self.url_result(data_json['video']['url'])
+        data = self._search_json(r'<noframes[^>]*>', webpage, 'player data', video_id)
+        video_url = traverse_obj(data, (
+            'clips', 'dups', (video_id, ...), 'host', 'href', {url_or_none}, any,
+        )) or traverse_obj(data, (
+            'clips', 'items', (video_id, ...), 'url', {url_or_none}, any,
+        ))
+        if not video_url:
+            self.raise_no_formats('No video URL found', expected=True, video_id=video_id)
+        return self.url_result(video_url)
 
 
 class ZenYandexBaseIE(InfoExtractor):
