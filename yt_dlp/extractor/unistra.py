@@ -5,8 +5,7 @@ from ..utils import qualities
 
 
 class UnistraIE(InfoExtractor):
-    _VALID_URL = r'https?://utv\.unistra\.fr/(?:index|video)\.php\?id_video\=(?P<id>\d+)'
-
+    _VALID_URL = r'https?://utv\.unistra\.fr/(?:index|video)\.php\?id_video=(?P<id>\d+)'
     _TESTS = [
         {
             'url': 'http://utv.unistra.fr/video.php?id_video=154',
@@ -15,7 +14,8 @@ class UnistraIE(InfoExtractor):
                 'id': '154',
                 'ext': 'mp4',
                 'title': 'M!ss Yella',
-                'description': 'md5:104892c71bd48e55d70b902736b81bbf',
+                'description': 'md5:280c67ed7e363f5eeacef6f1a62b2389',
+                'thumbnail': r're:https?://utv\.unistra\.fr/img/img_video/.+',
             },
         },
         {
@@ -25,35 +25,49 @@ class UnistraIE(InfoExtractor):
                 'id': '437',
                 'ext': 'mp4',
                 'title': 'Prix Louise Weiss 2014',
-                'description': 'md5:cc3a8735f079f4fb6b0b570fc10c135a',
+                'description': 'md5:7a94e0aa49b74a7c2d5c738bc83703d9',
+                'thumbnail': r're:https?://utv\.unistra\.fr/img/img_video/.+',
             },
         },
     ]
+    _VOD_BASE = 'https://vod-stream.di.unistra.fr/vod-flash/video/vod'
 
     def _real_extract(self, url):
-        mobj = self._match_valid_url(url)
-        video_id = mobj.group('id')
-
+        video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
 
-        files = set(re.findall(r'file\s*:\s*"(/[^"]+)"', webpage))
-
         quality = qualities(['SD', 'HD'])
-        formats = []
-        for file_path in files:
-            format_id = 'HD' if file_path.endswith('-HD.mp4') else 'SD'
-            formats.append({
-                'url': f'http://vod-flash.u-strasbg.fr:8080{file_path}',
-                'format_id': format_id,
-                'quality': quality(format_id),
-            })
+        formats, seen = [], set()
+        for entry in self._parse_html5_media_entries(url, webpage, video_id):
+            for fmt in entry.get('formats') or []:
+                media_url = fmt.get('url')
+                if not media_url or media_url in seen:
+                    continue
+                seen.add(media_url)
+                format_id = (
+                    'HD' if media_url.endswith('-HD.mp4')
+                    else 'SD' if media_url.endswith('-SD.mp4') else None)
+                if format_id:
+                    fmt['format_id'] = format_id
+                    fmt['quality'] = quality(format_id)
+                formats.append(fmt)
+
+        if not formats:
+            files = set(re.findall(r'file\s*:\s*"(/[^"]+)"', webpage))
+            for file_path in files:
+                format_id = 'HD' if file_path.endswith('-HD.mp4') else 'SD'
+                formats.append({
+                    'url': f'{self._VOD_BASE}{file_path}',
+                    'format_id': format_id,
+                    'quality': quality(format_id),
+                })
 
         title = self._html_search_regex(
             r'<title>UTV - (.*?)</', webpage, 'title')
         description = self._html_search_regex(
             r'<meta name="Description" content="(.*?)"', webpage, 'description', flags=re.DOTALL)
         thumbnail = self._search_regex(
-            r'image: "(.*?)"', webpage, 'thumbnail')
+            r'image:\s*"(.*?)"', webpage, 'thumbnail', default=None)
 
         return {
             'id': video_id,
