@@ -1,17 +1,9 @@
-import re
-import urllib.parse
-
 from .common import InfoExtractor
-from ..networking.exceptions import HTTPError
 from ..utils import (
-    ExtractorError,
-    determine_ext,
     int_or_none,
     parse_iso8601,
-    qualities,
     traverse_obj,
     try_get,
-    update_url_query,
     url_or_none,
     urljoin,
 )
@@ -36,55 +28,50 @@ class TVPlayIE(InfoExtractor):
                     '''
     _TESTS = [
         {
+            'url': 'http://www.tvplay.lv/parraides/fiba-horvatija---latvija-speles-apskats/12265110',
+            'md5': 'e6fbb9a80f1c9ab2f56d53413f8637b4',
+            'info_dict': {
+                'id': '12265110',
+                'ext': 'mp4',
+                'title': 'FIBA. Horvātija - Latvija. Spēles apskats',
+                'duration': 199,
+                'timestamp': 1787861069,
+                'upload_date': '20260827',
+                'series': 'FIBA Pasaules kauss',
+                'season': 'FIBA Pasaules kausa kvalifikācija',
+                'season_number': 2026,
+                'release_year': 2026,
+                'thumbnail': r're:https://static3\.go3\.tv/.+',
+            },
+            'params': {
+                'format': 'preview',
+            },
+        },
+        {
             'url': 'http://www.tvplay.lv/parraides/vinas-melo-labak/418113?autostart=true',
-            'md5': 'a1612fe0849455423ad8718fe049be21',
+            'skip': 'Old MTG playapi.mtgx.tv shut down',
             'info_dict': {
                 'id': '418113',
                 'ext': 'mp4',
                 'title': 'Kādi ir īri? - Viņas melo labāk',
-                'description': 'Baiba apsmej īrus, kādi tie ir un ko viņi dara.',
-                'series': 'Viņas melo labāk',
-                'season': '2.sezona',
-                'season_number': 2,
-                'duration': 25,
-                'timestamp': 1406097056,
-                'upload_date': '20140723',
             },
         },
         {
             'url': 'http://play.tv3.lt/programos/moterys-meluoja-geriau/409229?autostart=true',
+            'skip': 'Old MTG playapi.mtgx.tv shut down',
             'info_dict': {
                 'id': '409229',
                 'ext': 'flv',
                 'title': 'Moterys meluoja geriau',
-                'description': 'md5:9aec0fc68e2cbc992d2a140bd41fa89e',
-                'series': 'Moterys meluoja geriau',
-                'episode_number': 47,
-                'season': '1 sezonas',
-                'season_number': 1,
-                'duration': 1330,
-                'timestamp': 1403769181,
-                'upload_date': '20140626',
-            },
-            'params': {
-                # rtmp download
-                'skip_download': True,
             },
         },
         {
             'url': 'http://www.tv3play.ee/sisu/kodu-keset-linna/238551?autostart=true',
+            'skip': 'Old MTG playapi.mtgx.tv shut down',
             'info_dict': {
                 'id': '238551',
                 'ext': 'flv',
                 'title': 'Kodu keset linna 398537',
-                'description': 'md5:7df175e3c94db9e47c0d81ffa5d68701',
-                'duration': 1257,
-                'timestamp': 1292449761,
-                'upload_date': '20101215',
-            },
-            'params': {
-                # rtmp download
-                'skip_download': True,
             },
         },
         {
@@ -110,105 +97,109 @@ class TVPlayIE(InfoExtractor):
         },
     ]
 
-    def _real_extract(self, url):
-        video_id = self._match_id(url)
-        geo_country = self._search_regex(
-            r'https?://[^/]+\.([a-z]{2})', url,
-            'geo country', default=None)
-        if geo_country:
-            self._initialize_geo_bypass({'countries': [geo_country.upper()]})
-        video = self._download_json(
-            f'http://playapi.mtgx.tv/v3/videos/{video_id}', video_id, 'Downloading video JSON')
+    def _extract_go3_vod(self, video_id, country, is_live=False):
+        # play.tv3.lv is behind a Cloudflare managed challenge; the shared
+        # frontend API on play.tv3.lt serves the same catalog per tenant.
+        country = (country or 'lv').upper()
+        tenant = f'AVOD_{country}'
+        api_base = 'https://play.tv3.lt'
+        api_path = 'lives/programmes' if is_live else 'vods'
+        data = self._download_json(
+            f'{api_base}/api/products/{api_path}/{video_id}', video_id,
+            query={'platform': 'BROWSER', 'lang': country, 'tenant': tenant})
 
-        title = video['title']
+        if traverse_obj(data, 'loginRequired'):
+            self.raise_login_required()
 
-        try:
-            streams = self._download_json(
-                f'http://playapi.mtgx.tv/v3/videos/stream/{video_id}',
-                video_id, 'Downloading streams JSON')
-        except ExtractorError as e:
-            if isinstance(e.cause, HTTPError) and e.cause.status == 403:
-                msg = self._parse_json(e.cause.response.read().decode('utf-8'), video_id)
-                raise ExtractorError(msg['msg'], expected=True)
-            raise
+        video_type = 'CATCHUP' if is_live else 'MOVIE'
+        stream_id = data.get('programRecordingId') if is_live else video_id
+        stream = self._download_json(
+            f'{api_base}/api/products/{stream_id}/videos/playlist', video_id,
+            query={
+                'videoType': video_type,
+                'platform': 'BROWSER',
+                'lang': country,
+                'tenant': tenant,
+            })
 
-        quality = qualities(['hls', 'medium', 'high'])
-        formats = []
-        for format_id, video_url in streams.get('streams', {}).items():
-            video_url = url_or_none(video_url)
-            if not video_url:
-                continue
-            ext = determine_ext(video_url)
-            if ext == 'f4m':
-                formats.extend(self._extract_f4m_formats(
-                    update_url_query(video_url, {
-                        'hdcore': '3.5.0',
-                        'plugin': 'aasp-3.5.0.151.81',
-                    }), video_id, f4m_id='hds', fatal=False))
-            elif ext == 'm3u8':
-                formats.extend(self._extract_m3u8_formats(
-                    video_url, video_id, 'mp4', 'm3u8_native',
-                    m3u8_id='hls', fatal=False))
-            else:
-                fmt = {
-                    'format_id': format_id,
-                    'quality': quality(format_id),
-                    'ext': ext,
-                }
-                if video_url.startswith('rtmp'):
-                    m = re.search(
-                        r'^(?P<url>rtmp://[^/]+/(?P<app>[^/]+))/(?P<playpath>.+)$', video_url)
-                    if not m:
-                        continue
-                    fmt.update({
-                        'ext': 'flv',
-                        'url': m.group('url'),
-                        'app': m.group('app'),
-                        'play_path': m.group('playpath'),
-                        'preference': -1,
-                    })
-                else:
-                    fmt.update({
-                        'url': video_url,
-                    })
-                formats.append(fmt)
+        def _abs_url(value):
+            if not value:
+                return value
+            if value.startswith('//'):
+                return 'https:' + value
+            return urljoin('https://play.tv3.lt/', value)
 
-        if not formats and video.get('is_geo_blocked'):
-            self.raise_geo_restricted(
-                'This content might not be available in your country due to copyright reasons',
-                metadata_available=True)
+        formats, subtitles = [], {}
+        hls = traverse_obj(stream, ('sources', 'HLS', 0, 'src'), expected_type=url_or_none)
+        if hls:
+            fmts, subs = self._extract_m3u8_formats_and_subtitles(
+                _abs_url(hls), video_id, 'mp4', 'm3u8_native',
+                m3u8_id='hls', fatal=False)
+            # Master playlists omit EXT-X-KEY; FairPlay is only on variants.
+            if stream.get('drm'):
+                for fmt in fmts:
+                    fmt['has_drm'] = True
+            formats.extend(fmts)
+            self._merge_subtitles(subs, target=subtitles)
 
-        # TODO: webvtt in m3u8
-        subtitles = {}
-        sami_path = video.get('sami_path')
-        if sami_path:
-            lang = self._search_regex(
-                r'_([a-z]{2})\.xml', sami_path, 'lang',
-                default=urllib.parse.urlparse(url).netloc.rsplit('.', 1)[-1])
-            subtitles[lang] = [{
-                'url': sami_path,
-            }]
+        # Full streams are FairPlay/Widevine; public clips still publish a
+        # clear preview MP4 next to preview.json.
+        preview = traverse_obj(data, 'previewUrl', expected_type=url_or_none)
+        if preview:
+            preview = _abs_url(preview)
+            if preview.endswith('preview.json'):
+                preview = preview[:-len('preview.json')] + 'preview.mp4'
+            formats.append({
+                'url': preview,
+                'ext': 'mp4',
+                'format_id': 'preview',
+                'format_note': 'preview',
+                'quality': -10,
+            })
 
-        series = video.get('format_title')
-        episode_number = int_or_none(video.get('format_position', {}).get('episode'))
-        season = video.get('_embedded', {}).get('season', {}).get('title')
-        season_number = int_or_none(video.get('format_position', {}).get('season'))
+        if not formats:
+            if data.get('geolocked'):
+                self.raise_geo_restricted(countries=[country], metadata_available=True)
+            if stream.get('drm'):
+                self.report_drm(video_id)
+            self.raise_no_formats('No video formats found', expected=True, video_id=video_id)
+
+        thumbnails = [{
+            'url': _abs_url(thumb_url),
+            'ext': 'jpg',
+        } for thumb_url in set(traverse_obj(
+            data, (('gallery', 'galary', 'images', 'artworks'), ..., ..., ('miniUrl', 'mainUrl')),
+            expected_type=url_or_none) or [])]
+
+        def _clean(value):
+            return value.strip() if isinstance(value, str) else value
 
         return {
-            'id': video_id,
-            'title': title,
-            'description': video.get('description'),
-            'series': series,
-            'episode_number': episode_number,
-            'season': season,
-            'season_number': season_number,
-            'duration': int_or_none(video.get('duration')),
-            'timestamp': parse_iso8601(video.get('created_at')),
-            'view_count': try_get(video, lambda x: x['views']['total'], int),
-            'age_limit': int_or_none(video.get('age_limit', 0)),
+            'id': str(video_id),
+            'title': _clean(data.get('title')),
+            'description': _clean(traverse_obj(data, 'description', 'lead')),
+            'duration': int_or_none(data.get('duration')),
+            'timestamp': parse_iso8601(data.get('since')),
+            'series': _clean(traverse_obj(data, ('parentProduct', 'serial', 'title'), ('season', 'serial', 'title'))),
+            'season': _clean(traverse_obj(data, ('parentProduct', 'title'), ('season', 'title'))),
+            'season_number': int_or_none(traverse_obj(
+                data, ('parentProduct', 'number'), ('season', 'number'))),
+            'episode': data.get('title') if data.get('type_') == 'EPISODE' else None,
+            'episode_number': int_or_none(data.get('episode')),
+            'release_year': int_or_none(traverse_obj(
+                data, 'year', ('parentProduct', 'serial', 'year'), ('season', 'serial', 'year'))),
+            'thumbnails': thumbnails or None,
             'formats': formats,
             'subtitles': subtitles,
         }
+
+    def _real_extract(self, url):
+        video_id = self._match_id(url)
+        country = (self._search_regex(
+            r'https?://[^/]+\.([a-z]{2})', url,
+            'geo country', default='lv') or 'lv').upper()
+        self._initialize_geo_bypass({'countries': [country]})
+        return self._extract_go3_vod(video_id, country)
 
 
 class TVPlayHomeIE(InfoExtractor):

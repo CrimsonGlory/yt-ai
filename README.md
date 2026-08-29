@@ -2375,6 +2375,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **mit**: YouTube embeds on current OCW course URLs
     * **mocha**: Current mocha.com.vn API
     * **MovingImage**: Fall back to a Wayback Machine snapshot when AWS WAF captcha blocks the catalogue page
+    * **mtg**: Use the TV3 Play/GO3 products API (via play.tv3.lt, tenant AVOD_*) instead of the dead playapi.mtgx.tv; download the public preview MP4 when full streams are DRM
     * **murrtube**: Current app JSON
     * **museai**: skiv.com rebrand
     * **musescore**: New auth token + impersonate
