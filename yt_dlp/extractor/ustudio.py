@@ -22,6 +22,7 @@ class UstudioIE(InfoExtractor):
             'upload_date': '20111107',
             'uploader': 'Tony Farley',
         },
+        'skip': 'video gone',
     }
 
     def _real_extract(self, url):
@@ -65,7 +66,29 @@ class UstudioIE(InfoExtractor):
 class UstudioEmbedIE(InfoExtractor):
     IE_NAME = 'ustudio:embed'
     _VALID_URL = r'https?://(?:(?:app|embed)\.)?ustudio\.com/embed/(?P<uid>[^/]+)/(?P<id>[^/]+)'
-    _TEST = {
+    _TESTS = [{
+        'url': 'https://embed.ustudio.com/embed/DH7i2iplAxq1/UJlR0jB8s6nm',
+        'md5': '2ddfc0db988b7ddccc18f48d707c4721',
+        'info_dict': {
+            'id': 'UJlR0jB8s6nm',
+            'ext': 'mp4',
+            'title': 'CEA  - Sean Parker',
+            'description': '',
+            'duration': 147,
+            'uploader_id': 'DH7i2iplAxq1',
+            'tags': [
+                'CEA',
+                'International CES',
+                'uStudio',
+                'Video Content Management',
+                'Video Wall',
+                'video leaders',
+                'video solutions for business',
+                'video platform',
+            ],
+            'thumbnail': r're:https?://.*\.jpg$',
+        },
+    }, {
         'url': 'http://app.ustudio.com/embed/DeN7VdYRDKhP/Uw7G1kMCe65T',
         'skip': 'video gone',
         'md5': '47c0be52a09b23a7f40de9469cec58f4',
@@ -76,12 +99,12 @@ class UstudioEmbedIE(InfoExtractor):
             'description': 'md5:93d32650884b500115e158c5677d25ad',
             'uploader_id': 'DeN7VdYRDKhP',
         },
-    }
+    }]
 
     def _real_extract(self, url):
         uploader_id, video_id = self._match_valid_url(url).groups()
         video_data = self._download_json(
-            f'http://app.ustudio.com/embed/{uploader_id}/{video_id}/config.json',
+            f'https://app.ustudio.com/embed/{uploader_id}/{video_id}/config.json',
             video_id)['videos'][0]
         title = video_data['name']
 
@@ -101,7 +124,7 @@ class UstudioEmbedIE(InfoExtractor):
 
         thumbnails = []
         for image in video_data.get('images', []):
-            image_url = image.get('url')
+            image_url = image.get('url') or image.get('image_url')
             if not image_url:
                 continue
             thumbnails.append({
