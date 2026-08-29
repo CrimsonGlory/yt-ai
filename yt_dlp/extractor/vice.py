@@ -6,6 +6,7 @@ import time
 
 from .adobepass import AdobePassIE
 from .common import InfoExtractor
+from .vimeo import VimeoIE
 from .youtube import YoutubeIE
 from ..networking.exceptions import HTTPError
 from ..utils import (
@@ -14,9 +15,12 @@ from ..utils import (
     clean_html,
     int_or_none,
     parse_age_limit,
+    parse_iso8601,
     str_or_none,
     try_get,
+    url_or_none,
 )
+from ..utils.traversal import traverse_obj
 
 
 class ViceBaseIE(InfoExtractor):
@@ -233,6 +237,19 @@ class ViceArticleIE(ViceBaseIE):
     _VALID_URL = r'https?://(?:www\.)?vice\.com/(?P<locale>[^/]+)/article/(?:[0-9a-z]{6}/)?(?P<id>[^?#]+)'
 
     _TESTS = [{
+        'url': 'https://www.vice.com/en/article/vice-magazine-self-destruction-issue-pre-order/',
+        'md5': '599d3f6307311e7b425ec2a429f333ec',
+        'info_dict': {
+            'id': '2064710',
+            'ext': 'mp4',
+            'display_id': 'vice-magazine-self-destruction-issue-pre-order',
+            'title': 'VICE Magazine Presents: The Self-Destruction Issue, Pre-Order Now',
+            'description': 'md5:b1076719b77684e380747597ba28f604',
+            'thumbnail': r're:https?://www\.vice\.com/wp-content/.+',
+            'timestamp': 1783527370,
+            'upload_date': '20260708',
+        },
+    }, {
         'url': 'https://www.vice.com/en_us/article/on-set-with-the-woman-making-mormon-porn-in-utah',
         'skip': 'video gone',
         'info_dict': {
@@ -293,19 +310,38 @@ class ViceArticleIE(ViceBaseIE):
     }]
 
     def _real_extract(self, url):
-        locale, display_id = self._match_valid_url(url).groups()
+        display_id = self._match_valid_url(url).group('id').strip('/')
 
-        article = self._call_api('articles', 'slug', display_id, locale, '''body
-    embed_code''')[0]
-        body = article['body']
+        articles = self._download_json(
+            'https://www.vice.com/wp-json/wp/v2/posts', display_id,
+            query={'slug': display_id, 'per_page': 1})
+        if not articles:
+            raise ExtractorError('Unable to find article', expected=True)
+        article = articles[0]
+        body = traverse_obj(article, ('content', 'rendered', {str})) or ''
+        title = clean_html(traverse_obj(article, ('title', 'rendered', {str})))
 
         def _url_res(video_url, ie_key):
             return {
                 '_type': 'url_transparent',
                 'url': video_url,
                 'display_id': display_id,
+                'title': title,
                 'ie_key': ie_key,
             }
+
+        html5_entries = self._parse_html5_media_entries(url, body, display_id)
+        if html5_entries:
+            info = html5_entries[0]
+            info.update({
+                'id': str(article['id']),
+                'display_id': display_id,
+                'title': title,
+                'description': clean_html(traverse_obj(article, ('excerpt', 'rendered', {str}))),
+                'thumbnail': url_or_none(article.get('jetpack_featured_media_url')),
+                'timestamp': parse_iso8601(article.get('date_gmt') or article.get('date')),
+            })
+            return info
 
         vice_url = ViceIE._extract_url(body)
         if vice_url:
@@ -315,8 +351,13 @@ class ViceArticleIE(ViceBaseIE):
         if youtube_url:
             return _url_res(youtube_url, YoutubeIE.ie_key())
 
-        video_url = self._html_search_regex(
-            r'data-video-url="([^"]+)"',
-            article['embed_code'], 'video URL')
+        vimeo_url = VimeoIE._extract_url(url, body)
+        if vimeo_url:
+            return _url_res(vimeo_url, VimeoIE.ie_key())
 
-        return _url_res(video_url, ViceIE.ie_key())
+        iframe_url = self._html_search_regex(
+            r'<iframe[^>]+\bsrc=["\']([^"\']+)', body, 'embed URL', default=None)
+        if iframe_url:
+            return self.url_result(iframe_url, video_id=display_id)
+
+        raise ExtractorError('No video found in article', expected=True)

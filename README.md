@@ -2521,6 +2521,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **vqq:video**: Fall back to the union / float_vinfo2 APIs when pinia/OG metadata is gone
     * **videa**: Support player URLs with an `f=` parameter
     * **vevo**: Use the GraphQL TV API instead of the dead apiv2 REST API
+    * **vice**: Extract article videos from the WordPress REST API (HTML5, YouTube, Vimeo)
     * **voxmedia**: Follow Volume embeds from JSON-LD / `volume.vox-cdn.com`, then YouTube
     * **vrt**: Parse `mediaReference` from Next.js / JSON-LD when `vrtvideo` is gone
     * **wevidi**: Fall back to a YouTube embed when WVPlayer is missing
