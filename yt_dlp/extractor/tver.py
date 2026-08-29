@@ -24,6 +24,26 @@ class TVerIE(StreaksBaseIE):
     _GEO_COUNTRIES = ['JP']
     _GEO_BYPASS = False
     _TESTS = [{
+        # STREAKS playback is Japan-only (CloudFront real client IP; X-Forwarded-For is ignored)
+        'url': 'https://tver.jp/episodes/epk440bpli',
+        'skip': 'geo-restricted to Japan; STREAKS CloudFront playback blocks this country (X-Forwarded-For is ignored)',
+        'info_dict': {
+            'id': 'epk440bpli',
+            'ext': 'mp4',
+            'title': '上田と女が吠える夜 ワークライフバランスを捨ててる女VS大事にしてる女が大集合',
+            'alt_title': '上田と女が吠える夜 ワークライフバランスを捨ててる女VS大事にしてる女が大集合 日テレ 8月26日(水)放送分',
+            'description': 'md5:f3e18880f15e12ddaa4d17aa08193f3a',
+            'channel': '日テレ',
+            'thumbnail': 'https://statics.tver.jp/images/content/thumbnail/episode/xlarge/epk440bpli.jpg?v=6',
+            'series': '上田と女が吠える夜',
+            'episode': 'ワークライフバランスを捨ててる女VS大事にしてる女が大集合',
+            'episode_number': 219,
+            'release_timestamp': 1787748840,
+            'release_date': '20260826',
+            'series_id': 'sr5czyxny0',
+            'season_id': 's0001005',
+        },
+    }, {
         # via Streaks backend
         'url': 'https://tver.jp/episodes/epc1hdugbk',
         'skip': 'video gone',
@@ -97,7 +117,7 @@ class TVerIE(StreaksBaseIE):
             'id': 'sru35hwdd2',
             'title': '神回だけ見せます！',
         },
-        'playlist_count': 11,
+        'playlist_mincount': 9,
     }, {
         'url': 'https://tver.jp/series/srkq2shp9d',
         'only_matching': True,
@@ -271,6 +291,7 @@ class TVerOlympicIE(StreaksBaseIE):
     _VALID_URL = r'https?://(?:www\.)?tver\.jp/olympic/milanocortina2026/(?P<type>live|video)/play/(?P<id>\w+)'
     _TESTS = [{
         'url': 'https://tver.jp/olympic/milanocortina2026/video/play/3b1d4462150b42558d9cc8aabb5238d0/',
+        'skip': 'Milano Cortina 2026 catch-up ended; olympic-data.tver.jp no longer resolves',
         'info_dict': {
             'id': '3b1d4462150b42558d9cc8aabb5238d0',
             'ext': 'mp4',
@@ -288,6 +309,7 @@ class TVerOlympicIE(StreaksBaseIE):
         },
     }, {
         'url': 'https://tver.jp/olympic/milanocortina2026/live/play/glts313itwvj/',
+        'skip': 'Milano Cortina 2026 catch-up ended; olympic-data.tver.jp no longer resolves',
         'info_dict': {
             'id': 'glts313itwvj',
             'ext': 'mp4',
