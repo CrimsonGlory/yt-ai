@@ -1,11 +1,25 @@
+import urllib.parse
+
 from .common import InfoExtractor
-from ..utils import clean_html, float_or_none, get_element_by_class, js_to_json, traverse_obj
+from ..utils import (
+    ExtractorError,
+    clean_html,
+    float_or_none,
+    get_element_by_class,
+    js_to_json,
+    traverse_obj,
+)
+
+_SKIP = (
+    'wevidi.net Cloudflare-redirects all paths to YouTube (watch?v=9bFHsd3o1w0) '
+    'and no longer hosts videos')
 
 
 class WeVidiIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?wevidi\.net/watch/(?P<id>[\w-]{11})'
     _TESTS = [{
         'url': 'https://wevidi.net/watch/2th7UO5F4KV',
+        'skip': _SKIP,
         'md5': 'b913d1ff5bbad499e2c7ef4aa6d829d7',
         'info_dict': {
             'id': '2th7UO5F4KV',
@@ -18,6 +32,7 @@ class WeVidiIE(InfoExtractor):
         },
     }, {
         'url': 'https://wevidi.net/watch/ievRuuQHbPS',
+        'skip': _SKIP,
         'md5': 'ce8a94989a959bff9003fa27ee572935',
         'info_dict': {
             'id': 'ievRuuQHbPS',
@@ -30,6 +45,7 @@ class WeVidiIE(InfoExtractor):
         },
     }, {
         'url': 'https://wevidi.net/watch/PcMzDWaQSWb',
+        'skip': _SKIP,
         'md5': '55ee0d3434be5d9e5cc76b83f2bb57ec',
         'info_dict': {
             'id': 'PcMzDWaQSWb',
@@ -42,6 +58,7 @@ class WeVidiIE(InfoExtractor):
         },
     }, {
         'url': 'https://wevidi.net/watch/wJnRqDHNe_u',
+        'skip': _SKIP,
         'md5': 'c8f263dd47e66cc17546b3abf47b5a77',
         'info_dict': {
             'id': 'wJnRqDHNe_u',
@@ -54,6 +71,7 @@ class WeVidiIE(InfoExtractor):
         },
     }, {
         'url': 'https://wevidi.net/watch/4m1c4yJR_yc',
+        'skip': _SKIP,
         'md5': 'c63ce5ca6990dce86855fc02ca5bc1ed',
         'info_dict': {
             'id': '4m1c4yJR_yc',
@@ -91,7 +109,12 @@ class WeVidiIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
+        webpage, urlh = self._download_webpage_handle(url, video_id)
+        host = urllib.parse.urlparse(urlh.url).hostname or ''
+        if host == 'youtu.be' or host.endswith('youtube.com'):
+            raise ExtractorError(
+                'wevidi.net Cloudflare-redirects the entire domain to YouTube and no longer hosts videos',
+                expected=True)
 
         yt_id = self._search_regex(
             r'(?:youtube\.com/embed/|youtube\.com/watch\?v=|youtu\.be/)([\w-]{11})',
