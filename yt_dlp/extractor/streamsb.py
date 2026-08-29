@@ -3,7 +3,7 @@ import random
 import string
 
 from .common import InfoExtractor
-from ..utils import url_basename, urljoin
+from ..utils import ExtractorError, url_basename, urljoin
 
 
 def streamsb_to_ascii_hex(value):
@@ -22,7 +22,7 @@ class StreamsbIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?P<domain>%s)/(?:embed-)?(?P<id>[0-9a-zA-Z]+)' % '|'.join(_DOMAINS)
     _TESTS = [{
         'url': 'https://viewsb.com/dxfvlu4qanjx',
-        'skip': 'Site no longer exists or is broken',
+        'skip': 'viewsb.com is a ParkLogic parking page; StreamSB no longer hosts videos there',
         'md5': '488d111a63415369bf90ea83adc8a325',
         'info_dict': {
             'id': 'dxfvlu4qanjx',
@@ -48,7 +48,11 @@ class StreamsbIE(InfoExtractor):
 
     def _real_extract(self, url):
         domain, video_id = self._match_valid_url(url).group('domain', 'id')
-        webpage = self._download_webpage(url, video_id)
+        webpage = self._download_webpage(url, video_id, fatal=False)
+        if not webpage or 'parklogic.com' in webpage:
+            raise ExtractorError(
+                'StreamSB no longer hosts videos; viewsb.com is a ParkLogic parking page',
+                expected=True)
 
         iframe_rel_url = self._search_regex(
             r'(?i)<iframe\b[^>]+\bsrc\s*=\s*([\'"])(?P<path>/[^\'"]+\.html)\1',
