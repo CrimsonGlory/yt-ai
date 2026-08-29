@@ -2513,6 +2513,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **tweakers**: Follow YouTube embeds from `YouTubePlayer.init` (impersonate, DPG privacy gate)
     * **twitter:amplify**: Extract current `video.twimg.com` Amplify VMAP instead of the decommissioned `amp.twimg.com` player
     * **unistra**: Extract HTML5 `vod-stream.di.unistra.fr` MP4s instead of the dead Flash `vod-flash.u-strasbg.fr` host
+    * **unity**: Follow YouTube embeds on current Unity Learn tutorial pages (including `learn.unity.com`)
     * **urort**: Extract S3 `data-trackurl` from current `/track/` pages
     * **vqq:video**: Fall back to the union / float_vinfo2 APIs when pinia/OG metadata is gone
     * **videa**: Support player URLs with an `f=` parameter
