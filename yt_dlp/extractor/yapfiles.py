@@ -15,7 +15,6 @@ class YapFilesIE(InfoExtractor):
     _TESTS = [{
         # with hd
         'url': 'http://www.yapfiles.ru/get_player/?v=vMDE1NjcyNDUt0413',
-        'skip': 'HTTP Error 403',
         'md5': '2db19e2bfa2450568868548a1aa1956c',
         'info_dict': {
             'id': 'vMDE1NjcyNDUt0413',
@@ -30,8 +29,9 @@ class YapFilesIE(InfoExtractor):
         'only_matching': True,
     }]
     _WEBPAGE_TESTS = [{
-        # FIXME: Update _VALID_URL
+        # /show/ pages currently require login
         'url': 'https://www.yapfiles.ru/show/3397030/e34b69aa03829d513d7dc3ace6ec9631.mp4.html',
+        'skip': 'login required',
         'info_dict': {
             'id': 'vMDE4NzI1Mjgt690b',
             'ext': 'mp4',
@@ -48,13 +48,16 @@ class YapFilesIE(InfoExtractor):
         query = {}
         if webpage:
             player_url = self._search_regex(
-                r'player\.init\s*\(\s*(["\'])(?P<url>(?:(?!\1).)+)\1', webpage,
-                'player url', default=None, group='url')
+                (r'player\.init\s*\(\s*(["\'])(?P<url>(?:(?!\1).)+)\1',
+                 r'\burl:\s*(["\'])(?P<url>(?:https?:)?//api\.yapfiles\.ru/load/[^"\']+)\1'),
+                webpage, 'player url', default=None, group='url')
 
         if not player_url:
-            player_url = f'http://api.yapfiles.ru/load/{video_id}/'
+            player_url = f'https://api.yapfiles.ru/load/{video_id}/'
             query = {
-                'md5': 'ded5f369be61b8ae5f88e2eeb2f3caff',
+                'md5': self._search_regex(
+                    r'[?&]md5=([0-9a-f]{32})', webpage or '', 'md5',
+                    default='ded5f369be61b8ae5f88e2eeb2f3caff'),
                 'type': 'json',
                 'ref': url,
             }
@@ -62,7 +65,6 @@ class YapFilesIE(InfoExtractor):
         player = self._download_json(
             player_url, video_id, query=query)['player']
 
-        playlist_url = player['playlist']
         title = player['title']
         thumbnail = player.get('poster')
 
@@ -70,8 +72,13 @@ class YapFilesIE(InfoExtractor):
             raise ExtractorError(
                 f'Video {video_id} has been removed', expected=True)
 
-        playlist = self._download_json(
-            playlist_url, video_id)['player']['main']
+        file_source = player
+        if not url_or_none(player.get('file')):
+            playlist_url = url_or_none(player.get('playlist'))
+            if not playlist_url:
+                raise ExtractorError('Unable to extract video URL')
+            file_source = self._download_json(
+                playlist_url, video_id)['player']['main']
 
         hd_height = int_or_none(player.get('hd'))
 
@@ -80,8 +87,8 @@ class YapFilesIE(InfoExtractor):
         formats = []
         for format_id in QUALITIES:
             is_hd = format_id == 'hd'
-            format_url = url_or_none(playlist.get(
-                'file%s' % ('_hd' if is_hd else '')))
+            format_url = url_or_none(file_source.get(
+                'file_hd' if is_hd else 'file'))
             if not format_url:
                 continue
             formats.append({

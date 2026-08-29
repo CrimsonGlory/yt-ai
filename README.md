@@ -2544,6 +2544,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **XMinus**: Reconstruct xmst.cc `/dl/minus` URLs from the current x-minus.pro player after x-minus.org expired
     * **yandexdisk**: Support password-protected public files (`--video-password`)
     * **yandexvideo**: Read preview player JSON from `<noframes>` and follow the host video URL
+    * **yapfiles**: Parse the current yaplayer load URL and `file`/`file_hd` from the API instead of the old `player.init` playlist
 
 * **Ported live-verified upstream PRs** that had not been merged yet: TED `videoPlayerData`, HearThisAt API host, VGTV HTTPS API, RTVE Play clan URLs, and xHamster sources/pagination
 
