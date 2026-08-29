@@ -10,8 +10,13 @@ from ..utils import (
 
 
 class WPPilotBaseIE(InfoExtractor):
-    _VIDEO_URL = 'https://pilot.wp.pl/api/v1/channel/%s'
-    _VIDEO_GUEST_URL = 'https://pilot.wp.pl/api/v1/guest/channel/%s'
+    _VIDEO_URL = 'https://pilot.wp.pl/api/v3/channel/%s'
+    _VIDEO_GUEST_URL = 'https://pilot.wp.pl/api/v2/guest/channel/%s'
+    _CHANNEL_LIST_URL = 'https://pilot.wp.pl/api/v1/guest/channels/list'
+    # Guest playback is limited to the EU, Norway, and Iceland. The stream
+    # API checks the real client IP; X-Forwarded-For is ignored.
+    _GEO_COUNTRIES = ['PL']
+    _GEO_BYPASS = False
 
     _HEADERS_WEB = {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -23,21 +28,13 @@ class WPPilotBaseIE(InfoExtractor):
             cache_res = self.cache.load('wppilot', 'channel-list')
             if cache_res:
                 return cache_res, True
-        webpage = self._download_webpage('https://pilot.wp.pl/tv/', None, 'Downloading webpage')
-        page_data_base_url = self._search_regex(
-            r'<script src="(https://wp-pilot-gatsby\.wpcdn\.pl/v[\d.-]+/desktop)',
-            webpage, 'gatsby build version') + '/page-data'
-        page_data = self._download_json(f'{page_data_base_url}/tv/page-data.json', None, 'Downloading page data')
-        for qhash in page_data['staticQueryHashes']:
-            qhash_content = self._download_json(
-                f'{page_data_base_url}/sq/d/{qhash}.json', None,
-                'Searching for channel list')
-            channel_list = try_get(qhash_content, lambda x: x['data']['allChannels']['nodes'])
-            if channel_list is None:
-                continue
-            self.cache.store('wppilot', 'channel-list', channel_list)
-            return channel_list, False
-        raise ExtractorError('Unable to find the channel list')
+        channel_list = try_get(self._download_json(
+            self._CHANNEL_LIST_URL, None, 'Downloading channel list',
+            headers=self._HEADERS_WEB), lambda x: x['data'])
+        if not channel_list:
+            raise ExtractorError('Unable to find the channel list')
+        self.cache.store('wppilot', 'channel-list', channel_list)
+        return channel_list, False
 
     def _parse_channel(self, chan):
         return {
@@ -65,6 +62,7 @@ class WPPilotIE(WPPilotBaseIE):
         'params': {
             'format': 'bestvideo',
         },
+        'skip': 'geo-restricted to the EU (Norway/Iceland); guest stream API returns user_outside_eu (X-Forwarded-For is ignored)',
     }, {
         # audio only
         'url': 'https://pilot.wp.pl/tv/#radio-nowy-swiat',
@@ -76,6 +74,7 @@ class WPPilotIE(WPPilotBaseIE):
         'params': {
             'format': 'bestaudio',
         },
+        'skip': 'not accessible for guests (guest_channel_not_accessible); Radio Nowy Świat has guest_timeout=0',
     }, {
         'url': 'wppilot:9',
         'only_matching': True,
@@ -110,7 +109,11 @@ class WPPilotIE(WPPilotBaseIE):
             video_id, query={
                 'device_type': 'web',
             }, headers=self._HEADERS_WEB,
-            expected_status=(200, 422))
+            expected_status=(200, 403, 422))
+
+        error = try_get(video, lambda x: x['_meta']['error']['name'])
+        if error == 'user_outside_eu':
+            self.raise_geo_restricted(countries=self._GEO_COUNTRIES)
 
         stream_token = try_get(video, lambda x: x['_meta']['error']['info']['stream_token'])
         if stream_token:
@@ -124,9 +127,15 @@ class WPPilotIE(WPPilotBaseIE):
             if try_get(close, lambda x: x['data']['status']) == 'ok':
                 return self.url_result(url, ie=WPPilotIE.ie_key())
 
+        streams = try_get(video, lambda x: x['data']['stream_channel']['streams'])
+        if not streams:
+            if error in ('guest_channel_not_accessible', 'user_channel_not_accessible', 'not_authorized'):
+                self.raise_login_required()
+            raise ExtractorError(error or 'Unable to extract stream', expected=True)
+
         formats = []
 
-        for fmt in video['data']['stream_channel']['streams']:
+        for fmt in streams:
             # live DASH does not work for now
             # if fmt['type'] == 'dash@live:abr':
             #     formats.extend(
