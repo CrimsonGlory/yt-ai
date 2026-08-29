@@ -167,6 +167,16 @@ class VidsIoIE(InfoExtractor):
     IE_NAME = 'vids.io'
     _VALID_URL = r'https?://[\w-]+\.vids\.io/videos/(?P<id>[\da-f]+)/(?P<display_id>[\w-]+)'
     _TESTS = [{
+        'url': 'https://how-to-video.vids.io/videos/0691d1b61e1be8cf8f/streaming-episode-1-professional-live-streaming-for-beginners',
+        'md5': '1ad800e1286aaeeee94dc3f285e08c94',
+        'info_dict': {
+            'id': '0691d1b61e1be8cf8f',
+            'ext': 'mp4',
+            'title': 'Streaming Episode 1: Professional Live Streaming for Beginners',
+            'duration': 329,
+            'thumbnail': r're:https?://images\.sproutvideo\.com/.+\.jpg',
+        },
+    }, {
         'url': 'https://how-to-video.vids.io/videos/799cd8b11c10efc1f0/how-to-video-live-streaming',
         'md5': '9bbbb2c0c0739eb163b80f87b8d77c9e',
         'info_dict': {
@@ -176,6 +186,7 @@ class VidsIoIE(InfoExtractor):
             'duration': 2787,
             'thumbnail': r're:https?://images\.sproutvideo\.com/.+\.jpg',
         },
+        'skip': 'password-protected',
     }]
 
     def _real_extract(self, url):
