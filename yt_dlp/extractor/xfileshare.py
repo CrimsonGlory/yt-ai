@@ -49,7 +49,7 @@ class XFileShareIE(InfoExtractor):
         (r'holavid\.com', 'HolaVid'),
         (r'streamty\.com', 'Streamty'),
         (r'thevideobee\.to', 'TheVideoBee'),
-        (r'uqload\.com', 'Uqload'),
+        (r'uqload\.(?:com|vc|is|net|io|bz|to|ws|cx|cc)', 'Uqload'),
         (r'vadbam\.net', 'Vadbam'),
         (r'vedbam\.xyz', 'Vedbam'),
         (r'vidbom\.com', 'VidBom'),
@@ -68,20 +68,30 @@ class XFileShareIE(InfoExtractor):
     _EMBED_REGEX = [r'<iframe\b[^>]+\bsrc=(["\'])(?P<url>(?:https?:)?//(?:%s)/embed-[0-9a-zA-Z]+.*?)\1' % '|'.join(site for site in list(zip(*_SITES))[0])]
 
     _FILE_NOT_FOUND_REGEXES = (
-        r'>(?:404 - )?File Not Found<',
+        r'>(?:404 - )?\s*File Not Found\s*<',
         r'>The file was removed by administrator<',
+        r'The file you were looking for could not be found',
     )
 
     _TESTS = [{
+        'url': 'https://uqload.com/0sy4vfle775h',
+        'md5': '145a9e2c76cc1b0a30e5662d300812d7',
+        'info_dict': {
+            'id': '0sy4vfle775h',
+            'ext': 'mp4',
+            'title': 'Guntur Kaaram 2024 1080p WebDL Lody Ahmed Elrakaiby',
+            'thumbnail': r're:https://.*\.jpg',
+        },
+    }, {
         'url': 'https://uqload.com/dltx1wztngdz',
-        'skip': 'No video formats found',
+        'skip': 'video gone',
         'md5': '3cfbb65e4c90e93d7b37bcb65a595557',
         'info_dict': {
             'id': 'dltx1wztngdz',
             'ext': 'mp4',
             'title': 'Rick Astley Never Gonna Give You mp4',
-            'thumbnail': r're:https://.*\.jpg'
-        }
+            'thumbnail': r're:https://.*\.jpg',
+        },
     }, {
         'url': 'http://xvideosharing.com/fq65f94nd2ve',
         'skip': 'No video formats found',
@@ -118,6 +128,9 @@ class XFileShareIE(InfoExtractor):
         'only_matching': True,
     }, {
         'url': 'https://www.viidshar.com/abcd1234efgh',
+        'only_matching': True,
+    }, {
+        'url': 'https://uqload.vc/embed-0sy4vfle775h.html',
         'only_matching': True,
     }]
 
@@ -221,5 +234,5 @@ class XFileShareIE(InfoExtractor):
             'title': title,
             'thumbnail': thumbnail,
             'formats': formats,
-            'http_headers': {'Referer': url}
+            'http_headers': {'Referer': url},
         }
