@@ -723,6 +723,10 @@ from .hgtv import HGTVComShowIE
 from .hidive import HiDiveIE
 from .historicfilms import HistoricFilmsIE
 from .hitrecord import HitRecordIE
+from .hobune import (
+    HobuneChannelIE,
+    HobuneIE,
+)
 from .hollywoodreporter import (
     HollywoodReporterIE,
     HollywoodReporterPlaylistIE,
