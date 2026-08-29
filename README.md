@@ -2526,6 +2526,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **viu**: Extract public `hq.viu.com` trailer MP4s; raise geo-restriction when OTT APIs block this country (X-Forwarded-For is ignored)
     * **vevo**: Use the GraphQL TV API instead of the dead apiv2 REST API
     * **vice**: Extract article videos from the WordPress REST API (HTML5, YouTube, Vimeo)
+    * **vodplatform**: Impersonate the browser on current KWIKmotion embed pages
     * **voxmedia**: Follow Volume embeds from JSON-LD / `volume.vox-cdn.com`, then YouTube
     * **vrt**: Parse `mediaReference` from Next.js / JSON-LD when `vrtvideo` is gone
     * **wevidi**: Fall back to a YouTube embed when WVPlayer is missing
