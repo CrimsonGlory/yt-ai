@@ -15,7 +15,6 @@ class TumblrIE(InfoExtractor):
     _OAUTH_URL = 'https://www.tumblr.com/api/v2/oauth2/token'
     _TESTS = [{
         'url': 'http://tatianamaslanydaily.tumblr.com/post/54196191430/orphan-black-dvd-extra-behind-the-scenes',
-        'skip': 'Site blocks automated access',
         'md5': '479bb068e5b16462f5176a6828829767',
         'info_dict': {
             'id': '54196191430',
@@ -390,7 +389,7 @@ class TumblrIE(InfoExtractor):
 
     def _initialize_pre_login(self):
         login_page = self._download_webpage(
-            self._LOGIN_URL, None, 'Downloading login page', fatal=False)
+            self._LOGIN_URL, None, 'Downloading login page', fatal=False, impersonate=True)
         if login_page:
             self._ACCESS_TOKEN = self._search_regex(
                 r'"API_TOKEN":\s*"(\w+)"', login_page, 'API access token', fatal=False)
@@ -418,7 +417,8 @@ class TumblrIE(InfoExtractor):
                     'Authorization': f'Bearer {self._ACCESS_TOKEN}',
                 },
                 errnote='Login failed', fatal=False,
-                expected_status=lambda s: 400 <= s < 500)
+                expected_status=lambda s: 400 <= s < 500,
+                impersonate=True)
 
         response = _call_login()
         if traverse_obj(response, 'error') == 'tfa_required':
@@ -433,8 +433,7 @@ class TumblrIE(InfoExtractor):
         blog = blog_2 or blog_1
 
         url = f'http://{blog}.tumblr.com/post/{video_id}'
-        webpage, urlh = self._download_webpage_handle(
-            url, video_id, headers={'User-Agent': 'WhatsApp/2.0'})  # whatsapp ua bypasses problems
+        webpage, urlh = self._download_webpage_handle(url, video_id, impersonate=True)
 
         redirect_url = urlh.url
 
@@ -450,7 +449,8 @@ class TumblrIE(InfoExtractor):
             post_json = traverse_obj(
                 self._download_json(
                     f'https://www.tumblr.com/api/v2/blog/{blog}/posts/{video_id}/permalink',
-                    video_id, headers={'Authorization': f'Bearer {self._ACCESS_TOKEN}'}, fatal=False),
+                    video_id, headers={'Authorization': f'Bearer {self._ACCESS_TOKEN}'},
+                    fatal=False, impersonate=True),
                 ('response', 'timeline', 'elements', 0, {dict})) or {}
         content_json = traverse_obj(post_json, ((('trail', 0), None), 'content', ..., {dict}))
 
@@ -524,7 +524,7 @@ class TumblrIE(InfoExtractor):
         if iframe_url:
             iframe = self._download_webpage(
                 iframe_url, video_id, 'Downloading iframe page',
-                headers={'Referer': redirect_url})
+                headers={'Referer': redirect_url}, impersonate=True)
 
             options = self._parse_json(
                 self._search_regex(
