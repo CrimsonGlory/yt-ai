@@ -2012,6 +2012,7 @@ from .tiktok import (
     TikTokUserIE,
     TikTokVMIE,
 )
+from .timesradio import TimesRadioIE
 from .tmz import TMZIE
 from .tnaflix import (
     EMPFlixIE,

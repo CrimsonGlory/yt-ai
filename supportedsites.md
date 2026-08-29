@@ -77,6 +77,7 @@ The only reliable way to check if a site is supported is to try it.
  - **anderetijden**: npo.nl, ntr.nl, omroepwnl.nl, zapp.nl and npo3.nl
  - **Angel**
  - **AnimalPlanet**
+ - **AnonMP4**: AnonMP4
  - **ant1newsgr:article**: ant1news.gr articles
  - **ant1newsgr:embed**: ant1news.gr embedded videos
  - **antenna:watch**: antenna.gr and ant1news.gr videos
@@ -324,7 +325,7 @@ The only reliable way to check if a site is supported is to try it.
  - **DetikEmbed**
  - **DeuxM**
  - **DeuxMNews**
- - **DHM**: Filmarchiv - Deutsches Historisches Museum
+ - **DHM**: Deutsches Historisches Museum
  - **DigitalConcertHall**: [*digitalconcerthall*](## "netrc machine") DigitalConcertHall extractor
  - **DigitallySpeaking**
  - **Digiteka**
@@ -609,7 +610,7 @@ The only reliable way to check if a site is supported is to try it.
  - **iwara**: [*iwara*](## "netrc machine")
  - **iwara:playlist**: [*iwara*](## "netrc machine")
  - **iwara:user**: [*iwara*](## "netrc machine")
- - **Ixigua**
+ - **Ixigua**: 西瓜视频
  - **Jable**
  - **JablePlaylist**
  - **Jamendo**
@@ -808,7 +809,7 @@ The only reliable way to check if a site is supported is to try it.
  - **MujRozhlas**
  - **Murrtube**
  - **MurrtubeUser**: Murrtube user profile
- - **MuseAI**
+ - **MuseAI**: muse.ai (now Skiv)
  - **MuseScore**
  - **MusicdexAlbum**
  - **MusicdexArtist**
@@ -924,7 +925,6 @@ The only reliable way to check if a site is supported is to try it.
  - **NoodleMagazine**
  - **NOSNLArticle**
  - **Nova**: TN.cz, Prásk.tv, Nova.cz, Novaplus.cz, FANDA.tv, Krásná.cz and Doma.cz
- - **NovaEmbed**
  - **NovaPlay**
  - **NowCanal**
  - **nowness**
@@ -1038,7 +1038,7 @@ The only reliable way to check if a site is supported is to try it.
  - **player.sky.it**
  - **PlayerFm**
  - **PlaySuisse**: [*playsuisse*](## "netrc machine")
- - **Playtvak**: Playtvak.cz, iDNES.cz and Lidovky.cz
+ - **Playtvak**: Playtvak.cz, iDNES.cz, Lidovky.cz and iDNES.tv
  - **PlayVids**
  - **pluralsight**: [*pluralsight*](## "netrc machine")
  - **pluralsight:course**
@@ -1239,7 +1239,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Screen9**
  - **Screencast**
  - **Screencastify**
- - **ScreencastOMatic**
+ - **ScreencastOMatic**: Screencast-O-Matic (ScreenPal)
  - **ScreenRec**
  - **ScrippsNetworks**
  - **scrippsnetworks:watch**
@@ -1367,6 +1367,7 @@ The only reliable way to check if a site is supported is to try it.
  - **tarangplus:video**
  - **Tass**
  - **TBS**
+ - **tbs:newsdig**: TBS NEWS DIG
  - **TBSJPEpisode**
  - **TBSJPPlaylist**
  - **TBSJPProgram**
@@ -1430,6 +1431,7 @@ The only reliable way to check if a site is supported is to try it.
  - **tiktok:sound**
  - **tiktok:tag**
  - **tiktok:user**
+ - **TimesRadio**: Times Radio
  - **TLC**
  - **TMZ**
  - **TNAFlix**
@@ -1453,7 +1455,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Tube8**
  - **TubeTuGraz**: [*tubetugraz*](## "netrc machine") tube.tugraz.at
  - **TubeTuGrazSeries**: [*tubetugraz*](## "netrc machine")
- - **tubitv**: [*tubitv*](## "netrc machine")
+ - **tubitv**
  - **tubitv:series**
  - **Tumblr**: [*tumblr*](## "netrc machine")
  - **tunein:embed**
