@@ -629,6 +629,7 @@ The only reliable way to check if a site is supported is to try it.
  - **JWPlatform**
  - **Kakao**
  - **Kaltura**
+ - **KamTape**
  - **KankaNews**
  - **Karaoketv**
  - **Katsomo**
