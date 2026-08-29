@@ -1028,6 +1028,7 @@ The only reliable way to check if a site is supported is to try it.
  - **picarto**
  - **picarto:vod**
  - **Piksel**
+ - **pillows**: pillows.su
  - **Pinkbike**
  - **Pinterest**
  - **PinterestCollection**

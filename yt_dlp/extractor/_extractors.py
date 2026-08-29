@@ -1436,6 +1436,7 @@ from .picarto import (
     PicartoVodIE,
 )
 from .piksel import PikselIE
+from .pillows import PillowsIE
 from .pinkbike import PinkbikeIE
 from .pinterest import (
     PinterestCollectionIE,
