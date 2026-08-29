@@ -17,9 +17,6 @@ from ..utils import (
     jwt_encode,
     make_archive_id,
     merge_dicts,
-    parse_age_limit,
-    parse_duration,
-    parse_iso8601,
     str_or_none,
     strip_or_none,
     traverse_obj,
@@ -215,6 +212,7 @@ class VrtNUIE(VRTBaseIE):
         },
     }, {
         'url': 'https://www.vrt.be/vrtmax/a-z/meisjes/6/meisjes-s6a5/',
+        'skip': 'login required',
         'info_dict': {
             'id': 'pbs-pub-97b541ab-e05c-43b9-9a40-445702ef7189$vid-5e306921-a9aa-4fa9-9f39-5b82c8f1028e',
             'ext': 'mp4',
@@ -240,6 +238,7 @@ class VrtNUIE(VRTBaseIE):
         },
     }, {
         'url': 'https://www.vrt.be/vrtnu/a-z/taboe/3/taboe-s3a4/',
+        'skip': 'login required',
         'info_dict': {
             'id': 'pbs-pub-f50faa3a-1778-46b6-9117-4ba85f197703$vid-547507fe-1c8b-4394-b361-21e627cbd0fd',
             'ext': 'mp4',
@@ -274,24 +273,9 @@ class VrtNUIE(VRTBaseIE):
     query VideoPage($pageId: ID!) {
         page(id: $pageId) {
             ... on EpisodePage {
-                episode {
-                    ageRaw
-                    description
-                    durationRaw
-                    episodeNumberRaw
-                    id
-                    name
-                    onTimeRaw
-                    program {
-                        title
-                    }
-                    season {
-                        id
-                        titleRaw
-                    }
-                    title
-                    brand
-                }
+                title
+                brand
+                id
                 ldjson
                 player {
                     image {
@@ -300,6 +284,30 @@ class VrtNUIE(VRTBaseIE):
                     modes {
                         streamId
                     }
+                    subtitle
+                    title
+                }
+                trackingData {
+                    data
+                }
+            }
+            ... on PlaybackPage {
+                title
+                brand
+                id
+                ldjson
+                player {
+                    image {
+                        templateUrl
+                    }
+                    modes {
+                        streamId
+                    }
+                    subtitle
+                    title
+                }
+                trackingData {
+                    data
                 }
             }
         }
@@ -418,11 +426,13 @@ class VrtNUIE(VRTBaseIE):
                 'Authorization': f'Bearer {access_token}' if access_token else None,
                 'Content-Type': 'application/json',
                 'x-vrt-client-name': 'WEB',
-                'x-vrt-client-version': '1.5.9',
+                'x-vrt-client-version': '1.5.18',
                 'x-vrt-zone': 'default',
             }))['data']['page']
 
-        video_id = metadata['player']['modes'][0]['streamId']
+        video_id = traverse_obj(metadata, ('player', 'modes', 0, 'streamId', {str}))
+        if not video_id:
+            raise ExtractorError('Unable to extract stream ID')
 
         try:
             streaming_info = self._call_api(video_id, 'vrtnu-web@PROD', id_token=video_token)
@@ -442,27 +452,32 @@ class VrtNUIE(VRTBaseIE):
             else:
                 self.raise_no_formats(f'Unable to extract formats: {code}')
 
+        tracking = self._parse_json(
+            traverse_obj(metadata, ('trackingData', 'data', {str})), video_id, fatal=False) or {}
+
         return {
-            'duration': float_or_none(streaming_info.get('duration'), 1000),
-            'thumbnail': url_or_none(streaming_info.get('posterImageUrl')),
             **self._json_ld(traverse_obj(metadata, ('ldjson', ..., {json.loads})), video_id, fatal=False),
-            **traverse_obj(metadata, ('episode', {
+            **traverse_obj(metadata, {
                 'title': ('title', {str}),
-                'description': ('description', {str}),
-                'timestamp': ('onTimeRaw', {parse_iso8601}),
-                'series': ('program', 'title', {str}),
-                'season': ('season', 'titleRaw', {str}),
-                'season_number': ('season', 'titleRaw', {int_or_none}),
-                'season_id': ('id', {str_or_none}),
                 'episode': ('title', {str}),
-                'episode_number': ('episodeNumberRaw', {int_or_none}),
-                'episode_id': ('id', {str_or_none}),
-                'age_limit': ('ageRaw', {parse_age_limit}),
                 'channel': ('brand', {str}),
-                'duration': ('durationRaw', {parse_duration}),
+            }),
+            **traverse_obj(metadata, ('player', {
+                'title': ('title', {str}),
+                'series': ('subtitle', {str}),
             })),
+            **traverse_obj(tracking, {
+                'episode_id': ('$epid', {str_or_none}),
+                'season_id': ('$epid', {str_or_none}),
+                'season': ('$sena', {str_or_none}),
+                'season_number': ('$sena', {int_or_none}),
+                'episode_number': ('$epnu', {int_or_none}),
+                'timestamp': ('$eppt', {int_or_none(scale=1000)}),
+            }),
             'id': video_id,
             'display_id': display_id,
+            'duration': float_or_none(streaming_info.get('duration'), 1000),
+            'thumbnail': url_or_none(streaming_info.get('posterImageUrl')),
             'formats': formats,
             'subtitles': subtitles,
             '_old_archive_ids': [make_archive_id('Canvas', video_id),
