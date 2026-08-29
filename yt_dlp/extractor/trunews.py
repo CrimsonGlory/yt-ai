@@ -1,10 +1,12 @@
 from .common import InfoExtractor
+from ..utils import ExtractorError
 
 
 class TruNewsIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?trunews\.com/stream/(?P<id>[^/?#&]+)'
-    _TEST = {
+    _TESTS = [{
         'url': 'https://www.trunews.com/stream/will-democrats-stage-a-circus-during-president-trump-s-state-of-the-union-speech',
+        'skip': 'TruNews replaced trunews.com with a coming-soon landing page; /stream/ URLs 404 and the Zype catalog API returns 402',
         'info_dict': {
             'id': '5c5a21e65d3c196e1c0020cc',
             'display_id': 'will-democrats-stage-a-circus-during-president-trump-s-state-of-the-union-speech',
@@ -16,11 +18,17 @@ class TruNewsIE(InfoExtractor):
             'upload_date': '20190206',
         },
         'add_ie': ['Zype'],
-    }
+    }]
     _ZYPE_TEMPL = 'https://player.zype.com/embed/%s.js?api_key=X5XnahkjCwJrT_l5zUqypnaLEObotyvtUKJWWlONxDoHVjP8vqxlArLV8llxMbyt'
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
+
+        webpage = self._download_webpage(url, display_id, expected_status=404)
+        if not webpage or 'Page Not Found' in webpage or 'Coming Soon' in webpage:
+            raise ExtractorError(
+                'TruNews no longer hosts videos; trunews.com is a coming-soon landing page',
+                expected=True)
 
         zype_id = self._download_json(
             'https://api.zype.com/videos', display_id, query={
