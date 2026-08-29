@@ -22,6 +22,10 @@ class XboxClipsIE(InfoExtractor):
             'upload_date': '20140807',
             'duration': 56,
         },
+        # Clip pages still embed Xbox Live MP4s, but every public URI's Akamai
+        # __gda__ token is expired (HTTP 403). User/game listings return
+        # "No clips found"; Xbox gameclipsmetadata requires an XBL token.
+        'skip': 'Xbox Live clip URIs on xboxclips.com use expired Akamai SAS tokens (HTTP 403); site no longer refreshes public download URLs',
     }, {
         'url': 'https://gameclips.io/iAbdulElah/074a69a9-5faf-46aa-b93b-9909c1720325',
         'only_matching': True,
