@@ -1,16 +1,30 @@
 from .common import InfoExtractor
 from ..utils import (
     ExtractorError,
-    get_element_by_attribute,
-    parse_duration,
-    try_get,
-    update_url_query,
+    int_or_none,
+    str_or_none,
+    unescapeHTML,
+    url_or_none,
 )
+from ..utils.traversal import traverse_obj
 
 
 class USATodayIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?usatoday\.com/(?:[^/]+/)*(?P<id>[^?/#]+)'
     _TESTS = [{
+        'url': 'https://www.usatoday.com/videos/news/have-you-seen/2026/08/28/drone-captures-ancient-dinosaur-footprints-turned-into-puddles/91512551007/',
+        'info_dict': {
+            'id': '91512551007',
+            'ext': 'mp4',
+            'title': 'Drone captures ancient dinosaur footprints turned into puddles',
+            'description': 'md5:1c1251a336989d1f725cbc1b6b9f6a15',
+            'thumbnail': r're:https?://.+\.(?:jpg|jpeg)',
+            'duration': 30,
+            'timestamp': 1787944374,
+            'upload_date': '20260828',
+            'uploader': 'Anastasiia Riddle',
+        },
+    }, {
         # Brightcove Partner ID = 29906170001
         'url': 'http://www.usatoday.com/media/cinematic/video/81729424/us-france-warn-syrian-regime-ahead-of-new-peace-talks/',
         'skip': 'video gone',
@@ -27,6 +41,7 @@ class USATodayIE(InfoExtractor):
     }, {
         # ui-video-data[asset_metadata][items][brightcoveaccount] = 28911775001
         'url': 'https://www.usatoday.com/story/tech/science/2018/08/21/yellowstone-supervolcano-eruption-stop-worrying-its-blow/973633002/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '5824495846001',
             'ext': 'mp4',
@@ -37,24 +52,34 @@ class USATodayIE(InfoExtractor):
             'upload_date': '20180820',
         },
     }]
-    BRIGHTCOVE_URL_TEMPLATE = 'http://players.brightcove.net/%s/default_default/index.html?videoId=%s'
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        webpage = self._download_webpage(update_url_query(url, {'ajax': 'true'}), display_id)
-        ui_video_data = get_element_by_attribute('class', 'ui-video-data', webpage)
-        if not ui_video_data:
+        webpage = self._download_webpage(url, display_id)
+
+        video_data = self._search_json(
+            r'\bdata-c-vpd=(["\'])', webpage, 'video data', display_id,
+            end_pattern=r'\1', default={}, transform_source=unescapeHTML)
+        json_ld = self._search_json_ld(webpage, display_id, default={})
+
+        video_id = traverse_obj(video_data, ('id', {str_or_none})) or display_id
+        hls_url = traverse_obj(video_data, ('hlsURL', {url_or_none}))
+        if not hls_url:
             raise ExtractorError('no video on the webpage', expected=True)
-        video_data = self._parse_json(ui_video_data, display_id)
-        item = try_get(video_data, lambda x: x['asset_metadata']['items'], dict) or {}
+
+        formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+            hls_url, video_id, 'mp4', m3u8_id='hls')
 
         return {
-            '_type': 'url_transparent',
-            'url': self.BRIGHTCOVE_URL_TEMPLATE % (item.get('brightcoveaccount', '29906170001'), item.get('brightcoveid') or video_data['brightcove_id']),
-            'id': str(video_data['id']),
-            'title': video_data['title'],
-            'thumbnail': video_data.get('thumbnail'),
-            'description': video_data.get('description'),
-            'duration': parse_duration(video_data.get('length')),
-            'ie_key': 'BrightcoveNew',
+            'id': video_id,
+            'formats': formats,
+            'subtitles': subtitles,
+            'title': (traverse_obj(video_data, (('title', 'headline'), {str}, filter, any))
+                      or json_ld.get('title')),
+            'description': video_data.get('promoBrief') or json_ld.get('description'),
+            'thumbnail': url_or_none(video_data.get('videoStill')) or json_ld.get('thumbnail'),
+            'duration': int_or_none(video_data.get('length')) or json_ld.get('duration'),
+            'timestamp': (int_or_none(video_data.get('cd'), scale=1000)
+                          or json_ld.get('timestamp')),
+            'uploader': video_data.get('byline') or video_data.get('origin'),
         }
