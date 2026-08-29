@@ -5,6 +5,7 @@ import urllib.parse
 import uuid
 
 from .common import InfoExtractor
+from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
     int_or_none,
@@ -16,6 +17,7 @@ from ..utils import (
     unified_timestamp,
     unsmuggle_url,
     url_or_none,
+    urljoin,
 )
 
 
@@ -30,8 +32,24 @@ class ViuBaseIE(InfoExtractor):
 
 
 class ViuIE(ViuBaseIE):
-    _VALID_URL = r'(?:viu:|https?://[^/]+\.viu\.com/[a-z]{2}/media/)(?P<id>\d+)'
+    _VALID_URL = [
+        r'(?:viu:|https?://[^/]+\.viu\.com/[a-z]{2}/media/)(?P<id>\d+)',
+        r'https?://(?:www\.)?hq\.viu\.com(?:/(?:media/(?P<id>[\w.-]+))?)?(?:[?#]|$)',
+    ]
     _TESTS = [{
+        'url': 'https://www.hq.viu.com/',
+        'md5': '98c46b57ae9ef903d1de06c45f6aad36',
+        'info_dict': {
+            'id': 'FILMART_TVC_20250808',
+            'ext': 'mp4',
+            'title': 'Viu | HQ',
+            'description': 'md5:d8885996e437a3bc1ac85771f04ccfac',
+            'thumbnail': r're:https?://(?:www\.)?hq\.viu\.com/media/Preroll-desktop\.jpg',
+        },
+    }, {
+        'url': 'https://www.hq.viu.com/media/FILMART_TVC_20250808.mp4',
+        'only_matching': True,
+    }, {
         'url': 'https://www.viu.com/en/media/1116705532?containerId=playlist-22168059',
         'info_dict': {
             'id': '1116705532',
@@ -60,7 +78,55 @@ class ViuIE(ViuBaseIE):
         'only_matching': True,
     }]
 
+    @staticmethod
+    def _is_hq_url(url):
+        host = (urllib.parse.urlparse(url).hostname or '').lower()
+        return host == 'hq.viu.com' or host.endswith('.hq.viu.com')
+
+    def _extract_hq(self, url):
+        parsed = urllib.parse.urlparse(url)
+        media_name = self._search_regex(
+            r'/media/([\w.-]+)$', parsed.path, 'media name', default=None)
+        if media_name:
+            video_id = remove_end(media_name, '.mp4')
+            return {
+                'id': video_id,
+                'title': video_id.replace('_', ' '),
+                'url': urljoin('https://www.hq.viu.com/', parsed.path),
+                'ext': 'mp4',
+            }
+
+        webpage = self._download_webpage(url, 'hq')
+        trailer = self._search_regex(
+            r'datasource=["\'](media/[^"\']+\.mp4)["\']', webpage, 'trailer', default=None)
+        if not trailer:
+            entries = self._parse_html5_media_entries(url, webpage, 'hq')
+            if not entries:
+                raise ExtractorError('Unable to extract Viu HQ trailer', expected=True)
+            info = entries[0]
+            info.update({
+                'id': info.get('id') or 'hq',
+                'title': self._html_extract_title(webpage) or 'Viu HQ',
+            })
+            return info
+
+        video_id = remove_end(trailer.rsplit('/', 1)[-1], '.mp4')
+        thumbnail = urljoin(url, self._search_regex(
+            r'<video[^>]+poster=["\']([^"\']+)["\']', webpage, 'thumbnail', default=None))
+        return {
+            'id': video_id,
+            'title': self._html_extract_title(webpage) or video_id,
+            'description': self._html_search_regex(
+                r'<p class="">(.+?)</p>', webpage, 'description', default=None, flags=re.DOTALL),
+            'thumbnail': thumbnail,
+            'url': urljoin(url, trailer),
+            'ext': 'mp4',
+        }
+
     def _real_extract(self, url):
+        if self._is_hq_url(url):
+            return self._extract_hq(url)
+
         video_id = self._match_id(url)
 
         video_data = self._call_api(
@@ -150,6 +216,8 @@ class ViuPlaylistIE(ViuBaseIE):
 class ViuOTTIE(InfoExtractor):
     IE_NAME = 'viu:ott'
     _NETRC_MACHINE = 'viu'
+    # CloudFront and the auth token API geo-block by real client IP
+    _GEO_BYPASS = False
     _VALID_URL = r'https?://(?:www\.)?viu\.com/ott/(?P<country_code>[a-z]{2})/(?P<lang_code>[a-z]{2}-[a-z]{2})/vod/(?P<id>\d+)'
     _TESTS = [{
         'url': 'http://www.viu.com/ott/sg/en-us/vod/3421/The%20Prime%20Minister%20and%20I',
@@ -286,7 +354,7 @@ class ViuOTTIE(InfoExtractor):
 
         video_data = product_data.get('current_product')
         if not video_data:
-            self.raise_geo_restricted()
+            self.raise_geo_restricted(countries=[country_code.upper()])
 
         series_id = video_data.get('series_id')
         if self._yes_playlist(series_id, video_id, idata):
@@ -399,6 +467,9 @@ class ViuOTTIE(InfoExtractor):
 
 
 class ViuOTTIndonesiaBaseIE(InfoExtractor):
+    _GEO_COUNTRIES = ['ID']
+    # um.viuapi.io geo-blocks by real client IP
+    _GEO_BYPASS = False
     _BASE_QUERY = {
         'ver': 1.0,
         'fmt': 'json',
@@ -423,19 +494,24 @@ class ViuOTTIndonesiaBaseIE(InfoExtractor):
     }
 
     def _real_initialize(self):
-        ViuOTTIndonesiaBaseIE._TOKEN = self._download_json(
-            'https://um.viuapi.io/user/identity', None,
-            headers={'Content-type': 'application/json', **self._HEADERS},
-            query={**self._BASE_QUERY, 'iid': self._DEVICE_ID},
-            data=json.dumps({'deviceId': self._DEVICE_ID}).encode(),
-            note='Downloading token information')['token']
+        try:
+            ViuOTTIndonesiaBaseIE._TOKEN = self._download_json(
+                'https://um.viuapi.io/user/identity', None,
+                headers={'Content-type': 'application/json', **self._HEADERS},
+                query={**self._BASE_QUERY, 'iid': self._DEVICE_ID},
+                data=json.dumps({'deviceId': self._DEVICE_ID}).encode(),
+                note='Downloading token information')['token']
+        except ExtractorError as e:
+            if isinstance(e.cause, HTTPError) and e.cause.status in (403, 404):
+                self.raise_geo_restricted(countries=self._GEO_COUNTRIES)
+            raise
 
 
 class ViuOTTIndonesiaIE(ViuOTTIndonesiaBaseIE):
     _VALID_URL = r'https?://www\.viu\.com/ott/\w+/\w+/all/video-[\w-]+-(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.viu.com/ott/id/id/all/video-japanese-drama-tv_shows-detective_conan_episode_793-1165863142?containerId=playlist-26271226',
-        'skip': 'HTTP Error 403',
+        'skip': 'geo-restricted to Indonesia; um.viuapi.io returns HTTP 403 (X-Forwarded-For is ignored)',
         'info_dict': {
             'id': '1165863142',
             'ext': 'mp4',
@@ -450,7 +526,7 @@ class ViuOTTIndonesiaIE(ViuOTTIndonesiaBaseIE):
         },
     }, {
         'url': 'https://www.viu.com/ott/id/id/all/video-korean-reality-tv_shows-entertainment_weekly_episode_1622-1118617054',
-        'skip': 'HTTP Error 403',
+        'skip': 'geo-restricted to Indonesia; um.viuapi.io returns HTTP 403 (X-Forwarded-For is ignored)',
         'info_dict': {
             'id': '1118617054',
             'ext': 'mp4',
@@ -467,7 +543,7 @@ class ViuOTTIndonesiaIE(ViuOTTIndonesiaBaseIE):
     }, {
         # age-limit test
         'url': 'https://www.viu.com/ott/id/id/all/video-japanese-trailer-tv_shows-trailer_jujutsu_kaisen_ver_01-1166044219?containerId=playlist-26273140',
-        'skip': 'HTTP Error 403',
+        'skip': 'geo-restricted to Indonesia; um.viuapi.io returns HTTP 403 (X-Forwarded-For is ignored)',
         'info_dict': {
             'id': '1166044219',
             'ext': 'mp4',
@@ -483,7 +559,7 @@ class ViuOTTIndonesiaIE(ViuOTTIndonesiaBaseIE):
     }, {
         # json ld metadata type equal to Movie instead of TVEpisodes
         'url': 'https://www.viu.com/ott/id/id/all/video-japanese-animation-movies-demon_slayer_kimetsu_no_yaiba_the_movie_mugen_train-1165892707?containerId=1675060691786',
-        'skip': 'HTTP Error 403',
+        'skip': 'geo-restricted to Indonesia; um.viuapi.io returns HTTP 403 (X-Forwarded-For is ignored)',
         'info_dict': {
             'id': '1165892707',
             'ext': 'mp4',

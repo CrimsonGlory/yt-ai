@@ -2523,6 +2523,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **viddler**: Use the current public `/api/videos/` JSON and Mux HLS instead of the retired v2 playback API
     * **viewsb**: Raise an expected error that viewsb.com is a ParkLogic parking page and StreamSB no longer hosts videos
     * **Viqeo**: Parse `window.DATA` and follow VK-hosted `video_ext` media
+    * **viu**: Extract public `hq.viu.com` trailer MP4s; raise geo-restriction when OTT APIs block this country (X-Forwarded-For is ignored)
     * **vevo**: Use the GraphQL TV API instead of the dead apiv2 REST API
     * **vice**: Extract article videos from the WordPress REST API (HTML5, YouTube, Vimeo)
     * **voxmedia**: Follow Volume embeds from JSON-LD / `volume.vox-cdn.com`, then YouTube
