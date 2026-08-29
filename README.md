@@ -2538,6 +2538,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **WorldStarHipHop**: Extract JSON-LD MP4s from current `/videos/{id}/{slug}` pages
     * **wppilot**: Load the guest channel list from the public API instead of the old Gatsby CDN page-data; raise geo-restriction when guest streams return `user_outside_eu` (X-Forwarded-For is ignored)
     * **wwe**: Read Drupal 10 `drupal-settings-json` instead of the old `Drupal.settings` JS
+    * **xanimu**: Impersonate the browser to bypass Cloudflare and read JSON-LD metadata
     * **xfileshare**: Match current Uqload TLDs (`uqload.vc` and related mirrors) after `uqload.com` started redirecting
     * **XMinus**: Reconstruct xmst.cc `/dl/minus` URLs from the current x-minus.pro player after x-minus.org expired
     * **yandexdisk**: Support password-protected public files (`--video-password`)
