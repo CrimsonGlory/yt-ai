@@ -2503,6 +2503,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **tumblr**: Impersonate the browser
     * **TravelChannel**: Match `www.travelchannel.com` video URLs after `watch.` redirected
     * **tv2**: Use the Vimond content-discovery and play APIs instead of the dead Sumo REST API
+    * **TV5MONDE**: Extract information.tv5monde.com news videos from the player API / direct MP4; raise an expected error when old `/tv/video` URLs redirect to DRM-protected TV5MONDE+
     * **tvp**: Fall back to the original TVPlayer object id when retired portals such as swipeto.pl 301 to the VOD homepage
     * **urort**: Extract S3 `data-trackurl` from current `/track/` pages
     * **vqq:video**: Fall back to the union / float_vinfo2 APIs when pinia/OG metadata is gone

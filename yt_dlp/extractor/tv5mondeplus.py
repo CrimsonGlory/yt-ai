@@ -2,6 +2,7 @@ import urllib.parse
 
 from .common import InfoExtractor
 from ..utils import (
+    ExtractorError,
     clean_html,
     determine_ext,
     extract_attributes,
@@ -15,8 +16,25 @@ from ..utils.traversal import traverse_obj
 
 class TV5MondePlusIE(InfoExtractor):
     IE_NAME = 'TV5MONDE'
-    _VALID_URL = r'https?://(?:www\.)?tv5monde\.com/tv/video/(?P<id>[^/?#]+)'
+    _VALID_URL = r'https?://(?:www\.|information\.)?tv5monde\.com/(?:tv/video|(?:[^/?#]+)/video|les-jt)/(?P<id>[^/?#]+)'
     _TESTS = [{
+        # information.tv5monde.com news clip (direct mp4)
+        'url': 'https://information.tv5monde.com/international/video/canada-donald-trump-le-rebaptiseur-de-lac-2835290',
+        'md5': 'ca8a199a4dcf84159d7043fc6e3743ab',
+        'info_dict': {
+            'id': '6661938',
+            'display_id': 'canada-donald-trump-le-rebaptiseur-de-lac-2835290',
+            'ext': 'mp4',
+            'title': 'Canada: Donald Trump, le rebaptiseur de lac',
+            'description': 'md5:820f7faab5da46480a0c2f72f602921c',
+            'thumbnail': r're:https?://information\.tv5monde\.com/.+',
+            'duration': 175,
+            'upload_date': '20260828',
+            'timestamp': 1787875200,
+            'series': 'article',
+            'episode': 'canada_donald_trump_le_rebaptiseur_de_lac|jtchapter_canada_donald_trump_le_rebaptiseur_',
+        },
+    }, {
         # documentary
         'url': 'https://www.tv5monde.com/tv/video/65931-baudouin-l-heritage-d-un-roi-baudouin-l-heritage-d-un-roi',
         'md5': 'd2a708902d3df230a357c99701aece05',
@@ -33,6 +51,7 @@ class TV5MondePlusIE(InfoExtractor):
             'description': 'md5:78125c74a5cac06d7743a2d09126edad',
             'series': "Baudouin, l'héritage d'un roi",
         },
+        'skip': 'Old /tv/video pages redirect to DRM-protected TV5MONDE+',
     }, {
         # series episode
         'url': 'https://www.tv5monde.com/tv/video/52952-toute-la-vie-mardi-23-mars-2021',
@@ -50,6 +69,7 @@ class TV5MondePlusIE(InfoExtractor):
             'series': 'Toute la vie',
             'episode': 'Mardi 23 mars 2021',
         },
+        'skip': 'Old /tv/video pages redirect to DRM-protected TV5MONDE+',
     }, {
         # movie
         'url': 'https://www.tv5monde.com/tv/video/8771-ce-fleuve-qui-nous-charrie-ce-fleuve-qui-nous-charrie-p001-ce-fleuve-qui-nous-charrie',
@@ -67,6 +87,7 @@ class TV5MondePlusIE(InfoExtractor):
             'episode': 'CE FLEUVE QUI NOUS CHARRIE-P001-CE FLEUVE QUI NOUS CHARRIE',
             'series': 'Ce fleuve qui nous charrie',
         },
+        'skip': 'Old /tv/video pages redirect to DRM-protected TV5MONDE+',
     }, {
         # news
         'url': 'https://www.tv5monde.com/tv/video/70402-tv5monde-le-journal-edition-du-08-05-24-11h',
@@ -84,6 +105,10 @@ class TV5MondePlusIE(InfoExtractor):
             'series': 'TV5MONDE, le journal',
             'episode': 'EDITION DU 08/05/24 - 11H',
         },
+        'skip': 'Old /tv/video pages redirect to DRM-protected TV5MONDE+',
+    }, {
+        'url': 'https://information.tv5monde.com/les-jt/64-minutes',
+        'only_matching': True,
     }]
     _GEO_BYPASS = False
 
@@ -96,7 +121,10 @@ class TV5MondePlusIE(InfoExtractor):
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        webpage = self._download_webpage(url, display_id, impersonate=True)
+        webpage, urlh = self._download_webpage_handle(url, display_id, impersonate=True)
+        if 'tv5mondeplus.com' in urllib.parse.urlparse(urlh.url).netloc:
+            raise ExtractorError(
+                'This video has moved to TV5MONDE+, which uses DRM', expected=True)
 
         if ">Ce programme n'est malheureusement pas disponible pour votre zone géographique.<" in webpage:
             self.raise_geo_restricted(countries=['FR'])
@@ -128,10 +156,13 @@ class TV5MondePlusIE(InfoExtractor):
                     v_url = traverse_obj(deferred_json, (0, 'url', {url_or_none}))
                     if not v_url:
                         continue
-                    # data-guid from the webpage isn't stable, use the material id from the json urls
-                    video_id = self._search_regex(
-                        r'materials/([\da-zA-Z]{10}_[\da-fA-F]{7})/', v_url, 'video id', default=None)
                     process_video_files(deferred_json)
+
+                # data-guid from the webpage isn't stable; prefer ids from media URLs
+                video_id = video_id or self._search_regex(
+                    (r'materials/([\da-zA-Z]{10}_[\da-fA-F]{7})/',
+                     r'/videos/[\da-f]+/(\d+)\.mp4'),
+                    v_url, 'video id', default=None)
 
                 video_format = video_file.get('format') or determine_ext(v_url)
                 if video_format == 'm3u8':
@@ -169,8 +200,12 @@ class TV5MondePlusIE(InfoExtractor):
             })),
             'id': video_id,
             'display_id': display_id,
-            'title': clean_html(get_element_by_class('main-title', webpage)),
-            'description': clean_html(get_element_by_class('text', get_element_html_by_class('ep-summary', webpage) or '')),
+            'title': (clean_html(get_element_by_class('main-title', webpage))
+                      or self._og_search_title(webpage)),
+            'description': (
+                clean_html(get_element_by_class(
+                    'text', get_element_html_by_class('ep-summary', webpage) or ''))
+                or self._og_search_description(webpage)),
             'thumbnail': url_or_none(vpl_data.get('data-image')),
             'formats': formats,
             'subtitles': self._extract_subtitles(self._parse_json(
