@@ -2,22 +2,56 @@ import json
 import re
 
 from .common import InfoExtractor
-from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
+    determine_ext,
     int_or_none,
+    join_nonempty,
     parse_iso8601,
-    parse_qs,
+    parse_resolution,
+    traverse_obj,
+    url_or_none,
 )
 
 
 class VevoBaseIE(InfoExtractor):
-    def _extract_json(self, webpage, video_id):
-        return self._parse_json(
-            self._search_regex(
-                r'window\.__INITIAL_STORE__\s*=\s*({.+?});\s*</script>',
-                webpage, 'initial store'),
-            video_id)
+    _GRAPHQL_API = 'https://api.vevo.com/graphql'
+    _GRAPHQL_TOKEN = 'fny8q3azy3jy94wsjavj3hr3gc'
+    _GEO_COUNTRIES = ['US', 'GB', 'CA', 'AU']
+    _GEO_BYPASS = False
+
+    def _call_graphql(self, query, variables, video_id, note='Downloading GraphQL JSON', country=None):
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': f'Bearer {self._GRAPHQL_TOKEN}',
+        }
+        if country:
+            headers['country-code'] = country
+        data = self._download_json(
+            self._GRAPHQL_API, video_id, note,
+            data=json.dumps({'query': query, 'variables': variables}).encode(),
+            headers=headers)
+        errors = data.get('errors')
+        if errors:
+            if isinstance(errors, dict):
+                message = errors.get('message')
+            else:
+                message = join_nonempty(*(
+                    traverse_obj(err, ('message', {str}))
+                    for err in errors), delim=', ')
+            raise ExtractorError(
+                f'{self.IE_NAME} said: {message or "GraphQL error"}', expected=True)
+        return data
+
+    def _iter_countries(self):
+        explicit = (self.get_param('geo_bypass_country') or '').upper() or None
+        if explicit:
+            yield explicit
+            return
+        if self.get_param('geo_bypass', True):
+            yield from self._GEO_COUNTRIES
+        else:
+            yield None
 
 
 class VevoIE(VevoBaseIE):
@@ -34,38 +68,68 @@ class VevoIE(VevoBaseIE):
            vevo:)
         (?P<id>[^&?#]+)'''
     _EMBED_REGEX = [r'<iframe[^>]+?src=(["\'])(?P<url>(?:https?:)?//(?:cache\.)?vevo\.com/.+?)\1']
+    _QUERY_VIDEO = '''\
+query GetVideo($id: String!) {
+  video(id: $id) {
+    id
+    title
+    thumbnail
+    genre
+    explicit
+    hls
+    dash
+    mp4 { quality url }
+    created
+    duration
+    unavailable
+    artists { role artist { name } }
+    viewCounts { total }
+    captions { srt { url } vtt { url } ttml { url } }
+  }
+}'''
 
     _TESTS = [{
         'url': 'http://www.vevo.com/watch/hurts/somebody-to-die-for/GB1101300280',
-        'md5': '95ee28ee45e70130e3ab02b0f579ae23',
+        'md5': 'd84af2c66db9949d79fd6fb1ab5a83ec',
         'info_dict': {
             'id': 'GB1101300280',
             'ext': 'mp4',
-            'title': 'Hurts - Somebody to Die For',
-            'timestamp': 1372057200,
-            'upload_date': '20130624',
+            'title': 'Hurts - Somebody to Die For (Official Video)',
+            'thumbnail': r're:https?://.+\.(?:jpg|jpeg|png)',
+            'timestamp': 1688688410,
+            'upload_date': '20230707',
             'uploader': 'Hurts',
-            'track': 'Somebody to Die For',
+            'track': 'Somebody to Die For (Official Video)',
             'artist': 'Hurts',
+            'artists': ['Hurts'],
             'genre': 'Pop',
+            'genres': ['Pop'],
+            'duration': 230,
+            'age_limit': 0,
+            'view_count': int,
         },
-        'expected_warnings': ['Unable to download SMIL file', 'Unable to download info'],
+        'params': {'format': 'http-high'},
     }, {
-        'note': 'v3 SMIL format',
+        'note': 'v3 HTTP/HLS formats',
         'url': 'http://www.vevo.com/watch/cassadee-pope/i-wish-i-could-break-your-heart/USUV71302923',
-        'md5': 'f6ab09b034f8c22969020b042e5ac7fc',
         'info_dict': {
             'id': 'USUV71302923',
             'ext': 'mp4',
             'title': 'Cassadee Pope - I Wish I Could Break Your Heart',
-            'timestamp': 1392796919,
-            'upload_date': '20140219',
+            'thumbnail': r're:https?://.+',
+            'timestamp': 1688686495,
+            'upload_date': '20230706',
             'uploader': 'Cassadee Pope',
             'track': 'I Wish I Could Break Your Heart',
             'artist': 'Cassadee Pope',
+            'artists': ['Cassadee Pope'],
             'genre': 'Country',
+            'genres': ['Country'],
+            'duration': 226,
+            'age_limit': 0,
+            'view_count': int,
         },
-        'expected_warnings': ['Unable to download SMIL file', 'Unable to download info'],
+        'params': {'skip_download': True},
     }, {
         'note': 'Age-limited video',
         'url': 'https://www.vevo.com/watch/justin-timberlake/tunnel-vision-explicit/USRV81300282',
@@ -73,49 +137,62 @@ class VevoIE(VevoBaseIE):
             'id': 'USRV81300282',
             'ext': 'mp4',
             'title': 'Justin Timberlake - Tunnel Vision (Explicit)',
+            'thumbnail': r're:https?://.+',
+            'timestamp': 1688705194,
+            'upload_date': '20230707',
             'age_limit': 18,
-            'timestamp': 1372888800,
-            'upload_date': '20130703',
             'uploader': 'Justin Timberlake',
             'track': 'Tunnel Vision (Explicit)',
             'artist': 'Justin Timberlake',
+            'artists': ['Justin Timberlake'],
             'genre': 'Pop',
+            'genres': ['Pop'],
+            'duration': 418,
+            'view_count': int,
         },
-        'expected_warnings': ['Unable to download SMIL file', 'Unable to download info'],
+        'params': {'skip_download': True},
     }, {
-        'note': 'No video_info',
+        'note': 'Featured artist',
         'url': 'http://www.vevo.com/watch/k-camp-1/Till-I-Die/USUV71503000',
-        'md5': '8b83cc492d72fc9cf74a02acee7dc1b0',
         'info_dict': {
             'id': 'USUV71503000',
             'ext': 'mp4',
-            'title': 'K Camp ft. T.I. - Till I Die',
+            'title': 'K CAMP ft. T.I. - Till I Die',
+            'thumbnail': r're:https?://.+',
+            'timestamp': 1688696215,
+            'upload_date': '20230707',
             'age_limit': 18,
-            'timestamp': 1449468000,
-            'upload_date': '20151207',
-            'uploader': 'K Camp',
+            'uploader': 'K CAMP',
             'track': 'Till I Die',
-            'artist': 'K Camp',
-            'genre': 'Hip-Hop',
+            'artist': 'K CAMP ft. T.I.',
+            'artists': ['K CAMP ft. T.I.'],
+            'genre': 'Hip Hop',
+            'genres': ['Hip Hop'],
+            'duration': 194,
+            'view_count': int,
         },
-        'expected_warnings': ['Unable to download SMIL file', 'Unable to download info'],
+        'params': {'skip_download': True},
     }, {
         'note': 'Featured test',
         'url': 'https://www.vevo.com/watch/lemaitre/Wait/USUV71402190',
-        'md5': 'd28675e5e8805035d949dc5cf161071d',
         'info_dict': {
             'id': 'USUV71402190',
             'ext': 'mp4',
-            'title': 'Lemaitre ft. LoLo - Wait',
+            'title': 'Lemaitre ft. Lolo - Wait',
+            'thumbnail': r're:https?://.+',
+            'timestamp': 1688694976,
+            'upload_date': '20230707',
             'age_limit': 0,
-            'timestamp': 1413432000,
-            'upload_date': '20141016',
             'uploader': 'Lemaitre',
             'track': 'Wait',
-            'artist': 'Lemaitre',
+            'artist': 'Lemaitre ft. Lolo',
+            'artists': ['Lemaitre ft. Lolo'],
             'genre': 'Electronic',
+            'genres': ['Electronic'],
+            'duration': 205,
+            'view_count': int,
         },
-        'expected_warnings': ['Unable to download SMIL file', 'Unable to download info'],
+        'params': {'skip_download': True},
     }, {
         'note': 'Only available via webpage',
         'url': 'http://www.vevo.com/watch/GBUV71600656',
@@ -124,15 +201,8 @@ class VevoIE(VevoBaseIE):
             'id': 'GBUV71600656',
             'ext': 'mp4',
             'title': 'ABC - Viva Love',
-            'age_limit': 0,
-            'timestamp': 1461830400,
-            'upload_date': '20160428',
-            'uploader': 'ABC',
-            'track': 'Viva Love',
-            'artist': 'ABC',
-            'genre': 'Pop',
         },
-        'expected_warnings': ['Failed to download video versions info'],
+        'skip': 'Unavailable in tested Vevo TV markets',
     }, {
         # no genres available
         'url': 'http://www.vevo.com/watch/INS171400764',
@@ -149,140 +219,93 @@ class VevoIE(VevoBaseIE):
         'url': 'https://tv.vevo.com/watch/artist/janet-jackson/US0450100550',
         'only_matching': True,
     }]
-    _VERSIONS = {
-        0: 'youtube',  # only in AuthenticateVideo videoVersions
-        1: 'level3',
-        2: 'akamai',
-        3: 'level3',
-        4: 'amazon',
-    }
 
-    def _initialize_api(self, video_id):
-        webpage = self._download_webpage(
-            'https://accounts.vevo.com/token', None,
-            note='Retrieving oauth token',
-            errnote='Unable to retrieve oauth token',
-            data=json.dumps({
-                'client_id': 'SPupX1tvqFEopQ1YS6SS',
-                'grant_type': 'urn:vevo:params:oauth:grant-type:anonymous',
-            }).encode(),
-            headers={
-                'Content-Type': 'application/json',
-            })
-
-        if re.search(r'(?i)THIS PAGE IS CURRENTLY UNAVAILABLE IN YOUR REGION', webpage):
+    def _extract_video(self, video_id):
+        last_video = None
+        for country in self._iter_countries():
+            note = 'Downloading GraphQL video info'
+            if country:
+                note += f' ({country})'
+            data = self._call_graphql(
+                self._QUERY_VIDEO, {'id': video_id}, video_id, note, country)
+            video = traverse_obj(data, ('data', 'video', {dict}))
+            if not video:
+                continue
+            last_video = video
+            if not video.get('unavailable'):
+                return video
+        if last_video:
             self.raise_geo_restricted(
-                f'{self.IE_NAME} said: This page is currently unavailable in your region')
-
-        auth_info = self._parse_json(webpage, video_id)
-        self._api_url_template = self.http_scheme() + '//apiv2.vevo.com/%s?token=' + auth_info['legacy_token']
-
-    def _call_api(self, path, *args, **kwargs):
-        try:
-            data = self._download_json(self._api_url_template % path, *args, **kwargs)
-        except ExtractorError as e:
-            if isinstance(e.cause, HTTPError):
-                errors = self._parse_json(e.cause.response.read().decode(), None)['errors']
-                error_message = ', '.join([error['message'] for error in errors])
-                raise ExtractorError(f'{self.IE_NAME} said: {error_message}', expected=True)
-            raise
-        return data
+                'This video is not available in the requested Vevo market',
+                countries=self._GEO_COUNTRIES)
+        raise ExtractorError('Unable to extract Vevo video info', expected=True)
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-
-        self._initialize_api(video_id)
-
-        video_info = self._call_api(
-            f'video/{video_id}', video_id, 'Downloading api video info',
-            'Failed to download video info')
-
-        video_versions = self._call_api(
-            f'video/{video_id}/streams', video_id,
-            'Downloading video versions info',
-            'Failed to download video versions info',
-            fatal=False)
-
-        # Some videos are only available via webpage (e.g.
-        # https://github.com/ytdl-org/youtube-dl/issues/9366)
-        if not video_versions:
-            webpage = self._download_webpage(url, video_id)
-            json_data = self._extract_json(webpage, video_id)
-            if 'streams' in json_data.get('default', {}):
-                video_versions = json_data['default']['streams'][video_id][0]
-            else:
-                video_versions = [
-                    value
-                    for key, value in json_data['apollo']['data'].items()
-                    if key.startswith(f'{video_id}.streams')]
-
-        uploader = None
-        artist = None
-        featured_artist = None
-        artists = video_info.get('artists')
-        for curr_artist in artists:
-            if curr_artist.get('role') == 'Featured':
-                featured_artist = curr_artist['name']
-            else:
-                artist = uploader = curr_artist['name']
+        video = self._extract_video(video_id)
 
         formats = []
-        for video_version in video_versions:
-            version = self._VERSIONS.get(video_version.get('version'), 'generic')
-            version_url = video_version.get('url')
-            if not version_url:
-                continue
+        seen_urls = set()
 
-            if '.ism' in version_url:
-                continue
-            elif '.mpd' in version_url:
-                formats.extend(self._extract_mpd_formats(
-                    version_url, video_id, mpd_id=f'dash-{version}',
-                    note=f'Downloading {version} MPD information',
-                    errnote=f'Failed to download {version} MPD information',
-                    fatal=False))
-            elif '.m3u8' in version_url:
-                formats.extend(self._extract_m3u8_formats(
-                    version_url, video_id, 'mp4', 'm3u8_native',
-                    m3u8_id=f'hls-{version}',
-                    note=f'Downloading {version} m3u8 information',
-                    errnote=f'Failed to download {version} m3u8 information',
-                    fatal=False))
-            else:
-                m = re.search(r'''(?xi)
-                    _(?P<quality>[a-z0-9]+)
-                    _(?P<width>[0-9]+)x(?P<height>[0-9]+)
-                    _(?P<vcodec>[a-z0-9]+)
-                    _(?P<vbr>[0-9]+)
-                    _(?P<acodec>[a-z0-9]+)
-                    _(?P<abr>[0-9]+)
-                    \.(?P<ext>[a-z0-9]+)''', version_url)
-                if not m:
-                    continue
-
-                formats.append({
-                    'url': version_url,
-                    'format_id': f'http-{version}-{video_version.get("quality") or m.group("quality")}',
-                    'vcodec': m.group('vcodec'),
-                    'acodec': m.group('acodec'),
-                    'vbr': int(m.group('vbr')),
-                    'abr': int(m.group('abr')),
-                    'ext': m.group('ext'),
-                    'width': int(m.group('width')),
-                    'height': int(m.group('height')),
+        def add_http_format(format_url, format_id):
+            format_url = url_or_none(format_url)
+            if not format_url or format_url in seen_urls:
+                return
+            seen_urls.add(format_url)
+            fmt = {
+                'url': format_url,
+                'format_id': format_id,
+                'ext': determine_ext(format_url, 'mp4'),
+                **parse_resolution(format_url),
+            }
+            mobj = re.search(
+                r'_(?P<width>\d+)x(?P<height>\d+)_(?P<vcodec>[a-z0-9]+)_(?P<vbr>\d+)_(?P<acodec>[a-z0-9]+)_(?P<abr>\d+)',
+                format_url, re.I)
+            if mobj:
+                fmt.update({
+                    'width': int(mobj.group('width')),
+                    'height': int(mobj.group('height')),
+                    'vcodec': mobj.group('vcodec'),
+                    'vbr': int(mobj.group('vbr')),
+                    'acodec': mobj.group('acodec'),
+                    'abr': int(mobj.group('abr')),
                 })
+            formats.append(fmt)
 
-        track = video_info['title']
-        if featured_artist:
-            artist = f'{artist} ft. {featured_artist}'
-        title = f'{artist} - {track}' if artist else track
+        for mp4 in traverse_obj(video, ('mp4', ..., {dict})) or []:
+            add_http_format(mp4.get('url'), join_nonempty('http', mp4.get('quality')))
 
-        genres = video_info.get('genres')
-        genre = (
-            genres[0] if genres and isinstance(genres, list)
-            and isinstance(genres[0], str) else None)
+        dash_url = url_or_none(video.get('dash'))
+        if dash_url:
+            if determine_ext(dash_url) == 'mpd':
+                formats.extend(self._extract_mpd_formats(
+                    dash_url, video_id, mpd_id='dash', fatal=False))
+            else:
+                add_http_format(dash_url, 'http-dash')
 
-        is_explicit = video_info.get('isExplicit')
+        hls_url = url_or_none(video.get('hls'))
+        if hls_url:
+            formats.extend(self._extract_m3u8_formats(
+                hls_url, video_id, 'mp4', m3u8_id='hls', fatal=False))
+
+        main, featured = [], []
+        for item in traverse_obj(video, ('artists', ..., {dict})) or []:
+            name = traverse_obj(item, ('artist', 'name', {str}))
+            if not name:
+                continue
+            if (item.get('role') or '').lower() == 'featured':
+                featured.append(name)
+            else:
+                main.append(name)
+
+        uploader = main[0] if main else None
+        artist = join_nonempty(*main, delim=', ')
+        if featured:
+            artist = join_nonempty(artist, f'ft. {join_nonempty(*featured, delim=", ")}', delim=' ')
+        track = video.get('title')
+        title = join_nonempty(artist, track, delim=' - ') or video_id
+
+        is_explicit = video.get('explicit')
         if is_explicit is True:
             age_limit = 18
         elif is_explicit is False:
@@ -290,19 +313,32 @@ class VevoIE(VevoBaseIE):
         else:
             age_limit = None
 
+        subtitles = {}
+        for lang_ext, cap_url in (
+            ('srt', traverse_obj(video, ('captions', 'srt', 'url', {url_or_none}))),
+            ('vtt', traverse_obj(video, ('captions', 'vtt', 'url', {url_or_none}))),
+            ('ttml', traverse_obj(video, ('captions', 'ttml', 'url', {url_or_none}))),
+        ):
+            if cap_url:
+                subtitles.setdefault('en', []).append({
+                    'url': cap_url,
+                    'ext': lang_ext,
+                })
+
         return {
             'id': video_id,
             'title': title,
             'formats': formats,
-            'thumbnail': video_info.get('imageUrl') or video_info.get('thumbnailUrl'),
-            'timestamp': parse_iso8601(video_info.get('releaseDate')),
+            'thumbnail': url_or_none(video.get('thumbnail')),
+            'timestamp': parse_iso8601(video.get('created')),
             'uploader': uploader,
-            'duration': int_or_none(video_info.get('duration')),
-            'view_count': int_or_none(video_info.get('views', {}).get('total')),
+            'duration': int_or_none(video.get('duration'), scale=1000),
+            'view_count': int_or_none(traverse_obj(video, ('viewCounts', 'total'))),
             'age_limit': age_limit,
             'track': track,
-            'artist': uploader,
-            'genre': genre,
+            'artist': artist or uploader,
+            'genre': video.get('genre'),
+            'subtitles': subtitles or None,
         }
 
 
@@ -316,37 +352,14 @@ class VevoPlaylistIE(VevoBaseIE):
             'title': 'Rock',
         },
         'playlist_count': 20,
+        'skip': 'Vevo consumer playlist pages now redirect to hq.vevo.com',
     }, {
         'url': 'http://www.vevo.com/watch/genre/rock?index=0',
         'only_matching': True,
     }]
 
     def _real_extract(self, url):
-        mobj = self._match_valid_url(url)
-        playlist_id = mobj.group('id')
-        playlist_kind = mobj.group('kind')
-
-        webpage = self._download_webpage(url, playlist_id)
-
-        qs = parse_qs(url)
-        index = qs.get('index', [None])[0]
-
-        if index:
-            video_id = self._search_regex(
-                r'<meta[^>]+content=(["\'])vevo://video/(?P<id>.+?)\1[^>]*>',
-                webpage, 'video id', default=None, group='id')
-            if video_id:
-                return self.url_result(f'vevo:{video_id}', VevoIE.ie_key())
-
-        playlists = self._extract_json(webpage, playlist_id)['default'][f'{playlist_kind}s']
-
-        playlist = (next(iter(playlists.values()))
-                    if playlist_kind == 'playlist' else playlists[playlist_id])
-
-        entries = [
-            self.url_result(f'vevo:{src}', VevoIE.ie_key())
-            for src in playlist['isrcs']]
-
-        return self.playlist_result(
-            entries, playlist.get('playlistId') or playlist_id,
-            playlist.get('name'), playlist.get('description'))
+        playlist_id = self._match_valid_url(url).group('id')
+        raise ExtractorError(
+            'Vevo consumer playlist pages are no longer available',
+            expected=True, video_id=playlist_id)
