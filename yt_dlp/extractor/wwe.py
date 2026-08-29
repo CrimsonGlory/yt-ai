@@ -50,8 +50,8 @@ class WWEBaseIE(InfoExtractor):
             'title': title,
             'description': description,
             'thumbnail': thumbnail,
-            'series': series,
-            'episode': episode,
+            'series': series or None,
+            'episode': episode or None,
             'formats': formats,
             'subtitles': subtitles,
         }
@@ -61,13 +61,15 @@ class WWEIE(WWEBaseIE):
     _VALID_URL = r'https?://(?:[^/]+\.)?wwe\.com/(?:[^/]+/)*videos/(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://www.wwe.com/videos/daniel-bryan-vs-andrade-cien-almas-smackdown-live-sept-4-2018',
-        'md5': '92811c6a14bfc206f7a6a9c5d9140184',
+        'md5': '3c510f392f9228fb9eb58e8f3140ce09',
         'info_dict': {
             'id': '40048199',
             'ext': 'mp4',
             'title': 'Daniel Bryan vs. Andrade "Cien" Almas: SmackDown LIVE, Sept. 4, 2018',
             'description': 'md5:2d7424dbc6755c61a0e649d2a8677f67',
             'thumbnail': r're:^https?://.*\.jpg$',
+            'display_id': 'daniel-bryan-vs-andrade-cien-almas-smackdown-live-sept-4-2018',
+            'series': 'SmackDown',
         },
     }, {
         'url': 'https://de.wwe.com/videos/gran-metalik-vs-tony-nese-wwe-205-live-sept-4-2018',
@@ -78,11 +80,9 @@ class WWEIE(WWEBaseIE):
         display_id = self._match_id(url)
         webpage = self._download_webpage(url, display_id)
 
-        landing = self._parse_json(
-            self._html_search_regex(
-                r'(?s)Drupal\.settings\s*,\s*({.+?})\s*\)\s*;',
-                webpage, 'drupal settings'),
-            display_id)['WWEVideoLanding']
+        landing = self._search_json(
+            r'<script[^>]+data-drupal-selector="drupal-settings-json"[^>]*>',
+            webpage, 'drupal settings', display_id)['WWEVideoLanding']
 
         data = landing['initialVideo']['playlist'][0]
         video_id = landing.get('initialVideoId')

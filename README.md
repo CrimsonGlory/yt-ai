@@ -2537,6 +2537,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **wimbledon**: Extract current `/video/{slug}` pages via GraphQL and Adobe Scene7 HLS; keep Brightcove for legacy `/video/media/` IDs
     * **WorldStarHipHop**: Extract JSON-LD MP4s from current `/videos/{id}/{slug}` pages
     * **wppilot**: Load the guest channel list from the public API instead of the old Gatsby CDN page-data; raise geo-restriction when guest streams return `user_outside_eu` (X-Forwarded-For is ignored)
+    * **wwe**: Read Drupal 10 `drupal-settings-json` instead of the old `Drupal.settings` JS
     * **xfileshare**: Match current Uqload TLDs (`uqload.vc` and related mirrors) after `uqload.com` started redirecting
     * **yandexdisk**: Support password-protected public files (`--video-password`)
 
