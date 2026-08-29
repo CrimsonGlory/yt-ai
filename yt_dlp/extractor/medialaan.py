@@ -12,14 +12,16 @@ from ..utils.traversal import find_elements, traverse_obj
 
 
 class MedialaanBaseIE(InfoExtractor):
-    def _extract_from_mychannels_api(self, mychannels_id):
+    def _extract_from_mychannels_api(self, mychannels_id, impersonate=None):
         webpage = self._download_webpage(
-            f'https://mychannels.video/embed/{mychannels_id}', mychannels_id)
+            f'https://mychannels.video/embed/{mychannels_id}', mychannels_id,
+            impersonate=impersonate)
         brand_config = self._search_json(
             r'window\.mychannels\.brand_config\s*=', webpage, 'brand config', mychannels_id)
         response = self._download_json(
             f'https://api.mychannels.world/v1/embed/video/{mychannels_id}',
-            mychannels_id, headers={'X-Mychannels-Brand': brand_config['brand']})
+            mychannels_id, headers={'X-Mychannels-Brand': brand_config['brand']},
+            impersonate=impersonate)
 
         formats = []
         for stream in traverse_obj(response, (
