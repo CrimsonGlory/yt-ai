@@ -1494,6 +1494,10 @@ from .prankcast import (
     PrankCastPostIE,
 )
 from .premiershiprugby import PremiershipRugbyIE
+from .preservetube import (
+    PreserveTubeChannelIE,
+    PreserveTubeIE,
+)
 from .presstv import PressTVIE
 from .projectveritas import ProjectVeritasIE
 from .prx import (

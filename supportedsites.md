@@ -1075,6 +1075,8 @@ The only reliable way to check if a site is supported is to try it.
  - **PrankCast**
  - **PrankCastPost**
  - **PremiershipRugby**
+ - **preservetube**: PreserveTube
+ - **preservetube:channel**
  - **PressTV**
  - **ProjectVeritas**
  - **PRXAccount**
