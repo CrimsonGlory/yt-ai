@@ -21,7 +21,6 @@ class TvwIE(InfoExtractor):
     ]
     _TESTS = [{
         'url': 'https://tvw.org/video/billy-frank-jr-statue-maquette-unveiling-ceremony-2024011211/',
-        'skip': 'HTTP Error 403',
         'md5': '9ceb94fe2bb7fd726f74f16356825703',
         'info_dict': {
             'id': '2024011211',
@@ -33,7 +32,7 @@ class TvwIE(InfoExtractor):
             'upload_date': '20240110',
             'location': 'Legislative Building',
             'display_id': 'billy-frank-jr-statue-maquette-unveiling-ceremony-2024011211',
-            'categories': ['General Interest'],
+            'categories': ['General Interest', 'AIR-ON-TV'],
         },
     }, {
         'url': 'https://tvw.org/video/ebeys-landing-state-park-2024081007/',
@@ -101,7 +100,7 @@ class TvwIE(InfoExtractor):
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        webpage = self._download_webpage(url, display_id)
+        webpage = self._download_webpage(url, display_id, impersonate=True)
 
         client_id = self._html_search_meta('clientID', webpage, fatal=True)
         video_id = self._html_search_meta('eventID', webpage, fatal=True)
@@ -172,7 +171,7 @@ class TvwNewsIE(InfoExtractor):
 
     def _real_extract(self, url):
         playlist_id = self._match_id(url)
-        webpage = self._download_webpage(url, playlist_id)
+        webpage = self._download_webpage(url, playlist_id, impersonate=True)
 
         video_ids = traverse_obj(webpage, (
             {find_elements(cls='invintus-player', html=True)}, ..., {extract_attributes}, 'data-eventid'))
@@ -211,7 +210,7 @@ class TvwTvChannelsIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
+        webpage = self._download_webpage(url, video_id, impersonate=True)
 
         m3u8_url = traverse_obj(webpage, (
             {find_element(id='invintus-persistent-stream-frame', html=True)}, {extract_attributes},
