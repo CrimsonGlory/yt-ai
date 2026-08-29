@@ -2558,8 +2558,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 
 * **Extractor internals**:
     * `url_result` smuggles generic intent so the Generic extractor keeps the intended URL
-    * `subs_list_to_dict` copies entries and handles empty `id`/`ext`
-    * `download_range_func` equality/repr includes `from_info`
+    * `subs_list_to_dict` copies entries before mutating them
     * Skip non-numeric `age_limit` test values when listing extractors so `make_supportedsites` does not crash
 
 * **Testing and developer workflow**:

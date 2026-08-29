@@ -5088,7 +5088,7 @@ class function_with_repr:
 
 
 class Namespace(types.SimpleNamespace):
-    """Immutable namespace"""
+    """SimpleNamespace iterable over attribute values"""
 
     def __iter__(self):
         return iter(self.__dict__.values())
