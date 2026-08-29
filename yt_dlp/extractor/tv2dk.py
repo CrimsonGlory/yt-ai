@@ -30,6 +30,7 @@ class TV2DKIE(InfoExtractor):
                     '''
     _TESTS = [{
         'url': 'https://www.tvsyd.dk/nyheder/28-10-2019/1930/1930-28-okt-2019?autoplay=1#player',
+        'md5': '5758c3c220b0e8ff6e58d43a6d538c79',
         'info_dict': {
             'id': 'sPp5z21q',
             'ext': 'mp4',
@@ -90,7 +91,7 @@ class TV2DKIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
+        webpage = self._download_webpage(url, video_id, impersonate=True)
         search_space = traverse_obj(webpage, {find_element(tag='article')}) or webpage
 
         player_ids = traverse_obj(

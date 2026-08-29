@@ -2504,6 +2504,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **tumblr**: Impersonate the browser
     * **TravelChannel**: Match `www.travelchannel.com` video URLs after `watch.` redirected
     * **tv2**: Use the Vimond content-discovery and play APIs instead of the dead Sumo REST API
+    * **TV2DK**: Impersonate the browser to avoid HTTP 406 on regional TV 2 article pages
     * **TV5MONDE**: Extract information.tv5monde.com news videos from the player API / direct MP4; raise an expected error when old `/tv/video` URLs redirect to DRM-protected TV5MONDE+
     * **tvigle**: Resolve current `/video/` pages from Next.js data and the cloud play API
     * **tvn24**: Extract JSON-LD VideoObject MP4s on current `/...-vd` pages instead of the old data-quality player
