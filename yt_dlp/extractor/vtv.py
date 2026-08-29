@@ -1,5 +1,4 @@
 from .common import InfoExtractor
-from ..utils import extract_attributes, get_element_html_by_class, remove_start
 
 
 class VTVGoIE(InfoExtractor):
@@ -76,11 +75,20 @@ class VTVGoIE(InfoExtractor):
 class VTVIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?vtv\.vn/video/[\w-]*?(?P<id>\d+)\.htm'
     _TESTS = [{
+        'url': 'https://vtv.vn/video/loai-gian-khong-lo-lai-may-cuu-tro-y-te-108698430.htm',
+        'info_dict': {
+            'id': '108698430',
+            'ext': 'mp4',
+            'title': 'Loài gián khổng lồ "lai máy" cứu trợ y tế | Shorts Video',
+            'thumbnail': 'https://static.mediacdn.vn/vtv.vn/images/thumb-share-vtv.jpg',
+        },
+    }, {
         'url': 'https://vtv.vn/video/thoi-su-20h-vtv1-12-6-2024-680411.htm',
         'info_dict': {
             'id': '680411',
             'ext': 'mp4',
-            'title': 'Thời sự 20h VTV1 - 12/6/2024 - Video đã phát trên VTV1 | VTV.VN',
+            'title': 'Thời sự 20h VTV1 - 12/6/2024',
+            'description': 'Thời sự 20h VTV1 - 12/6/2024 VIDEO CLIP',
             'thumbnail': 'https://cdn-images.vtv.vn/zoom/600_315/66349b6076cb4dee98746cf1/2024/06/12/thumb/1206-ts-20h-02929741475480320806760.mp4/thumb0.jpg',
         },
     }, {
@@ -88,23 +96,26 @@ class VTVIE(InfoExtractor):
         'info_dict': {
             'id': '560248',
             'ext': 'mp4',
-            'title': 'ZLife #1: Không ngờ tới phải không? | VTV24 - Video đã phát trên VTV-NEWS | VTV.VN',
-            'description': 'Ai đứng sau vụ việc thay đổi ảnh đại diện trên các trang mạng xã hội của VTV Digital tối 2/5?',
-            'thumbnail': 'https://video-thumbs.mediacdn.vn/zoom/600_315/vtv/2022/5/13/t67s6btf3ji-16524555726231894427334.jpg',
+            'title': 'ZLife #1: Không ngờ tới phải không? | VTV24',
+            'description': 'md5:cbf7c4aea80e1557f1f7a21b1e2fb62e',
+            'thumbnail': 'https://video-thumbs.mediacdn.vn/zoom/600_315//vtv/2022/5/13/t67s6btf3ji-16524555726231894427334.jpg',
         },
+        'params': {'skip_download': True},
     }]
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
-        data_vid = extract_attributes(get_element_html_by_class(
-            'VCSortableInPreviewMode', get_element_html_by_class(
-                'video-highlight-box', webpage)))['data-vid']
-        m3u8_url = f'https://cdn-videos.vtv.vn/{remove_start(data_vid, "vtv.mediacdn.vn/")}/master.m3u8'
+        # Classic player: data-vid="vtv.mediacdn.vn/...mp4"
+        # Shorts player: data-file="https://cdn-videos.vtv.vn/...mp4"
+        video_path = self._search_regex(
+            r'(?:data-vid=["\'](?:vtv\.mediacdn\.vn/)?|data-file=["\']https?://cdn-videos\.vtv\.vn/)([^"\']+\.mp4)',
+            webpage, 'video path')
+        m3u8_url = f'https://cdn-videos.vtv.vn/{video_path}/master.m3u8'
         return {
             'id': video_id,
             'title': self._og_search_title(webpage, default=None),
-            'description': self._og_search_description(webpage, default=None),
+            'description': self._og_search_description(webpage, default=None) or None,
             'thumbnail': self._og_search_thumbnail(webpage, default=None),
             'formats': self._extract_m3u8_formats(m3u8_url, video_id, 'mp4'),
         }

@@ -2531,6 +2531,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **vrt**: Parse `mediaReference` from Next.js / JSON-LD when `vrtvideo` is gone
     * **vrtmax**: Query EpisodePage player/JSON-LD GraphQL after the `episode` field was removed
     * **vtm**: Pass the DPG privacy gate and impersonate the browser to extract public mychannels clips
+    * **vtv**: Extract HLS from classic `data-vid` and shorts `data-file` CDN paths
     * **wevidi**: Fall back to a YouTube embed when WVPlayer is missing
     * **xfileshare**: Match current Uqload TLDs (`uqload.vc` and related mirrors) after `uqload.com` started redirecting
     * **yandexdisk**: Support password-protected public files (`--video-password`)
