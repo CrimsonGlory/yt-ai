@@ -15,7 +15,7 @@ class TrueIDIE(InfoExtractor):
     _VALID_URL = r'https?://(?P<domain>vn\.trueid\.net|trueid\.(?:id|ph))/(?:movie|series/[^/]+)/(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://trueid.id/movie/XYNlDOZZJzL6/pengabdi-setan/',
-        'skip': 'Site no longer exists or is broken',
+        'skip': 'trueid.id nameservers refuse DNS (Google Cloud DNS REFUSED); Indonesian site is offline',
         'md5': '2552c7535125885901f1a2a4bcf32ca3',
         'info_dict': {
             'id': 'XYNlDOZZJzL6',
@@ -35,7 +35,7 @@ class TrueIDIE(InfoExtractor):
         'expected_warnings': ['Video is geo restricted.'],
     }, {
         'url': 'https://trueid.id/series/zZOBVPb62EwR/qXY73rwyl7oj/one-piece-ep-1/',
-        'skip': 'Site no longer exists or is broken',
+        'skip': 'trueid.id nameservers refuse DNS (Google Cloud DNS REFUSED); Indonesian site is offline',
         'md5': '1c6d976049bc3c89a8a25aed2c3fb081',
         'info_dict': {
             'id': 'qXY73rwyl7oj',
@@ -56,7 +56,7 @@ class TrueIDIE(InfoExtractor):
         'expected_warnings': ['Video is geo restricted.'],
     }, {
         'url': 'https://vn.trueid.net/series/7DNPM7Bpa9wv/pwLgEQ4Xbda2/haikyu-vua-bong-chuyen-phan-1/',
-        'skip': 'Site no longer exists or is broken',
+        'skip': 'vn.trueid.net has no DNS A record; Vietnamese site is offline',
         'info_dict': {
             'id': 'pwLgEQ4Xbda2',
             'ext': 'mp4',
