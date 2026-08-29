@@ -15,6 +15,24 @@ class UOLIE(InfoExtractor):
     IE_NAME = 'uol.com.br'
     _VALID_URL = r'https?://(?:.+?\.)?uol\.com\.br/.*?(?:(?:mediaId|v)=|view/(?:[a-z0-9]+/)?|video(?:=|/(?:\d{4}/\d{2}/\d{2}/)?))(?P<id>\d+|[\w-]+-[A-Z0-9]+)'
     _TESTS = [{
+        'url': 'https://mais.uol.com.br/view/17414108',
+        'md5': '38e748c3d80c102b057fc76b4a2d1bfe',
+        'info_dict': {
+            'id': '17414108',
+            'ext': 'mp4',
+            'title': 'Sakamoto: Flávio Bolsonaro na Globo se viu sem argumentos e inventou diálog',
+            'description': 'md5:01ca95e298766ebc12dd6f60d7656096',
+            'timestamp': 1787960053,
+            'upload_date': '20260828',
+            'duration': 175,
+            'view_count': int,
+            'thumbnail': 'https://thumb.mais.uol.com.br/17414108-xlarge.jpg?ver=2',
+            'tags': ['uol flash'],
+        },
+        'params': {
+            'format': '360p',
+        },
+    }, {
         'url': 'http://player.mais.uol.com.br/player_video_v3.swf?mediaId=15951931',
         'skip': 'video gone',
         'md5': '4f1e26683979715ff64e4e29099cf020',
