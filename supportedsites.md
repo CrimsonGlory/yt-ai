@@ -1118,6 +1118,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Pornotube**
  - **PornoVoisines**
  - **PornoXO**
+ - **PornSlash**: pornslash.com
  - **PornTop**
  - **PornTube**
  - **Pr0gramm**

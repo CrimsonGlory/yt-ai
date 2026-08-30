@@ -2318,6 +2318,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Piczel** (`piczel.tv`): Public `/api/streams/{slug}` JSON for LL-HLS live (`playback.piczel.tv`) and recording MP4s. Request: [yt-dlp/yt-dlp#16032](https://github.com/yt-dlp/yt-dlp/issues/16032)
     * **Pillows** (`pillows.su`): SvelteKit `__data.json` (devalue) metadata and `api.pillows.su` original-file downloads. Request: [yt-dlp/yt-dlp#17426](https://github.com/yt-dlp/yt-dlp/issues/17426)
     * **PimpBunny** (`pimpbunny.com`): KVS `kt_player` config (randomized JS object) and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#15333](https://github.com/yt-dlp/yt-dlp/issues/15333)
+    * **PornSlash** (`pornslash.com`): HLS.js `loadSource` master playlist with `/media/report` host fallback. Request: [yt-dlp/yt-dlp#14768](https://github.com/yt-dlp/yt-dlp/issues/14768)
     * **PreserveTube** (`preservetube.com`): Public `/video/{id}` JSON API and HTML5 fallback; channel archives from `/channel/{id}/videos`. Request: [yt-dlp/yt-dlp#17540](https://github.com/yt-dlp/yt-dlp/issues/17540)
     * **Plurk** (`plurk.com`): Parse post-page `plurk` JSON for `video.plurk.com` MP4/HLS with the `verify` token. Request: [yt-dlp/yt-dlp#15679](https://github.com/yt-dlp/yt-dlp/issues/15679)
     * **RacingTV** (`racingtv.com`): Public `api.racingtv.com` on-demand JSON (client `API-KEY`) and HLS after the preroll token wait. Request: [yt-dlp/yt-dlp#17503](https://github.com/yt-dlp/yt-dlp/issues/17503)
