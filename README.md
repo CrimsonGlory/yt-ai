@@ -2358,6 +2358,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Streamtape** (`streamtape.com`): Reconstruct the obfuscated `get_video` MP4 URL from player JS. Request: [yt-dlp/yt-dlp#16770](https://github.com/yt-dlp/yt-dlp/issues/16770)
     * **Stuff** (`stuff.co.nz`): Public `/api/v1.0/stuff/story/{id}` JSON; Brightcove player or hosted HLS/MP4. Request: [yt-dlp/yt-dlp#14961](https://github.com/yt-dlp/yt-dlp/issues/14961)
     * **Sync** (`sync.com`): Public share `linkpathlist`/`pathdata` with PBKDF2+AES-GCM key unwrap and RSA-signed compat download. Request: [yt-dlp/yt-dlp#16598](https://github.com/yt-dlp/yt-dlp/issues/16598)
+    * **Thothub** (`thothub.to`): KVS `kt_player` flashvars and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#13133](https://github.com/yt-dlp/yt-dlp/issues/13133)
     * **ThreeNow** (`threenow.co.nz`): Live channels from the public `now-api.fullscreen.nz` `live-epg` HLS. Request: [yt-dlp/yt-dlp#17082](https://github.com/yt-dlp/yt-dlp/issues/17082)
     * **TimesRadio** (`thetimes.com`): HTML5 catch-up MP3 (Omny) and live AAC stream from Times Radio pages; impersonate for the device-check interstitial. Request: [yt-dlp/yt-dlp#17253](https://github.com/yt-dlp/yt-dlp/issues/17253)
     * **TVAsahiDouga** (`douga.tv-asahi.co.jp`): Episode-page `window.app` Falcor metadata and Brightcove HLS (`ovp_video_id`) with JP geo-bypass. Request: [yt-dlp/yt-dlp#14947](https://github.com/yt-dlp/yt-dlp/issues/14947)

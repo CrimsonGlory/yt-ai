@@ -2095,6 +2095,7 @@ from .thisvid import (
     ThisVidMemberIE,
     ThisVidPlaylistIE,
 )
+from .thothub import ThothubIE
 from .threem import ThreeMIE
 from .threenow import ThreeNowIE
 from .threeqsdn import ThreeQSDNIE
