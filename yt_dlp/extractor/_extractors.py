@@ -225,6 +225,7 @@ from .blackboardcollaborate import (
     BlackboardCollaborateIE,
     BlackboardCollaborateLaunchIE,
 )
+from .blacksky import BlackskyIE
 from .bleacherreport import (
     BleacherReportCMSIE,
     BleacherReportIE,

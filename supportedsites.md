@@ -180,6 +180,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Bitmovin**
  - **BlackboardCollaborate**
  - **BlackboardCollaborateLaunch**
+ - **Blacksky**: blacksky.community
  - **BleacherReport**
  - **BleacherReportCMS**
  - **blerp**

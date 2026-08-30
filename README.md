@@ -2276,6 +2276,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 * **New extractors**:
     * [AnonMP4](https://github.com/CrimsonGlory/yt-ai/commit/7e1d8ceb53acea50102343d0cd3db56e1fc2dbc8) (`anonmp4.art` / `anonmp4.to`)
     * **Balapan** (`balapan.tv`): Clappr HLS from the `player.rtrk.kz` live iframe. Request: [yt-dlp/yt-dlp#17241](https://github.com/yt-dlp/yt-dlp/issues/17241)
+    * **Blacksky** (`blacksky.community`): AT Protocol `getPostThread` via `api.blacksky.community` (HLS on `video.blacksky.community`, blob fallback from the author's PDS). Request: [yt-dlp/yt-dlp#16161](https://github.com/yt-dlp/yt-dlp/issues/16161)
     * **Castbox** (`castbox.fm`): Public `everest.castbox.fm` episode v4 JSON (direct MP3/media URL). Request: [yt-dlp/yt-dlp#16910](https://github.com/yt-dlp/yt-dlp/issues/16910)
     * **Cime** (`ci.me`): Public `/api/app` JSON for VOD HLS, clip MP4, and Amazon IVS live. Request: [yt-dlp/yt-dlp#16247](https://github.com/yt-dlp/yt-dlp/issues/16247)
     * **CuriosityU** (`curiosityu.com`): Bitmovin DASH (`cdn-s3-cf.curiositystream.com`) from lecture-page `sourceConfig`. Request: [yt-dlp/yt-dlp#16564](https://github.com/yt-dlp/yt-dlp/issues/16564)
