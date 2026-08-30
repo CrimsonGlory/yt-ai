@@ -1477,6 +1477,7 @@ from .picarto import (
 from .piczel import PiczelIE
 from .piksel import PikselIE
 from .pillows import PillowsIE
+from .pimpbunny import PimpBunnyIE
 from .pinkbike import PinkbikeIE
 from .pinterest import (
     PinterestCollectionIE,

@@ -1064,6 +1064,7 @@ The only reliable way to check if a site is supported is to try it.
  - **piczel**: Piczel.tv live streams and recordings
  - **Piksel**
  - **pillows**: pillows.su
+ - **PimpBunny**: pimpbunny.com
  - **Pinkbike**
  - **Pinterest**
  - **PinterestCollection**
