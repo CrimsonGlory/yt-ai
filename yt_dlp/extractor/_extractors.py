@@ -1161,6 +1161,7 @@ from .naver import (
     NaverIE,
     NaverLiveIE,
 )
+from .naverblog import NaverBlogIE
 from .nba import (
     NBAIE,
     NBAChannelIE,

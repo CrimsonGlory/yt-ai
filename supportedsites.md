@@ -842,6 +842,7 @@ The only reliable way to check if a site is supported is to try it.
  - **NateProgram**
  - **NationalGeographicTV**
  - **Naver**
+ - **Naver:blog**: Naver Blog
  - **Naver:live**
  - **nba**
  - **nba:channel**
