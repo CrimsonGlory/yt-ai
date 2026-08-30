@@ -36,6 +36,7 @@ The only reliable way to check if a site is supported is to try it.
  - **abcotvs:clips**
  - **AbemaTV**: [*abematv*](## "netrc machine")
  - **AbemaTVTitle**: [*abematv*](## "netrc machine")
+ - **abyss**: Abyss.to / Hydrax
  - **AcademicEarth:Course**
  - **acast**
  - **acast:channel**

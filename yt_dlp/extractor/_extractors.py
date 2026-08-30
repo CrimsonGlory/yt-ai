@@ -16,6 +16,7 @@ from .abematv import (
     AbemaTVIE,
     AbemaTVTitleIE,
 )
+from .abyss import AbyssIE
 from .academicearth import AcademicEarthCourseIE
 from .acast import (
     ACastChannelIE,

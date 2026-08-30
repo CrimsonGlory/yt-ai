@@ -2274,6 +2274,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 * **Restored extractors previously marked currently broken**: Sites that still publish media were rewritten against current pages/APIs. Notable reworks include DW, Europa, TFO, TeleMB, PlutoTV, and GDCVault. Extractors whose old APIs died can fall back to HTML5 / JSON-LD / JWPlayer / HLS on the webpage (`_WEB_FALLBACK`)
 
 * **New extractors**:
+    * **Abyss** (`abyss.to`): Decrypt player `datas` (AES-CTR) and download `sssrr.org` sora MP4 fragments. Request: [yt-dlp/yt-dlp#16027](https://github.com/yt-dlp/yt-dlp/issues/16027)
     * [AnonMP4](https://github.com/CrimsonGlory/yt-ai/commit/7e1d8ceb53acea50102343d0cd3db56e1fc2dbc8) (`anonmp4.art` / `anonmp4.to`)
     * **Balapan** (`balapan.tv`): Clappr HLS from the `player.rtrk.kz` live iframe. Request: [yt-dlp/yt-dlp#17241](https://github.com/yt-dlp/yt-dlp/issues/17241)
     * **Blacksky** (`blacksky.community`): AT Protocol `getPostThread` via `api.blacksky.community` (HLS on `video.blacksky.community`, blob fallback from the author's PDS). Request: [yt-dlp/yt-dlp#16161](https://github.com/yt-dlp/yt-dlp/issues/16161)
