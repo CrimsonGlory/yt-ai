@@ -1484,6 +1484,7 @@ from .pluralsight import (
     PluralsightCourseIE,
     PluralsightIE,
 )
+from .plurk import PlurkIE
 from .plutotv import PlutoTVIE
 from .plyr import PlyrEmbedIE
 from .podbayfm import (

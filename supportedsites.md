@@ -1068,6 +1068,7 @@ The only reliable way to check if a site is supported is to try it.
  - **PlayVids**
  - **pluralsight**: [*pluralsight*](## "netrc machine")
  - **pluralsight:course**
+ - **Plurk**: Plurk
  - **PlutoTV**
  - **PlyrEmbed**
  - **PodbayFM**
