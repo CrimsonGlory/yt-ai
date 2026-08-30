@@ -1177,6 +1177,7 @@ The only reliable way to check if a site is supported is to try it.
  - **RedGifsSearch**: Redgifs search
  - **RedGifsUser**: Redgifs user
  - **RedTube**
+ - **redzidzirdilatviju**: Redzi, dzirdi Latviju!
  - **RENTV**
  - **RENTVArticle**
  - **Restudy**
