@@ -194,6 +194,7 @@ The only reliable way to check if a site is supported is to try it.
  - **BostonGlobe**
  - **Box**
  - **BoxCastVideo**
+ - **BoyfriendTV**
  - **Bpb**: Bundeszentrale für politische Bildung
  - **BR**: Bayerischer Rundfunk
  - **BrainPOP**: [*brainpop*](## "netrc machine")

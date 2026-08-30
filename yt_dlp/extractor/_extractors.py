@@ -240,6 +240,7 @@ from .boosty import BoostyIE
 from .bostonglobe import BostonGlobeIE
 from .box import BoxIE
 from .boxcast import BoxCastVideoIE
+from .boyfriendtv import BoyfriendTVIE
 from .bpb import BpbIE
 from .br import BRIE
 from .brainpop import (
