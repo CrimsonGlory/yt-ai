@@ -465,6 +465,7 @@ The only reliable way to check if a site is supported is to try it.
  - **franceinfo**: franceinfo.fr (formerly francetvinfo.fr)
  - **francetv**
  - **francetv:site**
+ - **freesex**: freesex.cz
  - **Freesound**
  - **freespeech.org**
  - **freetv:series**

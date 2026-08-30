@@ -638,6 +638,7 @@ from .francetv import (
     FranceTVInfoIE,
     FranceTVSiteIE,
 )
+from .freesex import FreeSexIE
 from .freesound import FreesoundIE
 from .freespeech import FreespeechIE
 from .freetv import (
