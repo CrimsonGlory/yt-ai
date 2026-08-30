@@ -2323,6 +2323,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Mp4Porn** (`mp4porn.space`): Player `url_v` `/play` MP4 and `/play_hls` HLS with a site Referer. Request: [yt-dlp/yt-dlp#15302](https://github.com/yt-dlp/yt-dlp/issues/15302)
     * **Mp4Upload** (`mp4upload.com`): Video.js `player.src` MP4 from embed pages with a site Referer. Request: [yt-dlp/yt-dlp#14075](https://github.com/yt-dlp/yt-dlp/issues/14075)
     * **Naver:blog** (`blog.naver.com`): PostView `vid`/`inkey` (SE3 and Prism player) via the rmcnmv VOD play API. Request: [yt-dlp/yt-dlp#16816](https://github.com/yt-dlp/yt-dlp/issues/16816)
+    * **nobody.live** (`nobody.live`): Public `/stream` JSON for a random zero-viewer Twitch channel, then Twitch HLS. Request: [yt-dlp/yt-dlp#13696](https://github.com/yt-dlp/yt-dlp/issues/13696)
     * **OnePodcast** (`onepodcast.it`): GEDI media-hub `audioSource` MP3 and Brightcove `videoSrc` MP4 from episode pages. Request: [yt-dlp/yt-dlp#16798](https://github.com/yt-dlp/yt-dlp/issues/16798)
     * **Piczel** (`piczel.tv`): Public `/api/streams/{slug}` JSON for LL-HLS live (`playback.piczel.tv`) and recording MP4s. Request: [yt-dlp/yt-dlp#16032](https://github.com/yt-dlp/yt-dlp/issues/16032)
     * **Pillows** (`pillows.su`): SvelteKit `__data.json` (devalue) metadata and `api.pillows.su` original-file downloads. Request: [yt-dlp/yt-dlp#17426](https://github.com/yt-dlp/yt-dlp/issues/17426)

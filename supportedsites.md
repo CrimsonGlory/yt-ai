@@ -971,6 +971,7 @@ The only reliable way to check if a site is supported is to try it.
  - **njoy**: N-JOY
  - **njoy:embed**
  - **NobelPrize**
+ - **nobody.live**: nobody.live zero-viewer Twitch streams
  - **NoicePodcast**
  - **NonkTube**
  - **NoodleMagazine**
