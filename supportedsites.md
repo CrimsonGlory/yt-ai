@@ -1048,6 +1048,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Piapro**: [*piapro*](## "netrc machine")
  - **picarto**
  - **picarto:vod**
+ - **piczel**: Piczel.tv live streams and recordings
  - **Piksel**
  - **pillows**: pillows.su
  - **Pinkbike**
