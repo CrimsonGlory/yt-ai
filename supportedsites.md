@@ -459,6 +459,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Folketinget**: Folketinget (ft.dk; Danish parliament)
  - **FoodNetwork**
  - **FootyRoom**
+ - **forendors**: Forendors
  - **Formula1**
  - **FOX**
  - **fox4kc**: FOX 4 Kansas City (WDAF-TV)
