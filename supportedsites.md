@@ -1409,6 +1409,7 @@ The only reliable way to check if a site is supported is to try it.
  - **StoryFireUser**
  - **Streaks**
  - **Streamable**
+ - **streamco:platform**: J-Stream Equipmedia
  - **StreamCZ**
  - **streamingcommunityz**: StreamingCommunity
  - **streamruby**: Streamruby

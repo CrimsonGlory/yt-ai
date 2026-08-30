@@ -1951,6 +1951,7 @@ from .storyfire import (
 )
 from .streaks import StreaksIE
 from .streamable import StreamableIE
+from .streamco import StreamCoPlatformIE
 from .streamcz import StreamCZIE
 from .streamingcommunityz import StreamingCommunityzIE
 from .streamruby import StreamrubyIE
