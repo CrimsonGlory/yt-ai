@@ -898,6 +898,7 @@ from .kakao import KakaoIE
 from .kaltura import KalturaIE
 from .kamtape import KamTapeIE
 from .kankanews import KankaNewsIE
+from .karafun import KarafunIE
 from .karaoketv import KaraoketvIE
 from .karuseltv import KaruselTVIE
 from .kelbyone import KelbyOneIE

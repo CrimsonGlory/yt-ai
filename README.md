@@ -2295,6 +2295,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Hobune** (`hobune.stream`): HTML5 video pages and static channel listings. Request: [yt-dlp/yt-dlp#17541](https://github.com/yt-dlp/yt-dlp/issues/17541)
     * **ImagenTV** (`imagentv.com`): Dailymotion (and YouTube) IDs from Drupal `itv_content_result` and the public livestreaming API. Request: [yt-dlp/yt-dlp#16391](https://github.com/yt-dlp/yt-dlp/issues/16391)
     * **KamTape** (`kamtape.com`): VLPlayer `get_video` (HTML5 MP4) from watch pages. Request: [yt-dlp/yt-dlp#17508](https://github.com/yt-dlp/yt-dlp/issues/17508)
+    * **Karafun** (`karafun.com`): Signed web-session `/api` plus `.kit` container Ogg-track extraction. Request: [yt-dlp/yt-dlp#15470](https://github.com/yt-dlp/yt-dlp/issues/15470)
     * **KaruselTV** (`karusel-tv.ru`): Public `video/api/get/{id}` MP4 sources from video and announce pages. Request: [yt-dlp/yt-dlp#17236](https://github.com/yt-dlp/yt-dlp/issues/17236)
     * **KHInsider** (`downloads.khinsider.com`): Public MP3/FLAC CDN links from track pages; albums as track playlists. Request: [yt-dlp/yt-dlp#16713](https://github.com/yt-dlp/yt-dlp/issues/16713)
     * **LuluStream** (`luluvid.com`): Packed JWPlayer HLS from embed pages (CDN token is bound to User-Agent and Accept-Language). Request: [yt-dlp/yt-dlp#16656](https://github.com/yt-dlp/yt-dlp/issues/16656)

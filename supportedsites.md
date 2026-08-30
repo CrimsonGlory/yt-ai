@@ -652,6 +652,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Kaltura**
  - **KamTape**
  - **KankaNews**
+ - **Karafun**: KaraFun
  - **Karaoketv**
  - **karusel-tv**: Карусель
  - **Katsomo**
