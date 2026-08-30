@@ -1712,6 +1712,7 @@ The only reliable way to check if a site is supported is to try it.
  - **WebcasterFeed**
  - **WebOfStories**
  - **WebOfStoriesPlaylist**
+ - **WedoTV**: wedotv.com
  - **Weibo**
  - **WeiboUser**
  - **WeiboVideo**

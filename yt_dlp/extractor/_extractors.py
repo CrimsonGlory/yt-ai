@@ -2388,6 +2388,7 @@ from .webofstories import (
     WebOfStoriesIE,
     WebOfStoriesPlaylistIE,
 )
+from .wedotv import WedoTVIE
 from .weibo import (
     WeiboIE,
     WeiboUserIE,
