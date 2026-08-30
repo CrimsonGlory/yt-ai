@@ -1157,6 +1157,7 @@ from .motorsport import MotorsportIE
 from .moviepilot import MoviepilotIE
 from .movingimage import MovingImageIE
 from .mp4porn import Mp4PornIE
+from .mp4upload import Mp4UploadIE
 from .msn import MSNIE
 from .mtv import MTVIE
 from .muenchentv import MuenchenTVIE

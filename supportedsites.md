@@ -848,6 +848,7 @@ The only reliable way to check if a site is supported is to try it.
  - **moviepilot**: Moviepilot trailer
  - **MovingImage**
  - **mp4porn**: mp4porn.space
+ - **mp4upload**: mp4upload.com
  - **MSN**
  - **mtg**: MTG services
  - **mtv**
