@@ -326,6 +326,7 @@ The only reliable way to check if a site is supported is to try it.
  - **DetikEmbed**
  - **DeuxM**
  - **DeuxMNews**
+ - **DeviantArt**: DeviantArt
  - **DHM**: Deutsches Historisches Museum
  - **DigitalConcertHall**: [*digitalconcerthall*](## "netrc machine") DigitalConcertHall extractor
  - **DigitallySpeaking**
