@@ -1822,6 +1822,10 @@ from .skynewsarabia import (
     SkyNewsArabiaIE,
 )
 from .skynewsau import SkyNewsAUIE
+from .sleebi import (
+    SleebiChannelIE,
+    SleebiIE,
+)
 from .slideshare import SlideshareIE
 from .slideslive import SlidesLiveIE
 from .slutload import SlutloadIE

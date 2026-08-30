@@ -1311,6 +1311,8 @@ The only reliable way to check if a site is supported is to try it.
  - **skynewsarabia:article**
  - **skynewsarabia:video**
  - **SkyNewsAU**
+ - **sleebi**: Sleebi
+ - **sleebi:channel**: Sleebi channels
  - **Slideshare**
  - **SlidesLive**
  - **Slutload**
