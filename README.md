@@ -2263,7 +2263,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 
 ### New features
 
-* Forked from [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and periodically merged with upstream (currently through [**yt-dlp@2f3929ba1**](https://github.com/yt-dlp/yt-dlp/commit/2f3929ba1a79996779deb4ad0d7b11368ca355ac))
+* Forked from [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and periodically merged with upstream (currently through [**yt-dlp@bbc809a11**](https://github.com/yt-dlp/yt-dlp/commit/bbc809a1161d3bfca51fa36f59dda35556ee85a0))
 
 * **Independent branding**: Binaries, config, cache, and plugin paths use `yt-ai`, so yt-ai can be installed alongside yt-dlp. The Python import remains `yt_dlp`. See [CONFIGURATION](#configuration)
 
@@ -2634,7 +2634,6 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 * **Ported live-verified upstream PRs** that had not been merged yet: TED `videoPlayerData`, HearThisAt API host, VGTV HTTPS API, RTVE Play clan URLs, and xHamster sources/pagination
 
 * **Extractor internals**:
-    * `url_result` smuggles generic intent so the Generic extractor keeps the intended URL
     * `subs_list_to_dict` copies entries before mutating them
     * Skip non-numeric `age_limit` test values when listing extractors so `make_supportedsites` does not crash
 
