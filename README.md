@@ -2282,6 +2282,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Castbox** (`castbox.fm`): Public `everest.castbox.fm` episode v4 JSON (direct MP3/media URL). Request: [yt-dlp/yt-dlp#16910](https://github.com/yt-dlp/yt-dlp/issues/16910)
     * **CBN** (`cbn.com`): Drupal `_format=json` Brightcove IDs with `video-js` / html5player fallback. Request: [yt-dlp/yt-dlp#15622](https://github.com/yt-dlp/yt-dlp/issues/15622)
     * **Cime** (`ci.me`): Public `/api/app` JSON for VOD HLS, clip MP4, and Amazon IVS live. Request: [yt-dlp/yt-dlp#16247](https://github.com/yt-dlp/yt-dlp/issues/16247)
+    * **CinemathequeBretagne** (`cinematheque-bretagne.bzh`): Diaz oEmbed iframe HTML5 MP4. Request: [yt-dlp/yt-dlp#15616](https://github.com/yt-dlp/yt-dlp/issues/15616)
     * **CuriosityU** (`curiosityu.com`): Bitmovin DASH (`cdn-s3-cf.curiositystream.com`) from lecture-page `sourceConfig`. Request: [yt-dlp/yt-dlp#16564](https://github.com/yt-dlp/yt-dlp/issues/16564)
     * **DeviantArt** (`deviantart.com`): Eclipse `__INITIAL_STATE__` transcoded MP4s with JSON-LD `contentUrl` fallback. Request: [yt-dlp/yt-dlp#17234](https://github.com/yt-dlp/yt-dlp/issues/17234)
     * **DoramasPrincess** (`doramasprincess.com`): POST `/ajax/embed` for HTML5 sources and packed JWPlayer HLS from host iframes. Request: [yt-dlp/yt-dlp#16369](https://github.com/yt-dlp/yt-dlp/issues/16369)

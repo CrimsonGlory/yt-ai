@@ -338,6 +338,7 @@ from .cime import (
     CimeIE,
     CimeVODIE,
 )
+from .cinemathequebretagne import CinemathequeBretagneIE
 from .cinemax import CinemaxIE
 from .cinetecamilano import CinetecaMilanoIE
 from .cineverse import (
