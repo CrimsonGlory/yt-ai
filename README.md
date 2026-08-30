@@ -2294,6 +2294,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **ShortMax** (`shorttv.live`): Nuxt `__NUXT_DATA__` HLS with custom per-segment AES-CBC. Request: [yt-dlp/yt-dlp#17230](https://github.com/yt-dlp/yt-dlp/issues/17230)
     * **Showcamrips** (`showcamrips.com`): HTML5 MP4 from `play.php` with a showcamrips Referer. Request: [yt-dlp/yt-dlp#16822](https://github.com/yt-dlp/yt-dlp/issues/16822)
     * **Streamtape** (`streamtape.com`): Reconstruct the obfuscated `get_video` MP4 URL from player JS. Request: [yt-dlp/yt-dlp#16770](https://github.com/yt-dlp/yt-dlp/issues/16770)
+    * **Sync** (`sync.com`): Public share `linkpathlist`/`pathdata` with PBKDF2+AES-GCM key unwrap and RSA-signed compat download. Request: [yt-dlp/yt-dlp#16598](https://github.com/yt-dlp/yt-dlp/issues/16598)
     * **ThreeNow** (`threenow.co.nz`): Live channels from the public `now-api.fullscreen.nz` `live-epg` HLS. Request: [yt-dlp/yt-dlp#17082](https://github.com/yt-dlp/yt-dlp/issues/17082)
     * **TimesRadio** (`thetimes.com`): HTML5 catch-up MP3 (Omny) and live AAC stream from Times Radio pages; impersonate for the device-check interstitial. Request: [yt-dlp/yt-dlp#17253](https://github.com/yt-dlp/yt-dlp/issues/17253)
     * **TVTropes** (`tvtropes.org`): Impersonate Cloudflare and extract Bunny HLS from video-example data attributes. Request: [yt-dlp/yt-dlp#17106](https://github.com/yt-dlp/yt-dlp/issues/17106)

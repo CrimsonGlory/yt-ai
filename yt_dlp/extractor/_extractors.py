@@ -1913,6 +1913,7 @@ from .svt import (
     SVTPlayIE,
     SVTSeriesIE,
 )
+from .sync import SyncIE
 from .sztvhu import SztvHuIE
 from .tagesschau import TagesschauIE
 from .taptap import (

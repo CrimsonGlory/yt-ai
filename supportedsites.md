@@ -1371,6 +1371,7 @@ The only reliable way to check if a site is supported is to try it.
  - **svt:play**: SVT Play and Öppet arkiv
  - **svt:​play:series**
  - **Syfy**
+ - **sync.com**: Sync.com
  - **SztvHu**
  - **t-online.de**
  - **Tagesschau**
