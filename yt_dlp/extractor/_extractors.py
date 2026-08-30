@@ -2148,6 +2148,7 @@ from .tvanouvelles import (
     TVANouvellesArticleIE,
     TVANouvellesIE,
 )
+from .tvasahidouga import TVAsahiDougaIE
 from .tvc import (
     TVCIE,
     TVCArticleIE,

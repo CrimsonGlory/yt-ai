@@ -363,6 +363,7 @@ The only reliable way to check if a site is supported is to try it.
  - **dlive:vod**
  - **DoodStream**
  - **doramasprincess**: DoramasPrincess
+ - **douga.tv-asahi.co.jp**: テレ朝動画
  - **Douyin**
  - **DouyuShow**
  - **DouyuTV**: 斗鱼直播
