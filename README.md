@@ -2309,6 +2309,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **KamTape** (`kamtape.com`): VLPlayer `get_video` (HTML5 MP4) from watch pages. Request: [yt-dlp/yt-dlp#17508](https://github.com/yt-dlp/yt-dlp/issues/17508)
     * **Karafun** (`karafun.com`): Signed web-session `/api` plus `.kit` container Ogg-track extraction. Request: [yt-dlp/yt-dlp#15470](https://github.com/yt-dlp/yt-dlp/issues/15470)
     * **KaruselTV** (`karusel-tv.ru`): Public `video/api/get/{id}` MP4 sources from video and announce pages. Request: [yt-dlp/yt-dlp#17236](https://github.com/yt-dlp/yt-dlp/issues/17236)
+    * **Keporn** (`f1.keporn.vip`): Public `/api/json/video` metadata and `/api/videofile.php` Cyrillic-base64 `get_file` MP4s. Request: [yt-dlp/yt-dlp#14612](https://github.com/yt-dlp/yt-dlp/issues/14612)
     * **KHInsider** (`downloads.khinsider.com`): Public MP3/FLAC CDN links from track pages; albums as track playlists. Request: [yt-dlp/yt-dlp#16713](https://github.com/yt-dlp/yt-dlp/issues/16713)
     * **LuluStream** (`luluvid.com`): Packed JWPlayer HLS from embed pages (CDN token is bound to User-Agent and Accept-Language). Request: [yt-dlp/yt-dlp#16656](https://github.com/yt-dlp/yt-dlp/issues/16656)
     * **Luticlip** (`luticlip.com`): HTML5 Video.js MP4 from RetroTube pages with Range-chunked takcdn downloads. Request: [yt-dlp/yt-dlp#16465](https://github.com/yt-dlp/yt-dlp/issues/16465)
