@@ -832,6 +832,7 @@ The only reliable way to check if a site is supported is to try it.
  - **MovieFap**
  - **moviepilot**: Moviepilot trailer
  - **MovingImage**
+ - **mp4porn**: mp4porn.space
  - **MSN**
  - **mtg**: MTG services
  - **mtv**
