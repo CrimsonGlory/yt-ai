@@ -538,6 +538,7 @@ The only reliable way to check if a site is supported is to try it.
  - **GoogleDrive:Folder**
  - **GoPro**
  - **GoToStage**
+ - **Granicus**: Granicus public meetings
  - **Graspop**
  - **Gronkh**
  - **gronkh:feed**
