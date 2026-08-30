@@ -771,6 +771,7 @@ The only reliable way to check if a site is supported is to try it.
  - **MarkizaPage**
  - **massengeschmack.tv**
  - **Masters**
+ - **Mat6Tube**: mat6tube.com
  - **MatchiTV**
  - **MatchTV**
  - **matreshka.tv**: МатрёшкаТВ
