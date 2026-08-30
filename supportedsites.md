@@ -57,6 +57,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Alibaba**
  - **AliExpressLive**
  - **AlJazeera**
+ - **AllDaf**: alldaf.org
  - **Allocine**
  - **Allstar**
  - **AllstarProfile**
