@@ -1169,6 +1169,10 @@ from .murrtube import (
     MurrtubeUserIE,
 )
 from .museai import MuseAIIE
+from .musicbrainz import (
+    MusicBrainzIE,
+    MusicBrainzReleaseIE,
+)
 from .musicdex import (
     MusicdexAlbumIE,
     MusicdexArtistIE,

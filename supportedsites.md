@@ -862,6 +862,8 @@ The only reliable way to check if a site is supported is to try it.
  - **MurrtubeUser**: Murrtube user profile
  - **MuseAI**: muse.ai (now Skiv)
  - **MuseScore**
+ - **musicbrainz**: MusicBrainz recordings
+ - **musicbrainz:release**: MusicBrainz releases
  - **MusicdexAlbum**
  - **MusicdexArtist**
  - **MusicdexPlaylist**
