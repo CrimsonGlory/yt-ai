@@ -227,6 +227,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Canalplus**: mycanal.fr and piwiplus.fr
  - **Canalsurmas**
  - **CaracolTvPlay**: [*caracoltv-play*](## "netrc machine")
+ - **castbox**: Castbox
  - **cbc.ca**
  - **cbc.ca:listen**
  - **cbc.ca:player**

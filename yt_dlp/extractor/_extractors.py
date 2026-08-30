@@ -280,6 +280,7 @@ from .canalc2 import Canalc2IE
 from .canalplus import CanalplusIE
 from .canalsurmas import CanalsurmasIE
 from .caracoltv import CaracolTvPlayIE
+from .castbox import CastboxIE
 from .cbc import (
     CBCIE,
     CBCGemContentIE,
