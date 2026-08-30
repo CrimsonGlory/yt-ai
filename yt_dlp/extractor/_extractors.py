@@ -693,6 +693,7 @@ from .gamejolt import (
 from .gamespot import GameSpotIE
 from .gamestar import GameStarIE
 from .gaskrank import GaskrankIE
+from .gayhaus import GayhausIE
 from .gazeta import GazetaIE
 from .gbnews import GBNewsIE
 from .gdcvault import GDCVaultIE
