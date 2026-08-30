@@ -1305,6 +1305,7 @@ from .nfl import (
     NFLPlusEpisodeIE,
     NFLPlusReplayIE,
 )
+from .nhaccuatui import NhacCuaTuiIE
 from .nhk import (
     NhkForSchoolBangumiIE,
     NhkForSchoolProgramListIE,

@@ -957,6 +957,7 @@ The only reliable way to check if a site is supported is to try it.
  - **nfl.com:article**
  - **nfl.com:​plus:episode**
  - **nfl.com:​plus:replay**
+ - **nhaccuatui**: nhaccuatui.com
  - **NhkForSchoolBangumi**
  - **NhkForSchoolProgramList**
  - **NhkForSchoolSubject**: Portal page for each school subjects, like Japanese (kokugo, 国語) or math (sansuu/suugaku or 算数・数学)

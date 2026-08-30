@@ -2336,6 +2336,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Musi** (`feelthemusi.com`): Public `/api/v4/playlists/fetch` JSON and YouTube video IDs. Request: [yt-dlp/yt-dlp#12931](https://github.com/yt-dlp/yt-dlp/issues/12931)
     * **MusicBrainz** (`musicbrainz.org`): MusicBrainz WS/2 URL relationships, preferring YouTube/SoundCloud/Audius/Audiomack/Bandcamp. Request: [yt-dlp/yt-dlp#13673](https://github.com/yt-dlp/yt-dlp/issues/13673)
     * **Naver:blog** (`blog.naver.com`): PostView `vid`/`inkey` (SE3 and Prism player) via the rmcnmv VOD play API. Request: [yt-dlp/yt-dlp#16816](https://github.com/yt-dlp/yt-dlp/issues/16816)
+    * **NhacCuaTui** (`nhaccuatui.com`): Nuxt `__NUXT_DATA__` song/video `streamURL` MP3/MP4 (and FLAC when present). Request: [yt-dlp/yt-dlp#12329](https://github.com/yt-dlp/yt-dlp/issues/12329)
     * **nobody.live** (`nobody.live`): Public `/stream` JSON for a random zero-viewer Twitch channel, then Twitch HLS. Request: [yt-dlp/yt-dlp#13696](https://github.com/yt-dlp/yt-dlp/issues/13696)
     * **OnePodcast** (`onepodcast.it`): GEDI media-hub `audioSource` MP3 and Brightcove `videoSrc` MP4 from episode pages. Request: [yt-dlp/yt-dlp#16798](https://github.com/yt-dlp/yt-dlp/issues/16798)
     * **PandaVideo** (`pandavideo.com`): Player-embed HLS from `b-{library}.tv.pandavideo.com.br/{id}/playlist.m3u8`. Request: [yt-dlp/yt-dlp#13109](https://github.com/yt-dlp/yt-dlp/issues/13109)
