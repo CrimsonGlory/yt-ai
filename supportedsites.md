@@ -1697,6 +1697,7 @@ The only reliable way to check if a site is supported is to try it.
  - **wykop:​post:comment**
  - **Xanimu**
  - **XboxClips**
+ - **XFetishTube**: x-fetish.tube
  - **XFileShare**: XFileShare based sites: Aparat, ClipWatching, GoUnlimited, GoVid, Highstream, HolaVid, Streamty, TheVideoBee, Uqload, Vadbam, Vedbam, VidBom, vidlo, VidLocker, VidShare, Viidshar, VUp, WolfStream, XVideoSharing
  - **XHamster**
  - **XHamsterEmbed**
