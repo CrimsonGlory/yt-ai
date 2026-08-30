@@ -190,6 +190,7 @@ The only reliable way to check if a site is supported is to try it.
  - **blogger.com**
  - **Bloomberg**
  - **Bluesky**
+ - **bnrnews**: BNR News (Bulgarian National Radio)
  - **BongaCams**
  - **boomstream**: Boomstream
  - **Boosty**

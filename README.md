@@ -2280,6 +2280,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * [AnonMP4](https://github.com/CrimsonGlory/yt-ai/commit/7e1d8ceb53acea50102343d0cd3db56e1fc2dbc8) (`anonmp4.art` / `anonmp4.to`)
     * **Balapan** (`balapan.tv`): Clappr HLS from the `player.rtrk.kz` live iframe. Request: [yt-dlp/yt-dlp#17241](https://github.com/yt-dlp/yt-dlp/issues/17241)
     * **Blacksky** (`blacksky.community`): AT Protocol `getPostThread` via `api.blacksky.community` (HLS on `video.blacksky.community`, blob fallback from the author's PDS). Request: [yt-dlp/yt-dlp#16161](https://github.com/yt-dlp/yt-dlp/issues/16161)
+    * **BNRNews** (`bnrnews.bg`): Public `/api/materials/{program}/{id}` JSON and `/api/media/{uuid}` MP3/MP4. Request: [yt-dlp/yt-dlp#15248](https://github.com/yt-dlp/yt-dlp/issues/15248)
     * **Boomstream** (`play.boomstream.com`): Player `window.boomstreamConfig` HLS; derive AES-128 key/IV from `#EXT-X-MEDIA-READY`. Request: [yt-dlp/yt-dlp#15376](https://github.com/yt-dlp/yt-dlp/issues/15376)
     * **BoyfriendTV** (`boyfriendtv.com`): Player `sources.hlsAuto` HLS from video pages. Request: [yt-dlp/yt-dlp#15509](https://github.com/yt-dlp/yt-dlp/issues/15509)
     * **Bouke** (`bouke.media`): Drupal Freecaster `data-video-id` / `live_token` embed JSON (MP4, HLS, DASH). Request: [yt-dlp/yt-dlp#15403](https://github.com/yt-dlp/yt-dlp/issues/15403)
