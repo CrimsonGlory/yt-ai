@@ -2328,6 +2328,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **MissEvan** (`missevan.com`): Public `/sound/getsound` JSON for progressive M4A; SAMPLE-AES HLS is DRM. Request: [yt-dlp/yt-dlp#15517](https://github.com/yt-dlp/yt-dlp/issues/15517)
     * **Mp4Porn** (`mp4porn.space`): Player `url_v` `/play` MP4 and `/play_hls` HLS with a site Referer. Request: [yt-dlp/yt-dlp#15302](https://github.com/yt-dlp/yt-dlp/issues/15302)
     * **Mp4Upload** (`mp4upload.com`): Video.js `player.src` MP4 from embed pages with a site Referer. Request: [yt-dlp/yt-dlp#14075](https://github.com/yt-dlp/yt-dlp/issues/14075)
+    * **Musi** (`feelthemusi.com`): Public `/api/v4/playlists/fetch` JSON and YouTube video IDs. Request: [yt-dlp/yt-dlp#12931](https://github.com/yt-dlp/yt-dlp/issues/12931)
     * **MusicBrainz** (`musicbrainz.org`): MusicBrainz WS/2 URL relationships, preferring YouTube/SoundCloud/Audius/Audiomack/Bandcamp. Request: [yt-dlp/yt-dlp#13673](https://github.com/yt-dlp/yt-dlp/issues/13673)
     * **Naver:blog** (`blog.naver.com`): PostView `vid`/`inkey` (SE3 and Prism player) via the rmcnmv VOD play API. Request: [yt-dlp/yt-dlp#16816](https://github.com/yt-dlp/yt-dlp/issues/16816)
     * **nobody.live** (`nobody.live`): Public `/stream` JSON for a random zero-viewer Twitch channel, then Twitch HLS. Request: [yt-dlp/yt-dlp#13696](https://github.com/yt-dlp/yt-dlp/issues/13696)

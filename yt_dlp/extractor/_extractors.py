@@ -1177,6 +1177,7 @@ from .murrtube import (
     MurrtubeUserIE,
 )
 from .museai import MuseAIIE
+from .musi import MusiIE
 from .musicbrainz import (
     MusicBrainzIE,
     MusicBrainzReleaseIE,
