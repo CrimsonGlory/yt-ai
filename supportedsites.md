@@ -1383,6 +1383,7 @@ The only reliable way to check if a site is supported is to try it.
  - **SpankBang**
  - **SpankBangPlaylist**
  - **Spiegel**
+ - **Sponsr**
  - **Sport5**
  - **SportBox**
  - **sporteurope**

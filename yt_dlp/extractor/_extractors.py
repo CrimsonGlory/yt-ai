@@ -1909,6 +1909,7 @@ from .spankbang import (
     SpankBangPlaylistIE,
 )
 from .spiegel import SpiegelIE
+from .sponsr import SponsrIE
 from .streamsb import StreamsbIE
 from .sport5 import Sport5IE
 from .sportbox import SportBoxIE
