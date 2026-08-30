@@ -458,6 +458,7 @@ from .douyutv import (
     DouyuTVIE,
 )
 from .doodstream import DoodStreamIE
+from .doramasprincess import DoramasPrincessIE
 from .dplay import (
     TLCIE,
     AmHistoryChannelIE,

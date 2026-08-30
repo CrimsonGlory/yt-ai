@@ -2279,6 +2279,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Castbox** (`castbox.fm`): Public `everest.castbox.fm` episode v4 JSON (direct MP3/media URL). Request: [yt-dlp/yt-dlp#16910](https://github.com/yt-dlp/yt-dlp/issues/16910)
     * **CuriosityU** (`curiosityu.com`): Bitmovin DASH (`cdn-s3-cf.curiositystream.com`) from lecture-page `sourceConfig`. Request: [yt-dlp/yt-dlp#16564](https://github.com/yt-dlp/yt-dlp/issues/16564)
     * **DeviantArt** (`deviantart.com`): Eclipse `__INITIAL_STATE__` transcoded MP4s with JSON-LD `contentUrl` fallback. Request: [yt-dlp/yt-dlp#17234](https://github.com/yt-dlp/yt-dlp/issues/17234)
+    * **DoramasPrincess** (`doramasprincess.com`): POST `/ajax/embed` for HTML5 sources and packed JWPlayer HLS from host iframes. Request: [yt-dlp/yt-dlp#16369](https://github.com/yt-dlp/yt-dlp/issues/16369)
     * **eplay** (`eplay.com`): Public `search-cf.eplay.com` post JSON (tokenized MP4/HLS) with Next.js fallback. Request: [yt-dlp/yt-dlp#16853](https://github.com/yt-dlp/yt-dlp/issues/16853)
     * **FOX4KC** (`fox4kc.com`): Anvato/Lura HLS from `/video/{slug}/{id}/` URLs and WordPress `lead_media` on article pages. Request: [yt-dlp/yt-dlp#16582](https://github.com/yt-dlp/yt-dlp/issues/16582)
     * **Giphy** (`giphy.com`): Next.js gif JSON with unsigned `media.giphy.com` MP4/GIF/WebP (signed OG/v1 URLs return HTML). Request: [yt-dlp/yt-dlp#16970](https://github.com/yt-dlp/yt-dlp/issues/16970)
