@@ -722,6 +722,7 @@ The only reliable way to check if a site is supported is to try it.
  - **LSMLREmbed**
  - **LSMLTVEmbed**
  - **LSMReplay**
+ - **lulustream**: LuluStream
  - **Lumni**
  - **maariv.co.il**
  - **MagellanTV**
