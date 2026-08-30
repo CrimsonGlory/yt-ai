@@ -393,6 +393,7 @@ from .curiositystream import (
     CuriosityStreamIE,
     CuriosityStreamSeriesIE,
 )
+from .curiosityu import CuriosityUIE
 from .cybrary import (
     CybraryCourseIE,
     CybraryIE,

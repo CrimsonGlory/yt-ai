@@ -299,6 +299,7 @@ The only reliable way to check if a site is supported is to try it.
  - **curiositystream**: [*curiositystream*](## "netrc machine")
  - **curiositystream:collections**: [*curiositystream*](## "netrc machine")
  - **curiositystream:series**: [*curiositystream*](## "netrc machine")
+ - **CuriosityU**: Curiosity University
  - **Cybrary**: [*cybrary*](## "netrc machine")
  - **CybraryCourse**: [*cybrary*](## "netrc machine")
  - **DacastPlaylist**
