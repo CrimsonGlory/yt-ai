@@ -284,6 +284,7 @@ The only reliable way to check if a site is supported is to try it.
  - **CJSW**
  - **Clipchamp**
  - **ClipRs**
+ - **closeload**: Closeload
  - **CloserToTruth**
  - **CloudflareStream**
  - **CloudyCDN**
@@ -1223,6 +1224,7 @@ The only reliable way to check if a site is supported is to try it.
  - **ReverbNation**
  - **rezka**: HDrezka
  - **RideHome**
+ - **ridomovies**: RidoMovies
  - **RinseFM**
  - **RinseFMArtistPlaylist**
  - **RockstarGames**

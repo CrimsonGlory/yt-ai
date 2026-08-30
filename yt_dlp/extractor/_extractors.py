@@ -1687,6 +1687,10 @@ from .reuters import ReutersIE
 from .reverbnation import ReverbNationIE
 from .rezka import RezkaIE
 from .ridehome import RideHomeIE
+from .ridomovies import (
+    CloseLoadIE,
+    RidoMoviesIE,
+)
 from .rinsefm import (
     RinseFMArtistPlaylistIE,
     RinseFMIE,
