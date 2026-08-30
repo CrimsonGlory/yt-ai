@@ -611,6 +611,7 @@ from .fourtube import (
     PornTubeIE,
 )
 from .fox import FOXIE
+from .fox4kc import FOX4KCIE
 from .fox9 import (
     FOX9IE,
     FOX9NewsIE,

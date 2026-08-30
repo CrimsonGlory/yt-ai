@@ -445,6 +445,7 @@ The only reliable way to check if a site is supported is to try it.
  - **FootyRoom**
  - **Formula1**
  - **FOX**
+ - **fox4kc**: FOX 4 Kansas City (WDAF-TV)
  - **FOX9**
  - **FOX9News**
  - **foxnews**: Fox News and Fox Business Video
