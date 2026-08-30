@@ -255,6 +255,9 @@ The only reliable way to check if a site is supported is to try it.
  - **chzzk:live**
  - **chzzk:video**
  - **cielotv.it**
+ - **cime:clip**: ci.me clips
+ - **cime:live**: ci.me live
+ - **cime:vod**: ci.me VOD
  - **Cinemax**
  - **CinetecaMilano**
  - **Cineverse**
