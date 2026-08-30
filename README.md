@@ -2280,6 +2280,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **AllDaf** (`alldaf.org`): Nuxt `__NUXT_DATA__` post `s3Url`/HLS plus JWPlayer media JSON. Request: [yt-dlp/yt-dlp#15289](https://github.com/yt-dlp/yt-dlp/issues/15289)
     * **AlphaTV** (`alphatv.gr`): Kwik player `data-video-url` MP4/HLS with JSON-LD `embedUrl` fallback. Request: [yt-dlp/yt-dlp#14945](https://github.com/yt-dlp/yt-dlp/issues/14945)
     * [AnonMP4](https://github.com/CrimsonGlory/yt-ai/commit/7e1d8ceb53acea50102343d0cd3db56e1fc2dbc8) (`anonmp4.art` / `anonmp4.to`)
+    * **AstalaVR** (`astalavr.com`): Impersonate Cloudflare and extract Delight VR (`dl8-video`) tokened MP4 sources. Request: [yt-dlp/yt-dlp#13332](https://github.com/yt-dlp/yt-dlp/issues/13332)
     * **Avjb** (`avjb.com`): Player CSRF `/player/spped.php` HLS lines, with Playerjs preview MP4 fallback. Request: [yt-dlp/yt-dlp#14653](https://github.com/yt-dlp/yt-dlp/issues/14653)
     * **Balapan** (`balapan.tv`): Clappr HLS from the `player.rtrk.kz` live iframe. Request: [yt-dlp/yt-dlp#17241](https://github.com/yt-dlp/yt-dlp/issues/17241)
     * **BeatStars** (`beatstars.com`): Public `main.v2.beatstars.com/track` JSON and tagged stream MP3. Request: [yt-dlp/yt-dlp#14675](https://github.com/yt-dlp/yt-dlp/issues/14675)

@@ -132,6 +132,7 @@ from .asobichannel import (
     AsobiChannelTagURLIE,
 )
 from .asobistage import AsobiStageIE
+from .astalavr import AstalaVRIE
 from .atresplayer import AtresPlayerIE
 from .atscaleconf import AtScaleConfEventIE
 from .audimedia import AudiMediaIE
