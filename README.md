@@ -2362,6 +2362,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Viggle** (`viggle.ai`): Public `/api/share/video-task` JSON (impersonate) for signed `assets.viggle.ai` MP4. Request: [yt-dlp/yt-dlp#13657](https://github.com/yt-dlp/yt-dlp/issues/13657)
     * **WCOStream** (`wcostream.tv`): Impersonate Cloudflare, map embed `file=` to `getvidlink.php` (`cizgi`/`neptun`) tokens, and download `getvid` MP4s. Request: [yt-dlp/yt-dlp#13987](https://github.com/yt-dlp/yt-dlp/issues/13987)
     * **WedoTV** (`wedotv.com`): Public `/api/player.get_video.php` HLS from the page `data-video-id`. Request: [yt-dlp/yt-dlp#14221](https://github.com/yt-dlp/yt-dlp/issues/14221)
+    * **Xbox** (`xbox.com`): Microsoft displaycatalog `CMSVideos` HLS/DASH store trailers. Request: [yt-dlp/yt-dlp#13591](https://github.com/yt-dlp/yt-dlp/issues/13591)
     * **XFetishTube** (`x-fetish.tube`): KVS `kt_player` config (randomized JS object) and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#16623](https://github.com/yt-dlp/yt-dlp/issues/16623)
     * **XPicVid** (`xpicvid.com`): Impersonate Cloudflare and extract DPlayer quality MP4s. Request: [yt-dlp/yt-dlp#15279](https://github.com/yt-dlp/yt-dlp/issues/15279)
     * **Xumo** (`play.xumo.com`): Public `valencia-app-mds.xumo.com` asset JSON for HLS/DASH VOD and series playlists. Request: [yt-dlp/yt-dlp#15643](https://github.com/yt-dlp/yt-dlp/issues/15643)

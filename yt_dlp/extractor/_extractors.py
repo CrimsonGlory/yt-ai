@@ -2457,6 +2457,7 @@ from .wykop import (
     WykopPostIE,
 )
 from .xanimu import XanimuIE
+from .xbox import XboxIE
 from .xboxclips import XboxClipsIE
 from .xfetishtube import XFetishTubeIE
 from .xfileshare import XFileShareIE
