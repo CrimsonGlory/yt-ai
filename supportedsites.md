@@ -389,6 +389,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Epicon**
  - **EpiconSeries**
  - **EpidemicSound**
+ - **eplay**: ePlay
  - **eplus**: [*eplus*](## "netrc machine") e+ (イープラス)
  - **Epoch**
  - **Eporner**

@@ -524,6 +524,7 @@ from .epicon import (
     EpiconSeriesIE,
 )
 from .epidemicsound import EpidemicSoundIE
+from .eplay import EPlayIE
 from .eplus import EplusIbIE
 from .epoch import EpochIE
 from .eporner import EpornerIE
