@@ -1107,6 +1107,10 @@ from .megatvcom import (
     MegaTVComEmbedIE,
     MegaTVComIE,
 )
+from .meijifilmarchives import (
+    MeijiFilmArchivesIE,
+    MeijiFilmArchivesPlaylistIE,
+)
 from .meipai import MeipaiIE
 from .melonvod import MelonVODIE
 from .metacritic import MetacriticIE

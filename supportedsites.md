@@ -806,6 +806,8 @@ The only reliable way to check if a site is supported is to try it.
  - **megaphone.fm**: megaphone.fm embedded players
  - **megatvcom**: megatv.com videos
  - **megatvcom:embed**: megatv.com embedded videos
+ - **meijifilmarchives**: The Meiji Period on Film
+ - **meijifilmarchives:playlist**: The Meiji Period on Film listings
  - **Meipai**: 美拍
  - **mellowfan**: [*mellowfan*](## "netrc machine") mellow-fan
  - **mellowfan:capture**: [*mellowfan*](## "netrc machine")
