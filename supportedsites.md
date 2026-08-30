@@ -726,6 +726,7 @@ The only reliable way to check if a site is supported is to try it.
  - **LSMReplay**
  - **lulustream**: LuluStream
  - **Lumni**
+ - **luticlip**: luticlip.com
  - **maariv.co.il**
  - **MagellanTV**
  - **MagentaMusik**

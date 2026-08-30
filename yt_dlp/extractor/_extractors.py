@@ -1012,6 +1012,7 @@ from .lsm import (
 )
 from .lulustream import LuluStreamIE
 from .lumni import LumniIE
+from .luticlip import LuticlipIE
 from .maariv import MaarivIE
 from .magellantv import MagellanTVIE
 from .magentamusik import MagentaMusikIE
