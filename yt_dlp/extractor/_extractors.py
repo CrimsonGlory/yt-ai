@@ -2318,6 +2318,7 @@ from .viewlift import (
     ViewLiftEmbedIE,
     ViewLiftIE,
 )
+from .viggle import ViggleIE
 from .viidea import ViideaIE
 from .vimeo import (
     VHXEmbedIE,

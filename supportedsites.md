@@ -1655,6 +1655,7 @@ The only reliable way to check if a site is supported is to try it.
  - **viewlift**
  - **viewlift:embed**
  - **viewsb**: viewsb.com (StreamSB)
+ - **Viggle**: Viggle
  - **Viidea**
  - **vimeo**: [*vimeo*](## "netrc machine")
  - **vimeo:album**: [*vimeo*](## "netrc machine")
