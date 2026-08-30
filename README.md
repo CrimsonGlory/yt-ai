@@ -2267,7 +2267,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 
 * **Independent branding**: Binaries, config, cache, and plugin paths use `yt-ai`, so yt-ai can be installed alongside yt-dlp. The Python import remains `yt_dlp`. See [CONFIGURATION](#configuration)
 
-* **AI/LLM contributions allowed**: yt-dlp's NO AI / NO LLM contribution ban (`.NO_AI`, issue/PR checkboxes, and auto-close workflow) has been removed
+* **AI/LLM contributions required**: yt-dlp's NO AI / NO LLM contribution ban (`.NO_AI`, issue/PR checkboxes, and auto-close workflow) has been replaced with [`.NO_HUMAN`](.NO_HUMAN/README.md)
 
 * **Restored extractors previously blocked as piracy**: The KnownPiracy refusal list is gone. Restored from git history (and youtube-dl for viewsb): DoodStream, viewsb (StreamSB), filemoon, HentaiStigma, ThisAV, XFileShare hosts, YourPorn (sxyprn), Jable, 91porn, Einthusan, YourUpload, Xanimu, Musicdex, duboku, and Gofile
 
@@ -2683,7 +2683,7 @@ Relative to **yt-dlp**:
 * Plugins are loaded from `yt-ai` config folders and `yt-ai-plugins` (not `yt-dlp-plugins`). See [plugins](#plugins)
 * The PyPI package is [`yt-ai`](https://pypi.org/project/yt-ai); embedding still uses `import yt_dlp`
 * Sites yt-dlp refused as piracy, and extractors it marked currently broken, are enabled again
-* AI / LLM contributions are allowed
+* AI / LLM contributions are required (see [`.NO_HUMAN`](.NO_HUMAN/README.md))
 
 CLI defaults (format selection, output template, Python version, and so on) otherwise match yt-dlp. The following differences from youtube-dl / youtube-dlc, and the `--compat-options` that revert them, are inherited from yt-dlp:
 
