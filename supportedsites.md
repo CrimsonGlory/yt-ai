@@ -1161,6 +1161,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Restudy**
  - **Reuters**
  - **ReverbNation**
+ - **rezka**: HDrezka
  - **RideHome**
  - **RinseFM**
  - **RinseFMArtistPlaylist**

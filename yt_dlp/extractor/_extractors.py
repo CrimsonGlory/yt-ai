@@ -1617,6 +1617,7 @@ from .rentv import (
 from .restudy import RestudyIE
 from .reuters import ReutersIE
 from .reverbnation import ReverbNationIE
+from .rezka import RezkaIE
 from .ridehome import RideHomeIE
 from .rinsefm import (
     RinseFMArtistPlaylistIE,
