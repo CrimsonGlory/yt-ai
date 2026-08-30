@@ -1261,6 +1261,7 @@ The only reliable way to check if a site is supported is to try it.
  - **SharePoint**
  - **ShemarooMe**
  - **Shiey**
+ - **shortmax**: ShortMax
  - **showroom:live**: SHOWROOM
  - **showroom:vod**
  - **ShugiinItvLive**: 衆議院インターネット審議中継
