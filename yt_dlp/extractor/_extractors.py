@@ -1889,6 +1889,7 @@ from .storyfire import (
 from .streaks import StreaksIE
 from .streamable import StreamableIE
 from .streamcz import StreamCZIE
+from .streamtape import StreamtapeIE
 from .streetvoice import StreetVoiceIE
 from .stripchat import StripchatIE
 from .stv import STVPlayerIE
