@@ -1397,6 +1397,7 @@ The only reliable way to check if a site is supported is to try it.
  - **streamtape**: Streamtape
  - **StreetVoice**
  - **Stripchat**
+ - **stuff**: Stuff.co.nz
  - **stv:player**
  - **stvr**: Slovak Television and Radio (formerly RTVS)
  - **Subsplash**
