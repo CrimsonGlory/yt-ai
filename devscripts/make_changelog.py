@@ -21,6 +21,7 @@ from devscripts.utils import read_file, run_process, write_file
 BASE_URL = 'https://github.com'
 LOCATION_PATH = Path(__file__).parent
 HASH_LENGTH = 7
+VERSION_TAG_MATCH = '[0-9]*.[0-9]*.[0-9]*'
 
 logger = logging.getLogger(__name__)
 
@@ -280,9 +281,11 @@ class CommitRange:
         return commit in self._commits
 
     def _get_commits_and_fixes(self, default_author):
+        range_spec = f'{self._start}..{self._end}' if self._start else self._end
+        logger.info(f'Collecting commits in range {range_spec}')
         result = run_process(
             self.COMMAND, 'log', f'--format=%H%n%s%n%an%n%b%n{self.COMMIT_SEPARATOR}',
-            f'{self._start}..{self._end}' if self._start else self._end).stdout
+            range_spec).stdout
 
         commits, reverts = {}, {}
         fixes = defaultdict(list)
@@ -458,12 +461,44 @@ def get_new_contributors(contributors_path, commits):
     return sorted(new_contributors, key=str.casefold)
 
 
+def get_previous_version_tag(end='HEAD'):
+    """Newest version tag that is an ancestor of *end* but not *end* itself.
+
+    yt-dlp stable releases always have a ``Release YYYY.MM.DD`` commit, so the
+    changelog can stop there. Fork releases created only as GitHub tags do not,
+    and would otherwise include every commit since the last upstream release.
+    """
+    def describe(commitish):
+        return run_process(
+            'git', 'describe', '--tags', '--abbrev=0',
+            f'--match={VERSION_TAG_MATCH}', commitish).stdout.strip()
+
+    try:
+        tag = describe(end)
+        tag_sha = run_process('git', 'rev-parse', '--verify', f'{tag}^{{}}').stdout.strip()
+        end_sha = run_process('git', 'rev-parse', '--verify', f'{end}^{{}}').stdout.strip()
+        if tag_sha != end_sha:
+            return tag
+        return describe(f'{end}^')
+    except Exception as err:
+        logger.debug(f'Could not determine previous version tag from {end}: {err}')
+        return None
+
+
 def create_changelog(args):
     logging.basicConfig(
         datefmt='%Y-%m-%d %H-%M-%S', format='{asctime} | {levelname:<8} | {message}',
         level=logging.WARNING - 10 * args.verbosity, style='{', stream=sys.stderr)
 
-    commits = CommitRange(None, args.commitish, args.default_author)
+    start = args.start
+    if not start:
+        start = get_previous_version_tag(args.commitish)
+        if start:
+            logger.info(f'Using previous version tag {start} as changelog start')
+        else:
+            logger.info('No previous version tag found; stopping at last Release commit')
+
+    commits = CommitRange(start, args.commitish, args.default_author)
 
     if not args.no_override:
         if args.override_path.exists():
@@ -490,6 +525,9 @@ def create_parser():
     parser.add_argument(
         'commitish', default='HEAD', nargs='?',
         help='The commitish to create the range from (default: %(default)s)')
+    parser.add_argument(
+        '--start', default=None,
+        help='The commitish to start the range from (default: previous version tag)')
     parser.add_argument(
         '-v', '--verbosity', action='count', default=0,
         help='increase verbosity (can be used twice)')

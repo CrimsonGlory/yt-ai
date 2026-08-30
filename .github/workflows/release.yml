@@ -256,6 +256,7 @@ jobs:
 
       - name: Generate release notes
         env:
+          GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
           BASE_REPO: yt-dlp/yt-dlp
           NIGHTLY_REPO: yt-dlp/yt-dlp-nightly-builds
@@ -283,7 +284,16 @@ jobs:
             "The zipimport Unix executable and release tarball contain code licensed under ISC and MIT. " \
             "The PyInstaller-bundled executables are subject to these and other licenses, all of which are compiled in " \
             "[THIRD_PARTY_LICENSES.txt](https://github.com/${BASE_REPO}/blob/${HEAD_SHA}/THIRD_PARTY_LICENSES.txt)" >> ./RELEASE_NOTES
-          python ./devscripts/make_changelog.py -vv --collapsible >> ./RELEASE_NOTES
+          changelog_args=( -vv --collapsible )
+          prev_tag="$(gh release list --repo "${REPOSITORY}" --exclude-drafts --limit 1 --json tagName --jq '.[0].tagName // empty' || true)"
+          if [[ -n "${prev_tag}" && "${prev_tag}" != "${TARGET_TAG}" ]]; then
+            git fetch --force origin "refs/tags/${prev_tag}:refs/tags/${prev_tag}" \
+              || git fetch --tags origin || true
+            if git rev-parse --verify "${prev_tag}^{}" >/dev/null 2>&1; then
+              changelog_args+=( --start "${prev_tag}" )
+            fi
+          fi
+          python ./devscripts/make_changelog.py "${changelog_args[@]}" >> ./RELEASE_NOTES
           printf '%s\n\n' '**This is a pre-release build**' >> ./PRERELEASE_NOTES
           cat ./RELEASE_NOTES >> ./PRERELEASE_NOTES
           printf '%s\n\n' "Generated from: https://github.com/${REPOSITORY}/commit/${HEAD_SHA}" >> ./ARCHIVE_NOTES
