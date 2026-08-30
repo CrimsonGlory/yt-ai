@@ -1056,6 +1056,7 @@ The only reliable way to check if a site is supported is to try it.
  - **PalcoMP3:song**
  - **PalcoMP3:video**
  - **PandaTv**: pandalive.co.kr (팬더티비)
+ - **PandaVideo**: Panda Video
  - **Panopto**
  - **PanoptoList**
  - **PanoptoPlaylist**
