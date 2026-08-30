@@ -1707,6 +1707,8 @@ The only reliable way to check if a site is supported is to try it.
  - **washingtonpost:article**
  - **wat.tv**
  - **WatchESPN**
+ - **wcostream**: wcostream.tv
+ - **wcostream:show**: wcostream.tv shows
  - **WDR**
  - **WDRElefant**
  - **WDRPage**

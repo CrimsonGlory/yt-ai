@@ -2378,6 +2378,10 @@ from .washingtonpost import (
     WashingtonPostIE,
 )
 from .wat import WatIE
+from .wcostream import (
+    WCOStreamIE,
+    WCOStreamShowIE,
+)
 from .wdr import (
     WDRIE,
     WDRElefantIE,
