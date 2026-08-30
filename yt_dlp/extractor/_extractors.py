@@ -1644,6 +1644,7 @@ from .radlive import (
     RadLiveIE,
     RadLiveSeasonIE,
 )
+from .rahatupu import RahatupuIE
 from .rai import (
     RaiCulturaIE,
     RaiIE,

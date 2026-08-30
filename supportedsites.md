@@ -1199,6 +1199,7 @@ The only reliable way to check if a site is supported is to try it.
  - **radlive**
  - **radlive:channel**
  - **radlive:season**
+ - **rahatupu**: rahatupu.net
  - **Rai**
  - **RaiCultura**
  - **RaiNews**

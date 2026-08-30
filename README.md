@@ -2348,6 +2348,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **PreserveTube** (`preservetube.com`): Public `/video/{id}` JSON API and HTML5 fallback; channel archives from `/channel/{id}/videos`. Request: [yt-dlp/yt-dlp#17540](https://github.com/yt-dlp/yt-dlp/issues/17540)
     * **Plurk** (`plurk.com`): Parse post-page `plurk` JSON for `video.plurk.com` MP4/HLS with the `verify` token. Request: [yt-dlp/yt-dlp#15679](https://github.com/yt-dlp/yt-dlp/issues/15679)
     * **RacingTV** (`racingtv.com`): Public `api.racingtv.com` on-demand JSON (client `API-KEY`) and HLS after the preroll token wait. Request: [yt-dlp/yt-dlp#17503](https://github.com/yt-dlp/yt-dlp/issues/17503)
+    * **Rahatupu** (`rahatupu.net`): Schema.org VideoObject `contentUrl` MP4 (Clean Tube player iframe fallback). Request: [yt-dlp/yt-dlp#12300](https://github.com/yt-dlp/yt-dlp/issues/12300)
     * **RedziDzirdiLatviju** (`redzidzirdilatviju.lv`): Solr `/index` JSON for movies (Nimble HLS on `filmas.arhivi.lv`) and sound samples (archive MP3). Request: [yt-dlp/yt-dlp#15886](https://github.com/yt-dlp/yt-dlp/issues/15886)
     * **Rezka** (`rezka.ag`): Anubis PoW plus `initCDN*Events` / `ajax/get_cdn_series` voidboost HLS and MP4. Request: [yt-dlp/yt-dlp#17096](https://github.com/yt-dlp/yt-dlp/issues/17096)
     * **RidoMovies** (`ridomovies.tv`): Impersonate Cloudflare, follow Closeload JWPlayer embeds, and decode obfuscated HLS. Request: [yt-dlp/yt-dlp#13566](https://github.com/yt-dlp/yt-dlp/issues/13566)
