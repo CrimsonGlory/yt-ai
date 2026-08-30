@@ -1541,6 +1541,7 @@ from .pornhub import (
     PornHubUserIE,
     PornHubUserVideosUploadIE,
 )
+from .pornlib import PornLibIE
 from .pornotube import PornotubeIE
 from .pornovoisines import PornoVoisinesIE
 from .porn91 import Porn91IE

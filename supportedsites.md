@@ -1117,6 +1117,7 @@ The only reliable way to check if a site is supported is to try it.
  - **PornHubPlaylist**: [*pornhub*](## "netrc machine")
  - **PornHubUser**: [*pornhub*](## "netrc machine")
  - **PornHubUserVideosUpload**: [*pornhub*](## "netrc machine")
+ - **PornLib**: pornlib.com
  - **Pornotube**
  - **PornoVoisines**
  - **PornoXO**
