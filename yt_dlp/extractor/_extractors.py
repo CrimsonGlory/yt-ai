@@ -570,6 +570,7 @@ from .espn import (
     FiveThirtyEightIE,
     WatchESPNIE,
 )
+from .esuppod import EsupPodIE
 from .ettutv import EttuTvIE
 from .europa import (
     EuropaIE,

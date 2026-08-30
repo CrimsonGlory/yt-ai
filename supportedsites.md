@@ -425,6 +425,7 @@ The only reliable way to check if a site is supported is to try it.
  - **ESPN**
  - **ESPNArticle**
  - **ESPNCricInfo**
+ - **esuppod**: Esup-Pod (Université de Lille)
  - **EttuTv**
  - **Europa**
  - **EuroParlWebstream**
