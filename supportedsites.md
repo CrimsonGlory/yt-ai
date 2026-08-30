@@ -53,6 +53,7 @@ The only reliable way to check if a site is supported is to try it.
  - **aenetworks:show**
  - **AeonCo**
  - **agalega:videos**
+ - **AiryTV**: Airy TV
  - **AitubeKZVideo**
  - **Alibaba**
  - **AliExpressLive**
