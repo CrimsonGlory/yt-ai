@@ -235,6 +235,7 @@ The only reliable way to check if a site is supported is to try it.
  - **cbc.ca:listen**
  - **cbc.ca:player**
  - **cbc.ca:​player:playlist**
+ - **cbn**: CBN
  - **CBS**
  - **CBSLocal**
  - **CBSLocalArticle**

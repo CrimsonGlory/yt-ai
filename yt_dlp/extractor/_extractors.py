@@ -294,6 +294,7 @@ from .cbc import (
     CBCPlayerIE,
     CBCPlayerPlaylistIE,
 )
+from .cbn import CBNIE
 from .cbs import (
     CBSIE,
     ParamountPressExpressIE,
