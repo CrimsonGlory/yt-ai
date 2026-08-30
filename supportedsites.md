@@ -1500,6 +1500,8 @@ The only reliable way to check if a site is supported is to try it.
  - **tvp:vod**
  - **tvp:​vod:series**
  - **TVPlayHome**
+ - **tvtropes**: TV Tropes
+ - **tvtropes:playlist**
  - **tvw**
  - **tvw:news**
  - **tvw:tvchannels**

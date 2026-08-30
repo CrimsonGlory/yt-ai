@@ -2113,6 +2113,10 @@ from .tvplay import (
     TVPlayHomeIE,
     TVPlayIE,
 )
+from .tvtropes import (
+    TVTropesIE,
+    TVTropesPlaylistIE,
+)
 from .tvw import (
     TvwIE,
     TvwNewsIE,
