@@ -645,6 +645,8 @@ The only reliable way to check if a site is supported is to try it.
  - **Kenh14Video**
  - **khanacademy**
  - **khanacademy:unit**
+ - **khinsider**: KHInsider
+ - **khinsider:album**: KHInsider albums
  - **kick:clips**
  - **kick:live**
  - **kick:vod**

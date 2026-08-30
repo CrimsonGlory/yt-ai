@@ -893,6 +893,10 @@ from .khanacademy import (
     KhanAcademyIE,
     KhanAcademyUnitIE,
 )
+from .khinsider import (
+    KHInsiderAlbumIE,
+    KHInsiderIE,
+)
 from .kick import (
     KickClipIE,
     KickIE,
