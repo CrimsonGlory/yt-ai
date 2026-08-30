@@ -17,6 +17,7 @@ The only reliable way to check if a site is supported is to try it.
  - **23video**
  - **247sports**
  - **24tv.ua**
+ - **3m**: 3M
  - **3qsdn**: 3Q SDN
  - **3sat**
  - **4tube**

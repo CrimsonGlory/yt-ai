@@ -2033,6 +2033,7 @@ from .thisvid import (
     ThisVidMemberIE,
     ThisVidPlaylistIE,
 )
+from .threem import ThreeMIE
 from .threenow import ThreeNowIE
 from .threeqsdn import ThreeQSDNIE
 from .threespeak import (
