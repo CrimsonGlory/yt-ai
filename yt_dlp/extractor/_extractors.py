@@ -918,6 +918,7 @@ from .jwplatform import JWPlatformIE
 from .kakao import KakaoIE
 from .kaltura import KalturaIE
 from .kamtape import KamTapeIE
+from .kan import KanIE
 from .kankanews import KankaNewsIE
 from .karafun import KarafunIE
 from .karaoketv import KaraoketvIE

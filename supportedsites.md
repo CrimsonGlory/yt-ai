@@ -672,6 +672,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Kakao**
  - **Kaltura**
  - **KamTape**
+ - **Kan**: Kan (Israeli Public Broadcasting Corporation)
  - **KankaNews**
  - **Karafun**: KaraFun
  - **Karaoketv**
