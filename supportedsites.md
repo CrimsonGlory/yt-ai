@@ -1356,6 +1356,7 @@ The only reliable way to check if a site is supported is to try it.
  - **SoftWhiteUnderbelly**: [*softwhiteunderbelly*](## "netrc machine")
  - **Sohu**
  - **SohuV**
+ - **song.link**: Songlink/Odesli
  - **SonyLIV**: [*sonyliv*](## "netrc machine")
  - **SonyLIVSeries**
  - **soop**: [*afreecatv*](## "netrc machine") sooplive.com

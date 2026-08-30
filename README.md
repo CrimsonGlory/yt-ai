@@ -2340,6 +2340,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Skland** (`skland.com`): Guest `zonai.skland.com` item API (Shumei device id + HMAC) for HLS. Request: [yt-dlp/yt-dlp#15545](https://github.com/yt-dlp/yt-dlp/issues/15545)
     * **Sleebi** (`sleebi.net`): Public `/v/API/{id}` metadata and PUT `/src` for hosted `videos.sleebi.eu` MP4s. Request: [yt-dlp/yt-dlp#15550](https://github.com/yt-dlp/yt-dlp/issues/15550)
     * **SNB** (`snb.ch`): Swisscom CSR webcast token plus public `/webcast/{id}` HLS from Research TV and Web TV pages. Request: [yt-dlp/yt-dlp#14562](https://github.com/yt-dlp/yt-dlp/issues/14562)
+    * **song.link** (`song.link`): Next.js `pageData` listen links, preferring YouTube/SoundCloud/Audius/Audiomack/Bandcamp. Request: [yt-dlp/yt-dlp#13754](https://github.com/yt-dlp/yt-dlp/issues/13754)
     * **Sora** (`sora.com`): Public `backend/project_y/post` JSON (impersonate) for signed Azure MP4. Request: [yt-dlp/yt-dlp#14513](https://github.com/yt-dlp/yt-dlp/issues/14513)
     * **Sponsr** (`sponsr.ru`): Parse Next.js post JSON and extract Kinescope HLS/MP4. Request: [yt-dlp/yt-dlp#14399](https://github.com/yt-dlp/yt-dlp/issues/14399)
     * **streamco:platform** (`api01-platform.stream.co.jp`): Parse Equipmedia `plt` player pages for JStream host/publisher/mid and extract HLS via `eq_meta` JSONP. Request: [yt-dlp/yt-dlp#13843](https://github.com/yt-dlp/yt-dlp/issues/13843)

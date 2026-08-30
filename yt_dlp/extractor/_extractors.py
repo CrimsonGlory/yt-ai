@@ -1874,6 +1874,7 @@ from .sohu import (
     SohuIE,
     SohuVIE,
 )
+from .songlink import SonglinkIE
 from .sonyliv import (
     SonyLIVIE,
     SonyLIVSeriesIE,
