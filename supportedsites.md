@@ -980,6 +980,8 @@ The only reliable way to check if a site is supported is to try it.
  - **OnDemandKoreaProgram**
  - **OneFootball**
  - **OnePlacePodcast**
+ - **onepodcast**: OnePodcast
+ - **onepodcast:serie**: OnePodcast series
  - **onet.pl**
  - **onet.tv**
  - **onet.tv:channel**
