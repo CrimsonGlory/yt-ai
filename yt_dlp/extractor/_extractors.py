@@ -66,6 +66,7 @@ from .allstar import (
     AllstarProfileIE,
 )
 from .alphaporno import AlphaPornoIE
+from .alphatv import AlphaTVIE
 from .altcensored import (
     AltCensoredChannelIE,
     AltCensoredIE,

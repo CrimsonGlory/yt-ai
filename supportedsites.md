@@ -62,6 +62,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Allstar**
  - **AllstarProfile**
  - **AlphaPorno**
+ - **alphatv**: Alpha TV
  - **altcensored**
  - **altcensored:channel**
  - **Alura**: [*alura*](## "netrc machine")
