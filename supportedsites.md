@@ -192,6 +192,7 @@ The only reliable way to check if a site is supported is to try it.
  - **BongaCams**
  - **Boosty**
  - **BostonGlobe**
+ - **bouke**: Boukè
  - **Box**
  - **BoxCastVideo**
  - **BoyfriendTV**
