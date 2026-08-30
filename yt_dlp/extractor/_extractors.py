@@ -462,6 +462,7 @@ from .deuxm import (
 from .deviantart import DeviantArtIE
 from .dfb import DFBIE
 from .dhm import DHMIE
+from .difm import DIFMIE
 from .digitalconcerthall import DigitalConcertHallIE
 from .digiteka import DigitekaIE
 from .digiview import DigiviewIE

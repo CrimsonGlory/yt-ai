@@ -353,6 +353,7 @@ The only reliable way to check if a site is supported is to try it.
  - **DeuxMNews**
  - **DeviantArt**: DeviantArt
  - **DHM**: Deutsches Historisches Museum
+ - **di.fm**: DI.FM
  - **DigitalConcertHall**: [*digitalconcerthall*](## "netrc machine") DigitalConcertHall extractor
  - **DigitallySpeaking**
  - **Digiteka**
