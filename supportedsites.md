@@ -1348,6 +1348,7 @@ The only reliable way to check if a site is supported is to try it.
  - **smotrim:live**
  - **smotrim:playlist**
  - **SnapchatSpotlight**
+ - **snb**: Swiss National Bank Research TV and Web TV
  - **SoftWhiteUnderbelly**: [*softwhiteunderbelly*](## "netrc machine")
  - **Sohu**
  - **SohuV**

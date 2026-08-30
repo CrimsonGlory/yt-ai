@@ -1864,6 +1864,7 @@ from .smotrim import (
     SmotrimPlaylistIE,
 )
 from .snapchat import SnapchatSpotlightIE
+from .snb import SNBIE
 from .softwhiteunderbelly import SoftWhiteUnderbellyIE
 from .sohu import (
     SohuIE,
