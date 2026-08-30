@@ -616,6 +616,7 @@ from .filmon import (
 )
 from .filemoon import FilemoonIE
 from .filmweb import FilmwebIE
+from .filmzie import FilmzieIE
 from .firsttv import (
     FirstTVIE,
     FirstTVLiveIE,

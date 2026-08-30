@@ -459,6 +459,7 @@ The only reliable way to check if a site is supported is to try it.
  - **filmon**
  - **filmon:channel**
  - **Filmweb**
+ - **Filmzie**: Filmzie
  - **FiveThirtyEight**
  - **FiveTV**
  - **Flickr**
