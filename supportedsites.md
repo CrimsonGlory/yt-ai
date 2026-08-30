@@ -1597,6 +1597,7 @@ The only reliable way to check if a site is supported is to try it.
  - **UDNEmbed**: 聯合影音
  - **UFCTV**: [*ufctv*](## "netrc machine")
  - **ukcolumn**
+ - **ukdevilz**: ukdevilz.com
  - **UlizaPlayer**
  - **UlizaPortal**: ulizaportal.jp
  - **umg:de**: Universal Music Deutschland
