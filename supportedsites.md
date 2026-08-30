@@ -801,6 +801,7 @@ The only reliable way to check if a site is supported is to try it.
  - **mirrativ**
  - **mirrativ:user**
  - **MirrorCoUK**
+ - **missevan**: MissEvan / 猫耳FM
  - **mixch**
  - **mixch:archive**
  - **mixch:movie**

@@ -2298,6 +2298,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **KHInsider** (`downloads.khinsider.com`): Public MP3/FLAC CDN links from track pages; albums as track playlists. Request: [yt-dlp/yt-dlp#16713](https://github.com/yt-dlp/yt-dlp/issues/16713)
     * **LuluStream** (`luluvid.com`): Packed JWPlayer HLS from embed pages (CDN token is bound to User-Agent and Accept-Language). Request: [yt-dlp/yt-dlp#16656](https://github.com/yt-dlp/yt-dlp/issues/16656)
     * **Luticlip** (`luticlip.com`): HTML5 Video.js MP4 from RetroTube pages with Range-chunked takcdn downloads. Request: [yt-dlp/yt-dlp#16465](https://github.com/yt-dlp/yt-dlp/issues/16465)
+    * **MissEvan** (`missevan.com`): Public `/sound/getsound` JSON for progressive M4A; SAMPLE-AES HLS is DRM. Request: [yt-dlp/yt-dlp#15517](https://github.com/yt-dlp/yt-dlp/issues/15517)
     * **Naver:blog** (`blog.naver.com`): PostView `vid`/`inkey` (SE3 and Prism player) via the rmcnmv VOD play API. Request: [yt-dlp/yt-dlp#16816](https://github.com/yt-dlp/yt-dlp/issues/16816)
     * **OnePodcast** (`onepodcast.it`): GEDI media-hub `audioSource` MP3 and Brightcove `videoSrc` MP4 from episode pages. Request: [yt-dlp/yt-dlp#16798](https://github.com/yt-dlp/yt-dlp/issues/16798)
     * **Piczel** (`piczel.tv`): Public `/api/streams/{slug}` JSON for LL-HLS live (`playback.piczel.tv`) and recording MP4s. Request: [yt-dlp/yt-dlp#16032](https://github.com/yt-dlp/yt-dlp/issues/16032)
