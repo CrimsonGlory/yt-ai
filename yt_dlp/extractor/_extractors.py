@@ -1799,6 +1799,7 @@ from .simplecast import (
 )
 from .sina import SinaIE
 from .skeb import SkebIE
+from .skland import SklandIE
 from .sky import (
     SkyNewsIE,
     SkyNewsStoryIE,

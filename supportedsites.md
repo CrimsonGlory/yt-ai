@@ -1302,6 +1302,7 @@ The only reliable way to check if a site is supported is to try it.
  - **simplecast:podcast**
  - **Sina**
  - **Skeb**
+ - **skland**: 森空岛
  - **sky.it**
  - **sky:news**
  - **sky:​news:story**
