@@ -226,6 +226,7 @@ The only reliable way to check if a site is supported is to try it.
  - **BTVPlus**
  - **Bundesliga**
  - **Bundestag**
+ - **Bunkr**: bunkr.cr
  - **BunnyCdn**
  - **BusinessInsider**
  - **BuzzFeed**

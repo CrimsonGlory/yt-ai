@@ -275,6 +275,7 @@ from .brollie import BrollieIE
 from .btvplus import BTVPlusIE
 from .bundesliga import BundesligaIE
 from .bundestag import BundestagIE
+from .bunkr import BunkrIE
 from .bunnycdn import BunnyCdnIE
 from .businessinsider import BusinessInsiderIE
 from .buzzfeed import BuzzFeedIE
