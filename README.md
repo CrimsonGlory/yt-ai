@@ -2313,6 +2313,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **TimesRadio** (`thetimes.com`): HTML5 catch-up MP3 (Omny) and live AAC stream from Times Radio pages; impersonate for the device-check interstitial. Request: [yt-dlp/yt-dlp#17253](https://github.com/yt-dlp/yt-dlp/issues/17253)
     * **TVTropes** (`tvtropes.org`): Impersonate Cloudflare and extract Bunny HLS from video-example data attributes. Request: [yt-dlp/yt-dlp#17106](https://github.com/yt-dlp/yt-dlp/issues/17106)
     * **XFetishTube** (`x-fetish.tube`): KVS `kt_player` config (randomized JS object) and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#16623](https://github.com/yt-dlp/yt-dlp/issues/16623)
+    * **Xumo** (`play.xumo.com`): Public `valencia-app-mds.xumo.com` asset JSON for HLS/DASH VOD and series playlists. Request: [yt-dlp/yt-dlp#15643](https://github.com/yt-dlp/yt-dlp/issues/15643)
 
 * **Extractor fixes** (verified on live sites where possible):
     * **20min**: Extract videos from the Unity API instead of the old podcast URLs

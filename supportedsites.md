@@ -1725,6 +1725,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Xinpianchang**: 新片场
  - **XMinus**
  - **XNXX**
+ - **xumo**: XUMO
  - **XVideos**
  - **xvideos:quickies**
  - **XXXYMovies**
