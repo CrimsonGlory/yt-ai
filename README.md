@@ -2340,6 +2340,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Sora** (`sora.com`): Public `backend/project_y/post` JSON (impersonate) for signed Azure MP4. Request: [yt-dlp/yt-dlp#14513](https://github.com/yt-dlp/yt-dlp/issues/14513)
     * **Sponsr** (`sponsr.ru`): Parse Next.js post JSON and extract Kinescope HLS/MP4. Request: [yt-dlp/yt-dlp#14399](https://github.com/yt-dlp/yt-dlp/issues/14399)
     * **StreamingCommunityz** (`streamingcommunityz`): Inertia `data-page` iframe to vixcloud HLS. Request: [yt-dlp/yt-dlp#14432](https://github.com/yt-dlp/yt-dlp/issues/14432)
+    * **Streamruby** (`rubyvidhub.com`): Packed JWPlayer HLS from embed pages. Request: [yt-dlp/yt-dlp#14361](https://github.com/yt-dlp/yt-dlp/issues/14361)
     * **Streamster** (`streamster.tv`): MediaElement `video/youtube` source and player `videodata` YouTube embeds. Request: [yt-dlp/yt-dlp#14526](https://github.com/yt-dlp/yt-dlp/issues/14526)
     * **Streamtape** (`streamtape.com`): Reconstruct the obfuscated `get_video` MP4 URL from player JS. Request: [yt-dlp/yt-dlp#16770](https://github.com/yt-dlp/yt-dlp/issues/16770)
     * **Stuff** (`stuff.co.nz`): Public `/api/v1.0/stuff/story/{id}` JSON; Brightcove player or hosted HLS/MP4. Request: [yt-dlp/yt-dlp#14961](https://github.com/yt-dlp/yt-dlp/issues/14961)

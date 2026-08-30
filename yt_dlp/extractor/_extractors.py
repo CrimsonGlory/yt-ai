@@ -1950,6 +1950,7 @@ from .streaks import StreaksIE
 from .streamable import StreamableIE
 from .streamcz import StreamCZIE
 from .streamingcommunityz import StreamingCommunityzIE
+from .streamruby import StreamrubyIE
 from .streamster import StreamsterIE
 from .streamtape import StreamtapeIE
 from .streetvoice import StreetVoiceIE

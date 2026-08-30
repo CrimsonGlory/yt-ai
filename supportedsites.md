@@ -1408,6 +1408,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Streamable**
  - **StreamCZ**
  - **streamingcommunityz**: StreamingCommunity
+ - **streamruby**: Streamruby
  - **Streamster**: streamster.tv
  - **streamtape**: Streamtape
  - **StreetVoice**
