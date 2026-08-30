@@ -604,6 +604,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Hypem**
  - **Hytale**
  - **Icareus**
+ - **IcePorn**
  - **IdagioAlbum**
  - **IdagioPersonalPlaylist**
  - **IdagioPlaylist**
