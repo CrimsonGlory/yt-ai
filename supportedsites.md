@@ -693,6 +693,7 @@ The only reliable way to check if a site is supported is to try it.
  - **KrasView**: Красвью
  - **KTH**
  - **Ku6**
+ - **Kuaishou**: 快手
  - **KukuluLive**
  - **kuwo:album**: 酷我音乐 - 专辑
  - **kuwo:category**: 酷我音乐 - 分类

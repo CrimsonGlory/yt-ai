@@ -949,6 +949,7 @@ from .kompas import KompasVideoIE
 from .krasview import KrasViewIE
 from .kth import KTHIE
 from .ku6 import Ku6IE
+from .kuaishou import KuaishouIE
 from .kukululive import KukuluLiveIE
 from .kuwo import (
     KuwoAlbumIE,
