@@ -760,6 +760,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Masters**
  - **MatchiTV**
  - **MatchTV**
+ - **matreshka.tv**: МатрёшкаТВ
  - **mave**
  - **mave:channel**
  - **MBN**: mbn.co.kr (매일방송)
