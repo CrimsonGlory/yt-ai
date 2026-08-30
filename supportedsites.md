@@ -1338,6 +1338,7 @@ The only reliable way to check if a site is supported is to try it.
  - **simplecast:episode**
  - **simplecast:podcast**
  - **Sina**
+ - **skai**: SKAI
  - **Skeb**
  - **skland**: 森空岛
  - **sky.it**
