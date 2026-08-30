@@ -2001,6 +2001,7 @@ from .thisvid import (
     ThisVidMemberIE,
     ThisVidPlaylistIE,
 )
+from .threenow import ThreeNowIE
 from .threeqsdn import ThreeQSDNIE
 from .threespeak import (
     ThreeSpeakIE,

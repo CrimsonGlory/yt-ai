@@ -1427,6 +1427,7 @@ The only reliable way to check if a site is supported is to try it.
  - **ThisVid**
  - **ThisVidMember**
  - **ThisVidPlaylist**
+ - **ThreeNow**: ThreeNow live TV
  - **ThreeSpeak**
  - **ThreeSpeakUser**
  - **TikTok**

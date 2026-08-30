@@ -2285,6 +2285,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **RacingTV** (`racingtv.com`): Public `api.racingtv.com` on-demand JSON (client `API-KEY`) and HLS after the preroll token wait. Request: [yt-dlp/yt-dlp#17503](https://github.com/yt-dlp/yt-dlp/issues/17503)
     * **Rezka** (`rezka.ag`): Anubis PoW plus `initCDN*Events` / `ajax/get_cdn_series` voidboost HLS and MP4. Request: [yt-dlp/yt-dlp#17096](https://github.com/yt-dlp/yt-dlp/issues/17096)
     * **ShortMax** (`shorttv.live`): Nuxt `__NUXT_DATA__` HLS with custom per-segment AES-CBC. Request: [yt-dlp/yt-dlp#17230](https://github.com/yt-dlp/yt-dlp/issues/17230)
+    * **ThreeNow** (`threenow.co.nz`): Live channels from the public `now-api.fullscreen.nz` `live-epg` HLS. Request: [yt-dlp/yt-dlp#17082](https://github.com/yt-dlp/yt-dlp/issues/17082)
     * **TimesRadio** (`thetimes.com`): HTML5 catch-up MP3 (Omny) and live AAC stream from Times Radio pages; impersonate for the device-check interstitial. Request: [yt-dlp/yt-dlp#17253](https://github.com/yt-dlp/yt-dlp/issues/17253)
     * **TVTropes** (`tvtropes.org`): Impersonate Cloudflare and extract Bunny HLS from video-example data attributes. Request: [yt-dlp/yt-dlp#17106](https://github.com/yt-dlp/yt-dlp/issues/17106)
 
