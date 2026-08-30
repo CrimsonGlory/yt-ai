@@ -601,6 +601,10 @@ from .fc2 import (
 )
 from .fczenit import FczenitIE
 from .fifa import FifaIE
+from .fikfap import (
+    FikFapIE,
+    FikFapUserIE,
+)
 from .filmarchiv import FilmArchivIE
 from .filmon import (
     FilmOnChannelIE,

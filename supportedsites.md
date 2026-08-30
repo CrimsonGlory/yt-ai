@@ -447,6 +447,8 @@ The only reliable way to check if a site is supported is to try it.
  - **fc2:live**
  - **Fczenit**
  - **Fifa**
+ - **fikfap**: FikFap
+ - **fikfap:user**: FikFap user
  - **filemoon**: filemoon.sx
  - **FilmArchiv**: FILMARCHIV ON
  - **filmon**

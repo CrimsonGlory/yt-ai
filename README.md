@@ -2294,6 +2294,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **DoramasPrincess** (`doramasprincess.com`): POST `/ajax/embed` for HTML5 sources and packed JWPlayer HLS from host iframes. Request: [yt-dlp/yt-dlp#16369](https://github.com/yt-dlp/yt-dlp/issues/16369)
     * **eplay** (`eplay.com`): Public `search-cf.eplay.com` post JSON (tokenized MP4/HLS) with Next.js fallback. Request: [yt-dlp/yt-dlp#16853](https://github.com/yt-dlp/yt-dlp/issues/16853)
     * **Fawesome** (`fawesome.tv`): Security-token `recipes.php` API for HLS and progressive MP4. Request: [yt-dlp/yt-dlp#15706](https://github.com/yt-dlp/yt-dlp/issues/15706)
+    * **FikFap** (`fikfap.com`): Public `api.fikfap.com` post JSON (anonymous UUID) and tokenized Bunny HLS. Request: [yt-dlp/yt-dlp#14980](https://github.com/yt-dlp/yt-dlp/issues/14980)
     * **Forendors** (`forendors.cz`): Public `api.forendors.cz` post JSON and signed `assets.forendors.cz` HLS. Request: [yt-dlp/yt-dlp#15173](https://github.com/yt-dlp/yt-dlp/issues/15173)
     * **FOX4KC** (`fox4kc.com`): Anvato/Lura HLS from `/video/{slug}/{id}/` URLs and WordPress `lead_media` on article pages. Request: [yt-dlp/yt-dlp#16582](https://github.com/yt-dlp/yt-dlp/issues/16582)
     * **FreeSex** (`freesex.cz`): POST the 18+ terms form and extract the Video.js HTML5 MP4. Request: [yt-dlp/yt-dlp#15930](https://github.com/yt-dlp/yt-dlp/issues/15930)
