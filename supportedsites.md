@@ -1265,6 +1265,7 @@ The only reliable way to check if a site is supported is to try it.
  - **SampleFocus**
  - **Sangiin**: 参議院インターネット審議中継 (archive)
  - **Sapo**: SAPO Vídeos
+ - **sasflix**: Sasflix
  - **SaucePlus**: Sauce+
  - **SaucePlusChannel**
  - **SBS**: sbs.com.au

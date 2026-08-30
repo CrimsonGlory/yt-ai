@@ -2313,6 +2313,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **RacingTV** (`racingtv.com`): Public `api.racingtv.com` on-demand JSON (client `API-KEY`) and HLS after the preroll token wait. Request: [yt-dlp/yt-dlp#17503](https://github.com/yt-dlp/yt-dlp/issues/17503)
     * **RedziDzirdiLatviju** (`redzidzirdilatviju.lv`): Solr `/index` JSON for movies (Nimble HLS on `filmas.arhivi.lv`) and sound samples (archive MP3). Request: [yt-dlp/yt-dlp#15886](https://github.com/yt-dlp/yt-dlp/issues/15886)
     * **Rezka** (`rezka.ag`): Anubis PoW plus `initCDN*Events` / `ajax/get_cdn_series` voidboost HLS and MP4. Request: [yt-dlp/yt-dlp#17096](https://github.com/yt-dlp/yt-dlp/issues/17096)
+    * **Sasflix** (`sasflix.ru`): Public `/api/web/topics/{id}` JSON plus HLS and progressive `/api/video` downloads. Request: [yt-dlp/yt-dlp#15373](https://github.com/yt-dlp/yt-dlp/issues/15373)
     * **ShortMax** (`shorttv.live`): Nuxt `__NUXT_DATA__` HLS with custom per-segment AES-CBC. Request: [yt-dlp/yt-dlp#17230](https://github.com/yt-dlp/yt-dlp/issues/17230)
     * **Showcamrips** (`showcamrips.com`): HTML5 MP4 from `play.php` with a showcamrips Referer. Request: [yt-dlp/yt-dlp#16822](https://github.com/yt-dlp/yt-dlp/issues/16822)
     * **Skland** (`skland.com`): Guest `zonai.skland.com` item API (Shumei device id + HMAC) for HLS. Request: [yt-dlp/yt-dlp#15545](https://github.com/yt-dlp/yt-dlp/issues/15545)
