@@ -120,6 +120,7 @@ The only reliable way to check if a site is supported is to try it.
  - **audius:artist**: Audius.co profile/artist pages
  - **audius:playlist**: Audius.co playlists
  - **audius:track**: Audius track ID or API link. Prepend with "audius:"
+ - **avjb**: AVJB
  - **AZMedien**: AZ Medien videos
  - **BaiduVideo**: 百度视频
  - **Balapan**: Balapan TV livestream

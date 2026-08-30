@@ -150,6 +150,7 @@ from .audius import (
     AudiusProfileIE,
     AudiusTrackIE,
 )
+from .avjb import AvjbIE
 from .azmedien import AZMedienIE
 from .baidu import BaiduVideoIE
 from .balapan import BalapanIE
