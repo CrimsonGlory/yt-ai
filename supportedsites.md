@@ -582,6 +582,7 @@ The only reliable way to check if a site is supported is to try it.
  - **iheartradio:podcast**
  - **IlPost**
  - **Iltalehti**
+ - **imagentv**: Imagen Televisión
  - **imdb**: Internet Movie Database trailers
  - **imdb:list**: Internet Movie Database lists
  - **Imgur**
