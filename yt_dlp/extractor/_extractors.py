@@ -2430,6 +2430,7 @@ from .ximalaya import (
 from .xinpianchang import XinpianchangIE
 from .xminus import XMinusIE
 from .xnxx import XNXXIE
+from .xpicvid import XPicVidIE
 from .xumo import XumoIE
 from .xvideos import (
     XVideosIE,
