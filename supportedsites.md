@@ -514,6 +514,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Gazeta**
  - **GBNews**: GB News clips, features and live streams
  - **GDCVault**: [*gdcvault*](## "netrc machine")
+ - **ge.movie**: GE.MOVIE
  - **GediDigital**
  - **gem.cbc.ca**: [*cbcgem*](## "netrc machine")
  - **gem.cbc.ca:live**: [*cbcgem*](## "netrc machine")

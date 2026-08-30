@@ -692,6 +692,7 @@ from .gazeta import GazetaIE
 from .gbnews import GBNewsIE
 from .gdcvault import GDCVaultIE
 from .gedidigital import GediDigitalIE
+from .gemovie import GeMovieIE
 from .generic import GenericIE
 from .genericembeds import (
     HTML5MediaEmbedIE,
