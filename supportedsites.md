@@ -431,6 +431,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Fathom**
  - **Faulio**
  - **FaulioLive**
+ - **fawesome**: Fawesome
  - **faz.net**
  - **fc2**: [*fc2*](## "netrc machine")
  - **fc2:embed**
