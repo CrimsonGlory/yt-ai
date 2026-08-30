@@ -264,6 +264,7 @@ from .brilliantpala import (
     BrilliantpalaClassesIE,
     BrilliantpalaElearnIE,
 )
+from .brollie import BrollieIE
 from .btvplus import BTVPlusIE
 from .bundesliga import BundesligaIE
 from .bundestag import BundestagIE
