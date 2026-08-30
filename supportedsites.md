@@ -105,6 +105,7 @@ The only reliable way to check if a site is supported is to try it.
  - **ArteTVCategory**
  - **ArteTVEmbed**
  - **ArteTVPlaylist**
+ - **AsianGamesHub**: Asian Games Hub / Asian Games TV
  - **asobichannel**: ASOBI CHANNEL
  - **asobichannel:tag**: ASOBI CHANNEL
  - **AsobiStage**: ASOBISTAGE (アソビステージ)

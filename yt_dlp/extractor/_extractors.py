@@ -127,6 +127,7 @@ from .arte import (
     ArteTVIE,
     ArteTVPlaylistIE,
 )
+from .asiangameshub import AsianGamesHubIE
 from .asobichannel import (
     AsobiChannelIE,
     AsobiChannelTagURLIE,
