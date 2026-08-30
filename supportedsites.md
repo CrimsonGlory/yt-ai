@@ -420,6 +420,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Erocast**
  - **EroProfile**: [*eroprofile*](## "netrc machine")
  - **EroProfile:album**
+ - **Erothots**: erothots.co
  - **ERRArhiiv**
  - **ERRJupiter**
  - **ertflix**: ERTFLIX videos

@@ -2299,6 +2299,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **DeviantArt** (`deviantart.com`): Eclipse `__INITIAL_STATE__` transcoded MP4s with JSON-LD `contentUrl` fallback. Request: [yt-dlp/yt-dlp#17234](https://github.com/yt-dlp/yt-dlp/issues/17234)
     * **DoramasPrincess** (`doramasprincess.com`): POST `/ajax/embed` for HTML5 sources and packed JWPlayer HLS from host iframes. Request: [yt-dlp/yt-dlp#16369](https://github.com/yt-dlp/yt-dlp/issues/16369)
     * **eplay** (`eplay.com`): Public `search-cf.eplay.com` post JSON (tokenized MP4/HLS) with Next.js fallback. Request: [yt-dlp/yt-dlp#16853](https://github.com/yt-dlp/yt-dlp/issues/16853)
+    * **Erothots** (`erothots.co`): JSON-LD metadata and Plyr/Video.js HTML5 MP4 from `cdn.erocdn.co`. Request: [yt-dlp/yt-dlp#13021](https://github.com/yt-dlp/yt-dlp/issues/13021)
     * **EsupPod** (`pod.univ-lille.fr`): Video.js `mp4_sources` progressive MP4, with `srcOptions` HLS fallback. Request: [yt-dlp/yt-dlp#13738](https://github.com/yt-dlp/yt-dlp/issues/13738)
     * **Fawesome** (`fawesome.tv`): Security-token `recipes.php` API for HLS and progressive MP4. Request: [yt-dlp/yt-dlp#15706](https://github.com/yt-dlp/yt-dlp/issues/15706)
     * **FikFap** (`fikfap.com`): Public `api.fikfap.com` post JSON (anonymous UUID) and tokenized Bunny HLS. Request: [yt-dlp/yt-dlp#14980](https://github.com/yt-dlp/yt-dlp/issues/14980)

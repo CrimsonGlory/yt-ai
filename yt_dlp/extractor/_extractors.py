@@ -556,6 +556,7 @@ from .eroprofile import (
     EroProfileAlbumIE,
     EroProfileIE,
 )
+from .erothots import ErothotsIE
 from .err import (
     ERRArhiivIE,
     ERRJupiterIE,
