@@ -190,6 +190,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Bloomberg**
  - **Bluesky**
  - **BongaCams**
+ - **boomstream**: Boomstream
  - **Boosty**
  - **BostonGlobe**
  - **bouke**: Boukè

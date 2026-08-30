@@ -236,6 +236,7 @@ from .blogger import BloggerIE
 from .bloomberg import BloombergIE
 from .bluesky import BlueskyIE
 from .bongacams import BongaCamsIE
+from .boomstream import BoomstreamIE
 from .boosty import BoostyIE
 from .bostonglobe import BostonGlobeIE
 from .bouke import BoukeIE
