@@ -1266,6 +1266,7 @@ The only reliable way to check if a site is supported is to try it.
  - **ShemarooMe**
  - **Shiey**
  - **shortmax**: ShortMax
+ - **showcamrips**: showcamrips.com
  - **showroom:live**: SHOWROOM
  - **showroom:vod**
  - **ShugiinItvLive**: 衆議院インターネット審議中継
