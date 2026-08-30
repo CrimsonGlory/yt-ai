@@ -195,6 +195,7 @@ from .bibeltv import (
     BibelTVSeriesIE,
     BibelTVVideoIE,
 )
+from .bigmarker import BigMarkerIE
 from .bigo import BigoIE
 from .bild import BildIE
 from .bilibili import (

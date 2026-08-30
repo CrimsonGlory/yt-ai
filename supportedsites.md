@@ -156,6 +156,7 @@ The only reliable way to check if a site is supported is to try it.
  - **bibeltv:live**: BibelTV live program
  - **bibeltv:series**: BibelTV series playlist
  - **bibeltv:video**: BibelTV single video
+ - **BigMarker**: BigMarker webinars
  - **Bigo**
  - **Bild**: Bild.de
  - **BiliBili**
