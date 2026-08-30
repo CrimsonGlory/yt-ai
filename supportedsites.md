@@ -1289,6 +1289,7 @@ The only reliable way to check if a site is supported is to try it.
  - **senate.gov**
  - **senate.gov:isvp**
  - **Servus**
+ - **sexbjcam**: sexbjcam.com
  - **Sexu**
  - **SeznamZpravy**
  - **SeznamZpravyArticle**
