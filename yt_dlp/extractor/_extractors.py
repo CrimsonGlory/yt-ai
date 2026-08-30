@@ -178,6 +178,7 @@ from .bbc import (
 )
 from .beacon import BeaconTvIE
 from .beatport import BeatportIE
+from .beatstars import BeatStarsIE
 from .beeg import BeegIE
 from .behindkink import BehindKinkIE
 from .berufetv import BerufeTVIE

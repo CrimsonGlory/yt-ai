@@ -143,6 +143,7 @@ The only reliable way to check if a site is supported is to try it.
  - **BBVTVRecordings**: [*bbvtv*](## "netrc machine")
  - **BeaconTv**
  - **Beatport**
+ - **BeatStars**
  - **Beeg**
  - **BehindKink**
  - **BerufeTV**
