@@ -2337,6 +2337,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Skland** (`skland.com`): Guest `zonai.skland.com` item API (Shumei device id + HMAC) for HLS. Request: [yt-dlp/yt-dlp#15545](https://github.com/yt-dlp/yt-dlp/issues/15545)
     * **Sleebi** (`sleebi.net`): Public `/v/API/{id}` metadata and PUT `/src` for hosted `videos.sleebi.eu` MP4s. Request: [yt-dlp/yt-dlp#15550](https://github.com/yt-dlp/yt-dlp/issues/15550)
     * **SNB** (`snb.ch`): Swisscom CSR webcast token plus public `/webcast/{id}` HLS from Research TV and Web TV pages. Request: [yt-dlp/yt-dlp#14562](https://github.com/yt-dlp/yt-dlp/issues/14562)
+    * **Sora** (`sora.com`): Public `backend/project_y/post` JSON (impersonate) for signed Azure MP4. Request: [yt-dlp/yt-dlp#14513](https://github.com/yt-dlp/yt-dlp/issues/14513)
     * **Streamster** (`streamster.tv`): MediaElement `video/youtube` source and player `videodata` YouTube embeds. Request: [yt-dlp/yt-dlp#14526](https://github.com/yt-dlp/yt-dlp/issues/14526)
     * **Streamtape** (`streamtape.com`): Reconstruct the obfuscated `get_video` MP4 URL from player JS. Request: [yt-dlp/yt-dlp#16770](https://github.com/yt-dlp/yt-dlp/issues/16770)
     * **Stuff** (`stuff.co.nz`): Public `/api/v1.0/stuff/story/{id}` JSON; Brightcove player or hosted HLS/MP4. Request: [yt-dlp/yt-dlp#14961](https://github.com/yt-dlp/yt-dlp/issues/14961)

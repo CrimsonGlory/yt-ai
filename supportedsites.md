@@ -1359,6 +1359,7 @@ The only reliable way to check if a site is supported is to try it.
  - **soop:catchstory**: [*afreecatv*](## "netrc machine") sooplive.com catch story
  - **soop:live**: [*afreecatv*](## "netrc machine") sooplive.com livestreams
  - **soop:user**: [*afreecatv*](## "netrc machine")
+ - **sora**: Sora
  - **soundcloud**: [*soundcloud*](## "netrc machine")
  - **soundcloud:playlist**: [*soundcloud*](## "netrc machine")
  - **soundcloud:related**: [*soundcloud*](## "netrc machine")
