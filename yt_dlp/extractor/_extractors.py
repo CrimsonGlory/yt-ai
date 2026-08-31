@@ -42,6 +42,7 @@ from .aenetworks import (
     HistoryTopicIE,
 )
 from .aeonco import AeonCoIE
+from .afl import AFLIE
 from .afreecatv import (
     AfreecaTVCatchStoryIE,
     AfreecaTVIE,

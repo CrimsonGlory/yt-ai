@@ -53,6 +53,7 @@ The only reliable way to check if a site is supported is to try it.
  - **aenetworks:collection**
  - **aenetworks:show**
  - **AeonCo**
+ - **afl**: Australian Football League
  - **agalega:videos**
  - **AiryTV**: Airy TV
  - **AitubeKZVideo**
