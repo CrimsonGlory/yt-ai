@@ -386,6 +386,7 @@ from .cnn import (
     CNNIE,
     CNNIndonesiaIE,
 )
+from .collabinc import CollabIncIE
 from .comedycentral import ComedyCentralIE
 from .commercialradio import CommercialRadioIE
 from .commonmistakes import (
