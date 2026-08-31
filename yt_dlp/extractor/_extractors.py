@@ -2405,6 +2405,7 @@ from .uplynk import (
     UplynkIE,
     UplynkPreplayIE,
 )
+from .upride import UprideIE
 from .urort import UrortIE
 from .urplay import URPlayIE
 from .usanetwork import USANetworkIE

@@ -2447,6 +2447,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **TVTropes** (`tvtropes.org`): Impersonate Cloudflare and extract Bunny HLS from video-example data attributes. Request: [yt-dlp/yt-dlp#17106](https://github.com/yt-dlp/yt-dlp/issues/17106)
     * **Udio** (`udio.com`): Public `/api/songs` JSON for `song_path` MP3 and `video_path` MP4. Request: [yt-dlp/yt-dlp#10045](https://github.com/yt-dlp/yt-dlp/issues/10045)
     * **UKDevilz** (`ukdevilz.com`): Impersonate Cloudflare and extract JWPlayer `window.playlist` MP4 sources. Request: [yt-dlp/yt-dlp#14166](https://github.com/yt-dlp/yt-dlp/issues/14166)
+    * **UpRide** (`upride.cc`): Impersonate Cloudflare, then JSON-LD `contentURL` original upload plus Cloudflare Stream iframe HLS/DASH. Request: [yt-dlp/yt-dlp#7858](https://github.com/yt-dlp/yt-dlp/issues/7858)
     * **Veev** (`veev.to`): Decode the player `fc` token and `/dl?op=player_api` source URL. Request: [yt-dlp/yt-dlp#10092](https://github.com/yt-dlp/yt-dlp/issues/10092)
     * **VidMoly** (`vidmoly.to`): Canonical `vidmoly.biz` embed JWPlayer HLS (also `.me`/`.net`). Request: [yt-dlp/yt-dlp#9689](https://github.com/yt-dlp/yt-dlp/issues/9689)
     * **Viggle** (`viggle.ai`): Public `/api/share/video-task` JSON (impersonate) for signed `assets.viggle.ai` MP4. Request: [yt-dlp/yt-dlp#13657](https://github.com/yt-dlp/yt-dlp/issues/13657)

@@ -1723,6 +1723,7 @@ The only reliable way to check if a site is supported is to try it.
  - **uol.com.br**
  - **uplynk**
  - **uplynk:preplay**
+ - **upride**: UpRide.cc
  - **Urort**: NRK P3 Urørt
  - **URPlay**
  - **USANetwork**
