@@ -2286,6 +2286,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * [AnonMP4](https://github.com/CrimsonGlory/yt-ai/commit/7e1d8ceb53acea50102343d0cd3db56e1fc2dbc8) (`anonmp4.art` / `anonmp4.to`)
     * **Archivebate** (`archivebate.com`): Mixdrop iframe packed `MDCore.wurl` MP4, with native HLS embed fallback. Request: [yt-dlp/yt-dlp#8262](https://github.com/yt-dlp/yt-dlp/issues/8262)
     * **AsianGamesHub** (`asiangameshub.com`): Anonymous ViewLift identity token and entitlement HLS/MP4. Request: [yt-dlp/yt-dlp#12861](https://github.com/yt-dlp/yt-dlp/issues/12861)
+    * **AsianPinay** (`asianpinay.cc`): XtremeStream player `xs1.php` HLS from the iframe embed, with Magixz CDN MP4 fallback. Request: [yt-dlp/yt-dlp#7132](https://github.com/yt-dlp/yt-dlp/issues/7132)
     * **AstalaVR** (`astalavr.com`): Impersonate Cloudflare and extract Delight VR (`dl8-video`) tokened MP4 sources. Request: [yt-dlp/yt-dlp#13332](https://github.com/yt-dlp/yt-dlp/issues/13332)
     * **ATPTour** (`atptour.com`): Impersonate Cloudflare, then Brightcove IDs from `/videos/getcurrentrelatedvideos` and news-page `video-js`/iframe embeds. Request: [yt-dlp/yt-dlp#10816](https://github.com/yt-dlp/yt-dlp/issues/10816)
     * **Avjb** (`avjb.com`): Player CSRF `/player/spped.php` HLS lines, with Playerjs preview MP4 fallback. Request: [yt-dlp/yt-dlp#14653](https://github.com/yt-dlp/yt-dlp/issues/14653)
