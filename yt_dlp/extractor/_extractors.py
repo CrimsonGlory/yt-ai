@@ -1021,6 +1021,7 @@ from .lcp import (
     LcpIE,
     LcpPlayIE,
 )
+from .learnenglishkids import LearnEnglishKidsIE
 from .learningonscreen import LearningOnScreenIE
 from .lecture2go import Lecture2GoIE
 from .lecturio import (

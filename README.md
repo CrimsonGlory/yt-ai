@@ -2338,6 +2338,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Keporn** (`f1.keporn.vip`): Public `/api/json/video` metadata and `/api/videofile.php` Cyrillic-base64 `get_file` MP4s. Request: [yt-dlp/yt-dlp#14612](https://github.com/yt-dlp/yt-dlp/issues/14612)
     * **KHInsider** (`downloads.khinsider.com`): Public MP3/FLAC CDN links from track pages; albums as track playlists. Request: [yt-dlp/yt-dlp#16713](https://github.com/yt-dlp/yt-dlp/issues/16713)
     * **Kuaishou** (`kuaishou.com`): Mobile H5 `window.INIT_STATE` progressive MP4/HLS from share and short-video pages. Request: [yt-dlp/yt-dlp#14010](https://github.com/yt-dlp/yt-dlp/issues/14010)
+    * **LearnEnglishKids** (`learnenglishkids.britishcouncil.org`): Drupal `akamai-custom-embed` Plyr HLS from `data-video`, with YouTube iframe fallback. Request: [yt-dlp/yt-dlp#10146](https://github.com/yt-dlp/yt-dlp/issues/10146)
     * **LuluStream** (`luluvid.com`): Packed JWPlayer HLS from embed pages (CDN token is bound to User-Agent and Accept-Language). Request: [yt-dlp/yt-dlp#16656](https://github.com/yt-dlp/yt-dlp/issues/16656)
     * **Luticlip** (`luticlip.com`): HTML5 Video.js MP4 from RetroTube pages with Range-chunked takcdn downloads. Request: [yt-dlp/yt-dlp#16465](https://github.com/yt-dlp/yt-dlp/issues/16465)
     * **Mat6Tube** (`mat6tube.com`): JWPlayer `window.playlist` progressive MP4s from watch pages. Request: [yt-dlp/yt-dlp#14613](https://github.com/yt-dlp/yt-dlp/issues/14613)

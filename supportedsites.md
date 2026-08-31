@@ -747,6 +747,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Lcp**
  - **LcpPlay**
  - **Le**: 乐视网
+ - **learnenglishkids**: LearnEnglish Kids
  - **LearningOnScreen**
  - **Lecture2Go**
  - **Lecturio**: [*lecturio*](## "netrc machine")
