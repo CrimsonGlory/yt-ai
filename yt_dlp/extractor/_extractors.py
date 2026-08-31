@@ -95,6 +95,7 @@ from .americastestkitchen import (
     AmericasTestKitchenSeasonIE,
 )
 from .angel import AngelIE
+from .animationfilmarchives import AnimationFilmArchivesIE
 from .anonmp4 import AnonMP4IE
 from .antenna import (
     Ant1NewsGrArticleIE,

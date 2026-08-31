@@ -85,6 +85,7 @@ The only reliable way to check if a site is supported is to try it.
  - **anderetijden**: npo.nl, ntr.nl, omroepwnl.nl, zapp.nl and npo3.nl
  - **Angel**
  - **AnimalPlanet**
+ - **animationfilmarchives**: Japanese Animated Film Classics
  - **AnonMP4**: AnonMP4
  - **ant1newsgr:article**: ant1news.gr articles
  - **ant1newsgr:embed**: ant1news.gr embedded videos
