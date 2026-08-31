@@ -2572,6 +2572,7 @@ from .weibo import (
     WeiboVideoIE,
 )
 from .weiqitv import WeiqiTVIE
+from .welt import WeltIE
 from .weverse import (
     WeverseIE,
     WeverseLiveIE,

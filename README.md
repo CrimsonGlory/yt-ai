@@ -2463,6 +2463,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **WCOStream** (`wcostream.tv`): Impersonate Cloudflare, map embed `file=` to `getvidlink.php` (`cizgi`/`neptun`) tokens, and download `getvid` MP4s. Request: [yt-dlp/yt-dlp#13987](https://github.com/yt-dlp/yt-dlp/issues/13987)
     * **wcvb** (`wcvb.com`): Next.js `voltronArticle` Hearst Digital Studios MP4 transcodings. Request: [yt-dlp/yt-dlp#10548](https://github.com/yt-dlp/yt-dlp/issues/10548)
     * **WedoTV** (`wedotv.com`): Public `/api/player.get_video.php` HLS from the page `data-video-id`. Request: [yt-dlp/yt-dlp#14221](https://github.com/yt-dlp/yt-dlp/issues/14221)
+    * **Welt** (`welt.de`): `WeltVideoPlayer` hydration JSON progressive MP4s and HLS. Request: [yt-dlp/yt-dlp#7513](https://github.com/yt-dlp/yt-dlp/issues/7513)
     * **Xbox** (`xbox.com`): Microsoft displaycatalog `CMSVideos` HLS/DASH store trailers. Request: [yt-dlp/yt-dlp#13591](https://github.com/yt-dlp/yt-dlp/issues/13591)
     * **XFetishTube** (`x-fetish.tube`): KVS `kt_player` config (randomized JS object) and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#16623](https://github.com/yt-dlp/yt-dlp/issues/16623)
     * **XPicVid** (`xpicvid.com`): Impersonate Cloudflare and extract DPlayer quality MP4s. Request: [yt-dlp/yt-dlp#15279](https://github.com/yt-dlp/yt-dlp/issues/15279)

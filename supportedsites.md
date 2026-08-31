@@ -1854,6 +1854,7 @@ The only reliable way to check if a site is supported is to try it.
  - **WeiboUser**
  - **WeiboVideo**
  - **WeiqiTV**: WQTV
+ - **welt**: WELT Mediathek
  - **wetv:episode**
  - **WeTvSeries**
  - **Weverse**: [*weverse*](## "netrc machine")
