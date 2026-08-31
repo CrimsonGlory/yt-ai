@@ -2487,6 +2487,7 @@ from .viewlift import (
 )
 from .viggle import ViggleIE
 from .viidea import ViideaIE
+from .villagesexvideos import VillageSexVideosIE
 from .vimeo import (
     VHXEmbedIE,
     VimeoAlbumIE,

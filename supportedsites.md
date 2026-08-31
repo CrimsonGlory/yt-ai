@@ -1788,6 +1788,7 @@ The only reliable way to check if a site is supported is to try it.
  - **viewsb**: viewsb.com (StreamSB)
  - **Viggle**: Viggle
  - **Viidea**
+ - **villagesexvideos**: villagesexvideos.com
  - **vimeo**: [*vimeo*](## "netrc machine")
  - **vimeo:album**: [*vimeo*](## "netrc machine")
  - **vimeo:channel**: [*vimeo*](## "netrc machine")
