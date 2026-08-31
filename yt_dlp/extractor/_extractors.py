@@ -436,6 +436,10 @@ from .curiositystream import (
     CuriosityStreamSeriesIE,
 )
 from .curiosityu import CuriosityUIE
+from .cyberfile import (
+    CyberfileFolderIE,
+    CyberfileIE,
+)
 from .cybrary import (
     CybraryCourseIE,
     CybraryIE,
