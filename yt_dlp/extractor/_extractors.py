@@ -1340,6 +1340,7 @@ from .nfl import (
     NFLPlusEpisodeIE,
     NFLPlusReplayIE,
 )
+from .nfsa import NFSAIE
 from .nhaccuatui import NhacCuaTuiIE
 from .nhk import (
     NhkForSchoolBangumiIE,

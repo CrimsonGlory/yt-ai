@@ -984,6 +984,7 @@ The only reliable way to check if a site is supported is to try it.
  - **nfl.com:article**
  - **nfl.com:​plus:episode**
  - **nfl.com:​plus:replay**
+ - **nfsa**: National Film and Sound Archive of Australia
  - **nhaccuatui**: nhaccuatui.com
  - **NhkForSchoolBangumi**
  - **NhkForSchoolProgramList**
