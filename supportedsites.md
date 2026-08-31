@@ -125,6 +125,8 @@ The only reliable way to check if a site is supported is to try it.
  - **audius:track**: Audius track ID or API link. Prepend with "audius:"
  - **avjb**: AVJB
  - **AZMedien**: AZ Medien videos
+ - **AzNude**: AZNude
+ - **aznude:playlist**: AZNude celeb/movie pages
  - **BaiduVideo**: 百度视频
  - **Balapan**: Balapan TV livestream
  - **BanBye**

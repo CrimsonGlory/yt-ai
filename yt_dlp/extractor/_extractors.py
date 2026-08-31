@@ -154,6 +154,10 @@ from .audius import (
 )
 from .avjb import AvjbIE
 from .azmedien import AZMedienIE
+from .aznude import (
+    AzNudeIE,
+    AzNudePlaylistIE,
+)
 from .baidu import BaiduVideoIE
 from .balapan import BalapanIE
 from .banbye import (
