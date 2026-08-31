@@ -873,6 +873,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Metacritic**
  - **mewatch**
  - **Mfcamhub**: mfcamhub.com
+ - **mgtow.tv**: MGTOW TV
  - **MicrosoftBuild**
  - **MicrosoftEmbed**
  - **MicrosoftLearnEpisode**

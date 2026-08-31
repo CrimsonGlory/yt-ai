@@ -1183,6 +1183,7 @@ from .melonvod import MelonVODIE
 from .meridix import MeridixIE
 from .metacritic import MetacriticIE
 from .mfcamhub import MfcamhubIE
+from .mgtowtv import MGTOWTVIE
 from .mgtv import MGTVIE
 from .microsoftembed import (
     MicrosoftBuildIE,
