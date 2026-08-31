@@ -1617,6 +1617,7 @@ The only reliable way to check if a site is supported is to try it.
  - **TubeTuGrazSeries**: [*tubetugraz*](## "netrc machine")
  - **tubitv**
  - **tubitv:series**
+ - **tuckercarlson**: Tucker Carlson Network
  - **Tumblr**: [*tumblr*](## "netrc machine")
  - **tunein:embed**
  - **tunein:podcast**

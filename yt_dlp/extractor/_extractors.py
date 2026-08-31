@@ -2242,6 +2242,7 @@ from .tubitv import (
     TubiTvIE,
     TubiTvShowIE,
 )
+from .tuckercarlson import TuckerCarlsonIE
 from .tumblr import TumblrIE
 from .tunein import (
     TuneInEmbedIE,
