@@ -2300,6 +2300,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Boomstream** (`play.boomstream.com`): Player `window.boomstreamConfig` HLS; derive AES-128 key/IV from `#EXT-X-MEDIA-READY`. Request: [yt-dlp/yt-dlp#15376](https://github.com/yt-dlp/yt-dlp/issues/15376)
     * **BoyfriendTV** (`boyfriendtv.com`): Player `sources.hlsAuto` HLS from video pages. Request: [yt-dlp/yt-dlp#15509](https://github.com/yt-dlp/yt-dlp/issues/15509)
     * **Bouke** (`bouke.media`): Drupal Freecaster `data-video-id` / `live_token` embed JSON (MP4, HLS, DASH). Request: [yt-dlp/yt-dlp#15403](https://github.com/yt-dlp/yt-dlp/issues/15403)
+    * **Brighteon** (`brighteon.com`): Next.js `__NEXT_DATA__` HLS/DASH and `/api-v3/channels` listings. Request: [yt-dlp/yt-dlp#8214](https://github.com/yt-dlp/yt-dlp/issues/8214)
     * **Brollie** (`brollie.com.au`): MAZ catalog `item_feeds` plus anonymous Zype HLS from `api.maz.tv`. Request: [yt-dlp/yt-dlp#15164](https://github.com/yt-dlp/yt-dlp/issues/15164)
     * **Bunkr** (`bunkr.cr`): File-page `data-file-id` via `dl.bunkr.cr/api/_001_v2` and signed CDN URL from `glb-apisign.cdn.cr`. Request: [yt-dlp/yt-dlp#12536](https://github.com/yt-dlp/yt-dlp/issues/12536)
     * **cablecast** (`cablecast.tv`): Public `/cablecastapi/v1` show/VOD JSON and HLS/MP4. Request: [yt-dlp/yt-dlp#9785](https://github.com/yt-dlp/yt-dlp/issues/9785)

@@ -279,6 +279,10 @@ from .brightcove import (
     BrightcoveLegacyIE,
     BrightcoveNewIE,
 )
+from .brighteon import (
+    BrighteonChannelIE,
+    BrighteonIE,
+)
 from .brilliantpala import (
     BrilliantpalaClassesIE,
     BrilliantpalaElearnIE,
