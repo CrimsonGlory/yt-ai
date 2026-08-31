@@ -1370,6 +1370,7 @@ from .newgrounds import (
     NewgroundsUserIE,
 )
 from .newsday import NewsdayTVIE
+from .newsnation import NewsNationIE
 from .newspicks import NewsPicksIE
 from .newsy import NewsyIE
 from .nexx import (

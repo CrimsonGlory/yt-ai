@@ -1010,6 +1010,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Newgrounds:playlist**
  - **Newgrounds:user**
  - **newsday:tv**: NewsdayTV
+ - **newsnation**: NewsNation
  - **NewsPicks**
  - **Newsy**
  - **Nexx**
