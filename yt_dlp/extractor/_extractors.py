@@ -1670,6 +1670,7 @@ from .pyvideo import PyvideoIE
 from .qdance import QDanceIE
 from .qingting import QingTingIE
 from .qlover import QloveRIE
+from .qosvideos import QosVideosIE
 from .qqmusic import (
     QQMusicAlbumIE,
     QQMusicIE,
