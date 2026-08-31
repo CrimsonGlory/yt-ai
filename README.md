@@ -2344,6 +2344,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **GlobalNews** (`globalnews.ca`): JSON-LD `contentUrl` MP4 for `/video/` clips and JW `video-entry` HLS for `/live/` streams. Request: [yt-dlp/yt-dlp#9266](https://github.com/yt-dlp/yt-dlp/issues/9266)
     * **GoogleMaps** (`maps.app.goo.gl`): Follow share/place URLs to `lh3.googleusercontent.com` progressive MP4s (`=m18`/`=m22`/`=m37`/`=dv`). Request: [yt-dlp/yt-dlp#12246](https://github.com/yt-dlp/yt-dlp/issues/12246)
     * **Granicus** (`harrisonburg-va.granicus.com`): Flowplayer `video_url` HLS from clip player pages. Request: [yt-dlp/yt-dlp#15344](https://github.com/yt-dlp/yt-dlp/issues/15344)
+    * **Haokan** (`haokan.baidu.com`): Public `mbd.baidu.com` videolanding `window.jsonData` `clarityUrl`/`playurl` MP4. Request: [yt-dlp/yt-dlp#7069](https://github.com/yt-dlp/yt-dlp/issues/7069)
     * **Hobune** (`hobune.stream`): HTML5 video pages and static channel listings. Request: [yt-dlp/yt-dlp#17541](https://github.com/yt-dlp/yt-dlp/issues/17541)
     * **Hotmart** (`player.hotmart.com`): Next.js `__NEXT_DATA__` `applicationData` HLS (`vod-akm.play.hotmart.com`) with player Referer. Request: [yt-dlp/yt-dlp#8397](https://github.com/yt-dlp/yt-dlp/issues/8397)
     * **HQPorner** (`hqporner.com`): Player iframe (mydaddy.cc) HTML5 MP4 sources. Request: [yt-dlp/yt-dlp#7116](https://github.com/yt-dlp/yt-dlp/issues/7116)
