@@ -797,6 +797,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Lumni**
  - **luticlip**: luticlip.com
  - **maariv.co.il**
+ - **MacaulayLibrary**: Macaulay Library
  - **MagellanTV**
  - **MagentaMusik**
  - **mailru**: Видео@Mail.Ru

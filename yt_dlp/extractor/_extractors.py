@@ -1092,6 +1092,7 @@ from .lulustream import LuluStreamIE
 from .lumni import LumniIE
 from .luticlip import LuticlipIE
 from .maariv import MaarivIE
+from .macaulaylibrary import MacaulayLibraryIE
 from .magellantv import MagellanTVIE
 from .magentamusik import MagentaMusikIE
 from .mailru import (

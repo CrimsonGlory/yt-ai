@@ -2347,6 +2347,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **LearnEnglishKids** (`learnenglishkids.britishcouncil.org`): Drupal `akamai-custom-embed` Plyr HLS from `data-video`, with YouTube iframe fallback. Request: [yt-dlp/yt-dlp#10146](https://github.com/yt-dlp/yt-dlp/issues/10146)
     * **LuluStream** (`luluvid.com`): Packed JWPlayer HLS from embed pages (CDN token is bound to User-Agent and Accept-Language). Request: [yt-dlp/yt-dlp#16656](https://github.com/yt-dlp/yt-dlp/issues/16656)
     * **Luticlip** (`luticlip.com`): HTML5 Video.js MP4 from RetroTube pages with Range-chunked takcdn downloads. Request: [yt-dlp/yt-dlp#16465](https://github.com/yt-dlp/yt-dlp/issues/16465)
+    * **MacaulayLibrary** (`macaulaylibrary.org`): Solve Anubis PoW, then download Cornell CDN video/audio from asset pages. Request: [yt-dlp/yt-dlp#9292](https://github.com/yt-dlp/yt-dlp/issues/9292)
     * **Mat6Tube** (`mat6tube.com`): JWPlayer `window.playlist` progressive MP4s from watch pages. Request: [yt-dlp/yt-dlp#14613](https://github.com/yt-dlp/yt-dlp/issues/14613)
     * **MatreshkaTV** (`matreshka.tv`): Public `/api/video-service/v1/video/{id}` JSON for signed HLS on `c4-video.cmtv.ru`. Request: [yt-dlp/yt-dlp#15380](https://github.com/yt-dlp/yt-dlp/issues/15380)
     * **MeansTV** (`means.tv`): Uscreen `/program_content` Mux HLS; collections via `/collection_homepage`. Request: [yt-dlp/yt-dlp#12026](https://github.com/yt-dlp/yt-dlp/issues/12026)
