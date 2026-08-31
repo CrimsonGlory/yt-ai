@@ -1214,6 +1214,7 @@ The only reliable way to check if a site is supported is to try it.
  - **polskieradio:​podcast:list**
  - **Popcorntimes**
  - **PopcornTV**
+ - **pops**: POPS
  - **Pornbox**
  - **PornerBros**
  - **PornFlip**
