@@ -2453,6 +2453,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **XFetishTube** (`x-fetish.tube`): KVS `kt_player` config (randomized JS object) and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#16623](https://github.com/yt-dlp/yt-dlp/issues/16623)
     * **XPicVid** (`xpicvid.com`): Impersonate Cloudflare and extract DPlayer quality MP4s. Request: [yt-dlp/yt-dlp#15279](https://github.com/yt-dlp/yt-dlp/issues/15279)
     * **Xumo** (`play.xumo.com`): Public `valencia-app-mds.xumo.com` asset JSON for HLS/DASH VOD and series playlists. Request: [yt-dlp/yt-dlp#15643](https://github.com/yt-dlp/yt-dlp/issues/15643)
+    * **youku:tv** (`youku.tv`): Impersonate Chrome, then mtop UPS `appinfo.get` (ccode 0597) HLS. Request: [yt-dlp/yt-dlp#8058](https://github.com/yt-dlp/yt-dlp/issues/8058)
 
 * **Extractor fixes** (verified on live sites where possible):
     * **20min**: Extract videos from the Unity API instead of the old podcast URLs

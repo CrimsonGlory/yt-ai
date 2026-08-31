@@ -1908,6 +1908,7 @@ The only reliable way to check if a site is supported is to try it.
  - **YouJizz**
  - **youku**: 优酷
  - **youku:show**
+ - **youku:tv**: YOUKU International
  - **YouNowChannel**
  - **YouNowLive**
  - **YouNowMoment**

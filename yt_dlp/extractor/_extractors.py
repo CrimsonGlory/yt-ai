@@ -2646,6 +2646,7 @@ from .youku import (
     YoukuIE,
     YoukuShowIE,
 )
+from .youkutv import YoukuTVIE
 from .younow import (
     YouNowChannelIE,
     YouNowLiveIE,
