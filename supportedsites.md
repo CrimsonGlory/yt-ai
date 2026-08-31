@@ -661,6 +661,7 @@ The only reliable way to check if a site is supported is to try it.
  - **JablePlaylist**
  - **Jamendo**
  - **JamendoAlbum**
+ - **javtiful**: javtiful.com
  - **jcbasimul**: JCBA Internet Simul Radio
  - **JeuxVideo**
  - **jiosaavn:album**
