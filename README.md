@@ -2401,6 +2401,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Skai** (`skai.gr`): Player `var data` `episodemain` Wowza HLS (`videostream.skai.gr`). Request: [yt-dlp/yt-dlp#13456](https://github.com/yt-dlp/yt-dlp/issues/13456)
     * **Skland** (`skland.com`): Guest `zonai.skland.com` item API (Shumei device id + HMAC) for HLS. Request: [yt-dlp/yt-dlp#15545](https://github.com/yt-dlp/yt-dlp/issues/15545)
     * **Sleebi** (`sleebi.net`): Public `/v/API/{id}` metadata and PUT `/src` for hosted `videos.sleebi.eu` MP4s. Request: [yt-dlp/yt-dlp#15550](https://github.com/yt-dlp/yt-dlp/issues/15550)
+    * **smotret.tv** (`smotret.tv`): Follow the channel player iframe and extract native HLS (`var streams`) or nested embeds. Request: [yt-dlp/yt-dlp#8899](https://github.com/yt-dlp/yt-dlp/issues/8899)
     * **Smule** (`smule.com`): Impersonate Cloudflare, RC4-decode `e:` media URLs from public `/p/{id}/json`, and download CDN MP4/M4A. Request: [yt-dlp/yt-dlp#10875](https://github.com/yt-dlp/yt-dlp/issues/10875)
     * **SNB** (`snb.ch`): Swisscom CSR webcast token plus public `/webcast/{id}` HLS from Research TV and Web TV pages. Request: [yt-dlp/yt-dlp#14562](https://github.com/yt-dlp/yt-dlp/issues/14562)
     * **song.link** (`song.link`): Next.js `pageData` listen links, preferring YouTube/SoundCloud/Audius/Audiomack/Bandcamp. Request: [yt-dlp/yt-dlp#13754](https://github.com/yt-dlp/yt-dlp/issues/13754)

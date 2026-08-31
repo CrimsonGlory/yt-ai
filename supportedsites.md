@@ -1423,6 +1423,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Slideshare**
  - **SlidesLive**
  - **Slutload**
+ - **smotret.tv**
  - **smotrim**
  - **smotrim:audio**
  - **smotrim:live**

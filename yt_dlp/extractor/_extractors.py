@@ -1961,6 +1961,7 @@ from .sleebi import (
 from .slideshare import SlideshareIE
 from .slideslive import SlidesLiveIE
 from .slutload import SlutloadIE
+from .smotret import SmotretTVIE
 from .smotrim import (
     SmotrimAudioIE,
     SmotrimIE,
