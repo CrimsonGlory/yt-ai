@@ -645,6 +645,8 @@ The only reliable way to check if a site is supported is to try it.
  - **IdagioTrack**
  - **iflix:episode**
  - **IflixSeries**
+ - **ifunny**: iFunny
+ - **ifunny:user**: iFunny user timeline
  - **ign.com**
  - **IGNArticle**
  - **IGNVideo**

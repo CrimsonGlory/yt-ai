@@ -863,6 +863,10 @@ from .idagio import (
     IdagioRecordingIE,
     IdagioTrackIE,
 )
+from .ifunny import (
+    IFunnyIE,
+    IFunnyUserIE,
+)
 from .ign import (
     IGNIE,
     IGNArticleIE,

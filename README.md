@@ -2342,6 +2342,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **hstream** (`hstream.moe`): Laravel `/player/api` JSON for progressive 720p MP4 and DASH (including 48fps). Request: [yt-dlp/yt-dlp#9791](https://github.com/yt-dlp/yt-dlp/issues/9791)
     * **Hudl** (`hudl.com`): Public fan GraphQL broadcast JSON and vcloud HLS. Request: [yt-dlp/yt-dlp#9022](https://github.com/yt-dlp/yt-dlp/issues/9022)
     * **IcePorn** (`iceporn.com`): Public `/player_config_json/` MP4 files (DrTuber-style API). Request: [yt-dlp/yt-dlp#12478](https://github.com/yt-dlp/yt-dlp/issues/12478)
+    * **IFunny** (`ifunny.co` / `img.ifunny.co`): Video-page Open Graph/HTML5 MP4 (`img.getfn.io` / `img.ifunny.co`) and CSRF `/api/v1/user/{nick}/timeline` playlists. Request: [yt-dlp/yt-dlp#8006](https://github.com/yt-dlp/yt-dlp/issues/8006)
     * **ImagenTV** (`imagentv.com`): Dailymotion (and YouTube) IDs from Drupal `itv_content_result` and the public livestreaming API. Request: [yt-dlp/yt-dlp#16391](https://github.com/yt-dlp/yt-dlp/issues/16391)
     * **InfosecExchange** (`video.infosec.exchange`): PeerTube `/api/v1/videos` JSON for HLS and fragmented MP4. Request: [yt-dlp/yt-dlp#11857](https://github.com/yt-dlp/yt-dlp/issues/11857)
     * **Javtiful** (`javtiful.com`): Plyr `playerSources` HTML5 MP4 with JSON-LD metadata. Request: [yt-dlp/yt-dlp#12280](https://github.com/yt-dlp/yt-dlp/issues/12280)
