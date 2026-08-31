@@ -112,6 +112,7 @@ The only reliable way to check if a site is supported is to try it.
  - **asobichannel:tag**: ASOBI CHANNEL
  - **AsobiStage**: ASOBISTAGE (アソビステージ)
  - **AstalaVR**: AstalaVR
+ - **atptour**: ATP Tour
  - **AtresPlayer**: [*atresplayer*](## "netrc machine")
  - **AtScaleConfEvent**
  - **AudiMedia**

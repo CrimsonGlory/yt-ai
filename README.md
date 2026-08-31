@@ -2283,6 +2283,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * [AnonMP4](https://github.com/CrimsonGlory/yt-ai/commit/7e1d8ceb53acea50102343d0cd3db56e1fc2dbc8) (`anonmp4.art` / `anonmp4.to`)
     * **AsianGamesHub** (`asiangameshub.com`): Anonymous ViewLift identity token and entitlement HLS/MP4. Request: [yt-dlp/yt-dlp#12861](https://github.com/yt-dlp/yt-dlp/issues/12861)
     * **AstalaVR** (`astalavr.com`): Impersonate Cloudflare and extract Delight VR (`dl8-video`) tokened MP4 sources. Request: [yt-dlp/yt-dlp#13332](https://github.com/yt-dlp/yt-dlp/issues/13332)
+    * **ATPTour** (`atptour.com`): Impersonate Cloudflare, then Brightcove IDs from `/videos/getcurrentrelatedvideos` and news-page `video-js`/iframe embeds. Request: [yt-dlp/yt-dlp#10816](https://github.com/yt-dlp/yt-dlp/issues/10816)
     * **Avjb** (`avjb.com`): Player CSRF `/player/spped.php` HLS lines, with Playerjs preview MP4 fallback. Request: [yt-dlp/yt-dlp#14653](https://github.com/yt-dlp/yt-dlp/issues/14653)
     * **AzNude** (`aznude.com`): JWPlayer `playerInstance.setup` HLS/MP4 from `/azncdn/` and `/embed/` pages; celeb/movie listings as playlists. Request: [yt-dlp/yt-dlp#12060](https://github.com/yt-dlp/yt-dlp/issues/12060)
     * **Balapan** (`balapan.tv`): Clappr HLS from the `player.rtrk.kz` live iframe. Request: [yt-dlp/yt-dlp#17241](https://github.com/yt-dlp/yt-dlp/issues/17241)

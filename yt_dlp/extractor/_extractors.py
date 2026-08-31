@@ -135,6 +135,7 @@ from .asobichannel import (
 )
 from .asobistage import AsobiStageIE
 from .astalavr import AstalaVRIE
+from .atptour import ATPTourIE
 from .atresplayer import AtresPlayerIE
 from .atscaleconf import AtScaleConfEventIE
 from .audimedia import AudiMediaIE
