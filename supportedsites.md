@@ -610,6 +610,7 @@ The only reliable way to check if a site is supported is to try it.
  - **HRTiPlaylist**: [*hrti*](## "netrc machine")
  - **HSEProduct**
  - **HSEShow**
+ - **hstream**: hstream.moe
  - **html5**
  - **Huajiao**: 花椒直播
  - **HuffPost**: Huffington Post

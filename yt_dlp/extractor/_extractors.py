@@ -815,6 +815,7 @@ from .hse import (
     HSEProductIE,
     HSEShowIE,
 )
+from .hstream import HstreamIE
 from .huajiao import HuajiaoIE
 from .huffpost import HuffPostIE
 from .hungama import (
