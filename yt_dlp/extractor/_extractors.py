@@ -1933,6 +1933,7 @@ from .smotrim import (
     SmotrimLiveIE,
     SmotrimPlaylistIE,
 )
+from .smule import SmuleIE
 from .snapchat import SnapchatSpotlightIE
 from .snb import SNBIE
 from .softwhiteunderbelly import SoftWhiteUnderbellyIE
