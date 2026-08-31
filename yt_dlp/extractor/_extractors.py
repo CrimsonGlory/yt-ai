@@ -2360,6 +2360,7 @@ from .ustudio import (
 )
 from .varzesh3 import Varzesh3IE
 from .vbox7 import Vbox7IE
+from .veev import VeevIE
 from .veo import VeoIE
 from .vevo import (
     VevoIE,

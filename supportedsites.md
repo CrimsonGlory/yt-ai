@@ -1686,6 +1686,7 @@ The only reliable way to check if a site is supported is to try it.
  - **ustudio:embed**
  - **Varzesh3**
  - **Vbox7**
+ - **veev**: Veev.to
  - **Veo**
  - **Vevo**
  - **VevoPlaylist**
