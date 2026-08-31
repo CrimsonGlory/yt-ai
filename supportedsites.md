@@ -1421,6 +1421,8 @@ The only reliable way to check if a site is supported is to try it.
  - **SpankBang**
  - **SpankBangPlaylist**
  - **Spiegel**
+ - **spinitron**: Spinitron
+ - **spinitron:show**: Spinitron shows
  - **Sponsr**
  - **Sport5**
  - **SportBox**
