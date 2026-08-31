@@ -1769,6 +1769,7 @@ The only reliable way to check if a site is supported is to try it.
  - **WatchESPN**
  - **wcostream**: wcostream.tv
  - **wcostream:show**: wcostream.tv shows
+ - **wcvb**: WCVB Channel 5 Boston (Hearst TV)
  - **WDR**
  - **WDRElefant**
  - **WDRPage**

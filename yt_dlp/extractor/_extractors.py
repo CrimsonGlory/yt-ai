@@ -2462,6 +2462,7 @@ from .wcostream import (
     WCOStreamIE,
     WCOStreamShowIE,
 )
+from .wcvb import WCVBIE
 from .wdr import (
     WDRIE,
     WDRElefantIE,
