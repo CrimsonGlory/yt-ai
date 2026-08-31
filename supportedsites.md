@@ -611,6 +611,7 @@ The only reliable way to check if a site is supported is to try it.
  - **HollywoodReporter**
  - **HollywoodReporterPlaylist**
  - **Holodex**
+ - **hotmart**: Hotmart Player
  - **HotNewHipHop**
  - **hotstar**: JioHotstar
  - **hotstar:series**
