@@ -32,6 +32,7 @@ from .adn import (
 )
 from .adobeconnect import AdobeConnectIE
 from .adobetv import AdobeTVVideoIE
+from .adultempire import AdultEmpireIE
 from .adultswim import AdultSwimIE
 from .aenetworks import (
     AENetworksCollectionIE,
