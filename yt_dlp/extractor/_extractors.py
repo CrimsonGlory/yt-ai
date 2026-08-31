@@ -1368,6 +1368,7 @@ from .newgrounds import (
     NewgroundsPlaylistIE,
     NewgroundsUserIE,
 )
+from .newsday import NewsdayTVIE
 from .newspicks import NewsPicksIE
 from .newsy import NewsyIE
 from .nexx import (

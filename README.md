@@ -2386,6 +2386,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **MusicBrainz** (`musicbrainz.org`): MusicBrainz WS/2 URL relationships, preferring YouTube/SoundCloud/Audius/Audiomack/Bandcamp. Request: [yt-dlp/yt-dlp#13673](https://github.com/yt-dlp/yt-dlp/issues/13673)
     * **MyNet** (`mynet.com`): Player `videoInfo` progressive MP4 and HLS from `/tv/embed/{id}`. Request: [yt-dlp/yt-dlp#7714](https://github.com/yt-dlp/yt-dlp/issues/7714)
     * **Naver:blog** (`blog.naver.com`): PostView `vid`/`inkey` (SE3 and Prism player) via the rmcnmv VOD play API. Request: [yt-dlp/yt-dlp#16816](https://github.com/yt-dlp/yt-dlp/issues/16816)
+    * **NewsdayTV** (`newsday.tv`): Next.js `__NEXT_DATA__` Brightcove IDs from `/watch/` pages. Request: [yt-dlp/yt-dlp#7418](https://github.com/yt-dlp/yt-dlp/issues/7418)
     * **NFSA** (`nfsa.gov.au`): Public Sanity GROQ for collection items, then Vimeo player URLs (site referer) or Sanity CDN files. Request: [yt-dlp/yt-dlp#9593](https://github.com/yt-dlp/yt-dlp/issues/9593)
     * **NhacCuaTui** (`nhaccuatui.com`): Nuxt `__NUXT_DATA__` song/video `streamURL` MP3/MP4 (and FLAC when present). Request: [yt-dlp/yt-dlp#12329](https://github.com/yt-dlp/yt-dlp/issues/12329)
     * **nobody.live** (`nobody.live`): Public `/stream` JSON for a random zero-viewer Twitch channel, then Twitch HLS. Request: [yt-dlp/yt-dlp#13696](https://github.com/yt-dlp/yt-dlp/issues/13696)

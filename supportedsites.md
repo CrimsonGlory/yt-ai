@@ -1008,6 +1008,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Newgrounds**: [*newgrounds*](## "netrc machine")
  - **Newgrounds:playlist**
  - **Newgrounds:user**
+ - **newsday:tv**: NewsdayTV
  - **NewsPicks**
  - **Newsy**
  - **Nexx**
