@@ -1998,6 +1998,10 @@ from .sponsr import SponsrIE
 from .sport5 import Sport5IE
 from .sportbox import SportBoxIE
 from .sportdeutschland import SportDeutschlandIE
+from .spotifypodcasters import (
+    SpotifyPodcastersIE,
+    SpotifyPodcastersShowIE,
+)
 from .spreaker import (
     SpreakerIE,
     SpreakerShowIE,

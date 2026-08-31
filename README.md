@@ -2389,6 +2389,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Sora** (`sora.com`): Public `backend/project_y/post` JSON (impersonate) for signed Azure MP4. Request: [yt-dlp/yt-dlp#14513](https://github.com/yt-dlp/yt-dlp/issues/14513)
     * **Spinitron** (`spinitron.com`): Playlist-page Ark `data-ark-start` HLS from `ark3.spinitron.com/ark2`; show pages list archived episodes. Request: [yt-dlp/yt-dlp#11401](https://github.com/yt-dlp/yt-dlp/issues/11401)
     * **Sponsr** (`sponsr.ru`): Parse Next.js post JSON and extract Kinescope HLS/MP4. Request: [yt-dlp/yt-dlp#14399](https://github.com/yt-dlp/yt-dlp/issues/14399)
+    * **SpotifyPodcasters** (`podcasters.spotify.com` / `creators.spotify.com`): Public `/pod/api/v3/episodes/{id}` JSON and CloudFront enclosure. Request: [yt-dlp/yt-dlp#9844](https://github.com/yt-dlp/yt-dlp/issues/9844)
     * **streamco:platform** (`api01-platform.stream.co.jp`): Parse Equipmedia `plt` player pages for JStream host/publisher/mid and extract HLS via `eq_meta` JSONP. Request: [yt-dlp/yt-dlp#13843](https://github.com/yt-dlp/yt-dlp/issues/13843)
     * **StreamingCommunityz** (`streamingcommunityz`): Inertia `data-page` iframe to vixcloud HLS. Request: [yt-dlp/yt-dlp#14432](https://github.com/yt-dlp/yt-dlp/issues/14432)
     * **Streamruby** (`rubyvidhub.com`): Packed JWPlayer HLS from embed pages. Request: [yt-dlp/yt-dlp#14361](https://github.com/yt-dlp/yt-dlp/issues/14361)

@@ -1450,6 +1450,8 @@ The only reliable way to check if a site is supported is to try it.
  - **Sport5**
  - **SportBox**
  - **sporteurope**
+ - **spotify:podcasters**: Spotify for Creators (podcasters.spotify.com)
+ - **spotify:​podcasters:show**: Spotify for Creators shows
  - **Spreaker**
  - **SpreakerShow**
  - **SproutVideo**
