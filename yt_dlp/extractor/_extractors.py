@@ -1077,6 +1077,7 @@ from .locipo import (
     LocipoPlaylistIE,
 )
 from .loco import LocoIE
+from .lookmovie2 import LookMovie2IE
 from .loom import (
     LoomFolderIE,
     LoomIE,

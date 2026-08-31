@@ -2349,6 +2349,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Kuaishou** (`kuaishou.com`): Mobile H5 `window.INIT_STATE` progressive MP4/HLS from share and short-video pages. Request: [yt-dlp/yt-dlp#14010](https://github.com/yt-dlp/yt-dlp/issues/14010)
     * **KVF** (`kvf.fo`): JWPlayer `media`/`mode` vars and `vod.kringvarp.fo` SMIL HLS. Request: [yt-dlp/yt-dlp#9620](https://github.com/yt-dlp/yt-dlp/issues/9620)
     * **LearnEnglishKids** (`learnenglishkids.britishcouncil.org`): Drupal `akamai-custom-embed` Plyr HLS from `data-video`, with YouTube iframe fallback. Request: [yt-dlp/yt-dlp#10146](https://github.com/yt-dlp/yt-dlp/issues/10146)
+    * **LookMovie2** (`lookmovie2.to`): Play-page `movie_storage`/`show_storage` hash plus `/api/v1/security/{movie,episode}-access` HLS. Request: [yt-dlp/yt-dlp#8951](https://github.com/yt-dlp/yt-dlp/issues/8951)
     * **LuluStream** (`luluvid.com`): Packed JWPlayer HLS from embed pages (CDN token is bound to User-Agent and Accept-Language). Request: [yt-dlp/yt-dlp#16656](https://github.com/yt-dlp/yt-dlp/issues/16656)
     * **Luticlip** (`luticlip.com`): HTML5 Video.js MP4 from RetroTube pages with Range-chunked takcdn downloads. Request: [yt-dlp/yt-dlp#16465](https://github.com/yt-dlp/yt-dlp/issues/16465)
     * **MacaulayLibrary** (`macaulaylibrary.org`): Solve Anubis PoW, then download Cornell CDN video/audio from asset pages. Request: [yt-dlp/yt-dlp#9292](https://github.com/yt-dlp/yt-dlp/issues/9292)

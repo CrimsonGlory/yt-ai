@@ -788,6 +788,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Locipo**
  - **LocipoPlaylist**
  - **Loco**
+ - **LookMovie2**: LookMovie2
  - **loom**
  - **loom:folder**
  - **LoveHomePorn**
