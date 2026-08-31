@@ -942,6 +942,7 @@ The only reliable way to check if a site is supported is to try it.
  - **mxplayer**: Amazon MX Player
  - **mxplayer:season**
  - **mxplayer:show**
+ - **mynet**: Mynet Video
  - **MySpace**
  - **MySpace:album**
  - **MySpass**

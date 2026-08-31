@@ -1276,6 +1276,7 @@ from .mxplayer import (
     MxplayerSeasonIE,
     MxplayerShowIE,
 )
+from .mynet import MyNetIE
 from .myspace import (
     MySpaceAlbumIE,
     MySpaceIE,
