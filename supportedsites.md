@@ -1116,6 +1116,8 @@ The only reliable way to check if a site is supported is to try it.
  - **OsnatelTVRecordings**: [*osnateltv*](## "netrc machine")
  - **OutsideTV**
  - **OwnCloud**
+ - **oyez**: Oyez
+ - **oyez:case**: Oyez case
  - **pacegallery**: Pace Gallery
  - **PacktPub**: [*packtpub*](## "netrc machine")
  - **PacktPubCourse**
