@@ -2364,6 +2364,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Sasflix** (`sasflix.ru`): Public `/api/web/topics/{id}` JSON plus HLS and progressive `/api/video` downloads. Request: [yt-dlp/yt-dlp#15373](https://github.com/yt-dlp/yt-dlp/issues/15373)
     * **SexBJCam** (`sexbjcam.com`): Impersonate Cloudflare and extract packed JWPlayer HLS from the playrecord.biz embed. Request: [yt-dlp/yt-dlp#15338](https://github.com/yt-dlp/yt-dlp/issues/15338)
     * **ShortMax** (`shorttv.live`): Nuxt `__NUXT_DATA__` HLS with custom per-segment AES-CBC. Request: [yt-dlp/yt-dlp#17230](https://github.com/yt-dlp/yt-dlp/issues/17230)
+    * **ShoutTV** (`watch.shout-tv.com`): Guest DICE/IMG Gaming token (`dce.shout`) and v4 VOD/live HLS. Request: [yt-dlp/yt-dlp#11371](https://github.com/yt-dlp/yt-dlp/issues/11371)
     * **Showcamrips** (`showcamrips.com`): HTML5 MP4 from `play.php` with a showcamrips Referer. Request: [yt-dlp/yt-dlp#16822](https://github.com/yt-dlp/yt-dlp/issues/16822)
     * **Skai** (`skai.gr`): Player `var data` `episodemain` Wowza HLS (`videostream.skai.gr`). Request: [yt-dlp/yt-dlp#13456](https://github.com/yt-dlp/yt-dlp/issues/13456)
     * **Skland** (`skland.com`): Guest `zonai.skland.com` item API (Shumei device id + HMAC) for HLS. Request: [yt-dlp/yt-dlp#15545](https://github.com/yt-dlp/yt-dlp/issues/15545)

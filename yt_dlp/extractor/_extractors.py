@@ -1860,6 +1860,11 @@ from .sharepoint import SharePointIE
 from .shemaroome import ShemarooMeIE
 from .shiey import ShieyIE
 from .shortmax import ShortMaxIE
+from .shouttv import (
+    ShoutTVIE,
+    ShoutTVSeasonIE,
+    ShoutTVSeriesIE,
+)
 from .showcamrips import ShowcamripsIE
 from .showroomlive import (
     ShowRoomLiveIE,

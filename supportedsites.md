@@ -1353,6 +1353,9 @@ The only reliable way to check if a site is supported is to try it.
  - **ShemarooMe**
  - **Shiey**
  - **shortmax**: ShortMax
+ - **shouttv**: [*shouttv*](## "netrc machine") Shout! TV videos and live channels
+ - **shouttv:season**: [*shouttv*](## "netrc machine") Shout! TV seasons
+ - **shouttv:series**: [*shouttv*](## "netrc machine") Shout! TV series
  - **showcamrips**: showcamrips.com
  - **showroom:live**: SHOWROOM
  - **showroom:vod**
