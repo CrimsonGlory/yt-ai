@@ -822,6 +822,7 @@ from .hse import (
 )
 from .hstream import HstreamIE
 from .huajiao import HuajiaoIE
+from .hudl import HudlIE
 from .huffpost import HuffPostIE
 from .hungama import (
     HungamaAlbumPlaylistIE,

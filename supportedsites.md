@@ -618,6 +618,7 @@ The only reliable way to check if a site is supported is to try it.
  - **hstream**: hstream.moe
  - **html5**
  - **Huajiao**: 花椒直播
+ - **hudl**: Hudl Fan / Hudl TV broadcasts
  - **HuffPost**: Huffington Post
  - **Hungama**
  - **HungamaAlbumPlaylist**
