@@ -2313,6 +2313,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Chapman** (`blogs.chapman.edu`): Impersonate Cloudflare on archive posts, then YuJa `/P/Data/VideoJSON` and `/P/Data/VideoSource` HLS. Request: [yt-dlp/yt-dlp#11127](https://github.com/yt-dlp/yt-dlp/issues/11127)
     * **Cime** (`ci.me`): Public `/api/app` JSON for VOD HLS, clip MP4, and Amazon IVS live. Request: [yt-dlp/yt-dlp#16247](https://github.com/yt-dlp/yt-dlp/issues/16247)
     * **CinemathequeBretagne** (`cinematheque-bretagne.bzh`): Diaz oEmbed iframe HTML5 MP4. Request: [yt-dlp/yt-dlp#15616](https://github.com/yt-dlp/yt-dlp/issues/15616)
+    * **Cinetimes** (`cinetimes.org`): Title-page Plyr iframe (YouTube, archive.org, Vimeo) and Wikimedia Commons HTML5. Request: [yt-dlp/yt-dlp#7317](https://github.com/yt-dlp/yt-dlp/issues/7317)
     * **CollabInc** (`collab.inc`): Public `dashboard.collab.inc/api/public_video_library/{id}` JSON and S3 HLS, preferring unwatermarked `/hls/`. Request: [yt-dlp/yt-dlp#10080](https://github.com/yt-dlp/yt-dlp/issues/10080)
     * **CommercialRadio** (`881903.com`): Public `/api/live/src` playlist.js and CloudFront-cookie HLS (`edge-aac`/`edge-ts`). Request: [yt-dlp/yt-dlp#12241](https://github.com/yt-dlp/yt-dlp/issues/12241)
     * **ctc** (`ctc.ru`): Impersonate WAF for `/api/page/v1` JSON, then Odysseus playlist HLS/DASH via `X-Referer`. Request: [yt-dlp/yt-dlp#11162](https://github.com/yt-dlp/yt-dlp/issues/11162)

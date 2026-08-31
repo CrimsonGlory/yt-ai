@@ -298,6 +298,7 @@ The only reliable way to check if a site is supported is to try it.
  - **cinemathequebretagne**: Cinémathèque de Bretagne
  - **Cinemax**
  - **CinetecaMilano**
+ - **cinetimes**: Cinetimes
  - **Cineverse**
  - **CineverseDetails**
  - **CiscoLiveSearch**

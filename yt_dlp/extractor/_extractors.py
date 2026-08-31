@@ -377,6 +377,7 @@ from .cime import (
 from .cinemathequebretagne import CinemathequeBretagneIE
 from .cinemax import CinemaxIE
 from .cinetecamilano import CinetecaMilanoIE
+from .cinetimes import CinetimesIE
 from .cineverse import (
     CineverseDetailsIE,
     CineverseIE,
