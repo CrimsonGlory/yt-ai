@@ -1731,6 +1731,7 @@ The only reliable way to check if a site is supported is to try it.
  - **VKPlay**
  - **VKPlayLive**
  - **vm.tiktok**
+ - **vmware**: VMware / Broadcom video library
  - **Vocaroo**
  - **VODPlatform**
  - **voicy**

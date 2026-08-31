@@ -2416,6 +2416,7 @@ from .vk import (
     VKUserVideosIE,
     VKWallPostIE,
 )
+from .vmware import VMwareIE
 from .vocaroo import VocarooIE
 from .vodplatform import VODPlatformIE
 from .voicy import (
