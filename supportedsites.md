@@ -1718,6 +1718,7 @@ The only reliable way to check if a site is supported is to try it.
  - **VidioPremier**: [*vidio*](## "netrc machine")
  - **VidLii**
  - **Vidly**
+ - **vidmoly**: VidMoly
  - **vids.io**
  - **Vidyard**
  - **viewlift**

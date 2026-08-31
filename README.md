@@ -2414,6 +2414,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Udio** (`udio.com`): Public `/api/songs` JSON for `song_path` MP3 and `video_path` MP4. Request: [yt-dlp/yt-dlp#10045](https://github.com/yt-dlp/yt-dlp/issues/10045)
     * **UKDevilz** (`ukdevilz.com`): Impersonate Cloudflare and extract JWPlayer `window.playlist` MP4 sources. Request: [yt-dlp/yt-dlp#14166](https://github.com/yt-dlp/yt-dlp/issues/14166)
     * **Veev** (`veev.to`): Decode the player `fc` token and `/dl?op=player_api` source URL. Request: [yt-dlp/yt-dlp#10092](https://github.com/yt-dlp/yt-dlp/issues/10092)
+    * **VidMoly** (`vidmoly.to`): Canonical `vidmoly.biz` embed JWPlayer HLS (also `.me`/`.net`). Request: [yt-dlp/yt-dlp#9689](https://github.com/yt-dlp/yt-dlp/issues/9689)
     * **Viggle** (`viggle.ai`): Public `/api/share/video-task` JSON (impersonate) for signed `assets.viggle.ai` MP4. Request: [yt-dlp/yt-dlp#13657](https://github.com/yt-dlp/yt-dlp/issues/13657)
     * **VMware** (`vmware.com`): Brightcove player IDs from `/video/` and Explore library pages via `/get-st`. Request: [yt-dlp/yt-dlp#10881](https://github.com/yt-dlp/yt-dlp/issues/10881)
     * **WCOStream** (`wcostream.tv`): Impersonate Cloudflare, map embed `file=` to `getvidlink.php` (`cizgi`/`neptun`) tokens, and download `getvid` MP4s. Request: [yt-dlp/yt-dlp#13987](https://github.com/yt-dlp/yt-dlp/issues/13987)

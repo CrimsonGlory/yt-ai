@@ -2403,6 +2403,7 @@ from .vidio import (
 )
 from .vidlii import VidLiiIE
 from .vidly import VidlyIE
+from .vidmoly import VidMolyIE
 from .vidyard import VidyardIE
 from .viewlift import (
     ViewLiftEmbedIE,
