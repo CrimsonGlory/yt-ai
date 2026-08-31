@@ -880,6 +880,7 @@ The only reliable way to check if a site is supported is to try it.
  - **MicrosoftLearnPlaylist**
  - **MicrosoftLearnSession**
  - **MicrosoftMedius**
+ - **milb**: Minor League Baseball
  - **minds**
  - **minds:channel**
  - **minds:group**

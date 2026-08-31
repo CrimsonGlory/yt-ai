@@ -1193,6 +1193,7 @@ from .microsoftembed import (
     MicrosoftLearnSessionIE,
     MicrosoftMediusIE,
 )
+from .milb import MiLBIE
 from .minds import (
     MindsChannelIE,
     MindsGroupIE,
