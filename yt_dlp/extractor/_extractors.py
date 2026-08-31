@@ -987,6 +987,7 @@ from .kick import (
     KickIE,
     KickVODIE,
 )
+from .kickbot import KickBotIE
 from .kicker import KickerIE
 from .kickstarter import KickStarterIE
 from .kika import (

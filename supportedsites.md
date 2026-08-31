@@ -724,6 +724,7 @@ The only reliable way to check if a site is supported is to try it.
  - **kick:clips**
  - **kick:live**
  - **kick:vod**
+ - **kickbot**: KickBot
  - **Kicker**
  - **KickStarter**
  - **Kika**: KiKA.de
