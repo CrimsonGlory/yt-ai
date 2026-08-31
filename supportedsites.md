@@ -357,6 +357,7 @@ The only reliable way to check if a site is supported is to try it.
  - **damtomo:video**
  - **dangalplay**: [*dangalplay*](## "netrc machine")
  - **dangalplay:season**: [*dangalplay*](## "netrc machine")
+ - **danmarkpaafilm**: Danmark på Film
  - **daum.net**
  - **daum.net:clip**
  - **daum.net:playlist**

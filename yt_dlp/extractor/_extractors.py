@@ -468,6 +468,7 @@ from .dangalplay import (
     DangalPlayIE,
     DangalPlaySeasonIE,
 )
+from .danmarkpaafilm import DanmarkPaaFilmIE
 from .daum import (
     DaumClipIE,
     DaumIE,

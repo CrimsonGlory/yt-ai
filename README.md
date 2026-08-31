@@ -2313,6 +2313,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **ctc** (`ctc.ru`): Impersonate WAF for `/api/page/v1` JSON, then Odysseus playlist HLS/DASH via `X-Referer`. Request: [yt-dlp/yt-dlp#11162](https://github.com/yt-dlp/yt-dlp/issues/11162)
     * **CuriosityU** (`curiosityu.com`): Bitmovin DASH (`cdn-s3-cf.curiositystream.com`) from lecture-page `sourceConfig`. Request: [yt-dlp/yt-dlp#16564](https://github.com/yt-dlp/yt-dlp/issues/16564)
     * **Cyberfile** (`cyberfile.me`): YetiShare `account/ajax/file_details` download_token MP4s and folder listings. Request: [yt-dlp/yt-dlp#8932](https://github.com/yt-dlp/yt-dlp/issues/8932)
+    * **DanmarkPaaFilm** (`danmarkpaafilm.dk`): Impersonate, then Drupal `/player-playback-url` DBC AMS iframe and AES-128 HLS. Request: [yt-dlp/yt-dlp#8316](https://github.com/yt-dlp/yt-dlp/issues/8316)
     * **DeviantArt** (`deviantart.com`): Eclipse `__INITIAL_STATE__` transcoded MP4s with JSON-LD `contentUrl` fallback. Request: [yt-dlp/yt-dlp#17234](https://github.com/yt-dlp/yt-dlp/issues/17234)
     * **DI.FM** (`di.fm`): Impersonate Cloudflare, then AudioAddict episode JSON and signed `content.audioaddict.com` AAC. Request: [yt-dlp/yt-dlp#12520](https://github.com/yt-dlp/yt-dlp/issues/12520)
     * **DigitalerLesesaal** (`digitaler-lesesaal.bundesarchiv.de`): Public archive video/copies JSON and liXe player HLS. Request: [yt-dlp/yt-dlp#10451](https://github.com/yt-dlp/yt-dlp/issues/10451)
