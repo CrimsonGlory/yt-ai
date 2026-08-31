@@ -145,6 +145,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Bandlab**
  - **BandlabPlaylist**
  - **BannedVideo**
+ - **baomoi**: Báo Mới
  - **bbc**: [*bbc*](## "netrc machine") BBC
  - **bbc.co.uk**: [*bbc*](## "netrc machine") BBC iPlayer
  - **bbc.co.uk:article**: BBC articles
