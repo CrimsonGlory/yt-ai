@@ -31,6 +31,7 @@ from .adn import (
     ADNSeasonIE,
 )
 from .adobeconnect import AdobeConnectIE
+from .adobemax import AdobeMaxIE
 from .adobetv import AdobeTVVideoIE
 from .adultempire import AdultEmpireIE
 from .adultswim import AdultSwimIE

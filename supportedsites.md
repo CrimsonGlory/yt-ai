@@ -47,6 +47,7 @@ The only reliable way to check if a site is supported is to try it.
  - **ADN**: [*animationdigitalnetwork*](## "netrc machine") Animation Digital Network
  - **ADNSeason**: [*animationdigitalnetwork*](## "netrc machine") Animation Digital Network
  - **AdobeConnect**
+ - **adobemax**: Adobe MAX
  - **adobetv**
  - **adultempire**: Adult Empire
  - **AdultSwim**

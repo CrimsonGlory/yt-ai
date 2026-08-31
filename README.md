@@ -2276,6 +2276,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 * **New extractors**:
     * **3m** (`3m.com`): Product-page `__INITIAL_DATA` Brightcove gallery (`videoPlayerListId`) via the snaps2 player map. Request: [yt-dlp/yt-dlp#15705](https://github.com/yt-dlp/yt-dlp/issues/15705)
     * **Abyss** (`abyss.to`): Decrypt player `datas` (AES-CTR) and download `sssrr.org` sora MP4 fragments. Request: [yt-dlp/yt-dlp#16027](https://github.com/yt-dlp/yt-dlp/issues/16027)
+    * **AdobeMax** (`adobe.com`): MAX `/sessions/` pages load `/www-fragments/max/{year}/marquees/{code}/ondemand.live.html` and delegate the `video.tv.adobe.com` iframe to **adobetv**. Request: [yt-dlp/yt-dlp#7992](https://github.com/yt-dlp/yt-dlp/issues/7992)
     * **AdultEmpire** (`adultempire.com`): Age-gate cookie, then `/gw/player` JSON-LD `contentUrl` trailer MP4. Request: [yt-dlp/yt-dlp#9583](https://github.com/yt-dlp/yt-dlp/issues/9583)
     * **afl** (`afl.com.au`): Brightcove `video-js` player IDs from public `/video/` pages. Request: [yt-dlp/yt-dlp#10909](https://github.com/yt-dlp/yt-dlp/issues/10909)
     * **AiryTV** (`live.airy.tv`): Public `api.airy.tv` `/content/{id}` JSON for unencrypted VOD HLS. Request: [yt-dlp/yt-dlp#14937](https://github.com/yt-dlp/yt-dlp/issues/14937)
