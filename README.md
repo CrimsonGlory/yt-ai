@@ -2357,6 +2357,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Keporn** (`f1.keporn.vip`): Public `/api/json/video` metadata and `/api/videofile.php` Cyrillic-base64 `get_file` MP4s. Request: [yt-dlp/yt-dlp#14612](https://github.com/yt-dlp/yt-dlp/issues/14612)
     * **KHInsider** (`downloads.khinsider.com`): Public MP3/FLAC CDN links from track pages; albums as track playlists. Request: [yt-dlp/yt-dlp#16713](https://github.com/yt-dlp/yt-dlp/issues/16713)
     * **KickBot** (`kickbot.app`): SvelteKit `__data.json` clip metadata and `clips.kickbotcdn.com` HLS/MP4. Request: [yt-dlp/yt-dlp#8861](https://github.com/yt-dlp/yt-dlp/issues/8861)
+    * **Kissasian** (`kissasian.video`): Follow `hndrama.cc` embed servers and packed JWPlayer HLS (VidHide). Request: [yt-dlp/yt-dlp#7801](https://github.com/yt-dlp/yt-dlp/issues/7801)
     * **Kuaishou** (`kuaishou.com`): Mobile H5 `window.INIT_STATE` progressive MP4/HLS from share and short-video pages. Request: [yt-dlp/yt-dlp#14010](https://github.com/yt-dlp/yt-dlp/issues/14010)
     * **KVF** (`kvf.fo`): JWPlayer `media`/`mode` vars and `vod.kringvarp.fo` SMIL HLS. Request: [yt-dlp/yt-dlp#9620](https://github.com/yt-dlp/yt-dlp/issues/9620)
     * **LearnEnglishKids** (`learnenglishkids.britishcouncil.org`): Drupal `akamai-custom-embed` Plyr HLS from `data-video`, with YouTube iframe fallback. Request: [yt-dlp/yt-dlp#10146](https://github.com/yt-dlp/yt-dlp/issues/10146)

@@ -1010,6 +1010,7 @@ from .kika import (
     KikaPlaylistIE,
 )
 from .kinopoisk import KinoPoiskIE
+from .kissasian import KissasianIE
 from .kommunetv import KommunetvIE
 from .kompas import KompasVideoIE
 from .krasview import KrasViewIE

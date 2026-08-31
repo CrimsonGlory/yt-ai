@@ -741,6 +741,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Kika**: KiKA.de
  - **KikaPlaylist**
  - **KinoPoisk**
+ - **kissasian**: Kissasian
  - **Kommunetv**
  - **KompasVideo**
  - **KrasView**: Красвью
