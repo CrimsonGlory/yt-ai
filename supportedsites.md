@@ -97,6 +97,7 @@ The only reliable way to check if a site is supported is to try it.
  - **apple:​music:connect**: Apple Music Connect
  - **apple:podcasts**: Apple Podcasts
  - **archive.org**: archive.org video and audio
+ - **Archivebate**: archivebate.com
  - **ArcPublishing**
  - **ARDAudiothek**
  - **ARDAudiothekPlaylist**

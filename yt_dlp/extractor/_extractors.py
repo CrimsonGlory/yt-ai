@@ -108,6 +108,7 @@ from .apa import APAIE
 from .aparat import AparatIE
 from .appleconnect import AppleConnectIE
 from .applepodcasts import ApplePodcastsIE
+from .archivebate import ArchivebateIE
 from .archiveorg import (
     ArchiveOrgIE,
     YoutubeWebArchiveIE,
