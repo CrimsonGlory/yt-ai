@@ -852,6 +852,10 @@ from .ina import InaIE
 from .inc import IncIE
 from .indavideo import IndavideoEmbedIE
 from .infoq import InfoQIE
+from .infosecexchange import (
+    InfosecExchangeIE,
+    InfosecExchangePlaylistIE,
+)
 from .instagram import (
     InstagramIE,
     InstagramIOSIE,

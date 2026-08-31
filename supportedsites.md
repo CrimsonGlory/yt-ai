@@ -634,6 +634,8 @@ The only reliable way to check if a site is supported is to try it.
  - **Inc**
  - **IndavideoEmbed**
  - **InfoQ**
+ - **InfosecExchange**: Infosec.Exchange Video
+ - **InfosecExchange:Playlist**
  - **Instagram**
  - **instagram:story**
  - **instagram:tag**: Instagram hashtag search URLs
