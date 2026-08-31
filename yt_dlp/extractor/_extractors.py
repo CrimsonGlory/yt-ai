@@ -744,6 +744,7 @@ from .gettr import (
 from .giantbomb import GiantBombIE
 from .giphy import GiphyIE
 from .glide import GlideIE
+from .globalnews import GlobalNewsIE
 from .globalplayer import (
     GlobalPlayerAudioEpisodeIE,
     GlobalPlayerAudioIE,
