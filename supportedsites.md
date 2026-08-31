@@ -1453,6 +1453,7 @@ The only reliable way to check if a site is supported is to try it.
  - **spinitron**: Spinitron
  - **spinitron:show**: Spinitron shows
  - **Sponsr**
+ - **spooncast**: Spoon Radio
  - **Sport5**
  - **SportBox**
  - **sporteurope**

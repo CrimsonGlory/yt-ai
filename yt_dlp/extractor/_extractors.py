@@ -2001,6 +2001,7 @@ from .spinitron import (
     SpinitronShowIE,
 )
 from .sponsr import SponsrIE
+from .spooncast import SpooncastIE
 from .sport5 import Sport5IE
 from .sportbox import SportBoxIE
 from .sportdeutschland import SportDeutschlandIE
