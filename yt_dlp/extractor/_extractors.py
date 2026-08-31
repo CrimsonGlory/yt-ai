@@ -2222,6 +2222,7 @@ from .tver import (
 )
 from .tvigle import TvigleIE
 from .tviplayer import TVIPlayerIE
+from .tvmonaco import TVMonacoIE
 from .tvn24 import TVN24IE
 from .tvnoe import TVNoeIE
 from .tvo import TvoIE

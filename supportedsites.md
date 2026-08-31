@@ -1596,6 +1596,7 @@ The only reliable way to check if a site is supported is to try it.
  - **tver:olympic**
  - **tvigle**: Интернет-телевидение Tvigle.ru
  - **TVIPlayer**
+ - **TVMonaco**: TVMonaco
  - **TVN24**
  - **tvnoe**: Televize Noe
  - **TVO**
