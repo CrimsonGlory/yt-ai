@@ -415,6 +415,10 @@ from .cspan import (
     CSpanCongressIE,
     CSpanIE,
 )
+from .ctc import (
+    CTCIE,
+    CTCSeasonIE,
+)
 from .ctsnews import CtsNewsIE
 from .ctvnews import CTVNewsIE
 from .cultureunplugged import CultureUnpluggedIE

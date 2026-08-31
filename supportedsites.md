@@ -320,6 +320,8 @@ The only reliable way to check if a site is supported is to try it.
  - **Crtvg**
  - **CSpan**: C-SPAN
  - **CSpanCongress**
+ - **ctc**: СТС
+ - **ctc:season**: СТС seasons
  - **CtsNews**: 華視新聞
  - **CTVNews**
  - **cu.ntv.co.jp**: 日テレ無料TADA!
