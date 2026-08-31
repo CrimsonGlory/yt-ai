@@ -1472,6 +1472,7 @@ from .nytimes import (
 )
 from .nzherald import NZHeraldIE
 from .nzonscreen import NZOnScreenIE
+from .nzrplus import NZRPlusIE
 from .nzz import NZZIE
 from .odkmedia import OnDemandChinaEpisodeIE
 from .odnoklassniki import OdnoklassnikiIE

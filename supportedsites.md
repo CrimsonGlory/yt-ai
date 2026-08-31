@@ -1079,6 +1079,7 @@ The only reliable way to check if a site is supported is to try it.
  - **NYTimesCookingRecipe**
  - **nzherald**
  - **NZOnScreen**
+ - **nzrplus**: [*nzrplus*](## "netrc machine") NZR+
  - **NZZ**
  - **ocw.mit.edu**
  - **Odnoklassniki**

@@ -2382,6 +2382,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **NFSA** (`nfsa.gov.au`): Public Sanity GROQ for collection items, then Vimeo player URLs (site referer) or Sanity CDN files. Request: [yt-dlp/yt-dlp#9593](https://github.com/yt-dlp/yt-dlp/issues/9593)
     * **NhacCuaTui** (`nhaccuatui.com`): Nuxt `__NUXT_DATA__` song/video `streamURL` MP3/MP4 (and FLAC when present). Request: [yt-dlp/yt-dlp#12329](https://github.com/yt-dlp/yt-dlp/issues/12329)
     * **nobody.live** (`nobody.live`): Public `/stream` JSON for a random zero-viewer Twitch channel, then Twitch HLS. Request: [yt-dlp/yt-dlp#13696](https://github.com/yt-dlp/yt-dlp/issues/13696)
+    * **NZRPlus** (`nzrplus.com`): Guest DCE/ImgGaming `v1/init` token, then VOD/live HLS/DASH. Request: [yt-dlp/yt-dlp#7875](https://github.com/yt-dlp/yt-dlp/issues/7875)
     * **Olevod** (`olevod.com`): Signed `api.olelive.com` `/v1/pub/vod/detail` HLS. Request: [yt-dlp/yt-dlp#9379](https://github.com/yt-dlp/yt-dlp/issues/9379)
     * **OnePodcast** (`onepodcast.it`): GEDI media-hub `audioSource` MP3 and Brightcove `videoSrc` MP4 from episode pages. Request: [yt-dlp/yt-dlp#16798](https://github.com/yt-dlp/yt-dlp/issues/16798)
     * **PaceGallery** (`pacegallery.com`): Lazy-loaded YouTube `data-id` embeds on exhibition and journal pages. Request: [yt-dlp/yt-dlp#8327](https://github.com/yt-dlp/yt-dlp/issues/8327)
