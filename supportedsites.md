@@ -800,6 +800,7 @@ The only reliable way to check if a site is supported is to try it.
  - **mave:channel**
  - **MBN**: mbn.co.kr (매일방송)
  - **MDR**: MDR.DE
+ - **means.tv**: Means TV
  - **MedalTV**
  - **media.ccc.de**
  - **media.ccc.de:lists**

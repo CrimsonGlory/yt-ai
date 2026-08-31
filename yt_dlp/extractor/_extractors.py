@@ -1096,6 +1096,7 @@ from .mave import (
 )
 from .mbn import MBNIE
 from .mdr import MDRIE
+from .meanstv import MeansTVIE
 from .medaltv import MedalTVIE
 from .mediaite import MediaiteIE
 from .mediaklikk import MediaKlikkIE
