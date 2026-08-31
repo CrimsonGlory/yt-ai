@@ -629,6 +629,7 @@ The only reliable way to check if a site is supported is to try it.
  - **HotNewHipHop**
  - **hotstar**: JioHotstar
  - **hotstar:series**
+ - **HQPorner**: hqporner.com
  - **hrfernsehen**
  - **HRTi**: [*hrti*](## "netrc machine")
  - **HRTiPlaylist**: [*hrti*](## "netrc machine")

@@ -2346,6 +2346,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Granicus** (`harrisonburg-va.granicus.com`): Flowplayer `video_url` HLS from clip player pages. Request: [yt-dlp/yt-dlp#15344](https://github.com/yt-dlp/yt-dlp/issues/15344)
     * **Hobune** (`hobune.stream`): HTML5 video pages and static channel listings. Request: [yt-dlp/yt-dlp#17541](https://github.com/yt-dlp/yt-dlp/issues/17541)
     * **Hotmart** (`player.hotmart.com`): Next.js `__NEXT_DATA__` `applicationData` HLS (`vod-akm.play.hotmart.com`) with player Referer. Request: [yt-dlp/yt-dlp#8397](https://github.com/yt-dlp/yt-dlp/issues/8397)
+    * **HQPorner** (`hqporner.com`): Player iframe (mydaddy.cc) HTML5 MP4 sources. Request: [yt-dlp/yt-dlp#7116](https://github.com/yt-dlp/yt-dlp/issues/7116)
     * **hstream** (`hstream.moe`): Laravel `/player/api` JSON for progressive 720p MP4 and DASH (including 48fps). Request: [yt-dlp/yt-dlp#9791](https://github.com/yt-dlp/yt-dlp/issues/9791)
     * **Hudl** (`hudl.com`): Public fan GraphQL broadcast JSON and vcloud HLS. Request: [yt-dlp/yt-dlp#9022](https://github.com/yt-dlp/yt-dlp/issues/9022)
     * **Hypeddit** (`hypeddit.com`): Public `hypeddit-gates-prod` S3 preview MP3 from gate pages. Request: [yt-dlp/yt-dlp#7948](https://github.com/yt-dlp/yt-dlp/issues/7948)

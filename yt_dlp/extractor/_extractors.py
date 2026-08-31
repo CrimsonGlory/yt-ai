@@ -835,6 +835,7 @@ from .hotstar import (
     HotStarPrefixIE,
     HotStarSeriesIE,
 )
+from .hqporner import HQPornerIE
 from .hrefli import HrefLiRedirectIE
 from .hrfensehen import HRFernsehenIE
 from .hrti import (
