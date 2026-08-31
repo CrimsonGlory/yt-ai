@@ -441,6 +441,7 @@ The only reliable way to check if a site is supported is to try it.
  - **ElTreceTV**: El Trece TV (Argentina)
  - **Embedly**
  - **EMPFlix**
+ - **emturbovid**: emturbovid.com
  - **epicdevelopercommunity**: Epic Games Developer Community
  - **Epicon**
  - **EpiconSeries**
