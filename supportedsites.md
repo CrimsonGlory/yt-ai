@@ -1146,6 +1146,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Pornbox**
  - **PornerBros**
  - **PornFlip**
+ - **PornHat**: pornhat.com
  - **PornHub**: [*pornhub*](## "netrc machine") PornHub and Thumbzilla
  - **PornHubPagedVideoList**: [*pornhub*](## "netrc machine")
  - **PornHubPlaylist**: [*pornhub*](## "netrc machine")

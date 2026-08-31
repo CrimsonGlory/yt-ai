@@ -1575,6 +1575,7 @@ from .popcorntimes import PopcorntimesIE
 from .popcorntv import PopcornTVIE
 from .pornbox import PornboxIE
 from .pornflip import PornFlipIE
+from .pornhat import PornHatIE
 from .pornhub import (
     PornHubIE,
     PornHubPagedVideoListIE,
