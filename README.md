@@ -2465,6 +2465,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Udio** (`udio.com`): Public `/api/songs` JSON for `song_path` MP3 and `video_path` MP4. Request: [yt-dlp/yt-dlp#10045](https://github.com/yt-dlp/yt-dlp/issues/10045)
     * **UKDevilz** (`ukdevilz.com`): Impersonate Cloudflare and extract JWPlayer `window.playlist` MP4 sources. Request: [yt-dlp/yt-dlp#14166](https://github.com/yt-dlp/yt-dlp/issues/14166)
     * **UpRide** (`upride.cc`): Impersonate Cloudflare, then JSON-LD `contentURL` original upload plus Cloudflare Stream iframe HLS/DASH. Request: [yt-dlp/yt-dlp#7858](https://github.com/yt-dlp/yt-dlp/issues/7858)
+    * **USNewsOn** (`usnewson.com`): Video.js `pllrc` onestream API (`pro.usnlive.com/api/stream`) and direct HLS. Request: [yt-dlp/yt-dlp#6985](https://github.com/yt-dlp/yt-dlp/issues/6985)
     * **Veev** (`veev.to`): Decode the player `fc` token and `/dl?op=player_api` source URL. Request: [yt-dlp/yt-dlp#10092](https://github.com/yt-dlp/yt-dlp/issues/10092)
     * **Videas** (`videas.fr`): Player `data-embed` JSON and CDN HLS. Request: [yt-dlp/yt-dlp#7786](https://github.com/yt-dlp/yt-dlp/issues/7786)
     * **VidMoly** (`vidmoly.to`): Canonical `vidmoly.biz` embed JWPlayer HLS (also `.me`/`.net`). Request: [yt-dlp/yt-dlp#9689](https://github.com/yt-dlp/yt-dlp/issues/9689)

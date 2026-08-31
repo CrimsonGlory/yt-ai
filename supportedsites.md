@@ -1749,6 +1749,7 @@ The only reliable way to check if a site is supported is to try it.
  - **URPlay**
  - **USANetwork**
  - **USAToday**
+ - **usnewson**: USNewsON live news streams
  - **ustream**
  - **ustream:channel**
  - **ustudio**

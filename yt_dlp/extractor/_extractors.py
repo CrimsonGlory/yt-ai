@@ -2435,6 +2435,7 @@ from .urort import UrortIE
 from .urplay import URPlayIE
 from .usanetwork import USANetworkIE
 from .usatoday import USATodayIE
+from .usnewson import USNewsOnIE
 from .ustream import (
     UstreamChannelIE,
     UstreamIE,
