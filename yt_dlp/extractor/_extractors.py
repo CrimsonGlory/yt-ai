@@ -1449,6 +1449,7 @@ from .oftv import (
     OfTVPlaylistIE,
 )
 from .oktoberfesttv import OktoberfestTVIE
+from .olevod import OlevodIE
 from .olympics import OlympicsReplayIE
 from .omnyfm import (
     OmnyfmIE,

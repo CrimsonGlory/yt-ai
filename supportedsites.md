@@ -1062,6 +1062,7 @@ The only reliable way to check if a site is supported is to try it.
  - **OfTV**
  - **OfTVPlaylist**
  - **OktoberfestTV**
+ - **olevod**: Olevod (欧乐影院)
  - **OlympicsReplay**
  - **Omnyfm**
  - **OmnyfmPlaylist**
