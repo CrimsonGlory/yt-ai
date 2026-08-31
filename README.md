@@ -2443,6 +2443,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **TeraBox** (`terabox.app`): Impersonate, `/share/list` metadata, HMAC-SHA1 signed `/share/streaming.m3u8` HLS. Request: [yt-dlp/yt-dlp#10492](https://github.com/yt-dlp/yt-dlp/issues/10492)
     * **ThotDeep** (`thotdeep.com`): Decode JWPlayer `data-source` (pad, reverse, base64) and download single-use HLS. Request: [yt-dlp/yt-dlp#10746](https://github.com/yt-dlp/yt-dlp/issues/10746)
     * **Thothub** (`thothub.to`): KVS `kt_player` flashvars and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#13133](https://github.com/yt-dlp/yt-dlp/issues/13133)
+    * **Threads** (`threads.net` / `threads.com`): Parse logged-out `data-sjs` Relay JSON for `video_versions` and DASH. Request: [yt-dlp/yt-dlp#7523](https://github.com/yt-dlp/yt-dlp/issues/7523)
     * **ThreeNow** (`threenow.co.nz`): Live channels from the public `now-api.fullscreen.nz` `live-epg` HLS. Request: [yt-dlp/yt-dlp#17082](https://github.com/yt-dlp/yt-dlp/issues/17082)
     * **TimesRadio** (`thetimes.com`): HTML5 catch-up MP3 (Omny) and live AAC stream from Times Radio pages; impersonate for the device-check interstitial. Request: [yt-dlp/yt-dlp#17253](https://github.com/yt-dlp/yt-dlp/issues/17253)
     * **Tipeee** (`tipeee.com` / `tipeee.fr`): Public news-post `api.tipeee.com` JSON and YouTube/Vimeo embed URLs. Request: [yt-dlp/yt-dlp#8465](https://github.com/yt-dlp/yt-dlp/issues/8465)

@@ -1615,6 +1615,7 @@ The only reliable way to check if a site is supported is to try it.
  - **ThisVidPlaylist**
  - **ThotDeep**: thotdeep.com
  - **Thothub**: thothub.to
+ - **Threads**: Threads (threads.net / threads.com)
  - **ThreeNow**: ThreeNow live TV
  - **ThreeSpeak**
  - **ThreeSpeakUser**

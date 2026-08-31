@@ -2235,6 +2235,7 @@ from .thisvid import (
 )
 from .thotdeep import ThotDeepIE
 from .thothub import ThothubIE
+from .threads import ThreadsIE
 from .threem import ThreeMIE
 from .threenow import ThreeNowIE
 from .threeqsdn import ThreeQSDNIE
