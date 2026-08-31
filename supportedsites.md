@@ -1529,6 +1529,7 @@ The only reliable way to check if a site is supported is to try it.
  - **TeleTask**
  - **Telewebion**
  - **TennisTV**: [*tennistv*](## "netrc machine")
+ - **TeraBox**
  - **TF1**
  - **tfo**: Télévision française de l'Ontario
  - **tfo:series**

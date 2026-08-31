@@ -2122,6 +2122,7 @@ from .tenplay import (
     TenPlayIE,
     TenPlaySeasonIE,
 )
+from .terabox import TeraBoxIE
 from .testurl import TestURLIE
 from .tf1 import TF1IE
 from .tfo import (
