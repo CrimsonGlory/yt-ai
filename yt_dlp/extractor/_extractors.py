@@ -2326,6 +2326,7 @@ from .udemy import (
     UdemyCourseIE,
     UdemyIE,
 )
+from .udio import UdioIE
 from .udn import UDNEmbedIE
 from .ufctv import UFCTVIE
 from .ukcolumn import UkColumnIE

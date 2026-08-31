@@ -1664,6 +1664,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Txxx**
  - **udemy**: [*udemy*](## "netrc machine")
  - **udemy:course**: [*udemy*](## "netrc machine")
+ - **udio**: Udio
  - **UDNEmbed**: 聯合影音
  - **UFCTV**: [*ufctv*](## "netrc machine")
  - **ukcolumn**

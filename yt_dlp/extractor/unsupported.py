@@ -282,7 +282,6 @@ class KnownLiabilityIE(UnsupportedInfoExtractor):
     URLS = (
         r'motherless\.\w+',
         r'suno\.com',
-        r'udio\.com',
     )
 
     _TESTS = [{
@@ -290,9 +289,6 @@ class KnownLiabilityIE(UnsupportedInfoExtractor):
         'only_matching': True,
     }, {
         'url': 'https://suno.com/song/',
-        'only_matching': True,
-    }, {
-        'url': 'https://www.udio.com/songs/',
         'only_matching': True,
     }]
 

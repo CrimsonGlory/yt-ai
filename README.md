@@ -2406,6 +2406,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **TVAsahiDouga** (`douga.tv-asahi.co.jp`): Episode-page `window.app` Falcor metadata and Brightcove HLS (`ovp_video_id`) with JP geo-bypass. Request: [yt-dlp/yt-dlp#14947](https://github.com/yt-dlp/yt-dlp/issues/14947)
     * **TVMonaco** (`tvmonaco.com`): Okast `/api/media/v7/media` metadata and AES-128 HLS from `/api/offer/v4/media/{uuid}/url`. Request: [yt-dlp/yt-dlp#11687](https://github.com/yt-dlp/yt-dlp/issues/11687)
     * **TVTropes** (`tvtropes.org`): Impersonate Cloudflare and extract Bunny HLS from video-example data attributes. Request: [yt-dlp/yt-dlp#17106](https://github.com/yt-dlp/yt-dlp/issues/17106)
+    * **Udio** (`udio.com`): Public `/api/songs` JSON for `song_path` MP3 and `video_path` MP4. Request: [yt-dlp/yt-dlp#10045](https://github.com/yt-dlp/yt-dlp/issues/10045)
     * **UKDevilz** (`ukdevilz.com`): Impersonate Cloudflare and extract JWPlayer `window.playlist` MP4 sources. Request: [yt-dlp/yt-dlp#14166](https://github.com/yt-dlp/yt-dlp/issues/14166)
     * **Veev** (`veev.to`): Decode the player `fc` token and `/dl?op=player_api` source URL. Request: [yt-dlp/yt-dlp#10092](https://github.com/yt-dlp/yt-dlp/issues/10092)
     * **Viggle** (`viggle.ai`): Public `/api/share/video-task` JSON (impersonate) for signed `assets.viggle.ai` MP4. Request: [yt-dlp/yt-dlp#13657](https://github.com/yt-dlp/yt-dlp/issues/13657)
