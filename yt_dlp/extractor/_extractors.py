@@ -562,6 +562,7 @@ from .elonet import ElonetIE
 from .elpais import ElPaisIE
 from .eltrecetv import ElTreceTVIE
 from .embedly import EmbedlyIE
+from .epicdevelopercommunity import EpicDeveloperCommunityIE
 from .epicon import (
     EpiconIE,
     EpiconSeriesIE,

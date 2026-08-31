@@ -426,6 +426,7 @@ The only reliable way to check if a site is supported is to try it.
  - **ElTreceTV**: El Trece TV (Argentina)
  - **Embedly**
  - **EMPFlix**
+ - **epicdevelopercommunity**: Epic Games Developer Community
  - **Epicon**
  - **EpiconSeries**
  - **EpidemicSound**

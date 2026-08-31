@@ -2312,6 +2312,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **DI.FM** (`di.fm`): Impersonate Cloudflare, then AudioAddict episode JSON and signed `content.audioaddict.com` AAC. Request: [yt-dlp/yt-dlp#12520](https://github.com/yt-dlp/yt-dlp/issues/12520)
     * **DigitalerLesesaal** (`digitaler-lesesaal.bundesarchiv.de`): Public archive video/copies JSON and liXe player HLS. Request: [yt-dlp/yt-dlp#10451](https://github.com/yt-dlp/yt-dlp/issues/10451)
     * **DoramasPrincess** (`doramasprincess.com`): POST `/ajax/embed` for HTML5 sources and packed JWPlayer HLS from host iframes. Request: [yt-dlp/yt-dlp#16369](https://github.com/yt-dlp/yt-dlp/issues/16369)
+    * **EpicDeveloperCommunity** (`dev.epicgames.com`): Impersonate Cloudflare, then learning `post.json` plus Electra/qstv DASH. Request: [yt-dlp/yt-dlp#9783](https://github.com/yt-dlp/yt-dlp/issues/9783)
     * **eplay** (`eplay.com`): Public `search-cf.eplay.com` post JSON (tokenized MP4/HLS) with Next.js fallback. Request: [yt-dlp/yt-dlp#16853](https://github.com/yt-dlp/yt-dlp/issues/16853)
     * **Erothots** (`erothots.co`): JSON-LD metadata and Plyr/Video.js HTML5 MP4 from `cdn.erocdn.co`. Request: [yt-dlp/yt-dlp#13021](https://github.com/yt-dlp/yt-dlp/issues/13021)
     * **EsupPod** (`pod.univ-lille.fr`): Video.js `mp4_sources` progressive MP4, with `srcOptions` HLS fallback. Request: [yt-dlp/yt-dlp#13738](https://github.com/yt-dlp/yt-dlp/issues/13738)
