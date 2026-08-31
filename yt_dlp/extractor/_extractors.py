@@ -489,12 +489,12 @@ from .dlive import (
     DLiveStreamIE,
     DLiveVODIE,
 )
+from .doodstream import DoodStreamIE
+from .doramasprincess import DoramasPrincessIE
 from .douyutv import (
     DouyuShowIE,
     DouyuTVIE,
 )
-from .doodstream import DoodStreamIE
-from .doramasprincess import DoramasPrincessIE
 from .dplay import (
     TLCIE,
     AmHistoryChannelIE,
@@ -599,6 +599,11 @@ from .europeantour import EuropeanTourIE
 from .eurosport import EurosportIE
 from .euscreen import EUScreenIE
 from .expressen import ExpressenIE
+from .extrememusic import (
+    ExtremeMusicAlbumIE,
+    ExtremeMusicIE,
+    ExtremeMusicPlaylistIE,
+)
 from .facebook import (
     FacebookAdsIE,
     FacebookIE,
@@ -628,12 +633,12 @@ from .fikfap import (
     FikFapIE,
     FikFapUserIE,
 )
+from .filemoon import FilemoonIE
 from .filmarchiv import FilmArchivIE
 from .filmon import (
     FilmOnChannelIE,
     FilmOnIE,
 )
-from .filemoon import FilemoonIE
 from .filmweb import FilmwebIE
 from .filmzie import FilmzieIE
 from .firsttv import (
@@ -775,8 +780,8 @@ from .harpodeon import HarpodeonIE
 from .hbo import HBOIE
 from .hearthisat import HearThisAtIE
 from .heise import HeiseIE
-from .hentaistigma import HentaiStigmaIE
 from .hellporno import HellPornoIE
+from .hentaistigma import HentaiStigmaIE
 from .hgtv import HGTVComShowIE
 from .hidive import HiDiveIE
 from .historicfilms import HistoricFilmsIE
@@ -905,6 +910,10 @@ from .iwara import (
     IwaraUserIE,
 )
 from .ixigua import IxiguaIE
+from .jable import (
+    JableIE,
+    JablePlaylistIE,
+)
 from .jamendo import (
     JamendoAlbumIE,
     JamendoIE,
@@ -928,10 +937,6 @@ from .jiosaavn import (
     JioSaavnSongIE,
 )
 from .joj import JojIE
-from .jable import (
-    JableIE,
-    JablePlaylistIE,
-)
 from .jove import JoveIE
 from .jstream import JStreamIE
 from .jtbc import (
@@ -1202,6 +1207,7 @@ from .murrtube import (
     MurrtubeUserIE,
 )
 from .museai import MuseAIIE
+from .musescore import MuseScoreIE
 from .musi import MusiIE
 from .musicbrainz import (
     MusicBrainzIE,
@@ -1213,7 +1219,6 @@ from .musicdex import (
     MusicdexPlaylistIE,
     MusicdexSongIE,
 )
-from .musescore import MuseScoreIE
 from .mux import MuxIE
 from .mx3 import (
     Mx3IE,
@@ -1585,6 +1590,7 @@ from .polskieradio import (
 )
 from .popcorntimes import PopcorntimesIE
 from .popcorntv import PopcornTVIE
+from .porn91 import Porn91IE
 from .pornbox import PornboxIE
 from .pornflip import PornFlipIE
 from .pornhat import PornHatIE
@@ -1598,7 +1604,6 @@ from .pornhub import (
 from .pornlib import PornLibIE
 from .pornotube import PornotubeIE
 from .pornovoisines import PornoVoisinesIE
-from .porn91 import Porn91IE
 from .pornoxo import PornoXOIE
 from .pornslash import PornSlashIE
 from .pr0gramm import Pr0grammIE
@@ -1978,7 +1983,6 @@ from .spinitron import (
     SpinitronShowIE,
 )
 from .sponsr import SponsrIE
-from .streamsb import StreamsbIE
 from .sport5 import Sport5IE
 from .sportbox import SportBoxIE
 from .sportdeutschland import SportDeutschlandIE
@@ -2020,6 +2024,7 @@ from .streamco import StreamCoPlatformIE
 from .streamcz import StreamCZIE
 from .streamingcommunityz import StreamingCommunityzIE
 from .streamruby import StreamrubyIE
+from .streamsb import StreamsbIE
 from .streamster import StreamsterIE
 from .streamtape import StreamtapeIE
 from .streetvoice import StreetVoiceIE
@@ -2138,8 +2143,8 @@ from .thestar import TheStarIE
 from .thesun import TheSunIE
 from .theweatherchannel import TheWeatherChannelIE
 from .thisamericanlife import ThisAmericanLifeIE
-from .thisoldhouse import ThisOldHouseIE
 from .thisav import ThisAVIE
+from .thisoldhouse import ThisOldHouseIE
 from .thisvid import (
     ThisVidIE,
     ThisVidMemberIE,

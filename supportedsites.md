@@ -452,6 +452,9 @@ The only reliable way to check if a site is supported is to try it.
  - **EWETVLive**: [*ewetv*](## "netrc machine")
  - **EWETVRecordings**: [*ewetv*](## "netrc machine")
  - **Expressen**
+ - **extrememusic**: Extreme Music
+ - **extrememusic:album**: Extreme Music albums
+ - **extrememusic:playlist**: Extreme Music playlists
  - **facebook**
  - **facebook:ads**
  - **facebook:reel**
