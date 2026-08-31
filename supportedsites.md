@@ -887,6 +887,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Monstercat**
  - **monstersiren**: 塞壬唱片
  - **Motorsport**: motorsport.com
+ - **MoverUz**: Mover.uz
  - **MovieFap**
  - **moviepilot**: Moviepilot trailer
  - **MovingImage**

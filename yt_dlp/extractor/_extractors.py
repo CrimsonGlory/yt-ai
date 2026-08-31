@@ -1206,6 +1206,7 @@ from .mocha import MochaVideoIE
 from .mojevideo import MojevideoIE
 from .monstercat import MonstercatIE
 from .motorsport import MotorsportIE
+from .moveruz import MoverUzIE
 from .moviepilot import MoviepilotIE
 from .movingimage import MovingImageIE
 from .mp4porn import Mp4PornIE
