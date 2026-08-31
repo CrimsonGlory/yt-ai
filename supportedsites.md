@@ -1175,6 +1175,8 @@ The only reliable way to check if a site is supported is to try it.
  - **PornTop**
  - **PornTube**
  - **Pr0gramm**
+ - **pragmaticworkstraining**: Pragmatic Works Training
+ - **pragmaticworkstraining:course**: Pragmatic Works Training courses
  - **PrankCast**
  - **PrankCastPost**
  - **PremiershipRugby**

@@ -2363,6 +2363,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **PornHat** (`pornhat.com`): FluidPlayer HTML5 `/get_file/` sources as HLS masters on `cdn.privatehost.com`. Request: [yt-dlp/yt-dlp#11852](https://github.com/yt-dlp/yt-dlp/issues/11852)
     * **PornLib** (`pornlib.com`): Public `/player_config_json/` MP4 files (lq/hq/4k). Request: [yt-dlp/yt-dlp#14614](https://github.com/yt-dlp/yt-dlp/issues/14614)
     * **PornSlash** (`pornslash.com`): HLS.js `loadSource` master playlist with `/media/report` host fallback. Request: [yt-dlp/yt-dlp#14768](https://github.com/yt-dlp/yt-dlp/issues/14768)
+    * **PragmaticWorksTraining** (`learning.pragmaticworkstraining.com`): Public LMS `GetVideoPreview` / `GetCoursePublic*` JSON and Mux HLS. Request: [yt-dlp/yt-dlp#10188](https://github.com/yt-dlp/yt-dlp/issues/10188)
     * **PreserveTube** (`preservetube.com`): Public `/video/{id}` JSON API and HTML5 fallback; channel archives from `/channel/{id}/videos`. Request: [yt-dlp/yt-dlp#17540](https://github.com/yt-dlp/yt-dlp/issues/17540)
     * **Plurk** (`plurk.com`): Parse post-page `plurk` JSON for `video.plurk.com` MP4/HLS with the `verify` token. Request: [yt-dlp/yt-dlp#15679](https://github.com/yt-dlp/yt-dlp/issues/15679)
     * **PutlockerDigital** (`www2.putlocker.digital`): Watch-page JWPlayer `?number=` JSON for loadshare.org MP4/HLS. Request: [yt-dlp/yt-dlp#11365](https://github.com/yt-dlp/yt-dlp/issues/11365)

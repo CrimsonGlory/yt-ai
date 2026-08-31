@@ -1611,6 +1611,10 @@ from .pornovoisines import PornoVoisinesIE
 from .pornoxo import PornoXOIE
 from .pornslash import PornSlashIE
 from .pr0gramm import Pr0grammIE
+from .pragmaticworkstraining import (
+    PragmaticWorksTrainingCourseIE,
+    PragmaticWorksTrainingIE,
+)
 from .prankcast import (
     PrankCastIE,
     PrankCastPostIE,
