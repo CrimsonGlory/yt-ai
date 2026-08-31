@@ -1194,6 +1194,8 @@ The only reliable way to check if a site is supported is to try it.
  - **preservetube:channel**
  - **PressTV**
  - **ProjectVeritas**
+ - **proko**: Proko
+ - **proko:course**: Proko courses
  - **PRXAccount**
  - **PRXSeries**
  - **prxseries:search**: PRX Series Search; "prxseries:" prefix

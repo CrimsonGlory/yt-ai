@@ -1636,6 +1636,10 @@ from .preservetube import (
 )
 from .presstv import PressTVIE
 from .projectveritas import ProjectVeritasIE
+from .proko import (
+    ProkoCourseIE,
+    ProkoIE,
+)
 from .prx import (
     PRXAccountIE,
     PRXSeriesIE,
