@@ -1693,6 +1693,7 @@ from .radiocanada import (
     RadioCanadaAudioVideoIE,
     RadioCanadaIE,
 )
+from .radiocentral import RadioCentralIE
 from .radiode import RadioDeIE
 from .radiofrance import (
     FranceCultureIE,

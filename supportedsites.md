@@ -1240,6 +1240,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Radio1Be**
  - **radiocanada**
  - **radiocanada:audiovideo**
+ - **radiocentral**: Radio Central
  - **radiofrance**
  - **RadioFranceLive**
  - **RadioFrancePodcast**
