@@ -478,6 +478,7 @@ from .dfb import DFBIE
 from .dhm import DHMIE
 from .difm import DIFMIE
 from .digitalconcerthall import DigitalConcertHallIE
+from .digitalerlesesaal import DigitalerLesesaalIE
 from .digiteka import DigitekaIE
 from .digiview import DigiviewIE
 from .discogs import DiscogsReleasePlaylistIE

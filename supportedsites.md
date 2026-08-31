@@ -365,6 +365,7 @@ The only reliable way to check if a site is supported is to try it.
  - **DHM**: Deutsches Historisches Museum
  - **di.fm**: DI.FM
  - **DigitalConcertHall**: [*digitalconcerthall*](## "netrc machine") DigitalConcertHall extractor
+ - **digitalerlesesaal**: Digitaler Lesesaal des Bundesarchivs
  - **DigitallySpeaking**
  - **Digiteka**
  - **Digiview**
