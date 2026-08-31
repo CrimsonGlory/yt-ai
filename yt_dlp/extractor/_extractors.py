@@ -2169,6 +2169,7 @@ from .toypics import (
     ToypicsIE,
     ToypicsUserIE,
 )
+from .treffdarc import TreffDarcIE
 from .trtcocuk import TrtCocukVideoIE
 from .trtworld import TrtWorldIE
 from .trueid import TrueIDIE

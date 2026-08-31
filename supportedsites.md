@@ -1561,6 +1561,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Toypics**: Toypics video
  - **ToypicsUser**: Toypics user profile
  - **TravelChannel**
+ - **treffdarc**: TREFF.DARC.DE
  - **TrtCocukVideo**
  - **TrtWorld**
  - **TrueID**
