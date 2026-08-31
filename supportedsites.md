@@ -1551,6 +1551,7 @@ The only reliable way to check if a site is supported is to try it.
  - **ThisVid**
  - **ThisVidMember**
  - **ThisVidPlaylist**
+ - **ThotDeep**: thotdeep.com
  - **Thothub**: thothub.to
  - **ThreeNow**: ThreeNow live TV
  - **ThreeSpeak**

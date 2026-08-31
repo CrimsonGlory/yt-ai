@@ -2153,6 +2153,7 @@ from .thisvid import (
     ThisVidMemberIE,
     ThisVidPlaylistIE,
 )
+from .thotdeep import ThotDeepIE
 from .thothub import ThothubIE
 from .threem import ThreeMIE
 from .threenow import ThreeNowIE
