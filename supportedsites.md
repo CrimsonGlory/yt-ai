@@ -1521,6 +1521,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Telecinco**: telecinco.es, cuatro.com and mediaset.es
  - **Telegraaf**
  - **telegram:embed**
+ - **Telegraph**: The Telegraph
  - **telemb**: Télé MB
  - **Telemundo**
  - **TeleQuebec**

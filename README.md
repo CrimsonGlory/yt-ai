@@ -2392,6 +2392,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Streamtape** (`streamtape.com`): Reconstruct the obfuscated `get_video` MP4 URL from player JS. Request: [yt-dlp/yt-dlp#16770](https://github.com/yt-dlp/yt-dlp/issues/16770)
     * **Stuff** (`stuff.co.nz`): Public `/api/v1.0/stuff/story/{id}` JSON; Brightcove player or hosted HLS/MP4. Request: [yt-dlp/yt-dlp#14961](https://github.com/yt-dlp/yt-dlp/issues/14961)
     * **Sync** (`sync.com`): Public share `linkpathlist`/`pathdata` with PBKDF2+AES-GCM key unwrap and RSA-signed compat download. Request: [yt-dlp/yt-dlp#16598](https://github.com/yt-dlp/yt-dlp/issues/16598)
+    * **Telegraph** (`telegraph.co.uk`): Impersonate Edge and extract particle iframe `window.videos` MP4/HLS. Request: [yt-dlp/yt-dlp#10291](https://github.com/yt-dlp/yt-dlp/issues/10291)
     * **TeraBox** (`terabox.app`): Impersonate, `/share/list` metadata, HMAC-SHA1 signed `/share/streaming.m3u8` HLS. Request: [yt-dlp/yt-dlp#10492](https://github.com/yt-dlp/yt-dlp/issues/10492)
     * **ThotDeep** (`thotdeep.com`): Decode JWPlayer `data-source` (pad, reverse, base64) and download single-use HLS. Request: [yt-dlp/yt-dlp#10746](https://github.com/yt-dlp/yt-dlp/issues/10746)
     * **Thothub** (`thothub.to`): KVS `kt_player` flashvars and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#13133](https://github.com/yt-dlp/yt-dlp/issues/13133)

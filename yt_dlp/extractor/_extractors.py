@@ -2100,6 +2100,7 @@ from .telecaribe import TelecaribePlayIE
 from .telecinco import TelecincoIE
 from .telegraaf import TelegraafIE
 from .telegram import TelegramEmbedIE
+from .telegraph import TelegraphIE
 from .telemb import TeleMBIE
 from .telemundo import TelemundoIE
 from .telequebec import (
