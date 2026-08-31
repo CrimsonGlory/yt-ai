@@ -294,6 +294,7 @@ from .camfm import (
 from .cammodels import CamModelsIE
 from .camsoda import CamsodaIE
 from .camtasia import CamtasiaEmbedIE
+from .camwhoresbay import CamwhoresbayIE
 from .canal1 import Canal1IE
 from .canalalpha import CanalAlphaIE
 from .canalc2 import Canalc2IE

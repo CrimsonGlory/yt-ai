@@ -241,6 +241,7 @@ The only reliable way to check if a site is supported is to try it.
  - **CamModels**
  - **Camsoda**
  - **CamtasiaEmbed**
+ - **Camwhoresbay**: camwhoresbay.com
  - **Canal1**
  - **CanalAlpha**
  - **canalc2.tv**
