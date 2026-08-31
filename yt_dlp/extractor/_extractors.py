@@ -249,6 +249,7 @@ from .bleacherreport import (
     BleacherReportIE,
 )
 from .blerp import BlerpIE
+from .blod import BlodIE
 from .blogger import BloggerIE
 from .bloomberg import BloombergIE
 from .bluesky import BlueskyIE

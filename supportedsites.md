@@ -202,6 +202,7 @@ The only reliable way to check if a site is supported is to try it.
  - **BleacherReport**
  - **BleacherReportCMS**
  - **blerp**
+ - **blod**: Bodossaki Lectures on Demand
  - **blogger.com**
  - **Bloomberg**
  - **Bluesky**
