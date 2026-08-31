@@ -249,6 +249,7 @@ from .bloomberg import BloombergIE
 from .bluesky import BlueskyIE
 from .bnrnews import BNRNewsIE
 from .bongacams import BongaCamsIE
+from .boomplay import BoomplayIE
 from .boomstream import BoomstreamIE
 from .boosty import BoostyIE
 from .bostonglobe import BostonGlobeIE

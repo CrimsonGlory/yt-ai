@@ -2289,6 +2289,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **BigMarker** (`bigmarker.com`): Conference-page `bmVideoPlayer.loadVideo` progressive MP4, plus HLS/DASH when unencrypted. Request: [yt-dlp/yt-dlp#13694](https://github.com/yt-dlp/yt-dlp/issues/13694)
     * **Blacksky** (`blacksky.community`): AT Protocol `getPostThread` via `api.blacksky.community` (HLS on `video.blacksky.community`, blob fallback from the author's PDS). Request: [yt-dlp/yt-dlp#16161](https://github.com/yt-dlp/yt-dlp/issues/16161)
     * **BNRNews** (`bnrnews.bg`): Public `/api/materials/{program}/{id}` JSON and `/api/media/{uuid}` MP3/MP4. Request: [yt-dlp/yt-dlp#15248](https://github.com/yt-dlp/yt-dlp/issues/15248)
+    * **Boomplay** (`boomplay.com`): Public `/share/getEventData` JSON and `source.boomplaymusic.com` MP3. Request: [yt-dlp/yt-dlp#11220](https://github.com/yt-dlp/yt-dlp/issues/11220)
     * **Boomstream** (`play.boomstream.com`): Player `window.boomstreamConfig` HLS; derive AES-128 key/IV from `#EXT-X-MEDIA-READY`. Request: [yt-dlp/yt-dlp#15376](https://github.com/yt-dlp/yt-dlp/issues/15376)
     * **BoyfriendTV** (`boyfriendtv.com`): Player `sources.hlsAuto` HLS from video pages. Request: [yt-dlp/yt-dlp#15509](https://github.com/yt-dlp/yt-dlp/issues/15509)
     * **Bouke** (`bouke.media`): Drupal Freecaster `data-video-id` / `live_token` embed JSON (MP4, HLS, DASH). Request: [yt-dlp/yt-dlp#15403](https://github.com/yt-dlp/yt-dlp/issues/15403)

@@ -202,6 +202,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Bluesky**
  - **bnrnews**: BNR News (Bulgarian National Radio)
  - **BongaCams**
+ - **boomplay**: Boomplay
  - **boomstream**: Boomstream
  - **Boosty**
  - **BostonGlobe**
