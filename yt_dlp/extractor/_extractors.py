@@ -1000,6 +1000,7 @@ from .kuwo import (
     KuwoMvIE,
     KuwoSingerIE,
 )
+from .kvf import KVFIE
 from .la7 import (
     LA7IE,
     LA7PodcastEpisodeIE,

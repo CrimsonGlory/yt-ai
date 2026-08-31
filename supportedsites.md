@@ -735,6 +735,7 @@ The only reliable way to check if a site is supported is to try it.
  - **kuwo:mv**: 酷我音乐 - MV
  - **kuwo:singer**: 酷我音乐 - 歌手
  - **kuwo:song**: 酷我音乐
+ - **KVF**: Kringvarp Føroya
  - **la7.it**
  - **la7.it:​pod:episode**
  - **la7.it:podcast**
