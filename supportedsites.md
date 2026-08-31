@@ -272,6 +272,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Cellebrite**
  - **CeskaTelevize**
  - **CGTN**
+ - **chapman**: Chapman University blogs and YuJa video
  - **CharlieRose**
  - **Chaturbate**
  - **Chilloutzone**

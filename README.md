@@ -2298,6 +2298,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Camwhoresbay** (`camwhoresbay.com`): KVS `kt_player` `flashvars` and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#11625](https://github.com/yt-dlp/yt-dlp/issues/11625)
     * **Castbox** (`castbox.fm`): Public `everest.castbox.fm` episode v4 JSON (direct MP3/media URL). Request: [yt-dlp/yt-dlp#16910](https://github.com/yt-dlp/yt-dlp/issues/16910)
     * **CBN** (`cbn.com`): Drupal `_format=json` Brightcove IDs with `video-js` / html5player fallback. Request: [yt-dlp/yt-dlp#15622](https://github.com/yt-dlp/yt-dlp/issues/15622)
+    * **Chapman** (`blogs.chapman.edu`): Impersonate Cloudflare on archive posts, then YuJa `/P/Data/VideoJSON` and `/P/Data/VideoSource` HLS. Request: [yt-dlp/yt-dlp#11127](https://github.com/yt-dlp/yt-dlp/issues/11127)
     * **Cime** (`ci.me`): Public `/api/app` JSON for VOD HLS, clip MP4, and Amazon IVS live. Request: [yt-dlp/yt-dlp#16247](https://github.com/yt-dlp/yt-dlp/issues/16247)
     * **CinemathequeBretagne** (`cinematheque-bretagne.bzh`): Diaz oEmbed iframe HTML5 MP4. Request: [yt-dlp/yt-dlp#15616](https://github.com/yt-dlp/yt-dlp/issues/15616)
     * **CommercialRadio** (`881903.com`): Public `/api/live/src` playlist.js and CloudFront-cookie HLS (`edge-aac`/`edge-ts`). Request: [yt-dlp/yt-dlp#12241](https://github.com/yt-dlp/yt-dlp/issues/12241)
