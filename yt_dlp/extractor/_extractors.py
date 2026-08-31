@@ -1574,6 +1574,7 @@ from .pluralsight import (
 from .plurk import PlurkIE
 from .plutotv import PlutoTVIE
 from .plyr import PlyrEmbedIE
+from .pmvhaven import PMVHavenIE
 from .podbayfm import (
     PodbayFMChannelIE,
     PodbayFMIE,
