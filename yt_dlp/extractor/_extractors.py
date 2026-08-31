@@ -1481,6 +1481,10 @@ from .ntvcojp import NTVCoJpCUIE
 from .ntvde import NTVDeIE
 from .ntvru import NTVRuIE
 from .nubilesporn import NubilesPornIE
+from .nutson import (
+    NutsonIE,
+    NutsonUserIE,
+)
 from .nuvid import NuvidIE
 from .nytimes import (
     NYTimesArticleIE,
