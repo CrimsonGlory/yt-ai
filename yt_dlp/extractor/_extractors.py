@@ -166,6 +166,7 @@ from .aznude import (
 )
 from .b9good import B9GoodIE
 from .baidu import BaiduVideoIE
+from .baidubaike import BaiduBaikeIE
 from .balapan import BalapanIE
 from .banbye import (
     BanByeChannelIE,

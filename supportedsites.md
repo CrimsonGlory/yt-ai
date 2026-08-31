@@ -134,6 +134,7 @@ The only reliable way to check if a site is supported is to try it.
  - **AzNude**: AZNude
  - **aznude:playlist**: AZNude celeb/movie pages
  - **b9good**: B9GOOD
+ - **baidubaike**: 百度百科
  - **BaiduVideo**: 百度视频
  - **Balapan**: Balapan TV livestream
  - **BanBye**
