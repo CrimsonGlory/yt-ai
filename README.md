@@ -2313,6 +2313,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Gayhaus** (`gayhaus.com`): KVS `kt_player` config (randomized JS object) and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#12384](https://github.com/yt-dlp/yt-dlp/issues/12384)
     * **ge.movie** (`ge.movie`): Impersonate Cloudflare, then Playerjs playlists from the `em.filmix.stream` / `em.kinoflix.tv` iframe. Request: [yt-dlp/yt-dlp#13390](https://github.com/yt-dlp/yt-dlp/issues/13390)
     * **Giphy** (`giphy.com`): Next.js gif JSON with unsigned `media.giphy.com` MP4/GIF/WebP (signed OG/v1 URLs return HTML). Request: [yt-dlp/yt-dlp#16970](https://github.com/yt-dlp/yt-dlp/issues/16970)
+    * **GoogleMaps** (`maps.app.goo.gl`): Follow share/place URLs to `lh3.googleusercontent.com` progressive MP4s (`=m18`/`=m22`/`=m37`/`=dv`). Request: [yt-dlp/yt-dlp#12246](https://github.com/yt-dlp/yt-dlp/issues/12246)
     * **Granicus** (`harrisonburg-va.granicus.com`): Flowplayer `video_url` HLS from clip player pages. Request: [yt-dlp/yt-dlp#15344](https://github.com/yt-dlp/yt-dlp/issues/15344)
     * **Hobune** (`hobune.stream`): HTML5 video pages and static channel listings. Request: [yt-dlp/yt-dlp#17541](https://github.com/yt-dlp/yt-dlp/issues/17541)
     * **IcePorn** (`iceporn.com`): Public `/player_config_json/` MP4 files (DrTuber-style API). Request: [yt-dlp/yt-dlp#12478](https://github.com/yt-dlp/yt-dlp/issues/12478)

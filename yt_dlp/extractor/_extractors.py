@@ -746,6 +746,7 @@ from .googledrive import (
     GoogleDriveFolderIE,
     GoogleDriveIE,
 )
+from .googlemaps import GoogleMapsIE
 from .googlesearch import GoogleSearchIE
 from .goplay import GoPlayIE
 from .gopro import GoProIE
