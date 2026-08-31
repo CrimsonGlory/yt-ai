@@ -1637,6 +1637,7 @@ from .putlockerdigital import PutlockerDigitalIE
 from .pyvideo import PyvideoIE
 from .qdance import QDanceIE
 from .qingting import QingTingIE
+from .qlover import QloveRIE
 from .qqmusic import (
     QQMusicAlbumIE,
     QQMusicIE,

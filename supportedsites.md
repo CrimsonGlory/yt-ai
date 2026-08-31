@@ -1193,6 +1193,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Pyvideo**
  - **QDance**: [*qdance*](## "netrc machine")
  - **QingTing**
+ - **qlover**: QloveR
  - **qqmusic**: QQ音乐
  - **qqmusic:album**: QQ音乐 - 专辑
  - **qqmusic:mv**: QQ音乐 - MV
