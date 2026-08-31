@@ -23,6 +23,7 @@ The only reliable way to check if a site is supported is to try it.
  - **4tube**
  - **56.com**
  - **7plus**
+ - **881903**: Commercial Radio Hong Kong
  - **91porn**
  - **9c9media**
  - **9gag**: 9GAG

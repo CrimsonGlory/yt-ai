@@ -378,6 +378,7 @@ from .cnn import (
     CNNIndonesiaIE,
 )
 from .comedycentral import ComedyCentralIE
+from .commercialradio import CommercialRadioIE
 from .commonmistakes import (
     BlobIE,
     CommonMistakesIE,
