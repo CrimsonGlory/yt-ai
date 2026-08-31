@@ -2287,6 +2287,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **ATPTour** (`atptour.com`): Impersonate Cloudflare, then Brightcove IDs from `/videos/getcurrentrelatedvideos` and news-page `video-js`/iframe embeds. Request: [yt-dlp/yt-dlp#10816](https://github.com/yt-dlp/yt-dlp/issues/10816)
     * **Avjb** (`avjb.com`): Player CSRF `/player/spped.php` HLS lines, with Playerjs preview MP4 fallback. Request: [yt-dlp/yt-dlp#14653](https://github.com/yt-dlp/yt-dlp/issues/14653)
     * **AzNude** (`aznude.com`): JWPlayer `playerInstance.setup` HLS/MP4 from `/azncdn/` and `/embed/` pages; celeb/movie listings as playlists. Request: [yt-dlp/yt-dlp#12060](https://github.com/yt-dlp/yt-dlp/issues/12060)
+    * **B9Good** (`b9good.org`): korxime.guru JWPlayer embed; signed `/ajax/getSources` AES-GCM HLS. Request: [yt-dlp/yt-dlp#9245](https://github.com/yt-dlp/yt-dlp/issues/9245)
     * **Balapan** (`balapan.tv`): Clappr HLS from the `player.rtrk.kz` live iframe. Request: [yt-dlp/yt-dlp#17241](https://github.com/yt-dlp/yt-dlp/issues/17241)
     * **BeatStars** (`beatstars.com`): Public `main.v2.beatstars.com/track` JSON and tagged stream MP3. Request: [yt-dlp/yt-dlp#14675](https://github.com/yt-dlp/yt-dlp/issues/14675)
     * **BigMarker** (`bigmarker.com`): Conference-page `bmVideoPlayer.loadVideo` progressive MP4, plus HLS/DASH when unencrypted. Request: [yt-dlp/yt-dlp#13694](https://github.com/yt-dlp/yt-dlp/issues/13694)
