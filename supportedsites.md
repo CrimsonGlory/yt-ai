@@ -843,6 +843,7 @@ The only reliable way to check if a site is supported is to try it.
  - **MelonVOD**
  - **Metacritic**
  - **mewatch**
+ - **Mfcamhub**: mfcamhub.com
  - **MicrosoftBuild**
  - **MicrosoftEmbed**
  - **MicrosoftLearnEpisode**

@@ -1147,6 +1147,7 @@ from .meijifilmarchives import (
 from .meipai import MeipaiIE
 from .melonvod import MelonVODIE
 from .metacritic import MetacriticIE
+from .mfcamhub import MfcamhubIE
 from .mgtv import MGTVIE
 from .microsoftembed import (
     MicrosoftBuildIE,

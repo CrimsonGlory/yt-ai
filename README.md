@@ -2344,6 +2344,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **MatreshkaTV** (`matreshka.tv`): Public `/api/video-service/v1/video/{id}` JSON for signed HLS on `c4-video.cmtv.ru`. Request: [yt-dlp/yt-dlp#15380](https://github.com/yt-dlp/yt-dlp/issues/15380)
     * **MeansTV** (`means.tv`): Uscreen `/program_content` Mux HLS; collections via `/collection_homepage`. Request: [yt-dlp/yt-dlp#12026](https://github.com/yt-dlp/yt-dlp/issues/12026)
     * **MeijiFilmArchives** (`meiji.filmarchives.jp`): NII `h10.cs.nii.ac.jp` iframe DASH/HLS (`video_view.php`) from work and Lumière pages. Request: [yt-dlp/yt-dlp#13035](https://github.com/yt-dlp/yt-dlp/issues/13035)
+    * **Mfcamhub** (`mfcamhub.com`): KVS `kt_player` hashed flashvars and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#10449](https://github.com/yt-dlp/yt-dlp/issues/10449)
     * **MissAV** (`missav`): Impersonate Cloudflare, unpack packed player JS, and download `surrit.com` HLS. Request: [yt-dlp/yt-dlp#11458](https://github.com/yt-dlp/yt-dlp/issues/11458)
     * **MissEvan** (`missevan.com`): Public `/sound/getsound` JSON for progressive M4A; SAMPLE-AES HLS is DRM. Request: [yt-dlp/yt-dlp#15517](https://github.com/yt-dlp/yt-dlp/issues/15517)
     * **Mp4Porn** (`mp4porn.space`): Player `url_v` `/play` MP4 and `/play_hls` HLS with a site Referer. Request: [yt-dlp/yt-dlp#15302](https://github.com/yt-dlp/yt-dlp/issues/15302)
