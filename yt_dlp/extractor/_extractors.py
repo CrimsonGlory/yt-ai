@@ -2444,6 +2444,7 @@ from .vice import (
 )
 from .viddler import ViddlerIE
 from .videa import VideaIE
+from .videas import VideasIE
 from .videocampus_sachsen import (
     VideocampusSachsenIE,
     ViMPPlaylistIE,

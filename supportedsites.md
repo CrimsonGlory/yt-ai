@@ -1749,6 +1749,7 @@ The only reliable way to check if a site is supported is to try it.
  - **vice:show**
  - **Viddler**
  - **Videa**
+ - **Videas**
  - **video.arnes.si**: Arnes Video
  - **video.google:search**: Google Video search; "gvsearch:" prefix
  - **video.sky.it**
