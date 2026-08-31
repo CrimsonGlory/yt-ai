@@ -1510,6 +1510,7 @@ from .orf import (
 )
 from .outsidetv import OutsideTVIE
 from .owncloud import OwnCloudIE
+from .pacegallery import PaceGalleryIE
 from .packtpub import (
     PacktPubCourseIE,
     PacktPubIE,

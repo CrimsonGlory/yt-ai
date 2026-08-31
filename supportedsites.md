@@ -1104,6 +1104,7 @@ The only reliable way to check if a site is supported is to try it.
  - **OsnatelTVRecordings**: [*osnateltv*](## "netrc machine")
  - **OutsideTV**
  - **OwnCloud**
+ - **pacegallery**: Pace Gallery
  - **PacktPub**: [*packtpub*](## "netrc machine")
  - **PacktPubCourse**
  - **PalcoMP3:artist**
