@@ -636,6 +636,7 @@ The only reliable way to check if a site is supported is to try it.
  - **HungamaSong**
  - **huya:live**: 虎牙直播
  - **huya:video**: 虎牙视频
+ - **Hypeddit**
  - **Hypem**
  - **Hytale**
  - **Icareus**

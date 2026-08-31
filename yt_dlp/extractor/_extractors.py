@@ -848,6 +848,7 @@ from .huya import (
     HuyaLiveIE,
     HuyaVideoIE,
 )
+from .hypeddit import HypedditIE
 from .hypem import HypemIE
 from .hypergryph import MonsterSirenHypergryphMusicIE
 from .hytale import HytaleIE
