@@ -530,6 +530,10 @@ The only reliable way to check if a site is supported is to try it.
  - **FrontendMastersLesson**: [*frontendmasters*](## "netrc machine")
  - **Funk**
  - **Funker530**
+ - **funkwhale**: Funkwhale
+ - **funkwhale:album**
+ - **funkwhale:channel**
+ - **funkwhale:playlist**
  - **Fux**
  - **FuyinTV**
  - **fyptt**: fyptt.to

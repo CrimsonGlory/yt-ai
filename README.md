@@ -2332,6 +2332,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Forendors** (`forendors.cz`): Public `api.forendors.cz` post JSON and signed `assets.forendors.cz` HLS. Request: [yt-dlp/yt-dlp#15173](https://github.com/yt-dlp/yt-dlp/issues/15173)
     * **FOX4KC** (`fox4kc.com`): Anvato/Lura HLS from `/video/{slug}/{id}/` URLs and WordPress `lead_media` on article pages. Request: [yt-dlp/yt-dlp#16582](https://github.com/yt-dlp/yt-dlp/issues/16582)
     * **FreeSex** (`freesex.cz`): POST the 18+ terms form and extract the Video.js HTML5 MP4. Request: [yt-dlp/yt-dlp#15930](https://github.com/yt-dlp/yt-dlp/issues/15930)
+    * **Funkwhale** (`funk.firobe.fr`): Public `/api/v1` track, playlist, album, and channel JSON plus `/api/v1/listen` audio. Request: [yt-dlp/yt-dlp#7627](https://github.com/yt-dlp/yt-dlp/issues/7627)
     * **Fyptt** (`fyptt.to`): ARVE iframe to Video.js `fypttstr.php` / JWPlayer `fypttjwstr.php` and tokenized `stream.fyptt.to` MP4. Request: [yt-dlp/yt-dlp#7998](https://github.com/yt-dlp/yt-dlp/issues/7998)
     * **Gayhaus** (`gayhaus.com`): KVS `kt_player` config (randomized JS object) and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#12384](https://github.com/yt-dlp/yt-dlp/issues/12384)
     * **ge.movie** (`ge.movie`): Impersonate Cloudflare, then Playerjs playlists from the `em.filmix.stream` / `em.kinoflix.tv` iframe. Request: [yt-dlp/yt-dlp#13390](https://github.com/yt-dlp/yt-dlp/issues/13390)
