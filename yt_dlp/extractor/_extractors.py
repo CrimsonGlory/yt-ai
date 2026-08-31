@@ -1192,6 +1192,10 @@ from .mirrativ import (
 from .mirrorcouk import MirrorCoUKIE
 from .missav import MissAVIE
 from .missevan import MissEvanIE
+from .misterrogers import (
+    MisterRogersIE,
+    MisterRogersPlaylistIE,
+)
 from .mit import (
     OCWMITIE,
     TechTVMITIE,

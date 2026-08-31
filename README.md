@@ -2366,6 +2366,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Mfcamhub** (`mfcamhub.com`): KVS `kt_player` hashed flashvars and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#10449](https://github.com/yt-dlp/yt-dlp/issues/10449)
     * **MissAV** (`missav`): Impersonate Cloudflare, unpack packed player JS, and download `surrit.com` HLS. Request: [yt-dlp/yt-dlp#11458](https://github.com/yt-dlp/yt-dlp/issues/11458)
     * **MissEvan** (`missevan.com`): Public `/sound/getsound` JSON for progressive M4A; SAMPLE-AES HLS is DRM. Request: [yt-dlp/yt-dlp#15517](https://github.com/yt-dlp/yt-dlp/issues/15517)
+    * **MisterRogers** (`misterrogers.org`): Brightcove `video-js` player IDs from public `/videos/` clips and `/video-playlist/` pages. Request: [yt-dlp/yt-dlp#8263](https://github.com/yt-dlp/yt-dlp/issues/8263)
     * **MoverUz** (`mover.uz`): Decode obfuscated Playerjs `#2` config for labeled `v.mover.uz` MP4s. Request: [yt-dlp/yt-dlp#9579](https://github.com/yt-dlp/yt-dlp/issues/9579)
     * **Mp4Porn** (`mp4porn.space`): Player `url_v` `/play` MP4 and `/play_hls` HLS with a site Referer. Request: [yt-dlp/yt-dlp#15302](https://github.com/yt-dlp/yt-dlp/issues/15302)
     * **Mp4Upload** (`mp4upload.com`): Video.js `player.src` MP4 from embed pages with a site Referer. Request: [yt-dlp/yt-dlp#14075](https://github.com/yt-dlp/yt-dlp/issues/14075)

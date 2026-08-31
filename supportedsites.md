@@ -879,6 +879,8 @@ The only reliable way to check if a site is supported is to try it.
  - **MirrorCoUK**
  - **missav**: MissAV
  - **missevan**: MissEvan / 猫耳FM
+ - **misterrogers**: Mister Rogers' Neighborhood
+ - **misterrogers:playlist**: Mister Rogers' Neighborhood playlists
  - **mixch**
  - **mixch:archive**
  - **mixch:movie**
