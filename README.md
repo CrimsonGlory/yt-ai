@@ -2356,6 +2356,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **PornSlash** (`pornslash.com`): HLS.js `loadSource` master playlist with `/media/report` host fallback. Request: [yt-dlp/yt-dlp#14768](https://github.com/yt-dlp/yt-dlp/issues/14768)
     * **PreserveTube** (`preservetube.com`): Public `/video/{id}` JSON API and HTML5 fallback; channel archives from `/channel/{id}/videos`. Request: [yt-dlp/yt-dlp#17540](https://github.com/yt-dlp/yt-dlp/issues/17540)
     * **Plurk** (`plurk.com`): Parse post-page `plurk` JSON for `video.plurk.com` MP4/HLS with the `verify` token. Request: [yt-dlp/yt-dlp#15679](https://github.com/yt-dlp/yt-dlp/issues/15679)
+    * **PutlockerDigital** (`www2.putlocker.digital`): Watch-page JWPlayer `?number=` JSON for loadshare.org MP4/HLS. Request: [yt-dlp/yt-dlp#11365](https://github.com/yt-dlp/yt-dlp/issues/11365)
     * **RacingTV** (`racingtv.com`): Public `api.racingtv.com` on-demand JSON (client `API-KEY`) and HLS after the preroll token wait. Request: [yt-dlp/yt-dlp#17503](https://github.com/yt-dlp/yt-dlp/issues/17503)
     * **Rahatupu** (`rahatupu.net`): Schema.org VideoObject `contentUrl` MP4 (Clean Tube player iframe fallback). Request: [yt-dlp/yt-dlp#12300](https://github.com/yt-dlp/yt-dlp/issues/12300)
     * **RedziDzirdiLatviju** (`redzidzirdilatviju.lv`): Solr `/index` JSON for movies (Nimble HLS on `filmas.arhivi.lv`) and sound samples (archive MP3). Request: [yt-dlp/yt-dlp#15886](https://github.com/yt-dlp/yt-dlp/issues/15886)

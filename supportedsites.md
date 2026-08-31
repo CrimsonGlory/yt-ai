@@ -1176,6 +1176,7 @@ The only reliable way to check if a site is supported is to try it.
  - **PRXStory**
  - **puhutv**
  - **puhutv:serie**
+ - **putlocker:digital**: Putlocker.digital
  - **Pyvideo**
  - **QDance**: [*qdance*](## "netrc machine")
  - **QingTing**
