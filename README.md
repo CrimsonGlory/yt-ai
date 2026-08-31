@@ -2427,6 +2427,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Thothub** (`thothub.to`): KVS `kt_player` flashvars and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#13133](https://github.com/yt-dlp/yt-dlp/issues/13133)
     * **ThreeNow** (`threenow.co.nz`): Live channels from the public `now-api.fullscreen.nz` `live-epg` HLS. Request: [yt-dlp/yt-dlp#17082](https://github.com/yt-dlp/yt-dlp/issues/17082)
     * **TimesRadio** (`thetimes.com`): HTML5 catch-up MP3 (Omny) and live AAC stream from Times Radio pages; impersonate for the device-check interstitial. Request: [yt-dlp/yt-dlp#17253](https://github.com/yt-dlp/yt-dlp/issues/17253)
+    * **Tipeee** (`tipeee.com` / `tipeee.fr`): Public news-post `api.tipeee.com` JSON and YouTube/Vimeo embed URLs. Request: [yt-dlp/yt-dlp#8465](https://github.com/yt-dlp/yt-dlp/issues/8465)
     * **TreffDarc** (`treff.darc.de`): BigBlueButton `metadata.xml` plus public webcam/deskshare WebM/MP4. Request: [yt-dlp/yt-dlp#11372](https://github.com/yt-dlp/yt-dlp/issues/11372)
     * **TuckerCarlson** (`tuckercarlson.com`): Impersonate Cloudflare, then JSON-LD `contentUrl` Cloudflare Stream HLS/DASH. Request: [yt-dlp/yt-dlp#9169](https://github.com/yt-dlp/yt-dlp/issues/9169)
     * **TVAsahiDouga** (`douga.tv-asahi.co.jp`): Episode-page `window.app` Falcor metadata and Brightcove HLS (`ovp_video_id`) with JP geo-bypass. Request: [yt-dlp/yt-dlp#14947](https://github.com/yt-dlp/yt-dlp/issues/14947)

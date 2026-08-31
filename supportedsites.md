@@ -1601,6 +1601,7 @@ The only reliable way to check if a site is supported is to try it.
  - **tiktok:tag**
  - **tiktok:user**
  - **TimesRadio**: Times Radio
+ - **tipeee**: Tipeee
  - **TLC**
  - **TMZ**
  - **TNAFlix**

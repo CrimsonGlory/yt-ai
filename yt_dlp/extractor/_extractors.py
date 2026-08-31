@@ -2219,6 +2219,7 @@ from .tiktok import (
     TikTokVMIE,
 )
 from .timesradio import TimesRadioIE
+from .tipeee import TipeeeIE
 from .tmz import TMZIE
 from .tnaflix import (
     EMPFlixIE,
