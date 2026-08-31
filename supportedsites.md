@@ -237,6 +237,7 @@ The only reliable way to check if a site is supported is to try it.
  - **BusinessInsider**
  - **BuzzFeed**
  - **BYUtv**
+ - **cablecast**: Cablecast
  - **Caltrans**
  - **CAM4**
  - **CamFMEpisode**
