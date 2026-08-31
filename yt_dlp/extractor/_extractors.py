@@ -1653,6 +1653,7 @@ from .proko import (
     ProkoCourseIE,
     ProkoIE,
 )
+from .promodj import PromoDJIE
 from .prx import (
     PRXAccountIE,
     PRXSeriesIE,

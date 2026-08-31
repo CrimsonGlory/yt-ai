@@ -1207,6 +1207,7 @@ The only reliable way to check if a site is supported is to try it.
  - **ProjectVeritas**
  - **proko**: Proko
  - **proko:course**: Proko courses
+ - **promodj**: PromoDJ
  - **PRXAccount**
  - **PRXSeries**
  - **prxseries:search**: PRX Series Search; "prxseries:" prefix

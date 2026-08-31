@@ -2387,6 +2387,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **PreserveTube** (`preservetube.com`): Public `/video/{id}` JSON API and HTML5 fallback; channel archives from `/channel/{id}/videos`. Request: [yt-dlp/yt-dlp#17540](https://github.com/yt-dlp/yt-dlp/issues/17540)
     * **Plurk** (`plurk.com`): Parse post-page `plurk` JSON for `video.plurk.com` MP4/HLS with the `verify` token. Request: [yt-dlp/yt-dlp#15679](https://github.com/yt-dlp/yt-dlp/issues/15679)
     * **Proko** (`proko.com`): Public `/api/lessons` and `/api/videos` JSON for YouTube/Vimeo lesson hosts; `/api/courses` playlists. Request: [yt-dlp/yt-dlp#9508](https://github.com/yt-dlp/yt-dlp/issues/9508)
+    * **PromoDJ** (`promodj.com`): Parse `CORE.Player` JSON for prelisten/download MP3 and H.264 video. Request: [yt-dlp/yt-dlp#8721](https://github.com/yt-dlp/yt-dlp/issues/8721)
     * **PutlockerDigital** (`www2.putlocker.digital`): Watch-page JWPlayer `?number=` JSON for loadshare.org MP4/HLS. Request: [yt-dlp/yt-dlp#11365](https://github.com/yt-dlp/yt-dlp/issues/11365)
     * **QloveR** (`qlover.jp`): Public `api.qlover.jp/fc` Sheeta video_pages, session-id HLS, and CloudFront-cookie audio content_access. Request: [yt-dlp/yt-dlp#10260](https://github.com/yt-dlp/yt-dlp/issues/10260)
     * **RacingTV** (`racingtv.com`): Public `api.racingtv.com` on-demand JSON (client `API-KEY`) and HLS after the preroll token wait. Request: [yt-dlp/yt-dlp#17503](https://github.com/yt-dlp/yt-dlp/issues/17503)
