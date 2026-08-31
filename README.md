@@ -2445,6 +2445,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **glide**: Nested share path IDs
     * **globalplayer:live**: Fetch the stream from the guacamole playables API
     * **godtube**: Schema.org `contentUrl` instead of player XML
+    * **gofile**: Sign `X-Website-Token` from `wt.obf.js` and download all folder files (any type) with the `accountToken` cookie
     * **gopro**: Fetch the download URL from the JWT `medium_id`
     * **gotostage**: New Goto contentservice API hosts
     * **hbo**: Current HBO.com video/embed JSON instead of the old XML player

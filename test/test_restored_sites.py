@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
 # Allow direct execution
+import hashlib
 import io
 import json
 import os
 import sys
 import unittest
+from unittest import mock
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -278,9 +280,75 @@ class TestRestoredSites(unittest.TestCase):
         info = GofileIE(ydl).extract('https://gofile.io/d/AMZyDw')
         self.assertEqual(info['id'], 'AMZyDw')
         entries = list(info['entries'])
-        self.assertEqual(len(entries), 1)
-        self.assertEqual(entries[0]['id'], 'file-1')
-        self.assertEqual(entries[0]['url'], 'https://cdn.example.com/clip.mp4')
+        self.assertEqual(len(entries), 2)
+        by_id = {entry['id']: entry for entry in entries}
+        self.assertEqual(by_id['file-1']['url'], 'https://cdn.example.com/clip.mp4')
+        self.assertEqual(by_id['file-1']['ext'], 'mp4')
+        self.assertEqual(by_id['file-2']['url'], 'https://cdn.example.com/notes.txt')
+        self.assertEqual(by_id['file-2']['ext'], 'txt')
+        self.assertIn('accountToken=guest-token', by_id['file-1']['http_headers']['Cookie'])
+
+    def test_gofile_nested_folder_and_images(self):
+        account = json.dumps({'data': {'token': 'guest-token'}})
+        listing = json.dumps({
+            'status': 'ok',
+            'data': {
+                'name': 'album',
+                'type': 'folder',
+                'children': {
+                    'img': {
+                        'id': 'img-1',
+                        'type': 'file',
+                        'name': 'photo.jpg',
+                        'mimetype': 'image/jpeg',
+                        'link': 'https://cdn.example.com/photo.jpg',
+                        'size': 10,
+                    },
+                    'sub': {
+                        'id': 'sub-folder',
+                        'type': 'folder',
+                        'name': 'more',
+                    },
+                },
+            },
+            'metadata': {'hasNextPage': False},
+        })
+        nested = json.dumps({
+            'status': 'ok',
+            'data': {
+                'name': 'more',
+                'type': 'folder',
+                'children': {
+                    'doc': {
+                        'id': 'doc-1',
+                        'type': 'file',
+                        'name': 'readme.txt',
+                        'mimetype': 'text/plain',
+                        'link': 'https://cdn.example.com/readme.txt',
+                    },
+                },
+            },
+        })
+        ydl = FixtureYDL({
+            'api.gofile.io/accounts': account,
+            'api.gofile.io/contents/album1': listing,
+            'api.gofile.io/contents/sub-folder': nested,
+        })
+        info = GofileIE(ydl).extract('https://gofile.io/d/album1')
+        self.assertEqual(info['title'], 'album')
+        entries = list(info['entries'])
+        self.assertEqual({entry['id'] for entry in entries}, {'img-1', 'doc-1'})
+
+    def test_gofile_website_token(self):
+        ie = GofileIE(FakeYDL())
+        with mock.patch('yt_dlp.extractor.gofile.time.time', return_value=124176 * 14400):
+            token = ie._website_token('guest-token')
+        raw = '{}::{}::guest-token::124176::{}'.format(
+            GofileIE._CLIENT_UA, GofileIE._CLIENT_LANG, GofileIE._WT_SALT)
+        self.assertEqual(token, hashlib.sha256(raw.encode()).hexdigest())
+        self.assertEqual(
+            ie._extract_wt_salt(r"var x=['\x31\x32\x61\x66\x30\x35\x36\x64\x61\x63\x65\x61\x30\x62'];"),
+            '12af056dacea0b')
 
     def test_gofile_password_required(self):
         account = json.dumps({'data': {'token': 'guest-token'}})
