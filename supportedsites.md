@@ -1179,6 +1179,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Pinkbike**
  - **Pinterest**
  - **PinterestCollection**
+ - **planetwissen**: Planet Wissen
  - **Platzi**: [*platzi*](## "netrc machine")
  - **PlatziCourse**: [*platzi*](## "netrc machine")
  - **play.tv**: [*goplay*](## "netrc machine") PLAY (formerly goplay.be)

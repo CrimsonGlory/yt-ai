@@ -1620,6 +1620,7 @@ from .pinterest import (
     PinterestCollectionIE,
     PinterestIE,
 )
+from .planetwissen import PlanetWissenIE
 from .platzi import (
     PlatziCourseIE,
     PlatziIE,
