@@ -716,6 +716,7 @@ from .frontendmasters import (
 from .funk import FunkIE
 from .funker530 import Funker530IE
 from .fuyintv import FuyinTVIE
+from .fyptt import FypttIE
 from .gab import GabIE
 from .gaia import GaiaIE
 from .gamedevtv import GameDevTVDashboardIE

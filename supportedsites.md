@@ -531,6 +531,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Funker530**
  - **Fux**
  - **FuyinTV**
+ - **fyptt**: fyptt.to
  - **Gab**
  - **Gaia**: [*gaia*](## "netrc machine")
  - **GameDevTVDashboard**: [*gamedevtv*](## "netrc machine")
