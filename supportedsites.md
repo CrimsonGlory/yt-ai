@@ -635,6 +635,7 @@ The only reliable way to check if a site is supported is to try it.
  - **history:player**
  - **history:topic**: History.com Topic
  - **HitRecord**
+ - **hket**: Hong Kong Economic Times
  - **hobune**: hobune.stream
  - **hobune:channel**
  - **HollywoodReporter**
