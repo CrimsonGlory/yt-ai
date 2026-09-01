@@ -2454,6 +2454,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **QosVideos** (`qosvideos.com`): Schema.org VideoObject `contentURL` MP4 (Clean Tube player iframe fallback). Request: [yt-dlp/yt-dlp#8478](https://github.com/yt-dlp/yt-dlp/issues/8478)
     * **QuartierRouge** (`quartier-rouge.be`): Video.js HLS (`a.qr.be`) from public listing and profile pages. Request: [yt-dlp/yt-dlp#5831](https://github.com/yt-dlp/yt-dlp/issues/5831)
     * **RacingTV** (`racingtv.com`): Public `api.racingtv.com` on-demand JSON (client `API-KEY`) and HLS after the preroll token wait. Request: [yt-dlp/yt-dlp#17503](https://github.com/yt-dlp/yt-dlp/issues/17503)
+    * **Radio4** (`radio4.dk`): Nuxt `_payload.json` episode `audioUrl` (Omny MP3). Request: [yt-dlp/yt-dlp#4076](https://github.com/yt-dlp/yt-dlp/issues/4076)
     * **RadioCentral** (`radiocentral.ch`): Parse `window.__APOLLO_STATE__` show-segment AudioAssets (az-cdn MP3s) from podcast pages. Request: [yt-dlp/yt-dlp#8400](https://github.com/yt-dlp/yt-dlp/issues/8400)
     * **RadioCourtoisie** (`radiocourtoisie.fr`): WordPress `sr_playlist` REST plus Sonaar `playlist.json` MP3s (also `rc.fr`). Request: [yt-dlp/yt-dlp#6377](https://github.com/yt-dlp/yt-dlp/issues/6377)
     * **Rahatupu** (`rahatupu.net`): Schema.org VideoObject `contentUrl` MP4 (Clean Tube player iframe fallback). Request: [yt-dlp/yt-dlp#12300](https://github.com/yt-dlp/yt-dlp/issues/12300)

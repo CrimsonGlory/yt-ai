@@ -1776,6 +1776,7 @@ from .radiko import (
     RadikoIE,
     RadikoRadioIE,
 )
+from .radio4 import Radio4IE
 from .radiocanada import (
     RadioCanadaAudioVideoIE,
     RadioCanadaIE,

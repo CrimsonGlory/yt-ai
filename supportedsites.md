@@ -1309,6 +1309,7 @@ The only reliable way to check if a site is supported is to try it.
  - **RadikoRadio**
  - **radio.de**
  - **Radio1Be**
+ - **radio4**: Radio4
  - **radiocanada**
  - **radiocanada:audiovideo**
  - **radiocentral**: Radio Central
