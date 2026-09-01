@@ -236,6 +236,7 @@ The only reliable way to check if a site is supported is to try it.
  - **BrainPOPFr**: [*brainpop*](## "netrc machine") BrainPOP Français
  - **BrainPOPIl**: [*brainpop*](## "netrc machine") BrainPOP Hebrew
  - **BrainPOPJr**: [*brainpop*](## "netrc machine")
+ - **brandnewtube**: BrandNewTube / OneVSP
  - **brandxmusic**: Brand X Music
  - **brandxmusic:album**: Brand X Music albums
  - **BravoTV**

@@ -285,6 +285,7 @@ from .brainpop import (
     BrainPOPIlIE,
     BrainPOPJrIE,
 )
+from .brandnewtube import BrandNewTubeIE
 from .brandxmusic import (
     BrandXMusicAlbumIE,
     BrandXMusicIE,

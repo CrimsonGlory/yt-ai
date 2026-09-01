@@ -2310,6 +2310,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **BoundHub** (`boundhub.com`): Impersonate Cloudflare, then KVS `kt_player` `flashvars` and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#3940](https://github.com/yt-dlp/yt-dlp/issues/3940)
     * **BoyfriendTV** (`boyfriendtv.com`): Player `sources.hlsAuto` HLS from video pages. Request: [yt-dlp/yt-dlp#15509](https://github.com/yt-dlp/yt-dlp/issues/15509)
     * **Bouke** (`bouke.media`): Drupal Freecaster `data-video-id` / `live_token` embed JSON (MP4, HLS, DASH). Request: [yt-dlp/yt-dlp#15403](https://github.com/yt-dlp/yt-dlp/issues/15403)
+    * **BrandNewTube** (`brandnewtube.com` / `onevsp.com`): HTML5/`<source>` MP4 and Livewire `video-player` URL, with Bunny Stream iframe fallback. Request: [yt-dlp/yt-dlp#2715](https://github.com/yt-dlp/yt-dlp/issues/2715)
     * **BrandXMusic** (`brandxmusic.net`): CadenzaBox `api.cadenzabox.com` track/release JSON and public GCS `webAudio` MP3. Request: [yt-dlp/yt-dlp#3304](https://github.com/yt-dlp/yt-dlp/issues/3304)
     * **Brighteon** (`brighteon.com`): Next.js `__NEXT_DATA__` HLS/DASH and `/api-v3/channels` listings. Request: [yt-dlp/yt-dlp#8214](https://github.com/yt-dlp/yt-dlp/issues/8214)
     * **Brollie** (`brollie.com.au`): MAZ catalog `item_feeds` plus anonymous Zype HLS from `api.maz.tv`. Request: [yt-dlp/yt-dlp#15164](https://github.com/yt-dlp/yt-dlp/issues/15164)
