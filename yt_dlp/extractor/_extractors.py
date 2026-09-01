@@ -1194,6 +1194,7 @@ from .meijifilmarchives import (
 )
 from .meipai import MeipaiIE
 from .melonvod import MelonVODIE
+from .memobase import MemobaseIE
 from .meridix import MeridixIE
 from .metacritic import MetacriticIE
 from .mfcamhub import MfcamhubIE

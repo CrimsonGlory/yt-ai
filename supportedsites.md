@@ -881,6 +881,7 @@ The only reliable way to check if a site is supported is to try it.
  - **mellowfan:movie**: [*mellowfan*](## "netrc machine")
  - **mellowfan:playlist**: [*mellowfan*](## "netrc machine")
  - **MelonVOD**
+ - **memobase**: MEMOBASE von Memoriav
  - **Meridix**: Meridix / Stack Streaming
  - **Metacritic**
  - **mewatch**
