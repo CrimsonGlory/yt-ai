@@ -569,6 +569,7 @@ The only reliable way to check if a site is supported is to try it.
  - **GameStar**
  - **Gaskrank**
  - **Gayhaus**: gayhaus.com
+ - **Gaystream**: gaystream.pw
  - **Gazeta**
  - **GBNews**: GB News clips, features and live streams
  - **GDCVault**: [*gdcvault*](## "netrc machine")

@@ -2352,6 +2352,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Funkwhale** (`funk.firobe.fr`): Public `/api/v1` track, playlist, album, and channel JSON plus `/api/v1/listen` audio. Request: [yt-dlp/yt-dlp#7627](https://github.com/yt-dlp/yt-dlp/issues/7627)
     * **Fyptt** (`fyptt.to`): ARVE iframe to Video.js `fypttstr.php` / JWPlayer `fypttjwstr.php` and tokenized `stream.fyptt.to` MP4. Request: [yt-dlp/yt-dlp#7998](https://github.com/yt-dlp/yt-dlp/issues/7998)
     * **Gayhaus** (`gayhaus.com`): KVS `kt_player` config (randomized JS object) and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#12384](https://github.com/yt-dlp/yt-dlp/issues/12384)
+    * **Gaystream** (`gaystream.pw`): Server-tab embed URLs; prefer **voe**, with Vidhide packed HLS fallback. Request: [yt-dlp/yt-dlp#3312](https://github.com/yt-dlp/yt-dlp/issues/3312)
     * **ge.movie** (`ge.movie`): Impersonate Cloudflare, then Playerjs playlists from the `em.filmix.stream` / `em.kinoflix.tv` iframe. Request: [yt-dlp/yt-dlp#13390](https://github.com/yt-dlp/yt-dlp/issues/13390)
     * **Giphy** (`giphy.com`): Next.js gif JSON with unsigned `media.giphy.com` MP4/GIF/WebP (signed OG/v1 URLs return HTML). Request: [yt-dlp/yt-dlp#16970](https://github.com/yt-dlp/yt-dlp/issues/16970)
     * **GlobalNews** (`globalnews.ca`): JSON-LD `contentUrl` MP4 for `/video/` clips and JW `video-entry` HLS for `/live/` streams. Request: [yt-dlp/yt-dlp#9266](https://github.com/yt-dlp/yt-dlp/issues/9266)
