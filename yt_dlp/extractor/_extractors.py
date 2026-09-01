@@ -1637,6 +1637,7 @@ from .periscope import (
     PeriscopeIE,
     PeriscopeUserIE,
 )
+from .perverzija import PerverzijaIE
 from .pgatour import PGATourIE
 from .philharmoniedeparis import PhilharmonieDeParisIE
 from .phoenix import PhoenixIE

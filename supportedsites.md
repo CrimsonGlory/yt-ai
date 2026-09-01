@@ -1194,6 +1194,7 @@ The only reliable way to check if a site is supported is to try it.
  - **PerformGroup**
  - **periscope**: Periscope
  - **periscope:user**: Periscope user videos
+ - **Perverzija**: Perverzija
  - **PGATour**
  - **PhilharmonieDeParis**: Philharmonie de Paris
  - **phoenix.de**
