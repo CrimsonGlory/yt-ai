@@ -2356,6 +2356,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **IFunny** (`ifunny.co` / `img.ifunny.co`): Video-page Open Graph/HTML5 MP4 (`img.getfn.io` / `img.ifunny.co`) and CSRF `/api/v1/user/{nick}/timeline` playlists. Request: [yt-dlp/yt-dlp#8006](https://github.com/yt-dlp/yt-dlp/issues/8006)
     * **ImagenTV** (`imagentv.com`): Dailymotion (and YouTube) IDs from Drupal `itv_content_result` and the public livestreaming API. Request: [yt-dlp/yt-dlp#16391](https://github.com/yt-dlp/yt-dlp/issues/16391)
     * **InfosecExchange** (`video.infosec.exchange`): PeerTube `/api/v1/videos` JSON for HLS and fragmented MP4. Request: [yt-dlp/yt-dlp#11857](https://github.com/yt-dlp/yt-dlp/issues/11857)
+    * **ipfs** (`ipfs://`): Rewrite `ipfs://`/`ipns://` CIDs to an HTTP gateway (`--extractor-args ipfs:gateway=URL`, `IPFS_GATEWAY`, or Pinata). Request: [yt-dlp/yt-dlp#6860](https://github.com/yt-dlp/yt-dlp/issues/6860)
     * **Javtiful** (`javtiful.com`): Plyr `playerSources` HTML5 MP4 with JSON-LD metadata. Request: [yt-dlp/yt-dlp#12280](https://github.com/yt-dlp/yt-dlp/issues/12280)
     * **JCBASimul** (`jcbasimul.com`): Radimo `select_stream` JWT plus Ogg Opus over WebSocket (`listener.fmplapla.com`). Request: [yt-dlp/yt-dlp#14092](https://github.com/yt-dlp/yt-dlp/issues/14092)
     * **KamTape** (`kamtape.com`): VLPlayer `get_video` (HTML5 MP4) from watch pages. Request: [yt-dlp/yt-dlp#17508](https://github.com/yt-dlp/yt-dlp/issues/17508)

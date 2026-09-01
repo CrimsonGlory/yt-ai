@@ -920,6 +920,7 @@ from .instagram import (
     InstagramUserIE,
 )
 from .internazionale import InternazionaleIE
+from .ipfs import IpfsIE
 from .iprima import (
     IPrimaCNNIE,
     IPrimaIE,

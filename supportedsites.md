@@ -687,6 +687,7 @@ The only reliable way to check if a site is supported is to try it.
  - **InstagramIOS**: IOS instagram:// URL
  - **Internazionale**
  - **InvestigationDiscovery**
+ - **ipfs**: IPFS
  - **IPrima**: [*iprima*](## "netrc machine")
  - **IPrimaCNN**
  - **iq.com**: International version of iQiyi
