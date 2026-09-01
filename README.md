@@ -2426,6 +2426,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Musi** (`feelthemusi.com`): Public `/api/v4/playlists/fetch` JSON and YouTube video IDs. Request: [yt-dlp/yt-dlp#12931](https://github.com/yt-dlp/yt-dlp/issues/12931)
     * **MusicBrainz** (`musicbrainz.org`): MusicBrainz WS/2 URL relationships, preferring YouTube/SoundCloud/Audius/Audiomack/Bandcamp. Request: [yt-dlp/yt-dlp#13673](https://github.com/yt-dlp/yt-dlp/issues/13673)
     * **MyNet** (`mynet.com`): Player `videoInfo` progressive MP4 and HLS from `/tv/embed/{id}`. Request: [yt-dlp/yt-dlp#7714](https://github.com/yt-dlp/yt-dlp/issues/7714)
+    * **MyTaratata** (`mytaratata.com`): JWPlayer `data-source` MP4 and `/videos/{id}` HLS from clip pages; episode listings as playlists. Request: [yt-dlp/yt-dlp#2690](https://github.com/yt-dlp/yt-dlp/issues/2690)
     * **Naver:blog** (`blog.naver.com`): PostView `vid`/`inkey` (SE3 and Prism player) via the rmcnmv VOD play API. Request: [yt-dlp/yt-dlp#16816](https://github.com/yt-dlp/yt-dlp/issues/16816)
     * **NewsdayTV** (`newsday.tv`): Next.js `__NEXT_DATA__` Brightcove IDs from `/watch/` pages. Request: [yt-dlp/yt-dlp#7418](https://github.com/yt-dlp/yt-dlp/issues/7418)
     * **NewsNation** (`newsnationnow.com`): Anvato/Lura HLS from `/video/{slug}/{id}/` URLs and WordPress `lead_media` on article pages. Request: [yt-dlp/yt-dlp#7285](https://github.com/yt-dlp/yt-dlp/issues/7285)

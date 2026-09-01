@@ -998,6 +998,8 @@ The only reliable way to check if a site is supported is to try it.
  - **MySpace**
  - **MySpace:album**
  - **MySpass**
+ - **mytaratata**: mytaratata.com
+ - **mytaratata:episode**: mytaratata.com episodes
  - **MyVideoGe**
  - **MyVidster**
  - **Mzaalo**

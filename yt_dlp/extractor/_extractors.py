@@ -1342,6 +1342,10 @@ from .myspace import (
     MySpaceIE,
 )
 from .myspass import MySpassIE
+from .mytaratata import (
+    MyTaratataEpisodeIE,
+    MyTaratataIE,
+)
 from .myvideoge import MyVideoGeIE
 from .myvidster import MyVidsterIE
 from .mzaalo import MzaaloIE
