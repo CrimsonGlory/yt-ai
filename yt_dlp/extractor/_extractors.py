@@ -2658,6 +2658,7 @@ from .xhamster import (
     XHamsterIE,
     XHamsterUserIE,
 )
+from .xiaoheimi import XiaoHeiMiIE
 from .xiaohongshu import XiaoHongShuIE
 from .ximalaya import (
     XimalayaAlbumIE,

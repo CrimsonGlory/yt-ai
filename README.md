@@ -2492,6 +2492,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Xbox** (`xbox.com`): Microsoft displaycatalog `CMSVideos` HLS/DASH store trailers. Request: [yt-dlp/yt-dlp#13591](https://github.com/yt-dlp/yt-dlp/issues/13591)
     * **Xcadr** (`xcadr.tv`): KVS `kt_player` `flashvars` and license-decoded `get_file` MP4s; celeb/movie listings as playlists. Request: [yt-dlp/yt-dlp#6362](https://github.com/yt-dlp/yt-dlp/issues/6362)
     * **XFetishTube** (`x-fetish.tube`): KVS `kt_player` config (randomized JS object) and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#16623](https://github.com/yt-dlp/yt-dlp/issues/16623)
+    * **XiaoHeiMi** (`xiaoheimi.net`): Impersonate Cloudflare and extract MacCMS `player_aaaa` HLS. Request: [yt-dlp/yt-dlp#5625](https://github.com/yt-dlp/yt-dlp/issues/5625)
     * **XPicVid** (`xpicvid.com`): Impersonate Cloudflare and extract DPlayer quality MP4s. Request: [yt-dlp/yt-dlp#15279](https://github.com/yt-dlp/yt-dlp/issues/15279)
     * **Xumo** (`play.xumo.com`): Public `valencia-app-mds.xumo.com` asset JSON for HLS/DASH VOD and series playlists. Request: [yt-dlp/yt-dlp#15643](https://github.com/yt-dlp/yt-dlp/issues/15643)
     * **XXXTik** (`xxxtik.com`): Public DigitalOcean `/post/{uuid}` JSON and CDN HLS (`p5rn.com` / `xcdn.tv`). Request: [yt-dlp/yt-dlp#6224](https://github.com/yt-dlp/yt-dlp/issues/6224)

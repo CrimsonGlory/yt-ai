@@ -1926,6 +1926,7 @@ The only reliable way to check if a site is supported is to try it.
  - **XHamster**
  - **XHamsterEmbed**
  - **XHamsterUser**
+ - **xiaoheimi**: 小宝影院
  - **XiaoHongShu**: 小红书
  - **ximalaya**: 喜马拉雅FM
  - **ximalaya:album**: 喜马拉雅FM 专辑
