@@ -44,6 +44,7 @@ The only reliable way to check if a site is supported is to try it.
  - **acast:channel**
  - **AcFunBangumi**
  - **AcFunVideo**
+ - **acmi**: ACMI: Your museum of screen culture
  - **ADN**: [*animationdigitalnetwork*](## "netrc machine") Animation Digital Network
  - **ADNSeason**: [*animationdigitalnetwork*](## "netrc machine") Animation Digital Network
  - **AdobeConnect**

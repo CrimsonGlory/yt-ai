@@ -26,6 +26,7 @@ from .acfun import (
     AcFunBangumiIE,
     AcFunVideoIE,
 )
+from .acmi import ACMIIE
 from .adn import (
     ADNIE,
     ADNSeasonIE,
