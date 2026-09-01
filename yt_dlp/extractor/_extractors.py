@@ -990,6 +990,7 @@ from .japandiet import (
 )
 from .javbangers import JavBangersIE
 from .javguru import JavGuruIE
+from .javmix import JavmixIE
 from .javtiful import JavtifulIE
 from .jcbasimul import JCBASimulIE
 from .jeuxvideo import JeuxVideoIE

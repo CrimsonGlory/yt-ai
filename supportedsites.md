@@ -727,6 +727,7 @@ The only reliable way to check if a site is supported is to try it.
  - **JamendoAlbum**
  - **JavBangers**: javbangers.com
  - **javguru**: jav.guru
+ - **javmix**: Javmix.TV
  - **javtiful**: javtiful.com
  - **jcbasimul**: JCBA Internet Simul Radio
  - **JeuxVideo**
