@@ -970,6 +970,7 @@ from .japandiet import (
     ShugiinItvLiveRoomIE,
     ShugiinItvVodIE,
 )
+from .javguru import JavGuruIE
 from .javtiful import JavtifulIE
 from .jcbasimul import JCBASimulIE
 from .jeuxvideo import JeuxVideoIE
