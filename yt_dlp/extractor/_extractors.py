@@ -398,6 +398,7 @@ from .clipchamp import ClipchampIE
 from .cliprs import ClipRsIE
 from .closertotruth import CloserToTruthIE
 from .cloudflarestream import CloudflareStreamIE
+from .cloudmailru import CloudMailRuIE
 from .cloudycdn import CloudyCDNIE
 from .clubic import ClubicIE
 from .clyp import ClypIE

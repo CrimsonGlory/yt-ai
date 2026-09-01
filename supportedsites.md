@@ -316,6 +316,7 @@ The only reliable way to check if a site is supported is to try it.
  - **closeload**: Closeload
  - **CloserToTruth**
  - **CloudflareStream**
+ - **cloudmailru**: Облако Mail.ru
  - **CloudyCDN**
  - **Clubic**
  - **Clyp**

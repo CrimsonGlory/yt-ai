@@ -2320,6 +2320,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Cime** (`ci.me`): Public `/api/app` JSON for VOD HLS, clip MP4, and Amazon IVS live. Request: [yt-dlp/yt-dlp#16247](https://github.com/yt-dlp/yt-dlp/issues/16247)
     * **CinemathequeBretagne** (`cinematheque-bretagne.bzh`): Diaz oEmbed iframe HTML5 MP4. Request: [yt-dlp/yt-dlp#15616](https://github.com/yt-dlp/yt-dlp/issues/15616)
     * **Cinetimes** (`cinetimes.org`): Title-page Plyr iframe (YouTube, archive.org, Vimeo) and Wikimedia Commons HTML5. Request: [yt-dlp/yt-dlp#7317](https://github.com/yt-dlp/yt-dlp/issues/7317)
+    * **cloudmailru** (`cloud.mail.ru`): Public weblink `/api/v2/file` metadata and dispatcher `weblink_get` original download. Request: [yt-dlp/yt-dlp#4888](https://github.com/yt-dlp/yt-dlp/issues/4888)
     * **CollabInc** (`collab.inc`): Public `dashboard.collab.inc/api/public_video_library/{id}` JSON and S3 HLS, preferring unwatermarked `/hls/`. Request: [yt-dlp/yt-dlp#10080](https://github.com/yt-dlp/yt-dlp/issues/10080)
     * **college-de-france** (`college-de-france.fr`): JSON-LD `VideoObject` YouTube `embedUrl` with `podcastfichiers` m4a fallback. Request: [yt-dlp/yt-dlp#5991](https://github.com/yt-dlp/yt-dlp/issues/5991)
     * **CommercialRadio** (`881903.com`): Public `/api/live/src` playlist.js and CloudFront-cookie HLS (`edge-aac`/`edge-ts`). Request: [yt-dlp/yt-dlp#12241](https://github.com/yt-dlp/yt-dlp/issues/12241)
