@@ -2320,6 +2320,7 @@ from .toggle import (
 )
 from .toggo import ToggoIE
 from .tokinosorafc import TokinoSoraFCIE
+from .tokyomotion import TokyoMotionIE
 from .tonline import TOnlineIE
 from .toongoggles import ToonGogglesIE
 from .toutiao import ToutiaoIE
