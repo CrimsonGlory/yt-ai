@@ -403,6 +403,7 @@ from .cnn import (
     CNNIndonesiaIE,
 )
 from .collabinc import CollabIncIE
+from .collegedefrance import CollegeDeFranceIE
 from .comedycentral import ComedyCentralIE
 from .commercialradio import CommercialRadioIE
 from .commonmistakes import (
