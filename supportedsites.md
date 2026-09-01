@@ -83,6 +83,7 @@ The only reliable way to check if a site is supported is to try it.
  - **AmazonReviews**
  - **AmazonStore**
  - **AMCNetworks**
+ - **americanarchive**: American Archive of Public Broadcasting
  - **AmericasTestKitchen**
  - **AmericasTestKitchenSeason**
  - **AmHistoryChannel**

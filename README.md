@@ -2285,6 +2285,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **AiryTV** (`live.airy.tv`): Public `api.airy.tv` `/content/{id}` JSON for unencrypted VOD HLS. Request: [yt-dlp/yt-dlp#14937](https://github.com/yt-dlp/yt-dlp/issues/14937)
     * **AllDaf** (`alldaf.org`): Nuxt `__NUXT_DATA__` post `s3Url`/HLS plus JWPlayer media JSON. Request: [yt-dlp/yt-dlp#15289](https://github.com/yt-dlp/yt-dlp/issues/15289)
     * **AlphaTV** (`alphatv.gr`): Kwik player `data-video-url` MP4/HLS with JSON-LD `embedUrl` fallback. Request: [yt-dlp/yt-dlp#14945](https://github.com/yt-dlp/yt-dlp/issues/14945)
+    * **americanarchive** (`americanarchive.org`): PBCore `/api/{id}` metadata, Sony Ci progressive MP4 from `/media/{id}/download`, HLS fallback; both need a site Referer. Request: [yt-dlp/yt-dlp#1894](https://github.com/yt-dlp/yt-dlp/issues/1894)
     * **AnimationFilmArchives** (`animation.filmarchives.jp`): NII `h10.cs.nii.ac.jp` iframe DASH/HLS (`video_view.php`) from play and playen pages. Request: [yt-dlp/yt-dlp#8982](https://github.com/yt-dlp/yt-dlp/issues/8982)
     * [AnonMP4](https://github.com/CrimsonGlory/yt-ai/commit/7e1d8ceb53acea50102343d0cd3db56e1fc2dbc8) (`anonmp4.art` / `anonmp4.to`)
     * **Archivebate** (`archivebate.com`): Mixdrop iframe packed `MDCore.wurl` MP4, with native HLS embed fallback. Request: [yt-dlp/yt-dlp#8262](https://github.com/yt-dlp/yt-dlp/issues/8262)

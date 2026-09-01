@@ -92,6 +92,7 @@ from .amazonminitv import (
     AmazonMiniTVSeriesIE,
 )
 from .amcnetworks import AMCNetworksIE
+from .americanarchive import AmericanArchiveIE
 from .americastestkitchen import (
     AmericasTestKitchenIE,
     AmericasTestKitchenSeasonIE,
