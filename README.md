@@ -2316,6 +2316,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Bunkr** (`bunkr.cr`): File-page `data-file-id` via `dl.bunkr.cr/api/_001_v2` and signed CDN URL from `glb-apisign.cdn.cr`. Request: [yt-dlp/yt-dlp#12536](https://github.com/yt-dlp/yt-dlp/issues/12536)
     * **cablecast** (`cablecast.tv`): Public `/cablecastapi/v1` show/VOD JSON and HLS/MP4. Request: [yt-dlp/yt-dlp#9785](https://github.com/yt-dlp/yt-dlp/issues/9785)
     * **Camwhoresbay** (`camwhoresbay.com`): KVS `kt_player` `flashvars` and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#11625](https://github.com/yt-dlp/yt-dlp/issues/11625)
+    * **CanliTV** (`canlitv.com`): JWPlayer HLS from `/player/index.php` with Referer. Request: [yt-dlp/yt-dlp#3180](https://github.com/yt-dlp/yt-dlp/issues/3180)
     * **CaracolRadio** (`caracol.com.co`): Fusion `mediateca-info` JSON for public `/audio/` podcast and radio MP3s. Request: [yt-dlp/yt-dlp#6000](https://github.com/yt-dlp/yt-dlp/issues/6000)
     * **Castbox** (`castbox.fm`): Public `everest.castbox.fm` episode v4 JSON (direct MP3/media URL). Request: [yt-dlp/yt-dlp#16910](https://github.com/yt-dlp/yt-dlp/issues/16910)
     * **CBN** (`cbn.com`): Drupal `_format=json` Brightcove IDs with `video-js` / html5player fallback. Request: [yt-dlp/yt-dlp#15622](https://github.com/yt-dlp/yt-dlp/issues/15622)

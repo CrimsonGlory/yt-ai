@@ -271,6 +271,7 @@ The only reliable way to check if a site is supported is to try it.
  - **canalc2.tv**
  - **Canalplus**: mycanal.fr and piwiplus.fr
  - **Canalsurmas**
+ - **canlitv**: canlitv.com
  - **CaracolRadio**: Caracol Radio
  - **CaracolTvPlay**: [*caracoltv-play*](## "netrc machine")
  - **castbox**: Castbox
