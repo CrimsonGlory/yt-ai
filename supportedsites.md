@@ -805,6 +805,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Le**: 乐视网
  - **learnenglishkids**: LearnEnglish Kids
  - **LearningOnScreen**
+ - **LeCinemaClub**: Le Cinéma Club
  - **Lecture2Go**
  - **Lecturio**: [*lecturio*](## "netrc machine")
  - **LecturioCourse**: [*lecturio*](## "netrc machine")

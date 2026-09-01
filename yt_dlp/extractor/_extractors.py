@@ -1092,6 +1092,7 @@ from .lcp import (
 )
 from .learnenglishkids import LearnEnglishKidsIE
 from .learningonscreen import LearningOnScreenIE
+from .lecinemaclub import LeCinemaClubIE
 from .lecture2go import Lecture2GoIE
 from .lecturio import (
     LecturioCourseIE,
