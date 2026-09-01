@@ -1226,6 +1226,7 @@ The only reliable way to check if a site is supported is to try it.
  - **PlaySuisse**: [*playsuisse*](## "netrc machine")
  - **Playtvak**: Playtvak.cz, iDNES.cz, Lidovky.cz and iDNES.tv
  - **PlayVids**
+ - **plex**: Plex Watch
  - **pluralsight**: [*pluralsight*](## "netrc machine")
  - **pluralsight:course**
  - **Plurk**: Plurk

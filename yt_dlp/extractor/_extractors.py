@@ -1672,6 +1672,7 @@ from .platzi import (
 from .playerfm import PlayerFmIE
 from .playsuisse import PlaySuisseIE
 from .playtvak import PlaytvakIE
+from .plex import PlexIE
 from .pluralsight import (
     PluralsightCourseIE,
     PluralsightIE,

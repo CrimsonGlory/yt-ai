@@ -2438,6 +2438,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Pillows** (`pillows.su`): SvelteKit `__data.json` (devalue) metadata and `api.pillows.su` original-file downloads. Request: [yt-dlp/yt-dlp#17426](https://github.com/yt-dlp/yt-dlp/issues/17426)
     * **PimpBunny** (`pimpbunny.com`): KVS `kt_player` config (randomized JS object) and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#15333](https://github.com/yt-dlp/yt-dlp/issues/15333)
     * **PlanetWissen** (`planet-wissen.de`): Parse inline WDR `gseaInlineMediaData` HLS/MP4 (mdb and sophora players). Request: [yt-dlp/yt-dlp#7239](https://github.com/yt-dlp/yt-dlp/issues/7239)
+    * **Plex** (`plex.tv`): Anonymous plex.tv token and vod.provider unencrypted HLS/DASH for Watch Plex movies and episodes. Request: [yt-dlp/yt-dlp#4062](https://github.com/yt-dlp/yt-dlp/issues/4062)
     * **PMVHaven** (`pmvhaven.com`): Public `/api/videos/{id}` JSON for source MP4 and HLS. Request: [yt-dlp/yt-dlp#9831](https://github.com/yt-dlp/yt-dlp/issues/9831)
     * **Pops** (`pops.vn`): Next.js `__NEXT_DATA__` `videoDetail` YouTube IDs and native HLS `sourceLink`. Request: [yt-dlp/yt-dlp#6955](https://github.com/yt-dlp/yt-dlp/issues/6955)
     * **Porn3dx** (`porn3dx.com`): Livewire `post-view` Bunny Stream GUIDs and `iframe.mediadelivery.net` HLS. Request: [yt-dlp/yt-dlp#5025](https://github.com/yt-dlp/yt-dlp/issues/5025)
