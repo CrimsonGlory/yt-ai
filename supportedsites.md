@@ -111,6 +111,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Art19**
  - **Art19Show**
  - **arte.sky.it**
+ - **ArteRadioAudioblog**: ARTE Radio Audioblog
  - **ArteTV**
  - **ArteTVCategory**
  - **ArteTVEmbed**

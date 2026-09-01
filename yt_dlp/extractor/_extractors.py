@@ -134,6 +134,7 @@ from .arte import (
     ArteTVIE,
     ArteTVPlaylistIE,
 )
+from .arteradio import ArteRadioAudioblogIE
 from .artmuseum import ArtMuseumIE
 from .asiangameshub import AsianGamesHubIE
 from .asianpinay import AsianPinayIE
