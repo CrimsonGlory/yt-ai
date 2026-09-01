@@ -2666,6 +2666,7 @@ from .xvideos import (
     XVideosIE,
     XVideosQuickiesIE,
 )
+from .xxxtik import XXXTikIE
 from .xxxymovies import XXXYMoviesIE
 from .yahoo import (
     YahooIE,

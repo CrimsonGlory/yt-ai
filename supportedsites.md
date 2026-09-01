@@ -1930,6 +1930,7 @@ The only reliable way to check if a site is supported is to try it.
  - **xumo**: XUMO
  - **XVideos**
  - **xvideos:quickies**
+ - **xxxtik**: XXXTik
  - **XXXYMovies**
  - **yahoo**
  - **yahoo:japannews**: Yahoo! Japan News
