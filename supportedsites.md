@@ -751,6 +751,7 @@ The only reliable way to check if a site is supported is to try it.
  - **kickbot**: KickBot
  - **Kicker**
  - **KickStarter**
+ - **kidoodle**: Kidoodle.TV
  - **Kika**: KiKA.de
  - **KikaPlaylist**
  - **KinoPoisk**

@@ -1020,6 +1020,7 @@ from .kick import (
 from .kickbot import KickBotIE
 from .kicker import KickerIE
 from .kickstarter import KickStarterIE
+from .kidoodle import KidoodleIE
 from .kika import (
     KikaIE,
     KikaPlaylistIE,
