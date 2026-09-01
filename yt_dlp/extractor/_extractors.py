@@ -1227,6 +1227,7 @@ from .mediastream import (
 )
 from .mediaworksnz import MediaWorksNZVODIE
 from .medici import MediciIE
+from .mega import MegaIE
 from .megaphone import MegaphoneIE
 from .megatvcom import (
     MegaTVComEmbedIE,

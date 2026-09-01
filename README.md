@@ -2411,6 +2411,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **MatreshkaTV** (`matreshka.tv`): Public `/api/video-service/v1/video/{id}` JSON for signed HLS on `c4-video.cmtv.ru`. Request: [yt-dlp/yt-dlp#15380](https://github.com/yt-dlp/yt-dlp/issues/15380)
     * **MeansTV** (`means.tv`): Uscreen `/program_content` Mux HLS; collections via `/collection_homepage`. Request: [yt-dlp/yt-dlp#12026](https://github.com/yt-dlp/yt-dlp/issues/12026)
     * **MediaFire** (`mediafire.com`): Public `file/get_info` JSON plus the file-page `#downloadButton` CDN URL. Request: [yt-dlp/yt-dlp#4143](https://github.com/yt-dlp/yt-dlp/issues/4143)
+    * **mega.nz** (`mega.nz`): Public file/folder API metadata and AES-128-CTR decryption of the CDN ciphertext. Request: [yt-dlp/yt-dlp#2004](https://github.com/yt-dlp/yt-dlp/issues/2004)
     * **MeijiFilmArchives** (`meiji.filmarchives.jp`): NII `h10.cs.nii.ac.jp` iframe DASH/HLS (`video_view.php`) from work and Lumière pages. Request: [yt-dlp/yt-dlp#13035](https://github.com/yt-dlp/yt-dlp/issues/13035)
     * **Memobase** (`memobase.ch`): Non-Mozilla UA past Anubis, then Plyr `media.memobase.ch` `/master` MP4/M4V; SRG Play embeds delegated to **srgssr**. Request: [yt-dlp/yt-dlp#6820](https://github.com/yt-dlp/yt-dlp/issues/6820)
     * **Meridix** (`meridix.com`): Qwilt VOD HLS (`smil:http_ondemand/{id}.smil`, audio `mp4:http_ondemand/{id}.mp4`) with a site Referer. Request: [yt-dlp/yt-dlp#9230](https://github.com/yt-dlp/yt-dlp/issues/9230)

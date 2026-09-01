@@ -906,6 +906,7 @@ The only reliable way to check if a site is supported is to try it.
  - **MediaStream**
  - **MediaWorksNZVOD**
  - **Medici**
+ - **mega.nz**: MEGA
  - **megaphone.fm**: megaphone.fm embedded players
  - **megatvcom**: megatv.com videos
  - **megatvcom:embed**: megatv.com embedded videos
