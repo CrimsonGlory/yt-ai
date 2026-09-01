@@ -2128,6 +2128,7 @@ from .streaks import StreaksIE
 from .streamable import StreamableIE
 from .streamco import StreamCoPlatformIE
 from .streamcz import StreamCZIE
+from .streamgates import StreamgatesIE
 from .streamingcommunityz import StreamingCommunityzIE
 from .streamruby import StreamrubyIE
 from .streamsb import StreamsbIE

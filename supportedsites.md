@@ -1547,6 +1547,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Streamable**
  - **streamco:platform**: J-Stream Equipmedia
  - **StreamCZ**
+ - **Streamgates**
  - **streamingcommunityz**: StreamingCommunity
  - **streamruby**: Streamruby
  - **Streamster**: streamster.tv

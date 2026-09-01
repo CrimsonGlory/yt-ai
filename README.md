@@ -2455,6 +2455,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Spooncast** (`spooncast.net`): Public `{country}-api.spooncast.net/casts/{id}` JSON and CDN m4a. Request: [yt-dlp/yt-dlp#9590](https://github.com/yt-dlp/yt-dlp/issues/9590)
     * **SpotifyPodcasters** (`podcasters.spotify.com` / `creators.spotify.com`): Public `/pod/api/v3/episodes/{id}` JSON and CloudFront enclosure. Request: [yt-dlp/yt-dlp#9844](https://github.com/yt-dlp/yt-dlp/issues/9844)
     * **streamco:platform** (`api01-platform.stream.co.jp`): Parse Equipmedia `plt` player pages for JStream host/publisher/mid and extract HLS via `eq_meta` JSONP. Request: [yt-dlp/yt-dlp#13843](https://github.com/yt-dlp/yt-dlp/issues/13843)
+    * **Streamgates** (`cplayer.streamgates.net`): Radiant Media Player `src.hls` DVR playlist. Request: [yt-dlp/yt-dlp#5720](https://github.com/yt-dlp/yt-dlp/issues/5720)
     * **StreamingCommunityz** (`streamingcommunityz`): Inertia `data-page` iframe to vixcloud HLS. Request: [yt-dlp/yt-dlp#14432](https://github.com/yt-dlp/yt-dlp/issues/14432)
     * **Streamruby** (`rubyvidhub.com`): Packed JWPlayer HLS from embed pages. Request: [yt-dlp/yt-dlp#14361](https://github.com/yt-dlp/yt-dlp/issues/14361)
     * **Streamster** (`streamster.tv`): MediaElement `video/youtube` source and player `videodata` YouTube embeds. Request: [yt-dlp/yt-dlp#14526](https://github.com/yt-dlp/yt-dlp/issues/14526)
