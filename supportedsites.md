@@ -1422,6 +1422,7 @@ The only reliable way to check if a site is supported is to try it.
  - **sbs.co.kr:programs_vod**
  - **schooltv**
  - **ScienceChannel**
+ - **scratch**: Scratch
  - **Screen9**
  - **Screencast**
  - **Screencastify**

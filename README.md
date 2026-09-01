@@ -2440,6 +2440,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Rezka** (`rezka.ag`): Anubis PoW plus `initCDN*Events` / `ajax/get_cdn_series` voidboost HLS and MP4. Request: [yt-dlp/yt-dlp#17096](https://github.com/yt-dlp/yt-dlp/issues/17096)
     * **RidoMovies** (`ridomovies.tv`): Impersonate Cloudflare, follow Closeload JWPlayer embeds, and decode obfuscated HLS. Request: [yt-dlp/yt-dlp#13566](https://github.com/yt-dlp/yt-dlp/issues/13566)
     * **Sasflix** (`sasflix.ru`): Public `/api/web/topics/{id}` JSON plus HLS and progressive `/api/video` downloads. Request: [yt-dlp/yt-dlp#15373](https://github.com/yt-dlp/yt-dlp/issues/15373)
+    * **Scratch** (`scratch.mit.edu`): Public `api.scratch.mit.edu` project JSON and unique `assets.scratch.mit.edu` sounds. Request: [yt-dlp/yt-dlp#5226](https://github.com/yt-dlp/yt-dlp/issues/5226)
     * **SexBJCam** (`sexbjcam.com`): Impersonate Cloudflare and extract packed JWPlayer HLS from the playrecord.biz embed. Request: [yt-dlp/yt-dlp#15338](https://github.com/yt-dlp/yt-dlp/issues/15338)
     * **ShortMax** (`shorttv.live`): Nuxt `__NUXT_DATA__` HLS with custom per-segment AES-CBC. Request: [yt-dlp/yt-dlp#17230](https://github.com/yt-dlp/yt-dlp/issues/17230)
     * **ShoutTV** (`watch.shout-tv.com`): Guest DICE/IMG Gaming token (`dce.shout`) and v4 VOD/live HLS. Request: [yt-dlp/yt-dlp#11371](https://github.com/yt-dlp/yt-dlp/issues/11371)

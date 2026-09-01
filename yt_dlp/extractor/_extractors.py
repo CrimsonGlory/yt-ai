@@ -1944,6 +1944,7 @@ from .sbscokr import (
     SBSCoKrIE,
     SBSCoKrProgramsVodIE,
 )
+from .scratch import ScratchIE
 from .screen9 import Screen9IE
 from .screencast import ScreencastIE
 from .screencastify import ScreencastifyIE
