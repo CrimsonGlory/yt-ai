@@ -2355,6 +2355,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **GooglePhotos** (`photos.google.com`): Shared album `AF_initDataCallback` media URLs; `=dv` MP4 download. Request: [yt-dlp/yt-dlp#5222](https://github.com/yt-dlp/yt-dlp/issues/5222)
     * **GoToWebinar** (`register.gotowebinar.com`): Attendee broker and registration-service `recordingAssets` APIs for public `recordingView`/`viewRecording` links, then the signed `cdnLocation` MP4. Request: [yt-dlp/yt-dlp#4348](https://github.com/yt-dlp/yt-dlp/issues/4348)
     * **Granicus** (`harrisonburg-va.granicus.com`): Flowplayer `video_url` HLS from clip player pages. Request: [yt-dlp/yt-dlp#15344](https://github.com/yt-dlp/yt-dlp/issues/15344)
+    * **hanime** (`hanime.tv`): Signed `auth.hanime.tv` `/api/v11/handshake` AES-GCM `X-Token` HLS. Request: [yt-dlp/yt-dlp#4007](https://github.com/yt-dlp/yt-dlp/issues/4007)
     * **Haokan** (`haokan.baidu.com`): Public `mbd.baidu.com` videolanding `window.jsonData` `clarityUrl`/`playurl` MP4. Request: [yt-dlp/yt-dlp#7069](https://github.com/yt-dlp/yt-dlp/issues/7069)
     * **HDRezka** (`hdrezka.ag`): Anubis PoW plus `initCDN*Events` / `ajax/get_cdn_series` voidboost HLS and MP4. Request: [yt-dlp/yt-dlp#4732](https://github.com/yt-dlp/yt-dlp/issues/4732)
     * **HKET** (`video.hket.com`): Video.js `data-m3u8` HLS from `/video/` and `/article/` pages. Request: [yt-dlp/yt-dlp#4173](https://github.com/yt-dlp/yt-dlp/issues/4173)

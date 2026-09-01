@@ -826,6 +826,7 @@ from .gronkh import (
     GronkhVodsIE,
 )
 from .groupon import GrouponIE
+from .hanime import HanimeIE
 from .haokan import HaokanIE
 from .harpodeon import HarpodeonIE
 from .hbo import HBOIE

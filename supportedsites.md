@@ -618,6 +618,7 @@ The only reliable way to check if a site is supported is to try it.
  - **gronkh:feed**
  - **gronkh:vods**
  - **Groupon**
+ - **hanime**: hanime.tv
  - **haokan**: 百度好看视频
  - **Harpodeon**
  - **hbo**
