@@ -133,6 +133,7 @@ from .arte import (
     ArteTVIE,
     ArteTVPlaylistIE,
 )
+from .artmuseum import ArtMuseumIE
 from .asiangameshub import AsianGamesHubIE
 from .asianpinay import AsianPinayIE
 from .asobichannel import (

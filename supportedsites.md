@@ -112,6 +112,7 @@ The only reliable way to check if a site is supported is to try it.
  - **ArteTVCategory**
  - **ArteTVEmbed**
  - **ArteTVPlaylist**
+ - **artmuseum**: Museum of Modern Art in Warsaw (MSN) / Filmoteka Muzeum
  - **AsianGamesHub**: Asian Games Hub / Asian Games TV
  - **AsianPinay**: AsianPinay
  - **asobichannel**: ASOBI CHANNEL
