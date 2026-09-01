@@ -436,6 +436,7 @@ The only reliable way to check if a site is supported is to try it.
  - **dzen.ru:channel**
  - **EbaumsWorld**
  - **Ebay**
+ - **echo360**: Echo360 / EchoVideo
  - **egghead:course**: egghead.io course
  - **egghead:lesson**: egghead.io lesson
  - **eggs:artist**

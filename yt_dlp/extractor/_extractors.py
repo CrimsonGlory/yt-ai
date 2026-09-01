@@ -578,6 +578,7 @@ from .dvtv import DVTVIE
 from .dw import DWIE
 from .ebaumsworld import EbaumsWorldIE
 from .ebay import EbayIE
+from .echo360 import Echo360IE
 from .egghead import (
     EggheadCourseIE,
     EggheadLessonIE,
