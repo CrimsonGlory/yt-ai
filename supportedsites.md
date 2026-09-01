@@ -1802,6 +1802,7 @@ The only reliable way to check if a site is supported is to try it.
  - **UlizaPortal**: ulizaportal.jp
  - **umg:de**: Universal Music Deutschland
  - **Unistra**
+ - **UnitedNationsMedia**
  - **UnitedNationsWebTv**
  - **Unity**
  - **uol.com.br**

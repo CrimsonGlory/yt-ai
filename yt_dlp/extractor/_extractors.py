@@ -2494,7 +2494,10 @@ from .uliza import (
 )
 from .umg import UMGDeIE
 from .unistra import UnistraIE
-from .unitednations import UnitedNationsWebTvIE
+from .unitednations import (
+    UnitedNationsMediaIE,
+    UnitedNationsWebTvIE,
+)
 from .unity import UnityIE
 from .unsupported import (
     KnownDRMIE,
