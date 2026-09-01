@@ -1192,6 +1192,7 @@ from .mbn import MBNIE
 from .mdr import MDRIE
 from .meanstv import MeansTVIE
 from .medaltv import MedalTVIE
+from .mediafire import MediaFireIE
 from .mediaite import MediaiteIE
 from .mediaklikk import MediaKlikkIE
 from .medialaan import MedialaanIE

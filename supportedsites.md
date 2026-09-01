@@ -880,6 +880,7 @@ The only reliable way to check if a site is supported is to try it.
  - **MedalTV**
  - **media.ccc.de**
  - **media.ccc.de:lists**
+ - **mediafire**: MediaFire
  - **Mediaite**
  - **MediaKlikk**
  - **Medialaan**
