@@ -2429,6 +2429,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **PutlockerDigital** (`www2.putlocker.digital`): Watch-page JWPlayer `?number=` JSON for loadshare.org MP4/HLS. Request: [yt-dlp/yt-dlp#11365](https://github.com/yt-dlp/yt-dlp/issues/11365)
     * **QloveR** (`qlover.jp`): Public `api.qlover.jp/fc` Sheeta video_pages, session-id HLS, and CloudFront-cookie audio content_access. Request: [yt-dlp/yt-dlp#10260](https://github.com/yt-dlp/yt-dlp/issues/10260)
     * **QosVideos** (`qosvideos.com`): Schema.org VideoObject `contentURL` MP4 (Clean Tube player iframe fallback). Request: [yt-dlp/yt-dlp#8478](https://github.com/yt-dlp/yt-dlp/issues/8478)
+    * **QuartierRouge** (`quartier-rouge.be`): Video.js HLS (`a.qr.be`) from public listing and profile pages. Request: [yt-dlp/yt-dlp#5831](https://github.com/yt-dlp/yt-dlp/issues/5831)
     * **RacingTV** (`racingtv.com`): Public `api.racingtv.com` on-demand JSON (client `API-KEY`) and HLS after the preroll token wait. Request: [yt-dlp/yt-dlp#17503](https://github.com/yt-dlp/yt-dlp/issues/17503)
     * **RadioCentral** (`radiocentral.ch`): Parse `window.__APOLLO_STATE__` show-segment AudioAssets (az-cdn MP3s) from podcast pages. Request: [yt-dlp/yt-dlp#8400](https://github.com/yt-dlp/yt-dlp/issues/8400)
     * **RadioCourtoisie** (`radiocourtoisie.fr`): WordPress `sr_playlist` REST plus Sonaar `playlist.json` MP3s (also `rc.fr`). Request: [yt-dlp/yt-dlp#6377](https://github.com/yt-dlp/yt-dlp/issues/6377)

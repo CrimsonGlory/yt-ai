@@ -1276,6 +1276,7 @@ The only reliable way to check if a site is supported is to try it.
  - **QuantumTV**: [*quantumtv*](## "netrc machine")
  - **QuantumTVLive**: [*quantumtv*](## "netrc machine")
  - **QuantumTVRecordings**: [*quantumtv*](## "netrc machine")
+ - **quartierrouge**: Quartier-Rouge / Redlights
  - **R7**
  - **R7Article**
  - **racingtv**: Racing TV

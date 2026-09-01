@@ -1737,6 +1737,7 @@ from .qqmusic import (
     QQMusicToplistIE,
     QQMusicVideoIE,
 )
+from .quartierrouge import QuartierRougeIE
 from .r7 import (
     R7IE,
     R7ArticleIE,
