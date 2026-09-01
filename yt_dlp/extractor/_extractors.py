@@ -991,6 +991,7 @@ from .japandiet import (
 from .javbangers import JavBangersIE
 from .javguru import JavGuruIE
 from .javmix import JavmixIE
+from .javquick import JavQuickIE
 from .javtiful import JavtifulIE
 from .jcbasimul import JCBASimulIE
 from .jeuxvideo import JeuxVideoIE
