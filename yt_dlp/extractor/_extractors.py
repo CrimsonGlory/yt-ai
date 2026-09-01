@@ -962,6 +962,7 @@ from .iwara import (
     IwaraPlaylistIE,
     IwaraUserIE,
 )
+from .iwitness import IWitnessIE
 from .ixigua import IxiguaIE
 from .jable import (
     JableIE,
