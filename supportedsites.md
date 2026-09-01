@@ -288,6 +288,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Cellebrite**
  - **CeskaTelevize**
  - **CGTN**
+ - **chaos.social**: chaos.social
  - **chapman**: Chapman University blogs and YuJa video
  - **CharlieRose**
  - **Chaturbate**

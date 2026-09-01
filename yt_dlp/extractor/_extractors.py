@@ -364,6 +364,7 @@ from .cda import (
 from .cellebrite import CellebriteIE
 from .ceskatelevize import CeskaTelevizeIE
 from .cgtn import CGTNIE
+from .chaossocial import ChaosSocialIE
 from .chapman import ChapmanIE
 from .charlierose import CharlieRoseIE
 from .chaturbate import ChaturbateIE
