@@ -608,6 +608,7 @@ from .epicon import (
     EpiconSeriesIE,
 )
 from .epidemicsound import EpidemicSoundIE
+from .epix import EpixIE
 from .eplay import EPlayIE
 from .eplus import EplusIbIE
 from .epoch import EpochIE

@@ -2341,6 +2341,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Emturbovid** (`emturbovid.com`): JWPlayer `urlPlay` HLS; skip PNG-wrapped Google Drive segments with `EXT-X-BYTERANGE`. Request: [yt-dlp/yt-dlp#6869](https://github.com/yt-dlp/yt-dlp/issues/6869)
     * **EpicDeveloperCommunity** (`dev.epicgames.com`): Impersonate Cloudflare, then learning `post.json` plus Electra/qstv DASH. Request: [yt-dlp/yt-dlp#9783](https://github.com/yt-dlp/yt-dlp/issues/9783)
     * **eplay** (`eplay.com`): Public `search-cf.eplay.com` post JSON (tokenized MP4/HLS) with Next.js fallback. Request: [yt-dlp/yt-dlp#16853](https://github.com/yt-dlp/yt-dlp/issues/16853)
+    * **Epix** (`epix.com` / `mgmplus.com`): Anonymous `api.mgmplus.com` device session, then public trailer/extra HLS and MP4. Request: [yt-dlp/yt-dlp#3185](https://github.com/yt-dlp/yt-dlp/issues/3185)
     * **Erothots** (`erothots.co`): JSON-LD metadata and Plyr/Video.js HTML5 MP4 from `cdn.erocdn.co`. Request: [yt-dlp/yt-dlp#13021](https://github.com/yt-dlp/yt-dlp/issues/13021)
     * **EsupPod** (`pod.univ-lille.fr`): Video.js `mp4_sources` progressive MP4, with `srcOptions` HLS fallback. Request: [yt-dlp/yt-dlp#13738](https://github.com/yt-dlp/yt-dlp/issues/13738)
     * **ExtremeMusic** (`extrememusic.com`): Public `snapi.extrememusic.com` track/album/playlist JSON and CloudFront audition MP3s. Request: [yt-dlp/yt-dlp#10997](https://github.com/yt-dlp/yt-dlp/issues/10997)

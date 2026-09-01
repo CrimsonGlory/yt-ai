@@ -462,6 +462,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Epicon**
  - **EpiconSeries**
  - **EpidemicSound**
+ - **epix**: EPIX / MGM+
  - **eplay**: ePlay
  - **eplus**: [*eplus*](## "netrc machine") e+ (イープラス)
  - **Epoch**
