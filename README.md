@@ -2411,6 +2411,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **NZRPlus** (`nzrplus.com`): Guest DCE/ImgGaming `v1/init` token, then VOD/live HLS/DASH. Request: [yt-dlp/yt-dlp#7875](https://github.com/yt-dlp/yt-dlp/issues/7875)
     * **Olevod** (`olevod.com`): Signed `api.olelive.com` `/v1/pub/vod/detail` HLS. Request: [yt-dlp/yt-dlp#9379](https://github.com/yt-dlp/yt-dlp/issues/9379)
     * **OnePodcast** (`onepodcast.it`): GEDI media-hub `audioSource` MP3 and Brightcove `videoSrc` MP4 from episode pages. Request: [yt-dlp/yt-dlp#16798](https://github.com/yt-dlp/yt-dlp/issues/16798)
+    * **OnTVTime** (`ontvtime.ru`): Player cookies (`tv`/`tv2`/`tv1`) plus page `gid` to native HLS (`s*.ontvtime.ru/stream/`). Request: [yt-dlp/yt-dlp#5172](https://github.com/yt-dlp/yt-dlp/issues/5172)
     * **Owncast** (`live.retrostrange.com`): Public `/api/status` and `/api/config` JSON plus `/hls/stream.m3u8`. Request: [yt-dlp/yt-dlp#7111](https://github.com/yt-dlp/yt-dlp/issues/7111)
     * **Oyez** (`oyez.org`): Public `api.oyez.org` case JSON and `case_media` MP3 oral arguments/opinion announcements. Request: [yt-dlp/yt-dlp#7829](https://github.com/yt-dlp/yt-dlp/issues/7829)
     * **PaceGallery** (`pacegallery.com`): Lazy-loaded YouTube `data-id` embeds on exhibition and journal pages. Request: [yt-dlp/yt-dlp#8327](https://github.com/yt-dlp/yt-dlp/issues/8327)

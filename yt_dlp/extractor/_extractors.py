@@ -1544,6 +1544,7 @@ from .onet import (
     OnetPlIE,
 )
 from .onsen import OnsenIE
+from .ontvtime import OnTVTimeIE
 from .opencast import (
     OpencastIE,
     OpencastPlaylistIE,
