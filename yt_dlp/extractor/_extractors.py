@@ -1064,6 +1064,7 @@ from .kuwo import (
     KuwoSingerIE,
 )
 from .kvf import KVFIE
+from .kwai import KwaiIE
 from .la7 import (
     LA7IE,
     LA7PodcastEpisodeIE,
