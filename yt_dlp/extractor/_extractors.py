@@ -2316,6 +2316,7 @@ from .toggle import (
     ToggleIE,
 )
 from .toggo import ToggoIE
+from .tokinosorafc import TokinoSoraFCIE
 from .tonline import TOnlineIE
 from .toongoggles import ToonGogglesIE
 from .toutiao import ToutiaoIE
