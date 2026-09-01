@@ -1282,6 +1282,7 @@ The only reliable way to check if a site is supported is to try it.
  - **radiocanada**
  - **radiocanada:audiovideo**
  - **radiocentral**: Radio Central
+ - **radiocourtoisie**: Radio Courtoisie
  - **radiofrance**
  - **RadioFranceLive**
  - **RadioFrancePodcast**

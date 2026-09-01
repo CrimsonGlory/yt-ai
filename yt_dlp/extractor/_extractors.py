@@ -1747,6 +1747,7 @@ from .radiocanada import (
     RadioCanadaIE,
 )
 from .radiocentral import RadioCentralIE
+from .radiocourtoisie import RadioCourtoisieIE
 from .radiode import RadioDeIE
 from .radiofrance import (
     FranceCultureIE,

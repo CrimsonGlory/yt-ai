@@ -2427,6 +2427,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **QosVideos** (`qosvideos.com`): Schema.org VideoObject `contentURL` MP4 (Clean Tube player iframe fallback). Request: [yt-dlp/yt-dlp#8478](https://github.com/yt-dlp/yt-dlp/issues/8478)
     * **RacingTV** (`racingtv.com`): Public `api.racingtv.com` on-demand JSON (client `API-KEY`) and HLS after the preroll token wait. Request: [yt-dlp/yt-dlp#17503](https://github.com/yt-dlp/yt-dlp/issues/17503)
     * **RadioCentral** (`radiocentral.ch`): Parse `window.__APOLLO_STATE__` show-segment AudioAssets (az-cdn MP3s) from podcast pages. Request: [yt-dlp/yt-dlp#8400](https://github.com/yt-dlp/yt-dlp/issues/8400)
+    * **RadioCourtoisie** (`radiocourtoisie.fr`): WordPress `sr_playlist` REST plus Sonaar `playlist.json` MP3s (also `rc.fr`). Request: [yt-dlp/yt-dlp#6377](https://github.com/yt-dlp/yt-dlp/issues/6377)
     * **Rahatupu** (`rahatupu.net`): Schema.org VideoObject `contentUrl` MP4 (Clean Tube player iframe fallback). Request: [yt-dlp/yt-dlp#12300](https://github.com/yt-dlp/yt-dlp/issues/12300)
     * **RedziDzirdiLatviju** (`redzidzirdilatviju.lv`): Solr `/index` JSON for movies (Nimble HLS on `filmas.arhivi.lv`) and sound samples (archive MP3). Request: [yt-dlp/yt-dlp#15886](https://github.com/yt-dlp/yt-dlp/issues/15886)
     * **Rezka** (`rezka.ag`): Anubis PoW plus `initCDN*Events` / `ajax/get_cdn_series` voidboost HLS and MP4. Request: [yt-dlp/yt-dlp#17096](https://github.com/yt-dlp/yt-dlp/issues/17096)
