@@ -221,6 +221,8 @@ The only reliable way to check if a site is supported is to try it.
  - **Boosty**
  - **BostonGlobe**
  - **bouke**: Boukè
+ - **BoundHub**: boundhub.com
+ - **boundhub:playlist**: boundhub.com playlists
  - **Box**
  - **BoxCastVideo**
  - **BoyfriendTV**

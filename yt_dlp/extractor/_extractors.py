@@ -268,6 +268,10 @@ from .boomstream import BoomstreamIE
 from .boosty import BoostyIE
 from .bostonglobe import BostonGlobeIE
 from .bouke import BoukeIE
+from .boundhub import (
+    BoundHubIE,
+    BoundHubPlaylistIE,
+)
 from .box import BoxIE
 from .boxcast import BoxCastVideoIE
 from .boyfriendtv import BoyfriendTVIE

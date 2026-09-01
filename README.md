@@ -2305,6 +2305,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **BNRNews** (`bnrnews.bg`): Public `/api/materials/{program}/{id}` JSON and `/api/media/{uuid}` MP3/MP4. Request: [yt-dlp/yt-dlp#15248](https://github.com/yt-dlp/yt-dlp/issues/15248)
     * **Boomplay** (`boomplay.com`): Public `/share/getEventData` JSON and `source.boomplaymusic.com` MP3. Request: [yt-dlp/yt-dlp#11220](https://github.com/yt-dlp/yt-dlp/issues/11220)
     * **Boomstream** (`play.boomstream.com`): Player `window.boomstreamConfig` HLS; derive AES-128 key/IV from `#EXT-X-MEDIA-READY`. Request: [yt-dlp/yt-dlp#15376](https://github.com/yt-dlp/yt-dlp/issues/15376)
+    * **BoundHub** (`boundhub.com`): Impersonate Cloudflare, then KVS `kt_player` `flashvars` and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#3940](https://github.com/yt-dlp/yt-dlp/issues/3940)
     * **BoyfriendTV** (`boyfriendtv.com`): Player `sources.hlsAuto` HLS from video pages. Request: [yt-dlp/yt-dlp#15509](https://github.com/yt-dlp/yt-dlp/issues/15509)
     * **Bouke** (`bouke.media`): Drupal Freecaster `data-video-id` / `live_token` embed JSON (MP4, HLS, DASH). Request: [yt-dlp/yt-dlp#15403](https://github.com/yt-dlp/yt-dlp/issues/15403)
     * **Brighteon** (`brighteon.com`): Next.js `__NEXT_DATA__` HLS/DASH and `/api-v3/channels` listings. Request: [yt-dlp/yt-dlp#8214](https://github.com/yt-dlp/yt-dlp/issues/8214)
