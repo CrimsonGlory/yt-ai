@@ -2469,6 +2469,7 @@ from .udn import UDNEmbedIE
 from .ufctv import UFCTVIE
 from .ukcolumn import UkColumnIE
 from .ukdevilz import UKDevilzIE
+from .ukdevilz18 import UKDevilz18IE
 from .uliza import (
     UlizaPlayerIE,
     UlizaPortalIE,

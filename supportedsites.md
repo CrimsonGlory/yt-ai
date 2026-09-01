@@ -1783,6 +1783,7 @@ The only reliable way to check if a site is supported is to try it.
  - **UFCTV**: [*ufctv*](## "netrc machine")
  - **ukcolumn**
  - **ukdevilz**: ukdevilz.com
+ - **ukdevilz:18**: 18.ukdevilz.com
  - **UlizaPlayer**
  - **UlizaPortal**: ulizaportal.jp
  - **umg:de**: Universal Music Deutschland

@@ -2508,6 +2508,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **TVTropes** (`tvtropes.org`): Impersonate Cloudflare and extract Bunny HLS from video-example data attributes. Request: [yt-dlp/yt-dlp#17106](https://github.com/yt-dlp/yt-dlp/issues/17106)
     * **Udio** (`udio.com`): Public `/api/songs` JSON for `song_path` MP3 and `video_path` MP4. Request: [yt-dlp/yt-dlp#10045](https://github.com/yt-dlp/yt-dlp/issues/10045)
     * **UKDevilz** (`ukdevilz.com`): Impersonate Cloudflare and extract JWPlayer `window.playlist` MP4 sources. Request: [yt-dlp/yt-dlp#14166](https://github.com/yt-dlp/yt-dlp/issues/14166)
+    * **UKDevilz18** (`18.ukdevilz.com`): Impersonate Cloudflare and extract JWPlayer `window.playlist` MP4 sources. Request: [yt-dlp/yt-dlp#4004](https://github.com/yt-dlp/yt-dlp/issues/4004)
     * **UpRide** (`upride.cc`): Impersonate Cloudflare, then JSON-LD `contentURL` original upload plus Cloudflare Stream iframe HLS/DASH. Request: [yt-dlp/yt-dlp#7858](https://github.com/yt-dlp/yt-dlp/issues/7858)
     * **USNewsOn** (`usnewson.com`): Video.js `pllrc` onestream API (`pro.usnlive.com/api/stream`) and direct HLS. Request: [yt-dlp/yt-dlp#6985](https://github.com/yt-dlp/yt-dlp/issues/6985)
     * **Veev** (`veev.to`): Decode the player `fc` token and `/dl?op=player_api` source URL. Request: [yt-dlp/yt-dlp#10092](https://github.com/yt-dlp/yt-dlp/issues/10092)
