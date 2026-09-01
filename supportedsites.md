@@ -620,6 +620,7 @@ The only reliable way to check if a site is supported is to try it.
  - **haokan**: 百度好看视频
  - **Harpodeon**
  - **hbo**
+ - **hdrezka**: HDrezka (hdrezka.ag)
  - **HearThisAt**
  - **Heise**
  - **HellPorno**

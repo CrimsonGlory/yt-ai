@@ -828,6 +828,7 @@ from .groupon import GrouponIE
 from .haokan import HaokanIE
 from .harpodeon import HarpodeonIE
 from .hbo import HBOIE
+from .hdrezka import HDRezkaIE
 from .hearthisat import HearThisAtIE
 from .heise import HeiseIE
 from .hellporno import HellPornoIE
