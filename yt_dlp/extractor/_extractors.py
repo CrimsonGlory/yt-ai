@@ -817,6 +817,7 @@ from .googlesearch import GoogleSearchIE
 from .goplay import GoPlayIE
 from .gopro import GoProIE
 from .gotostage import GoToStageIE
+from .gotowebinar import GoToWebinarIE
 from .granicus import GranicusIE
 from .graspop import GraspopIE
 from .gronkh import (

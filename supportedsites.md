@@ -611,6 +611,7 @@ The only reliable way to check if a site is supported is to try it.
  - **GoogleMaps**: Google Maps user-uploaded videos
  - **GoPro**
  - **GoToStage**
+ - **GoToWebinar**: GoTo Webinar recordings
  - **Granicus**: Granicus public meetings
  - **Graspop**
  - **Gronkh**

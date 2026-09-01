@@ -2353,6 +2353,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **GlobalNews** (`globalnews.ca`): JSON-LD `contentUrl` MP4 for `/video/` clips and JW `video-entry` HLS for `/live/` streams. Request: [yt-dlp/yt-dlp#9266](https://github.com/yt-dlp/yt-dlp/issues/9266)
     * **GoogleMaps** (`maps.app.goo.gl`): Follow share/place URLs to `lh3.googleusercontent.com` progressive MP4s (`=m18`/`=m22`/`=m37`/`=dv`). Request: [yt-dlp/yt-dlp#12246](https://github.com/yt-dlp/yt-dlp/issues/12246)
     * **GooglePhotos** (`photos.google.com`): Shared album `AF_initDataCallback` media URLs; `=dv` MP4 download. Request: [yt-dlp/yt-dlp#5222](https://github.com/yt-dlp/yt-dlp/issues/5222)
+    * **GoToWebinar** (`register.gotowebinar.com`): Attendee broker and registration-service `recordingAssets` APIs for public `recordingView`/`viewRecording` links, then the signed `cdnLocation` MP4. Request: [yt-dlp/yt-dlp#4348](https://github.com/yt-dlp/yt-dlp/issues/4348)
     * **Granicus** (`harrisonburg-va.granicus.com`): Flowplayer `video_url` HLS from clip player pages. Request: [yt-dlp/yt-dlp#15344](https://github.com/yt-dlp/yt-dlp/issues/15344)
     * **Haokan** (`haokan.baidu.com`): Public `mbd.baidu.com` videolanding `window.jsonData` `clarityUrl`/`playurl` MP4. Request: [yt-dlp/yt-dlp#7069](https://github.com/yt-dlp/yt-dlp/issues/7069)
     * **HDRezka** (`hdrezka.ag`): Anubis PoW plus `initCDN*Events` / `ajax/get_cdn_series` voidboost HLS and MP4. Request: [yt-dlp/yt-dlp#4732](https://github.com/yt-dlp/yt-dlp/issues/4732)
