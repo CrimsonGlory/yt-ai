@@ -16,7 +16,7 @@ from ..utils.traversal import traverse_obj
 
 class TeraBoxIE(InfoExtractor):
     _VALID_URL = r'''(?x)
-        https?://(?:www\.)?terabox\.app/
+        https?://(?:www\.)?terabox\.(?P<domain>app|com)/
         (?:
             (?:[\w-]+/)*(?:sharing/link|share/filelist)\?(?:[^#]*&)?surl=(?P<id>[^&#]+)
             |s/1(?P<sid>[^/?#]+)
@@ -24,6 +24,21 @@ class TeraBoxIE(InfoExtractor):
     '''
     _TESTS = [{
         'url': 'https://www.terabox.app/sharing/link?surl=DdE5omp0kAF1UGFQ_TGFHg',
+        'md5': '12ff2f8a57beb4da70b4e8064cb6039c',
+        'info_dict': {
+            'id': 'DdE5omp0kAF1UGFQ_TGFHg',
+            'ext': 'mp4',
+            'title': 'bVWi4TNV1.mp4',
+            'duration': 66,
+            'width': 720,
+            'height': 1280,
+            'timestamp': 1785185834,
+            'upload_date': '20260727',
+            'age_limit': 18,
+            'thumbnail': r're:https?://.*',
+        },
+    }, {
+        'url': 'https://www.terabox.com/sharing/link?surl=DdE5omp0kAF1UGFQ_TGFHg',
         'md5': '12ff2f8a57beb4da70b4e8064cb6039c',
         'info_dict': {
             'id': 'DdE5omp0kAF1UGFQ_TGFHg',
@@ -46,6 +61,12 @@ class TeraBoxIE(InfoExtractor):
     }, {
         'url': 'https://www.terabox.app/indonesian/sharing/link?surl=DdE5omp0kAF1UGFQ_TGFHg',
         'only_matching': True,
+    }, {
+        'url': 'https://terabox.com/s/1DdE5omp0kAF1UGFQ_TGFHg',
+        'only_matching': True,
+    }, {
+        'url': 'https://www.terabox.com/s/1fgJnEjTkrixpGx0hpwoJUg',
+        'only_matching': True,
     }]
     _BASE_URL = 'https://www.terabox.app'
     _APP_ID = '250528'
@@ -62,6 +83,7 @@ class TeraBoxIE(InfoExtractor):
     def _real_extract(self, url):
         mobj = self._match_valid_url(url)
         video_id = mobj.group('id') or mobj.group('sid')
+        self._BASE_URL = f'https://www.terabox.{mobj.group("domain")}'
         headers = {'Referer': url}
 
         webpage = self._download_webpage(
