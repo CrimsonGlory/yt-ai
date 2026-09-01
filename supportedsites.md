@@ -1235,6 +1235,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Popcorntimes**
  - **PopcornTV**
  - **pops**: POPS
+ - **Porn3dx**
  - **Pornbox**
  - **PornerBros**
  - **PornFlip**

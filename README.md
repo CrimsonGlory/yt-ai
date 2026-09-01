@@ -2426,6 +2426,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **PlanetWissen** (`planet-wissen.de`): Parse inline WDR `gseaInlineMediaData` HLS/MP4 (mdb and sophora players). Request: [yt-dlp/yt-dlp#7239](https://github.com/yt-dlp/yt-dlp/issues/7239)
     * **PMVHaven** (`pmvhaven.com`): Public `/api/videos/{id}` JSON for source MP4 and HLS. Request: [yt-dlp/yt-dlp#9831](https://github.com/yt-dlp/yt-dlp/issues/9831)
     * **Pops** (`pops.vn`): Next.js `__NEXT_DATA__` `videoDetail` YouTube IDs and native HLS `sourceLink`. Request: [yt-dlp/yt-dlp#6955](https://github.com/yt-dlp/yt-dlp/issues/6955)
+    * **Porn3dx** (`porn3dx.com`): Livewire `post-view` Bunny Stream GUIDs and `iframe.mediadelivery.net` HLS. Request: [yt-dlp/yt-dlp#5025](https://github.com/yt-dlp/yt-dlp/issues/5025)
     * **PornHat** (`pornhat.com`): FluidPlayer HTML5 `/get_file/` sources as HLS masters on `cdn.privatehost.com`. Request: [yt-dlp/yt-dlp#11852](https://github.com/yt-dlp/yt-dlp/issues/11852)
     * **PornLib** (`pornlib.com`): Public `/player_config_json/` MP4 files (lq/hq/4k). Request: [yt-dlp/yt-dlp#14614](https://github.com/yt-dlp/yt-dlp/issues/14614)
     * **PornSlash** (`pornslash.com`): HLS.js `loadSource` master playlist with `/media/report` host fallback. Request: [yt-dlp/yt-dlp#14768](https://github.com/yt-dlp/yt-dlp/issues/14768)

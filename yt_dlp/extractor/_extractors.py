@@ -1689,6 +1689,7 @@ from .polskieradio import (
 from .popcorntimes import PopcorntimesIE
 from .popcorntv import PopcornTVIE
 from .pops import PopsIE
+from .porn3dx import Porn3dxIE
 from .porn91 import Porn91IE
 from .pornbox import PornboxIE
 from .pornflip import PornFlipIE
