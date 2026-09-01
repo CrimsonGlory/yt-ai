@@ -285,6 +285,10 @@ from .brainpop import (
     BrainPOPIlIE,
     BrainPOPJrIE,
 )
+from .brandxmusic import (
+    BrandXMusicAlbumIE,
+    BrandXMusicIE,
+)
 from .breitbart import BreitBartIE
 from .brightcove import (
     BrightcoveLegacyIE,
