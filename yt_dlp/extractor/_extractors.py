@@ -495,6 +495,10 @@ from .dbtv import DBTVIE
 from .dctp import DctpTvIE
 from .democracynow import DemocracynowIE
 from .detik import DetikEmbedIE
+from .deutschekinemathek import (
+    DeutscheKinemathekIE,
+    DeutscheKinemathekPlaylistIE,
+)
 from .deuxm import (
     DeuxMIE,
     DeuxMNewsIE,

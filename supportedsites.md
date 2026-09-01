@@ -381,6 +381,8 @@ The only reliable way to check if a site is supported is to try it.
  - **democracynow**
  - **DestinationAmerica**
  - **DetikEmbed**
+ - **deutschekinemathek**: Deutsche Kinemathek
+ - **deutschekinemathek:playlist**: Deutsche Kinemathek streaming program
  - **DeuxM**
  - **DeuxMNews**
  - **DeviantArt**: DeviantArt
