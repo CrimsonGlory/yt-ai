@@ -1962,6 +1962,7 @@ The only reliable way to check if a site is supported is to try it.
  - **ximalaya**: 喜马拉雅FM
  - **ximalaya:album**: 喜马拉雅FM 专辑
  - **Xinpianchang**: 新片场
+ - **XMegaDrive**: xmegadrive.com
  - **XMinus**
  - **XNXX**
  - **xpicvid**: xpicvid.com
