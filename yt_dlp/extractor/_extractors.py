@@ -913,6 +913,7 @@ from .ichinanalive import (
     IchinanaLiveIE,
     IchinanaLiveVODIE,
 )
+from .icourse163 import ICourse163IE
 from .idagio import (
     IdagioAlbumIE,
     IdagioPersonalPlaylistIE,

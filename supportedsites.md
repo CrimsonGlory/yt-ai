@@ -684,6 +684,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Hytale**
  - **Icareus**
  - **IcePorn**
+ - **icourse163**: 中国大学MOOC
  - **IdagioAlbum**
  - **IdagioPersonalPlaylist**
  - **IdagioPlaylist**

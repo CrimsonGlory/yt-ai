@@ -2381,6 +2381,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Hudl** (`hudl.com`): Public fan GraphQL broadcast JSON and vcloud HLS. Request: [yt-dlp/yt-dlp#9022](https://github.com/yt-dlp/yt-dlp/issues/9022)
     * **Hypeddit** (`hypeddit.com`): Public `hypeddit-gates-prod` S3 preview MP3 from gate pages. Request: [yt-dlp/yt-dlp#7948](https://github.com/yt-dlp/yt-dlp/issues/7948)
     * **IcePorn** (`iceporn.com`): Public `/player_config_json/` MP4 files (DrTuber-style API). Request: [yt-dlp/yt-dlp#12478](https://github.com/yt-dlp/yt-dlp/issues/12478)
+    * **ICourse163** (`icourse163.org`): Signed `resourceRpcBean.getResourceTokenV2` plus `vod.study.163.com` HLS for public course intros. Request: [yt-dlp/yt-dlp#1016](https://github.com/yt-dlp/yt-dlp/issues/1016)
     * **IFunny** (`ifunny.co` / `img.ifunny.co`): Video-page Open Graph/HTML5 MP4 (`img.getfn.io` / `img.ifunny.co`) and CSRF `/api/v1/user/{nick}/timeline` playlists. Request: [yt-dlp/yt-dlp#8006](https://github.com/yt-dlp/yt-dlp/issues/8006)
     * **ImagenTV** (`imagentv.com`): Dailymotion (and YouTube) IDs from Drupal `itv_content_result` and the public livestreaming API. Request: [yt-dlp/yt-dlp#16391](https://github.com/yt-dlp/yt-dlp/issues/16391)
     * **InfosecExchange** (`video.infosec.exchange`): PeerTube `/api/v1/videos` JSON for HLS and fragmented MP4. Request: [yt-dlp/yt-dlp#11857](https://github.com/yt-dlp/yt-dlp/issues/11857)
