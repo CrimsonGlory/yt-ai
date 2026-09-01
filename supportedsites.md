@@ -599,6 +599,8 @@ The only reliable way to check if a site is supported is to try it.
  - **Gofile**
  - **Golem**
  - **goodgame:stream**
+ - **google:photos**: Google Photos shared videos
+ - **google:​photos:album**: Google Photos shared albums
  - **GoogleDrive**
  - **GoogleDrive:Folder**
  - **GoogleMaps**: Google Maps user-uploaded videos

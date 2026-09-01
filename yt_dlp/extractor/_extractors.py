@@ -802,6 +802,10 @@ from .googledrive import (
     GoogleDriveIE,
 )
 from .googlemaps import GoogleMapsIE
+from .googlephotos import (
+    GooglePhotosAlbumIE,
+    GooglePhotosIE,
+)
 from .googlesearch import GoogleSearchIE
 from .goplay import GoPlayIE
 from .gopro import GoProIE

@@ -2348,6 +2348,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Giphy** (`giphy.com`): Next.js gif JSON with unsigned `media.giphy.com` MP4/GIF/WebP (signed OG/v1 URLs return HTML). Request: [yt-dlp/yt-dlp#16970](https://github.com/yt-dlp/yt-dlp/issues/16970)
     * **GlobalNews** (`globalnews.ca`): JSON-LD `contentUrl` MP4 for `/video/` clips and JW `video-entry` HLS for `/live/` streams. Request: [yt-dlp/yt-dlp#9266](https://github.com/yt-dlp/yt-dlp/issues/9266)
     * **GoogleMaps** (`maps.app.goo.gl`): Follow share/place URLs to `lh3.googleusercontent.com` progressive MP4s (`=m18`/`=m22`/`=m37`/`=dv`). Request: [yt-dlp/yt-dlp#12246](https://github.com/yt-dlp/yt-dlp/issues/12246)
+    * **GooglePhotos** (`photos.google.com`): Shared album `AF_initDataCallback` media URLs; `=dv` MP4 download. Request: [yt-dlp/yt-dlp#5222](https://github.com/yt-dlp/yt-dlp/issues/5222)
     * **Granicus** (`harrisonburg-va.granicus.com`): Flowplayer `video_url` HLS from clip player pages. Request: [yt-dlp/yt-dlp#15344](https://github.com/yt-dlp/yt-dlp/issues/15344)
     * **Haokan** (`haokan.baidu.com`): Public `mbd.baidu.com` videolanding `window.jsonData` `clarityUrl`/`playurl` MP4. Request: [yt-dlp/yt-dlp#7069](https://github.com/yt-dlp/yt-dlp/issues/7069)
     * **Hobune** (`hobune.stream`): HTML5 video pages and static channel listings. Request: [yt-dlp/yt-dlp#17541](https://github.com/yt-dlp/yt-dlp/issues/17541)
