@@ -1339,6 +1339,7 @@ from .mxplayer import (
     MxplayerSeasonIE,
     MxplayerShowIE,
 )
+from .myfreecams import MyFreeCamsIE
 from .mynet import MyNetIE
 from .myspace import (
     MySpaceAlbumIE,

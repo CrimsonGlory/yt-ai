@@ -997,6 +997,7 @@ The only reliable way to check if a site is supported is to try it.
  - **mxplayer**: Amazon MX Player
  - **mxplayer:season**
  - **mxplayer:show**
+ - **MyFreeCams**: MyFreeCams
  - **mynet**: Mynet Video
  - **MySpace**
  - **MySpace:album**
