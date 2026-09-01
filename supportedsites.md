@@ -735,6 +735,7 @@ The only reliable way to check if a site is supported is to try it.
  - **javguru**: jav.guru
  - **javmix**: Javmix.TV
  - **javquick**: javquick.com
+ - **javsubbed**: javsubbed.net
  - **javtiful**: javtiful.com
  - **jcbasimul**: JCBA Internet Simul Radio
  - **JeuxVideo**

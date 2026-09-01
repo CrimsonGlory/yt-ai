@@ -2378,6 +2378,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **JavGuru** (`jav.guru`): Impersonate Cloudflare, decode `wp-btn-iframe` searcho tokens, then DoodStream/packed HLS host embeds. Request: [yt-dlp/yt-dlp#6393](https://github.com/yt-dlp/yt-dlp/issues/6393)
     * **Javmix** (`javmix.tv`): Unpack packed player JS for host iframe URLs, then packed JWPlayer HLS (or a dedicated host IE). Request: [yt-dlp/yt-dlp#4568](https://github.com/yt-dlp/yt-dlp/issues/4568)
     * **JavQuick** (`javquick.com`): Player `data-id` via public `/watch?token=` MP4 (chunked Range CDN; HD fallback for encrypted FullHD). Request: [yt-dlp/yt-dlp#4531](https://github.com/yt-dlp/yt-dlp/issues/4531)
+    * **JavSubbed** (`javsubbed.net`): Source-tab host embeds (emturbovid/streamtape/voe/doodstream) via dedicated host IEs. Request: [yt-dlp/yt-dlp#3862](https://github.com/yt-dlp/yt-dlp/issues/3862)
     * **Javtiful** (`javtiful.com`): Plyr `playerSources` HTML5 MP4 with JSON-LD metadata. Request: [yt-dlp/yt-dlp#12280](https://github.com/yt-dlp/yt-dlp/issues/12280)
     * **JCBASimul** (`jcbasimul.com`): Radimo `select_stream` JWT plus Ogg Opus over WebSocket (`listener.fmplapla.com`). Request: [yt-dlp/yt-dlp#14092](https://github.com/yt-dlp/yt-dlp/issues/14092)
     * **KamTape** (`kamtape.com`): VLPlayer `get_video` (HTML5 MP4) from watch pages. Request: [yt-dlp/yt-dlp#17508](https://github.com/yt-dlp/yt-dlp/issues/17508)
