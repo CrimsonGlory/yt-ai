@@ -197,6 +197,7 @@ The only reliable way to check if a site is supported is to try it.
  - **BiliIntl**: [*biliintl*](## "netrc machine")
  - **biliIntl:series**: [*biliintl*](## "netrc machine")
  - **BiliLive**
+ - **bing**: Bing Videos
  - **BioBioChileTV**
  - **Biography**
  - **BitChute**
