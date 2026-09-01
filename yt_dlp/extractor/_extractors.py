@@ -1559,6 +1559,7 @@ from .onefichier import OneFichierIE
 from .onefootball import OneFootballIE
 from .onenewsnz import OneNewsNZIE
 from .oneplace import OnePlacePodcastIE
+from .oneplus1video import OnePlus1VideoIE
 from .onepodcast import (
     OnePodcastIE,
     OnePodcastSerieIE,

@@ -2275,6 +2275,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 
 * **New extractors**:
     * **1fichier** (`1fichier.com`): Guest download form POST after the free wait countdown, then the `Start your download` CDN link. Request: [yt-dlp/yt-dlp#3642](https://github.com/yt-dlp/yt-dlp/issues/3642)
+    * **1plus1.video** (`1plus1.video`): OVVA player base64 config and grandcentral balancer HLS. Request: [yt-dlp/yt-dlp#3566](https://github.com/yt-dlp/yt-dlp/issues/3566)
     * **3m** (`3m.com`): Product-page `__INITIAL_DATA` Brightcove gallery (`videoPlayerListId`) via the snaps2 player map. Request: [yt-dlp/yt-dlp#15705](https://github.com/yt-dlp/yt-dlp/issues/15705)
     * **Abyss** (`abyss.to`): Decrypt player `datas` (AES-CTR) and download `sssrr.org` sora MP4 fragments. Request: [yt-dlp/yt-dlp#16027](https://github.com/yt-dlp/yt-dlp/issues/16027)
     * **acmi** (`acmi.net.au`): Public XOS `/xos/works/{id}/` JSON and signed S3 `web_resource`/`resource` MP4s. Request: [yt-dlp/yt-dlp#5974](https://github.com/yt-dlp/yt-dlp/issues/5974)

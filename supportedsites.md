@@ -12,6 +12,7 @@ The only reliable way to check if a site is supported is to try it.
  - **17live:vod**
  - **1fichier**: 1fichier
  - **1News**: 1news.co.nz article videos
+ - **1plus1.video**: 1+1 video
  - **1tv**: Первый канал
  - **1tv:live**: Первый канал (прямой эфир)
  - **20min**
