@@ -1611,6 +1611,7 @@ from .pbs import (
     PBSIE,
     PBSKidsIE,
 )
+from .pbslearningmedia import PBSLearningMediaIE
 from .pearvideo import PearVideoIE
 from .peekvids import (
     PeekVidsIE,

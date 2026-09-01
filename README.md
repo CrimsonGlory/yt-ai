@@ -2419,6 +2419,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **PaceGallery** (`pacegallery.com`): Lazy-loaded YouTube `data-id` embeds on exhibition and journal pages. Request: [yt-dlp/yt-dlp#8327](https://github.com/yt-dlp/yt-dlp/issues/8327)
     * **PandaVideo** (`pandavideo.com`): Player-embed HLS from `b-{library}.tv.pandavideo.com.br/{id}/playlist.m3u8`. Request: [yt-dlp/yt-dlp#13109](https://github.com/yt-dlp/yt-dlp/issues/13109)
     * **PalestineFilmInstitute** (`palestinefilminstitute.org`): Tokened CDN `watch/{id}` HLS (`share/hls.m3u8`) plus `meta.json` poster/subs; Squarespace pages that iframe the player. Request: [yt-dlp/yt-dlp#11282](https://github.com/yt-dlp/yt-dlp/issues/11282)
+    * **PBSLearningMedia** (`pbslearningmedia.org`): Public `/api/v2/resource/{id}/` JSON for HLS/MP4 and captions. Request: [yt-dlp/yt-dlp#5073](https://github.com/yt-dlp/yt-dlp/issues/5073)
     * **Piczel** (`piczel.tv`): Public `/api/streams/{slug}` JSON for LL-HLS live (`playback.piczel.tv`) and recording MP4s. Request: [yt-dlp/yt-dlp#16032](https://github.com/yt-dlp/yt-dlp/issues/16032)
     * **Pillows** (`pillows.su`): SvelteKit `__data.json` (devalue) metadata and `api.pillows.su` original-file downloads. Request: [yt-dlp/yt-dlp#17426](https://github.com/yt-dlp/yt-dlp/issues/17426)
     * **PimpBunny** (`pimpbunny.com`): KVS `kt_player` config (randomized JS object) and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#15333](https://github.com/yt-dlp/yt-dlp/issues/15333)
