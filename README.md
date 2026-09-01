@@ -2340,6 +2340,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **DeviantArt** (`deviantart.com`): Eclipse `__INITIAL_STATE__` transcoded MP4s with JSON-LD `contentUrl` fallback. Request: [yt-dlp/yt-dlp#17234](https://github.com/yt-dlp/yt-dlp/issues/17234)
     * **DI.FM** (`di.fm`): Impersonate Cloudflare, then AudioAddict episode JSON and signed `content.audioaddict.com` AAC. Request: [yt-dlp/yt-dlp#12520](https://github.com/yt-dlp/yt-dlp/issues/12520)
     * **DigitalerLesesaal** (`digitaler-lesesaal.bundesarchiv.de`): Public archive video/copies JSON and liXe player HLS. Request: [yt-dlp/yt-dlp#10451](https://github.com/yt-dlp/yt-dlp/issues/10451)
+    * **DocumaniaTV** (`documaniatv.com`): PHP Melody `pm_video_data` plus JWPlayer `/json/{id}` MP4 (`/stream/{id}` fallback). Request: [yt-dlp/yt-dlp#1595](https://github.com/yt-dlp/yt-dlp/issues/1595)
     * **DoramasPrincess** (`doramasprincess.com`): POST `/ajax/embed` for HTML5 sources and packed JWPlayer HLS from host iframes. Request: [yt-dlp/yt-dlp#16369](https://github.com/yt-dlp/yt-dlp/issues/16369)
     * **echo360** (`echo360.org.au` / `echo360.net.au`): Public media player bootstrap, session token, and CloudFront-signed HLS/fMP4 from player-properties. Request: [yt-dlp/yt-dlp#3966](https://github.com/yt-dlp/yt-dlp/issues/3966)
     * **Emturbovid** (`emturbovid.com`): JWPlayer `urlPlay` HLS; skip PNG-wrapped Google Drive segments with `EXT-X-BYTERANGE`. Request: [yt-dlp/yt-dlp#6869](https://github.com/yt-dlp/yt-dlp/issues/6869)

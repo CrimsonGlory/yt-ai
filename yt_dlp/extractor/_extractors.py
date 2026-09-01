@@ -536,6 +536,7 @@ from .dlive import (
     DLiveStreamIE,
     DLiveVODIE,
 )
+from .documaniatv import DocumaniaTVIE
 from .doodstream import DoodStreamIE
 from .doramasprincess import DoramasPrincessIE
 from .douyutv import (

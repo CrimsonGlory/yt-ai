@@ -418,6 +418,7 @@ The only reliable way to check if a site is supported is to try it.
  - **dlf:corpus**: DLF Multi-feed Archives
  - **dlive:stream**
  - **dlive:vod**
+ - **DocumaniaTV**: DocumaniaTV
  - **DoodStream**
  - **doramasprincess**: DoramasPrincess
  - **douga.tv-asahi.co.jp**: テレ朝動画
