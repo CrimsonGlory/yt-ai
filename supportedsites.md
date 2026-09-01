@@ -1390,6 +1390,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Rumble**
  - **RumbleChannel**
  - **RumbleEmbed**
+ - **RuntimeTV**
  - **Ruptly**
  - **rutube**: Rutube videos
  - **rutube:channel**: Rutube channel

@@ -1912,6 +1912,7 @@ from .rumble import (
     RumbleEmbedIE,
     RumbleIE,
 )
+from .runtimetv import RuntimeTVIE
 from .rutube import (
     RutubeChannelIE,
     RutubeEmbedIE,
