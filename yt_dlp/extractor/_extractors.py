@@ -1055,6 +1055,7 @@ from .kika import (
     KikaIE,
     KikaPlaylistIE,
 )
+from .kinescope import KinescopeIE
 from .kinopoisk import KinoPoiskIE
 from .kissasian import KissasianIE
 from .kommunetv import KommunetvIE

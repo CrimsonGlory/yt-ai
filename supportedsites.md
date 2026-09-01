@@ -779,6 +779,7 @@ The only reliable way to check if a site is supported is to try it.
  - **kidoodle**: Kidoodle.TV
  - **Kika**: KiKA.de
  - **KikaPlaylist**
+ - **kinescope**: Kinescope
  - **KinoPoisk**
  - **kissasian**: Kissasian
  - **Kommunetv**
