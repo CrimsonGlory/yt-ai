@@ -2522,6 +2522,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **VidMoly** (`vidmoly.to`): Canonical `vidmoly.biz` embed JWPlayer HLS (also `.me`/`.net`). Request: [yt-dlp/yt-dlp#9689](https://github.com/yt-dlp/yt-dlp/issues/9689)
     * **Viggle** (`viggle.ai`): Public `/api/share/video-task` JSON (impersonate) for signed `assets.viggle.ai` MP4. Request: [yt-dlp/yt-dlp#13657](https://github.com/yt-dlp/yt-dlp/issues/13657)
     * **VillageSexVideos** (`villagesexvideos.com`): Impersonate Cloudflare, then schema `contentURL` MP4 (Clean Tube player iframe fallback). Request: [yt-dlp/yt-dlp#7033](https://github.com/yt-dlp/yt-dlp/issues/7033)
+    * **Vix** (`vix.com`): Next.js flight `videoToken` JWT delegated to Anvato/Lura HLS. Request: [yt-dlp/yt-dlp#3366](https://github.com/yt-dlp/yt-dlp/issues/3366)
     * **VMware** (`vmware.com`): Brightcove player IDs from `/video/` and Explore library pages via `/get-st`. Request: [yt-dlp/yt-dlp#10881](https://github.com/yt-dlp/yt-dlp/issues/10881)
     * **Voe** (`voe.sx`): Follow the rotating player-domain JS redirect and deobfuscate player JSON for HLS/MP4. Request: [yt-dlp/yt-dlp#5481](https://github.com/yt-dlp/yt-dlp/issues/5481)
     * **WCOStream** (`wcostream.tv`): Impersonate Cloudflare, map embed `file=` to `getvidlink.php` (`cizgi`/`neptun`) tokens, and download `getvid` MP4s. Request: [yt-dlp/yt-dlp#13987](https://github.com/yt-dlp/yt-dlp/issues/13987)

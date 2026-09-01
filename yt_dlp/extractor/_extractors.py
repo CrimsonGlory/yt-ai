@@ -2578,6 +2578,7 @@ from .viu import (
     ViuOTTIndonesiaIE,
     ViuPlaylistIE,
 )
+from .vix import VixIE
 from .vk import (
     VKIE,
     VKPlayIE,

@@ -1866,6 +1866,7 @@ The only reliable way to check if a site is supported is to try it.
  - **viu:ott**: [*viu*](## "netrc machine")
  - **viu:playlist**
  - **ViuOTTIndonesia**
+ - **vix**: ViX
  - **vk**: [*vk*](## "netrc machine") VK
  - **vk:uservideos**: [*vk*](## "netrc machine") VK - User's Videos
  - **vk:wallpost**: [*vk*](## "netrc machine")
