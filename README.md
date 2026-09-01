@@ -2350,6 +2350,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **EsupPod** (`pod.univ-lille.fr`): Video.js `mp4_sources` progressive MP4, with `srcOptions` HLS fallback. Request: [yt-dlp/yt-dlp#13738](https://github.com/yt-dlp/yt-dlp/issues/13738)
     * **ExtremeMusic** (`extrememusic.com`): Public `snapi.extrememusic.com` track/album/playlist JSON and CloudFront audition MP3s. Request: [yt-dlp/yt-dlp#10997](https://github.com/yt-dlp/yt-dlp/issues/10997)
     * **Fawesome** (`fawesome.tv`): Security-token `recipes.php` API for HLS and progressive MP4. Request: [yt-dlp/yt-dlp#15706](https://github.com/yt-dlp/yt-dlp/issues/15706)
+    * **Feet9** (`feet9.com`): JSON-LD `VideoObject` `contentUrl` MP4, with Video.js `<source>` fallback. Request: [yt-dlp/yt-dlp#1748](https://github.com/yt-dlp/yt-dlp/issues/1748)
     * **FikFap** (`fikfap.com`): Public `api.fikfap.com` post JSON (anonymous UUID) and tokenized Bunny HLS. Request: [yt-dlp/yt-dlp#14980](https://github.com/yt-dlp/yt-dlp/issues/14980)
     * **Filmzie** (`filmzie.com`): Public `/api/v1/content` metadata and `/api/v1/video/stream` HLS. Request: [yt-dlp/yt-dlp#14535](https://github.com/yt-dlp/yt-dlp/issues/14535)
     * **Forendors** (`forendors.cz`): Public `api.forendors.cz` post JSON and signed `assets.forendors.cz` HLS. Request: [yt-dlp/yt-dlp#15173](https://github.com/yt-dlp/yt-dlp/issues/15173)

@@ -513,6 +513,7 @@ The only reliable way to check if a site is supported is to try it.
  - **fc2:embed**
  - **fc2:live**
  - **Fczenit**
+ - **Feet9**: Feet9
  - **Fifa**
  - **fikfap**: FikFap
  - **fikfap:user**: FikFap user

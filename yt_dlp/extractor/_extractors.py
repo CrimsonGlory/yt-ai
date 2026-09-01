@@ -679,6 +679,7 @@ from .fc2 import (
     FC2LiveIE,
 )
 from .fczenit import FczenitIE
+from .feet9 import Feet9IE
 from .fifa import FifaIE
 from .fikfap import (
     FikFapIE,
