@@ -974,6 +974,7 @@ from .japandiet import (
     ShugiinItvLiveRoomIE,
     ShugiinItvVodIE,
 )
+from .javbangers import JavBangersIE
 from .javguru import JavGuruIE
 from .javtiful import JavtifulIE
 from .jcbasimul import JCBASimulIE

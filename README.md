@@ -2361,6 +2361,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **ImagenTV** (`imagentv.com`): Dailymotion (and YouTube) IDs from Drupal `itv_content_result` and the public livestreaming API. Request: [yt-dlp/yt-dlp#16391](https://github.com/yt-dlp/yt-dlp/issues/16391)
     * **InfosecExchange** (`video.infosec.exchange`): PeerTube `/api/v1/videos` JSON for HLS and fragmented MP4. Request: [yt-dlp/yt-dlp#11857](https://github.com/yt-dlp/yt-dlp/issues/11857)
     * **ipfs** (`ipfs://`): Rewrite `ipfs://`/`ipns://` CIDs to an HTTP gateway (`--extractor-args ipfs:gateway=URL`, `IPFS_GATEWAY`, or Pinata). Request: [yt-dlp/yt-dlp#6860](https://github.com/yt-dlp/yt-dlp/issues/6860)
+    * **JavBangers** (`javbangers.com`): KVS `kt_player` `flashvars` and license-decoded `get_file` MP4s (Referer required). Request: [yt-dlp/yt-dlp#5369](https://github.com/yt-dlp/yt-dlp/issues/5369)
     * **JavGuru** (`jav.guru`): Impersonate Cloudflare, decode `wp-btn-iframe` searcho tokens, then DoodStream/packed HLS host embeds. Request: [yt-dlp/yt-dlp#6393](https://github.com/yt-dlp/yt-dlp/issues/6393)
     * **Javtiful** (`javtiful.com`): Plyr `playerSources` HTML5 MP4 with JSON-LD metadata. Request: [yt-dlp/yt-dlp#12280](https://github.com/yt-dlp/yt-dlp/issues/12280)
     * **JCBASimul** (`jcbasimul.com`): Radimo `select_stream` JWT plus Ogg Opus over WebSocket (`listener.fmplapla.com`). Request: [yt-dlp/yt-dlp#14092](https://github.com/yt-dlp/yt-dlp/issues/14092)
