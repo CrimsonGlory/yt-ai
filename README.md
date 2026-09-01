@@ -2486,6 +2486,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Viggle** (`viggle.ai`): Public `/api/share/video-task` JSON (impersonate) for signed `assets.viggle.ai` MP4. Request: [yt-dlp/yt-dlp#13657](https://github.com/yt-dlp/yt-dlp/issues/13657)
     * **VillageSexVideos** (`villagesexvideos.com`): Impersonate Cloudflare, then schema `contentURL` MP4 (Clean Tube player iframe fallback). Request: [yt-dlp/yt-dlp#7033](https://github.com/yt-dlp/yt-dlp/issues/7033)
     * **VMware** (`vmware.com`): Brightcove player IDs from `/video/` and Explore library pages via `/get-st`. Request: [yt-dlp/yt-dlp#10881](https://github.com/yt-dlp/yt-dlp/issues/10881)
+    * **Voe** (`voe.sx`): Follow the rotating player-domain JS redirect and deobfuscate player JSON for HLS/MP4. Request: [yt-dlp/yt-dlp#5481](https://github.com/yt-dlp/yt-dlp/issues/5481)
     * **WCOStream** (`wcostream.tv`): Impersonate Cloudflare, map embed `file=` to `getvidlink.php` (`cizgi`/`neptun`) tokens, and download `getvid` MP4s. Request: [yt-dlp/yt-dlp#13987](https://github.com/yt-dlp/yt-dlp/issues/13987)
     * **wcvb** (`wcvb.com`): Next.js `voltronArticle` Hearst Digital Studios MP4 transcodings. Request: [yt-dlp/yt-dlp#10548](https://github.com/yt-dlp/yt-dlp/issues/10548)
     * **WedoTV** (`wedotv.com`): Public `/api/player.get_video.php` HLS from the page `data-video-id`. Request: [yt-dlp/yt-dlp#14221](https://github.com/yt-dlp/yt-dlp/issues/14221)

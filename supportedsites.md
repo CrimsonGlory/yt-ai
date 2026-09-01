@@ -1834,6 +1834,7 @@ The only reliable way to check if a site is supported is to try it.
  - **vmware**: VMware / Broadcom video library
  - **Vocaroo**
  - **VODPlatform**
+ - **voe**: voe.sx
  - **voicy**
  - **voicy:channel**
  - **volejtv:category**

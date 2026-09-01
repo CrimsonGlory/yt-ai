@@ -2539,6 +2539,7 @@ from .vk import (
 from .vmware import VMwareIE
 from .vocaroo import VocarooIE
 from .vodplatform import VODPlatformIE
+from .voe import VoeIE
 from .voicy import (
     VoicyChannelIE,
     VoicyIE,
