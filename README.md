@@ -2274,6 +2274,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 * **Restored extractors previously marked currently broken**: Sites that still publish media were rewritten against current pages/APIs. Notable reworks include DW, Europa, TFO, TeleMB, PlutoTV, and GDCVault. Extractors whose old APIs died can fall back to HTML5 / JSON-LD / JWPlayer / HLS on the webpage (`_WEB_FALLBACK`)
 
 * **New extractors**:
+    * **1fichier** (`1fichier.com`): Guest download form POST after the free wait countdown, then the `Start your download` CDN link. Request: [yt-dlp/yt-dlp#3642](https://github.com/yt-dlp/yt-dlp/issues/3642)
     * **3m** (`3m.com`): Product-page `__INITIAL_DATA` Brightcove gallery (`videoPlayerListId`) via the snaps2 player map. Request: [yt-dlp/yt-dlp#15705](https://github.com/yt-dlp/yt-dlp/issues/15705)
     * **Abyss** (`abyss.to`): Decrypt player `datas` (AES-CTR) and download `sssrr.org` sora MP4 fragments. Request: [yt-dlp/yt-dlp#16027](https://github.com/yt-dlp/yt-dlp/issues/16027)
     * **acmi** (`acmi.net.au`): Public XOS `/xos/works/{id}/` JSON and signed S3 `web_resource`/`resource` MP4s. Request: [yt-dlp/yt-dlp#5974](https://github.com/yt-dlp/yt-dlp/issues/5974)

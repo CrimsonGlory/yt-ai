@@ -1555,6 +1555,7 @@ from .ondemandkorea import (
     OnDemandKoreaIE,
     OnDemandKoreaProgramIE,
 )
+from .onefichier import OneFichierIE
 from .onefootball import OneFootballIE
 from .onenewsnz import OneNewsNZIE
 from .oneplace import OnePlacePodcastIE
