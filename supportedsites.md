@@ -824,6 +824,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Liputan6**
  - **ListenNotes**
  - **LiTV**
+ - **live.house.gov**: U.S. House of Representatives Floor Proceedings
  - **LiveJournal**
  - **Livestreamfails**
  - **Lnk**

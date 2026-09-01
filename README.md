@@ -2358,6 +2358,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **HDRezka** (`hdrezka.ag`): Anubis PoW plus `initCDN*Events` / `ajax/get_cdn_series` voidboost HLS and MP4. Request: [yt-dlp/yt-dlp#4732](https://github.com/yt-dlp/yt-dlp/issues/4732)
     * **Hobune** (`hobune.stream`): HTML5 video pages and static channel listings. Request: [yt-dlp/yt-dlp#17541](https://github.com/yt-dlp/yt-dlp/issues/17541)
     * **Hotmart** (`player.hotmart.com`): Next.js `__NEXT_DATA__` `applicationData` HLS (`vod-akm.play.hotmart.com`) with player Referer. Request: [yt-dlp/yt-dlp#8397](https://github.com/yt-dlp/yt-dlp/issues/8397)
+    * **HouseLive** (`live.house.gov`): Azure `broadcastevents` JSON and Bitmovin HLS/DASH floor video. Request: [yt-dlp/yt-dlp#4642](https://github.com/yt-dlp/yt-dlp/issues/4642)
     * **HQPorner** (`hqporner.com`): Player iframe (mydaddy.cc) HTML5 MP4 sources. Request: [yt-dlp/yt-dlp#7116](https://github.com/yt-dlp/yt-dlp/issues/7116)
     * **hstream** (`hstream.moe`): Laravel `/player/api` JSON for progressive 720p MP4 and DASH (including 48fps). Request: [yt-dlp/yt-dlp#9791](https://github.com/yt-dlp/yt-dlp/issues/9791)
     * **Hudl** (`hudl.com`): Public fan GraphQL broadcast JSON and vcloud HLS. Request: [yt-dlp/yt-dlp#9022](https://github.com/yt-dlp/yt-dlp/issues/9022)
