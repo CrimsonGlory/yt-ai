@@ -2641,6 +2641,10 @@ from .wykop import (
 from .xanimu import XanimuIE
 from .xbox import XboxIE
 from .xboxclips import XboxClipsIE
+from .xcadr import (
+    XcadrIE,
+    XcadrPlaylistIE,
+)
 from .xfetishtube import XFetishTubeIE
 from .xfileshare import XFileShareIE
 from .xhamster import (

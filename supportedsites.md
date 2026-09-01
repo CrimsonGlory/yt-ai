@@ -1913,6 +1913,8 @@ The only reliable way to check if a site is supported is to try it.
  - **Xanimu**
  - **xbox**: Xbox store trailers
  - **XboxClips**
+ - **Xcadr**: xcadr.tv
+ - **xcadr:playlist**: xcadr.tv celeb/movie pages
  - **XFetishTube**: x-fetish.tube
  - **XFileShare**: XFileShare based sites: Aparat, ClipWatching, GoUnlimited, GoVid, Highstream, HolaVid, Streamty, TheVideoBee, Uqload, Vadbam, Vedbam, VidBom, vidlo, VidLocker, VidShare, Viidshar, VUp, WolfStream, XVideoSharing
  - **XHamster**
