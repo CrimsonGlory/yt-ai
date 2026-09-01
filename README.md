@@ -2483,6 +2483,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Showcamrips** (`showcamrips.com`): HTML5 MP4 from `play.php` with a showcamrips Referer. Request: [yt-dlp/yt-dlp#16822](https://github.com/yt-dlp/yt-dlp/issues/16822)
     * **Skai** (`skai.gr`): Player `var data` `episodemain` Wowza HLS (`videostream.skai.gr`). Request: [yt-dlp/yt-dlp#13456](https://github.com/yt-dlp/yt-dlp/issues/13456)
     * **Skland** (`skland.com`): Guest `zonai.skland.com` item API (Shumei device id + HMAC) for HLS. Request: [yt-dlp/yt-dlp#15545](https://github.com/yt-dlp/yt-dlp/issues/15545)
+    * **Slavmir** (`slavmir.tv`): MelonPlayer `#video-player` `data-url` HLS from public `/video/detail/` pages. Request: [yt-dlp/yt-dlp#3052](https://github.com/yt-dlp/yt-dlp/issues/3052)
     * **Sleebi** (`sleebi.net`): Public `/v/API/{id}` metadata and PUT `/src` for hosted `videos.sleebi.eu` MP4s. Request: [yt-dlp/yt-dlp#15550](https://github.com/yt-dlp/yt-dlp/issues/15550)
     * **smotret.tv** (`smotret.tv`): Follow the channel player iframe and extract native HLS (`var streams`) or nested embeds. Request: [yt-dlp/yt-dlp#8899](https://github.com/yt-dlp/yt-dlp/issues/8899)
     * **Smule** (`smule.com`): Impersonate Cloudflare, RC4-decode `e:` media URLs from public `/p/{id}/json`, and download CDN MP4/M4A. Request: [yt-dlp/yt-dlp#10875](https://github.com/yt-dlp/yt-dlp/issues/10875)

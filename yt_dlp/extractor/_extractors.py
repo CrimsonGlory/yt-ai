@@ -2072,6 +2072,7 @@ from .skynewsarabia import (
     SkyNewsArabiaIE,
 )
 from .skynewsau import SkyNewsAUIE
+from .slavmir import SlavmirIE
 from .sleebi import (
     SleebiChannelIE,
     SleebiIE,
