@@ -1129,6 +1129,7 @@ The only reliable way to check if a site is supported is to try it.
  - **Omnyfm**
  - **OmnyfmPlaylist**
  - **OmnyfmShow**
+ - **omroepzeeland**: Omroep Zeeland
  - **on24**: ON24
  - **OnDemandChinaEpisode**
  - **OnDemandKorea**
