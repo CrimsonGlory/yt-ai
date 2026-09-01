@@ -1614,6 +1614,7 @@ The only reliable way to check if a site is supported is to try it.
  - **subsplash:playlist**
  - **Substack**
  - **SunPorno**
+ - **superriki**: SuperRiki
  - **sverigesradio:episode**
  - **sverigesradio:publication**
  - **svt:page**

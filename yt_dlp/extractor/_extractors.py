@@ -2209,6 +2209,7 @@ from .subsplash import (
 )
 from .substack import SubstackIE
 from .sunporno import SunPornoIE
+from .superriki import SuperrikiIE
 from .sverigesradio import (
     SverigesRadioEpisodeIE,
     SverigesRadioPublicationIE,
