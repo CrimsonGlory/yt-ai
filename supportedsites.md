@@ -1082,6 +1082,7 @@ The only reliable way to check if a site is supported is to try it.
  - **NOSNLArticle**
  - **Nova**: TN.cz, Prásk.tv, Nova.cz, Novaplus.cz, FANDA.tv, Krásná.cz and Doma.cz
  - **NovaPlay**
+ - **Novinky**: Novinky.cz
  - **NowCanal**
  - **nowness**
  - **nowness:playlist**
