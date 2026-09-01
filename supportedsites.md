@@ -1114,6 +1114,7 @@ The only reliable way to check if a site is supported is to try it.
  - **nowness**
  - **nowness:playlist**
  - **nowness:series**
+ - **nowtv.com.tr**: NOW (formerly FOX Turkey)
  - **Noz**
  - **npo**: npo.nl, ntr.nl, omroepwnl.nl, zapp.nl and npo3.nl
  - **npo.nl:live**

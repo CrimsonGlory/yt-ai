@@ -1504,6 +1504,7 @@ from .nowness import (
     NownessPlaylistIE,
     NownessSeriesIE,
 )
+from .nowtvtr import NowTVTRIE
 from .noz import NozIE
 from .npo import (
     NPOIE,
