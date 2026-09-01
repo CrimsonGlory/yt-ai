@@ -2332,6 +2332,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **CollabInc** (`collab.inc`): Public `dashboard.collab.inc/api/public_video_library/{id}` JSON and S3 HLS, preferring unwatermarked `/hls/`. Request: [yt-dlp/yt-dlp#10080](https://github.com/yt-dlp/yt-dlp/issues/10080)
     * **college-de-france** (`college-de-france.fr`): JSON-LD `VideoObject` YouTube `embedUrl` with `podcastfichiers` m4a fallback. Request: [yt-dlp/yt-dlp#5991](https://github.com/yt-dlp/yt-dlp/issues/5991)
     * **CommercialRadio** (`881903.com`): Public `/api/live/src` playlist.js and CloudFront-cookie HLS (`edge-aac`/`edge-ts`). Request: [yt-dlp/yt-dlp#12241](https://github.com/yt-dlp/yt-dlp/issues/12241)
+    * **Crowdcast** (`crowdcast.io`): Public Hasura GraphQL VOD/live HLS from `gql.crowdcast.io`. Request: [yt-dlp/yt-dlp#1511](https://github.com/yt-dlp/yt-dlp/issues/1511)
     * **ctc** (`ctc.ru`): Impersonate WAF for `/api/page/v1` JSON, then Odysseus playlist HLS/DASH via `X-Referer`. Request: [yt-dlp/yt-dlp#11162](https://github.com/yt-dlp/yt-dlp/issues/11162)
     * **CuriosityU** (`curiosityu.com`): Bitmovin DASH (`cdn-s3-cf.curiositystream.com`) from lecture-page `sourceConfig`. Request: [yt-dlp/yt-dlp#16564](https://github.com/yt-dlp/yt-dlp/issues/16564)
     * **Cyberfile** (`cyberfile.me`): YetiShare `account/ajax/file_details` download_token MP4s and folder listings. Request: [yt-dlp/yt-dlp#8932](https://github.com/yt-dlp/yt-dlp/issues/8932)

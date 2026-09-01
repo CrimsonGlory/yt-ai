@@ -351,6 +351,8 @@ The only reliable way to check if a site is supported is to try it.
  - **CrooksAndLiars**
  - **CrowdBunker**
  - **CrowdBunkerChannel**
+ - **crowdcast**: Crowdcast
+ - **crowdcast:clip**: Crowdcast clips
  - **Crtvg**
  - **CSpan**: C-SPAN
  - **CSpanCongress**

@@ -448,6 +448,10 @@ from .crowdbunker import (
     CrowdBunkerChannelIE,
     CrowdBunkerIE,
 )
+from .crowdcast import (
+    CrowdcastClipIE,
+    CrowdcastIE,
+)
 from .crtvg import CrtvgIE
 from .cspan import (
     CSpanCongressIE,
