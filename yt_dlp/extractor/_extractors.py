@@ -1738,6 +1738,7 @@ from .pornotube import PornotubeIE
 from .pornovoisines import PornoVoisinesIE
 from .pornoxo import PornoXOIE
 from .pornslash import PornSlashIE
+from .pornzog import PornzogIE
 from .pr0gramm import Pr0grammIE
 from .pragmaticworkstraining import (
     PragmaticWorksTrainingCourseIE,

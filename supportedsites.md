@@ -1280,6 +1280,7 @@ The only reliable way to check if a site is supported is to try it.
  - **PornSlash**: pornslash.com
  - **PornTop**
  - **PornTube**
+ - **Pornzog**: pornzog.com
  - **Pr0gramm**
  - **pragmaticworkstraining**: Pragmatic Works Training
  - **pragmaticworkstraining:course**: Pragmatic Works Training courses
