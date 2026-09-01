@@ -1891,6 +1891,10 @@ from .rte import (
     RteIE,
     RteRadioIE,
 )
+from .rthk import (
+    RTHKIE,
+    RTHKProgrammeIE,
+)
 from .rtl2 import RTL2IE
 from .rtlnl import (
     RTLLuArticleIE,

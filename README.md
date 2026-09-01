@@ -2458,6 +2458,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **RedziDzirdiLatviju** (`redzidzirdilatviju.lv`): Solr `/index` JSON for movies (Nimble HLS on `filmas.arhivi.lv`) and sound samples (archive MP3). Request: [yt-dlp/yt-dlp#15886](https://github.com/yt-dlp/yt-dlp/issues/15886)
     * **Rezka** (`rezka.ag`): Anubis PoW plus `initCDN*Events` / `ajax/get_cdn_series` voidboost HLS and MP4. Request: [yt-dlp/yt-dlp#17096](https://github.com/yt-dlp/yt-dlp/issues/17096)
     * **RidoMovies** (`ridomovies.tv`): Impersonate Cloudflare, follow Closeload JWPlayer embeds, and decode obfuscated HLS. Request: [yt-dlp/yt-dlp#13566](https://github.com/yt-dlp/yt-dlp/issues/13566)
+    * **RTHK** (`rthk.hk`): JWPlayer HLS from radio/TV episode pages and `/radio|/tv/catchUp` programme listings. Request: [yt-dlp/yt-dlp#4247](https://github.com/yt-dlp/yt-dlp/issues/4247)
     * **RuntimeTV** (`runtime.tv`): Ottera Drupal `cs_auth_token` plus `api-ott.runtime.tv` `embeddedVideoPlayer` HLS (Kaltura). Request: [yt-dlp/yt-dlp#5190](https://github.com/yt-dlp/yt-dlp/issues/5190)
     * **Sasflix** (`sasflix.ru`): Public `/api/web/topics/{id}` JSON plus HLS and progressive `/api/video` downloads. Request: [yt-dlp/yt-dlp#15373](https://github.com/yt-dlp/yt-dlp/issues/15373)
     * **Scratch** (`scratch.mit.edu`): Public `api.scratch.mit.edu` project JSON and unique `assets.scratch.mit.edu` sounds. Request: [yt-dlp/yt-dlp#5226](https://github.com/yt-dlp/yt-dlp/issues/5226)

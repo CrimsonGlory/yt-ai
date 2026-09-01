@@ -1383,6 +1383,8 @@ The only reliable way to check if a site is supported is to try it.
  - **RTDocumentryPlaylist**
  - **rte**: Raidió Teilifís Éireann TV
  - **rte:radio**: Raidió Teilifís Éireann radio
+ - **rthk**: RTHK
+ - **rthk:programme**: RTHK programmes
  - **rtl.lu:article**
  - **rtl.lu:tele-vod**
  - **rtl.nl**: rtl.nl and rtlxl.nl
