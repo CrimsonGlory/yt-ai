@@ -11,6 +11,7 @@ class HTML5MediaEmbedIE(InfoExtractor):
     _WEBPAGE_TESTS = [
         {
             'url': 'https://html.com/media/',
+            'skip': 'Cloudflare challenge',
             'info_dict': {
                 'title': 'HTML5 Media',
                 'description': 'md5:933b2d02ceffe7a7a0f3c8326d91cc2a',
@@ -41,6 +42,7 @@ class QuotedHTMLIE(InfoExtractor):
     _WEBPAGE_TESTS = [{
         # 2 YouTube embeds in data-html
         'url': 'https://24tv.ua/bronetransporteri-ozbroyenni-zsu-shho-vidomo-pro-bronovik-wolfhound_n2167966',
+        'skip': 'Cloudflare challenge',
         'info_dict': {
             'id': 'bronetransporteri-ozbroyenni-zsu-shho-vidomo-pro-bronovik-wolfhound_n2167966',
             'title': 'Броньовик Wolfhound: гігант, який допомагає ЗСУ знищувати окупантів на фронті',
@@ -65,6 +67,7 @@ class QuotedHTMLIE(InfoExtractor):
     }, {
         # YouTube embeds on Squarespace (data-html): https://github.com/ytdl-org/youtube-dl/issues/21294
         'url': 'https://www.harvardballetcompany.org/past-productions',
+        'skip': 'Cloudflare challenge',
         'info_dict': {
             'id': 'past-productions',
             'title': 'Productions — Harvard Ballet Company',
@@ -75,6 +78,7 @@ class QuotedHTMLIE(InfoExtractor):
     }, {
         # Squarespace video embed, 2019-08-28, data-html
         'url': 'http://ootboxford.com',
+        'skip': 'Cloudflare challenge',
         'info_dict': {
             'id': 'Tc7b_JGdZfw',
             'title': 'Out of the Blue, at Childish Things 10',

@@ -64,16 +64,17 @@ class DLFIE(DLFBaseIE):
             'skip': 'This webpage no longer exists',
         }, {
             'url': 'https://www.deutschlandfunk.de/russische-athleten-kehren-zurueck-auf-die-sportbuehne-ein-gefaehrlicher-tueroeffner-dlf-d9cc1856-100.html',
+            'md5': 'a364090dd34b135a7377e25ffa4d50a1',
             'info_dict': {
-                'id': 'd9cc1856',
-                'title': 'Russische Athleten kehren zurück auf die Sportbühne: Ein gefährlicher Türöffner',
-                'ext': 'mp3',
-                'duration': 291,
-                'thumbnail': 'https://assets.deutschlandfunk.de/FALLBACK-IMAGE-AUDIO/512x512.png?t=1603714364673',
-                'uploader': 'Deutschlandfunk',
-                'series': 'Kommentare und Themen der Woche',
-                'channel': 'deutschlandfunk',
-            },
+            'id': 'd9cc1856',
+            'ext': 'mp3',
+            'title': 'Russische Athleten kehren zurück auf die Sportbühne: Ein gefährlicher Türöffner',
+            'uploader': 'Deutschlandfunk',
+            'channel': 'deutschlandfunk',
+            'duration': 291,
+            'thumbnail': 'md5:a84889668745495e1ef76855b7020a85',
+            'series': 'Kommentare und Themen der Woche',
+        },
         },
     ]
 
@@ -90,9 +91,20 @@ class DLFCorpusIE(DLFBaseIE):
     IE_DESC = 'DLF Multi-feed Archives'
     _VALID_URL = DLFBaseIE._VALID_URL_BASE + r'(?P<id>(?![\w-]+-dlf-[\da-f]{8})[\w-]+-\d+)\.html'
     _TESTS = [
+        {
+            'url': 'https://www.deutschlandfunk.de/crashkurs-100.html',
+            'info_dict': {
+                'id': 'crashkurs-100',
+                'title': 'Podcast - Crashkurs - Wirtschaft trifft Geschichte',
+                'description': 'md5:95fed9bf7069ef35b186329ad051b011',
+            },
+            'playlist_mincount': 2,
+            'params': {'skip_download': True},
+        },
         # Recorded news broadcast with referrals to related broadcasts
         {
             'url': 'https://www.deutschlandfunk.de/fechten-russland-belarus-ukraine-protest-100.html',
+            'skip': 'stale test sample / site changed',
             'info_dict': {
                 'id': 'fechten-russland-belarus-ukraine-protest-100',
                 'title': r're:Wiederzulassung als neutrale Athleten [-/] Was die Rückkehr russischer und belarussischer Sportler beim Fechten bedeutet',
@@ -169,6 +181,7 @@ class DLFCorpusIE(DLFBaseIE):
         # Podcast feed with no description
         {
             'url': 'https://www.deutschlandfunk.de/podcast-tolle-idee-100.html',
+            'skip': 'stale test sample / site changed',
             'info_dict': {
                 'id': 'podcast-tolle-idee-100',
                 'title': 'Wissenschaftspodcast - Tolle Idee! - Was wurde daraus?',

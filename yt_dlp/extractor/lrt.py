@@ -11,12 +11,26 @@ from ..utils.traversal import traverse_obj
 class LRTStreamIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?lrt\.lt/mediateka/tiesiogiai/(?P<id>[\w-]+)'
     _TESTS = [{
+        'url': 'https://www.lrt.lt/mediateka/tiesiogiai/lrt-televizija',
+        'info_dict': {
+            'id': 'lrt-televizija',
+            'ext': 'mp4',
+            'title': r're:^LRT TELEVIZIJA \d{4}-\d{2}-\d{2} \d{2}:\d{2}$',
+            'live_status': 'is_live',
+        },
+        'params': {
+            'skip_download': 'm3u8',
+        },
+    }, {
         'url': 'https://www.lrt.lt/mediateka/tiesiogiai/lrt-opus',
         'info_dict': {
             'id': 'lrt-opus',
             'live_status': 'is_live',
-            'title': 're:^LRT Opus.+$',
+            'title': r're:^LRT OPUS \d{4}-\d{2}-\d{2} \d{2}:\d{2}$',
             'ext': 'mp4',
+        },
+        'params': {
+            'skip_download': 'm3u8',
         },
     }]
 

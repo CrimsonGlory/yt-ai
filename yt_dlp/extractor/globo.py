@@ -217,7 +217,7 @@ class GloboArticleIE(InfoExtractor):
         'url': 'https://redeglobo.globo.com/rpc/meuparana/noticia/a-producao-de-chocolates-no-parana.ghtml',
         'info_dict': {
             'id': 'a-producao-de-chocolates-no-parana',
-            'title': 'A produção de chocolates no Paraná',
+            'title': 'A produção de chocolates no Paraná  | Rede globo',
             'description': 'md5:f2e3daf00ffd1dc0e9a8a6c7cfb0a89e',
         },
         'playlist_count': 2,

@@ -11,6 +11,7 @@ class YoutubeYtBeIE(YoutubeBaseInfoExtractor):
     _VALID_URL = rf'https?://youtu\.be/(?P<id>[0-9A-Za-z_-]{{11}})/*?.*?\blist=(?P<playlist_id>{YoutubeBaseInfoExtractor._PLAYLIST_ID_RE})'
     _TESTS = [{
         'url': 'https://youtu.be/yeWKywCrFtk?list=PL2qgrgXsNUG5ig9cat4ohreBjYLAPC0J5',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'yeWKywCrFtk',
             'ext': 'mp4',
@@ -236,6 +237,8 @@ class YoutubeConsentRedirectIE(YoutubeBaseInfoExtractor):
             'uploader': 'さなちゃんねる',
             'channel_is_verified': True,
             'heatmap': 'count:100',
+            'media_type': 'livestream',
+            'timestamp': int,
         },
         'add_ie': ['Youtube'],
         'params': {'skip_download': 'Youtube'},

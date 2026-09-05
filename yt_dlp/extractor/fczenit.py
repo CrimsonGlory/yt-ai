@@ -8,14 +8,17 @@ from ..utils import (
 class FczenitIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?fc-zenit\.ru/video/(?P<id>[0-9]+)'
     _TEST = {
-        'url': 'http://fc-zenit.ru/video/41044/',
-        'md5': '0e3fab421b455e970fa1aa3891e57df0',
+        'url': 'http://fc-zenit.ru/video/60878/',
+        'md5': '26b6978fc503c7a84647810d514c5f9a',
         'info_dict': {
-            'id': '41044',
+            'id': '60878',
             'ext': 'mp4',
-            'title': 'Так пишется история: казанский разгром ЦСКА на «Зенит-ТВ»',
-            'timestamp': 1462283735,
-            'upload_date': '20160503',
+            'title': 'Обзор матча  FONBET Кубка России «Зенит» — «Динамо» (Мх)',
+            'thumbnail': r're:https?://.+\.jpg',
+            'duration': 126.0,
+            'timestamp': 1788382233,
+            'upload_date': '20260902',
+            'tags': ['Ерохин', 'александр соболев'],
         },
     }
 

@@ -22,8 +22,25 @@ class OnDemandKoreaIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?ondemandkorea\.com/(?:en/)?player/vod/[a-z0-9-]+\?(?:[^#]+&)?contentId=(?P<id>\d+)'
     _GEO_COUNTRIES = ['US', 'CA']
 
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.ondemandkorea.com/player/vod/hot-odk-pick-3-minute-news?contentId=3503266',
+            'md5': 'c77fda6a2ffe23659980ffda808bae75',
+            'info_dict': {
+            'id': '3503266',
+            'ext': 'mp4',
+            'title': 'HOT! ODK Pick 3 Minute News: 9/1 Yonhap News TV',
+            'duration': 124.0,
+            'thumbnail': 'md5:76a7c0a7d180a3878d5b6157f15de46a',
+            'release_date': '20260901',
+            'series': 'HOT! ODK Pick 3 Minute News',
+            'series_id': '23324',
+            'episode': '9/1 Yonhap News TV',
+            'episode_number': 9406,
+        },
+        },{
         'url': 'https://www.ondemandkorea.com/player/vod/ask-us-anything?contentId=686471',
+        'skip': 'video gone',
         'md5': 'e2ff77255d989e3135bde0c5889fbce8',
         'info_dict': {
             'id': '686471',
@@ -39,6 +56,7 @@ class OnDemandKoreaIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.ondemandkorea.com/player/vod/breakup-probation-a-week?contentId=1595796',
+        'skip': 'stale test sample / site changed',
         'md5': '57266c720006962be7ff415b24775caa',
         'info_dict': {
             'id': '1595796',
@@ -54,6 +72,7 @@ class OnDemandKoreaIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.ondemandkorea.com/player/vod/the-outlaws?contentId=369531',
+        'skip': 'video gone',
         'md5': 'fa5523b87aa1f6d74fc622a97f2b47cd',
         'info_dict': {
             'id': '369531',
@@ -131,7 +150,15 @@ class OnDemandKoreaProgramIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?ondemandkorea\.com/(?:en/)?player/vod/(?P<id>[a-z0-9-]+)(?:$|#)'
     _GEO_COUNTRIES = ['US', 'CA']
 
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.ondemandkorea.com/player/vod/the-seasons-cantabile-of-park-bo-gum-6',
+            'info_dict': {
+                'id': 'the-seasons-cantabile-of-park-bo-gum-6',
+            },
+            'playlist_mincount': 1,
+            'params': {'skip_download': True},
+        },{
         'url': 'https://www.ondemandkorea.com/player/vod/uskn-news',
         'info_dict': {
             'id': 'uskn-news',

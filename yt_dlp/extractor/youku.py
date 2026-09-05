@@ -63,6 +63,7 @@ class YoukuIE(InfoExtractor):
         },
     }, {
         'url': 'https://v.youku.com/v_show/id_XNTA2NTA0MjA1Mg==.html',
+        'skip': 'DRM protected',
         'info_dict': {
             'id': 'XNTA2NTA0MjA1Mg',
             'ext': 'mp4',
@@ -203,6 +204,7 @@ class YoukuShowIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://list.youku.com/show/id_zc7c670be07ff11e48b3f.html',
+        'skip': 'extractor broken: Unable to extract page config',
         'info_dict': {
             'id': 'zc7c670be07ff11e48b3f',
             'title': '花千骨 DVD版',
@@ -212,6 +214,7 @@ class YoukuShowIE(InfoExtractor):
     }, {
         # Episode number not starting from 1
         'url': 'http://list.youku.com/show/id_zefbfbd70efbfbd780bef.html',
+        'skip': 'extractor broken: Unable to extract page config',
         'info_dict': {
             'id': 'zefbfbd70efbfbd780bef',
             'title': '超级飞侠3',

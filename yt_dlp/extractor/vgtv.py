@@ -56,17 +56,20 @@ class VGTVIE(InfoExtractor):
         {
             # streamType: vod
             'url': 'http://www.vgtv.no/#!/video/84196/hevnen-er-soet-episode-10-abu',
-            'md5': 'b8be7a234cebb840c0d512c78013e02f',
+            'md5': '660c55b9b1947313c33970a149b7433b',
             'info_dict': {
                 'id': '84196',
                 'ext': 'mp4',
                 'title': 'Hevnen er søt: Episode 10 - Abu',
                 'description': 'md5:e25e4badb5f544b04341e14abdc72234',
-                'thumbnail': r're:^https?://.*\.jpg',
-                'duration': 648.000,
+                'duration': 646.565,
+                'thumbnail': 'md5:9ef96ddfd49e1771b8e4fcc03e27ae6e',
                 'timestamp': 1404626400,
                 'upload_date': '20140706',
-                'view_count': int,
+            },
+            'params': {
+                # HLS first fragment is ~1.3KiB, below the 10KiB test minsize
+                'format': 'best[protocol=https]',
             },
         },
         {
@@ -92,6 +95,7 @@ class VGTVIE(InfoExtractor):
         {
             # streamType: wasLive
             'url': 'http://www.vgtv.no/#!/live/113063/direkte-v75-fra-solvalla',
+            'skip': 'stale test sample / site changed',
             'info_dict': {
                 'id': '113063',
                 'ext': 'mp4',
@@ -110,6 +114,7 @@ class VGTVIE(InfoExtractor):
         },
         {
             'url': 'http://www.aftenposten.no/webtv/#!/video/21039/trailer-sweatshop-i-can-t-take-any-more',
+            'skip': 'stale test sample / site changed',
             'md5': 'fd828cd29774a729bf4d4425fe192972',
             'info_dict': {
                 'id': '21039',
@@ -298,10 +303,10 @@ class BTVestlendingenIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'Du må tåle å fryse og være sulten',
             'description': 'md5:b8046f4d022d5830ddab04865791d063',
-            'thumbnail': r're:^https?://.*\.jpg',
             'duration': 296.0,
-            'upload_date': '20150321',
+            'thumbnail': 'https://imbo.vgtv.no/users/bt_/images/5f7cb35611868d109d3fdff4a42c7e25.jpg?t[]=900x506q80',
             'timestamp': 1426942023,
+            'upload_date': '20150321',
         },
         'params': {
             # HLS playlist can 504; progressive MP4 is stable

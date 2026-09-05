@@ -18,6 +18,7 @@ class MyFreeCamsIE(InfoExtractor):
     '''
     _TESTS = [{
         'url': 'https://www.myfreecams.com/#erikasmagic',
+        'skip': 'not currently live',
         'info_dict': {
             'id': 'erikasmagic',
             'ext': 'mp4',

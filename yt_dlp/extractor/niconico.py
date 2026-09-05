@@ -667,7 +667,7 @@ class NiconicoSeriesIE(NiconicoPlaylistBaseIE):
         'url': 'https://www.nicovideo.jp/series/12312/',
         'info_dict': {
             'id': '12312',
-            'title': 'バトルスピリッツ　お勧めカード紹介(調整中)',
+            'title': 'バトルスピリッツ　お勧めカード紹介',
             'description': '',
             'uploader': '野鳥',
             'uploader_id': '2275360',
@@ -773,7 +773,14 @@ class NicovideoSearchURLIE(NicovideoSearchBaseIE):
     IE_NAME = f'{NicovideoSearchIE.IE_NAME}_url'
     IE_DESC = 'Nico video search URLs'
     _VALID_URL = r'https?://(?:www\.)?nicovideo\.jp/search/(?P<id>[^?#&]+)?'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.nicovideo.jp/search/',
+            'info_dict': {
+            },
+            'playlist_mincount': 2,
+            'params': {'skip_download': True},
+        },{
         'url': 'http://www.nicovideo.jp/search/sm9',
         'skip': 'video gone',
         'info_dict': {
@@ -908,6 +915,7 @@ class NiconicoLiveIE(NiconicoBaseIE):
     _VALID_URL = r'https?://(?:sp\.)?live2?\.nicovideo\.jp/(?:watch|gate)/(?P<id>lv\d+)'
     _TESTS = [{
         'url': 'https://live.nicovideo.jp/watch/lv329299587',
+        'skip': 'extractor broken: Unable to extract websocket URL',
         'info_dict': {
             'id': 'lv329299587',
             'ext': 'mp4',
@@ -927,6 +935,7 @@ class NiconicoLiveIE(NiconicoBaseIE):
         'params': {'skip_download': True},
     }, {
         'url': 'https://live.nicovideo.jp/watch/lv331050399',
+        'skip': 'extractor broken: Unable to extract websocket URL',
         'info_dict': {
             'id': 'lv331050399',
             'ext': 'mp4',

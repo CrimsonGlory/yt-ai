@@ -57,6 +57,7 @@ class MuseAIIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://skiv.com/docs',
+        'skip': 'webpage sample unavailable',
         'playlist_mincount': 3,
         'info_dict': {
             'id': 'docs',

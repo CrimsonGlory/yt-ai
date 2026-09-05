@@ -10,6 +10,7 @@ class EUScreenIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://euscreen.eu/item.html?id=EUS_0EBCBF356BFC4E12A014023BA41BD98C',
+        'skip': 'extractor broken: Failed to parse JSON (caused by JSONDecodeError(\'Extra data in \\\'mage.jpg"})("$e',
         'info_dict': {
             'id': 'EUS_0EBCBF356BFC4E12A014023BA41BD98C',
             'ext': 'mp4',

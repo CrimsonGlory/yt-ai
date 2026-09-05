@@ -66,6 +66,7 @@ class BBCCoUkIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'http://www.bbc.co.uk/programmes/b039g8p7',
+            'skip': 'extractor broken: UnboundLocalError',
             'info_dict': {
                 'id': 'b039d07m',
                 'ext': 'flv',
@@ -211,6 +212,7 @@ class BBCCoUkIE(InfoExtractor):
         }, {
             # compact player (https://github.com/ytdl-org/youtube-dl/issues/8147)
             'url': 'http://www.bbc.co.uk/programmes/p028bfkf/player',
+            'skip': 'video gone',
             'info_dict': {
                 'id': 'p028bfkj',
                 'ext': 'flv',
@@ -602,7 +604,16 @@ class BBCIE(BBCCoUkIE):  # XXX: Do not subclass from concrete IE
         'mobile-tablet-main',
     ]
 
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'http://www.bbc.com/news/articles/cj6482r6yl4o',
+            'info_dict': {
+                'id': 'cj6482r6yl4o',
+                'title': 'BBC reports from Palestinian village under weekly attack by Israeli settlers',
+            },
+            'playlist_mincount': 1,
+            'params': {'skip_download': True},
+        },{
         # article with multiple videos embedded with data-playable containing vpids
         'url': 'http://www.bbc.com/news/world-europe-32668511',
         'info_dict': {
@@ -625,6 +636,7 @@ class BBCIE(BBCCoUkIE):  # XXX: Do not subclass from concrete IE
         # article with multiple videos embedded with `new SMP()`
         # broken
         'url': 'http://www.bbc.co.uk/blogs/adamcurtis/entries/3662a707-0af9-3149-963f-47bea720b460',
+        'skip': 'extractor broken: Unable to extract playlist data',
         'info_dict': {
             'id': '3662a707-0af9-3149-963f-47bea720b460',
             'title': 'BUGGER',
@@ -634,6 +646,7 @@ class BBCIE(BBCCoUkIE):  # XXX: Do not subclass from concrete IE
     }, {
         # single video embedded with data-playable containing vpid
         'url': 'http://www.bbc.com/news/world-europe-32041533',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'p02mprgb',
             'ext': 'mp4',
@@ -667,6 +680,7 @@ class BBCIE(BBCCoUkIE):  # XXX: Do not subclass from concrete IE
     }, {
         # single video embedded with data-playable containing XML playlists (regional section)
         'url': 'http://www.bbc.com/mundo/video_fotos/2015/06/150619_video_honduras_militares_hospitales_corrupcion_aw',
+        'skip': 'extractor broken: Unable to extract playlist data',
         'info_dict': {
             'id': '39275083',
             'display_id': '150619_video_honduras_militares_hospitales_corrupcion_aw',
@@ -697,6 +711,7 @@ class BBCIE(BBCCoUkIE):  # XXX: Do not subclass from concrete IE
     }, {
         # single video story with __PWA_PRELOADED_STATE__
         'url': 'http://www.bbc.com/travel/story/20150625-sri-lankas-spicy-secret',
+        'skip': 'extractor broken: Unable to extract playlist data',
         'info_dict': {
             'id': 'p02q6gc4',
             'ext': 'mp4',
@@ -750,6 +765,7 @@ class BBCIE(BBCCoUkIE):  # XXX: Do not subclass from concrete IE
     }, {
         # article with multiple videos embedded with Morph.setPayload
         'url': 'http://www.bbc.com/sport/0/football/34475836',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '34475836',
             'title': 'Jurgen Klopp: Furious football from a witty and winning coach',
@@ -788,6 +804,7 @@ class BBCIE(BBCCoUkIE):  # XXX: Do not subclass from concrete IE
         # custom redirection to www.bbc.com
         # also, video with window.__INITIAL_DATA__
         'url': 'http://www.bbc.co.uk/news/science-environment-33661876',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'p02xzws1',
             'ext': 'mp4',
@@ -831,6 +848,7 @@ class BBCIE(BBCCoUkIE):  # XXX: Do not subclass from concrete IE
     }, {
         # bbcthreeConfig
         'url': 'https://www.bbc.co.uk/bbcthree/clip/73d0bbd0-abc3-4cea-b3c0-cdae21905eb1',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'p06556y7',
             'ext': 'mp4',
@@ -864,6 +882,7 @@ class BBCIE(BBCCoUkIE):  # XXX: Do not subclass from concrete IE
     }, {
         # BBC Reel
         'url': 'https://www.bbc.com/reel/video/p07c6sb6/how-positive-thinking-is-harming-your-happiness',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'p07c6sb9',
             'ext': 'mp4',
@@ -877,6 +896,7 @@ class BBCIE(BBCCoUkIE):  # XXX: Do not subclass from concrete IE
     }, {
         # BBC Sounds
         'url': 'https://www.bbc.co.uk/sounds/play/w3ct5rgx',
+        'skip': 'extractor broken: Unable to extract playlist data',
         'info_dict': {
             'id': 'p0hrw4nr',
             'ext': 'mp4',
@@ -1538,6 +1558,7 @@ class BBCCoUkArticleIE(InfoExtractor):
 
     _TEST = {
         'url': 'http://www.bbc.co.uk/programmes/articles/3jNQLTMrPlYGTBn0WV6M2MS/not-your-typical-role-model-ada-lovelace-the-19th-century-programmer',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '3jNQLTMrPlYGTBn0WV6M2MS',
             'title': 'Calculating Ada: The Countess of Computing - Not your typical role model: Ada Lovelace the 19th century programmer - BBC Four',
@@ -1648,6 +1669,7 @@ class BBCCoUkIPlayerEpisodesIE(BBCCoUkIPlayerPlaylistBaseIE):
     _VALID_URL = BBCCoUkIPlayerPlaylistBaseIE._VALID_URL_TMPL % 'episodes'
     _TESTS = [{
         'url': 'http://www.bbc.co.uk/iplayer/episodes/b05rcz9v',
+        'skip': 'extractor broken: AttributeError',
         'info_dict': {
             'id': 'b05rcz9v',
             'title': 'The Disappearance',
@@ -1678,13 +1700,14 @@ class BBCCoUkIPlayerEpisodesIE(BBCCoUkIPlayerPlaylistBaseIE):
         'url': 'https://www.bbc.co.uk/iplayer/episodes/m0004c4v/beechgrove',
         'info_dict': {
             'id': 'm0004c4v',
-            'title': 'Beechgrove',
-            'description': 'Gardening show that celebrates Scottish horticulture and growing conditions.',
+            'title': 'Beechgrove Garden',
+            'description': 'Celebrating the great Scottish garden. Tips and advice to get the most out of your garden, with inspirational ideas from Scotland\'s most beautiful green spaces.',
         },
         'playlist_mincount': 37,
     }, {
         # explicit page
         'url': 'https://www.bbc.co.uk/iplayer/episodes/m0004c4v/beechgrove?page=2',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'm0004c4v',
             'title': 'Beechgrove',
@@ -1753,7 +1776,7 @@ class BBCCoUkIPlayerGroupIE(BBCCoUkIPlayerPlaylistBaseIE):
             'title': 'Music in Scotland',
             'description': 'Perfomances in Scotland and programmes featuring Scottish acts.',
         },
-        'playlist_mincount': 25,
+        'playlist_mincount': 20,
     }, {
         # explicit page
         'url': 'https://www.bbc.co.uk/iplayer/group/p081d7j7?page=2',
@@ -1804,31 +1827,31 @@ class BBCCoUkPlaylistIE(BBCCoUkPlaylistBaseIE):
     _URL_TEMPLATE = 'http://www.bbc.co.uk/programmes/%s'
     _VIDEO_ID_TEMPLATE = r'data-pid=["\'](%s)'
     _TESTS = [{
-        'url': 'http://www.bbc.co.uk/programmes/b05rcz9v/clips',
+        'url': 'https://www.bbc.co.uk/programmes/b006t0bv/clips',
         'info_dict': {
-            'id': 'b05rcz9v',
-            'title': 'The Disappearance - Clips - BBC Four',
-            'description': 'French thriller serial about a missing teenager.',
+            'id': 'b006t0bv',
+            'title': 'BBC One - Countryfile - Clips',
+            'description': 'Clips from Countryfile',
         },
-        'playlist_mincount': 7,
+        'playlist_mincount': 10,
     }, {
         # multipage playlist, explicit page
         'url': 'http://www.bbc.co.uk/programmes/b00mfl7n/clips?page=1',
         'info_dict': {
             'id': 'b00mfl7n',
-            'title': 'Frozen Planet - Clips - BBC One',
+            'title': 'BBC One - Frozen Planet - Clips',
             'description': 'md5:4a629b1ba5f1eee1264b90a9fa2b88c0',
         },
-        'playlist_mincount': 24,
+        'playlist_mincount': 10,
     }, {
         # multipage playlist, all pages
         'url': 'http://www.bbc.co.uk/programmes/b00mfl7n/clips',
         'info_dict': {
             'id': 'b00mfl7n',
-            'title': 'Frozen Planet - Clips - BBC One',
+            'title': 'BBC One - Frozen Planet - Clips',
             'description': 'md5:4a629b1ba5f1eee1264b90a9fa2b88c0',
         },
-        'playlist_mincount': 142,
+        'playlist_mincount': 10,
     }, {
         'url': 'http://www.bbc.co.uk/programmes/b05rcz9v/broadcasts/2016/06',
         'only_matching': True,

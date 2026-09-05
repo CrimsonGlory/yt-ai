@@ -61,6 +61,7 @@ class VisirIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.visir.is/g/20262837896d/segir-von-brigdin-med-prinsessuna-rista-djupt',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '9ad5e58a-f26f-49f7-8b1d-68f0629485b7-1770059257365',
             'ext': 'mp4',

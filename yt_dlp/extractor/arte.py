@@ -275,6 +275,7 @@ class ArteTVEmbedIE(InfoExtractor):
     _WEBPAGE_TESTS = [{
         # FIXME: Embed detection
         'url': 'https://timesofmalta.com/article/watch-sunken-warships-north-sea-arte.1108358',
+        'skip': 'Cloudflare challenge',
         'info_dict': {
             'id': '110288-000-A',
             'ext': 'mp4',
@@ -290,6 +291,7 @@ class ArteTVEmbedIE(InfoExtractor):
     }, {
         # FIXME: Embed detection
         'url': 'https://www.eurockeennes.fr/en-live/',
+        'skip': 'Cloudflare challenge',
         'info_dict': {
             'id': 'en-live',
             'title': 'Les Eurocks en live | Les Eurockéennes de Belfort – 3-4-5-6 juillet 2025 sur la Presqu&#039;Île du Malsaucy',

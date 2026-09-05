@@ -137,6 +137,7 @@ class PeriscopeUserIE(PeriscopeBaseIE):
 
     _TEST = {
         'url': 'https://www.periscope.tv/LularoeHusbandMike/',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'LularoeHusbandMike',
             'title': 'LULAROE HUSBAND MIKE',

@@ -18,6 +18,7 @@ class AmericasTestKitchenIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?:americastestkitchen|cooks(?:country|illustrated))\.com/(?:cooks(?:country|illustrated)/)?(?P<resource_type>episode|videos)/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.americastestkitchen.com/episode/582-weeknight-japanese-suppers',
+        'skip': 'stale test sample / site changed',
         'md5': 'b861c3e365ac38ad319cfd509c30577f',
         'info_dict': {
             'id': '5b400b9ee338f922cb06450c',
@@ -44,24 +45,23 @@ class AmericasTestKitchenIE(InfoExtractor):
     }, {
         # Metadata parsing behaves differently for newer episodes (705) as opposed to older episodes (582 above)
         'url': 'https://www.americastestkitchen.com/episode/705-simple-chicken-dinner',
-        'md5': '06451608c57651e985a498e69cec17e5',
+        'md5': '4ce24007c454fcbef5c8eff95201c974',
         'info_dict': {
             'id': '5fbe8c61bda2010001c6763b',
-            'title': 'Simple Chicken Dinner',
             'ext': 'mp4',
             'display_id': 'atktv_2103_simple-chicken-dinner_full-episode_web-mp4',
+            'title': 'Simple Chicken Dinner',
             'description': 'md5:eb68737cc2fd4c26ca7db30139d109e7',
+            'duration': 1397,
+            'thumbnail': 'md5:085f65d153db3423a5cef457b093f85e',
             'timestamp': 1610737200,
             'upload_date': '20210115',
             'release_date': '20210115',
-            'series': 'America\'s Test Kitchen',
+            'series': "America's Test Kitchen",
             'season': 'Season 21',
-            'episode': 'Simple Chicken Dinner',
             'season_number': 21,
+            'episode': 'Simple Chicken Dinner',
             'episode_number': 3,
-            'duration': 1397,
-            'thumbnail': r're:^https?://',
-            'view_count': int,
             'average_rating': 0,
         },
         'params': {

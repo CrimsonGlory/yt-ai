@@ -14,7 +14,21 @@ from ..utils.traversal import traverse_obj
 
 class OlympicsReplayIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?olympics\.com/[a-z]{2}/(?:paris-2024/)?(?:replay|videos?|original-series/episode)/(?P<id>[\w-]+)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.olympics.com/en/video/seven-golds-and-seven-world-records-for-spitz',
+            'md5': '5c41f7086102b5587b2ae17cd2ba4d66',
+            'info_dict': {
+            'id': '7bb7fca8-8bd5-447b-a4f4-99626e0c7465',
+            'ext': 'mp4',
+            'title': 'Seven golds and seven world records for Spitz',
+            'description': 'md5:955cf1e5436b327e3562cddf7357d8f5',
+            'duration': 59,
+            'thumbnail': 'https://img.olympics.com/images/image/private/t_1-1_1280/primary/yl1pv0klpiisgmwcmsgy',
+            'timestamp': 1528845165,
+            'upload_date': '20180612',
+        },
+        },{
         'url': 'https://olympics.com/fr/video/men-s-109kg-group-a-weightlifting-tokyo-2020-replays',
         'info_dict': {
             'id': 'f6a0753c-8e6f-4b7d-a435-027054a4f8e9',
@@ -50,6 +64,7 @@ class OlympicsReplayIE(InfoExtractor):
         'skip': 'Geo-restricted to RU, BR, BT, NP, TM, BD, TL',
     }, {
         'url': 'https://olympics.com/en/paris-2024/videos/dnp-suni-lee-i-have-goals-and-i-have-expectations-for-myself-but-i-also-am-trying-to-give-myself-grace',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'a42f37ab-8a74-41d0-a7d9-af27b7b02a90',
             'ext': 'mp4',

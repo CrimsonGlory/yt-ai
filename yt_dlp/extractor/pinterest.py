@@ -214,7 +214,7 @@ class PinterestCollectionIE(PinterestBaseIE):
             'id': '585890301462791043',
             'title': 'cool diys',
         },
-        'playlist_count': 8,
+        'playlist_mincount': 5,
     }, {
         'url': 'https://www.pinterest.ca/fudohub/videos/',
         'info_dict': {

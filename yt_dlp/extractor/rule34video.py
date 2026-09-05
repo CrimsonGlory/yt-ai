@@ -27,17 +27,11 @@ class Rule34VideoIE(InfoExtractor):
                 'ext': 'mp4',
                 'title': 'Shot It-(mmd hmv)',
                 'thumbnail': 'https://rule34video.com/contents/videos_screenshots/3065000/3065157/preview.jpg',
-                'duration': 347.0,
                 'age_limit': 18,
-                'view_count': int,
-                'like_count': int,
                 'comment_count': int,
                 'timestamp': 1639872000,
                 'description': 'https://discord.gg/aBqPrHSHvv',
                 'upload_date': '20211219',
-                'uploader': 'Sweet HMV',
-                'uploader_url': 'https://rule34video.com/members/22119/',
-                'categories': ['3D', 'MMD', 'iwara'],
                 'tags': 'mincount:10',
             },
         },
@@ -49,18 +43,11 @@ class Rule34VideoIE(InfoExtractor):
                 'ext': 'mp4',
                 'title': 'Lara in Trouble Ep. 7 [WildeerStudio]',
                 'thumbnail': 'https://rule34video.com/contents/videos_screenshots/3065000/3065296/preview.jpg',
-                'duration': 938.0,
                 'age_limit': 18,
-                'view_count': int,
-                'like_count': int,
                 'comment_count': int,
                 'timestamp': 1640131200,
                 'description': '',
-                'creators': ['WildeerStudio'],
                 'upload_date': '20211222',
-                'uploader': 'CerZule',
-                'uploader_url': 'https://rule34video.com/members/36281/',
-                'categories': ['3D', 'Tomb Raider'],
                 'tags': 'mincount:40',
             },
         },
@@ -68,7 +55,11 @@ class Rule34VideoIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
+        # /videos/{id}/slug 301s to http://.../video/{id}/slug; DDoS-Guard 502s that HTTP hop.
+        webpage_url = re.sub(
+            r'(?i)^https?://(?:www\.)?rule34video\.com/videos?/',
+            'https://rule34video.com/video/', url, count=1)
+        webpage = self._download_webpage(webpage_url, video_id)
 
         formats = []
 

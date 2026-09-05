@@ -188,6 +188,7 @@ class GlobalPlayerAudioEpisodeIE(GlobalPlayerBaseIE):
     }, {
         # radio catchup - test urls are removed after 7 days
         'url': 'https://www.globalplayer.com/catchup/lbc/uk/episodes/2zGmrV6DnvogKkNCXkwkQ8HQTA/',
+        'skip': 'video gone',
         'info_dict': {
             'id': '2zGmrV6DnvogKkNCXkwkQ8HQTA',
             'ext': 'm4a',

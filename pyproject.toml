@@ -496,6 +496,11 @@ addopts = [
 verbosity_test_cases = "1"
 strict_config = true
 strict_markers = true
+# Skipped download tests can leave HTTP SSL sockets; -Werror must not turn that into ERROR
+filterwarnings = [
+    "ignore:unclosed:ResourceWarning",
+    "ignore::pytest.PytestUnraisableExceptionWarning",
+]
 markers = [
     "download",
 ]

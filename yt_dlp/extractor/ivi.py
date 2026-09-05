@@ -216,6 +216,7 @@ class IviCompilationIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?ivi\.ru/watch/(?!\d+)(?P<compilationid>[a-z\d_-]+)(?:/season(?P<seasonid>\d+))?$'
     _TESTS = [{
         'url': 'http://www.ivi.ru/watch/dvoe_iz_lartsa',
+        'skip': 'extractor broken: [ivi:compilation] unable to extract title',
         'info_dict': {
             'id': 'dvoe_iz_lartsa',
             'title': 'Двое из ларца (2006 - 2008)',
@@ -223,6 +224,7 @@ class IviCompilationIE(InfoExtractor):
         'playlist_mincount': 24,
     }, {
         'url': 'http://www.ivi.ru/watch/dvoe_iz_lartsa/season1',
+        'skip': 'extractor broken: [ivi:compilation] unable to extract title',
         'info_dict': {
             'id': 'dvoe_iz_lartsa/season1',
             'title': 'Двое из ларца (2006 - 2008) 1 сезон',

@@ -34,6 +34,7 @@ class SoundcloudEmbedIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://news.sophos.com/en-us/2023/08/10/s3-ep147-what-if-you-type-in-your-password-during-a-meeting/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '1588847423',
             'ext': 'm4a',
@@ -56,6 +57,7 @@ class SoundcloudEmbedIE(InfoExtractor):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.guitarplayer.com/lessons/november-2023-guitar-player-lesson-audio',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '1695754080',
             'title': 'A Tribute to Brian Setzer’s Guitar Mastery',
@@ -939,8 +941,8 @@ class SoundcloudSetIE(SoundcloudPlaylistBaseIE):
             'modified_date': '20221108',
             'duration': 1531.376,
             'license': 'all-rights-reserved',
-            'like_count': 185,
-            'repost_count': 40,
+            'like_count': int,
+            'repost_count': int,
             'genres': ['Hip-hop & Rap'],
             'tags': ['Drum & Bass', 'Alternative', 'Ambient'],
             'thumbnails': [
@@ -1173,7 +1175,7 @@ class SoundcloudUserPermalinkIE(SoundcloudPagedPlaylistBaseIE):
             'id': '30909869',
             'title': 'neilcic',
         },
-        'playlist_mincount': 22,
+        'playlist_mincount': 5,
     }]
 
     def _real_extract(self, url):

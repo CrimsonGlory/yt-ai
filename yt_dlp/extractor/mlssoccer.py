@@ -7,21 +7,21 @@ class MLSSoccerIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.mlssoccer.com/video/the-octagon-can-alphonso-davies-lead-canada-to-first-world-cup-since-1986#the-octagon-can-alphonso-davies-lead-canada-to-first-world-cup-since-1986',
+        'md5': 'd35fb3ec5c36bcde5a8ffd367b2312c0',
         'info_dict': {
             'id': '6276033198001',
             'ext': 'mp4',
-            'title': 'The Octagon | Can Alphonso Davies lead Canada to first World Cup since 1986?',
-            'description': 'md5:f0a883ee33592a0221798f451a98be8f',
-            'thumbnail': 'https://cf-images.us-east-1.prod.boltdns.net/v1/static/5530036772001/1bbc44f6-c63c-4981-82fa-46b0c1f891e0/5c1ca44a-a033-4e98-b531-ff24c4947608/160x90/match/image.jpg',
+            'title': 'Can Alphonso Davies lead Canada to its first World Cup since 1986?',
+            'description': 'md5:2e219018f7bb03eb2da78f74a09d2dfe',
+            'thumbnail': r're:https?://.+\.jpg',
             'duration': 350.165,
             'timestamp': 1633627291,
             'uploader_id': '5530036772001',
-            'tags': ['club/canada'],
-            'is_live': False,
+            'tags': ['club/canada', 'competition/concacaf world cup qualifiers'],
             'upload_date': '20211007',
-            'filesize_approx': 255193528.83200002,
         },
-        'params': {'skip_download': True},
+        # Default format `b` prefers HLS; force progressive so --test is a stable 10KiB HTTP sample
+        'params': {'format': 'best[protocol=https]'},
     }, {
         'url': 'https://www.whitecapsfc.com/video/highlights-san-jose-earthquakes-vs-vancouver-whitecaps-fc-october-23-2021#highlights-san-jose-earthquakes-vs-vancouver-whitecaps-fc-october-23-2021',
         'only_matching': True,

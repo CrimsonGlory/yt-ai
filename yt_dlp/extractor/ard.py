@@ -128,8 +128,29 @@ class ARDBetaMediathekIE(InfoExtractor):
     _GEO_COUNTRIES = ['DE']
     _TOKEN_URL = 'https://sso.ardmediathek.de/sso/token'
 
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.ardmediathek.de/video/sportschau-dfb-pokal/gladbach-laesst-schott-mainz-keine-chance/das-erste/Y3JpZDovL3Nwb3J0c2NoYXUuZGUvM2M5ZjQ5MDEtZTVlMS00MWE2LTk4ZDktM2IzYjMxOTAxNGE5',
+            'md5': '24176e3a41b7e181599e799edaaff384',
+            'info_dict': {
+                'id': '11105441',
+                'ext': 'mp4',
+                'display_id': 'Y3JpZDovL3Nwb3J0c2NoYXUuZGUvM2M5ZjQ5MDEtZTVlMS00MWE2LTk4ZDktM2IzYjMxOTAxNGE5',
+                'title': 'Gladbach lässt Schott Mainz keine Chance',
+                'description': 'md5:3ad3d7a1f7470f1e5903e011a9cad0ef',
+                'channel': 'Das Erste',
+                'duration': 353,
+                'thumbnail': 'md5:68d8f1724d23942f8e39c9d134fc5ba5',
+                'timestamp': 1787507417,
+                'upload_date': '20260823',
+                'series': 'Sportschau DFB-Pokal',
+                'episode': 'Gladbach lässt Schott Mainz keine Chance',
+                'chapters': 'count:6',
+                '_old_archive_ids': ['ardbetamediathek Y3JpZDovL3Nwb3J0c2NoYXUuZGUvM2M5ZjQ5MDEtZTVlMS00MWE2LTk4ZDktM2IzYjMxOTAxNGE5'],
+            },
+        },{
         'url': 'https://www.ardmediathek.de/video/y-kollektiv/die-staerksten-frauen-der-welt-oder-reportage/br/Y3JpZDovL2JyLmRlL2Jyb2FkY2FzdC9GMjAyNldPMDAxNjA0QTA',
+        'skip': 'stale test sample / site changed',
         'md5': 'b6e8ab03f2bcc6e1f9e6cef25fcc03c4',
         'info_dict': {
             'display_id': 'Y3JpZDovL21kci5kZS9zZW5kdW5nLzI4MjA0MC80MjIwOTEtNDAyNTM0',
@@ -200,6 +221,7 @@ class ARDBetaMediathekIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.ardmediathek.de/video/lokalzeit-aus-duesseldorf/lokalzeit-aus-duesseldorf-oder-31-10-2024/wdr-duesseldorf/Y3JpZDovL3dkci5kZS9CZWl0cmFnLXNvcGhvcmEtOWFkMTc0ZWMtMDA5ZS00ZDEwLWFjYjctMGNmNTdhNzVmNzUz',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '13847165',
             'chapters': 'count:8',
@@ -390,8 +412,19 @@ class ARDMediathekCollectionIE(InfoExtractor):
         (?:/(?P<season>\d+)(?:/(?P<version>OV|AD))?)?/?(?:[?#]|$)'''
     _GEO_COUNTRIES = ['DE']
 
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.ardmediathek.de/serie/surface-das-versunkene-dorf-oder-serie/staffel-1/Y3JpZDovL2Rhc2Vyc3RlLmRlL3N1cmZhY2U/1',
+            'info_dict': {
+                'id': 'Y3JpZDovL2Rhc2Vyc3RlLmRlL3N1cmZhY2U_1',
+                'display_id': 'surface-das-versunkene-dorf-oder-serie/staffel-1',
+                'title': 'Staffel 1',
+            },
+            'playlist_mincount': 2,
+            'params': {'skip_download': True},
+        },{
         'url': 'https://www.ardmediathek.de/serie/nachtstreife-oder-start-der-7-staffel/staffel-1/Y3JpZDovL3N3ci5kZS9zZGIvc3RJZC8xMjQy/1',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'Y3JpZDovL3N3ci5kZS9zZGIvc3RJZC8xMjQy_1',
             'display_id': 'quiz/staffel-1-originalversion',
@@ -542,6 +575,7 @@ class ARDAudiothekIE(ARDAudiothekBaseIE):
         },
     }, {
         'url': 'https://www.ardsounds.de/episode/urn:ard:episode:8a3c955c3beeb397/',
+        'skip': 'DRM protected',
         'info_dict': {
             'id': 'urn:ard:episode:8a3c955c3beeb397',
             'ext': 'mp3',

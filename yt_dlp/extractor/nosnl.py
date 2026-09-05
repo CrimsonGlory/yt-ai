@@ -8,6 +8,7 @@ class NOSNLArticleIE(InfoExtractor):
         {
             # only 1 video
             'url': 'https://nos.nl/nieuwsuur/artikel/2440353-verzakking-door-droogte-dreigt-tot-een-miljoen-kwetsbare-huizen',
+            'skip': 'stale test sample / site changed',
             'info_dict': {
                 'id': '2440340',
                 'ext': 'mp4',
@@ -19,6 +20,7 @@ class NOSNLArticleIE(InfoExtractor):
         }, {
             # more than 1 video
             'url': 'https://nos.nl/artikel/2440409-vannacht-sliepen-weer-enkele-honderden-asielzoekers-in-ter-apel-buiten',
+            'skip': 'stale test sample / site changed',
             'info_dict': {
                 'id': '2440409',
                 'title': 'Vannacht sliepen weer enkele honderden asielzoekers in Ter Apel buiten',
@@ -44,13 +46,14 @@ class NOSNLArticleIE(InfoExtractor):
                 'modified_timestamp': 1660625449,
                 'timestamp': 1660625449,
                 'upload_date': '20220816',
-                'thumbnail': 'https://cdn.nos.nl/image/2022/08/16/888178/1024x576a.jpg',
+                'thumbnail': r're:https://images\.cdn\.nos\.nl/.+',
                 'categories': ['Binnenland', 'Buitenland'],
             },
             'playlist_count': 2,
         }, {
             # video url
             'url': 'https://nos.nl/video/2452718-xi-en-trudeau-botsen-voor-de-camera-op-g20-top-je-hebt-gelekt',
+            'skip': 'stale test sample / site changed',
             'info_dict': {
                 'id': '2452718',
                 'title': 'Xi en Trudeau botsen voor de camera op G20-top: \'Je hebt gelekt\'',

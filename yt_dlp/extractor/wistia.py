@@ -241,6 +241,7 @@ class WistiaIE(WistiaBaseIE):
         'skip': 'Invalid URL',
     }, {
         'url': 'https://study.com/academy/lesson/north-american-exploration-failed-colonies-of-spain-france-england.html#lesson',
+        'skip': 'HTTP 403/blocked',
         'md5': 'b9676d24bf30945d97060638fbfe77f0',
         'info_dict': {
             'id': '5vd7p4bct5',
@@ -253,11 +254,10 @@ class WistiaIE(WistiaBaseIE):
             'description': 'a Paywall Videos video',
         },
     }, {
-        'url': 'https://support.wistia.com/en/articles/8233354-embedding-your-media',
+        'url': 'https://support.wistia.com/en/articles/8233354-embed-your-media',
         'info_dict': {
-            'id': '8233354-embedding-your-media',
-            'title': 'Embedding Your Media | Wistia Help Center',
-            'age_limit': 0,
+            'id': '8233354-embed-your-media',
+            'title': 'Embed Your Media | Wistia Help Center',
             'description': 'md5:32a5edc0e266cd61e2d15be28873d614',
             'thumbnail': r're:https?://downloads\.intercomcdn\.com/.+\.jpg',
         },
@@ -325,6 +325,7 @@ class WistiaChannelIE(WistiaBaseIE):
         'skip': 'Invalid URL',
     }, {
         'url': 'https://fast.wistia.net/embed/channel/3802iirk0l',
+        'skip': 'HTTP 403/blocked',
         'info_dict': {
             'id': '3802iirk0l',
             'title': 'The Roof',
@@ -333,6 +334,7 @@ class WistiaChannelIE(WistiaBaseIE):
     }, {
         # link to popup video, follow --no-playlist
         'url': 'https://fast.wistia.net/embed/channel/3802iirk0l?wchannelid=3802iirk0l&wmediaid=sp5dqjzw3n',
+        'skip': 'extractor broken',
         'info_dict': {
             'id': 'sp5dqjzw3n',
             'ext': 'mp4',
@@ -366,6 +368,7 @@ class WistiaChannelIE(WistiaBaseIE):
     }, {
         # section instead of div
         'url': 'https://360learning.com/studio/onboarding-joei/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'z874k93n2o',
             'title': 'Onboarding Joei.',

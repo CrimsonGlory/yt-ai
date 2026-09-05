@@ -7,6 +7,7 @@ class PornFlipIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.pornflip.com/dzv9Mtw1qj2/sv/brazzers-double-dare-two-couples-fucked-jenna-reid-maya-bijou',
+            'skip': 'extractor broken: [PornFlip] unable to extract title',
             'info_dict': {
                 'id': 'dzv9Mtw1qj2',
                 'ext': 'mp4',

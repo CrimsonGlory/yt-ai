@@ -14,6 +14,7 @@ class MediciIE(InfoExtractor):
     _VALID_URL = r'https?://(?:(?P<sub>www|edu)\.)?medici\.tv/[a-z]{2}/[\w.-]+/(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://www.medici.tv/en/operas/thomas-ades-the-exterminating-angel-calixto-bieito-opera-bastille-paris',
+        'skip': 'DRM protected',
         'md5': 'd483f74e7a7a9eac0dbe152ab189050d',
         'info_dict': {
             'id': '8032',
@@ -28,6 +29,7 @@ class MediciIE(InfoExtractor):
         'expected_warnings': [r'preview'],
     }, {
         'url': 'https://edu.medici.tv/en/operas/wagner-lohengrin-paris-opera-kirill-serebrennikov-piotr-beczala-kwangchul-youn-johanni-van-oostrum',
+        'skip': 'DRM protected',
         'md5': '4ef3f4079a6e1c617584463a9eb84f99',
         'info_dict': {
             'id': '7900',
@@ -98,6 +100,7 @@ class MediciIE(InfoExtractor):
         'skip': 'Requires authentication; preview starts in the middle',
     }, {
         'url': 'https://www.medici.tv/en/jazz/makaya-mccraven-la-rochelle',
+        'skip': 'DRM protected',
         'md5': '4cc279a8b06609782747c8f50beea2b3',
         'info_dict': {
             'id': '7922',

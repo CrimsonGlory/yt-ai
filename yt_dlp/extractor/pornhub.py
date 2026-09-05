@@ -147,24 +147,26 @@ class PornHubIE(PornHubBaseIE):
     _EMBED_REGEX = [r'<iframe[^>]+?src=["\'](?P<url>(?:https?:)?//(?:www\.)?pornhub(?:premium)?\.(?:com|net|org)/embed/[\da-z]+)']
     _TESTS = [{
         'url': 'http://www.pornhub.com/view_video.php?viewkey=648719015',
-        'md5': '4d4a4e9178b655776f86cf89ecaf0edf',
         'info_dict': {
             'id': '648719015',
             'ext': 'mp4',
             'title': 'Seductive Indian beauty strips down and fingers her pink pussy',
-            'uploader': 'BABES-COM',
-            'uploader_id': '/users/babes-com',
-            'upload_date': '20130628',
-            'timestamp': 1372447216,
+            'uploader': 'spicevids',
+            'uploader_id': '/users/spicevids',
             'duration': 361,
+            'thumbnail': r're:https?://.+',
+            'timestamp': 1372447216,
+            'upload_date': '20130628',
+            'age_limit': 18,
             'view_count': int,
             'like_count': int,
             'comment_count': int,
-            'age_limit': 18,
-            'tags': list,
             'categories': list,
+            'tags': list,
             'cast': list,
-            'thumbnail': r're:https?://.+',
+        },
+        'params': {
+            'skip_download': True,
         },
     }, {
         # non-ASCII title
@@ -216,7 +218,9 @@ class PornHubIE(PornHubBaseIE):
         'skip': 'This video has been disabled',
     }, {
         'url': 'http://www.pornhub.com/view_video.php?viewkey=ph601dc30bae19a',
+        'skip': 'live/no formats (missing ext)',
         'info_dict': {
+            'ext': 'mp4',
             'id': 'ph601dc30bae19a',
             'uploader': 'Projekt Melody',
             'uploader_id': 'projekt-melody',
@@ -552,9 +556,13 @@ class PornHubUserIE(PornHubPlaylistBaseIE):
     _VALID_URL = rf'(?P<url>https?://(?:[a-zA-Z0-9.-]+\.)?{PornHubBaseIE._PORNHUB_HOST_RE}/(?:(?:user|channel)s|model|pornstar)/(?P<id>[^/?#&]+))(?:[?#&]|/(?!videos)|$)'
     _TESTS = [{
         'url': 'https://www.pornhub.com/model/zoe_ph',
+        'info_dict': {
+            'id': 'model/zoe_ph/videos',
+        },
         'playlist_mincount': 118,
     }, {
         'url': 'https://www.pornhub.com/pornstar/liz-vicious',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'liz-vicious',
         },

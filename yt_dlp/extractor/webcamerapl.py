@@ -18,7 +18,7 @@ class WebcameraplIE(InfoExtractor):
         'info_dict': {
             'id': 'gdansk-stare-miasto',
             'ext': 'mp4',
-            'title': r're:GDAŃSK - widok na Stare Miasto \d{4}-\d{2}-\d{2} \d{2}:\d{2}$',
+            'title': r're:GDAŃSK - widok na Stare Miasto(?: / Nowe ujęcia)? \d{4}-\d{2}-\d{2} \d{2}:\d{2}$',
             'live_status': 'is_live',
         },
     }]

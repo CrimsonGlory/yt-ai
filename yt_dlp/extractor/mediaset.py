@@ -129,6 +129,7 @@ class MediasetIE(ThePlatformBaseIE):
     }, {
         # WittyTV embed
         'url': 'https://www.wittytv.it/mauriziocostanzoshow/ultima-puntata-venerdi-25-novembre/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'F312172801000801',
             'ext': 'mp4',
@@ -268,6 +269,7 @@ class MediasetShowIE(MediasetIE):  # XXX: Do not subclass from concrete IE
             'title': 'Le Iene 2022/2023',
         },
         'playlist_mincount': 6,
+        'skip': 'stale test sample / site changed',
     }, {
         # TV Show webpage (specific season)
         'url': 'https://mediasetinfinity.mediaset.it/programmi-tv/leiene/leiene_SE000000000061,ST000000002763',

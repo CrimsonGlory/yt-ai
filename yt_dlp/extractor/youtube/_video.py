@@ -184,6 +184,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'availability': 'public',
             'live_status': 'not_live',
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
     }, {
         'note': 'Embed-only video (#1746)',
         'url': '//www.YouTube.com/watch?v=yZIXLfi8CZQ',
@@ -228,6 +235,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'availability': 'public',
             'live_status': 'not_live',
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
     }, {
         'note': '256k DASH audio (format 141) via DASH manifest',
         'url': 'https://www.youtube.com/watch?v=a9LDPn-MO4I',
@@ -270,7 +284,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         'info_dict': {
             'id': 'IB3lcPjvWLA',
             'ext': 'm4a',
-            'title': 'Afrojack, Spree Wilson - The Spark (Official Music Video) ft. Spree Wilson',
+            'title': 'AFROJACK - The Spark ft. Spree Wilson',
             'age_limit': 0,
             'availability': 'public',
             'categories': ['Music'],
@@ -280,14 +294,14 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'channel_is_verified': True,
             'channel_url': 'https://www.youtube.com/channel/UChuZAo1RKL85gev3Eal9_zg',
             'comment_count': int,
-            'description': 'md5:8f5e2b82460520b619ccac1f509d43bf',
+            'description': 'md5:12e7067fa6735a77bdcbb58cb1187d2d',
             'duration': 244,
             'heatmap': 'count:100',
             'like_count': int,
             'live_status': 'not_live',
             'media_type': 'video',
             'playable_in_embed': True,
-            'tags': 'count:19',
+            'tags': 'count:14',
             'thumbnail': r're:https?://i\.ytimg\.com/.+',
             'timestamp': 1381496404,
             'upload_date': '20131011',
@@ -296,6 +310,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@AfrojackVEVO',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {
             'format': '141/bestaudio[ext=m4a]',
             'skip_download': True,
@@ -335,6 +356,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@thewitcher',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
         'skip': 'Age-restricted; requires authentication',
     }, {
@@ -365,10 +393,17 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'timestamp': 1586358900,
             'upload_date': '20200408',
             'uploader': 'FlyingKitty',
-            'uploader_id': '@FlyingKitty900',
-            'uploader_url': 'https://www.youtube.com/@FlyingKitty900',
+            'uploader_id': '@FlyingKittyyy',
+            'uploader_url': 'https://www.youtube.com/@FlyingKittyyy',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         'note': 'Age-gated video embedable only with clientScreen=EMBED',
@@ -430,6 +465,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@HerrLurik',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
     }, {
         'note': 'Non-bypassable age-gated video',
         'url': 'https://youtube.com/watch?v=Cr381pDsSsA',
@@ -468,7 +510,14 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@deadmau5',
             'view_count': int,
         },
-        'expected_warnings': ['DASH manifest missing'],
+        'expected_warnings': [
+            'DASH manifest missing',
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # https://github.com/ytdl-org/youtube-dl/issues/4431
@@ -480,10 +529,9 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'age_limit': 0,
             'availability': 'public',
             'categories': ['Sports'],
-            'channel': 'Olympics',
+            'channel': 'Olympic Games',
             'channel_follower_count': int,
             'channel_id': 'UCTl3QQTvqHFjurroKxexy2Q',
-            'channel_is_verified': True,
             'channel_url': 'https://www.youtube.com/channel/UCTl3QQTvqHFjurroKxexy2Q',
             'description': 'md5:04bbbf3ccceb6795947572ca36f45904',
             'duration': 6085,
@@ -497,11 +545,18 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'thumbnail': r're:https?://i\.ytimg\.com/.+',
             'timestamp': 1440707674,
             'upload_date': '20150827',
-            'uploader': 'Olympics',
+            'uploader': 'Olympic Games',
             'uploader_id': '@Olympics',
             'uploader_url': 'https://www.youtube.com/@Olympics',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # Non-square pixels
@@ -534,6 +589,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@AllenMeow',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # url_encoded_fmt_stream_map is empty string (deprecated)
@@ -547,7 +609,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         'url': 'https://www.youtube.com/watch?v=FIl7x6_3R5Y',
         'info_dict': {
             'id': 'FIl7x6_3R5Y',
-            'ext': 'mp4',
+            'ext': 'webm',
             'title': '[60fps] 150614  마마무 솔라 \'Mr. 애매모호\' 라이브 직캠 @대학로 게릴라 콘서트',
             'age_limit': 0,
             'availability': 'public',
@@ -571,6 +633,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@dorappi2000',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # DASH manifest with segment_list
@@ -605,6 +674,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@airtekledstreaming7916',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {
             'format': '135',  # bestvideo
             'skip_download': True,
@@ -660,6 +736,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@IronSoulElf',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # Tags with '};'
@@ -712,6 +795,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@BKCHarvard',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # https://github.com/ytdl-org/youtube-dl/commit/fd050249afce1bcc9e7f4a127069375467007b55
@@ -747,6 +837,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@BernieSanders',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         'url': 'https://www.youtube.com/watch?feature=player_embedded&amp;amp;v=V36LpHqtcDY',
@@ -801,7 +898,14 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@Vsauce',
             'view_count': int,
         },
-        'expected_warnings': ['Skipping DASH manifest'],
+        'expected_warnings': [
+            'Skipping DASH manifest',
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # The following content has been identified by the YouTube community
@@ -881,6 +985,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader': 'Stephen',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         'url': 'https://www.youtubekids.com/watch?v=3b8nCWDgZ6Q',
@@ -911,13 +1022,12 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'age_limit': 0,
             'availability': 'public',
             'categories': ['Pets & Animals'],
-            'channel': 'l\'Or Vert asbl',
+            'channel': 'Natacha Detrixhe',
             'channel_follower_count': int,
             'channel_id': 'UCo03ZQPBW5U4UC3regpt1nw',
             'channel_url': 'https://www.youtube.com/channel/UCo03ZQPBW5U4UC3regpt1nw',
             'description': '',
             'duration': 7,
-            'like_count': int,
             'live_status': 'not_live',
             'media_type': 'video',
             'playable_in_embed': True,
@@ -925,11 +1035,20 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'thumbnail': r're:https?://i\.ytimg\.com/.+',
             'timestamp': 1497343210,
             'upload_date': '20170613',
-            'uploader': 'l\'Or Vert asbl',
+            'uploader': 'Natacha Detrixhe',
             'uploader_id': '@ElevageOrVert',
             'uploader_url': 'https://www.youtube.com/@ElevageOrVert',
             'view_count': int,
         },
+        'expected_warnings': [
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # with '};' inside yt initial data (see [1])
@@ -967,6 +1086,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@Csharp-video-tutorialsBlogspot',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # another example of '};' in ytInitialData
@@ -1012,6 +1138,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader': 'The Cinematic Orchestra',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # controversial video, only works with bpctr when authenticated with cookies
@@ -1055,7 +1188,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         'url': 'cBvYw8_A0vQ',
         'info_dict': {
             'id': 'cBvYw8_A0vQ',
-            'ext': 'mp4',
+            'ext': 'webm',
             'title': '4K Ueno Okachimachi  Street  Scenes  上野御徒町歩き',
             'age_limit': 0,
             'availability': 'public',
@@ -1078,6 +1211,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@walkaroundjapan7124',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # Has multiple audio streams
@@ -1172,6 +1312,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@SciShow',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {
             'format': 'mhtml',
             'skip_download': True,
@@ -1181,7 +1328,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         'url': 'https://www.youtube.com/watch?v=2NUZ8W2llS4',
         'info_dict': {
             'id': '2NUZ8W2llS4',
-            'ext': 'mp4',
+            'ext': 'webm',
             'title': 'The NP that test your phone performance 🙂',
             'age_limit': 0,
             'availability': 'public',
@@ -1207,6 +1354,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@LeonNguyen',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # date text is premiered video, ensure upload date in UTC (published 1641172509)
@@ -1242,13 +1396,20 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@Quackity',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # continuous livestream.
-        # Upload date was 2022-07-12T05:12:29-07:00, while stream start is 2022-07-12T15:59:30+00:00
-        'url': 'https://www.youtube.com/watch?v=jfKfPfyJRdk',
+        # Upload date was 2023-07-02T16:57:31+00:00, while stream start is 2023-07-02T17:10:22+00:00
+        'url': 'https://www.youtube.com/watch?v=4xDzrJKXOOY',
         'info_dict': {
-            'id': 'jfKfPfyJRdk',
+            'id': '4xDzrJKXOOY',
             'ext': 'mp4',
             'title': str,
             'age_limit': 0,
@@ -1260,28 +1421,35 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'channel_is_verified': True,
             'channel_url': 'https://www.youtube.com/channel/UCSJ4gkVC6NrvII8umztf0Ow',
             'concurrent_view_count': int,
-            'description': 'md5:48841fcfc1be6131d729fa7b4a7784cb',
+            'description': 'md5:d014a8b0fb55da042f4c79e17d468e47',
             'like_count': int,
             'live_status': 'is_live',
             'media_type': 'livestream',
             'playable_in_embed': True,
-            'release_date': '20220712',
-            'release_timestamp': 1657641570,
-            'tags': 'count:32',
+            'release_date': '20230702',
+            'release_timestamp': 1688333422,
+            'tags': 'count:23',
             'thumbnail': r're:https?://i\.ytimg\.com/.+',
-            'timestamp': 1657627949,
-            'upload_date': '20220712',
+            'timestamp': 1688332651,
+            'upload_date': '20230702',
             'uploader': 'Lofi Girl',
             'uploader_id': '@LofiGirl',
             'uploader_url': 'https://www.youtube.com/@LofiGirl',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         'url': 'https://www.youtube.com/watch?v=tjjjtzRLHvA',
         'info_dict': {
             'id': 'tjjjtzRLHvA',
-            'ext': 'mp4',
+            'ext': 'webm',
             'title': 'ハッシュタグ無し };if window.ytcsi',
             'age_limit': 0,
             'availability': 'unlisted',
@@ -1305,6 +1473,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@lesmiscore',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # Prefer primary title+description language metadata by default
@@ -1320,9 +1495,9 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'channel': 'cole-dlp-test-acc',
             'channel_id': 'UCiu-3thuViMebBjw_5nWYrA',
             'channel_url': 'https://www.youtube.com/channel/UCiu-3thuViMebBjw_5nWYrA',
+            'channel_follower_count': int,
             'description': '',
             'duration': 5,
-            'like_count': int,
             'live_status': 'not_live',
             'media_type': 'video',
             'playable_in_embed': True,
@@ -1335,6 +1510,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@coletdjnz',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # Extractor argument: prefer translated title+description
@@ -1349,6 +1531,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'channel': 'cole-dlp-test-acc',
             'channel_id': 'UCiu-3thuViMebBjw_5nWYrA',
             'channel_url': 'https://www.youtube.com/channel/UCiu-3thuViMebBjw_5nWYrA',
+            'channel_follower_count': int,
             'description': 'md5:e8c098ba19888e08554f960ffbf6f90e',
             'duration': 5,
             'like_count': int,
@@ -1368,7 +1551,14 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'extractor_args': {'youtube': {'lang': ['fr']}},
             'skip_download': True,
         },
-        'expected_warnings': [r'Preferring "fr" translated fields'],
+        'expected_warnings': [
+            r'Preferring "fr" translated fields',
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
     }, {
         'note': '6 channel audio',
         'url': 'https://www.youtube.com/watch?v=zgdo7-RRjgo',
@@ -1481,6 +1671,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@sana_natori',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # Fallbacks when webpage and web client is unavailable
@@ -1529,12 +1726,12 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         'url': 'https://www.youtube.com/shorts/18NGQq7p3LY',
         'info_dict': {
             'id': '18NGQq7p3LY',
-            'ext': 'mp4',
+            'ext': 'webm',
             'title': '아이브 이서 장원영 리즈 삐끼삐끼 챌린지',
             'age_limit': 0,
             'availability': 'public',
             'categories': ['People & Blogs'],
-            'channel': 'ㅇㅇ',
+            'channel': '이랑이',
             'channel_follower_count': int,
             'channel_id': 'UCC25oTm2J7ZVoi5TngOHg9g',
             'channel_url': 'https://www.youtube.com/channel/UCC25oTm2J7ZVoi5TngOHg9g',
@@ -1548,11 +1745,18 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'thumbnail': r're:https?://i\.ytimg\.com/.+',
             'timestamp': 1724306170,
             'upload_date': '20240822',
-            'uploader': 'ㅇㅇ',
-            'uploader_id': '@으아-v1k',
-            'uploader_url': 'https://www.youtube.com/@으아-v1k',
+            'uploader': '이랑이',
+            'uploader_id': '@이랑이0221',
+            'uploader_url': 'https://www.youtube.com/@이랑이0221',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # Youtube Music Auto-generated description with dot in artist name
@@ -1567,7 +1771,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'release_date': '20221202',
             'release_year': 2021,
             'alt_title': 'Back Around',
-            'description': 'md5:bfc0e2b3cc903a608d8a85a13cb50f95',
+            'description': 'md5:061e8882ef0b8ef0b33201c001540242',
             'media_type': 'video',
             'uploader': 'half•alive',
             'channel': 'half•alive',
@@ -1591,6 +1795,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'availability': 'public',
             'live_status': 'not_live',
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {
             'skip_download': True,
         },
@@ -1614,7 +1825,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'like_count': int,
             'age_limit': 0,
             'duration': 1664,
-            'thumbnail': 'https://i.ytimg.com/vi/brhfDfLdDZ8/sddefault.jpg',
+            'thumbnail': r're:https?://i\.ytimg\.com/.+',
             'categories': ['Entertainment'],
             'tags': ['Moonfall', 'Bad Science', 'Open Sauce', 'Sauce+', 'The Backyard Scientist', 'William Osman', 'Allen Pan'],
             'creators': ['Sauce +', 'William Osman 2'],
@@ -1626,6 +1837,15 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'channel_follower_count': int,
             'heatmap': 'count:100',
         },
+        'expected_warnings': [
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # Video with five collaborators
@@ -1660,6 +1880,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'live_status': 'not_live',
             'channel_follower_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # Comment subthreads with 4 levels of depth
@@ -1678,7 +1905,6 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'channel_url': 'https://www.youtube.com/channel/UCiu-3thuViMebBjw_5nWYrA',
             'channel_follower_count': int,
             'view_count': int,
-            'like_count': int,
             'age_limit': 0,
             'duration': 5,
             'thumbnail': 'https://i.ytimg.com/vi/f6HNySwZV4c/maxresdefault.jpg',
@@ -1694,6 +1920,14 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'comment_count': 15,  # XXX: minimum, but investigate if this changes
             'comments': 'count:15',
         },
+        'expected_warnings': [
+            'unable to extract yt initial data',
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {
             'skip_download': True,
             'getcomments': True,
@@ -1714,7 +1948,6 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'channel_id': 'UCayEJzV8XSSJkPdA7OAsbew',
             'channel_url': 'https://www.youtube.com/channel/UCayEJzV8XSSJkPdA7OAsbew',
             'view_count': int,
-            'like_count': int,
             'age_limit': 0,
             'duration': 12,
             'thumbnail': 'https://i.ytimg.com/vi/3dHQb2Nhma0/maxresdefault.jpg',
@@ -1728,6 +1961,15 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'comment_count': 9,  # XXX: minimum, but investigate if this changes
             'comments': 'count:9',
         },
+        'expected_warnings': [
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {
             'skip_download': True,
             'getcomments': True,
@@ -1765,6 +2007,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'timestamp': 1211825920,
             'media_type': 'video',
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # <embed>
@@ -1797,6 +2046,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@badmintonaddictid8958',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # WordPress Plugin: YouTube Video Importer
@@ -1804,7 +2060,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         'url': 'https://lothype.com/2025-chino-hills-hs-snare-quad-features-wgi2025-drumline/',
         'info_dict': {
             'id': 'lC21AX_pCfA',
-            'ext': 'mp4',
+            'ext': 'webm',
             'title': '2025 Chino Hills HS Snare & Quad Features! #wgi2025 #drumline',
             'age_limit': 0,
             'availability': 'public',
@@ -1830,11 +2086,19 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@DrumlineAV',
             'view_count': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }, {
         # lazyYT
         # https://github.com/ytdl-org/youtube-dl/commit/65f3a228b16c55fee959eee055767a796479270f
         'url': 'https://rabota7.ru/%D0%91%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'DexR8_tTSsQ',
             'ext': 'mp4',
@@ -1871,12 +2135,18 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         'url': 'https://www.uca.ac.uk/',
         'info_dict': {
             'id': 'www.uca.ac',
-            'title': 'UCA | Creative Arts Degrees UK | University for the Creative Arts',
-            'age_limit': 0,
-            'description': 'md5:179c7a06ea1ed01b94ff5d56cb18d73b',
-            'thumbnail': '/media/uca-2020/hero-headers/2025-prospectus-all-2x2.jpg',
+            'title': 'UCA | Art & Design Degrees UK | University for the Creative Arts',
+            'description': 'md5:4b9ff94e90fe3ca38d3f0a78b160638b',
+            'thumbnail': '/media/uca-2020/hero-headers/250911_UCA_WEB_HIGH_RES_LANDINGPAGE_01-(1).jpg',
         },
-        'playlist_count': 10,
+        'playlist_count': 6,
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'unable to extract yt initial data',
+            'Incomplete data received in embedded initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
         'params': {'skip_download': True},
     }]
 

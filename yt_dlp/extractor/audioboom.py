@@ -6,6 +6,7 @@ class AudioBoomIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?audioboom\.com/(?:boos|posts)/(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'https://audioboom.com/posts/7398103-asim-chaudhry',
+        'skip': 'extractor broken: [AudioBoom] unable to extract uploader url',
         'md5': '4d68be11c9f9daf3dab0778ad1e010c3',
         'info_dict': {
             'id': '7398103',
@@ -18,6 +19,7 @@ class AudioBoomIE(InfoExtractor):
         },
     }, {  # Direct mp3-file link
         'url': 'https://audioboom.com/posts/8128496.mp3',
+        'skip': 'extractor broken: [AudioBoom] unable to extract uploader url',
         'md5': 'e329edf304d450def95c7f86a9165ee1',
         'info_dict': {
             'id': '8128496',

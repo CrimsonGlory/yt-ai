@@ -114,7 +114,7 @@ class SlideshareIE(InfoExtractor):
             impersonate=True)
         return traverse_obj(data, ('data', 'slideshow', {dict})) or {}
 
-    def _extract_from_webpage(self, url, display_id):
+    def _extract_slideshow_from_webpage(self, url, display_id):
         try:
             webpage = self._download_webpage(url, display_id, impersonate=True)
         except ExtractorError as e:
@@ -163,7 +163,7 @@ class SlideshareIE(InfoExtractor):
         if not slideshow or not slideshow.get('id'):
             if slideshow:
                 self._raise_unavailable(slideshow, display_id)
-            slideshow = self._extract_from_webpage(url, display_id)
+            slideshow = self._extract_slideshow_from_webpage(url, display_id)
 
         self._raise_unavailable(slideshow, display_id)
         slideshow_id = str_or_none(slideshow.get('id')) or slideshow_id

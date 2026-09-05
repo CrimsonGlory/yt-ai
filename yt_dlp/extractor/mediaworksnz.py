@@ -45,6 +45,7 @@ class MediaWorksNZVODIE(InfoExtractor):
 
     _WEBPAGE_TESTS = [{
         'url': 'https://www.rova.nz/home/podcasts/socrates-walks-into-a-bar/the-trolley-problem---episode-1.html',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'VID02494',
             'ext': 'mp4',

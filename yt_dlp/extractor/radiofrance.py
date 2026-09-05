@@ -15,6 +15,7 @@ from ..utils import (
     unified_strdate,
     urljoin,
 )
+from ..utils.jslib import devalue
 
 
 class RadioFranceIE(InfoExtractor):
@@ -474,57 +475,99 @@ class RadioFranceProgramScheduleIE(RadioFranceBaseIE):
 
     _TESTS = [{
         'url': 'https://www.radiofrance.fr/franceinter/grille-programmes?date=17-02-2023',
-        'skip': 'video gone',
         'info_dict': {
             'id': 'franceinter-program-20230217',
             'upload_date': '20230217',
         },
-        'playlist_count': 25,
+        'playlist_mincount': 10,
     }, {
         'url': 'https://www.radiofrance.fr/franceculture/grille-programmes?date=01-02-2023',
-        'skip': 'video gone',
         'info_dict': {
             'id': 'franceculture-program-20230201',
             'upload_date': '20230201',
         },
-        'playlist_count': 25,
+        'playlist_mincount': 10,
     }, {
         'url': 'https://www.radiofrance.fr/mouv/grille-programmes?date=19-03-2023',
         'info_dict': {
             'id': 'mouv-program-20230319',
             'upload_date': '20230319',
         },
-        'playlist_count': 3,
+        'playlist_mincount': 3,
     }, {
         'url': 'https://www.radiofrance.fr/francemusique/grille-programmes?date=18-03-2023',
         'info_dict': {
             'id': 'francemusique-program-20230318',
             'upload_date': '20230318',
         },
-        'playlist_count': 15,
+        'playlist_mincount': 10,
     }, {
         'url': 'https://www.radiofrance.fr/franceculture/grille-programmes',
-        'skip': 'video gone',
         'only_matching': True,
     }]
 
+    def _program_schedule_date(self, url, entries):
+        qs_date = urllib.parse.parse_qs(urllib.parse.urlparse(url).query).get('date', [None])[0]
+        return unified_strdate(qs_date) or strftime_or_none(
+            traverse_obj(entries, (0, 'startTimeUnix', {int_or_none})), '%Y%m%d')
+
+    def _extract_program_grid(self, webpage, station, url):
+        encoded = self._search_regex(
+            r'loadProgramGrid/[^"]+",("(?:\\.|[^"\\])*")',
+            webpage, 'program grid', default=None)
+        if encoded:
+            try:
+                payload = self._parse_json(encoded, station)
+                entries = devalue.parse(self._parse_json(payload, station))
+            except (TypeError, ValueError, IndexError, ExtractorError):
+                entries = None
+            if isinstance(entries, list):
+                return entries, self._program_schedule_date(url, entries)
+
+        grid_data = traverse_obj(self._search_json(
+            r'\bconst\s+data\s*=', webpage, 'grid', station,
+            contains_pattern=r'\[\{(?s:.+)\}\]', transform_source=js_to_json, default=None),
+            (..., 'data', 'grid', {dict}), get_all=False)
+        if grid_data:
+            upload_date = strftime_or_none(grid_data.get('date'), '%Y%m%d') or self._program_schedule_date(url, None)
+            return grid_data, upload_date
+
+        raise ExtractorError('Unable to extract program grid', expected=True)
+
     def _generate_playlist_entries(self, webpage_url, api_response):
-        for entry in traverse_obj(api_response, ('steps', lambda _, v: v['expression']['path'])):
+        if isinstance(api_response, dict):
+            for entry in traverse_obj(api_response, ('steps', lambda _, v: v['expression']['path'])):
+                yield self.url_result(
+                    urljoin(webpage_url, f'/{entry["expression"]["path"]}'), ie=FranceCultureIE,
+                    url_transparent=True, **traverse_obj(entry, {
+                        'title': ('expression', 'title'),
+                        'thumbnail': ('expression', 'visual', 'src'),
+                        'timestamp': ('startTime', {int_or_none}),
+                        'series_id': ('concept', 'id'),
+                        'series': ('concept', 'title'),
+                    }))
+            return
+
+        for entry in api_response or []:
+            href = traverse_obj(entry, ('titleProps', 'href', {str}))
+            if not href:
+                continue
             yield self.url_result(
-                urljoin(webpage_url, f'/{entry["expression"]["path"]}'), ie=FranceCultureIE,
-                url_transparent=True, **traverse_obj(entry, {
-                    'title': ('expression', 'title'),
-                    'thumbnail': ('expression', 'visual', 'src'),
-                    'timestamp': ('startTime', {int_or_none}),
-                    'series_id': ('concept', 'id'),
-                    'series': ('concept', 'title'),
-                }))
+                urljoin(webpage_url, href), url_transparent=True, **{
+                    'title': (traverse_obj(entry, ('titleProps', 'text', {str}))
+                              or traverse_obj(entry, ('titleProps', 'title', {str}))),
+                    **traverse_obj(entry, {
+                        'thumbnail': ('visual', 'src', {str}),
+                        'timestamp': ('startTimeUnix', {int_or_none}),
+                        'series_id': ('conceptId', {str}),
+                        'series': ('titleProps', 'title', {str}),
+                    }),
+                })
 
     def _real_extract(self, url):
         station = self._match_valid_url(url).group('station')
         webpage = self._download_webpage(url, station)
-        grid_data = self._extract_data_from_webpage(webpage, station, 'grid')
-        upload_date = strftime_or_none(grid_data.get('date'), '%Y%m%d')
+        grid_data, upload_date = self._extract_program_grid(webpage, station, url)
 
         return self.playlist_result(
             self._generate_playlist_entries(url, grid_data),

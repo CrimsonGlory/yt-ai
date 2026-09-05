@@ -20,7 +20,9 @@ class MirrativIE(MirrativBaseIE):
 
     _TESTS = [{
         'url': 'https://mirrativ.com/live/UQomuS7EMgHoxRHjEhNiHw',
+        'skip': 'live/no formats (missing ext)',
         'info_dict': {
+            'ext': 'mp4',
             'id': 'UQomuS7EMgHoxRHjEhNiHw',
             'title': 'ねむいぃ、。『参加型』🔰jcが初めてやるCOD✨初見さん大歓迎💗',
             'is_live': True,

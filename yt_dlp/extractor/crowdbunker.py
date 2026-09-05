@@ -15,18 +15,19 @@ class CrowdBunkerIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://crowdbunker.com/v/0z4Kms8pi8I',
+        'md5': 'f3ece7323600dc073b001ddcc1cd9603',
         'info_dict': {
             'id': '0z4Kms8pi8I',
             'ext': 'mp4',
             'title': '117) Pass vax et solutions',
             'description': 'md5:86bcb422c29475dbd2b5dcfa6ec3749c',
-            'view_count': int,
-            'duration': 5386,
             'uploader': 'Jérémie Mercier',
             'uploader_id': 'UCeN_qQV829NYf0pvPJhW5dQ',
-            'like_count': int,
+            'duration': 5386,
+            'thumbnail': 'https://img.crowdbunker.com/meg/cb-medias4/images/0z4Kms8pi8I/maxres.jpg',
             'upload_date': '20211218',
-            'thumbnail': 'https://scw.divulg.org/cb-medias4/images/0z4Kms8pi8I/maxres.jpg',
+            'view_count': int,
+            'like_count': int,
         },
         'params': {'skip_download': True},
     }]

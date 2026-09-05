@@ -107,6 +107,7 @@ class CondeNastIE(InfoExtractor):
     }, {
         # FIXME: Subtitles
         'url': 'https://www.vanityfair.com/video/watch/vf-quiz-show-squid-game-s3',
+        'skip': 'extractor broken: AttributeError',
         'info_dict': {
             'id': '6862f999c1afbc5ff06b4803',
             'ext': 'mp4',

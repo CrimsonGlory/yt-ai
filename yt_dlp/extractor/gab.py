@@ -12,6 +12,7 @@ class GabIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?gab\.com/[^/]+/posts/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://gab.com/SomeBitchIKnow/posts/107163961867310434',
+        'skip': 'stale test sample / site changed',
         'md5': '8ca34fb00f1e1033b5c5988d79ec531d',
         'info_dict': {
             'id': '107163961867310434-0',
@@ -30,16 +31,16 @@ class GabIE(InfoExtractor):
             'id': '107045884469287653-0',
             'ext': 'mp4',
             'title': 'Jody Sadowski on Gab',
+            'description': '',
+            'uploader': 'TheLonelyProud',
             'uploader_id': '1390705',
+            'uploader_url': 'https://gab.com/TheLonelyProud',
+            'duration': 5.1,
             'timestamp': 1633390571,
             'upload_date': '20211004',
-            'uploader': 'TheLonelyProud',
-            'comment_count': int,
-            'description': str,
-            'duration': int,
             'like_count': int,
+            'comment_count': int,
             'repost_count': int,
-            'uploader_url': r're:https?://.*',
         },
     }]
 

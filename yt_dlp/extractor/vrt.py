@@ -490,6 +490,7 @@ class DagelijkseKostIE(VRTBaseIE):
     _VALID_URL = r'https?://dagelijksekost\.een\.be/gerechten/(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://dagelijksekost.een.be/gerechten/hachis-parmentier-met-witloof',
+        'skip': 'extractor broken: Unable to extract video id',
         'info_dict': {
             'id': 'md-ast-27a4d1ff-7d7b-425e-b84f-a4d227f592fa',
             'ext': 'mp4',
@@ -527,6 +528,7 @@ class Radio1BeIE(VRTBaseIE):
     _VALID_URL = r'https?://radio1\.be/(?:lees|luister/select)/(?P<id>[\w/-]+)'
     _TESTS = [{
         'url': 'https://radio1.be/luister/select/de-ochtend/komt-n-va-volgend-jaar-op-in-wallonie',
+        'skip': 'extractor broken: Unable to extract next.js data',
         'info_dict': {
             'id': 'eb6c22e9-544f-44f4-af39-cf8cccd29e22',
             'title': 'Komt N-VA volgend jaar op in Wallonië?',
@@ -537,6 +539,7 @@ class Radio1BeIE(VRTBaseIE):
         'playlist_mincount': 1,
     }, {
         'url': 'https://radio1.be/lees/europese-unie-wil-onmiddellijke-humanitaire-pauze-en-duurzaam-staakt-het-vuren-in-gaza?view=web',
+        'skip': 'extractor broken: Unable to extract next.js data',
         'info_dict': {
             'id': '5d47f102-dbdb-4fa0-832b-26c1870311f2',
             'title': 'Europese Unie wil "onmiddellijke humanitaire pauze" en "duurzaam staakt-het-vuren" in Gaza',

@@ -10,6 +10,7 @@ class Ku6IE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?ku6\.com/video/detail\?(?:[^#]*&)?id=(?P<id>[\w.-]+)'
     _TESTS = [{
         'url': 'https://www.ku6.com/video/detail?id=6QZvCP48tmowMnCQqiVffWmDAts.',
+        'skip': 'site unavailable',
         'md5': 'f502c5792ac207b978410262b7f155f4',
         'info_dict': {
             'id': '6QZvCP48tmowMnCQqiVffWmDAts.',

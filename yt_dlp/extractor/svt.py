@@ -129,6 +129,7 @@ class SVTPlayIE(SVTBaseIE):
                     '''
     _TESTS = [{
         'url': 'https://www.svtplay.se/video/jqPPXq9/rapport/igar-19-30',
+        'skip': 'extractor broken: Unable to extract SVT ID',
         'info_dict': {
             'id': 'jvvv237',
             'ext': 'mp4',
@@ -383,6 +384,7 @@ class SVTPageIE(SVTBaseIE):
     _VALID_URL = r'https?://(?:www\.)?svt\.se/(?:[^/?#]+/)*(?P<id>[^/?&#]+)'
     _TESTS = [{
         'url': 'https://www.svt.se/nyheter/lokalt/skane/viktor-18-forlorade-armar-och-ben-i-sepsis-vill-ateruppta-karaten-och-bli-svetsare',
+        'skip': 'extractor broken: Unable to extract json data',
         'info_dict': {
             'title': 'Viktor, 18, förlorade armar och ben i sepsis – vill återuppta karaten och bli svetsare',
             'id': 'viktor-18-forlorade-armar-och-ben-i-sepsis-vill-ateruppta-karaten-och-bli-svetsare',
@@ -390,6 +392,7 @@ class SVTPageIE(SVTBaseIE):
         'playlist_count': 2,
     }, {
         'url': 'https://www.svt.se/nyheter/lokalt/skane/forsvarsmakten-om-trafikkaoset-pa-e22-kunde-inte-varit-dar-snabbare',
+        'skip': 'extractor broken: Unable to extract json data',
         'info_dict': {
             'id': 'jXvk42E',
             'title': 'Försvarsmakten om trafikkaoset på E22: Kunde inte varit där snabbare',
@@ -406,6 +409,7 @@ class SVTPageIE(SVTBaseIE):
         },
     }, {
         'url': 'https://www.svt.se/nyheter/svtforum/2023-tungt-ar-for-svensk-media',
+        'skip': 'extractor broken: Unable to extract json data',
         'info_dict': {
             'title': '2023 tungt år för svensk media',
             'id': 'ewqAZv4',

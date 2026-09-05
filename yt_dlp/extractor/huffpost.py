@@ -21,6 +21,7 @@ class HuffPostIE(InfoExtractor):
 
     _TEST = {
         'url': 'http://live.huffingtonpost.com/r/segment/legalese-it/52dd3e4b02a7602131000677',
+        'skip': 'site unavailable',
         'md5': '55f5e8981c1c80a64706a44b74833de8',
         'info_dict': {
             'id': '52dd3e4b02a7602131000677',

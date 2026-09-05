@@ -25,7 +25,8 @@ class TV24UAVideoIE(InfoExtractor):
 
     _WEBPAGE_TESTS = [
         {
-            # iframe embed created from share menu.
+            # iframe embed created from share menu. Player HTML is CF-blocked;
+            # Generic identifies the 24tv.ua embed and media is on luxnet CDN.
             'url': 'data:text/html,%3Ciframe%20src=%22https://24tv.ua/news/showPlayer.do?objectId=1886193&videoUrl'
                    '=2022/03/1886193&w=640&h=360%22%20width=%22640%22%20height=%22360%22%20frameborder=%220%22'
                    '%20scrolling=%22no%22%3E%3C/iframe%3E',

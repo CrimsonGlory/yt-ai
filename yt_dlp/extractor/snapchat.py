@@ -8,19 +8,19 @@ class SnapchatSpotlightIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.snapchat.com/spotlight/W7_EDlXWTBiXAEEniNoMPwAAYYWtidGhudGZpAX1TKn0JAX1TKnXJAAAAAA',
-        'md5': '46c580f63592d0cbb76e974d2f9f0fcc',
+        'md5': '401e2841f6e055ced4fd7aafb041d86b',
         'info_dict': {
             'id': 'W7_EDlXWTBiXAEEniNoMPwAAYYWtidGhudGZpAX1TKn0JAX1TKnXJAAAAAA',
             'ext': 'mp4',
             'title': 'Views 💕',
             'description': '',
-            'thumbnail': r're:https://cf-st\.sc-cdn\.net/d/kKJHIR1QAznRKK9jgYYDq\.256\.IRZXSOY',
+            'uploader': 'shreypatel57',
+            'uploader_url': 'https://www.snapchat.com/@shreypatel57',
             'duration': 4.665,
+            'thumbnail': 'md5:0a6187f5e1d92ba6dc400a8ec8bd47e0',
             'timestamp': 1637777831.369,
             'upload_date': '20211124',
             'repost_count': int,
-            'uploader': 'shreypatel57',
-            'uploader_url': 'https://www.snapchat.com/add/shreypatel57',
         },
     }, {
         'url': 'https://www.snapchat.com/spotlight/W7_EDlXWTBiXAEEniNoMPwAAYcnVjYWdwcGV1AZEaIYn5AZEaIYnrAAAAAQ',

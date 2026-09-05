@@ -6,6 +6,7 @@ class LcpPlayIE(InfoExtractor):
     _VALID_URL = r'https?://play\.lcp\.fr/embed/(?P<id>[^/]+)/(?P<account_id>[^/]+)/[^/]+/[^/]+'
     _TESTS = [{
         'url': 'http://play.lcp.fr/embed/327336/131064/darkmatter/0',
+        'skip': 'extractor broken: NotImplementedError',
         'md5': 'b8bd9298542929c06c1c15788b1f277a',
         'info_dict': {
             'id': '327336',

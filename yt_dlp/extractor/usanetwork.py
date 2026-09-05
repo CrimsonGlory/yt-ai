@@ -5,6 +5,7 @@ class USANetworkIE(NBCIE):  # XXX: Do not subclass from concrete IE
     _VALID_URL = r'https?(?P<permalink>://(?:www\.)?usanetwork\.com/(?:[^/]+/videos?|movies?)/(?:[^/]+/)?(?P<id>\d+))'
     _TESTS = [{
         'url': 'https://www.usanetwork.com/peacock-trailers/video/intelligence-trailer/4185302',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '4185302',
             'ext': 'mp4',

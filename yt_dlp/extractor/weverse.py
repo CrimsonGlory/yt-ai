@@ -482,6 +482,7 @@ class WeverseMediaIE(WeverseBaseIE):
     _VALID_URL = r'https?://(?:www\.|m\.)?weverse\.io/(?P<artist>[^/?#]+)/media/(?P<id>[\d-]+)'
     _TESTS = [{
         'url': 'https://weverse.io/billlie/media/4-116372884',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'e-C9wLSQs6o',
             'ext': 'mp4',

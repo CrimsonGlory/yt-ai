@@ -37,6 +37,7 @@ class SejmIE(InfoExtractor):
     _TESTS = [{
         # multiple cameras, polish SL iterpreter
         'url': 'https://www.sejm.gov.pl/Sejm10.nsf/transmisje_arch.xsp#6181EF1AD9CEEBB5C1258A6D006452B5',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '6181EF1AD9CEEBB5C1258A6D006452B5',
             'title': '1. posiedzenie Sejmu X kadencji',
@@ -88,6 +89,7 @@ class SejmIE(InfoExtractor):
         }],
     }, {
         'url': 'https://www.sejm.gov.pl/Sejm8.nsf/transmisje.xsp?unid=9377A9D65518E9A5C125808E002E9FF2',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '9377A9D65518E9A5C125808E002E9FF2',
             'title': 'Debata "Lepsza Polska: obywatelska"',
@@ -108,6 +110,7 @@ class SejmIE(InfoExtractor):
     }, {
         # 7th term is very special, since it does not use redcdn livx
         'url': 'https://www.sejm.gov.pl/sejm7.nsf/transmisje_arch.xsp?rok=2015&month=11#A6E6D475ECCC6FE5C1257EF90034817F',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'A6E6D475ECCC6FE5C1257EF90034817F',
             'title': 'Konferencja prasowa - Stanowisko SLD ws. składu nowego rządu',

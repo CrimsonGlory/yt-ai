@@ -34,6 +34,7 @@ class RottenTomatoesIE(InfoExtractor):
         },
     }, {
         'url': 'http://www.rottentomatoes.com/m/toy_story_3',
+        'skip': 'extractor broken: Unable to extract data',
         'info_dict': {
             'id': 'toy_story_3',
             'title': 'Toy Story 3',

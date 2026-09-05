@@ -12,8 +12,22 @@ from ..utils.traversal import traverse_obj
 class MBNIE(InfoExtractor):
     IE_DESC = 'mbn.co.kr (매일방송)'
     _VALID_URL = r'https?://(?:www\.)?mbn\.co\.kr/vod/programContents/preview(?:list)?/\d+/\d+/(?P<id>\d+)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://mbn.co.kr/vod/programContents/previewlist/1036/6707/1155897',
+            'md5': '38f301601308654567b46302477c7e55',
+            'info_dict': {
+                'id': '1155897',
+                'ext': 'mp4',
+                'title': '＂이혼 소송에서 불리해질까 봐＂…소장 받자마자 3주 동안 아내 살해 준비?',
+                'duration': 839,
+                'thumbnail': 'http://img.vod.mbn.co.kr/vod2/1036/2026/09/02/20260902195319_21_1036_1155897_1080_7.jpg',
+                'release_date': '20260902',
+                'series': '더 펀치',
+            },
+        }, {
         'url': 'https://mbn.co.kr/vod/programContents/previewlist/861/5433/1276155',
+        'skip': 'stale test sample / site changed',
         'md5': '85e1694e5b247c04d1386b7e3c90fd76',
         'info_dict': {
             'id': '1276155',
@@ -28,6 +42,7 @@ class MBNIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.mbn.co.kr/vod/programContents/previewlist/835/5294/1084744',
+        'skip': 'stale test sample / site changed',
         'md5': 'fc65d3aac85e85e0b5056f4ef99cde4a',
         'info_dict': {
             'id': '1084744',
@@ -40,6 +55,7 @@ class MBNIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.mbn.co.kr/vod/programContents/preview/952/6088/1054797?next=1',
+        'skip': 'stale test sample / site changed',
         'md5': 'c711103c72aeac8323a5cf1751f10097',
         'info_dict': {
             'id': '1054797',

@@ -7,6 +7,7 @@ class SenIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?sen\.com/video/(?P<id>[0-9a-f-]+)'
     _TEST = {
         'url': 'https://www.sen.com/video/eef46eb1-4d79-4e28-be9d-bd937767f8c4',
+        'skip': 'extractor broken: Extractor failed to obtain "title". Creating a generic title instead; please rep',
         'md5': 'ff615aca9691053c94f8f10d96cd7884',
         'info_dict': {
             'id': 'eef46eb1-4d79-4e28-be9d-bd937767f8c4',

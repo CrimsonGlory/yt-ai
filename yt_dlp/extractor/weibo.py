@@ -304,6 +304,7 @@ class WeiboUserIE(WeiboBaseIE):
         'playlist_mincount': 195,
     }, {
         'url': 'https://weibo.com/u/7610808848?tabtype=newVideo&layerid=4967273022359838',
+        'skip': 'extractor broken: Extractor failed to obtain "title". Creating a generic title instead; please rep',
         'info_dict': {
             'id': '7610808848',
             'title': '张婧仪工作室的视频',

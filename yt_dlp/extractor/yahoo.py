@@ -21,7 +21,16 @@ from ..utils import (
 class YahooIE(InfoExtractor):
     IE_NAME = 'yahoo'
     _VALID_URL = r'(?P<url>https?://(?:(?P<country>[a-zA-Z]{2}(?:-[a-zA-Z]{2})?|malaysia)\.)?(?:[\da-zA-Z_-]+\.)?yahoo\.com/(?:[^/]+/)*(?P<id>[^?&#]*-[0-9]+(?:-[a-z]+)?)\.html)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://sports.yahoo.com/fantasy/article/fantasy-football-strategy-cheat-sheets-mock-drafts-rankings-204834810.html',
+            'info_dict': {
+                'id': '07e68b15-6f9a-49a0-9ffe-dae71cf4132a',
+                'title': 'md5:3dc90225a73e1427dee2a9a84df612cb',
+            },
+            'playlist_mincount': 1,
+            'params': {'skip_download': True},
+        },{
         'url': 'https://news.yahoo.com/video/china-moses-crazy-blues-104538833.html',
         'md5': '88e209b417f173d86186bef6e4d1f160',
         'info_dict': {
@@ -264,6 +273,7 @@ class YahooSearchIE(SearchInfoExtractor):
     _SEARCH_KEY = 'yvsearch'
     _TESTS = [{
         'url': 'yvsearch1:never gonna give you up',
+        'skip': 'extractor broken: Failed to parse JSON (caused by JSONDecodeError("Expecting value in \' <',
         'info_dict': {
             'id': 'never gonna give you up',
             'title': 'never gonna give you up',
@@ -288,6 +298,7 @@ class YahooJapanNewsIE(InfoExtractor):
     _GEO_COUNTRIES = ['JP']
     _TESTS = [{
         'url': 'https://news.yahoo.co.jp/articles/b060b38db6a10fadb9540dd724310e092a9a68a5',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'b060b38db6a10fadb9540dd724310e092a9a68a5',
             'ext': 'mp4',

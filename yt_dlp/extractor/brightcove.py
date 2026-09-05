@@ -79,13 +79,15 @@ class BrightcoveLegacyIE(InfoExtractor):
                 'ext': 'mp4',
                 'title': 'This Bracelet Acts as a Personal Thermostat',
                 'description': 'md5:547b78c64f4112766ccf4e151c20b6a0',
-                # 'uploader': 'Mashable',
+                'uploader_id': '1130468786001',
+                'duration': 81.301,
+                'thumbnail': r're:https?://.+\.jpg',
                 'timestamp': 1382041798,
                 'upload_date': '20131017',
-                'uploader_id': '1130468786001',
-                'duration': int,
-                'tags': list,
-                'thumbnail': r're:https?://.*',
+                'tags': ['body temperature', 'body thromostat', 'bracelet cooling', 'bracelet heater', 'mit materials-science design competition', 'newsy', 'personal thermostat', 'science', 'thromstat bracelet'],
+            },
+            'params': {
+                'skip_download': True,  # HLS/DASH only
             },
         },
         {
@@ -620,20 +622,22 @@ class BrightcoveNewIE(BrightcoveNewBaseIE):
     IE_NAME = 'brightcove:new'
     _VALID_URL = r'https?://players\.brightcove\.net/(?P<account_id>\d+)/(?P<player_id>[^/]+)_(?P<embed>[^/]+)/index\.html\?.*(?P<content_type>video|playlist)Id=(?P<video_id>\d+|ref:[^&]+)'
     _TESTS = [{
-        'url': 'http://players.brightcove.net/929656772001/e41d32dc-ec74-459e-a845-6c69f7b724ea_default/index.html?videoId=4463358922001',
-        'md5': 'c8100925723840d4b0d243f7025703be',
+        'url': 'https://players.brightcove.net/1752604059001/VyqgG8mql_default/index.html?videoId=5802784116001',
         'info_dict': {
-            'id': '4463358922001',
+            'id': '5802784116001',
             'ext': 'mp4',
-            'title': 'Meet the man behind Popcorn Time',
-            'description': 'md5:eac376a4fe366edc70279bfb681aea16',
-            'duration': 165.768,
-            'timestamp': 1441391203,
-            'upload_date': '20150904',
-            'uploader_id': '929656772001',
-            'formats': 'mincount:20',
+            'title': 'Boulder Creek',
+            'description': 'Used in responsive player sample',
+            'duration': 25.147,
+            'timestamp': 1530134407,
+            'upload_date': '20180627',
+            'uploader_id': '1752604059001',
+            'tags': ['landscape', 'mp4'],
+            'thumbnail': r're:https?://.*\.jpg',
         },
-        'skip': '404 Not Found',
+        'params': {
+            'skip_download': True,
+        },
     }, {
         # with rtmp streams
         'url': 'http://players.brightcove.net/4036320279001/5d112ed9-283f-485f-a7f9-33f42e8bc042_default/index.html?videoId=4279049078001',
@@ -679,53 +683,58 @@ class BrightcoveNewIE(BrightcoveNewBaseIE):
     }]
 
     _WEBPAGE_TESTS = [{
-        # brightcove player url embed
-        'url': 'https://nbc-2.com/weather/forecast/2022/11/16/forecast-warmest-day-of-the-week/',
-        'md5': '2934d5372b354d27083ccf8575dbfee2',
+        # brightcove player url embed (iframe)
+        'url': 'https://player.support.brightcove.com/styling/responsive-sizing-brightcove-player.html',
         'info_dict': {
-            'id': '6315650313112',
-            'title': 'First Alert Forecast: November 15, 2022',
+            'id': '5802784116001',
+            'title': 'Boulder Creek',
             'ext': 'mp4',
-            'tags': ['nbc2', 'forecast'],
-            'uploader_id': '6146886170001',
-            'thumbnail': r're:^https?://.*\.jpg$',
-            'timestamp': 1668574571,
-            'duration': 233.375,
-            'upload_date': '20221116',
+            'description': 'Used in responsive player sample',
+            'tags': ['landscape', 'mp4'],
+            'uploader_id': '1752604059001',
+            'thumbnail': r're:https?://.*\.jpg',
+            'timestamp': 1530134407,
+            'duration': 25.147,
+            'upload_date': '20180627',
+        },
+        'params': {
+            'skip_download': True,
         },
     }, {
-        # embedded with video tag only
-        'url': 'https://www.gooddishtv.com/tiktok-rapping-chef-mr-pyrex',
+        # in-page <video-js> embeds
+        'url': 'https://player.support.brightcove.com/plugins/picture-picture-plugin-aka-floating-or-pinned.html',
         'info_dict': {
-            'id': 'tiktok-rapping-chef-mr-pyrex',
-            'title': 'TikTok\'s Rapping Chef Makes Jambalaya for the Hosts',
-            'thumbnail': r're:^https?://.*\.jpg$',
-            'age_limit': 0,
-            'description': 'Just in time for Mardi Gras',
+            'id': 'picture-picture-plugin-aka-floating-or-pinned',
+            'title': 'Pinning Plugin (aka "Picture-in-Picture Plugin" or "pinned")',
+            'timestamp': int,
+            'upload_date': str,
         },
         'playlist': [{
             'info_dict': {
-                'id': '6299189544001',
+                'id': '1700303668035561406',
                 'ext': 'mp4',
-                'title': 'TGD_01-032_5',
-                'thumbnail': r're:^https?://.*\.jpg$',
-                'timestamp': 1646078943,
-                'uploader_id': '1569565978001',
-                'upload_date': '20220228',
-                'duration': 217.195,
+                'title': 'pip-native-v2',
+                'thumbnail': r're:https?://.*\.jpg',
+                'timestamp': 1621535938,
+                'uploader_id': '1752604059001',
+                'upload_date': '20210520',
+                'duration': 17.534,
             },
         }, {
             'info_dict': {
-                'id': '6305565995112',
+                'id': '1700305593799961732',
                 'ext': 'mp4',
-                'title': 'TGD 01-087 (Airs 05.25.22)_Segment 5',
-                'thumbnail': r're:^https?://.*\.jpg$',
-                'timestamp': 1651604591,
-                'uploader_id': '1569565978001',
-                'upload_date': '20220503',
-                'duration': 310.421,
+                'title': 'pip-bc-plugin',
+                'thumbnail': r're:https?://.*\.jpg',
+                'timestamp': 1621537774,
+                'uploader_id': '1752604059001',
+                'upload_date': '20210520',
+                'duration': 11.667,
             },
         }],
+        'params': {
+            'skip_download': True,
+        },
     }, {
         # Brightcove:new type [2].
         'url': 'http://www.delawaresportszone.com/video-st-thomas-more-earns-first-trip-to-basketball-semis',

@@ -7,18 +7,19 @@ from .common import InfoExtractor
 class TVANouvellesIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?tvanouvelles\.ca/videos/(?P<id>\d+)'
     _TEST = {
-        'url': 'http://www.tvanouvelles.ca/videos/5117035533001',
+        'url': 'https://www.tvanouvelles.ca/videos/6404509579112',
+        'md5': '804cf35a47459adebccaa5ec9909292d',
         'info_dict': {
-            'id': '5117035533001',
+            'id': '6404509579112',
             'ext': 'mp4',
-            'title': 'L’industrie du taxi dénonce l’entente entre Québec et Uber: explications',
-            'description': 'md5:479653b7c8cf115747bf5118066bd8b3',
+            'title': 'Grandes promesses pour réduire la taille de l\'État - La Joute',
+            'description': 'Grandes promesses pour réduire la taille de l\'État - La Joute',
             'uploader_id': '1741764581',
-            'timestamp': 1473352030,
-            'upload_date': '20160908',
-            'duration': int,
-            'tags': list,
+            'timestamp': 1788386473,
+            'upload_date': '20260902',
+            'duration': 1638.827,
             'thumbnail': r're:https?://.*',
+            'tags': ['nouvelles', 'lajoute'],
         },
         'add_ie': ['BrightcoveNew'],
     }

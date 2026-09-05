@@ -997,6 +997,7 @@ class TwitchStreamIE(TwitchVideosBaseIE):
         'only_matching': True,
     }, {
         'url': 'https://www.twitch.tv/monstercat',
+        'skip': 'not currently live',
         'info_dict': {
             'id': '40500071752',
             'display_id': 'monstercat',

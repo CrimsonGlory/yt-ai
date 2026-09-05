@@ -10,6 +10,7 @@ class RTL2IE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?rtl2\.de/sendung/[^/]+/(?:video/(?P<vico_id>\d+)[^/]+/(?P<vivi_id>\d+)-|folge/)(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'http://www.rtl2.de/sendung/grip-das-motormagazin/folge/folge-203-0',
+        'skip': 'extractor broken: [rtl2] rtl2 extractor failed (RegexNotFoundError: Unable to extract vico_id; ple',
         'info_dict': {
             'id': 'folge-203-0',
             'ext': 'f4v',

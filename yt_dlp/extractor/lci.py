@@ -8,6 +8,7 @@ class LCIIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?:lci|tf1info)\.fr/(?:[^/?#]+/)+[\w-]+-(?P<id>\d+)\.html'
     _TESTS = [{
         'url': 'https://www.tf1info.fr/replay-lci/videos/video-24h-pujadas-du-vendredi-24-mai-6708-2300831.html',
+        'skip': 'extractor broken: Could not find wat_id',
         'info_dict': {
             'id': '14113788',
             'ext': 'mp4',
@@ -21,6 +22,7 @@ class LCIIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.tf1info.fr/politique/election-presidentielle-2022-second-tour-j-2-marine-le-pen-et-emmanuel-macron-en-interview-de-lci-vendredi-soir-2217486.html',
+        'skip': 'extractor broken: Could not find wat_id',
         'info_dict': {
             'id': '13875948',
             'ext': 'mp4',

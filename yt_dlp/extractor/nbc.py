@@ -150,6 +150,7 @@ class NBCIE(NBCUniversalBaseIE):
     _VALID_URL = r'https?(?P<permalink>://(?:www\.)?nbc\.com/(?:classic-tv/)?[^/?#]+/video/[^/?#]+/(?P<id>\w+))'
     _TESTS = [{
         'url': 'http://www.nbc.com/the-tonight-show/video/jimmy-fallon-surprises-fans-at-ben-jerrys/2848237',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '2848237',
             'ext': 'mp4',
@@ -176,6 +177,7 @@ class NBCIE(NBCUniversalBaseIE):
         },
     }, {
         'url': 'https://www.nbc.com/the-golden-globe-awards/video/oprah-winfrey-receives-cecil-b-de-mille-award-at-the-2018-golden-globes/3646439',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '3646439',
             'ext': 'mp4',
@@ -203,6 +205,7 @@ class NBCIE(NBCUniversalBaseIE):
     }, {
         # Needs to be extracted from webpage instead of GraphQL
         'url': 'https://www.nbc.com/paris2024/video/ali-truwit-found-purpose-pool-after-her-life-changed/para24_sww_alitruwittodayshow_240823',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'para24_sww_alitruwittodayshow_240823',
             'ext': 'mp4',

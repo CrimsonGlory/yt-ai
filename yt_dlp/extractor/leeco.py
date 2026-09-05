@@ -210,6 +210,7 @@ class LePlaylistIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://www.le.com/tv/46177.html',
+        'skip': 'extractor broken: [LePlaylist] unable to extract description',
         'info_dict': {
             'id': '46177',
             'title': '美人天下',

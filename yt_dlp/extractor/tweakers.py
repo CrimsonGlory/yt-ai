@@ -13,6 +13,7 @@ class TweakersIE(InfoExtractor):
     _VALID_URL = r'https?://tweakers\.net/video/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://tweakers.net/video/20536/alles-wat-we-zagen-in-de-nieuwe-gta-vi-trailer-tweakers.html',
+        'skip': 'extractor broken: [youtube] qirME9LGzag: Signature solving failed: Some formats may be missing. En',
         'md5': 'c37fa28c1cbaa6695e9f3e6974889ccf',
         'info_dict': {
             'id': 'qirME9LGzag',

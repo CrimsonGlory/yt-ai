@@ -58,7 +58,7 @@ class PreserveTubeIE(InfoExtractor):
             return self._parse_api_data(data, video_id)
         if isinstance(data, dict) and data.get('error'):
             raise ExtractorError('Archive not found', expected=True)
-        return self._extract_from_webpage(video_id)
+        return self._extract_from_html(video_id)
 
     def _parse_api_data(self, data, video_id):
         stage = traverse_obj(data, ('deletion_stage', {str}))
@@ -102,7 +102,7 @@ class PreserveTubeIE(InfoExtractor):
             **parse_resolution(traverse_obj(media_file, ('resolution', {str}))),
         }
 
-    def _extract_from_webpage(self, video_id):
+    def _extract_from_html(self, video_id):
         url = f'https://preservetube.com/watch?v={video_id}'
         webpage = self._download_webpage(url, video_id)
         if 'Archive not found' in webpage:

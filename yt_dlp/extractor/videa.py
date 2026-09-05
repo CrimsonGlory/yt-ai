@@ -81,6 +81,7 @@ class VideaIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.kapucziner.hu/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '95yhJCdK2dX1T5Nh',
             'ext': 'mp4',

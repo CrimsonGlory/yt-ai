@@ -8,6 +8,7 @@ class AtScaleConfEventIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://atscaleconference.com/events/data-scale-spring-2022/',
+        'skip': 'stale test sample / site changed',
         'playlist_mincount': 13,
         'info_dict': {
             'id': 'data-scale-spring-2022',
@@ -16,6 +17,7 @@ class AtScaleConfEventIE(InfoExtractor):
         },
     }, {
         'url': 'https://atscaleconference.com/events/video-scale-2021/',
+        'skip': 'stale test sample / site changed',
         'playlist_mincount': 14,
         'info_dict': {
             'id': 'video-scale-2021',

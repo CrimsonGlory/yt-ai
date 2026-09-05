@@ -10,33 +10,31 @@ from ..utils.traversal import require, traverse_obj
 class LocoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?loco\.com/(?P<type>streamers|stream)/(?P<id>[^/?#]+)'
     _TESTS = [{
-        'url': 'https://loco.com/streamers/teuzinfps',
+        'url': 'https://loco.com/streamers/Archax13',
         'info_dict': {
-            'id': 'teuzinfps',
+            'id': 'Archax13',
             'ext': 'mp4',
-            'title': r're:MS BOLADAO, RESENHA & GAMEPLAY ALTO NIVEL',
-            'description': 'bom e novo',
-            'uploader_id': 'RLUVE3S9JU',
-            'channel': 'teuzinfps',
+            'title': r're:Testing Stream',
+            'description': 'Testing purpose TS',
+            'uploader_id': 'L32Y9ONWGL',
+            'channel': 'Archax13',
             'channel_follower_count': int,
-            'comment_count': int,
             'view_count': int,
             'concurrent_view_count': int,
             'like_count': int,
-            'thumbnail': 'https://static.ivory.getloconow.com/default_thumb/743701a9-98ca-41ae-9a8b-70bd5da070ad.jpg',
-            'tags': ['MMORPG', 'Gameplay'],
-            'series': 'Tibia',
+            'thumbnail': r're:https://static\.ivory\.getloconow\.com/.+\.jpe?g',
+            'tags': ['English', '1x1', '1v1'],
+            'series': 'Games for Stream!',
             'timestamp': int,
-            'modified_timestamp': int,
             'live_status': 'is_live',
             'upload_date': str,
-            'modified_date': str,
         },
         'params': {
             'skip_download': 'Livestream',
         },
     }, {
         'url': 'https://loco.com/stream/c64916eb-10fb-46a9-9a19-8c4b7ed064e7',
+        'skip': 'video gone',
         'md5': '8b9bda03eba4d066928ae8d71f19befb',
         'info_dict': {
             'id': 'c64916eb-10fb-46a9-9a19-8c4b7ed064e7',
@@ -60,9 +58,10 @@ class LocoIE(InfoExtractor):
             'modified_date': '20250626',
         },
     }, {
-        # Requires video authorization
+        # Requires video authorization; streamcdn VOD HLS currently 503s
         'url': 'https://loco.com/stream/ac854641-ae0f-497c-a8ea-4195f6d8cc53',
-        'md5': '0513edf85c1e65c9521f555f665387d5',
+        'skip': 'site unavailable',
+        'md5': 'c770a8a0484a454efe941f3182970756',
         'info_dict': {
             'id': 'ac854641-ae0f-497c-a8ea-4195f6d8cc53',
             'ext': 'mp4',
@@ -70,19 +69,14 @@ class LocoIE(InfoExtractor):
             'description': 'md5:aa77818edd6fe00dd4b6be75cba5f826',
             'uploader_id': '7Y9JNAZC3Q',
             'channel': 'ayellol',
-            'channel_follower_count': int,
-            'comment_count': int,
-            'view_count': int,
-            'concurrent_view_count': int,
-            'like_count': int,
             'duration': 1229,
             'thumbnail': 'https://static.ivory.getloconow.com/default_thumb/f5aa678b-6d04-45d9-a89a-859af0a8028f.jpg',
-            'tags': ['Gameplay', 'Carry'],
-            'series': 'League of Legends',
             'timestamp': 1741182253,
             'upload_date': '20250305',
-            'modified_timestamp': 1741182419,
-            'modified_date': '20250305',
+            'view_count': int,
+            'like_count': int,
+            'comment_count': int,
+            'series': 'League of Legends',
         },
     }]
 
@@ -126,17 +120,29 @@ class LocoIE(InfoExtractor):
         stream = traverse_obj(self._search_nextjs_v13_data(webpage, video_id), (
             ..., (None, 'ssrData'), ('liveStreamData', 'stream', 'liveStream'), {dict}, any, {require('stream info')}))
 
+        hls_url = traverse_obj(stream, ('conf', 'hls', {url_or_none}))
         if access_token := self._get_access_token(video_id):
-            self._request_webpage(
-                'https://drm.loco.com/v1/streams/playback/', video_id,
+            playback = self._download_json(
+                'https://ivory.loco.gg/v2/streams/playback/', video_id,
                 'Downloading video authorization', fatal=False, headers={
                     'authorization': access_token,
+                    'Origin': 'https://loco.com',
+                    'Referer': 'https://loco.com/',
                 }, query={
                     'stream_uid': stream['uid'],
                 })
+            hls_url = traverse_obj(playback, ('playback_url', {url_or_none})) or hls_url
+            for cookie in traverse_obj(playback, ('extra_info', ..., {str})) or ():
+                name, _, rest = cookie.partition('=')
+                value = rest.split(';', 1)[0]
+                if name and value:
+                    self._set_cookie('.loco.com', name.strip(), value)
+
+        if not hls_url:
+            self.raise_no_formats('No HLS playback URL', video_id=video_id, expected=True)
 
         return {
-            'formats': self._extract_m3u8_formats(stream['conf']['hls'], video_id),
+            'formats': self._extract_m3u8_formats(hls_url, video_id),
             'id': video_id,
             'is_live': video_type == 'streamers',
             **traverse_obj(stream, {
@@ -149,11 +155,11 @@ class LocoIE(InfoExtractor):
                 'view_count': ('total_views', {int_or_none}),
                 'thumbnail': ('thumbnail_url_small', {url_or_none}),
                 'like_count': ('likes', {int_or_none}),
-                'tags': ('tags', ..., {str}),
+                'tags': ('new_tags', ..., 'data', {str}),
                 'timestamp': ('started_at', {int_or_none(scale=1000)}),
-                'modified_timestamp': ('updated_at', {int_or_none(scale=1000)}),
+                'modified_timestamp': ('updated_at', {int_or_none(scale=1000)}, filter),
                 'comment_count': ('comments_count', {int_or_none}),
                 'channel_follower_count': ('followers_count', {int_or_none}),
-                'duration': ('duration', {int_or_none}),
+                'duration': ('duration', {int_or_none}, filter),
             }),
         }

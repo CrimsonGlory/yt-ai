@@ -51,6 +51,7 @@ class StoryFireIE(StoryFireBaseIE):
     _VALID_URL = StoryFireBaseIE._VALID_URL_BASE + r'video-details/(?P<id>[0-9a-f]{24})'
     _TEST = {
         'url': 'https://storyfire.com/video-details/5df1d132b6378700117f9181',
+        'skip': 'site unavailable',
         'md5': 'caec54b9e4621186d6079c7ec100c1eb',
         'info_dict': {
             'id': '378954662',
@@ -83,6 +84,7 @@ class StoryFireUserIE(StoryFireBaseIE):
     _VALID_URL = StoryFireBaseIE._VALID_URL_BASE + r'user/(?P<id>[^/]+)/video'
     _TEST = {
         'url': 'https://storyfire.com/user/UQ986nFxmAWIgnkZQ0ftVhq4nOk2/video',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'UQ986nFxmAWIgnkZQ0ftVhq4nOk2',
         },
@@ -109,12 +111,14 @@ class StoryFireSeriesIE(StoryFireBaseIE):
     _VALID_URL = StoryFireBaseIE._VALID_URL_BASE + r'write/series/stories/(?P<id>[^/?&#]+)'
     _TESTS = [{
         'url': 'https://storyfire.com/write/series/stories/-Lq6MsuIHLODO6d2dDkr/',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '-Lq6MsuIHLODO6d2dDkr',
         },
         'playlist_mincount': 13,
     }, {
         'url': 'https://storyfire.com/write/series/stories/the_mortal_one/',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'the_mortal_one',
         },

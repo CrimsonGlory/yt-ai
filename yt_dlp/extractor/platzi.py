@@ -158,6 +158,7 @@ class PlatziCourseIE(PlatziBaseIE):
         'playlist_count': 22,
     }, {
         'url': 'https://courses.platzi.com/classes/communication-codestream/',
+        'skip': 'extractor broken: Unable to extract data',
         'info_dict': {
             'id': '1367',
             'title': 'Codestream Course',

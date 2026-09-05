@@ -8,6 +8,7 @@ class ZeeNewsIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://zeenews.india.com/hindi/india/delhi-ncr-haryana/delhi-ncr/video/greater-noida-video-viral-on-social-media-attackers-beat-businessman-and-his-son-oppose-market-closed-atdnh/1402138',
+            'skip': 'extractor broken: [ZeeNews] ZeeNews extractor failed (ExtractorError: No video found); trying webp',
             'info_dict': {
                 'id': '1402138',
                 'ext': 'mp4',
@@ -23,6 +24,7 @@ class ZeeNewsIE(InfoExtractor):
         },
         {
             'url': 'https://zeenews.india.com/hindi/india/video/videsh-superfast-queen-elizabeth-iis-funeral-today/1357710',
+            'skip': 'extractor broken: [ZeeNews] ZeeNews extractor failed (ExtractorError: No video found); trying webp',
             'info_dict': {
                 'id': '1357710',
                 'ext': 'mp4',

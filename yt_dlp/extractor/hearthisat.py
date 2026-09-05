@@ -11,7 +11,23 @@ from ..utils import (
 class HearThisAtIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?hearthis\.at/(?P<artist>[^/?#]+)/(?P<title>[\w.-]+)'
     _PLAYLIST_URL = 'https://hearthis.at/playlist.php'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://hearthis.at/sceenfmlabel/04-jacob-groening-haidi-ninze-remix/',
+            'md5': 'fff7619d0b408d047597efc07a2d4f02',
+            'info_dict': {
+            'id': '911323',
+            'ext': 'mp3',
+            'display_id': 'sceenfmlabel - 04-jacob-groening-haidi-ninze-remix',
+            'title': 'sceen.fm label - Premiere: Jacob Groening - Haidi (Ninze Remix)',
+            'description': 'md5:ed4010155159e40381b337a48e0ba205',
+            'duration': 375,
+            'thumbnail': 'md5:87b7826d9108c12a1d408c9e5afd3fc4',
+            'timestamp': 1465663094,
+            'upload_date': '20160611',
+            'view_count': int,
+        },
+        },{
         'url': 'https://hearthis.at/moofi/dr-kreep',
         'md5': 'ab6ec33c8fed6556029337c7885eb4e0',
         'info_dict': {
@@ -30,6 +46,7 @@ class HearThisAtIE(InfoExtractor):
     }, {
         # 'download' link redirects to the original webpage
         'url': 'https://hearthis.at/twitchsf/dj-jim-hopkins-totally-bitchin-80s-dance-mix/',
+        'skip': 'stale test sample / site changed',
         'md5': '5980ceb7c461605d30f1f039df160c6e',
         'info_dict': {
             'id': '811296',
@@ -62,6 +79,7 @@ class HearThisAtIE(InfoExtractor):
         },
     }, {
         'url': 'https://hearthis.at/sithi2/biochip-c-classics-set-wolle-xdp-tresor.core-special-tresor-globus-berlin-13.07.20011/',
+        'skip': 'stale test sample / site changed',
         'md5': 'b45ac60f0c8111eef6ddc10ec232e312',
         'info_dict': {
             'id': '7145959',

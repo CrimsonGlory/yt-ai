@@ -57,6 +57,7 @@ class HeiseIE(InfoExtractor):
     }, {
         # YouTube embed
         'url': 'http://www.heise.de/newsticker/meldung/Netflix-In-20-Jahren-vom-Videoverleih-zum-TV-Revolutionaer-3814130.html',
+        'skip': 'extractor broken: [youtube] [jsc] Remote component challenge solver script (node) was skipped. It',
         'md5': 'e403d2b43fea8e405e88e3f8623909f1',
         'info_dict': {
             'id': '6kmWbXleKW4',

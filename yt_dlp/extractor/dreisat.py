@@ -10,8 +10,29 @@ from ..utils.traversal import require, traverse_obj
 class DreiSatIE(ZDFBaseIE):
     IE_NAME = '3sat'
     _VALID_URL = r'https?://(?:www\.)?3sat\.de/(?:[^/?#]+/)*(?P<id>[^/?#&]+)\.html'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.3sat.de/film/dokumentarfilm/gefaehrlich-nah-wenn-baeren-toeten-102.html',
+            'info_dict': {
+                'id': '260729_gefaehrlich_nah_wenn_baeren_toeten_mit_ad_dokfilm',
+                'ext': 'webm',
+                'title': 'Gefährlich nah – Wenn Bären töten',
+                'description': 'md5:0949d2e9fdc9756e68c411be9a665bbc',
+                'duration': 5635.0,
+                'thumbnail': 'md5:0f493070bd61cbb9ce9f0555dba92a98',
+                'timestamp': 1785348900,
+                'upload_date': '20260729',
+                'episode': 'Gefährlich nah – Wenn Bären töten',
+                'episode_id': 'POS_5eeca170-fe79-4f8e-aee6-146b711b2d05',
+            },
+            'params': {
+                # Akamai HTTP progressive (nrodlzdf-a.akamaihd.net) returns 403 outside DACH.
+                # HLS still plays; X-Forwarded-For is ignored by the CDN.
+                'skip_download': True,
+            },
+        },{
         'url': 'https://www.3sat.de/dokumentation/reise/traumziele-suedostasiens-die-philippinen-und-vietnam-102.html',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '231124_traumziele_philippinen_und_vietnam_dokreise',
             'ext': 'mp4',
@@ -41,6 +62,7 @@ class DreiSatIE(ZDFBaseIE):
         },
     }, {
         'url': 'https://www.3sat.de/gesellschaft/37-grad-leben/aus-dem-leben-gerissen-102.html',
+        'skip': 'stale test sample / site changed',
         'md5': 'a903eaf8d1fd635bd3317cd2ad87ec84',
         'info_dict': {
             'id': '250323_0903_sendung_sgl',
@@ -57,6 +79,7 @@ class DreiSatIE(ZDFBaseIE):
     }, {
         # Video with chapters
         'url': 'https://www.3sat.de/kabarett/kabarett-in-3sat/stefan-danziger-3sat-zu-gast-2026-kabarett-in-3sat-104.html',
+        'skip': 'stale test sample / site changed',
         'md5': '6b95790ce52e75f0d050adcdd2711ee6',
         'info_dict': {
             'id': '260621_stefan_danziger_mittel_und_wege_kabarett_in_3sat',

@@ -1472,7 +1472,7 @@ def test_clean_pot(po_token, expected):
         (PoTokenResponse(EXAMPLE_PO_TOKEN), True),
         (PoTokenResponse(EXAMPLE_PO_TOKEN, expires_at=-1), True),
         (PoTokenResponse(EXAMPLE_PO_TOKEN, expires_at=0), True),
-        (PoTokenResponse(EXAMPLE_PO_TOKEN, expires_at=int(time.time()) + 10000), True),
+        (PoTokenResponse(EXAMPLE_PO_TOKEN, expires_at=int(time.time()) + 10 ** 9), True),
     ],
 )
 def test_validate_pot_response(response, expected):

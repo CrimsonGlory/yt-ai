@@ -173,18 +173,19 @@ class KalturaIE(InfoExtractor):
     _WEBPAGE_TESTS = [{
         'url': 'https://www.cornell.edu/VIDEO/nima-arkani-hamed-standard-models-of-particle-physics',
         'info_dict': {
-            'id': '1_sgtvehim',
+            'id': '1_zy94if6q',
             'ext': 'mp4',
             'title': 'Our "Standard Models" of particle physics and cosmology',
             'duration': 5420,
-            'thumbnail': r're:https?://cdnsecakmi\.kaltura\.com/.+',
-            'timestamp': 1321158993,
-            'upload_date': '20111113',
-            'uploader_id': 'kps1',
+            'thumbnail': r're:https?://cfvod\.kaltura\.com/.+',
+            'timestamp': 1782512320,
+            'upload_date': '20260626',
+            'uploader_id': 'ga.ur-video',
             'view_count': int,
         },
     }, {
         'url': 'https://www.oreilly.com/ideas/my-cloud-makes-pretty-pictures',
+        'skip': 'HTTP Error 403: Forbidden',
         'info_dict': {
             'id': '0_utuok90b',
             'ext': 'mp4',

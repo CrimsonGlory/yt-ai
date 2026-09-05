@@ -34,11 +34,12 @@ class AmazonStoreIE(InfoExtractor):
                 'duration': 34,
             },
         }],
+        'params': {'skip_download': 'm3u8'},
         'expected_warnings': ['Unable to extract data'],
     }, {
-        'url': 'https://www.amazon.in/Sony-WH-1000XM4-Cancelling-Headphones-Bluetooth/dp/B0863TXGM3',
+        'url': 'https://www.amazon.in/dp/B09XS7JWHH',
         'info_dict': {
-            'id': 'B0863TXGM3',
+            'id': 'B09XS7JWHH',
             'title': str,
         },
         'playlist_mincount': 4,
@@ -49,7 +50,8 @@ class AmazonStoreIE(InfoExtractor):
             'id': 'B0845NXCXF',
             'title': str,
         },
-        'playlist-mincount': 1,
+        'playlist_mincount': 1,
+        'params': {'skip_download': 'm3u8'},
         'expected_warnings': ['Unable to extract data'],
     }, {
         'url': 'https://www.amazon.es/Samsung-Smartphone-s-AMOLED-Quad-c%C3%A1mara-espa%C3%B1ola/dp/B08WX337PQ',
@@ -65,7 +67,10 @@ class AmazonStoreIE(InfoExtractor):
         playlist_id = self._match_id(url)
 
         for retry in self.RetryManager():
-            webpage = self._download_webpage(url, playlist_id)
+            # amazon.com (and sometimes other storefronts) serve a captcha
+            # interstitial to non-browser clients; Chrome impersonation bypasses it.
+            webpage = self._download_webpage(
+                url, playlist_id, impersonate='chrome' if retry.attempt > 1 else None)
             try:
                 data_json = self._search_json(
                     r'var\s?obj\s?=\s?jQuery\.parseJSON\(\'', webpage, 'data', playlist_id,
@@ -73,15 +78,40 @@ class AmazonStoreIE(InfoExtractor):
             except ExtractorError as e:
                 retry.error = e
 
-        entries = [{
-            'id': video['marketPlaceID'],
-            'url': video['url'],
-            'title': video.get('title'),
-            'thumbnail': video.get('thumbUrl') or video.get('thumb'),
-            'duration': video.get('durationSeconds'),
-            'height': int_or_none(video.get('videoHeight')),
-            'width': int_or_none(video.get('videoWidth')),
-        } for video in (data_json.get('videos') or []) if video.get('isVideo') and video.get('url')]
+        entries = []
+        for video in data_json.get('videos') or []:
+            video_url = url_or_none(video.get('url'))
+            if not video.get('isVideo') or not video_url:
+                continue
+            video_id = video.get('marketPlaceID') or video.get('mediaObjectId')
+            formats, subtitles = [], {}
+            if 'm3u8' in video_url:
+                formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+                    video_url, video_id, 'mp4', m3u8_id='hls', fatal=False)
+                if not formats:
+                    formats = [{
+                        'url': video_url,
+                        'ext': 'mp4',
+                        'protocol': 'm3u8_native',
+                        'format_id': 'hls',
+                    }]
+            else:
+                formats.append({
+                    'url': video_url,
+                    'ext': 'mp4',
+                    'format_id': 'http-mp4',
+                    'height': int_or_none(video.get('videoHeight')),
+                    'width': int_or_none(video.get('videoWidth')),
+                })
+            entries.append({
+                'id': video_id,
+                'formats': formats,
+                'subtitles': subtitles,
+                'title': video.get('title'),
+                'thumbnail': url_or_none(
+                    video.get('thumbUrl') or video.get('thumb') or video.get('slateUrl')),
+                'duration': int_or_none(video.get('durationSeconds')),
+            })
         return self.playlist_result(entries, playlist_id=playlist_id, playlist_title=data_json.get('title'))
 
 

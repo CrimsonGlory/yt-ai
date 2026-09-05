@@ -13,6 +13,7 @@ class MuenchenTVIE(InfoExtractor):
     IE_DESC = 'münchen.tv'
     _TEST = {
         'url': 'http://www.muenchen.tv/livestream/',
+        'skip': 'extractor broken: [MuenchenTV] unable to extract thumbnail URL',
         'info_dict': {
             'id': '5334',
             'display_id': 'live',

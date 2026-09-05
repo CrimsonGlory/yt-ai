@@ -19,6 +19,7 @@ class SeznamZpravyIE(InfoExtractor):
     _EMBED_REGEX = [r'<iframe\b[^>]+\bsrc=(["\'])(?P<url>(?:https?:)?//(?:www\.)?seznamzpravy\.cz/iframe/player\?.*?)\1']
     _TESTS = [{
         'url': 'https://www.seznamzpravy.cz/iframe/player?duration=241&serviceSlug=zpravy&src=https%3A%2F%2Fv39-a.sdn.szn.cz%2Fv_39%2Fvmd%2F5999c902ea707c67d8e267a9%3Ffl%3Dmdk%2C432f65a0%7C&itemType=video&autoPlay=false&title=Sv%C4%9Bt%20bez%20obalu%3A%20%C4%8Ce%C5%A1t%C3%AD%20voj%C3%A1ci%20na%20mis%C3%ADch%20(kr%C3%A1tk%C3%A1%20verze)&series=Sv%C4%9Bt%20bez%20obalu&serviceName=Seznam%20Zpr%C3%A1vy&poster=%2F%2Fd39-a.sdn.szn.cz%2Fd_39%2Fc_img_F_I%2FR5puJ.jpeg%3Ffl%3Dcro%2C0%2C0%2C1920%2C1080%7Cres%2C1200%2C%2C1%7Cjpg%2C80%2C%2C1&width=1920&height=1080&cutFrom=0&cutTo=0&splVersion=VOD&contentId=170889&contextId=35990&showAdvert=true&collocation=&autoplayPossible=true&embed=&isVideoTooShortForPreroll=false&isVideoTooLongForPostroll=true&videoCommentOpKey=&videoCommentId=&version=4.0.76&dotService=zpravy&gemiusPrismIdentifier=bVc1ZIb_Qax4W2v5xOPGpMeCP31kFfrTzj0SqPTLh_b.Z7&zoneIdPreroll=seznam.pack.videospot&skipOffsetPreroll=5&sectionPrefixPreroll=%2Fzpravy',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '170889',
             'ext': 'mp4',
@@ -33,6 +34,7 @@ class SeznamZpravyIE(InfoExtractor):
     }, {
         # with Location key
         'url': 'https://www.seznamzpravy.cz/iframe/player?duration=null&serviceSlug=zpravy&src=https%3A%2F%2Flive-a.sdn.szn.cz%2Fv_39%2F59e468fe454f8472a96af9fa%3Ffl%3Dmdk%2C5c1e2840%7C&itemType=livevod&autoPlay=false&title=P%C5%99edseda%20KDU-%C4%8CSL%20Pavel%20B%C4%9Blobr%C3%A1dek%20ve%20volebn%C3%AD%20V%C3%BDzv%C4%9B%20Seznamu&series=V%C3%BDzva&serviceName=Seznam%20Zpr%C3%A1vy&poster=%2F%2Fd39-a.sdn.szn.cz%2Fd_39%2Fc_img_G_J%2FjTBCs.jpeg%3Ffl%3Dcro%2C0%2C0%2C1280%2C720%7Cres%2C1200%2C%2C1%7Cjpg%2C80%2C%2C1&width=16&height=9&cutFrom=0&cutTo=0&splVersion=VOD&contentId=185688&contextId=38489&showAdvert=true&collocation=&hideFullScreen=false&hideSubtitles=false&embed=&isVideoTooShortForPreroll=false&isVideoTooShortForPreroll2=false&isVideoTooLongForPostroll=false&fakePostrollZoneID=seznam.clanky.zpravy.preroll&fakePrerollZoneID=seznam.clanky.zpravy.preroll&videoCommentId=&trim=default_16x9&noPrerollVideoLength=30&noPreroll2VideoLength=undefined&noMidrollVideoLength=0&noPostrollVideoLength=999999&autoplayPossible=true&version=5.0.41&dotService=zpravy&gemiusPrismIdentifier=zD3g7byfW5ekpXmxTVLaq5Srjw5i4hsYo0HY1aBwIe..27&zoneIdPreroll=seznam.pack.videospot&skipOffsetPreroll=5&sectionPrefixPreroll=%2Fzpravy%2Fvyzva&zoneIdPostroll=seznam.pack.videospot&skipOffsetPostroll=5&sectionPrefixPostroll=%2Fzpravy%2Fvyzva&regression=false',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '185688',
             'ext': 'mp4',
@@ -122,6 +124,7 @@ class SeznamZpravyArticleIE(InfoExtractor):
     _TESTS = [{
         # two videos on one page, with SDN URL
         'url': 'https://www.seznamzpravy.cz/clanek/jejich-svet-na-nas-utoci-je-lepsi-branit-se-na-jejich-pisecku-rika-reziser-a-major-v-zaloze-marhoul-35990',
+        'skip': 'extractor broken: [SeznamZpravyArticle] unable to extract OpenGraph title',
         'info_dict': {
             'id': '35990',
             'title': 'md5:6011c877a36905f28f271fcd8dcdb0f2',

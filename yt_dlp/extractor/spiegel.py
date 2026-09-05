@@ -5,8 +5,24 @@ from .jwplatform import JWPlatformIE
 class SpiegelIE(InfoExtractor):
     _UUID_RE = r'[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}'
     _VALID_URL = rf'https?://(?:www\.)?(?:spiegel|manager-magazin)\.de(?:/[^/]+)+/[^/]*-(?P<id>[0-9]+|{_UUID_RE})(?:-embed|-iframe)?(?:\.html)?(?:$|[#?])'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.spiegel.de/panorama/vonovia-ratten-risse-und-taubenplage-in-hamburger-wohnsiedlung-spiegel-tv-a-522bd9e7-5e18-4189-ba78-d68b21eedcb2',
+            'md5': '12b2f36c1a485d5977a6c4b10e92cd06',
+            'info_dict': {
+            'id': 'G1TYUbFV',
+            'ext': 'mp4',
+            'display_id': '522bd9e7-5e18-4189-ba78-d68b21eedcb2',
+            'title': 'Vonovia: Ratten, Risse und Taubenplage in Hamburger Wohnsiedlung – SPIEGEL TV',
+            'description': 'md5:148473c45290d0de18a158f4e89b9ad8',
+            'duration': 656.0,
+            'thumbnail': 'https://cdn.jwplayer.com/v2/media/G1TYUbFV/poster.jpg?width=720',
+            'timestamp': 1787608505,
+            'upload_date': '20260824',
+        },
+        },{
         'url': 'http://www.spiegel.de/video/vulkan-tungurahua-in-ecuador-ist-wieder-aktiv-video-1259285.html',
+        'skip': 'stale test sample / site changed',
         'md5': '50c7948883ec85a3e431a0a44b7ad1d6',
         'info_dict': {
             'id': 'II0BUyxY',

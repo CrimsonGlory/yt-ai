@@ -196,6 +196,7 @@ class AudiusPlaylistIE(AudiusBaseIE):
     IE_DESC = 'Audius.co playlists'
     _TEST = {
         'url': 'https://audius.co/test_acc/playlist/test-playlist-22910',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'DNvjN',
             'title': 'test playlist',
@@ -255,6 +256,7 @@ class AudiusProfileIE(AudiusPlaylistIE):  # XXX: Do not subclass from concrete I
     _VALID_URL = r'https?://(?:www)?audius\.co/(?P<id>[^\/]+)/?(?:[?#]|$)'
     _TEST = {
         'url': 'https://audius.co/pzl/',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'ezRo7',
             'description': 'TAMALE\n\nContact: officialpzl@gmail.com',

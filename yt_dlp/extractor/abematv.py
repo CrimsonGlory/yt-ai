@@ -233,6 +233,7 @@ class AbemaTVIE(AbemaTVBaseIE):
     _TESTS = [{
         'url': 'https://abema.tv/video/episode/194-25_s2_p1',
         'info_dict': {
+            'ext': 'mp4',
             'id': '194-25_s2_p1',
             'title': '第1話 「チーズケーキ」　「モーニング再び」',
             'series': '異世界食堂２',
@@ -245,6 +246,7 @@ class AbemaTVIE(AbemaTVBaseIE):
     }, {
         'url': 'https://abema.tv/channels/anime-live2/slots/E8tvAnMJ7a9a5d',
         'info_dict': {
+            'ext': 'mp4',
             'id': 'E8tvAnMJ7a9a5d',
             'title': 'ゆるキャン△ SEASON２ 全話一挙【無料ビデオ72時間】',
             'series': 'ゆるキャン△ SEASON２',
@@ -257,6 +259,7 @@ class AbemaTVIE(AbemaTVBaseIE):
     }, {
         'url': 'https://abema.tv/video/episode/87-877_s1282_p31047',
         'info_dict': {
+            'ext': 'mp4',
             'id': 'E8tvAnMJ7a9a5d',
             'title': '第5話『光射す』',
             'description': 'md5:56d4fc1b4f7769ded5f923c55bb4695d',
@@ -268,6 +271,7 @@ class AbemaTVIE(AbemaTVBaseIE):
     }, {
         'url': 'https://abema.tv/now-on-air/abema-anime',
         'info_dict': {
+            'ext': 'mp4',
             'id': 'abema-anime',
             # this varies
             # 'title': '女子高生の無駄づかい 全話一挙【無料ビデオ72時間】',

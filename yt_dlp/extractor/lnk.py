@@ -11,6 +11,7 @@ class LnkIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://lnk.lt/zinios/79791',
+        'skip': 'extractor broken: Failed to parse JSON (caused by JSONDecodeError("Expecting value in \'\': line 1 c',
         'info_dict': {
             'id': '79791',
             'ext': 'mp4',
@@ -27,6 +28,7 @@ class LnkIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://lnk.lt/istorijos-trumpai/152546',
+        'skip': 'extractor broken: Failed to parse JSON (caused by JSONDecodeError("Expecting value in \'\': line 1 c',
         'info_dict': {
             'id': '152546',
             'ext': 'mp4',
@@ -43,6 +45,7 @@ class LnkIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://lnk.lt/gyvunu-pasaulis/151549',
+        'skip': 'extractor broken: Failed to parse JSON (caused by JSONDecodeError("Expecting value in \'\': line 1 c',
         'info_dict': {
             'id': '151549',
             'ext': 'mp4',

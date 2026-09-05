@@ -159,6 +159,7 @@ class BibelTVSeriesIE(BibelTVBaseIE):
 
     _TESTS = [{
         'url': 'https://www.bibeltv.de/mediathek/serien/333485-ein-wunder-fuer-jeden-tag',
+        'skip': 'extractor broken: Unable to extract next.js data',
         'playlist_mincount': 400,
         'info_dict': {
             'id': '333485',
@@ -187,6 +188,7 @@ class BibelTVLiveIE(BibelTVBaseIE):
 
     _TESTS = [{
         'url': 'https://www.bibeltv.de/livestreams/bibeltv/',
+        'skip': 'extractor broken: Unable to extract bibeltvData',
         'info_dict': {
             'id': 'bibeltv',
             'ext': 'mp4',

@@ -7,6 +7,7 @@ class TeleBruxellesIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?:telebruxelles|bx1)\.be/(?:[^/]+/)*(?P<id>[^/#?]+)'
     _TESTS = [{
         'url': 'https://bx1.be/categories/reportages/des-controles-routiers-pour-former-les-policiers-de-demain/',
+        'skip': 'HTTP 403/blocked',
         'md5': '02703e712c6522dc4651de662e983888',
         'info_dict': {
             'id': '827167',

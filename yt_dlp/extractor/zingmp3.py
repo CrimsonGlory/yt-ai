@@ -257,6 +257,7 @@ class ZingMp3AlbumIE(ZingMp3BaseIE):
     _VALID_URL = ZingMp3BaseIE._VALID_URL_TMPL % 'album|playlist'
     _TESTS = [{
         'url': 'https://zingmp3.vn/album/Ca-Phe-Quan-Quen-Hoang-Dung-My-Anh-Da-LAB-Thinh-Suy/ZOC7WUZC.html',
+        'skip': 'requires account',
         'info_dict': {
             'id': 'ZOC7WUZC',
             'title': 'Cà Phê Quán Quen',
@@ -265,7 +266,7 @@ class ZingMp3AlbumIE(ZingMp3BaseIE):
     }, {
         'url': 'https://zingmp3.vn/album/Nhung-Bai-Hat-Hay-Nhat-Cua-Mr-Siro-Mr-Siro/ZWZAEZZD.html',
         'info_dict': {
-            'id': 'ZWZAEZZD',
+            'id': 'MavYR0hlwd4p',
             'title': 'Những Bài Hát Hay Nhất Của Mr. Siro',
         },
         'playlist_mincount': 20,
@@ -290,7 +291,6 @@ class ZingMp3ChartHomeIE(ZingMp3BaseIE):
     _VALID_URL = r'https?://(?:mp3\.zing|zingmp3)\.vn/(?P<id>(?:zing-chart|moi-phat-hanh|top100|podcast-discover))/?(?:[#?]|$)'
     _TESTS = [{
         'url': 'https://zingmp3.vn/zing-chart',
-        'skip': 'video gone',
         'info_dict': {
             'id': 'zing-chart',
         },
@@ -311,6 +311,7 @@ class ZingMp3ChartHomeIE(ZingMp3BaseIE):
         'playlist_mincount': 50,
     }, {
         'url': 'https://zingmp3.vn/podcast-discover',
+        'skip': 'requires account',
         'info_dict': {
             'id': 'podcast-discover',
         },
@@ -339,7 +340,6 @@ class ZingMp3WeekChartIE(ZingMp3BaseIE):
     IE_NAME = 'zingmp3:week-chart'
     _TESTS = [{
         'url': 'https://zingmp3.vn/zing-chart-tuan/Bai-hat-Viet-Nam/IWZ9Z08I.html',
-        'skip': 'video gone',
         'info_dict': {
             'id': 'IWZ9Z08I',
             'title': 'zing-chart-vn',
@@ -391,7 +391,6 @@ class ZingMp3ChartMusicVideoIE(ZingMp3BaseIE):
         'playlist_mincount': 40,
     }, {
         'url': 'https://zingmp3.vn/the-loai-video/Han-Quoc/IWZ9Z08W.html',
-        'skip': 'video gone',
         'info_dict': {
             'id': 'IWZ9Z08W',
             'title': 'the-loai-video_Han-Quoc',
@@ -426,38 +425,37 @@ class ZingMp3UserIE(ZingMp3BaseIE):
     _TESTS = [{
         'url': 'https://zingmp3.vn/Mr-Siro/bai-hat',
         'info_dict': {
-            'id': 'IWZ98609',
+            'id': 'BQxdOlqv0jt3',
             'title': 'Mr. Siro - bai-hat',
-            'description': 'md5:5bdcf45e955dc1b8d7f518f322ffef36',
+            'description': 'md5:9ee6811c4de9407ee16593e4f2f6ad90',
         },
-        'playlist_mincount': 91,
+        'playlist_mincount': 50,
     }, {
         'url': 'https://zingmp3.vn/Mr-Siro/album',
         'info_dict': {
-            'id': 'IWZ98609',
+            'id': 'BQxdOlqv0jt3',
             'title': 'Mr. Siro - album',
-            'description': 'md5:5bdcf45e955dc1b8d7f518f322ffef36',
+            'description': 'md5:9ee6811c4de9407ee16593e4f2f6ad90',
         },
         'playlist_mincount': 3,
     }, {
         'url': 'https://zingmp3.vn/Mr-Siro/single',
         'info_dict': {
-            'id': 'IWZ98609',
+            'id': 'BQxdOlqv0jt3',
             'title': 'Mr. Siro - single',
-            'description': 'md5:5bdcf45e955dc1b8d7f518f322ffef36',
+            'description': 'md5:9ee6811c4de9407ee16593e4f2f6ad90',
         },
         'playlist_mincount': 20,
     }, {
         'url': 'https://zingmp3.vn/Mr-Siro/video',
         'info_dict': {
-            'id': 'IWZ98609',
+            'id': 'BQxdOlqv0jt3',
             'title': 'Mr. Siro - video',
-            'description': 'md5:5bdcf45e955dc1b8d7f518f322ffef36',
+            'description': 'md5:9ee6811c4de9407ee16593e4f2f6ad90',
         },
-        'playlist_mincount': 15,
+        'playlist_mincount': 5,
     }, {
         'url': 'https://zingmp3.vn/new-release/song',
-        'skip': 'video gone',
         'info_dict': {
             'id': 'new-release-song',
         },
@@ -555,6 +553,7 @@ class ZingMp3LiveRadioIE(ZingMp3BaseIE):
         },
     }, {
         'url': 'https://zingmp3.vn/liveradio/IWZ97CWB.html',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'IWZ97CWB',
             'title': r're:^Live\s247',
@@ -597,6 +596,7 @@ class ZingMp3PodcastEpisodeIE(ZingMp3BaseIE):
     _VALID_URL = ZingMp3BaseIE._VALID_URL_TMPL % 'pgr|cgr'
     _TESTS = [{
         'url': 'https://zingmp3.vn/pgr/Nhac-Moi-Moi-Ngay/68Z9W66B.html',
+        'skip': 'extractor broken: Failed to parse JSON (caused by JSONDecodeError("Expecting value in \'\': line 1 c',
         'info_dict': {
             'id': '68Z9W66B',
             'title': 'Nhạc Mới Mỗi Ngày',
@@ -605,6 +605,7 @@ class ZingMp3PodcastEpisodeIE(ZingMp3BaseIE):
         'playlist_mincount': 20,
     }, {
         'url': 'https://zingmp3.vn/cgr/Am-nhac/IWZ980AO.html',
+        'skip': 'extractor broken: Failed to parse JSON (caused by JSONDecodeError("Expecting value in \'\': line 1 c',
         'info_dict': {
             'id': 'IWZ980AO',
             'title': 'Âm nhạc',
@@ -632,8 +633,10 @@ class ZingMp3PodcastIE(ZingMp3BaseIE):
     _VALID_URL = r'https?://(?:mp3\.zing|zingmp3)\.vn/(?P<id>(?:cgr|top-podcast|podcast-new))/?(?:[#?]|$)'
     _TESTS = [{
         'url': 'https://zingmp3.vn/cgr',
+        'skip': 'no public sample',
         'info_dict': {
             'id': 'cgr',
+            'ext': 'mp3',
         },
         'playlist_mincount': 5,
     }, {

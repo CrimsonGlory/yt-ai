@@ -6,6 +6,7 @@ class NickIE(MTVServicesBaseIE):
     _VALID_URL = r'https?://(?:www\.)?nick\.com/(?:video-clips|episodes)/(?P<id>[\da-z]{6})'
     _TESTS = [{
         'url': 'https://www.nick.com/episodes/u3smw8/wylde-pak-best-summer-ever-season-1-ep-1',
+        'skip': 'extractor broken: Unable to extract video detail',
         'info_dict': {
             'id': 'eb9d4db0-274a-11ef-a913-0e37995d42c9',
             'ext': 'mp4',
@@ -28,6 +29,7 @@ class NickIE(MTVServicesBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.nick.com/video-clips/0p4706/spongebob-squarepants-spongebob-loving-the-krusty-krab-for-7-minutes',
+        'skip': 'extractor broken: Unable to extract video detail',
         'info_dict': {
             'id': '4aac2228-5295-4076-b986-159513cf4ce4',
             'ext': 'mp4',

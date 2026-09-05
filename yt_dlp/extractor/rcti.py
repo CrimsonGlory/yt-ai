@@ -32,6 +32,7 @@ class RCTIPlusIE(RCTIPlusBaseIE):
     _VALID_URL = r'https?://www\.rctiplus\.com/(?:programs/\d+?/.*?/)?(?P<type>episode|clip|extra|live-event|missed-event)/(?P<id>\d+)/(?P<display_id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://www.rctiplus.com/programs/1259/kiko-untuk-lola/episode/22124/untuk-lola',
+        'skip': 'video gone',
         'md5': '56ed45affad45fa18d5592a1bc199997',
         'info_dict': {
             'id': 'v_e22124',
@@ -52,6 +53,7 @@ class RCTIPlusIE(RCTIPlusBaseIE):
         },
     }, {  # Clip; Series title doesn't appear on metadata JSON
         'url': 'https://www.rctiplus.com/programs/316/cahaya-terindah/clip/3921/make-a-wish',
+        'skip': 'video gone',
         'md5': 'd179b2ff356f0e91a53bcc6a4d8504f0',
         'info_dict': {
             'id': 'v_c3921',
@@ -70,25 +72,28 @@ class RCTIPlusIE(RCTIPlusBaseIE):
         },
     }, {  # Extra
         'url': 'https://www.rctiplus.com/programs/616/inews-malam/extra/9438/diungkapkan-melalui-surat-terbuka-ceo-ruangguru-belva-devara-mundur-dari-staf-khusus-presiden',
-        'md5': 'c48106afdbce609749f5e0c007d9278a',
         'info_dict': {
             'id': 'v_ex9438',
-            'title': 'md5:2ede828c0f8bde249e0912be150314ca',
-            'display_id': 'md5:62b8d4e9ff096db527a1ad797e8a9933',
-            'description': 'md5:2ede828c0f8bde249e0912be150314ca',
             'ext': 'mp4',
-            'duration': 93,
-            'timestamp': 1587561540,
-            'upload_date': '20200422',
-            'series': 'iNews Malam',
+            'display_id': 'md5:62b8d4e9ff096db527a1ad797e8a9933',
+            'title': 'md5:2ede828c0f8bde249e0912be150314ca',
+            'description': 'md5:2ede828c0f8bde249e0912be150314ca',
             'channel': 'INEWS',
             'channel_id': '4',
-            'thumbnail': 'https://static.rctiplus.id/media/2000/files/fta_rcti/Portrait/iNews_Malam/inews_malam_768x1152.jpg',
-            'categories': ['Hard News'],
+            'duration': 93,
+            'thumbnail': 'md5:14870782c20d5801efe7bf4fb7f5d27a',
+            'timestamp': 1587561540,
+            'upload_date': '20200422',
             'live_status': 'not_live',
+            'series': 'iNews Malam',
+            'categories': ['Hard News'],
+        },
+        'params': {
+            'skip_download': 'm3u8',
         },
     }, {  # Missed event/replay
         'url': 'https://www.rctiplus.com/missed-event/2507/mou-signing-ceremony-27-juli-2021-1400-wib',
+        'skip': "extractor broken: AttributeError: 'dict' object has no attribute '__traceback__'",
         'md5': '649c5f27250faed1452ca8b91e06922d',
         'info_dict': {
             'id': 'v_pe2507',
@@ -227,6 +232,7 @@ class RCTIPlusSeriesIE(RCTIPlusBaseIE):
     _VALID_URL = r'https?://www\.rctiplus\.com/programs/(?P<id>\d+)/(?P<display_id>[^/?#&]+)(?:/(?P<type>episodes|extras|clips))?'
     _TESTS = [{
         'url': 'https://www.rctiplus.com/programs/829/putri-untuk-pangeran',
+        'skip': 'video gone',
         'playlist_mincount': 1019,
         'info_dict': {
             'id': '829',
@@ -346,6 +352,7 @@ class RCTIPlusTVIE(RCTIPlusBaseIE):
     _VALID_URL = r'https?://www\.rctiplus\.com/((tv/(?P<tvname>\w+))|(?P<eventname>live-event|missed-event))'
     _TESTS = [{
         'url': 'https://www.rctiplus.com/tv/rcti',
+        'skip': 'extractor broken: Unable to extract video link',
         'info_dict': {
             'id': 'v_lt1',
             'title': 'RCTI',

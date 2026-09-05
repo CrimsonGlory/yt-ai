@@ -14,6 +14,7 @@ class CroatianFilmIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.croatian.film/hr/films/72472',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '1078340774',
             'ext': 'mp4',
@@ -29,6 +30,7 @@ class CroatianFilmIE(InfoExtractor):
     }, {
         # geo-restricted but works with xff
         'url': 'https://www.croatian.film/en/films/77144',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '1144997795',
             'ext': 'mp4',
@@ -43,6 +45,7 @@ class CroatianFilmIE(InfoExtractor):
         'expected_warnings': ['Failed to parse XML: not well-formed'],
     }, {
         'url': 'https://www.croatian.film/en/films/75904/watch',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '1134883757',
             'ext': 'mp4',

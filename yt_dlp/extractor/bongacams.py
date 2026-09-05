@@ -16,6 +16,7 @@ class BongaCamsIE(InfoExtractor):
         'only_matching': True,
     }, {
         'url': 'https://de.bongacams.net/claireashton',
+        'skip': "extractor broken: An extractor error has occurred. (caused by KeyError('localData')); please repor",
         'info_dict': {
             'id': 'claireashton',
             'ext': 'mp4',

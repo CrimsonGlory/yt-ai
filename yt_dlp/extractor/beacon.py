@@ -12,7 +12,22 @@ class BeaconTvIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?beacon\.tv/content/(?P<id>[\w-]+)'
 
     _TESTS = [{
+        'url': 'https://beacon.tv/content/critical-role-campaign-four-official-trailer',
+        'info_dict': {
+            'id': 'critical-role-campaign-four-official-trailer',
+            'ext': 'mp4',
+            'title': 'Campaign 4 Official Trailer',
+            'description': "The wolves are at Thjazi Fang's door...but the real story is just beginning.",
+            'duration': 67.542,
+            'thumbnail': 'https://cdn.jwplayer.com/v2/media/HlLf5PLT/poster.jpg?width=720',
+            'timestamp': 1758214800,
+            'upload_date': '20250918',
+        },
+        'params': {'skip_download': 'm3u8'},
+        'expected_warnings': ['Ignoring subtitle tracks found in the HLS manifest'],
+    }, {
         'url': 'https://beacon.tv/content/welcome-to-beacon',
+        'skip': 'stale test sample / site changed',
         'md5': 'b3f5932d437f288e662f10f3bfc5bd04',
         'info_dict': {
             'id': 'welcome-to-beacon',
@@ -26,6 +41,7 @@ class BeaconTvIE(InfoExtractor):
         },
     }, {
         'url': 'https://beacon.tv/content/re-slayers-take-trailer',
+        'skip': 'stale test sample / site changed',
         'md5': 'd879b091485dbed2245094c8152afd89',
         'info_dict': {
             'id': 're-slayers-take-trailer',

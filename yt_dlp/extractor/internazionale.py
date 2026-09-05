@@ -5,17 +5,31 @@ from ..utils import unified_timestamp
 class InternazionaleIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?internazionale\.it/video/(?:[^/]+/)*(?P<id>[^/?#&]+)'
     _TESTS = [{
+        'url': 'https://www.internazionale.it/video/2026/06/17/dugonghi-thailandia',
+        'md5': 'e3e82ba57d160bbb8cc63c5891a5c6cb',
+        'info_dict': {
+            'id': '1781279351909-x2yhsg',
+            'ext': 'mp4',
+            'display_id': 'dugonghi-thailandia',
+            'title': "L'influencer che difende gli ultimi dugonghi della Thailandia",
+            'description': 'md5:ecfd79870c0d0d8d60258a291e7cd1b4',
+            'thumbnail': 'https://media.internazionale.it/images/2026/06/16/351620-sd.jpg',
+            'timestamp': 1781668861,
+            'upload_date': '20260617',
+        },
+    }, {
         'url': 'https://www.internazionale.it/video/2015/02/19/richard-linklater-racconta-una-scena-di-boyhood',
-        'md5': '3e39d32b66882c1218e305acbf8348ca',
+        'skip': 'DASH init fragment only',
+        'md5': 'f457c329061712ce21fd6592c37c04b2',
         'info_dict': {
             'id': '265968',
-            'display_id': 'richard-linklater-racconta-una-scena-di-boyhood',
             'ext': 'mp4',
+            'display_id': 'richard-linklater-racconta-una-scena-di-boyhood',
             'title': 'Richard Linklater racconta una scena di Boyhood',
             'description': 'md5:efb7e5bbfb1a54ae2ed5a4a015f0e665',
+            'thumbnail': 'https://media.internazionale.it/images/2015/02/18/105934-sd.jpg',
             'timestamp': 1424354635,
             'upload_date': '20150219',
-            'thumbnail': r're:^https?://.*\.jpg$',
         },
     }, {
         'url': 'https://www.internazionale.it/video/2018/08/29/telefono-stare-con-noi-stessi',

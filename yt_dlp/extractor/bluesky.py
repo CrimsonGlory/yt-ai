@@ -22,6 +22,7 @@ class BlueskyIE(InfoExtractor):
     ]
     _TESTS = [{
         'url': 'https://bsky.app/profile/blu3blue.bsky.social/post/3l4omssdl632g',
+        'skip': 'site unavailable',
         'md5': '375539c1930ab05d15585ed772ab54fd',
         'info_dict': {
             'id': '3l4omssdl632g',
@@ -108,6 +109,7 @@ class BlueskyIE(InfoExtractor):
         },
     }, {
         'url': 'https://bsky.app/profile/yunayuispink.bsky.social/post/3l7gqcfes742o',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'XxK3t_5V3ao',
             'ext': 'mp4',
@@ -139,6 +141,7 @@ class BlueskyIE(InfoExtractor):
         'add_ie': ['Youtube'],
     }, {
         'url': 'https://bsky.app/profile/endshark.bsky.social/post/3jzxjkcemae2m',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '222792849',
             'ext': 'mp3',
@@ -187,6 +190,7 @@ class BlueskyIE(InfoExtractor):
         },
     }, {
         'url': 'https://bsky.app/profile/cinny.bun.how/post/3l7rdfxhyds2f',
+        'skip': 'site unavailable',
         'md5': '8775118b235cf9fa6b5ad30f95cda75c',
         'info_dict': {
             'id': '3l7rdfxhyds2f',

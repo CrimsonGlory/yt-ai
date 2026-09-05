@@ -38,7 +38,7 @@ class WCOStreamBaseIE(InfoExtractor):
             title = re.split(r'\s+\|\s+Watch cartoons online', title, maxsplit=1)[0].strip()
         return title or None
 
-    def _extract_embed_urls(self, webpage):
+    def _find_player_embeds(self, webpage):
         embeds = []
         for mobj in re.finditer(r'<iframe\b[^>]+>', webpage, re.I):
             src = url_or_none(unescapeHTML(extract_attributes(mobj.group(0)).get('src') or ''))
@@ -143,7 +143,7 @@ class WCOStreamIE(WCOStreamBaseIE):
     def _real_extract(self, url):
         display_id = self._match_id(url)
         webpage = self._download_webpage(url, display_id, impersonate=True)
-        embed_urls = self._extract_embed_urls(webpage)
+        embed_urls = self._find_player_embeds(webpage)
         if not embed_urls:
             raise ExtractorError('No WCO embed player found', expected=True)
 

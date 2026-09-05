@@ -14,8 +14,32 @@ class MGTOWTVIE(InfoExtractor):
     IE_NAME = 'mgtow.tv'
     IE_DESC = 'MGTOW TV'
     _VALID_URL = r'https?://(?:www\.)?mgtow\.tv/(?:watch/(?:[^/?#]*_)?|embed/|v/)(?P<id>[\w-]+)(?:\.html)?'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.mgtow.tv/watch/lindsay-clancy-updates_ZO8Vr8tq4eY5nL4.html',
+            'md5': '48d010c9cf6fae69881a771ba7a22d8c',
+            'info_dict': {
+                'id': 'ZO8Vr8tq4eY5nL4',
+                'ext': 'mp4',
+                'title': 'Lindsay Clancy Updates!',
+                'description': 'md5:a2b2f32a4c752d5d41d724383f3cb085',
+                'uploader': 'Stefan Molyneux',
+                'uploader_id': 'Stefan_Molyneux',
+                'uploader_url': 'https://www.mgtow.tv/@Stefan_Molyneux',
+                'channel': 'Stefan Molyneux',
+                'channel_id': 'Stefan_Molyneux',
+                'channel_url': 'https://www.mgtow.tv/@Stefan_Molyneux',
+                'duration': 5452,
+                'thumbnail': 'md5:ca9c47106ab6d01c840a92c7db49f7aa',
+                'upload_date': '20260902',
+                'view_count': int,
+                'like_count': int,
+                'dislike_count': int,
+                'categories': ['People & Blogs'],
+            },
+        }, {
         'url': 'https://www.mgtow.tv/watch/inA4r3ODfbwlaZl',
+        'skip': 'stale test sample / site changed',
         'md5': '2a0d0f4ee13e5a3cb5d5feb943849cb4',
         'info_dict': {
             'id': 'inA4r3ODfbwlaZl',
@@ -60,15 +84,17 @@ class MGTOWTVIE(InfoExtractor):
             self.raise_no_formats('No video source found', expected=True, video_id=video_id)
         info = entries[0]
 
+        publisher_html = get_element_html_by_class('publisher-name', webpage) or ''
         uploader_id = self._search_regex(
             r'href="https?://(?:www\.)?mgtow\.tv/@([^"/?#]+)"',
-            webpage, 'uploader id', default=None)
+            publisher_html, 'uploader id', default=None)
         uploader = self._html_search_regex(
-            r'class="publisher-name"[^>]*>\s*<a[^>]*>([^<]+)',
-            webpage, 'uploader', default=None) or uploader_id
+            r'<a[^>]*>([^<]+)', publisher_html, 'uploader', default=None) or uploader_id
         uploader_url = urljoin('https://www.mgtow.tv/', f'@{uploader_id}') if uploader_id else None
         category = self._html_search_regex(
-            r'/videos/category/\d+[^>]*>([^<]+)', webpage, 'category', default=None)
+            r'/videos/category/\d+[^>]*>([^<]+)',
+            get_element_html_by_class('video-published', webpage) or '',
+            'category', default=None)
 
         info.update({
             'id': video_id,

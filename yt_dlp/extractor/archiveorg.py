@@ -431,6 +431,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
             # Video from 2012, webm format itag 45. Newest capture is deleted video, with an invalid description.
             # Should use the date in the link. Title ends with '- Youtube'. Capture has description in eow-description
             'url': 'https://web.archive.org/web/20120712231619/http://www.youtube.com/watch?v=AkhihxRKcrs&gl=US&hl=en',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': 'AkhihxRKcrs',
                 'ext': 'webm',
@@ -446,6 +447,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
         }, {
             # FLV video. Video file URL does not provide itag information
             'url': 'https://web.archive.org/web/20081211103536/http://www.youtube.com/watch?v=jNQXAC9IVRw',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': 'jNQXAC9IVRw',
                 'ext': 'flv',
@@ -462,6 +464,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
             },
         }, {
             'url': 'https://web.archive.org/web/20110712231407/http://www.youtube.com/watch?v=lTx3G6h2xyA',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': 'lTx3G6h2xyA',
                 'ext': 'mp4',
@@ -479,6 +482,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
         }, {
             # First capture is of dead video, second is the oldest from CDX response.
             'url': 'https://web.archive.org/https://www.youtube.com/watch?v=1JYutPM8O6E',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': '1JYutPM8O6E',
                 'ext': 'mp4',
@@ -496,6 +500,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
         }, {
             # First capture of dead video, capture date in link links to dead capture.
             'url': 'https://web.archive.org/web/20180803221945/https://www.youtube.com/watch?v=6FPhZJGvf4E',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': '6FPhZJGvf4E',
                 'ext': 'mp4',
@@ -515,6 +520,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
             ],
         }, {   # Very old YouTube page, has - YouTube in title.
             'url': 'http://web.archive.org/web/20070302011044/http://youtube.com/watch?v=-06-KB9XTzg',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': '-06-KB9XTzg',
                 'ext': 'flv',
@@ -522,6 +528,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
             },
         }, {
             'url': 'web.archive.org/https://www.youtube.com/watch?v=dWW7qP423y8',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': 'dWW7qP423y8',
                 'ext': 'mp4',
@@ -537,6 +544,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
         }, {
             # player response contains '};' See: https://github.com/ytdl-org/youtube-dl/issues/27093
             'url': 'https://web.archive.org/web/20200827003909if_/http://www.youtube.com/watch?v=6Dh-RL__uN4',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': '6Dh-RL__uN4',
                 'ext': 'mp4',
@@ -569,6 +577,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
         }, {
             # Jan 2011: watch-video-date/eow-date surrounded by whitespace
             'url': 'https://web.archive.org/web/20110126141719/http://www.youtube.com/watch?v=Q_yjX80U7Yc',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': 'Q_yjX80U7Yc',
                 'ext': 'webm',
@@ -584,6 +593,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
         }, {
             # ~May 2009 swfArgs. ytcfg is spread out over various vars
             'url': 'https://web.archive.org/web/0/https://www.youtube.com/watch?v=c5uJgG05xUY',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': 'c5uJgG05xUY',
                 'ext': 'webm',
@@ -599,6 +609,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
         }, {
             # ~June 2012. Upload date is in another lang so cannot extract.
             'url': 'https://web.archive.org/web/20120607174520/http://www.youtube.com/watch?v=xWTLLl-dQaA',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': 'xWTLLl-dQaA',
                 'ext': 'mp4',
@@ -613,6 +624,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
         }, {
             # ~July 2013
             'url': 'https://web.archive.org/web/*/https://www.youtube.com/watch?v=9eO1aasHyTM',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': '9eO1aasHyTM',
                 'ext': 'mp4',
@@ -629,6 +641,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
         }, {
             # April 2020: Player response in player config
             'url': 'https://web.archive.org/web/20200416034815/https://www.youtube.com/watch?v=Cf7vS8jc7dY&gl=US&hl=en',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': 'Cf7vS8jc7dY',
                 'ext': 'mp4',
@@ -646,6 +659,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
         }, {
             # watch7-user-header with yt-user-info
             'url': 'ytarchive:kbh4T_b4Ixw:20160307085057',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': 'kbh4T_b4Ixw',
                 'ext': 'mp4',
@@ -661,6 +675,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
         }, {
             # April 2012
             'url': 'https://web.archive.org/web/0/https://www.youtube.com/watch?v=SOm7mPoPskU',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': 'SOm7mPoPskU',
                 'ext': 'mp4',
@@ -676,6 +691,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
         }, {
             # Contains split audio/video formats
             'url': 'ytarchive:o_T_S_TU12M',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': 'o_T_S_TU12M',
                 'ext': 'mp4',
@@ -691,6 +707,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
         }, {
             # Video unavailable through wayback-fakeurl
             'url': 'ytarchive:SQCom7wjGDs',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': 'SQCom7wjGDs',
                 'ext': 'mp4',
@@ -708,6 +725,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
         }, {
             # dmuxed formats
             'url': 'https://web.archive.org/web/20240922160632/https://www.youtube.com/watch?v=z7hzvTL3k1k',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': 'z7hzvTL3k1k',
                 'ext': 'webm',

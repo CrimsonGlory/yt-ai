@@ -27,6 +27,7 @@ class CrooksAndLiarsIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://crooksandliars.com/2015/04/fox-friends-says-protecting-atheists',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '8RUoRhRi',
             'ext': 'mp4',

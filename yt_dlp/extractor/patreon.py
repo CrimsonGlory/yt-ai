@@ -292,6 +292,7 @@ class PatreonIE(PatreonBaseIE):
         # FIXME: Error: No supported media found in this post
         # Inlined media in post; uses _extract_from_media_api
         'url': 'https://www.patreon.com/posts/scottfalco-146966245',
+        'skip': 'extractor broken',
         'info_dict': {
             'id': '146966245',
             'ext': 'mp4',
@@ -577,7 +578,25 @@ class PatreonCampaignIE(PatreonBaseIE):
             (?:m|api/campaigns)/(?P<campaign_id>\d+)|
             (?:cw?/)?(?P<vanity>(?!creation[?/]|posts/|rss[?/])[\w-]+)
         )(?:/posts)?/?(?:$|[?#])'''
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.patreon.com/timchantarangsu',
+            'info_dict': {
+                'id': '1503139',
+                'title': 'Tim Chantarangsu',
+                'description': 'md5:0605a471a715586b47ee5460daf6cae3',
+                'uploader': 'Tim Chantarangsu',
+                'uploader_id': '9539006',
+                'uploader_url': 'https://www.patreon.com/timchantarangsu',
+                'channel': 'Tim Chantarangsu',
+                'channel_id': '1503139',
+                'channel_url': 'https://www.patreon.com/timchantarangsu',
+                'age_limit': 0,
+                'thumbnail': r're:^https?://.*$',
+            },
+            'playlist_mincount': 2,
+            'params': {'skip_download': True},
+        },{
         'url': 'https://www.patreon.com/dissonancepod/',
         'info_dict': {
             'title': 'Cognitive Dissonance Podcast',
@@ -596,6 +615,7 @@ class PatreonCampaignIE(PatreonBaseIE):
         'playlist_mincount': 68,
     }, {
         'url': 'https://www.patreon.com/m/4767637/posts',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'title': 'Not Just Bikes',
             'id': '4767637',
@@ -612,6 +632,7 @@ class PatreonCampaignIE(PatreonBaseIE):
         'playlist_mincount': 71,
     }, {
         'url': 'https://www.patreon.com/api/campaigns/4243769/posts',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'title': 'Second Thought',
             'channel_follower_count': int,
@@ -648,6 +669,7 @@ class PatreonCampaignIE(PatreonBaseIE):
     }, {
         # next.js v13 data, see https://github.com/yt-dlp/yt-dlp/issues/13622
         'url': 'https://www.patreon.com/c/anythingelse/posts',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '9631148',
             'title': 'Anything Else?',

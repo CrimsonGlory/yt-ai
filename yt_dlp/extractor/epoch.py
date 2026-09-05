@@ -7,6 +7,7 @@ class EpochIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.theepochtimes.com/they-can-do-audio-video-physical-surveillance-on-you-24h-365d-a-year-rex-lee-on-intrusive-apps_4661688.html',
+            'skip': 'stale test sample / site changed',
             'info_dict': {
                 'id': 'a3dd732c-4750-4bc8-8156-69180668bda1',
                 'ext': 'mp4',
@@ -24,14 +25,16 @@ class EpochIE(InfoExtractor):
         },
         {
             'url': 'https://www.theepochtimes.com/kash-patel-a-6-year-saga-of-government-corruption-from-russiagate-to-mar-a-lago_4690250.html',
+            'md5': '6b79d8ecc57ca8ba45e81401398dbe52',
             'info_dict': {
                 'id': 'aa9ceecd-a127-453d-a2de-7153d6fd69b6',
                 'ext': 'mp4',
-                'title': 'Kash Patel: A ‘6-Year-Saga’ of Government Corruption, From Russiagate to Mar-a-Lago',
+                'title': 'Kash Patel: A ‘6-Year-Saga’ of Government Corruption, From Russiagate to Mar-a-Lago | EpochTV',
             },
         },
         {
             'url': 'https://www.theepochtimes.com/dick-morris-discusses-his-book-the-return-trumps-big-2024-comeback_4819205.html',
+            'skip': 'stale test sample / site changed',
             'info_dict': {
                 'id': '9489f994-2a20-4812-b233-ac0e5c345632',
                 'ext': 'mp4',

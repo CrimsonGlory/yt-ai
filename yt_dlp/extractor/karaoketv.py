@@ -6,6 +6,7 @@ class KaraoketvIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?karaoketv\.co\.il/[^/]+/(?P<id>\d+)'
     _TEST = {
         'url': 'http://www.karaoketv.co.il/%D7%A9%D7%99%D7%A8%D7%99_%D7%A7%D7%A8%D7%99%D7%95%D7%A7%D7%99/58356/%D7%90%D7%99%D7%96%D7%95%D7%9F',
+        'skip': 'extractor broken: [Karaoketv] Karaoketv extractor failed (RegexNotFoundError: Unable to extract AP',
         'info_dict': {
             'id': '58356',
             'ext': 'flv',

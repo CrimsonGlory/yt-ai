@@ -40,6 +40,7 @@ class AdobeTVVideoIE(InfoExtractor):
     _WEBPAGE_TESTS = [{
         # https://video.tv.adobe.com/v/3442499
         'url': 'https://business.adobe.com/dx-fragments/summit/2025/marquees/S335/ondemand.live.html',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '3442499',
             'ext': 'mp4',

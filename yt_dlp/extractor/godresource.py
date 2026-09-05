@@ -14,20 +14,22 @@ class GodResourceIE(InfoExtractor):
     _TESTS = [{
         # hls stream
         'url': 'https://new.godresource.com/video/A01mTKjyf6w',
+        'md5': '9c2f3867bee06ad78083333385a9030f',
         'info_dict': {
             'id': 'A01mTKjyf6w',
             'ext': 'mp4',
-            'view_count': int,
-            'timestamp': 1710978666,
-            'channel_id': '5',
-            'thumbnail': 'https://cdn-02.godresource.com/e42968ac-9e8b-4231-ab86-f4f9d775841f/thumbnail.jpg',
-            'channel': 'Stedfast Baptist Church',
-            'upload_date': '20240320',
             'title': 'GodResource video #A01mTKjyf6w',
+            'channel': 'Stedfast Baptist Church',
+            'channel_id': '5',
+            'thumbnail': 'https://cdn-99.stedfast.org/e42968ac-9e8b-4231-ab86-f4f9d775841f/thumbnail.jpg',
+            'timestamp': 1710978666,
+            'upload_date': '20240320',
+            'view_count': int,
         },
     }, {
         # mp4 link
         'url': 'https://new.godresource.com/video/01DXmBbQv_X',
+        'skip': 'stale test sample / site changed',
         'md5': '0e8f72aa89a106b9d5c011ba6f8717b7',
         'info_dict': {
             'id': '01DXmBbQv_X',

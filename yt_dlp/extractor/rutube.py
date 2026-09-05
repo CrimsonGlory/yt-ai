@@ -113,7 +113,27 @@ class RutubeIE(RutubeBaseIE):
     _VALID_URL = r'https?://rutube\.ru/(?:(?:live/)?video(?:/private)?|(?:play/)?embed)/(?P<id>[\da-z]{32})'
     _EMBED_REGEX = [r'<iframe[^>]+?src=(["\'])(?P<url>(?:https?:)?//rutube\.ru/(?:play/)?embed/[\da-z]{32}.*?)\1']
 
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://rutube.ru/video/4d4b1160a11be0f015b827b636882485/',
+            'info_dict': {
+                'id': '4d4b1160a11be0f015b827b636882485',
+                'ext': 'mp4',
+                'title': 'САМЫЕ СТРАШНЫЕ ТИК ТОКИ (31 часть)',
+                'description': 'md5:6f4a81d1a26f52ca49d8f9aa8249cc43',
+                'uploader': 'Алиша',
+                'uploader_id': '71015089',
+                'duration': 1659,
+                'thumbnail': 'https://pic.rtbcdn.ru/video/2026-08-31/9f/82/9f8208f5ea97dddd47be9f42a5e45308.jpg',
+                'timestamp': 1788202481,
+                'upload_date': '20260831',
+                'age_limit': 0,
+                'view_count': int,
+                'chapters': 'count:21',
+                'categories': ['Развлечения'],
+            },
+            'params': {'skip_download': 'm3u8'},
+        }, {
         'url': 'https://rutube.ru/video/3eac3b4561676c17df9132a9a1e62e3e/',
         'info_dict': {
             'id': '3eac3b4561676c17df9132a9a1e62e3e',
@@ -146,6 +166,7 @@ class RutubeIE(RutubeBaseIE):
         'only_matching': True,
     }, {
         'url': 'https://rutube.ru/video/private/884fb55f07a97ab673c7d654553e0f48/?p=x2QojCumHTS3rsKHWXN8Lg',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '884fb55f07a97ab673c7d654553e0f48',
             'ext': 'mp4',
@@ -228,6 +249,7 @@ class RutubeIE(RutubeBaseIE):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://novate.ru/blogs/170625/73644/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'b0c96c75a4e5b274721bbced6ed8fb64',
             'ext': 'mp4',

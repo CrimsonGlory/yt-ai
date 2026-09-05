@@ -38,6 +38,7 @@ class ZenPornIE(InfoExtractor):
         },
     }, {
         'url': 'https://zenporn.com/video/8531117/amateur-students-having-a-fuck-fest-at-club/',
+        'skip': 'stale test sample / site changed',
         'md5': '67411256aa9451449e4d29f3be525541',
         'info_dict': {
             'id': '12791908',

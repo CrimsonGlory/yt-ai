@@ -6,6 +6,7 @@ class KommunetvIE(InfoExtractor):
     _VALID_URL = r'https?://\w+\.kommunetv\.no/archive/(?P<id>\w+)'
     _TEST = {
         'url': 'https://oslo.kommunetv.no/archive/921',
+        'skip': 'extractor broken: [Kommunetv] Ignoring subtitle tracks found in the HLS manifest; if any subtitle',
         'md5': '5f102be308ee759be1e12b63d5da4bbc',
         'info_dict': {
             'id': '921',

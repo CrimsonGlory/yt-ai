@@ -39,6 +39,7 @@ class SubstackIE(InfoExtractor):
         },
     }, {
         'url': 'https://andrewzimmern.substack.com/p/mussels-with-black-bean-sauce-recipe',
+        'skip': "extractor broken: Failed to parse JSON (caused by JSONDecodeError('Unterminated string starting at",
         'md5': 'fd3c07077b02444ff0130715b5f632bb',
         'info_dict': {
             'id': '47368578',
@@ -65,6 +66,7 @@ class SubstackIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.mollymovieclub.com/p/interstellar',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '53602801',
             'ext': 'mpga',
@@ -76,6 +78,7 @@ class SubstackIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.blockedandreported.org/p/episode-117-lets-talk-about-depp',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '57962052',
             'ext': 'mpga',

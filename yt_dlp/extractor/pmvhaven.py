@@ -15,8 +15,32 @@ class PMVHavenIE(InfoExtractor):
     IE_NAME = 'pmvhaven'
     IE_DESC = 'PMVHaven'
     _VALID_URL = r'https?://(?:www\.)?pmvhaven\.com/(?:video/(?:[^/?#]*_)?|videos/)(?P<id>[0-9a-fA-F]{24})'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://pmvhaven.com/video/sakura-lewd-bar_6a98d5fd3fa9b1fd344784df?from=home',
+            'md5': '4cc19ce271eb320eb1c80c637af0be61',
+            'info_dict': {
+                'id': '6a98d5fd3fa9b1fd344784df',
+                'ext': 'mp4',
+                'title': 'SAKURA LEWD BAR 😈',
+                'description': 'md5:ba16771ed1c71b5adf18838d7fc85caf',
+                'uploader': 'EternalHMV',
+                'uploader_id': '695b619fd783dad86e7c30d3',
+                'uploader_url': 'https://pmvhaven.com/profile/EternalHMV',
+                'duration': 607,
+                'thumbnail': 'md5:18ad6635493130efc2bbd9b68e19b3c7',
+                'timestamp': 1788401149,
+                'upload_date': '20260903',
+                'age_limit': 18,
+                'view_count': int,
+                'like_count': int,
+                'dislike_count': int,
+                'tags': ['Hmv', 'Cumshots', 'Gangbang', 'Hardcore', 'Orgy'],
+                'creators': ['EternalHMV'],
+            },
+        },{
         'url': 'https://pmvhaven.com/video/MARAVILLOSA-PMV-_66195f01d0f2168854325fd0',
+        'skip': 'stale test sample / site changed',
         'md5': '532b79a8c34a810d9f32fee0cee5ae21',
         'info_dict': {
             'id': '66195f01d0f2168854325fd0',

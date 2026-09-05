@@ -32,7 +32,25 @@ class TwitCastingIE(InfoExtractor):
         'Referer': 'https://twitcasting.tv/',
     }
     _TESTS = [{
+        # Public live from https://twitcasting.tv/ (VODs require login)
+        'url': 'https://twitcasting.tv/oreore17859/movie/840389816',
+        'info_dict': {
+            'id': '840389816',
+            'ext': 'mp4',
+            'title': r're:孔鳳 \d{4}-\d{2}-\d{2} \d{2}:\d{2}$',
+            'description': 'ツイキャス24H/365D',
+            'uploader_id': 'oreore17859',
+            'thumbnail': r're:^https?://.*\.jpg$',
+            'timestamp': int,
+            'upload_date': str,
+            'live_status': 'is_live',
+        },
+        'params': {
+            'skip_download': True,
+        },
+    }, {
         'url': 'https://twitcasting.tv/ivetesangalo/movie/2357609',
+        'skip': 'VOD requires login',
         'md5': '745243cad58c4681dc752490f7540d7f',
         'info_dict': {
             'id': '2357609',
@@ -51,6 +69,7 @@ class TwitCastingIE(InfoExtractor):
         },
     }, {
         'url': 'https://twitcasting.tv/mttbernardini/movie/3689740',
+        'skip': 'VOD requires login',
         'info_dict': {
             'id': '3689740',
             'ext': 'mp4',
@@ -69,6 +88,7 @@ class TwitCastingIE(InfoExtractor):
         },
     }, {
         'url': 'https://twitcasting.tv/loft_heaven/movie/685979292',
+        'skip': 'VOD requires login',
         'info_dict': {
             'id': '685979292',
             'ext': 'mp4',

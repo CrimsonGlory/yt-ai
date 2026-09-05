@@ -38,7 +38,15 @@ class YoutubeClipIE(YoutubeTabBaseInfoExtractor):
             'comment_count': int,
             'heatmap': 'count:100',
             'media_type': 'clip',
+            'channel_is_verified': True,
+            'timestamp': int,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'No supported JavaScript runtime',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
     }]
 
     def _real_extract(self, url):

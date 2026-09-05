@@ -17,6 +17,7 @@ class CaracolTvPlayIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://play.caracoltv.com/videoDetails/OTo4NGFmNjUwOWQ2ZmM0NTg2YWRiOWU0MGNhOWViOWJkYQ==',
+        'skip': 'requires account',
         'info_dict': {
             'id': 'OTo4NGFmNjUwOWQ2ZmM0NTg2YWRiOWU0MGNhOWViOWJkYQ==',
             'title': 'La teoría del promedio',
@@ -25,6 +26,7 @@ class CaracolTvPlayIE(InfoExtractor):
         'playlist_count': 6,
     }, {
         'url': 'https://play.caracoltv.com/videoDetails/OTo3OWM4ZTliYzQxMmM0MTMxYTk4Mjk2YjdjNGQ4NGRkOQ==/ella?season=0',
+        'skip': 'requires account',
         'info_dict': {
             'id': 'OTo3OWM4ZTliYzQxMmM0MTMxYTk4Mjk2YjdjNGQ4NGRkOQ==',
             'title': 'Ella',
@@ -33,6 +35,7 @@ class CaracolTvPlayIE(InfoExtractor):
         'playlist_count': 10,
     }, {
         'url': 'https://play.caracoltv.com/videoDetails/OTpiYTY1YTVmOTI5MzI0ZWJhOGZiY2Y3MmRlOWZlYmJkOA==/la-vuelta-al-mundo-en-80-risas-2022?season=0',
+        'skip': 'requires account',
         'info_dict': {
             'id': 'OTpiYTY1YTVmOTI5MzI0ZWJhOGZiY2Y3MmRlOWZlYmJkOA==',
             'title': 'La vuelta al mundo en 80 risas 2022',

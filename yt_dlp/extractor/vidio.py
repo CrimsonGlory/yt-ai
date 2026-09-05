@@ -68,8 +68,39 @@ class VidioBaseIE(InfoExtractor):
 
 class VidioIE(VidioBaseIE):
     _VALID_URL = r'https?://(?:www\.)?vidio\.com/(watch|embed)/(?P<id>\d+)-(?P<display_id>[^/?#&]+)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'http://www.vidio.com/watch/9408049-psim-jogja-vs-madura-united-fc-highlight-bri-super-league-2025-26?watchpage_type=next',
+            'md5': '40fbccaa4f8ee9de36f29da0d08686d7',
+            'info_dict': {
+                'id': '9408049',
+                'ext': 'mp4',
+                'display_id': 'psim-jogja-vs-madura-united-fc-highlight-bri-super-league-2025-26',
+                'title': 'PSIM Jogja vs Madura United FC - Highlight | BRI Super League 2025/26',
+                'description': 'Pertandingan BRI Super League 2025/26 antara PSIM Jogja vs Madura United FC (17 May 2026)',
+                'uploader': 'BRI Super League',
+                'uploader_id': 'liga1',
+                'uploader_url': 'https://www.vidio.com/@liga1',
+                'channel': 'Highlights BRI Super League 2025/26',
+                'channel_id': '52392590',
+                'duration': 137,
+                'thumbnail': 'md5:411777d3745b9832830f8aaf2c52123c',
+                'timestamp': 1779010728,
+                'upload_date': '20260517',
+                'view_count': int,
+                'like_count': int,
+                'dislike_count': int,
+                'comment_count': int,
+                'tags': ['FIFA', 'afc', 'aff', 'PSSI', 'liga indonesia baru', 'liga 1', 'BRI Liga 1 2025/26', 'psim yogyakarta', 'madura united'],
+            },
+            # Native HLS --test only fetches the CMAF init segment (~1KB)
+            'params': {
+                'external_downloader': 'ffmpeg',
+                'format': '360p',
+            },
+        }, {
         'url': 'http://www.vidio.com/watch/9421103-persija-vs-semen-padang-fc-full-highlights-bri-super-league-2025-26?watchpage_type=next',
+        'skip': 'video gone',
         'md5': 'abac81b1a205a8d94c609a473b5ea62a',
         'info_dict': {
             'id': '9421103',
@@ -102,6 +133,7 @@ class VidioIE(VidioBaseIE):
     }, {
         # embed url from https://enamplus.liputan6.com/read/5033648/video-fakta-temuan-suspek-cacar-monyet-di-jawa-tengah
         'url': 'https://www.vidio.com/embed/7115874-fakta-temuan-suspek-cacar-monyet-di-jawa-tengah',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '7115874',
             'ext': 'mp4',
@@ -187,8 +219,17 @@ class VidioIE(VidioBaseIE):
 
 class VidioPremierIE(VidioBaseIE):
     _VALID_URL = r'https?://(?:www\.)?vidio\.com/premier/(?P<id>\d+)/(?P<display_id>[^/?#&]+)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.vidio.com/premier/11397/roman-dendam',
+            'info_dict': {
+                'id': '11397',
+            },
+            'playlist_mincount': 2,
+            'params': {'skip_download': True},
+        },{
         'url': 'https://www.vidio.com/premier/2885/badai-pasti-berlalu',
+        'skip': 'stale test sample / site changed',
         'playlist_mincount': 14,
     }, {
         # Series with both free and premier-exclusive videos
@@ -232,7 +273,9 @@ class VidioLiveIE(VidioBaseIE):
     _VALID_URL = r'https?://(?:www\.)?vidio\.com/live/(?P<id>\d+)-(?P<display_id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://www.vidio.com/live/204-sctv',
+        'skip': 'live/no formats (missing ext)',
         'info_dict': {
+            'ext': 'mp4',
             'id': '204',
             'title': 'SCTV',
             'uploader': 'SCTV',

@@ -8,15 +8,16 @@ from ..utils import (
 class XXXYMoviesIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?xxxymovies\.com/videos/(?P<id>\d+)/(?P<display_id>[^/]+)'
     _TEST = {
-        'url': 'http://xxxymovies.com/videos/138669/ecstatic-orgasm-sofcore/',
-        'md5': '810b1bdbbffff89dd13bdb369fe7be4b',
+        'url': 'https://xxxymovies.com/videos/196013/ryan-reid-plays-video-games-while-alina-lopez-fucks-manuel-ferrara/',
+        'md5': '689ad03b81642541f70e2cadf0b2ec5d',
         'info_dict': {
-            'id': '138669',
-            'display_id': 'ecstatic-orgasm-sofcore',
+            'id': '196013',
+            'display_id': 'ryan-reid-plays-video-games-while-alina-lopez-fucks-manuel-ferrara',
             'ext': 'mp4',
-            'title': 'Ecstatic Orgasm Sofcore',
-            'duration': 931,
-            'categories': list,
+            'title': 'Ryan Reid Plays Video Games While Alina Lopez Fucks Manuel Ferrara',
+            'thumbnail': 'https://xxxymovies.com/contents/videos_screenshots/196000/196013/preview.mp4.jpg',
+            'categories': 'count:44',
+            'duration': 402,
             'view_count': int,
             'like_count': int,
             'dislike_count': int,

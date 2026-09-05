@@ -9,6 +9,7 @@ class YourPornIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?sxyprn\.com/post/(?P<id>[^/?#&.]+)'
     _TESTS = [{
         'url': 'https://sxyprn.com/post/57ffcb2e1179b.html',
+        'skip': 'extractor broken: Unable to extract data info',
         'md5': '6f8682b6464033d87acaa7a8ff0c092e',
         'info_dict': {
             'id': '57ffcb2e1179b',

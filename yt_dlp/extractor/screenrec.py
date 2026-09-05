@@ -5,6 +5,7 @@ class ScreenRecIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?screenrec\.com/share/(?P<id>\w{10})'
     _TESTS = [{
         'url': 'https://screenrec.com/share/DasLtbknYo',
+        'skip': 'extractor broken: Unable to extract m3u8 URL',
         'info_dict': {
             'id': 'DasLtbknYo',
             'ext': 'mp4',

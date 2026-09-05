@@ -69,6 +69,7 @@ class BunnyCdnIE(InfoExtractor):
     _WEBPAGE_TESTS = [{
         # Stream requires Referer
         'url': 'https://conword.io/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '3a5d863e-9cd6-447e-b6ef-e289af50b349',
             'ext': 'mp4',

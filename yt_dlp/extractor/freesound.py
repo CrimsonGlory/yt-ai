@@ -13,6 +13,7 @@ class FreesoundIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?freesound\.org/people/[^/]+/sounds/(?P<id>[^/]+)'
     _TEST = {
         'url': 'http://www.freesound.org/people/miklovan/sounds/194503/',
+        'skip': 'extractor broken: [Freesound] unable to extract description',
         'md5': '12280ceb42c81f19a515c745eae07650',
         'info_dict': {
             'id': '194503',

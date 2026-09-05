@@ -8,11 +8,12 @@ class Mir24TvIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?mir24\.tv/news/(?P<id>[0-9]+)/[^/?#]+'
     _TESTS = [{
         'url': 'https://mir24.tv/news/16635210/dni-kultury-rossii-otkrylis-v-uzbekistane.-na-prazdnichnom-koncerte-vystupili-zvezdy-rossijskoj-estrada',
+        'md5': '178683e12669a3f8a8ca712a82fe434d',
         'info_dict': {
             'id': '16635210',
-            'title': 'Дни культуры России открылись в Узбекистане. На праздничном концерте выступили звезды российской эстрады',
             'ext': 'mp4',
-            'thumbnail': r're:https://images\.mir24\.tv/.+\.jpg',
+            'title': 'md5:f7a3dd288a3e20c6703e87f6c65bb340',
+            'thumbnail': 'md5:ff78df6b95e42932caa5a2a91c233535',
         },
     }]
 

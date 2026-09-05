@@ -15,19 +15,20 @@ class NineGagIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://9gag.com/gag/ae5Ag7B',
+        'md5': '64a050a494566e889a907725a748bb63',
         'info_dict': {
             'id': 'ae5Ag7B',
             'ext': 'webm',
             'title': 'Capybara Agility Training',
-            'upload_date': '20191108',
-            'timestamp': 1573237208,
-            'thumbnail': 'https://img-9gag-fun.9cache.com/photo/ae5Ag7B_460s.jpg',
-            'categories': ['Awesome'],
-            'tags': ['Awesome'],
             'duration': 44,
+            'thumbnail': 'https://img-9gag-fun.9cache.com/photo/ae5Ag7B_460s.jpg',
+            'timestamp': 1573237208,
+            'upload_date': '20191108',
             'like_count': int,
             'dislike_count': int,
             'comment_count': int,
+            'categories': ['9GAGGER'],
+            'tags': ['Awesome'],
         },
     }, {
         # HTML escaped title
@@ -36,6 +37,7 @@ class NineGagIE(InfoExtractor):
     }, {
         # Non Anonymous Uploader
         'url': 'https://9gag.com/gag/ajgp66G',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'ajgp66G',
             'ext': 'webm',

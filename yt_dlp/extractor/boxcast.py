@@ -50,6 +50,7 @@ class BoxCastVideoIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://childrenshealthdefense.eu/live-stream/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'da1eqqgkacngd5djlqld',
             'ext': 'mp4',

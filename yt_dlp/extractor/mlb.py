@@ -175,6 +175,7 @@ class MLBIE(MLBBaseIE):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.mlbdailydish.com/2013/2/25/4028804/mlb-classic-video-vault-open-watch-embed-share',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'mlb-classic-video-vault-open-watch-embed-share',
             'title': 'MLB Classic vault is open! Don\'t avert your eyes!',
@@ -501,6 +502,7 @@ class MLBArticleIE(InfoExtractor):
     _VALID_URL = r'https?://www\.mlb\.com/news/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://www.mlb.com/news/manny-machado-robs-guillermo-heredia-reacts',
+        'skip': 'extractor broken: Unable to extract window.initState',
         'info_dict': {
             'id': '36db7394-343c-4ea3-b8ca-ead2e61bca9a',
             'title': 'Machado\'s grab draws hilarious irate reaction',

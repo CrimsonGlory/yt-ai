@@ -10,8 +10,26 @@ from ..utils import (
 
 class GaskrankIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?gaskrank\.tv/tv/(?P<categories>[^/]+)/(?P<id>[^/]+)\.htm'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'http://www.gaskrank.tv/tv/racing/aragongp-2026-nach-dem-zieleinlauf-stimmen-party.htm',
+            'info_dict': {
+                'id': '202609/42350',
+                'ext': 'mp4',
+                'display_id': 'aragongp-2026-nach-dem-zieleinlauf-stimmen-party',
+                'title': 'AragonGP 2026 nach dem Zieleinlauf - Stimmen, Party',
+                'uploader_id': 'Devinox',
+                'uploader_url': 'https://www.motogp.com/en/videopass',
+                'upload_date': '20260902',
+                'view_count': int,
+                'average_rating': float,
+                'categories': ['racing'],
+                'tags': ['zieleinlauf', 'party', 'devinox', 'motogp', 'aragongp', 'aragon', '2026', 'motoxx'],
+            },
+            'params': {'skip_download': True},
+        },{
         'url': 'http://www.gaskrank.tv/tv/motorrad-fun/strike-einparken-durch-anfaenger-crash-mit-groesserem-flurschaden.htm',
+        'skip': 'stale test sample / site changed',
         'md5': '1ae88dbac97887d85ebd1157a95fc4f9',
         'info_dict': {
             'id': '201601/26955',
@@ -25,6 +43,7 @@ class GaskrankIE(InfoExtractor):
         },
     }, {
         'url': 'http://www.gaskrank.tv/tv/racing/isle-of-man-tt-2011-michael-du-15920.htm',
+        'skip': 'video gone',
         'md5': 'c33ee32c711bc6c8224bfcbe62b23095',
         'info_dict': {
             'id': '201106/15920',

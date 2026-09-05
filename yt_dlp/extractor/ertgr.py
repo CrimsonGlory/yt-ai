@@ -285,6 +285,7 @@ class ERTWebtvEmbedIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.ertnews.gr/video/manolis-goyalles-o-anthropos-piso-apo-ti-diadiktyaki-vasilopita/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '2022/tv/news-themata-ianouarios/20220114-apotis6-gouales-pita.mp4',
             'ext': 'mp4',

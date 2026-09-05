@@ -31,14 +31,13 @@ class BeegIE(InfoExtractor):
         'info_dict': {
             'id': '599050563103750',
             'ext': 'mp4',
+            'display_id': '2569965',
             'title': 'Bad Relatives',
             'duration': 2060,
-            'tags': list,
-            'age_limit': 18,
-            'description': 'md5:b4fc879a58ae6c604f8f259155b7e3b9',
             'timestamp': 1643623200,
-            'display_id': '2569965',
             'upload_date': '20220131',
+            'age_limit': 18,
+            'tags': list,
         },
     }, {
         # api/v6 v2

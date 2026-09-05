@@ -24,6 +24,7 @@ class JojIE(InfoExtractor):
     _EMBED_REGEX = [r'<iframe\b[^>]+\bsrc=(["\'])(?P<url>(?:https?:)?//media\.joj\.sk/embed/(?:(?!\1).)+)\1']
     _TESTS = [{
         'url': 'https://play.joj.sk/videos/jBwogmVECP3LppXbdfLE',
+        'skip': 'site unavailable',
         'md5': '553f89bd753c7c00bb6fb7181f97d55a',
         'info_dict': {
             'id': 'jBwogmVECP3LppXbdfLE',

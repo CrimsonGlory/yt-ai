@@ -10,8 +10,26 @@ from ..utils import (
 
 class FilmwebIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?filmweb\.no/(?:(?:trailere|filmnytt)/article|(?:film|filmnytt)/)(?P<id>[^/?#.]+)(?:\.ece)?'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.filmweb.no/film/BVI20240798',
+            'md5': '7a51211c6b3dce402860efe2f19bfc4b',
+            'info_dict': {
+            'id': '124048588',
+            'ext': 'mp4',
+            'title': 'Toy Story 5',
+            'uploader': 'Ted Sanne',
+            'uploader_id': '12639962',
+            'duration': 144,
+            'thumbnail': 'md5:b630d743550af65aafd14158c3fea185',
+            'timestamp': 1772104913,
+            'upload_date': '20260226',
+            'view_count': int,
+            'comment_count': int,
+        },
+        },{
         'url': 'https://www.filmweb.no/filmnytt/forste-trailer-markens-grode',
+        'skip': 'site unavailable',
         'md5': '16bd233dd346c486cff93598a349f0d8',
         'info_dict': {
             'id': '130565033',

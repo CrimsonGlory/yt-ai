@@ -14,7 +14,26 @@ from ..utils import (
 class CCMAIE(InfoExtractor):
     IE_DESC = '3Cat, TV3 and Catalunya Ràdio'
     _VALID_URL = r'https?://(?:www\.)?3cat\.cat/(?:3cat|tv3/sx3)/[^/?#]+/(?P<type>video|audio)/(?P<id>\d+)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.3cat.cat/3cat/mirall-mirall/video/6296765/',
+            'md5': 'f457c329061712ce21fd6592c37c04b2',
+            'info_dict': {
+            'id': '6296765',
+            'ext': 'mp4',
+            'title': 'Mirall, mirall',
+            'alt_title': 'Mirall, mirall - Mirall, mirall',
+            'description': 'md5:a405abc98b1216acba3a6d0ded604c86',
+            'duration': 4748,
+            'thumbnail': 'https://img.3cat.cat/multimedia/jpg/6/3/1724225211536.jpg',
+            'timestamp': 1724965875,
+            'upload_date': '20240829',
+            'age_limit': 12,
+            'series': 'Pel·lícula',
+            'episode': 'Episode 1',
+            'episode_number': 1,
+        },
+        },{
         # ccma.cat/tv3/alacarta/ URLs redirect to 3cat.cat/3cat/
         'url': 'https://www.3cat.cat/3cat/lespot-de-la-marato-de-tv3/video/5630208/',
         'md5': '7296ca43977c8ea4469e719c609b0871',
@@ -51,6 +70,7 @@ class CCMAIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.3cat.cat/3cat/crims-josep-tallada-lespereu-me-part-1/video/6031387/',
+        'skip': 'stale test sample / site changed',
         'md5': '27493513d08a3e5605814aee9bb778d2',
         'info_dict': {
             'id': '6031387',

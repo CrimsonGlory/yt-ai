@@ -232,6 +232,7 @@ class TedEmbedIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://ideas.ted.com/6-ways-to-give-that-arent-about-money/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '123235',
             'ext': 'mp4',

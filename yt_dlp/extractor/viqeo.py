@@ -58,6 +58,7 @@ class ViqeoIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://viqeo.tv/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'viqeo',
             'title': 'Viqeo video platform',

@@ -29,15 +29,16 @@ class PodbayFMIE(InfoExtractor):
     _VALID_URL = r'https?://podbay\.fm/p/[^/?#]+/e/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://podbay.fm/p/behind-the-bastards/e/1647338400',
+        'skip': 'Cloudflare challenge',
         'md5': '3d4642297b6e20c4e7d8f761c05a5bff',
         'info_dict': {
             'id': '618e55de-c833-5a1d-8ada-af996f319e8a',
-            'title': 'Part One: Kissinger',
             'ext': 'mp3',
-            'description': r're:^We begin our epic six part series on Henry Kissinger.+',
-            'thumbnail': r're:^https?://.*\.jpg',
-            'timestamp': 1647338400,
+            'title': 'Part One: Kissinger',
+            'description': 'md5:3a217f5a6a7c36ffdd57f31287f0723a',
             'duration': 5001,
+            'thumbnail': 'md5:b5a01d84c880f9480dcf1f6e58f5d9f7',
+            'timestamp': 1647338400,
             'upload_date': '20220315',
         },
     }]

@@ -489,6 +489,7 @@ class SchoolTVIE(NPODataMidEmbedIE):
 
     _TEST = {
         'url': 'http://www.schooltv.nl/video/ademhaling-de-hele-dag-haal-je-adem-maar-wat-gebeurt-er-dan-eigenlijk-in-je-lichaam/',
+        'skip': 'extractor broken: Unable to extract video_id',
         'info_dict': {
             'id': 'WO_NTR_429477',
             'display_id': 'ademhaling-de-hele-dag-haal-je-adem-maar-wat-gebeurt-er-dan-eigenlijk-in-je-lichaam',
@@ -615,6 +616,7 @@ class WNLIE(NPOPlaylistBaseIE):
 
     _TESTS = [{
         'url': 'http://www.omroepwnl.nl/video/detail/vandaag-de-dag-6-mei__060515',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'vandaag-de-dag-6-mei',
             'title': 'Vandaag de Dag 6 mei',

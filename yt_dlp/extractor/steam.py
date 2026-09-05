@@ -88,6 +88,7 @@ class SteamCommunityIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?steamcommunity\.com/sharedfiles/filedetails(?:/?\?(?:[^#]+&)?id=|/)(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://steamcommunity.com/sharedfiles/filedetails/2717708756',
+        'skip': 'extractor broken: [youtube] [jsc] Remote component challenge solver script (node) was skipped. It',
         'info_dict': {
             'id': '39Sp2mB1Ly8',
             'ext': 'mp4',

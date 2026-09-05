@@ -178,21 +178,23 @@ class PanoptoIE(PanoptoBaseIE):
         'params': {'format': 'mhtml', 'skip_download': True},
     }, {
         'url': 'https://na-training-1.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=8285224a-9a2b-4957-84f2-acb0000c4ea9',
+        'md5': 'fac7c5adb16951499881a09f05aa1e71',
         'info_dict': {
             'id': '8285224a-9a2b-4957-84f2-acb0000c4ea9',
             'ext': 'mp4',
-            'chapters': [],
             'title': 'Company Policy',
-            'average_rating': 0,
-            'timestamp': 1615058901,
+            'uploader_id': '94436848-52eb-4953-88bf-af4100ee0f15',
             'channel': 'Human Resources',
-            'tags': ['HumanResources'],
             'duration': 1604.243,
-            'thumbnail': r're:https?://na-training-1\.hosted\.panopto\.com/.+',
-            'uploader_id': '8e8ba0a3-424f-40df-a4f1-ab3a01375103',
-            'uploader': 'Cait M.',
+            # FrameGrabber thumbnail URL includes a random query param
+            'thumbnail': r're:https://na-training-1\.hosted\.panopto\.com/.+',
+            'timestamp': 1615058901,
             'upload_date': '20210306',
-            'cast': ['Cait M.'],
+            'average_rating': 0,
+            'cast': [],
+            'chapters': [],
+            'tags': ['HumanResources'],
+            'subtitles': 'count:2',
         },
         'params': {'writesubtitles': True, 'skip_download': True},
     }, {
@@ -227,6 +229,7 @@ class PanoptoIE(PanoptoBaseIE):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.monash.edu/learning-teaching/teachhq/learning-technologies/panopto/how-to/insert-a-quiz-into-a-panopto-video',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '0bd3f16c-824a-436a-8486-ac5900693aef',
             'ext': 'mp4',

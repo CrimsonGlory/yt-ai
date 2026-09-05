@@ -1660,21 +1660,20 @@ class TwitterSpacesIE(TwitterBaseIE):
     }, {
         # Needs ffmpeg as downloader, see: https://github.com/yt-dlp/yt-dlp/issues/7536
         'url': 'https://twitter.com/i/spaces/1eaKbrQbjoRKX',
+        'md5': '80eb5f89b8ea0d55f69edc430bda4768',
         'info_dict': {
             'id': '1eaKbrQbjoRKX',
             'ext': 'm4a',
             'title': 'あ',
             'description': 'Twitter Space participated by nobody yet',
-            'uploader': '息根とめる',
+            'uploader': '息根とめる@録音機能付き拡声器',
             'uploader_id': 'tomeru_ikinone',
-            'live_status': 'was_live',
-            'release_date': '20230601',
-            'release_timestamp': 1685617200,
-            'thumbnail': r're:https?://pbs\.twimg\.com/profile_images/.+',
+            'thumbnail': 'https://pbs.twimg.com/profile_images/1581280899962122246/XCFncix-_400x400.jpg',
             'timestamp': 1685617198,
             'upload_date': '20230601',
-            'protocol': 'm3u8',  # ffmpeg is forced
-            'container': 'm4a_dash',  # audio-only format fixup is applied
+            'release_timestamp': 1685617200,
+            'release_date': '20230601',
+            'live_status': 'was_live',
         },
         'params': {'skip_download': 'm3u8'},
     }, {

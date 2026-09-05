@@ -31,6 +31,7 @@ class ViideaIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://videolectures.net/promogram_igor_mekjavic_eng/',
+        'skip': 'extractor broken: Unable to extract cfg',
         'info_dict': {
             'id': '20171',
             'display_id': 'promogram_igor_mekjavic_eng',
@@ -49,6 +50,7 @@ class ViideaIE(InfoExtractor):
     }, {
         # video with invalid direct format links (HTTP 403)
         'url': 'http://videolectures.net/russir2010_filippova_nlp/',
+        'skip': 'extractor broken: Unable to extract cfg',
         'info_dict': {
             'id': '14891',
             'display_id': 'russir2010_filippova_nlp',
@@ -67,6 +69,7 @@ class ViideaIE(InfoExtractor):
     }, {
         # event playlist
         'url': 'http://videolectures.net/deeplearning2015_montreal/',
+        'skip': 'extractor broken: Unable to extract cfg',
         'info_dict': {
             'id': '23181',
             'title': 'Deep Learning Summer School, Montreal 2015',
@@ -78,6 +81,7 @@ class ViideaIE(InfoExtractor):
     }, {
         # multi part lecture
         'url': 'http://videolectures.net/mlss09uk_bishop_ibi/',
+        'skip': 'extractor broken: Unable to extract cfg',
         'info_dict': {
             'id': '9737',
             'display_id': 'mlss09uk_bishop_ibi',

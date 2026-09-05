@@ -65,6 +65,7 @@ class DacastVODIE(DacastBaseIE):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.dacast.com/support/knowledgebase/how-can-i-embed-a-video-on-my-website/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'b6674869-f08a-23c5-1d7b-81f5309e1a90',
             'ext': 'mp4',
@@ -75,6 +76,7 @@ class DacastVODIE(DacastBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://gist.githubusercontent.com/bashonly/4ad249ef2910346fbdf3809b220f11ee/raw/87349778d4af1a80b1fcc3beb9c88108de5858f5/dacast_embeds.html',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'e7df418e-a83b-7a7f-7b5e-1a667981e8fa',
             'ext': 'mp4',
@@ -159,6 +161,7 @@ class DacastPlaylistIE(DacastBaseIE):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://gist.githubusercontent.com/bashonly/7efb606f49f3c6e07ea0327de5a661d1/raw/05a16eac830245ea301fb0a585023bec71e6093c/dacast_playlist_embed.html',
+        'skip': 'webpage sample unavailable',
         'playlist_mincount': 28,
         'info_dict': {
             'id': 'b632eb053cac17a9c9a02bcfc827f2d8',

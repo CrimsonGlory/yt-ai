@@ -7,7 +7,15 @@ from ..utils import int_or_none
 class PyvideoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?pyvideo\.org/(?P<category>[^/]+)/(?P<id>[^/?#&.]+)'
 
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'http://pyvideo.org/north-bay-python-2026/anonymous-functions-and-other-ways-to-annoy-your-coworkers.html',
+            'info_dict': {
+                'id': 'anonymous-functions-and-other-ways-to-annoy-your-coworkers',
+            },
+            'playlist_mincount': 1,
+            'params': {'skip_download': True},
+        },{
         'url': 'http://pyvideo.org/pycon-us-2013/become-a-logging-expert-in-30-minutes.html',
         'info_dict': {
             'id': 'become-a-logging-expert-in-30-minutes',
@@ -15,6 +23,7 @@ class PyvideoIE(InfoExtractor):
         'playlist_count': 2,
     }, {
         'url': 'http://pyvideo.org/pygotham-2012/gloriajw-spotifywitherikbernhardsson182m4v.html',
+        'skip': 'stale test sample / site changed',
         'md5': '5fe1c7e0a8aa5570330784c847ff6d12',
         'info_dict': {
             'id': '2542',

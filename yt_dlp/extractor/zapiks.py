@@ -132,6 +132,7 @@ class ZapiksIE(InfoExtractor):
         # https://www.zapiks.fr/ep3s5-bon-appetit-baqueira-m-1.html
         # https://www.zapiks.fr/index.php?action=playerIframe&media_id=118046
         'url': 'https://www.skipass.com/news/116090-bon-appetit-s5ep3-baqueira-mi-cor.html',
+        'skip': 'webpage sample unavailable',
         'md5': '196fe42901639d868956b1dcaa48de15',
         'info_dict': {
             'id': '118046',

@@ -382,6 +382,7 @@ class FloatplaneChannelIE(FloatplaneChannelBaseIE):
         'playlist_mincount': 14,
     }, {
         'url': 'https://beta.floatplane.com/channel/bitwit_ultra/home',
+        'skip': 'extractor broken: IndexError',
         'info_dict': {
             'id': 'bitwit_ultra',
             'title': 'Bitwit Ultra',

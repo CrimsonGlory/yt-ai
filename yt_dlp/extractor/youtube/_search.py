@@ -112,6 +112,7 @@ class YoutubeMusicSearchURLIE(YoutubeTabBaseInfoExtractor):
     _VALID_URL = r'https?://music\.youtube\.com/search\?([^#]+&)?(?:search_query|q)=(?:[^&]+)(?:[&#]|$)'
     _TESTS = [{
         'url': 'https://music.youtube.com/search?q=royalty+free+music',
+        'skip': 'stale test sample / site changed',
         'playlist_count': 16,
         'info_dict': {
             'id': 'royalty free music',

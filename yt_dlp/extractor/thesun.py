@@ -6,8 +6,18 @@ from ..utils import extract_attributes
 
 class TheSunIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?the-?sun(\.co\.uk|\.com)/[^/]+/(?P<id>\d+)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.thesun.co.uk/news/40259856/chris-langham-dies-pancreatic-cancer/',
+            'info_dict': {
+                'id': '40259856',
+                'title': 'Disgraced BBC star jailed for child sex offences dies from cancer aged 77',
+            },
+            'playlist_mincount': 1,
+            'params': {'skip_download': True},
+        },{
         'url': 'https://www.thesun.co.uk/tvandshowbiz/2261604/orlando-bloom-and-katy-perry-post-adorable-instagram-video-together-celebrating-thanksgiving-after-split-rumours/',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '2261604',
             'title': 'md5:cba22f48bad9218b64d5bbe0e16afddf',

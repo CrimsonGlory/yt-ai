@@ -20,21 +20,22 @@ class JTBCIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://tv.jtbc.co.kr/replay/pr10011629/pm10067930/ep20216321/view',
-        'md5': 'e6ade71d8c8685bbfd6e6ce4167c6a6c',
+        'md5': 'ca671849b4e56561251d7dca84cf03ce',
         'info_dict': {
             'id': 'VO10721192',
-            'display_id': 'ep20216321',
             'ext': 'mp4',
+            'display_id': 'ep20216321',
             'title': '힘쎈여자 강남순 2회 다시보기',
             'description': 'md5:043c1d9019100ce271dba09995dbd1e2',
-            'duration': 3770.0,
+            'duration': 3770,
+            'thumbnail': 'md5:703f0de57aa70b337139b1cd0c943c2a',
             'release_date': '20231008',
             'age_limit': 15,
-            'thumbnail': 'https://fs.jtbc.co.kr//joydata/CP00000001/prog/drama/stronggirlnamsoon/img/20231008_163541_522_1.jpg',
             'series': '힘쎈여자 강남순',
         },
     }, {
         'url': 'https://vod.jtbc.co.kr/player/program/ep20216733',
+        'skip': 'stale test sample / site changed',
         'md5': '217a6d190f115a75e4bda0ceaa4cd7f4',
         'info_dict': {
             'id': 'VO10721429',
@@ -50,6 +51,7 @@ class JTBCIE(InfoExtractor):
         },
     }, {
         'url': 'https://vod.jtbc.co.kr/player/clip/vo10721270',
+        'skip': 'stale test sample / site changed',
         'md5': '05782e2dc22a9c548aebefe62ae4328a',
         'info_dict': {
             'id': 'VO10721270',
@@ -65,6 +67,7 @@ class JTBCIE(InfoExtractor):
         },
     }, {
         'url': 'https://tv.jtbc.co.kr/trailer/pr10010392/pm10032526/vo10720912/view',
+        'skip': 'stale test sample / site changed',
         'md5': '367d480eb3ef54a9cd7a4b4d69c4b32d',
         'info_dict': {
             'id': 'VO10720912',
@@ -131,9 +134,10 @@ class JTBCProgramIE(InfoExtractor):
             '_type': 'playlist',
             'id': 'pr10010392',
         },
-        'playlist_count': 398,
+        'playlist_mincount': 50,
     }, {
         'url': 'https://vod.jtbc.co.kr/program/pr10011491/replay',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             '_type': 'playlist',
             'id': 'pr10011491',

@@ -200,7 +200,27 @@ class ZDFIE(ZDFBaseIE):
         r'https?://(?:www\.)?(?:zdfheute|logo)\.de/(?:[^/?#]+/)*(?P<id>[^/?#]+)\.html',
     ]
     IE_NAME = 'zdf'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.zdf.de/video/serien/standing-tall-116/ettore-100',
+            'md5': 'd4e2eb8e97bb62316a137d782928107e',
+            'info_dict': {
+            'id': 'ettore-100',
+            'ext': 'mp4',
+            'title': 'Ettore',
+            'description': 'md5:91a326ed74827da431b56c34bf7ed7a1',
+            'duration': 3165.0,
+            'thumbnail': 'md5:5645e38a880f9e40cf447effc35bdeec',
+            'timestamp': 1788410100,
+            'upload_date': '20260903',
+            'series': 'Standing Tall',
+            'series_id': 'standing-tall-116',
+            'season': 'Season 1',
+            'season_number': 1,
+            'episode': 'Episode 1',
+            'episode_number': 1,
+        },
+        },{
         # Standalone video (i.e. not part of a playlist), video URL
         'url': 'https://www.zdf.de/video/dokus/ein-tag-im-juli---ahrtalflut-2021-movie-100/terra-x-history-ein-tag-im-juli-ahrtalflut-2021-100',
         'md5': '19dedfc5bca3f4f015deeb96c153ecec',
@@ -255,6 +275,7 @@ class ZDFIE(ZDFBaseIE):
         # Video belongs to a playlist, video URL
         # Also: video mirrored from ARD Mediathek
         'url': 'https://www.zdf.de/video/dokus/collection-index-page-ard-collection-ard-dxjuomfyzdpzag93ojy2mzhhmmq3mzk2ztq4nda-132/page-video-ard-gelb-vom-hellen-glanz-zu-finsteren-abgruenden-102',
+        'skip': 'stale test sample / site changed',
         'md5': '84980c1a0148da6cd94de58333d7e1ee',
         'info_dict': {
             'id': 'page-video-ard-gelb-vom-hellen-glanz-zu-finsteren-abgruenden-102',
@@ -276,6 +297,7 @@ class ZDFIE(ZDFBaseIE):
     }, {
         # Video belongs to a playlist, play URL
         'url': 'https://www.zdf.de/play/dokus/collection-index-page-ard-collection-ard-dxjuomfyzdpzag93ojy2mzhhmmq3mzk2ztq4nda-132/page-video-ard-gelb-vom-hellen-glanz-zu-finsteren-abgruenden-102',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'page-video-ard-gelb-vom-hellen-glanz-zu-finsteren-abgruenden-102',
             'ext': 'mp4',
@@ -297,6 +319,7 @@ class ZDFIE(ZDFBaseIE):
     }, {
         # Video belongs to a playlist, legacy URL before website redesign in 2025-03
         'url': 'https://www.zdf.de/dokus/collection-index-page-ard-collection-ard-dxjuomfyzdpzag93ojy2mzhhmmq3mzk2ztq4nda-132/page-video-ard-gelb-vom-hellen-glanz-zu-finsteren-abgruenden-102.html',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'page-video-ard-gelb-vom-hellen-glanz-zu-finsteren-abgruenden-102',
             'ext': 'mp4',

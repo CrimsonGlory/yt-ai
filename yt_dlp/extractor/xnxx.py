@@ -13,14 +13,13 @@ class XNXXIE(InfoExtractor):
     _VALID_URL = r'https?://(?:video|www)\.xnxx3?\.com/video-?(?P<id>[0-9a-z]+)/'
     _TESTS = [{
         'url': 'http://www.xnxx.com/video-55awb78/skyrim_test_video',
-        'md5': '7583e96c15c0f21e9da3453d9920fbba',
+        'md5': 'f684f53b17babb6a69880d0cd88b33f5',
         'info_dict': {
             'id': '55awb78',
             'ext': 'mp4',
             'title': 'Skyrim Test Video',
-            'thumbnail': r're:^https?://.*\.jpg',
             'duration': 469,
-            'view_count': int,
+            'thumbnail': 'https://thumb-cdn77.xnxx-cdn.com/606b175b-da7c-4e2b-8f4e-cde799a0d59b/0/xn_12_t.jpg',
             'age_limit': 18,
         },
     }, {

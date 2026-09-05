@@ -128,6 +128,7 @@ class NebulaIE(NebulaBaseIE):
     _VALID_URL = rf'{_BASE_URL_RE}/videos/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://nebula.tv/videos/that-time-disney-remade-beauty-and-the-beast',
+        'skip': 'requires account',
         'info_dict': {
             'id': '84ed544d-4afd-4723-8cd5-2b95261f0abf',
             'ext': 'mp4',
@@ -204,6 +205,7 @@ class NebulaIE(NebulaBaseIE):
         'only_matching': True,
     }, {
         'url': 'https://nebula.tv/videos/tldrnewseu-did-the-us-really-blow-up-the-nordstream-pipelines',
+        'skip': 'requires account',
         'info_dict': {
             'id': 'e389af9d-1dab-44f2-8788-ee24deb7ff0d',
             'ext': 'mp4',
@@ -254,39 +256,39 @@ class NebulaClassIE(NebulaBaseIE):
     IE_NAME = 'nebula:media'
     _VALID_URL = rf'{_BASE_URL_RE}/(?!(?:myshows|library|videos)/)(?P<id>[\w-]+)/(?P<ep>[\w-]+)/?(?:$|[?#])'
     _TESTS = [{
-        'url': 'https://nebula.tv/copyright-for-fun-and-profit/14',
-        'skip': 'Login required',
+        'url': 'https://nebula.tv/copyright-for-fun-and-profit/1',
         'info_dict': {
-            'id': 'd7432cdc-c608-474d-942c-f74345daed7b',
+            'id': '63082c90-01dc-453f-9dd5-fb8c37f4736e',
             'ext': 'mp4',
-            'display_id': '14',
+            'display_id': '1',
             'channel_url': 'https://nebula.tv/copyright-for-fun-and-profit',
-            'episode_number': 14,
-            'thumbnail': 'https://dj423fildxgac.cloudfront.net/d533718d-9307-42d4-8fb0-e283285e99c9',
+            'episode_number': 1,
+            'thumbnail': r're:https?://.*',
             'uploader_url': 'https://nebula.tv/copyright-for-fun-and-profit',
-            'duration': 646,
-            'episode': 'Episode 14',
-            'title': 'Photos, Sculpture, and Video',
+            'duration': 486,
+            'episode': 'Episode 1',
+            'title': 'Intro',
         },
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://nebula.tv/extremitiespodcast/pyramiden-the-high-arctic-soviet-ghost-town',
+        'md5': '65bfed50d01cd71f6d6594870d70dbfb',
         'info_dict': {
+            'id': '83ef3b53-049e-4211-b34e-7bb518e67d64',
             'ext': 'mp3',
-            'id': '018f65f0-0033-4021-8f87-2d132beb19aa',
-            'description': 'md5:05d2b23ab780c955e2511a2b9127acff',
-            'series_id': '335e8159-d663-491a-888f-1732285706ac',
-            'modified_timestamp': 1599091504,
-            'episode_id': '018f65f0-0033-4021-8f87-2d132beb19aa',
-            'series': 'Extremities',
-            'modified_date': '20200903',
-            'upload_date': '20200902',
             'title': 'Pyramiden: The High-Arctic Soviet Ghost Town',
-            'release_timestamp': 1571237958,
-            'thumbnail': r're:^https?://content\.production\.cdn\.art19\.com.*\.jpeg$',
+            'description': 'md5:da65b7a4ef0b1ccdc496f922e8ab29f4',
             'duration': 1546.05714,
-            'timestamp': 1599085608,
+            'thumbnail': 'md5:1c48370cbc0a81f7ab7968e10c5b0ea8',
+            'timestamp': 1599085555,
+            'upload_date': '20200902',
+            'release_timestamp': 1571237958,
             'release_date': '20191016',
+            'modified_timestamp': 1629410982,
+            'modified_date': '20210819',
+            'series': 'Extremities',
+            'series_id': 'e0223cfc-f39c-4ad4-8724-bd8731bd31b5',
+            'episode_id': '83ef3b53-049e-4211-b34e-7bb518e67d64',
         },
     }, {
         'url': 'https://nebula.tv/thelayover/the-layover-episode-1',
@@ -360,6 +362,7 @@ class NebulaSubscriptionsIE(NebulaBaseIE):
     _VALID_URL = rf'{_BASE_URL_RE}/(?P<id>myshows|library/latest-videos)/?(?:$|[?#])'
     _TESTS = [{
         'url': 'https://nebula.tv/myshows',
+        'skip': 'site unavailable',
         'playlist_mincount': 1,
         'info_dict': {
             'id': 'myshows',
@@ -427,7 +430,7 @@ class NebulaChannelIE(NebulaBaseIE):
         'url': 'https://nebula.tv/trussissuespodcast',
         'info_dict': {
             'id': 'trussissuespodcast',
-            'title': 'The TLDR News Podcast',
+            'title': 'Starmergeddon',
             'description': 'md5:e66698f9e99054129c1696d28cc1dc7f',
         },
         'playlist_mincount': 80,

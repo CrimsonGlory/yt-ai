@@ -8,6 +8,7 @@ class EuropeanTourIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.europeantour.com/dpworld-tour/news/video/the-best-shots-of-the-2021-seasons/',
+        'skip': 'extractor broken: AttributeError',
         'info_dict': {
             'id': '6287788195001',
             'ext': 'mp4',

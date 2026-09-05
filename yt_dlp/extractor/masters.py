@@ -9,6 +9,7 @@ class MastersIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?masters\.com/en_US/watch/(?P<date>\d{4}-\d{2}-\d{2})/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.masters.com/en_US/watch/2022-04-07/16493755593805191/sungjae_im_thursday_interview_2022.html',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '16493755593805191',
             'ext': 'mp4',

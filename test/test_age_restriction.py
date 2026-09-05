@@ -43,6 +43,7 @@ class TestAgeRestriction(unittest.TestCase):
         self.assertFalse(_download_restricted(url, filename, age))
 
     def test_youtube(self):
+        self.skipTest('YouTube age-restricted videos require an account (cookies)')
         self._assert_restricted('HtVdAasjOgU', 'HtVdAasjOgU.mp4', 10)
 
     def test_youporn(self):

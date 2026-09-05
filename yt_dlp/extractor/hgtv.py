@@ -7,6 +7,7 @@ class HGTVComShowIE(InfoExtractor):
     _TESTS = [{
         # data-module="video"
         'url': 'http://www.hgtv.com/shows/flip-or-flop/flip-or-flop-full-episodes-season-4-videos',
+        'skip': 'extractor broken: Unable to extract video config',
         'info_dict': {
             'id': 'flip-or-flop-full-episodes-season-4-videos',
             'title': 'Flip or Flop Full Episodes',

@@ -66,6 +66,7 @@ class CloudyCDNIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.tavaklase.lv/video/es-esmu-mina-um-2/',
+        'skip': 'webpage sample unavailable',
         'md5': '63074e8e6c84ac2a01f2fb8bf03b8f43',
         'info_dict': {
             'id': 'cqd_lib-2',

@@ -2352,7 +2352,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **EsupPod** (`pod.univ-lille.fr`): Video.js `mp4_sources` progressive MP4, with `srcOptions` HLS fallback. Request: [yt-dlp/yt-dlp#13738](https://github.com/yt-dlp/yt-dlp/issues/13738)
     * **ExtremeMusic** (`extrememusic.com`): Public `snapi.extrememusic.com` track/album/playlist JSON and CloudFront audition MP3s. Request: [yt-dlp/yt-dlp#10997](https://github.com/yt-dlp/yt-dlp/issues/10997)
     * **Fawesome** (`fawesome.tv`): Security-token `recipes.php` API for HLS and progressive MP4. Request: [yt-dlp/yt-dlp#15706](https://github.com/yt-dlp/yt-dlp/issues/15706)
-    * **Feet9** (`feet9.com`): JSON-LD `VideoObject` `contentUrl` MP4, with Video.js `<source>` fallback. Request: [yt-dlp/yt-dlp#1748](https://github.com/yt-dlp/yt-dlp/issues/1748)
+    * **Feet9** (`feet9.com`): JSON-LD `VideoObject` `contentUrl` MP4, with Video.js `<source>` fallback; match locale-prefixed `/xx/` and `/xx-yy/` video URLs. Request: [yt-dlp/yt-dlp#1748](https://github.com/yt-dlp/yt-dlp/issues/1748)
     * **FikFap** (`fikfap.com`): Public `api.fikfap.com` post JSON (anonymous UUID) and tokenized Bunny HLS. Request: [yt-dlp/yt-dlp#14980](https://github.com/yt-dlp/yt-dlp/issues/14980)
     * **Filmzie** (`filmzie.com`): Public `/api/v1/content` metadata and `/api/v1/video/stream` HLS. Request: [yt-dlp/yt-dlp#14535](https://github.com/yt-dlp/yt-dlp/issues/14535)
     * **Forendors** (`forendors.cz`): Public `api.forendors.cz` post JSON and signed `assets.forendors.cz` HLS. Request: [yt-dlp/yt-dlp#15173](https://github.com/yt-dlp/yt-dlp/issues/15173)
@@ -2361,7 +2361,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Funkwhale** (`funk.firobe.fr`): Public `/api/v1` track, playlist, album, and channel JSON plus `/api/v1/listen` audio. Request: [yt-dlp/yt-dlp#7627](https://github.com/yt-dlp/yt-dlp/issues/7627)
     * **Fyptt** (`fyptt.to`): ARVE iframe to Video.js `fypttstr.php` / JWPlayer `fypttjwstr.php` and tokenized `stream.fyptt.to` MP4. Request: [yt-dlp/yt-dlp#7998](https://github.com/yt-dlp/yt-dlp/issues/7998)
     * **Gayhaus** (`gayhaus.com`): KVS `kt_player` config (randomized JS object) and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#12384](https://github.com/yt-dlp/yt-dlp/issues/12384)
-    * **Gaystream** (`gaystream.pw`): Server-tab embed URLs; prefer **voe**, with Vidhide packed HLS fallback. Request: [yt-dlp/yt-dlp#3312](https://github.com/yt-dlp/yt-dlp/issues/3312)
+    * **Gaystream** (`gaystream.pw`): Server-tab embed URLs; prefer **voe**, with Vidhide packed HLS fallback. Host-embed discovery is internal so Generic webpage extraction is not shadowed. Request: [yt-dlp/yt-dlp#3312](https://github.com/yt-dlp/yt-dlp/issues/3312)
     * **ge.movie** (`ge.movie`): Impersonate Cloudflare, then Playerjs playlists from the `em.filmix.stream` / `em.kinoflix.tv` iframe. Request: [yt-dlp/yt-dlp#13390](https://github.com/yt-dlp/yt-dlp/issues/13390)
     * **Giphy** (`giphy.com`): Next.js gif JSON with unsigned `media.giphy.com` MP4/GIF/WebP (signed OG/v1 URLs return HTML). Request: [yt-dlp/yt-dlp#16970](https://github.com/yt-dlp/yt-dlp/issues/16970)
     * **GlobalNews** (`globalnews.ca`): JSON-LD `contentUrl` MP4 for `/video/` clips and JW `video-entry` HLS for `/live/` streams. Request: [yt-dlp/yt-dlp#9266](https://github.com/yt-dlp/yt-dlp/issues/9266)
@@ -2422,7 +2422,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Memobase** (`memobase.ch`): Non-Mozilla UA past Anubis, then Plyr `media.memobase.ch` `/master` MP4/M4V; SRG Play embeds delegated to **srgssr**. Request: [yt-dlp/yt-dlp#6820](https://github.com/yt-dlp/yt-dlp/issues/6820)
     * **Meridix** (`meridix.com`): Qwilt VOD HLS (`smil:http_ondemand/{id}.smil`, audio `mp4:http_ondemand/{id}.mp4`) with a site Referer. Request: [yt-dlp/yt-dlp#9230](https://github.com/yt-dlp/yt-dlp/issues/9230)
     * **Mfcamhub** (`mfcamhub.com`): KVS `kt_player` hashed flashvars and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#10449](https://github.com/yt-dlp/yt-dlp/issues/10449)
-    * **MGTOWTV** (`mgtow.tv`): PlayTube HTML5 `<source>` MP4s from watch and embed pages. Request: [yt-dlp/yt-dlp#7755](https://github.com/yt-dlp/yt-dlp/issues/7755)
+    * **MGTOWTV** (`mgtow.tv`): PlayTube HTML5 `<source>` MP4s from watch and embed pages; publisher and category from `.publisher-name` / `.video-published`. Request: [yt-dlp/yt-dlp#7755](https://github.com/yt-dlp/yt-dlp/issues/7755)
     * **milb** (`milb.com`): `window.INIT_DATA` clip playbacks (MP4/HLS) from `/video/` highlight pages. Request: [yt-dlp/yt-dlp#7694](https://github.com/yt-dlp/yt-dlp/issues/7694)
     * **MissAV** (`missav`): Impersonate Cloudflare, unpack packed player JS, and download `surrit.com` HLS. Request: [yt-dlp/yt-dlp#11458](https://github.com/yt-dlp/yt-dlp/issues/11458)
     * **MissEvan** (`missevan.com`): Public `/sound/getsound` JSON for progressive M4A; SAMPLE-AES HLS is DRM. Request: [yt-dlp/yt-dlp#15517](https://github.com/yt-dlp/yt-dlp/issues/15517)
@@ -2469,7 +2469,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **PornSlash** (`pornslash.com`): HLS.js `loadSource` master playlist with `/media/report` host fallback. Request: [yt-dlp/yt-dlp#14768](https://github.com/yt-dlp/yt-dlp/issues/14768)
     * **Pornzog** (`pornzog.com`): Player iframe from Txxx-family hosts (`videotxxx.com`/`vid-vx.com` aliases), delegated to **txxx**. Request: [yt-dlp/yt-dlp#2982](https://github.com/yt-dlp/yt-dlp/issues/2982)
     * **PragmaticWorksTraining** (`learning.pragmaticworkstraining.com`): Public LMS `GetVideoPreview` / `GetCoursePublic*` JSON and Mux HLS. Request: [yt-dlp/yt-dlp#10188](https://github.com/yt-dlp/yt-dlp/issues/10188)
-    * **PreserveTube** (`preservetube.com`): Public `/video/{id}` JSON API and HTML5 fallback; channel archives from `/channel/{id}/videos`. Request: [yt-dlp/yt-dlp#17540](https://github.com/yt-dlp/yt-dlp/issues/17540)
+    * **PreserveTube** (`preservetube.com`): Public `/video/{id}` JSON API and HTML5 fallback; channel archives from `/channel/{id}/videos`. HTML fallback is internal so Generic webpage extraction is not shadowed. Request: [yt-dlp/yt-dlp#17540](https://github.com/yt-dlp/yt-dlp/issues/17540)
     * **Plurk** (`plurk.com`): Parse post-page `plurk` JSON for `video.plurk.com` MP4/HLS with the `verify` token. Request: [yt-dlp/yt-dlp#15679](https://github.com/yt-dlp/yt-dlp/issues/15679)
     * **Proko** (`proko.com`): Public `/api/lessons` and `/api/videos` JSON for YouTube/Vimeo lesson hosts; `/api/courses` playlists. Request: [yt-dlp/yt-dlp#9508](https://github.com/yt-dlp/yt-dlp/issues/9508)
     * **PromoDJ** (`promodj.com`): Parse `CORE.Player` JSON for prelisten/download MP3 and H.264 video. Request: [yt-dlp/yt-dlp#8721](https://github.com/yt-dlp/yt-dlp/issues/8721)
@@ -2545,7 +2545,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Vix** (`vix.com`): Next.js flight `videoToken` JWT delegated to Anvato/Lura HLS. Request: [yt-dlp/yt-dlp#3366](https://github.com/yt-dlp/yt-dlp/issues/3366)
     * **VMware** (`vmware.com`): Brightcove player IDs from `/video/` and Explore library pages via `/get-st`. Request: [yt-dlp/yt-dlp#10881](https://github.com/yt-dlp/yt-dlp/issues/10881)
     * **Voe** (`voe.sx`): Follow the rotating player-domain JS redirect and deobfuscate player JSON for HLS/MP4. Request: [yt-dlp/yt-dlp#5481](https://github.com/yt-dlp/yt-dlp/issues/5481)
-    * **WCOStream** (`wcostream.tv`): Impersonate Cloudflare, map embed `file=` to `getvidlink.php` (`cizgi`/`neptun`) tokens, and download `getvid` MP4s. Request: [yt-dlp/yt-dlp#13987](https://github.com/yt-dlp/yt-dlp/issues/13987)
+    * **WCOStream** (`wcostream.tv`): Impersonate Cloudflare, map embed `file=` to `getvidlink.php` (`cizgi`/`neptun`) tokens, and download `getvid` MP4s. Player-embed discovery is internal so Generic webpage extraction is not shadowed. Request: [yt-dlp/yt-dlp#13987](https://github.com/yt-dlp/yt-dlp/issues/13987)
     * **wcvb** (`wcvb.com`): Next.js `voltronArticle` Hearst Digital Studios MP4 transcodings. Request: [yt-dlp/yt-dlp#10548](https://github.com/yt-dlp/yt-dlp/issues/10548)
     * **WedoTV** (`wedotv.com`): Public `/api/player.get_video.php` HLS from the page `data-video-id`. Request: [yt-dlp/yt-dlp#14221](https://github.com/yt-dlp/yt-dlp/issues/14221)
     * **Welt** (`welt.de`): `WeltVideoPlayer` hydration JSON progressive MP4s and HLS. Request: [yt-dlp/yt-dlp#7513](https://github.com/yt-dlp/yt-dlp/issues/7513)
@@ -2564,7 +2564,10 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **abcnews**: Read the current `story.story` JSON instead of everscroll
     * **abc:iview**: Use the v3 video API and raise geo/login when unplayable
     * **allocine**: Extract Dailymotion videos via `DailymotionIE`
+    * **amazon**: Product-gallery `jQuery.parseJSON` videos; extract VSE HLS as MP4 formats; impersonate Chrome when the storefront serves a captcha interstitial
+    * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate bangumi play pages, fall back to `pgc/player/web/v2/playurl` on 412
     * **bunnycdn**: Fall back to `playlist.m3u8` when JSON-LD is missing
+    * **cam4**: Profile `/rest/v1.0/profile/{id}/streamInfo` HLS `cdnURL`/`edgeURL` (try each until one plays); empty 204 means the room is offline
     * **cliprs**: Extract Ring Publishing embeds
     * **cspan**: Fall back to JSON-LD / m3u8 when player JS is blocked
     * **cu.ntv.co.jp**: Raise geo-restriction when CloudFront / Streaks block playback outside Japan
@@ -2632,6 +2635,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **kankanews**: Current page media JSON
     * **khanacademy**: Fetch `published-content-version` instead of a hardcoded hash
     * **kicker**: RSS media feeds (and optional `www`)
+    * **kika**: Restrict playlist `_VALID_URL` so `/videos/` episode URLs stay on **kika**
     * **kickstarter**: Impersonate the browser to avoid 403s
     * **kinopoisk**: Discovery widget JSON instead of `ott-widget`
     * **ku6**: `video/detail?id=` pages
@@ -2641,6 +2645,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **leeco**: Guard missing `playstatus`
     * **lefigaro**: JW Platform on non-embed video URLs
     * **lemonde**: Dailymotion / YouTube / Digiteka provider map
+    * **lenta**: Rambler `getPlayerData` HLS from article `data-vid` embeds
     * **lifenews**: Next.js `pData` VIDEO blocks and `/p/` URLs
     * **likee**: Raise an expected error that public web pages are gone (app-only)
     * **listennotes**: Impersonate the browser
@@ -2648,8 +2653,12 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **livejournal**: Current video JSON
     * **loc**: `media.loc.gov` IDs and loc JSON media
     * **locipo**: Direct `video_file_name` when the Streaks API key is gone
+    * **loco**: Use ivory v2 `/streams/playback/` for tokenized HLS instead of the retired drm v1 endpoint
     * **maoritv**: maoriplus.co.nz, live/movie URLs, and a dynamic Brightcove account
     * **mave**: `cdn.mave.digital` storage
+    * **medaltv**: Public `/api/content/{id}` JSON for progressive MP4 and `socialMediaVideo`; HLS is optional (non-fatal)
+    * **mediasite**: Prefer GetPlayerOptions HLS over Deliver progressive MP4
+    * **mediastream**: Scan page JSON for mdstrm.com embed and live-stream URLs, not only iframe/JSON-LD
     * **mellowfan**: Fall back to the public movies API and `url_public` HLS when the authenticated detail API requires login
     * **meipai**: Signed media API instead of `encodeURIComponent` m3u8 on the page
     * **metacritic**: JW Platform on movie/game/tv pages
@@ -2704,11 +2713,12 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **playtvak**: Call the public `servix.idnes.cz` player API and match current iDNES.tv URLs
     * **playvids**: Read the numeric ID from `get_related_videos` when the player has no `data-id`
     * **plutotv**: Match current `/movies/` and `/shows/` VOD URLs
-    * **polsatgo**: Use the Polsat Box Go `pbg` portal after Polsat Go shutdown; raise login when playback is denied
     * **podbayfm**: Impersonate the browser
     * **podomatic**: Use the public v2 episode API and enclosure MP3s instead of the dead embed_params JSON
+    * **polsatgo**: Use the Polsat Box Go `pbg` portal after Polsat Go shutdown; raise login when playback is denied
+    * **polskieradio:category**: Match two-part `<title>` values on current legacy category pages
     * **popcorntimes**: Follow public trailer YouTube/Dailymotion embeds; raise geo-restriction for DACH-only feature films (X-Forwarded-For is ignored)
-    * **popcorntv**: Match `/streaming/` URLs, fetch via `www` to avoid the apex's expired TLS cert, and follow YouTube trailer embeds
+    * **popcorntv**: Match `/streaming/` and `/guarda/` URLs, fetch via `www` to avoid the apex's expired TLS cert, and follow YouTube trailer embeds
     * **pornbox**: Extract public trailer streams when the full scene requires login
     * **pornotube**: Use the site `/deliver` HLS endpoint instead of the dead AEBN clips API
     * **pornovoisines**: Extract Revma pack MP4s and JSON-LD trailers instead of the dead settings API
@@ -2723,20 +2733,23 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **r7**: Read Fusion `globalContent` streams on current video pages; scrape `player.r7.com` HTML when `player-api` is gone
     * **radlive**: Extract HLS from the 12core GraphQL API and match `/watch/` feature/episode URLs
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
+    * **radiofrance:programschedule**: Parse SvelteKit `loadProgramGrid` (devalue) from public `grille-programmes` pages
     * **radiojavan**: Use the public play.radiojavan.com video API instead of the old `video_host` page scrape
     * **radiokapital**: Use the `api.radiokapital.pl` WordPress REST API
     * **rds**: Read Jasper embed / Fusion Axis ids on current Arc video pages
     * **redbull**: Use GraphQL `v1:pageConfig` and `api-player.redbull.com` HLS instead of the dead crepo GraphQL / `v1:hero` schema
     * **redbulltv**: Play `api.redbull.tv` products via rrn content IDs and `dms.redbull.tv` HLS
+    * **redgifs:search**: Pass `count` matching `_PAGE_SIZE` on `/v2/gifs/search` after the default page size dropped
     * **reuters**: Read Fusion `globalContent` HLS on current `/video/watch/` pages (impersonate for DataDome)
     * **rockstargames**: Read v4 player JSON (`/v4/{id}/data/{locale}.json`) instead of the dead get-video.json API
     * **rozhlas**: Resolve slugs via the search API; unwrap single-item station playlists
     * **rte:radio**: Extract current `/radio/.../episodes/` catch-up from getplaylist (HLS and Omny MP3)
     * **rtbf**: Use the Auvio BFF and anonymous RedBee play for current `auvio.rtbf.be` URLs
-    * **rtl.lu**: Extract ReplayVideo HLS and ReplayAudio MP3 from current Brightspot/Next.js article pages
+    * **rtl.lu**: Extract ReplayVideo HLS and ReplayAudio MP3 from current Brightspot/Next.js article pages; do not match live `/tele/live` or radio show URLs
     * **rtl.nl**: Use the RTL XL token and watch/play v2 APIs for current video UUIDs (FairPlay/Widevine DRM)
     * **rtp**: Fall back to webpage player URLs when the mobile guest token API 404s
     * **rtrfm**: Read restream episode metadata from the current show page instead of the removed `.playShow` JS
+    * **rule34video**: Rewrite `/videos/` URLs to HTTPS `/video/{id}/{slug}/` (avoid HTTP 301 that DDoS-Guard 502s)
     * **ruv.is:spila**: POST the GraphQL program query instead of GET
     * **rumble**: Impersonate the browser for embedJS, video pages, and media downloads
     * **Ruutu**: Use the public MCC media API instead of the retired gatling XML cache
@@ -2750,7 +2763,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **showroom**: Use the public room API instead of Nuxt + login cookie
     * **sky:news**: Impersonate the browser and extract Brightcove IDs from the video sitemap / iframe widget when Akamai blocks the page
     * **sky:sports**: Fetch a Condatis Brightcove JWT and match current `/{sport}/video/` clip URLs
-    * **slideshare**: Extract public slide images from the GraphQL API after the Next.js rebrand
+    * **slideshare**: Extract public slide images from the GraphQL API after the Next.js rebrand; keep slideshow HTML parsing internal so Generic webpage extraction is not shadowed
     * **slutload**: Impersonate the browser and extract HLS from CamSoda `/porn/video/` preloaded JSON
     * **spankbang**: Parse `stream_data` and current `data-testid` video-page metadata
     * **sport5**: Extract Akamai HLS from current article player embeds
@@ -2779,17 +2792,19 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **thisav**: Raise an expected error that thisav.com was seized by FANZA in 2025 and no longer hosts videos
     * **tiktok**: Googlebot headers on aweme detail
     * **tnaflix**: Impersonate the browser (including Empflix)
-    * **toongoggles**: Use the OTTera API and embedded player HLS instead of the old numeric show API
+    * **toongoggles**: Use the OTTera API and embedded player HLS instead of the old numeric show API; still match legacy `/shows/{id}/...` URLs
     * **toypics**: Extract OvenPlayer / og:video MP4s from current `/u/{user}/{id}` pages
     * **trtworld**: Extract Next.js v13 CMS media (HLS/MP4) and YouTube fallbacks on current `/video/{slug}` URLs
     * **trunews**: Raise an expected error that trunews.com is a coming-soon landing page and no longer hosts videos
     * **tube8**: Extract playervars HLS/MP4 from current `/porn-video/` pages
     * **tubitv**: Raise geo-restriction when CloudFront redirects to gdpr.tubi.tv (X-Forwarded-For is ignored)
     * **tumblr**: Impersonate the browser
+    * **tunein**: Match program pages under `/radio/` as well as `/podcasts/`
     * **TravelChannel**: Match `www.travelchannel.com` video URLs after `watch.` redirected
     * **tv2**: Use the Vimond content-discovery and play APIs instead of the dead Sumo REST API
     * **TV2DK**: Impersonate the browser to avoid HTTP 406 on regional TV 2 article pages
     * **TV5MONDE**: Extract information.tv5monde.com news videos from the player API / direct MP4; raise an expected error when old `/tv/video` URLs redirect to DRM-protected TV5MONDE+
+    * **tvc**: Match https iframe embeds
     * **tvigle**: Resolve current `/video/` pages from Next.js data and the cloud play API
     * **tvn24**: Extract JSON-LD VideoObject MP4s on current `/...-vd` pages instead of the old data-quality player
     * **tvp**: Fall back to the original TVPlayer object id when retired portals such as swipeto.pl 301 to the VOD homepage
@@ -2800,7 +2815,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **unity**: Follow YouTube embeds on current Unity Learn tutorial pages (including `learn.unity.com`)
     * **urort**: Extract S3 `data-trackurl` from current `/track/` pages
     * **usatoday**: Extract Gannett CDN HLS from `data-c-vpd` instead of Brightcove
-    * **ustream**: Fetch IBM Video Streaming HLS over HTTPS UMS when `media_urls` is empty
+    * **ustream**: Fetch IBM Video Streaming HLS over HTTPS UMS long-poll when `media_urls` is empty
     * **ustudio:embed**: Fetch embed `config.json` over HTTPS and read `image_url` posters
     * **vqq:video**: Fall back to the union / float_vinfo2 APIs when pinia/OG metadata is gone
     * **videa**: Support player URLs with an `f=` parameter
@@ -2829,7 +2844,9 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **yandexdisk**: Support password-protected public files (`--video-password`)
     * **yandexvideo**: Read preview player JSON from `<noframes>` and follow the host video URL
     * **yapfiles**: Parse the current yaplayer load URL and `file`/`file_hd` from the API instead of the old `player.init` playlist
+    * **youjizz**: Read duration and uploader from current Runtime/Submitted By HTML
     * **younow**: Raise an expected error that live playback is WebRTC (Props SFU) and that public HLS/moments are gone
+    * **zenyandex**: Treat a missing channel feed-page JSON as end of playlist
     * **zetland**: Extract `storyServer` audio from Next.js App Router flight data
     * **zingmp3**: Sign API requests with the current app `version` and only the documented params
 
@@ -2844,6 +2861,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * Live byte-fetch tests from confirmed public URLs, plus many live extractor test updates (`live-site-status.csv`)
     * Node as the JS runtime for download tests
     * Skip dead / geo / login tests and refresh stale sample metadata
+    * Pytest ignores unclosed-SSL `ResourceWarning` / `PytestUnraisableExceptionWarning` at download-test teardown so `-Werror` does not fail skipped tests
     * `make_changelog` attributes fork commits to the git author and `CrimsonGlory/yt-ai`
     * [Development Docker workflow](https://github.com/CrimsonGlory/yt-ai/commit/13d780d260672007c07b37e4b5060a06c27d5b15) (`docker/Dockerfile` + compose) to run yt-ai and the offline suite in a container
     * `release.sh` crontab helper: dispatch the GitHub `Release` workflow only when `master` has commits after the latest GitHub release (no nightly/stable channel)

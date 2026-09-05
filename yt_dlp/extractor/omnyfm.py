@@ -78,6 +78,7 @@ class OmnyfmIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.asahi.com/special/podcasts/item/?itemid=311a5f48-ad71-4548-b1f2-af5e00747fbc',
+        'skip': 'webpage sample unavailable',
         'md5': '4c788bf03323734524a7c0f98d9956ed',
         'info_dict': {
             'id': 'sdgs-271',
@@ -172,6 +173,7 @@ class OmnyfmPlaylistIE(OmnyfmPlaylistBaseIE):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.asahi.com/articles/ASP763WDKP4JDIFI002.html',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'podcast',
             'title': 'ニュースの現場から',

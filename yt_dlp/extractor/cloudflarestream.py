@@ -30,6 +30,7 @@ class CloudflareStreamIE(InfoExtractor):
             'title': '0e8e040aec776862e1d632a699edf59e',
             'thumbnail': r're:https?://cloudflarestream\.com/.+\.jpg',
         },
+        'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://watch.cloudflarestream.com/9df17203414fd1db3e3ed74abbe936c1',
         'only_matching': True,
@@ -47,26 +48,23 @@ class CloudflareStreamIE(InfoExtractor):
         'only_matching': True,
     }]
     _WEBPAGE_TESTS = [{
-        'url': 'https://upride.cc/incident/shoulder-pass-at-light/',
+        'url': 'https://developers.cloudflare.com/stream/viewing-videos/using-the-stream-player/',
         'info_dict': {
-            'id': 'eaef9dea5159cf968be84241b5cedfe7',
+            'id': '5d5bc37ffcf54c9b82e996823bffbb81',
             'ext': 'mp4',
-            'title': 'eaef9dea5159cf968be84241b5cedfe7',
+            'title': '5d5bc37ffcf54c9b82e996823bffbb81',
             'thumbnail': r're:https?://cloudflarestream\.com/.+\.jpg',
         },
-        'params': {
-            'extractor_args': {'generic': {'impersonate': ['chrome']}},
-            'skip_download': 'm3u8',
-        },
+        'params': {'skip_download': 'm3u8'},
     }, {
-        # FIXME: Embed detection
-        'url': 'https://www.cloudflare.com/developer-platform/products/cloudflare-stream/',
+        'url': 'https://videojs.org/docs/framework/html/reference/cloudflare-video',
         'info_dict': {
-            'id': 'e7bd2dd67e0f8860b4ae81e33a966049',
+            'id': 'bfbd585059e33391d67b0f1d15fe6ea4',
             'ext': 'mp4',
-            'title': 'e7bd2dd67e0f8860b4ae81e33a966049',
+            'title': 'bfbd585059e33391d67b0f1d15fe6ea4',
             'thumbnail': r're:https?://cloudflarestream\.com/.+\.jpg',
         },
+        'params': {'skip_download': 'm3u8'},
     }]
 
     def _real_extract(self, url):

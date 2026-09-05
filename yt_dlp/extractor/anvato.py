@@ -33,19 +33,18 @@ class AnvatoIE(InfoExtractor):
     _TESTS = [{
         # from https://ktla.com/news/99-year-old-woman-learns-to-fly-in-torrance-checks-off-bucket-list-dream/
         'url': 'anvato:X8POa4zpGZMmeiq0wqiO8IP5rMqQM9VN:8032455',
-        'md5': '837718bcfb3a7778d022f857f7a9b19e',
+        'skip': 'stale test sample / site changed',
+        'md5': 'ca86484978c83aac356cab9ecafbf826',
         'info_dict': {
             'id': '8032455',
             'ext': 'mp4',
             'title': '99-year-old woman learns to fly plane in Torrance, checks off bucket list dream',
             'description': 'md5:0a12bab8159445e78f52a297a35c6609',
-            'upload_date': '20220928',
-            'timestamp': 1664408881,
-            'thumbnail': r're:^https?://.*\.jpg',
             'uploader': 'LIN',
-            'tags': ['video', 'news', '5live'],
             'duration': 155,
-            'categories': ['News'],
+            'thumbnail': 'md5:36f9cfb07ec24551faabcfd6bd38b6b6',
+            'timestamp': 1664408881,
+            'upload_date': '20220928',
         },
     }]
 

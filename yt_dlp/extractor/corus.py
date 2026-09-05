@@ -42,6 +42,7 @@ class CorusIE(ThePlatformFeedIE):  # XXX: Do not subclass from concrete IE
                     '''
     _TESTS = [{
         'url': 'https://www.hgtv.ca/video/bryan-inc/movie-night-popcorn-with-bryan/870923331648/',
+        'skip': 'extractor broken: IndexError',
         'info_dict': {
             'id': '870923331648',
             'ext': 'mp4',

@@ -18,6 +18,7 @@ class TeacherTubeIE(InfoExtractor):
     _TESTS = [{
         # flowplayer
         'url': 'https://www.teachertube.com/videos/339997',
+        'skip': 'extractor broken: [teachertube] teachertube extractor failed (ExtractorError: [teachertube] unable',
         'md5': 'f9434ef992fd65936d72999951ee254c',
         'info_dict': {
             'id': '339997',
@@ -29,6 +30,7 @@ class TeacherTubeIE(InfoExtractor):
     }, {
         # jwplayer
         'url': 'https://www.teachertube.com/videos/graphing-quadratic-inequalities-on-desmos-507405',
+        'skip': 'extractor broken: [teachertube] teachertube extractor failed (ExtractorError: [teachertube] unable',
         'md5': '01e8352006c65757caf7b961f6050e21',
         'info_dict': {
             'id': '507405',

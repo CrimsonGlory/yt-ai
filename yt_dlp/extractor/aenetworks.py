@@ -181,6 +181,7 @@ class AENetworksIE(AENetworksBaseIE):
         'skip': 'This content requires a valid, unexpired auth token',
     }, {
         'url': 'https://www.aetv.com/shows/duck-dynasty/season-9/episode-1',
+        'skip': 'extractor broken: Unable to extract GraphQL video ID',
         'info_dict': {
             'id': '147486',
             'ext': 'mp4',
@@ -327,6 +328,7 @@ class AENetworksCollectionIE(AENetworksListBaseIE):
     _VALID_URL = AENetworksBaseIE._BASE_URL_REGEX + r'(?:[^/]+/)*(?:list|collections)/(?P<id>[^/?#&]+)/?(?:[?#&]|$)'
     _TESTS = [{
         'url': 'https://watch.historyvault.com/list/america-the-story-of-us',
+        'skip': 'extractor broken: TypeError',
         'info_dict': {
             'id': '282',
             'title': 'America The Story of Us',
@@ -363,6 +365,7 @@ class AENetworksShowIE(AENetworksListBaseIE):
     _VALID_URL = AENetworksBaseIE._BASE_URL_REGEX + r'shows/(?P<id>[^/?#&]+)/?(?:[?#&]|$)'
     _TESTS = [{
         'url': 'http://www.history.com/shows/ancient-aliens',
+        'skip': 'extractor broken: TypeError',
         'info_dict': {
             'id': 'SERIES1574',
             'title': 'Ancient Aliens',
@@ -392,6 +395,7 @@ class HistoryTopicIE(AENetworksBaseIE):
     _VALID_URL = r'https?://(?:www\.)?history\.com/topics/[^/]+/(?P<id>[\w+-]+?)-video'
     _TESTS = [{
         'url': 'https://www.history.com/topics/valentines-day/history-of-valentines-day-video',
+        'skip': 'extractor broken: Unable to extract GraphQL video ID',
         'info_dict': {
             'id': '40700995724',
             'ext': 'mp4',

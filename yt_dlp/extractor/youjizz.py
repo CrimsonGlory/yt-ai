@@ -10,7 +10,23 @@ from ..utils import (
 class YouJizzIE(InfoExtractor):
     _VALID_URL = r'https?://(?:\w+\.)?youjizz\.com/videos/(?:[^/#?]*-(?P<id>\d+)\.html|embed/(?P<embed_id>\d+))'
     _TESTS = [{
+        'url': 'http://www.youjizz.com/videos/your-wife-hasn-t-come-back-76904011.html',
+        'md5': '62da394520e82b4bbdf5c2b7a89b1a58',
+        'info_dict': {
+            'id': '76904011',
+            'ext': 'mp4',
+            'title': 'Your Wife Hasn T Come Back',
+            'age_limit': 18,
+            'duration': 2106,
+            'uploader': 'krkfcjndkgef',
+        },
+        'params': {
+            # Progressive HTTP is a stable --test slice; HLS native downloads a whole fragment
+            'format': 'best[protocol=http]',
+        },
+    }, {
         'url': 'http://www.youjizz.com/videos/zeichentrick-1-2189178.html',
+        'skip': 'stale test sample / site changed',
         'md5': 'b1e1dfaa8bb9537d8b84eeda9cf4acf4',
         'info_dict': {
             'id': '2189178',
@@ -73,10 +89,11 @@ class YouJizzIE(InfoExtractor):
                 url, webpage, video_id)[0]
 
         duration = parse_duration(self._search_regex(
-            r'<strong>Runtime:</strong>([^<]+)', webpage, 'duration',
-            default=None))
-        uploader = self._search_regex(
-            r'<strong>Uploaded By:.*?<a[^>]*>([^<]+)', webpage, 'uploader',
+            r'<strong[^>]*>Runtime:</strong>\s*(?:<span[^>]*>)?([^<]+)',
+            webpage, 'duration', default=None)) or int_or_none(
+            self._og_search_property('video:duration', webpage, default=None))
+        uploader = self._html_search_regex(
+            r'(?:Uploaded By|Submitted By):.*?<a[^>]*>([^<]+)', webpage, 'uploader',
             default=None)
 
         info_dict.update({

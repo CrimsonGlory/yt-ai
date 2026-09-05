@@ -3,6 +3,8 @@ import re
 import urllib.parse
 
 from .common import InfoExtractor
+from ..networking import Request
+from ..networking.exceptions import TransportError
 from ..utils import (
     ExtractorError,
     encode_data_uri,
@@ -20,19 +22,21 @@ class UstreamIE(InfoExtractor):
     _EMBED_REGEX = [r'<iframe[^>]+?src=(["\'])(?P<url>https?://(?:www\.)?(?:ustream\.tv|video\.ibm\.com)/embed/.+?)\1']
     _TESTS = [{
         'url': 'https://video.ibm.com/recorded/132935304',
-        'md5': '70d045c82d3712f9ce282b8d3f51f735',
         'info_dict': {
             'id': '132935304',
             'ext': 'mp4',
             'title': 'IBM Video Streaming: Demo',
             'description': 'md5:0c0e702bbf8b5c53604bd52bf0a02477',
-            'timestamp': 1690543925,
-            'upload_date': '20230728',
             'uploader': 'Master Demo',
             'uploader_id': '41977162',
             'duration': 821.909,
+            'thumbnail': 'md5:22961ffa774c11df1f5650f655a339b9',
+            'timestamp': 1690543925,
+            'upload_date': '20230728',
             'view_count': int,
-            'thumbnail': r're:https?://.*\.jpg',
+        },
+        'params': {
+            'skip_download': True,  # HLS-only; progressive media_urls are gone
         },
     }, {
         'url': 'http://www.ustream.tv/recorded/20274954',
@@ -113,20 +117,33 @@ class UstreamIE(InfoExtractor):
         host = conn_info[0]['args'][0]['host']
         connection_id = conn_info[0]['args'][0]['connectionId']
 
-        return self._download_json(
-            f'https://{host}/1/ustream?connectionId={connection_id}',
-            video_id, note='Downloading stream info' + extra_note)
-
-    def _get_streams(self, url, video_id, app_id_ver):
-        # Sometimes the return dict does not have 'stream'
-        for trial_count in range(3):
-            stream_info = self._get_stream_info(
-                url, video_id, app_id_ver,
-                extra_note=f' (try {trial_count + 1})' if trial_count > 0 else '')
+        # UMS long-poll: the first payload is often moduleInfo without `stream`.
+        stream_url = f'https://{host}/1/ustream?connectionId={connection_id}'
+        for poll in range(5):
+            poll_note = extra_note
+            if poll:
+                poll_note += f' (poll {poll + 1})'
+            try:
+                stream_info = self._download_json(
+                    Request(stream_url, extensions={'timeout': 10}),
+                    video_id, note='Downloading stream info' + poll_note)
+            except ExtractorError as e:
+                if not isinstance(getattr(e, 'cause', None), TransportError):
+                    raise
+                return []
             for item in stream_info or []:
                 stream = (item.get('args') or [{}])[0].get('stream')
                 if stream:
                     return stream
+        return []
+
+    def _get_streams(self, url, video_id, app_id_ver):
+        for trial_count in range(3):
+            stream = self._get_stream_info(
+                url, video_id, app_id_ver,
+                extra_note=f' (try {trial_count + 1})' if trial_count > 0 else '')
+            if stream:
+                return stream
         return []
 
     def _parse_segmented_mp4(self, dash_stream_info):

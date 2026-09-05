@@ -6,7 +6,18 @@ class ElTreceTVIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?eltrecetv\.com\.ar/[\w-]+/capitulos/temporada-\d+/(?P<id>[\w-]+)'
     _TESTS = [
         {
+            'url': 'https://www.eltrecetv.com.ar/la-cocina-rebelde/capitulos/temporada-2026/programa-completo-del-020926-la-hermana-veronica-estuvo-angelada-y-preparo-sushi-casero-en-la-cocina-rebelde/',
+            'md5': '7469421b6208501e3ce37847ed7cdc02',
+            'info_dict': {
+            'id': 'programa-completo-del-020926-la-hermana-veronica-estuvo-angelada-y-preparo-sushi-casero-en-la-cocina-rebelde',
+            'ext': 'mp4',
+            'title': ' LA COCINA REBELDE - Programa 02/09/26',
+            'thumbnail': 'https://thumbs.vodgc.net/CompletosElTreceTVS30209202616314673158386.jpg?898532',
+        },
+        },
+        {
             'url': 'https://www.eltrecetv.com.ar/ahora-caigo/capitulos/temporada-2023/programa-del-061023/',
+            'skip': 'stale test sample / site changed',
             'md5': '71a66673dc63f9a5939d97bfe4b311ba',
             'info_dict': {
                 'id': 'AHCA05102023145553329621094',

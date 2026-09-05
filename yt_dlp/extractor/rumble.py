@@ -151,7 +151,7 @@ class RumbleEmbedIE(InfoExtractor):
                 'duration': 92,
                 'title': '911 Audio From The Man Who Wanted To Kill Supreme Court Justice Kavanaugh',
                 'channel_url': 'https://rumble.com/c/RichSementa',
-                'thumbnail': 'https://sp.rmbl.ws/s8/1/P/j/f/A/PjfAe.qR4e-small-911-Audio-From-The-Man-Who-.jpg',
+                'thumbnail': r're:https://.+\.jpg',
                 'timestamp': 1654892716,
                 'uploader': 'Mr Producer Media',
                 'upload_date': '20220610',
@@ -338,6 +338,7 @@ class RumbleIE(InfoExtractor):
 
     _WEBPAGE_TESTS = [{
         'url': 'https://rumble.com/videos?page=2',
+        'skip': 'Cloudflare anti-bot',
         'playlist_mincount': 24,
         'info_dict': {
             'id': 'videos?page=2',

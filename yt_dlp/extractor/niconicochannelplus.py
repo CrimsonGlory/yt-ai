@@ -54,6 +54,7 @@ class NiconicoChannelPlusIE(NiconicoChannelPlusBaseIE):
     _VALID_URL = r'https?://nicochannel\.jp/(?P<channel>[\w.-]+)/(?:video|live)/(?P<code>sm\w+)'
     _TESTS = [{
         'url': 'https://nicochannel.jp/kaorin/video/smsDd8EdFLcVZk9yyAhD6H7H',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'smsDd8EdFLcVZk9yyAhD6H7H',
             'title': '前田佳織里はニコ生がしたい！',
@@ -77,6 +78,7 @@ class NiconicoChannelPlusIE(NiconicoChannelPlusBaseIE):
     }, {
         # age limited video; test purpose channel.
         'url': 'https://nicochannel.jp/testman/video/smDXbcrtyPNxLx9jc4BW69Ve',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'smDXbcrtyPNxLx9jc4BW69Ve',
             'title': 'test oshiro',
@@ -257,6 +259,7 @@ class NiconicoChannelPlusChannelVideosIE(NiconicoChannelPlusChannelBaseIE):
     _TESTS = [{
         # query: None
         'url': 'https://nicochannel.jp/testman/videos',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'testman-videos',
             'title': '本番チャンネルプラステストマン-videos',
@@ -265,6 +268,7 @@ class NiconicoChannelPlusChannelVideosIE(NiconicoChannelPlusChannelBaseIE):
     }, {
         # query: None
         'url': 'https://nicochannel.jp/testtarou/videos',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'testtarou-videos',
             'title': 'チャンネルプラステスト太郎-videos',
@@ -273,6 +277,7 @@ class NiconicoChannelPlusChannelVideosIE(NiconicoChannelPlusChannelBaseIE):
     }, {
         # query: None
         'url': 'https://nicochannel.jp/testjirou/videos',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'testjirou-videos',
             'title': 'チャンネルプラステスト二郎-videos',
@@ -281,6 +286,7 @@ class NiconicoChannelPlusChannelVideosIE(NiconicoChannelPlusChannelBaseIE):
     }, {
         # query: tag
         'url': 'https://nicochannel.jp/testman/videos?tag=%E6%A4%9C%E8%A8%BC%E7%94%A8',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'testman-videos',
             'title': '本番チャンネルプラステストマン-videos',
@@ -289,6 +295,7 @@ class NiconicoChannelPlusChannelVideosIE(NiconicoChannelPlusChannelBaseIE):
     }, {
         # query: vodType
         'url': 'https://nicochannel.jp/testman/videos?vodType=1',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'testman-videos',
             'title': '本番チャンネルプラステストマン-videos',
@@ -297,6 +304,7 @@ class NiconicoChannelPlusChannelVideosIE(NiconicoChannelPlusChannelBaseIE):
     }, {
         # query: sort
         'url': 'https://nicochannel.jp/testman/videos?sort=-released_at',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'testman-videos',
             'title': '本番チャンネルプラステストマン-videos',
@@ -305,6 +313,7 @@ class NiconicoChannelPlusChannelVideosIE(NiconicoChannelPlusChannelBaseIE):
     }, {
         # query: tag, vodType
         'url': 'https://nicochannel.jp/testman/videos?tag=%E6%A4%9C%E8%A8%BC%E7%94%A8&vodType=1',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'testman-videos',
             'title': '本番チャンネルプラステストマン-videos',
@@ -313,6 +322,7 @@ class NiconicoChannelPlusChannelVideosIE(NiconicoChannelPlusChannelBaseIE):
     }, {
         # query: tag, sort
         'url': 'https://nicochannel.jp/testman/videos?tag=%E6%A4%9C%E8%A8%BC%E7%94%A8&sort=-released_at',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'testman-videos',
             'title': '本番チャンネルプラステストマン-videos',
@@ -321,6 +331,7 @@ class NiconicoChannelPlusChannelVideosIE(NiconicoChannelPlusChannelBaseIE):
     }, {
         # query: vodType, sort
         'url': 'https://nicochannel.jp/testman/videos?vodType=1&sort=-released_at',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'testman-videos',
             'title': '本番チャンネルプラステストマン-videos',
@@ -329,6 +340,7 @@ class NiconicoChannelPlusChannelVideosIE(NiconicoChannelPlusChannelBaseIE):
     }, {
         # query: tag, vodType, sort
         'url': 'https://nicochannel.jp/testman/videos?tag=%E6%A4%9C%E8%A8%BC%E7%94%A8&vodType=1&sort=-released_at',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'testman-videos',
             'title': '本番チャンネルプラステストマン-videos',
@@ -378,6 +390,7 @@ class NiconicoChannelPlusChannelLivesIE(NiconicoChannelPlusChannelBaseIE):
     _VALID_URL = r'https?://nicochannel\.jp/(?P<id>[a-z\d\._-]+)/lives'
     _TESTS = [{
         'url': 'https://nicochannel.jp/testman/lives',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'testman-lives',
             'title': '本番チャンネルプラステストマン-lives',
@@ -385,6 +398,7 @@ class NiconicoChannelPlusChannelLivesIE(NiconicoChannelPlusChannelBaseIE):
         'playlist_mincount': 18,
     }, {
         'url': 'https://nicochannel.jp/testtarou/lives',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'testtarou-lives',
             'title': 'チャンネルプラステスト太郎-lives',
@@ -392,6 +406,7 @@ class NiconicoChannelPlusChannelLivesIE(NiconicoChannelPlusChannelBaseIE):
         'playlist_mincount': 2,
     }, {
         'url': 'https://nicochannel.jp/testjirou/lives',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'testjirou-lives',
             'title': 'チャンネルプラステスト二郎-lives',

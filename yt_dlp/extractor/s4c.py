@@ -9,7 +9,23 @@ from ..utils.traversal import traverse_obj
 
 class S4CIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?s4c\.cymru/clic/programme/(?P<id>\d+)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.s4c.cymru/clic/programme/810357541',
+            'md5': '8754dd79284b127f936d2d4c13f17387',
+            'info_dict': {
+            'id': '810357541',
+            'ext': 'mp4',
+            'title': "a'r Sbarc Coll",
+            'description': 'md5:6ac23871919daec4c27da9ecda3a5050',
+            'duration': 840,
+            'thumbnail': 'https://www.s4c.cymru/amg/1920x1080/Deian_a_Loli_2020S4C_C3_R020_0002.jpg',
+            'upload_date': '20260828',
+            'release_date': '20260829',
+            'series': 'Deian a Loli',
+            'series_id': '810357027',
+        },
+        },{
         'url': 'https://www.s4c.cymru/clic/programme/893068169',
         'info_dict': {
             'id': '893068169',
@@ -26,6 +42,7 @@ class S4CIE(InfoExtractor):
     }, {
         # Geo restricted to the UK
         'url': 'https://www.s4c.cymru/clic/programme/947426692',
+        'skip': 'no playable formats',
         'info_dict': {
             'id': '947426692',
             'ext': 'mp4',

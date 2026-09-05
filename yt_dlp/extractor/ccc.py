@@ -11,8 +11,27 @@ class CCCIE(InfoExtractor):
     IE_NAME = 'media.ccc.de'
     _VALID_URL = r'https?://(?:www\.)?media\.ccc\.de/v/(?P<id>[^/?#&]+)'
 
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://media.ccc.de/v/emf2026-286-1-the-restoration',
+            'md5': '435bbb01c6cf96d161dc8a56572f7875',
+            'info_dict': {
+            'id': '17525',
+            'ext': 'mp4',
+            'display_id': 'emf2026-286-1-the-restoration',
+            'title': 'The restoration and running of a Foden 1928 6 ton steam wagon',
+            'description': 'md5:a94ddb16313f86f57b02c888def6d04e',
+            'duration': 1230,
+            'thumbnail': 'md5:20ccea4d190965ee9fcc48b1a792f7a8',
+            'timestamp': 1784372400,
+            'upload_date': '20260718',
+            'view_count': int,
+            'creators': ['James Hervey-Bathurst'],
+            'tags': list,
+        },
+        },{
         'url': 'https://media.ccc.de/v/30C3_-_5443_-_en_-_saal_g_-_201312281830_-_introduction_to_processor_design_-_byterazor#video',
+        'skip': 'stale test sample / site changed',
         'md5': '3a1eda8f3a29515d27f5adb967d7e740',
         'info_dict': {
             'id': '1839',

@@ -14,14 +14,14 @@ class CCTVIE(InfoExtractor):
     _TESTS = [{
         # fo.addVariable("videoCenterId","id")
         'url': 'http://sports.cntv.cn/2016/02/12/ARTIaBRxv4rTT1yWf1frW2wi160212.shtml',
-        'md5': 'd61ec00a493e09da810bf406a078f691',
+        'md5': '2d5be090e630d705aef3c8438524105e',
         'info_dict': {
             'id': '5ecdbeab623f4973b40ff25f18b174e8',
             'ext': 'mp4',
             'title': '[NBA]二少联手砍下46分 雷霆主场击败鹈鹕（快讯）',
             'description': 'md5:a530bb10317153e3862cc8c1bb9b930f',
-            'duration': 98,
             'uploader': 'songjunjie',
+            'duration': 98.0,
             'timestamp': 1455279956,
             'upload_date': '20160212',
         },
@@ -92,6 +92,7 @@ class CCTVIE(InfoExtractor):
     }, {
         # videoCenterId: "id"
         'url': 'http://news.cctv.com/2024/02/21/ARTIcU5tKIOIF2myEGCATkLo240221.shtml',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '5c846c0518444308ba32c4159df3b3e0',
             'ext': 'mp4',

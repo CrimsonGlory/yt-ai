@@ -101,7 +101,7 @@ class TuneInStationIE(TuneInBaseIE):
 class TuneInPodcastIE(TuneInBaseIE):
     IE_NAME = 'tunein:podcast:program'
     _PAGE_SIZE = 20
-    _VALID_URL = r'https?://tunein\.com/podcasts(?:/[^/?#]+){1,2}(?P<id>p\d+)'
+    _VALID_URL = r'https?://tunein\.com/(?:podcasts(?:/[^/?#]+){1,2}|radio/[^/?#]+)(?P<id>p\d+)'
     _TESTS = [{
         'url': 'https://tunein.com/podcasts/Technology-Podcasts/Artificial-Intelligence-p1153019/',
         'info_dict': {
@@ -116,6 +116,9 @@ class TuneInPodcastIE(TuneInBaseIE):
             'title': 'BBC News',
         },
         'playlist_mincount': 31,
+    }, {
+        'url': 'https://tunein.com/radio/SBS-Tamil-p191660/',
+        'only_matching': True,
     }]
 
     @classmethod
@@ -144,7 +147,7 @@ class TuneInPodcastIE(TuneInBaseIE):
 
 class TuneInPodcastEpisodeIE(TuneInBaseIE):
     IE_NAME = 'tunein:podcast'
-    _VALID_URL = r'https?://tunein\.com/podcasts(?:/[^/?#]+){1,2}(?P<series_id>p\d+)/?\?(?:[^#]+&)?(?i:topicid)=(?P<id>\d+)'
+    _VALID_URL = r'https?://tunein\.com/(?:podcasts(?:/[^/?#]+){1,2}|radio/[^/?#]+)(?P<series_id>p\d+)/?\?(?:[^#]+&)?(?i:topicid)=(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://tunein.com/podcasts/Technology-Podcasts/Artificial-Intelligence-p1153019/?topicId=236404354',
         'info_dict': {
@@ -164,6 +167,7 @@ class TuneInPodcastEpisodeIE(TuneInBaseIE):
         },
     }, {
         'url': 'https://tunein.com/podcasts/The-BOB--TOM-Show-Free-Podcast-p20069/?topicId=174552664',
+        'skip': 'video gone',
         'info_dict': {
             'id': 't174552664',
             'ext': 'mp3',

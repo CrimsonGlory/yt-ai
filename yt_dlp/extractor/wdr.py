@@ -173,6 +173,7 @@ class WDRPageIE(WDRIE):  # XXX: Do not subclass from concrete IE
         {
             # FIXME: Asset JSON is directly embedded in webpage
             'url': 'http://www1.wdr.de/mediathek/video/live/index.html',
+            'skip': 'extractor broken: IndexError',
             'info_dict': {
                 'id': 'mdb-2296252',
                 'ext': 'mp4',
@@ -215,6 +216,7 @@ class WDRPageIE(WDRIE):  # XXX: Do not subclass from concrete IE
         },
         {
             'url': 'http://www1.wdr.de/radio/player/radioplayer116~_layout-popupVersion.html',
+            'skip': 'stale test sample / site changed',
             # Live stream, MD5 unstable
             'info_dict': {
                 'id': 'mdb-869971',
@@ -251,6 +253,7 @@ class WDRPageIE(WDRIE):  # XXX: Do not subclass from concrete IE
         },
         {
             'url': 'https://www1.wdr.de/mediathek/video/sendungen/rockpalast/video-baroness---freak-valley-festival--100.html',
+            'skip': 'video gone',
             'info_dict': {
                 'id': 'mdb-2741028',
                 'ext': 'mp4',

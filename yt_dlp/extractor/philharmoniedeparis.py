@@ -15,12 +15,12 @@ class PhilharmonieDeParisIE(InfoExtractor):
                         (?P<id>\d+)
                     '''
     _TESTS = [{
-        'url': 'https://philharmoniedeparis.fr/fr/live/concert/1129666-danses-symphoniques',
-        'md5': '24bdb7e86c200c107680e1f7770330ae',
+        'url': 'https://philharmoniedeparis.fr/fr/live/concert/1198391-quatuor-ebene-quatuor-belcea',
+        'md5': '0a497ad2af3452a872cc9b7a6c7c3695',
         'info_dict': {
-            'id': '1129666',
+            'id': '1198391',
             'ext': 'mp4',
-            'title': 'Danses symphoniques. Orchestre symphonique Divertimento - Zahia Ziouani. Bizet, de Falla, Stravinski, Moussorgski, Saint-Saëns',
+            'title': 'Quatuor Ébène - Quatuor Belcea : Enesco - Octuor à cordes',
         },
     }, {
         'url': 'https://philharmoniedeparis.fr/fr/live/concert/1032066-akademie-fur-alte-musik-berlin-rias-kammerchor-rene-jacobs-passion-selon-saint-jean-de-johann',

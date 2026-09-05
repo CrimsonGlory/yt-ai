@@ -6,6 +6,20 @@ from ..utils.traversal import traverse_obj
 class AMCNetworksIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?:amc|bbcamerica|ifc|(?:we|sundance)tv)\.com/(?P<id>(?:movies|shows(?:/[^/?#]+)+)/[^/?#&]+)'
     _TESTS = [{
+        'url': 'https://www.amc.com/shows/anne-rice-talamasca-the-secret-order/videos/a-first-look-behind-the-scenes-of-talamasca-the-secret-order--1073480',
+        'md5': 'b71fab49c2b27d07e40a2b15f145dfa5',
+        'info_dict': {
+            'id': '6380152493112',
+            'ext': 'mp4',
+            'title': 'A First Look Behind-the-Scenes of Talamasca: The Secret Order',
+            'description': 'md5:5444917e0677c52a31b7be193b0f2ee3',
+            'uploader_id': '6240731308001',
+            'duration': 273.131,
+            'thumbnail': 'md5:48b5285ce1f6c36d8ca291a920ba1b27',
+            'timestamp': 1758902532,
+            'upload_date': '20250926',
+        },
+    }, {
         'url': 'https://www.amc.com/shows/dark-winds/videos/dark-winds-a-look-at-season-3--1072027',
         'info_dict': {
             'id': '6369261343112',
@@ -14,7 +28,6 @@ class AMCNetworksIE(InfoExtractor):
             'uploader_id': '6240731308001',
             'duration': 176.427,
             'thumbnail': r're:https://[^/]+\.boltdns\.net/.+/image\.jpg',
-            'tags': [],
             'timestamp': 1740414792,
             'upload_date': '20250224',
         },

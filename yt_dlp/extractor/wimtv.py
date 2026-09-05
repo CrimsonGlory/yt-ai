@@ -50,6 +50,7 @@ class WimTVIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'http://www.renzoarborechannel.tv/50_sorrisi_da_napoli.htm',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '50_sorrisi_da_napoli',
             'title': 'Renzo Arbore Channel . TV - 50 Sorrisi da Napoli',

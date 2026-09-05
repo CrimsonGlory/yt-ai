@@ -165,15 +165,15 @@ class SRGSSRPlayIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://www.srf.ch/play/tv/10vor10/video/snowden-beantragt-asyl-in-russland?id=28e1a57d-5b76-4399-8ab3-9097f071e6c5',
-        'md5': '6db2226ba97f62ad42ce09783680046c',
+        'md5': '81c6ad90d774c46e3c54ea2f01a94db3',
         'info_dict': {
             'id': '28e1a57d-5b76-4399-8ab3-9097f071e6c5',
             'ext': 'mp4',
-            'upload_date': '20130701',
             'title': 'Snowden beantragt Asyl in Russland',
-            'timestamp': 1372708215,
             'duration': 113.827,
-            'thumbnail': r're:https?://.*',
+            'thumbnail': 'md5:137f2b3ce9560e9ce612348d4057a152',
+            'timestamp': 1372708215,
+            'upload_date': '20130701',
         },
         'expected_warnings': ['Unable to download f4m manifest'],
     }, {

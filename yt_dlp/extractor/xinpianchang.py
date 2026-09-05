@@ -11,8 +11,25 @@ from ..utils.traversal import traverse_obj
 class XinpianchangIE(InfoExtractor):
     _VALID_URL = r'https?://(www\.)?xinpianchang\.com/(?P<id>a\d+)'
     IE_DESC = '新片场'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.xinpianchang.com/a13805701',
+            'md5': 'ec93b242ac8475cf8886e4572b582be1',
+            'info_dict': {
+                'id': 'a13805701',
+                'ext': 'mp4',
+                'title': '创作人纪录片系列｜全网播放量破亿AI短片背后的Mx-Shell',
+                'description': '《丧尸清道夫》爆火，全网播放量破亿，\n我们这一次走进了这个作品背后创作人Mx-Shell的生活，\n来看看他的故事。',
+                'uploader': '场长Ethan',
+                'uploader_id': '10000016',
+                'duration': 548,
+                'thumbnail': 'https://oss-xpc0.xpccdn.com/uploadfile/article/2026/9/3/4e6cd71453243e9458e323107c7a1686',
+                'categories': ['纪录片', '人物/社会', '人物', '人物纪实'],
+                'tags': ['AI', 'AIGC', 'Shotlab', '丧尸清道夫', 'Mx-Shell'],
+            },
+        }, {
         'url': 'https://www.xinpianchang.com/a13798806',
+        'skip': 'stale test sample / site changed',
         'md5': '2118d84226070b2c95406832783301d6',
         'info_dict': {
             'id': 'a13798806',

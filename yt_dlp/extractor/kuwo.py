@@ -73,17 +73,17 @@ class KuwoIE(KuwoBaseIE):
     IE_DESC = '酷我音乐'
     _VALID_URL = r'https?://(?:(?:www|m)\.)?kuwo\.cn/(?:(?:newh5app/)?play_detail|yinyue)/(?P<id>\d+)'
     _TESTS = [{
-        'url': 'https://www.kuwo.cn/play_detail/639883212',
-        'md5': 'a523c65653256f36635e6c924fa828d9',
+        'url': 'https://www.kuwo.cn/play_detail/9930103',
+        'md5': '8cb8d6497084261c35b03a051b027906',
         'info_dict': {
-            'id': '639883212',
+            'id': '9930103',
             'ext': 'mp3',
-            'title': '今生劫换来生缘 (闽南对唱版)',
-            'creator': '咏春&еяхат музыка',
-            'creators': ['咏春&еяхат музыка'],
-            'album': '今生劫换来生缘(闽南对唱版)',
-            'duration': 196,
-            'upload_date': '20260824',
+            'title': '优美的小调',
+            'creator': '张宇桦',
+            'creators': ['张宇桦'],
+            'album': '星空下的钢琴曲1',
+            'duration': 172,
+            'upload_date': '20131218',
         },
         'params': {
             'format': 'mp3-128',
@@ -117,7 +117,7 @@ class KuwoIE(KuwoBaseIE):
         'url': 'http://www.kuwo.cn/yinyue/3197154?catalog=yueku2016',
         'only_matching': True,
     }, {
-        'url': 'https://m.kuwo.cn/newh5app/play_detail/639883212',
+        'url': 'https://m.kuwo.cn/newh5app/play_detail/9930103',
         'only_matching': True,
     }]
 

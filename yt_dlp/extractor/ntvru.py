@@ -13,9 +13,31 @@ class NTVRuIE(InfoExtractor):
     IE_NAME = 'ntv.ru'
     _VALID_URL = r'https?://(?:www\.)?ntv\.ru/(?:[^/#?]+/)*(?P<id>[^/?#&]+)'
 
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.ntv.ru/novosti/3009701/',
+            'md5': '1499310144e27d75e2d33413a60c3948',
+            'info_dict': {
+                'id': '2612804',
+                'ext': 'mp4',
+                'title': 'В Москве состоялась премьера сериала "Трудно быть богом" по повести Стругацких',
+                'description': 'md5:b3c5a2d80a5255e51f369c06d797f6a9',
+                'duration': 218,
+                'thumbnail': 'http://cdn2-static.ntv.ru/home/news/2026/20260902/10_talpa8.jpg',
+                'timestamp': 1788331084,
+                'upload_date': '20260902',
+                'release_timestamp': 1788331084,
+                'release_date': '20260902',
+                'view_count': int,
+                'comment_count': int,
+                'tags': ['НТВ', 'кино', 'премьера', 'сериалы', 'шоу-бизнес'],
+                'modified_timestamp': 1788331084,
+                'modified_date': '20260902',
+            },
+        }, {
         # JSON Api is geo restricted
         'url': 'https://www.ntv.ru/novosti/3008484/',
+        'skip': 'stale test sample / site changed',
         'md5': '818962a1b52747d446db7cd5be43e142',
         'info_dict': {
             'id': '2610271',
@@ -77,6 +99,7 @@ class NTVRuIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.ntv.ru/kino/Koma_film/m70281/o336036/video/',
+        'skip': 'stale test sample / site changed',
         'md5': 'e9c7cde24d9d3eaed545911a04e6d4f4',
         'info_dict': {
             'id': '1126480',

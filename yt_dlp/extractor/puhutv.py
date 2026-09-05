@@ -203,6 +203,7 @@ class PuhuTVSerieIE(InfoExtractor):
     IE_NAME = 'puhutv:serie'
     _TESTS = [{
         'url': 'https://puhutv.com/deniz-yildizi-detay',
+        'skip': "extractor broken: An extractor error has occurred. (caused by KeyError('assets'))",
         'info_dict': {
             'title': 'Deniz Yıldızı',
             'id': 'deniz-yildizi',

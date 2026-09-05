@@ -30,6 +30,7 @@ class ZoomIE(InfoExtractor):
     }, {
         # play URL
         'url': 'https://ffgolf.zoom.us/rec/play/qhEhXbrxq1Zoucx8CMtHzq1Z_2YZRPVCqWK_K-2FkEGRsSLDeOX8Tu4P6jtjZcRry8QhIbvKZdtr4UNo.QcPn2debFskI9whJ',
+        'skip': 'site unavailable',
         'md5': '2c4b1c4e5213ebf9db293e88d9385bee',
         'info_dict': {
             'id': 'qhEhXbrxq1Zoucx8CMtHzq1Z_2YZRPVCqWK_K-2FkEGRsSLDeOX8Tu4P6jtjZcRry8QhIbvKZdtr4UNo.QcPn2debFskI9whJ',

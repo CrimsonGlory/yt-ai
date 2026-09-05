@@ -256,8 +256,18 @@ class JioSaavnShowIE(JioSaavnBaseIE):
 class JioSaavnAlbumIE(JioSaavnBaseIE):
     IE_NAME = 'jiosaavn:album'
     _VALID_URL = JioSaavnBaseIE._URL_BASE_RE + r'/album/[^/?#]+/(?P<id>[^/?#]+)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.jiosaavn.com/album/ohh-my-dog/qcRrhJqRtw4_',
+            'info_dict': {
+                'id': 'qcRrhJqRtw4_',
+                'title': 'Ohh My Dog',
+            },
+            'playlist_mincount': 2,
+            'params': {'skip_download': True},
+        },{
         'url': 'https://www.jiosaavn.com/album/96/buIOjYZDrNA_',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'buIOjYZDrNA_',
             'title': '96',
@@ -366,7 +376,16 @@ class JioSaavnShowPlaylistIE(JioSaavnBaseIE):
 class JioSaavnArtistIE(JioSaavnBaseIE):
     IE_NAME = 'jiosaavn:artist'
     _VALID_URL = JioSaavnBaseIE._URL_BASE_RE + r'/artist/[^/?#]+/(?P<id>[^/?#]+)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.jiosaavn.com/artist/tanishk-bagchi-songs/Y-5m-phldpg_',
+            'info_dict': {
+                'id': 'Y-5m-phldpg_',
+                'title': 'Tanishk Bagchi',
+            },
+            'playlist_mincount': 2,
+            'params': {'skip_download': True},
+        },{
         'url': 'https://www.jiosaavn.com/artist/krsna-songs/rYLBEve2z3U_',
         'info_dict': {
             'id': 'rYLBEve2z3U_',
@@ -375,6 +394,7 @@ class JioSaavnArtistIE(JioSaavnBaseIE):
         'playlist_mincount': 38,
     }, {
         'url': 'https://www.jiosaavn.com/artist/sanam-puri-songs/SkNEv3qRhDE_',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'SkNEv3qRhDE_',
             'title': 'Sanam Puri',

@@ -115,6 +115,7 @@ class MainStreamingIE(InfoExtractor):
     _WEBPAGE_TESTS = [{
         # FIXME: Embed detection
         'url': 'https://www.lacplay.it/video/in-evidenza_728/lac-storie-p-250-i-santi-pietro-e-paolo_77297/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'u7kiX5DUaHYr',
             'ext': 'mp4',

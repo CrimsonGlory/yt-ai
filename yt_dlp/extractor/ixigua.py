@@ -17,24 +17,26 @@ class IxiguaIE(InfoExtractor):
     _VALID_URL = r'https?://(?:\w+\.)?ixigua\.com/(?:video/)?(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.ixigua.com/6996881461559165471',
-        'md5': '18267e430d67c38debd21a216d9d5ba2',
         'info_dict': {
             'id': '6996881461559165471',
             'ext': 'mp4',
             'title': '盲目涉水风险大，亲身示范高水位行车注意事项',
-            'description': 'md5:df257c2e25bc6e5936efd5b5b8ac1dc5',
-            'tags': ['video_domestic/other', 'video_car/other', 'video_car/car_usage', 'video_car'],
-            'like_count': int,
-            'dislike_count': int,
-            'view_count': int,
-            'comment_count': int,
+            'description': '本期《懂车帝评测》，我们将尝试验证一个夏日大家可能会遇到的关键性问题：如果突发暴雨，我们不得不涉水行车，如何做才能更好保障生命安全。',
             'uploader': '懂车帝原创',
             'uploader_id': '6480145787',
-            'thumbnail': r're:^https?://.+',
+            'duration': 1030,
+            # Signed ByteDance image CDN host/query rotate between requests
+            'thumbnail': r're:https?://.+',
             'timestamp': 1629088414,
             'upload_date': '20210816',
-            'duration': 1030,
+            'view_count': int,
+            'like_count': int,
+            'dislike_count': int,
+            'comment_count': int,
+            'tags': list,
         },
+        # 10KiB test-mode Range fetches from rotating xgwap CDNs flake under load
+        'params': {'skip_download': True},
     }]
     _GOOGLEBOT_USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
 

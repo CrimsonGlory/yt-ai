@@ -145,7 +145,7 @@ class TapTapMomentIE(TapTapBaseIE):
             'upload_date': '20240517',
             'modified_timestamp': 1715942225,
             'modified_date': '20240517',
-            'uploader': 'TapTap 编辑',
+            'uploader': 'TapTap编辑',
             'uploader_id': '7159244',
         },
         'params': {'skip_download': 'm3u8'},
@@ -179,11 +179,11 @@ class TapTapAppIE(TapTapBaseIE):
             },
         }, {
             'info_dict': {
-                'id': '4058462',
+                'id': '5810149',
                 'ext': 'mp4',
                 'title': '原神',
                 'description': 'md5:e345f39a5fea5de2a46923f70d5f76ab',
-                'duration': 295,
+                'duration': 30,
                 'thumbnail': r're:^https?://.*\.(png|jpg)',
             },
         }],

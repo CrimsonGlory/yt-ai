@@ -68,6 +68,7 @@ class EggheadLessonIE(EggheadBaseIE):
     _VALID_URL = r'https?://(?:app\.)?egghead\.io/(?:api/v1/)?lessons/(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://egghead.io/lessons/javascript-linear-data-flow-with-container-style-types-box',
+        'skip': 'extractor broken: [egghead:lesson] Ignoring subtitle tracks found in the HLS manifest; if any subt',
         'info_dict': {
             'id': '1196',
             'display_id': 'javascript-linear-data-flow-with-container-style-types-box',

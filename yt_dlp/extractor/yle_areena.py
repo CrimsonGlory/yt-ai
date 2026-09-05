@@ -16,7 +16,7 @@ class YleAreenaIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://areena.yle.fi/1-4371942',
-            'md5': 'd87e9a1e74e67e009990ddd413e426b4',
+            'md5': '7d523478f6a0f235bb6200b6716e315e',
             'info_dict': {
                 'id': '1-4371942',
                 'ext': 'mp4',
@@ -36,13 +36,17 @@ class YleAreenaIE(InfoExtractor):
         },
         {
             'url': 'https://areena.yle.fi/1-2158940',
-            'md5': '6369ddc5e07b5fdaeda27a495184143c',
+            'md5': '7e9a63e1e2c87ec0c0f7dfc202859001',
             'info_dict': {
                 'id': '1-2158940',
                 'ext': 'mp4',
                 'title': 'Albi haluaa vessan',
                 'description': 'Albi haluaa vessan.',
                 'series': 'Albi Lumiukko',
+                'season': 'Season 1',
+                'season_number': 1,
+                'episode': 'Episode 8',
+                'episode_number': 8,
                 'thumbnail': r're:https?://.*',
                 'age_limit': 0,
                 'release_date': '20211215',
@@ -69,6 +73,7 @@ class YleAreenaIE(InfoExtractor):
         },
         {
             'url': 'https://areena.yle.fi/1-72251830',
+            'skip': 'video gone',
             'info_dict': {
                 'id': '1-72251830',
                 'ext': 'mp4',

@@ -62,7 +62,26 @@ class EggsIE(EggsBaseIE):
     IE_NAME = 'eggs:single'
     _VALID_URL = r'https?://eggs\.mu/artist/[^/?#]+/song/(?P<id>[\da-f-]+)'
 
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://eggs.mu/artist/okuba_010101/song/4f5e3632-59fa-4a0a-826a-d50769941de9',
+            'md5': '30051cb7bc6abc93838201f61560b0f2',
+            'info_dict': {
+                'id': '4f5e3632-59fa-4a0a-826a-d50769941de9',
+                'ext': 'm4a',
+                'title': '指先',
+                'uploader': "the奥歯's",
+                'uploader_id': '23808',
+                'thumbnail': 'md5:f5f2792698ef7138e0faf1bfdba92fa7',
+                'timestamp': 1770364800,
+                'upload_date': '20260206',
+                'view_count': int,
+                'like_count': int,
+                'comment_count': int,
+                'composers': [''],
+                'artists': ["the奥歯's"],
+            },
+        }, {
         'url': 'https://eggs.mu/artist/32_sunny_girl/song/0e95fd1d-4d61-4d5b-8b18-6092c551da90',
         'info_dict': {
             'id': '0e95fd1d-4d61-4d5b-8b18-6092c551da90',
@@ -82,6 +101,7 @@ class EggsIE(EggsBaseIE):
         },
     }, {
         'url': 'https://eggs.mu/artist/KAMO_3pband/song/1d4bc45f-1af6-47a9-8b30-a70cae350b4f',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '80cLKA2wnoA',
             'ext': 'mp4',
@@ -123,23 +143,35 @@ class EggsArtistIE(EggsBaseIE):
     _VALID_URL = r'https?://eggs\.mu/artist/(?P<id>\w+)/?(?:[?#&]|$)'
 
     _TESTS = [{
+        'url': 'https://eggs.mu/artist/strobogram_band',
+        'info_dict': {
+            'id': 'strobogram_band',
+            'title': 'strobogram',
+            'description': '都内で活動中の4ピースバンド。',
+            'thumbnail': r're:https?://image-pro\.eggs\.mu/profile/\d+\.jpe?g(?:\?.*)?$',
+        },
+        'playlist_mincount': 2,
+        'params': {'skip_download': True},
+    }, {
         'url': 'https://eggs.mu/artist/32_sunny_girl',
         'info_dict': {
             'id': '32_sunny_girl',
-            'thumbnail': 'https://image-pro.eggs.mu/profile/1607.jpeg?updated_at=2024-04-03T20%3A06%3A00%2B09%3A00',
-            'description': 'Muddy Mine / 東京高田馬場CLUB PHASE / Gt.Vo 橘高 連太郎 / Ba.Cho 小野 ゆうき / Dr 大森 りゅうひこ',
             'title': 'Sunny Girl',
+            'description': 'Muddy Mine / 東京高田馬場CLUB PHASE / Gt.Vo 橘高 連太郎 / Ba.Cho 小野 ゆうき / Dr 大森 りゅうひこ',
+            'thumbnail': r're:https?://image-pro\.eggs\.mu/profile/\d+\.jpe?g(?:\?.*)?$',
         },
         'playlist_mincount': 18,
+        'params': {'skip_download': True},
     }, {
         'url': 'https://eggs.mu/artist/KAMO_3pband',
         'info_dict': {
             'id': 'KAMO_3pband',
-            'description': '川崎発３ピースバンド',
-            'thumbnail': 'https://image-pro.eggs.mu/profile/35217.jpeg?updated_at=2024-11-27T16%3A31%3A50%2B09%3A00',
             'title': 'KAMO',
+            'description': '川崎発３ピースバンド',
+            'thumbnail': r're:https?://image-pro\.eggs\.mu/profile/\d+\.jpe?g(?:\?.*)?$',
         },
         'playlist_mincount': 2,
+        'params': {'skip_download': True},
     }]
 
     def _real_extract(self, url):

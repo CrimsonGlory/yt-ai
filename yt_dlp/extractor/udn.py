@@ -34,6 +34,7 @@ class UDNEmbedIE(InfoExtractor):
     _WEBPAGE_TESTS = [{
         # FIXME: Update _VALID_URL
         'url': 'https://video.udn.com/news/1308561',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '1308561',
             'ext': 'mp4',

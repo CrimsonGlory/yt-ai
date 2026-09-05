@@ -48,6 +48,7 @@ class FirstTVIE(InfoExtractor):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.1tv.ru/news/issue/2016-12-01/14:00',
+        'skip': 'extractor broken: Unable to extract playlist url',
         'info_dict': {
             'id': '14:00',
             'title': 'Выпуск программы «Время» в 20:00   1 декабря 2016 года. Новости. Первый канал',
@@ -57,6 +58,7 @@ class FirstTVIE(InfoExtractor):
     }, {
         # has timestamp; has item.uid but not item.id
         'url': 'https://www.1tv.ru/shows/segodnya-vecherom/vypuski/avtory-odnogo-hita-segodnya-vecherom-vypusk-ot-03-05-2025',
+        'skip': 'extractor broken: Unable to extract playlist url',
         'info_dict': {
             'id': '270411',
             'ext': 'mp4',

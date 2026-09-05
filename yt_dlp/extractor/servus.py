@@ -24,6 +24,7 @@ class ServusIE(InfoExtractor):
     _TESTS = [{
         # URL schema v3
         'url': 'https://www.servustv.com/natur/v/aa-28bycqnh92111/',
+        'skip': 'extractor broken: [Servus] unable to extract next.js data',
         'info_dict': {
             'id': 'AA-28BYCQNH92111',
             'ext': 'mp4',

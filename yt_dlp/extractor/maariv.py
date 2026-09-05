@@ -25,6 +25,7 @@ class MaarivIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.maariv.co.il/news/law/Article-1044008',
+        'skip': 'Cloudflare challenge',
         'info_dict': {
             'id': '3611585',
             'duration': 75,

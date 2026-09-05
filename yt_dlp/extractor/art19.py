@@ -15,50 +15,49 @@ class Art19IE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://rss.art19.com/episodes/5ba1413c-48b8-472b-9cc3-cfd952340bdb.mp3',
+        'md5': '19c5c0b8659873f884c41f838357bb9d',
         'info_dict': {
             'id': '5ba1413c-48b8-472b-9cc3-cfd952340bdb',
             'ext': 'mp3',
             'title': 'Why Did DeSantis Drop Out?',
-            'series': 'The Daily Briefing',
-            'release_timestamp': 1705941275,
             'description': 'md5:da38961da4a3f7e419471365e3c6b49f',
-            'episode': 'Episode 582',
-            'thumbnail': r're:^https?://content\.production\.cdn\.art19\.com.*\.jpeg$',
-            'series_id': 'ed52a0ab-08b1-4def-8afc-549e4d93296d',
-            'upload_date': '20240122',
-            'timestamp': 1705940815,
-            'episode_number': 582,
-            'modified_date': '20240122',
-            'episode_id': '5ba1413c-48b8-472b-9cc3-cfd952340bdb',
-            'modified_timestamp': 1705941275,
-            'release_date': '20240122',
             'duration': 527.4,
+            'thumbnail': 'md5:d0c2e357d5c3a8608197c613e6de21f8',
+            'timestamp': 1705940815,
+            'upload_date': '20240122',
+            'release_timestamp': 1705941275,
+            'release_date': '20240122',
+            'modified_timestamp': 1706070907,
+            'modified_date': '20240124',
+            'series': 'The Daily Briefing',
+            'series_id': 'ed52a0ab-08b1-4def-8afc-549e4d93296d',
+            'episode': 'Episode 582',
+            'episode_number': 582,
+            'episode_id': '5ba1413c-48b8-472b-9cc3-cfd952340bdb',
         },
     }, {
-        'url': 'https://art19.com/shows/scamfluencers/episodes/8319b776-4153-4d22-8630-631f204a03dd',
-        'skip': 'HTTP Error 403',
+        'url': 'https://art19.com/shows/minnesota-matters/episodes/49f825b7-b224-4b8e-927f-a8c8daa984d0',
         'info_dict': {
-            'id': '8319b776-4153-4d22-8630-631f204a03dd',
+            'id': '49f825b7-b224-4b8e-927f-a8c8daa984d0',
             'ext': 'mp3',
-            'title': 'Martha Stewart: The Homemaker Hustler Part 2',
-            'modified_date': '20240116',
-            'upload_date': '20240105',
-            'modified_timestamp': 1705435802,
-            'episode_id': '8319b776-4153-4d22-8630-631f204a03dd',
-            'series_id': 'd3c9b8ca-26b3-42f4-9bd8-21d1a9031e75',
+            'title': 'Minnesota Matters 8-28-26',
+            'description': 'md5:1847d3c1a4441db4ab562b523275f555',
+            'duration': 1680.0,
             'thumbnail': r're:^https?://content\.production\.cdn\.art19\.com.*\.jpeg$',
-            'description': 'md5:4aa7cfd1358dc57e729835bc208d7893',
-            'release_timestamp': 1705305660,
-            'release_date': '20240115',
-            'timestamp': 1704481536,
-            'episode_number': 88,
-            'series': 'Scamfluencers',
-            'duration': 2588.37501,
-            'episode': 'Episode 88',
+            'timestamp': 1787926885,
+            'upload_date': '20260828',
+            'release_timestamp': 1787893200,
+            'release_date': '20260828',
+            'modified_timestamp': 1787926975,
+            'modified_date': '20260828',
+            'series': 'Minnesota Matters',
+            'series_id': '1539924b-7cda-4c24-b9d9-6fb74d45ddd6',
+            'episode_id': '49f825b7-b224-4b8e-927f-a8c8daa984d0',
         },
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.nu.nl/formule-1/6291456/verstappen-wordt-een-synoniem-voor-formule-1.html',
+        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '7d42626a-7301-47db-bb8a-3b6f054d77d7',
             'ext': 'mp3',
@@ -82,8 +81,8 @@ class Art19IE(InfoExtractor):
             'episode': 'Episode 52',
         },
     }, {
-        'url': 'https://www.wishtv.com/podcast-episode/larry-bucshon-announces-retirement-from-congress/',
-        'skip': 'HTTP Error 403',
+        # Live wishtv.com article 403s yt-dlp; Wayback snapshot still has the Art19 embed
+        'url': 'https://web.archive.org/web/20240223123349/https://www.wishtv.com/podcast-episode/larry-bucshon-announces-retirement-from-congress/',
         'info_dict': {
             'id': '8da368bd-08d1-46d0-afaa-c134a4af7dc0',
             'ext': 'mp3',
@@ -215,6 +214,7 @@ class Art19ShowIE(InfoExtractor):
         'playlist_mincount': 425,
     }, {
         'url': 'https://rss.art19.com/scamfluencers',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             '_type': 'playlist',
             'id': 'd3c9b8ca-26b3-42f4-9bd8-21d1a9031e75',
@@ -247,6 +247,7 @@ class Art19ShowIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://deconstructingyourself.com/deconstructing-yourself-podcast',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             '_type': 'playlist',
             'id': 'cfbb9b01-c295-4adb-8726-adde7c03cf21',
@@ -262,6 +263,7 @@ class Art19ShowIE(InfoExtractor):
         'playlist_mincount': 80,
     }, {
         'url': 'https://chicagoreader.com/columns-opinion/podcasts/ben-joravsky-show-podcast-episodes/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             '_type': 'playlist',
             'id': '9dfa2c37-ab87-4c13-8388-4897914313ec',

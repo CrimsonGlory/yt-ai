@@ -55,17 +55,18 @@ class LinkedInIE(InfoExtractor):
     ]
     _TESTS = [{
         'url': 'https://www.linkedin.com/posts/mishalkhawaja_sendinblueviews-toronto-digitalmarketing-ugcPost-6850898786781339649-mM20',
+        'md5': '57c98189ce2837d6f7ef688d42e1b02e',
         'info_dict': {
             'id': '6850898786781339649',
             'ext': 'mp4',
-            'title': 'Mishal K. on LinkedIn: #sendinblueviews #toronto #digitalmarketing #nowhiring #sendinblue…',
-            'description': 'md5:2998a31f6f479376dd62831f53a80f71',
-            'uploader': 'Mishal K.',
-            'thumbnail': r're:https?://.*',
+            'title': 'md5:6fb1174b8cdee0fcd2380b2df6a13077',
+            'description': 'md5:029d6aa6c231ae8ea8cc754ad7b896db',
+            'thumbnail': 'https://static.licdn.com/aero-v1/sc/h/c45fy346jw096z9pbphyyhdz7',
             'like_count': int,
         },
     }, {
         'url': 'https://www.linkedin.com/posts/the-mathworks_2_what-is-mathworks-cloud-center-activity-7151241570371948544-4Gu7',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '7151241570371948544',
             'ext': 'mp4',

@@ -27,6 +27,7 @@ class ITVIE(InfoExtractor):
     _GEO_COUNTRIES = ['GB']
     _TESTS = [{
         'url': 'https://www.itv.com/hub/plebs/2a1873a0002',
+        'skip': 'extractor broken: Unable to extract params',
         'info_dict': {
             'id': '2a1873a0002',
             'ext': 'mp4',

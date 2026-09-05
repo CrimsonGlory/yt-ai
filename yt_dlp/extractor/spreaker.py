@@ -67,22 +67,22 @@ class SpreakerIE(InfoExtractor):
     ]
     _TESTS = [{
         'url': 'https://api.spreaker.com/episode/12534508',
+        'md5': '2eb676234408ded0666fe718952b5caa',
         'info_dict': {
             'id': '12534508',
-            'display_id': 'swm-ep15-how-to-market-your-music-part-2',
             'ext': 'mp3',
+            'display_id': 'swm-ep15-how-to-market-your-music-part-2',
             'title': 'EP:15 | Music Marketing (Likes) - Part 2',
             'description': 'md5:0588c43e27be46423e183076fa071177',
-            'timestamp': 1502250336,
-            'upload_date': '20170809',
             'uploader': 'SWM',
             'uploader_id': '9780658',
             'duration': 1063.42,
-            'view_count': int,
+            'thumbnail': 'md5:362a26da4f26cd2de79179f7280533fc',
+            'timestamp': 1502250336,
+            'upload_date': '20170809',
             'like_count': int,
             'comment_count': int,
             'series': 'Success With Music | SWM',
-            'thumbnail': 'https://d3wo5wojvuv7l.cloudfront.net/t_square_limited_160/images.spreaker.com/original/777ce4f96b71b0e1b7c09a5e625210e3.jpg',
             'creators': ['SWM'],
         },
     }, {

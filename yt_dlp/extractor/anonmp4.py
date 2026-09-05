@@ -17,6 +17,7 @@ class AnonMP4IE(InfoExtractor):
     _EMBED_REGEX = [r'<iframe[^>]+\bsrc=["\'](?P<url>https?://(?:www\.)?anonmp4\.(?:art|to)/embed/[A-Za-z0-9]+)']
     _TESTS = [{
         'url': 'https://anonmp4.art/v/gfFKPZb6t2HURbQ',
+        'skip': 'HTTP 403/blocked',
         'md5': '72c375f5cafcc8b7c3c4817b15ea0362',
         'info_dict': {
             'id': 'gfFKPZb6t2HURbQ',

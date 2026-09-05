@@ -16,6 +16,7 @@ class IchinanaLiveIE(InfoExtractor):
     _TESTS = [{
         'url': 'https://17.live/live/3773096',
         'info_dict': {
+            'ext': 'mp4',
             'id': '3773096',
             'title': '萠珈☕🤡🍫moka',
             'is_live': True,
@@ -100,7 +101,9 @@ class IchinanaLiveClipIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?17\.live/(?:[^/]+/)*profile/r/(?P<uploader_id>\d+)/clip/(?P<id>[^/]+)'
     _TESTS = [{
         'url': 'https://17.live/profile/r/1789280/clip/1bHQSK8KUieruFXaCH4A4upCzlN',
+        'skip': 'live/no formats (missing ext)',
         'info_dict': {
+            'ext': 'mp4',
             'id': '1bHQSK8KUieruFXaCH4A4upCzlN',
             'title': 'マチコ先生🦋Class💋',
             'description': 'マチ戦隊　第一次　バスターコール\n総額200万coin！\n動画制作@うぉーかー🌱Walker🎫',

@@ -10,7 +10,18 @@ from ..utils import (
 
 class ChilloutzoneIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?chilloutzone\.net/video/(?P<id>[\w-]+)\.html'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.chilloutzone.net/video/die-tuete-gibt-die-richtung-vor.html',
+            'md5': '186bd3f49b4275a26376a264adeb1149',
+            'info_dict': {
+            'id': 'die-tuete-gibt-die-richtung-vor',
+            'ext': 'mp4',
+            'title': 'Die Tüte gibt die Richtung vor',
+            'description': 'md5:adce1c0235033be0686d6ba495bacf3d',
+            'duration': 53,
+        },
+        },{
         'url': 'https://www.chilloutzone.net/video/enemene-meck-alle-katzen-weg.html',
         'md5': 'a76f3457e813ea0037e5244f509e66d1',
         'info_dict': {
@@ -23,6 +34,7 @@ class ChilloutzoneIE(InfoExtractor):
     }, {
         'note': 'Video hosted at YouTube',
         'url': 'https://www.chilloutzone.net/video/eine-sekunde-bevor.html',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '1YVQaAgHyRU',
             'ext': 'mp4',
@@ -50,6 +62,7 @@ class ChilloutzoneIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.chilloutzone.net/video/icon-blending.html',
+        'skip': 'site unavailable',
         'md5': '2f9d6850ec567b24f0f4fa143b9aa2f9',
         'info_dict': {
             'id': 'LLNkHpSjBfc',

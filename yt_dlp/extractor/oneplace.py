@@ -5,14 +5,15 @@ class OnePlacePodcastIE(InfoExtractor):
     _VALID_URL = r'https?://www\.oneplace\.com/[\w]+/[^/]+/listen/[\w-]+-(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.oneplace.com/ministries/a-daily-walk/listen/living-in-the-last-days-part-2-958461.html',
+        'md5': 'e51ca004279b9558baa628fe3ac1f896',
         'info_dict': {
             'id': '958461',
             'ext': 'mp3',
-            'title': 'Living in the Last Days Part 2 | A Daily Walk with John Randall',
-            'description': 'md5:fbb8f1cf21447ac54ecaa2887fc20c6e',
+            'title': 'md5:a2bba13474b81fe99f29b37c46cb7178',
         },
     }, {
         'url': 'https://www.oneplace.com/ministries/ankerberg-show/listen/ep-3-relying-on-the-constant-companionship-of-the-holy-spirit-part-2-922513.html',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '922513',
             'ext': 'mp3',

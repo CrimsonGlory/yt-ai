@@ -19,6 +19,7 @@ class WordpressPlaylistEmbedIE(InfoExtractor):
         # 5 WordPress playlists. This is using wpse-playlist, which is similar.
         # See: https://github.com/birgire/wpse-playlist
         'url': 'https://xlino.com/wordpress-playlist-shortcode-with-external-audio-or-video-files/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'wordpress-playlist-shortcode-with-external-audio-or-video-files',
             'title': 'WordPress: Playlist shortcode with external audio or video files – Birgir Erlendsson (birgire)',
@@ -83,6 +84,7 @@ class WordpressMiniAudioPlayerEmbedIE(InfoExtractor):
     _WEBPAGE_TESTS = [{
         # Version 1.8.10: https://plugins.trac.wordpress.org/browser/wp-miniaudioplayer/tags/1.8.10
         'url': 'https://news.samsung.com/global/over-the-horizon-the-evolution-of-the-samsung-galaxy-brand-sound',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'over-the-horizon-the-evolution-of-the-samsung-galaxy-brand-sound',
             'title': 'Over the Horizon: The Evolution of the Samsung Galaxy Brand Sound',
@@ -115,6 +117,7 @@ class WordpressMiniAudioPlayerEmbedIE(InfoExtractor):
         # Version 1.9.7: https://plugins.trac.wordpress.org/browser/wp-miniaudioplayer/tags/1.9.7
         # But has spaces around href filter
         'url': 'https://www.estudiords.com.br/temas/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'temas',
             'title': 'Temas Variados',

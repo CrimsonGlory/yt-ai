@@ -7,17 +7,17 @@ class BundesligaIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.bundesliga.com/en/bundesliga/videos?vid=bhhHkKyN',
-            'md5': '8fc3b25cd12440e3a8cdc51f1493849c',
+            'md5': '8ec7b79ecc8e6cd886c68b929185be23',
             'info_dict': {
-                'id': 'bhhHkKyN',
-                'ext': 'mp4',
-                'title': 'Watch: Alphonso Davies and Jeremie Frimpong head-to-head',
-                'thumbnail': 'https://cdn.jwplayer.com/v2/media/bhhHkKyN/poster.jpg?width=720',
-                'upload_date': '20220928',
-                'duration': 146,
-                'timestamp': 1664366511,
-                'description': 'md5:803d4411bd134140c774021dd4b7598b',
-            },
+            'id': 'bhhHkKyN',
+            'ext': 'mp4',
+            'title': 'Watch: Alphonso Davies and Jeremie Frimpong head-to-head',
+            'description': 'md5:803d4411bd134140c774021dd4b7598b',
+            'duration': 146.0,
+            'thumbnail': 'https://cdn.jwplayer.com/v2/media/bhhHkKyN/poster.jpg?width=720',
+            'timestamp': 1664366511,
+            'upload_date': '20220928',
+        },
         },
         {
             'url': 'https://www.bundesliga.com/en/bundesliga/videos/latest-features/T8IKc8TX?vid=ROHjs06G',

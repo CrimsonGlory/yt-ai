@@ -13,14 +13,15 @@ class VideoKenPlayerIE(InfoExtractor):
     _VALID_URL = r'https?://player\.videoken\.com/embed/slideslive-(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://player.videoken.com/embed/slideslive-38968434',
+        'md5': 'f457c329061712ce21fd6592c37c04b2',
         'info_dict': {
             'id': '38968434',
             'ext': 'mp4',
             'title': 'Deep Learning with Label Differential Privacy',
-            'timestamp': 1643377020,
-            'upload_date': '20220128',
-            'thumbnail': r're:^https?://.*\.(?:jpg|png)',
-            'thumbnails': 'count:30',
+            'duration': 869,
+            'thumbnail': 'md5:d3f7794f9e28a2605b9e539d5c1eb4df',
+            'timestamp': 1697820506,
+            'upload_date': '20231020',
             'chapters': 'count:29',
         },
         'params': {

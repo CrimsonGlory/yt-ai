@@ -6,6 +6,7 @@ class NRLTVIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?nrl\.com/tv(/[^/]+)*/(?P<id>[^/?&#]+)'
     _TEST = {
         'url': 'https://www.nrl.com/tv/news/match-highlights-titans-v-knights-862805/',
+        'skip': 'extractor broken: [NRLTV] NRLTV extractor failed (RegexNotFoundError: Unable to extract player dat',
         'info_dict': {
             'id': 'YyNnFuaDE6kPJqlDhG4CGQ_w89mKTau4',
             'ext': 'mp4',

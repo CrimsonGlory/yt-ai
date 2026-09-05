@@ -210,6 +210,7 @@ class AmazonMiniTVSeasonIE(AmazonMiniTVBaseIE):
     IE_DESC = 'Amazon MiniTV Season, "minitv:season:" prefix'
     _TESTS = [{
         'url': 'amazonminitv:season:amzn1.dv.gti.0aa996eb-6a1b-4886-a342-387fbd2f1db0',
+        'skip': 'requires account',
         'playlist_mincount': 6,
         'info_dict': {
             'id': 'amzn1.dv.gti.0aa996eb-6a1b-4886-a342-387fbd2f1db0',
@@ -269,6 +270,7 @@ class AmazonMiniTVSeriesIE(AmazonMiniTVBaseIE):
     IE_DESC = 'Amazon MiniTV Series, "minitv:series:" prefix'
     _TESTS = [{
         'url': 'amazonminitv:series:amzn1.dv.gti.56521d46-b040-4fd5-872e-3e70476a04b0',
+        'skip': 'requires account',
         'playlist_mincount': 3,
         'info_dict': {
             'id': 'amzn1.dv.gti.56521d46-b040-4fd5-872e-3e70476a04b0',

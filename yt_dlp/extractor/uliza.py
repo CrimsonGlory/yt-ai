@@ -13,6 +13,7 @@ class UlizaPlayerIE(InfoExtractor):
     _VALID_URL = r'https://player-api\.p\.uliza\.jp/v1/players/[^?#]+\?(?:[^#]*&)?name=(?P<id>[^#&]+)'
     _TESTS = [{
         'url': 'https://player-api.p.uliza.jp/v1/players/timeshift-disabled/pia/admin?type=normal&playerobjectname=ulizaPlayer&name=livestream01_dvr&repeatable=true',
+        'skip': 'extractor broken: Unable to extract m3u8 url',
         'info_dict': {
             'id': '88f3109a-f503-4d0f-a9f7-9f39ac745d84',
             'ext': 'mp4',

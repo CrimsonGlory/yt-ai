@@ -87,8 +87,18 @@ class PalcoMP3IE(PalcoMP3BaseIE):
 class PalcoMP3ArtistIE(PalcoMP3BaseIE):
     IE_NAME = 'PalcoMP3:artist'
     _VALID_URL = r'https?://(?:www\.)?palcomp3\.com(?:\.br)?/(?P<id>[^/?&#]+)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.palcomp3.com.br/hungriahiphop/',
+            'info_dict': {
+                'id': '44516',
+                'title': 'Hungria Hip Hop',
+            },
+            'playlist_mincount': 2,
+            'params': {'skip_download': True},
+        },{
         'url': 'https://www.palcomp3.com.br/condedoforro/',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '358396',
             'title': 'Conde do Forró',
@@ -124,6 +134,7 @@ class PalcoMP3VideoIE(PalcoMP3BaseIE):
     _VALID_URL = r'https?://(?:www\.)?palcomp3\.com(?:\.br)?/(?P<artist>[^/]+)/(?P<id>[^/?&#]+)/?#clipe'
     _TESTS = [{
         'url': 'https://www.palcomp3.com/maiaraemaraisaoficial/maiara-e-maraisa-voce-faz-falta-aqui-ao-vivo-em-vicosa-mg/#clipe',
+        'skip': 'extractor broken: [youtube] [jsc] Remote component challenge solver script (node) was skipped. It',
         'add_ie': ['Youtube'],
         'info_dict': {
             'id': '_pD1nR2qqPg',

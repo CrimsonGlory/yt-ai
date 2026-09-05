@@ -40,6 +40,7 @@ class VideoPressIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://wordpress.com/support/videopress/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'BZHMfMfN',
             'ext': 'mp4',

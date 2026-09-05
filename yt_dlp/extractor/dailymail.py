@@ -12,27 +12,28 @@ class DailyMailIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?dailymail\.co\.uk/(?:video/[^/]+/video-|embed/video/)(?P<id>[0-9]+)'
     _EMBED_REGEX = [r'<iframe\b[^>]+\bsrc=["\'](?P<url>(?:https?:)?//(?:www\.)?dailymail\.co\.uk/embed/video/\d+\.html)']
     _TESTS = [{
-        'url': 'http://www.dailymail.co.uk/video/tvshowbiz/video-1295863/The-Mountain-appears-sparkling-water-ad-Heavy-Bubbles.html',
-        'md5': 'f6129624562251f628296c3a9ffde124',
+        'url': 'https://www.dailymail.co.uk/video/news/video-3706517/Video-Inside-Spanish-villa-hot-tub-tragedy-claimed-lives-couple.html',
+        'md5': '064a7efb862aabaff11c1b34650094b1',
         'info_dict': {
-            'id': '1295863',
+            'id': '3706517',
             'ext': 'mp4',
-            'title': 'The Mountain appears in sparkling water ad for \'Heavy Bubbles\'',
-            'description': 'md5:a93d74b6da172dd5dc4d973e0b766a84',
-            'thumbnail': r're:https?://i\.dailymail\.co\.uk/.+\.jpg',
+            'title': 'Inside Spanish villa hot tub tragedy that claimed lives of couple',
+            'description': 'md5:6991d17fe4f036c71fc767f46eaaffe9',
+            'thumbnail': r're:https?://i\.dailymail\.(?:co\.uk|com)/.+\.jpg',
         },
     }, {
-        'url': 'http://www.dailymail.co.uk/embed/video/1295863.html',
+        'url': 'http://www.dailymail.co.uk/embed/video/3706517.html',
         'only_matching': True,
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.daily-news.gr/lifestyle/%ce%b7-%cf%84%cf%81%ce%b1%ce%b3%ce%bf%cf%85%ce%b4%ce%af%cf%83%cf%84%cf%81%ce%b9%ce%b1-jessie-j-%ce%bc%ce%bf%ce%b9%cf%81%ce%ac%cf%83%cf%84%ce%b7%ce%ba%ce%b5-%cf%83%cf%85%ce%b3%ce%ba%ce%bb%ce%bf%ce%bd/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '3463585',
             'ext': 'mp4',
             'title': 'Jessie J reveals she has undergone surgery as she shares clips',
             'description': 'md5:9fa9a25feca5b656b0b4a39c922fad1e',
-            'thumbnail': r're:https?://i\.dailymail\.co\.uk/.+\.jpg',
+            'thumbnail': r're:https?://i\.dailymail\.(?:co\.uk|com)/.+\.jpg',
         },
     }]
 

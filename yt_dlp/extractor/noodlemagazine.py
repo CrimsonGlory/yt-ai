@@ -13,19 +13,19 @@ class NoodleMagazineIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www|adult\.)?noodlemagazine\.com/watch/(?P<id>[0-9-_]+)'
     _TESTS = [{
         'url': 'https://adult.noodlemagazine.com/watch/-67421364_456239604',
-        'md5': 'f26aeaaaf57e0fb829b528eaaee562f8',
+        'md5': '163113823da85d3099e77696764bf824',
         'info_dict': {
             'id': '-67421364_456239604',
-            'title': 'Aria alexander manojob',
-            'thumbnail': r're:^https://.*\.jpg',
             'ext': 'mp4',
-            'duration': 903,
-            'view_count': int,
-            'like_count': int,
+            'title': 'Aria alexander manojob',
             'description': 'Aria alexander manojob',
-            'tags': ['aria', 'alexander', 'manojob'],
+            'duration': 903,
+            'thumbnail': 'md5:59e3e77647f1a6dd31de3e1c094616c7',
             'upload_date': '20190218',
             'age_limit': 18,
+            'view_count': int,
+            'like_count': int,
+            'tags': ['aria', 'alexander', 'manojob'],
         },
     }]
 

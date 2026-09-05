@@ -9,6 +9,7 @@ class RTNewsIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.rt.com/sport/546301-djokovic-arrives-belgrade-crowds/',
+        'skip': 'stale test sample / site changed',
         'playlist_mincount': 2,
         'info_dict': {
             'id': '546301',
@@ -18,6 +19,7 @@ class RTNewsIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.rt.com/shows/in-question/535980-plot-to-assassinate-julian-assange/',
+        'skip': 'stale test sample / site changed',
         'playlist_mincount': 1,
         'info_dict': {
             'id': '535980',
@@ -64,6 +66,7 @@ class RTDocumentryIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://rtd.rt.com/films/escobars-hitman/',
+        'skip': 'extractor broken: [RTDocumentry] unable to extract JSON-LD',
         'info_dict': {
             'id': 'escobars-hitman',
             'ext': 'mp4',

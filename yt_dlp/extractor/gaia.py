@@ -15,6 +15,7 @@ class GaiaIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?gaia\.com/video/(?P<id>[^/?]+).*?\bfullplayer=(?P<type>feature|preview)'
     _TESTS = [{
         'url': 'https://www.gaia.com/video/connecting-universal-consciousness?fullplayer=feature',
+        'skip': 'extractor broken: [Gaia] Ignoring subtitle tracks found in the HLS manifest; if any subtitle track',
         'info_dict': {
             'id': '89356',
             'ext': 'mp4',
@@ -30,6 +31,7 @@ class GaiaIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.gaia.com/video/connecting-universal-consciousness?fullplayer=preview',
+        'skip': 'extractor broken: [Gaia] Ignoring subtitle tracks found in the HLS manifest; if any subtitle track',
         'info_dict': {
             'id': '89351',
             'ext': 'mp4',

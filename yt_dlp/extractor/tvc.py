@@ -7,9 +7,10 @@ from ..utils import (
 
 class TVCIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?tvc\.ru/video/iframe/id/(?P<id>\d+)'
-    _EMBED_REGEX = [r'<iframe[^>]+?src=(["\'])(?P<url>(?:http:)?//(?:www\.)?tvc\.ru/video/iframe/id/[^"]+)\1']
+    _EMBED_REGEX = [r'<iframe[^>]+?src=(["\'])(?P<url>(?:https?:)?//(?:www\.)?tvc\.ru/video/iframe/id/.+?)\1']
     _TESTS = [{
         'url': 'http://www.tvc.ru/video/iframe/id/74622/isPlay/false/id_stat/channel/?acc_video_id=/channel/brand/id/17/show/episodes/episode_id/39702',
+        'skip': 'site unavailable',
         'md5': 'aa6fb3cf384e18a0ad3b30ee2898beba',
         'info_dict': {
             'id': '74622',
@@ -20,8 +21,8 @@ class TVCIE(InfoExtractor):
         },
     }]
     _WEBPAGE_TESTS = [{
-        # FIXME: Embed detection
         'url': 'https://krizis-centr.ru/informatsiya/smi-o-tsentre/liniya-zashchity-bitye-zhjony-tv-tsentr',
+        'skip': 'site unavailable',
         'md5': '43b8eee579a5cd2b85c9ed5b73d1c671',
         'info_dict': {
             'id': '123378',
@@ -67,6 +68,7 @@ class TVCArticleIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?tvc\.ru/(?!video/iframe/id/)(?P<id>[^?#]+)'
     _TESTS = [{
         'url': 'http://www.tvc.ru/channel/brand/id/29/show/episodes/episode_id/39702/',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '74622',
             'ext': 'mp4',
@@ -77,6 +79,7 @@ class TVCArticleIE(InfoExtractor):
         },
     }, {
         'url': 'http://www.tvc.ru/news/show/id/69944',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '75399',
             'ext': 'mp4',
@@ -87,6 +90,7 @@ class TVCArticleIE(InfoExtractor):
         },
     }, {
         'url': 'http://www.tvc.ru/channel/brand/id/47/show/episodes#',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '2185',
             'ext': 'mp4',

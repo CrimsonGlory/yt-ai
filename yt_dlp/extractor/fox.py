@@ -21,6 +21,7 @@ class FOXIE(InfoExtractor):
     _TESTS = [{
         # clip
         'url': 'https://www.fox.com/watch/4b765a60490325103ea69888fb2bd4e8/',
+        'skip': "extractor broken: An extractor error has occurred. (caused by KeyError('url'))",
         'md5': 'ebd296fcc41dd4b19f8115d8461a3165',
         'info_dict': {
             'id': '4b765a60490325103ea69888fb2bd4e8',

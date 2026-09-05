@@ -73,7 +73,7 @@ class GaystreamIE(InfoExtractor):
         # Require /e/<id>, /v/<id>, /d/<id>, etc. Skip dead hosts like https://host/e/
         return len(parts) >= 2
 
-    def _extract_embed_urls(self, webpage):
+    def _find_host_embeds(self, webpage):
         urls = []
         for regex in (
             r'document\.getElementById\("ifr"\)\.src="(https?://[^"]+)"',
@@ -105,7 +105,7 @@ class GaystreamIE(InfoExtractor):
         video_id, display_id = self._match_valid_url(url).group('id', 'display_id')
         webpage = self._download_webpage(url, video_id)
 
-        embed_urls = self._extract_embed_urls(webpage)
+        embed_urls = self._find_host_embeds(webpage)
         if not embed_urls:
             raise ExtractorError('No video hosts found; the file host may have been removed', expected=True)
 

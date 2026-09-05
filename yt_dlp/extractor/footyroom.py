@@ -6,6 +6,7 @@ class FootyRoomIE(InfoExtractor):
     _VALID_URL = r'https?://footyroom\.com/matches/(?P<id>\d+)'
     _TESTS = [{
         'url': 'http://footyroom.com/matches/79922154/hull-city-vs-chelsea/review',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '79922154',
             'title': 'VIDEO Hull City 0 - 2 Chelsea',

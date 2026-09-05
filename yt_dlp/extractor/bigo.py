@@ -8,6 +8,7 @@ class BigoIE(InfoExtractor):
     _TESTS = [{
         'url': 'https://www.bigo.tv/ja/221338632',
         'info_dict': {
+            'ext': 'mp4',
             'id': '6576287577575737440',
             'title': '土よ〜💁‍♂️ 休憩室/REST room',
             'thumbnail': r're:https?://.+',

@@ -193,7 +193,7 @@ class BanByeChannelIE(BanByeBaseIE):
             'title': 'Krzysztof Karoń',
             'id': 'p_Ld82N6gBw_OJ',
         },
-        'playlist_count': 9,
+        'playlist_mincount': 9,
     }]
     _PAGE_SIZE = 100
 

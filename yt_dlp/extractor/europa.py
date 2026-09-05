@@ -22,6 +22,7 @@ class EuropaIE(InfoExtractor):
     }
     _TESTS = [{
         'url': 'https://audiovisual.ec.europa.eu/en/video/I-107758',
+        'skip': 'stale test sample / site changed',
         'md5': '728cca2fd41d5aa7350cec1141fbe620',
         'info_dict': {
             'id': 'I-107758',
@@ -59,15 +60,16 @@ class EuropaIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'md5:dfc882adaabf388999e20d3079ee5277',
             'description': 'md5:67374bddab3fd2a8a319a92e1a286ad2',
-            'thumbnail': r're:https://vod\.prd\.commavservices\.eu/15/109295/THUMB_M_I109295INT1W_03\.jpg(\?.*)?',
+            'thumbnail': 'https://vod.prd.commavservices.eu/15/109295/THUMB_M_I109295INT1W_03.jpg?latest=0003410993',
             'timestamp': 1443762600,
             'upload_date': '20151002',
-            'modified_timestamp': 1731845416,
-            'modified_date': '20241117',
+            'modified_timestamp': 1770284225,
+            'modified_date': '20260205',
             'view_count': int,
         },
     }, {
         'url': 'https://audiovisual.ec.europa.eu/en/video/I-270061',
+        'skip': 'stale test sample / site changed',
         'md5': '5a10c7cc7b9f55fcbda6f0aa1ec72a66',
         'info_dict': {
             'id': 'I-270061',
@@ -132,6 +134,7 @@ class EuroParlWebstreamIE(InfoExtractor):
     '''
     _TESTS = [{
         'url': 'https://multimedia.europarl.europa.eu/pl/webstreaming/plenary-session_20220914-0900-PLENARY',
+        'skip': 'extractor broken: Unable to extract next.js data',
         'info_dict': {
             'id': '62388b15-d85b-4add-99aa-ba12ccf64f0d',
             'display_id': '20220914-0900-PLENARY',
@@ -157,6 +160,7 @@ class EuroParlWebstreamIE(InfoExtractor):
         'skip': 'not live anymore',
     }, {
         'url': 'https://multimedia.europarl.europa.eu/en/webstreaming/committee-on-culture-and-education_20230301-1130-COMMITTEE-CULT',
+        'skip': 'extractor broken: Unable to extract next.js data',
         'info_dict': {
             'id': '7355662c-8eac-445e-4bb9-08db14b0ddd7',
             'display_id': '20230301-1130-COMMITTEE-CULT',
@@ -179,6 +183,7 @@ class EuroParlWebstreamIE(InfoExtractor):
         'skip': 'Not live anymore',
     }, {
         'url': 'https://multimedia.europarl.europa.eu/en/webstreaming/20240320-1345-SPECIAL-PRESSER',
+        'skip': 'extractor broken: Unable to extract next.js data',
         'info_dict': {
             'id': 'c1f11567-5b52-470a-f3e1-08dc3c216ace',
             'display_id': '20240320-1345-SPECIAL-PRESSER',

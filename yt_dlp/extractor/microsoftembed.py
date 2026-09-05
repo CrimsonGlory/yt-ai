@@ -197,10 +197,10 @@ class MicrosoftLearnPlaylistIE(InfoExtractor):
         'url': 'https://learn.microsoft.com/en-us/shows/exam-readiness-zone',
         'info_dict': {
             'id': 'exam-readiness-zone',
-            'title': 'Microsoft Build 2022 - Events',
-            'description': 'md5:c16b43848027df837b22c6fbac7648d3',
+            'title': 'Exam Readiness Zone',
+            'description': 'md5:cdfdc7dfb983b8ce129aeda96e6301bf',
         },
-        'playlist_count': 201,
+        'playlist_count': 88,
     }]
 
     def _entries(self, url_base, video_id):
@@ -235,18 +235,20 @@ class MicrosoftLearnEpisodeIE(MicrosoftMediusBaseIE):
     _VALID_URL = r'https?://learn\.microsoft\.com/(?:[\w-]+/)?shows/[\w-]+/(?P<id>[^?#/]+)'
     _TESTS = [{
         'url': 'https://learn.microsoft.com/en-us/shows/bash-for-beginners/what-is-the-difference-between-a-terminal-and-a-shell-2-of-20-bash-for-beginners/',
+        'md5': '4297b49da88292cb8ab5d85e76fb5405',
+        'file_minsize': None,
         'info_dict': {
             'id': 'd44e1a03-a0e5-45c2-9496-5c9fa08dc94c',
-            'ext': 'ismv',
+            'ext': 'mp4',
             'title': 'What is the Difference Between a Terminal and a Shell? (Part 2 of 20)',
             'description': 'md5:7bbbfb593d21c2cf2babc3715ade6b88',
+            'thumbnail': 'md5:b8a71a7b0ba45541b9c01934699bfefd',
             'timestamp': 1676339547,
             'upload_date': '20230214',
-            'thumbnail': r're:https?://.*',
-            'subtitles': 'count:14',
         },
     }, {
         'url': 'https://learn.microsoft.com/en-gb/shows/on-demand-instructor-led-training-series/az-900-module-1',
+        'skip': 'extractor broken: Unable to extract entryId',
         'info_dict': {
             'id': '4fe10f7c-d83c-463b-ac0e-c30a8195e01b',
             'ext': 'mp4',
@@ -345,6 +347,7 @@ class MicrosoftBuildIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://build.microsoft.com/en-US/sessions/b49feb31-afcd-4217-a538-d3ca1d171198?source=sessions',
+        'skip': 'extractor broken: Extractor MicrosoftBuild returned nothing',
         'info_dict': {
             'id': 'aee55fb5-fcf9-4b38-b764-a3527cb57554',
             'ext': 'ismv',

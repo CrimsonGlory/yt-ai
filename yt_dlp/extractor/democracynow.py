@@ -14,6 +14,7 @@ class DemocracynowIE(InfoExtractor):
     IE_NAME = 'democracynow'
     _TESTS = [{
         'url': 'http://www.democracynow.org/shows/2015/7/3',
+        'skip': 'stale test sample / site changed',
         'md5': '3757c182d3d84da68f5c8f506c18c196',
         'info_dict': {
             'id': '2015-0703-001',
@@ -23,6 +24,7 @@ class DemocracynowIE(InfoExtractor):
         },
     }, {
         'url': 'http://www.democracynow.org/2015/7/3/this_flag_comes_down_today_bree',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '2015-0703-001',
             'ext': 'mp4',

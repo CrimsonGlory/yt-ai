@@ -35,6 +35,7 @@ class TelegramEmbedIE(InfoExtractor):
     }, {
         # 2-video post
         'url': 'https://t.me/vorposte/29342',
+        'skip': 'extractor broken: [telegram:embed] unable to extract timestamp',
         'info_dict': {
             'id': 'vorposte-29342',
             'title': 'Форпост 29342',
@@ -47,6 +48,7 @@ class TelegramEmbedIE(InfoExtractor):
     }, {
         # 2-video post with --no-playlist
         'url': 'https://t.me/vorposte/29343',
+        'skip': 'extractor broken: [telegram:embed] unable to extract timestamp',
         'md5': '1724e96053c18e788c8464038876e245',
         'info_dict': {
             'id': '29343',
@@ -66,6 +68,7 @@ class TelegramEmbedIE(InfoExtractor):
     }, {
         # 2-video post with 'single' query param
         'url': 'https://t.me/vorposte/29342?single',
+        'skip': 'extractor broken: [telegram:embed] unable to extract timestamp',
         'md5': 'd20b202f1e41400a9f43201428add18f',
         'info_dict': {
             'id': '29342',

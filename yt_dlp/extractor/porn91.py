@@ -17,6 +17,7 @@ class Porn91IE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://91porn.com/view_video.php?viewkey=7e42283b4f5ab36da134',
+        'skip': 'extractor broken: [91porn] unable to extract description',
         'md5': 'd869db281402e0ef4ddef3c38b866f86',
         'info_dict': {
             'id': '7e42283b4f5ab36da134',
@@ -31,6 +32,7 @@ class Porn91IE(InfoExtractor):
         }
     }, {
         'url': 'https://91porn.com/view_video.php?viewkey=7ef0cf3d362c699ab91c',
+        'skip': 'video gone',
         'md5': 'f8fd50540468a6d795378cd778b40226',
         'info_dict': {
             'id': '7ef0cf3d362c699ab91c',

@@ -12,7 +12,21 @@ from ..utils.traversal import traverse_obj
 
 class SkebIE(InfoExtractor):
     _VALID_URL = r'https?://skeb\.jp/@(?P<uploader_id>[^/?#]+)/works/(?P<id>\d+)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://skeb.jp/@kafka_osigoto/works/245',
+            'info_dict': {
+                'id': '245',
+                'description': 'md5:2ded160dff89ae4f5ca8eccc96a568a9',
+                'uploader': 'ふかかふ',
+                'uploader_id': 'kafka_osigoto',
+                'tags': 'count:30',
+                'genres': ['video'],
+            },
+            'playlist_mincount': 1,
+            'params': {'skip_download': True},
+            'expected_warnings': ['Skipping unsupported extension'],
+        }, {
         'url': 'https://skeb.jp/@riiru_wm/works/10',
         'info_dict': {
             'id': '466853',
@@ -27,6 +41,7 @@ class SkebIE(InfoExtractor):
         },
     }, {
         'url': 'https://skeb.jp/@furukawa_nob/works/3',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '489408',
             'ext': 'mp3',

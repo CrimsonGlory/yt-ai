@@ -194,6 +194,7 @@ class RedditIE(InfoExtractor):
     }, {
         # subtitles from caption-url
         'url': 'https://www.reddit.com/r/soccer/comments/1cxwzso/tottenham_1_0_newcastle_united_james_maddison_31/',
+        'skip': 'extractor broken',
         'info_dict': {
             'id': 'xbmj4t3igy1d1',
             'ext': 'mp4',

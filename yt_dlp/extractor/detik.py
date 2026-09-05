@@ -7,6 +7,7 @@ class DetikEmbedIE(InfoExtractor):
     _WEBPAGE_TESTS = [{
         # cnn embed
         'url': 'https://www.cnnindonesia.com/embed/video/846189',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '846189',
             'ext': 'mp4',
@@ -22,6 +23,7 @@ class DetikEmbedIE(InfoExtractor):
     }, {
         # 20.detik
         'url': 'https://20.detik.com/otobuzz/20220704-220704093/mulai-rp-10-jutaan-ini-skema-kredit-mitsubishi-pajero-sport',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'display_id': 'mulai-rp-10-jutaan-ini-skema-kredit-mitsubishi-pajero-sport',
             'id': '220704093',
@@ -41,6 +43,7 @@ class DetikEmbedIE(InfoExtractor):
     }, {
         # pasangmata.detik
         'url': 'https://pasangmata.detik.com/contribution/366649',
+        'skip': 'extractor broken',
         'info_dict': {
             'id': '366649',
             'ext': 'mp4',
@@ -69,6 +72,7 @@ class DetikEmbedIE(InfoExtractor):
     }, {
         # beautynesia embed
         'url': 'https://www.beautynesia.id/embed/video/261636',
+        'skip': 'extractor broken',
         'info_dict': {
             'id': '261636',
             'ext': 'mp4',
@@ -84,6 +88,7 @@ class DetikEmbedIE(InfoExtractor):
     }, {
         # cnbcindonesia embed
         'url': 'https://www.cnbcindonesia.com/embed/video/371839',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '371839',
             'ext': 'mp4',
@@ -96,6 +101,7 @@ class DetikEmbedIE(InfoExtractor):
     }, {
         # detik shortlink (we can get it from https://dtk.id/?<url>)
         'url': 'https://dtk.id/NkISKr',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '220914049',
             'ext': 'mp4',

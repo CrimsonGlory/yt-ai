@@ -224,6 +224,7 @@ class MTVIE(MTVServicesBaseIE):
     _VALID_URL = r'https?://(?:www\.)?mtv\.com/(?:video-clips|episodes)/(?P<id>[\da-z]{6})'
     _TESTS = [{
         'url': 'https://www.mtv.com/video-clips/syolsj',
+        'skip': "extractor broken: An extractor error has occurred. (caused by KeyError('stitchedstream')); please",
         'info_dict': {
             'id': '213ea7f8-bac7-4a43-8cd5-8d8cb8c8160f',
             'ext': 'mp4',

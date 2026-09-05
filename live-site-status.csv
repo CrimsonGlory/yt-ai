@@ -432,7 +432,7 @@ khanacademy.org,true,2026-08-26,false,false
 kick.com,true,2026-08-26,false,false
 kicker.de,true,2026-08-26,false,false
 kickstarter.com,true,2026-08-26,false,false
-kika.de,true,2026-08-24,false,false
+kika.de,true,2026-09-03,false,false
 kinopoisk.ru,true,2026-08-26,false,false
 kommunetv.no,true,2026-08-23,false,false
 kompas.com,true,2026-08-26,false,false
@@ -506,7 +506,7 @@ mediasite.com,false,NULL,false,false
 mediaworks.nz,true,2026-08-24,false,false
 medici.tv,true,2026-08-24,false,false
 megaphone.fm,true,2026-08-24,false,false
-megatv.com,true,2026-08-24,false,false
+megatv.com,true,2026-09-03,false,false
 meipai.com,true,2026-08-26,false,false
 mellow-fan.com,true,2026-08-24,false,false
 melon.com,false,NULL,false,false
@@ -753,8 +753,8 @@ rtrfm.com.au,true,2026-08-26,false,false
 rts.ch,true,2026-08-24,false,false
 rtvc.gov.co,false,NULL,false,false
 rtvcplay.co,true,2026-08-24,false,false
-rtve.es,true,2026-08-24,false,false
-rtvs.sk,true,2026-08-24,false,false
+rtve.es,true,2026-09-03,false,false
+rtvs.sk,true,2026-09-03,false,false
 rtvslo.si,true,2026-08-24,false,false
 rudo.video,true,2026-08-24,false,false
 ruhr-uni-bochum.de,true,2026-08-24,false,false
@@ -765,7 +765,7 @@ rutube.ru,false,NULL,false,false
 rutube:movie,false,NULL,false,false
 ruutu.fi,true,2026-08-26,false,false
 ruv.is,true,2026-08-26,false,false
-s4c.cymru,true,2026-08-24,false,false
+s4c.cymru,true,2026-09-03,false,false
 sachsen.de,true,2026-08-24,false,false
 safaribooksonline.com,true,2026-08-26,false,false
 saitosan.net,false,NULL,false,false
@@ -790,11 +790,11 @@ scrolller.com,true,2026-08-26,false,false
 sejm.gov.pl,false,NULL,false,false
 sen.com,true,2026-08-23,false,false
 senalcolombia.tv,false,NULL,false,false
-senate.gov,true,2026-08-24,false,false
+senate.gov,true,2026-09-03,false,false
 servustv.com,false,NULL,false,false
 sexu.com,true,2026-08-26,false,false
 seznamzpravy.cz,false,NULL,false,false
-sharepoint.com,true,2026-08-24,false,false
+sharepoint.com,true,2026-09-03,false,false
 shemaroome.com,false,NULL,false,false
 shiey.com,false,NULL,false,false
 showroom-live.com,true,2026-08-24,false,false
@@ -849,7 +849,7 @@ streamable.com,true,2026-08-24,false,false
 streetvoice.com,true,2026-08-23,false,false
 stripchat.com,false,NULL,false,false
 stv.tv,true,NULL,false,false
-subsplash.com,true,2026-08-24,false,false
+subsplash.com,true,2026-09-03,false,false
 substack.com,true,2026-08-24,false,false
 sunporno.com,true,2026-08-26,false,false
 sverigesradio.se,true,2026-08-26,false,false
@@ -858,7 +858,7 @@ svtplay.se,false,NULL,false,false
 swipeto.pl,true,2026-08-26,false,false
 sxyprn.com,false,NULL,false,false
 syfy.com,false,NULL,false,false
-sztv.hu,true,2026-08-26,false,false
+sztv.hu,true,2026-09-03,false,false
 t-online.de,true,2026-08-26,false,false
 t.me,true,2026-08-24,false,false
 t13.cl,true,2026-08-26,false,false
@@ -903,7 +903,7 @@ theverge.com,true,2026-08-26,false,false
 thisamericanlife.org,true,2026-08-26,false,false
 thisav.com,true,NULL,false,false
 thisoldhouse.com,true,2026-08-24,false,false
-thisvid.com,true,2026-08-24,false,false
+thisvid.com,true,2026-09-03,false,false
 tiktok.com,true,2026-08-24,false,false
 tlc.com,true,2026-08-26,false,false
 tmz.com,true,2026-08-24,false,false
@@ -932,7 +932,7 @@ tv3.lt,false,NULL,false,false
 tv4.se,false,NULL,false,false
 tv5monde.com,true,2026-08-26,false,false
 tv5unis.ca,true,2026-08-24,false,false
-tv8.it,true,2026-08-24,false,false
+tv8.it,true,2026-09-03,false,false
 tvanouvelles.ca,true,2026-08-24,false,false
 tvaplus.ca,true,2026-08-26,false,false
 tvc.ru,true,2026-08-24,false,false
@@ -987,15 +987,15 @@ vid.ly,true,2026-08-24,false,false
 viddler.com,true,2026-08-26,false,false
 videa.hu,true,2026-08-24,false,false
 video.google:search,false,NULL,false,false
-videoken.com,false,NULL,false,false
+videoken.com,true,2026-09-03,false,false
 videolectures.net,false,NULL,false,false
 videopress.com,true,2026-08-24,false,false
-vidio.com,true,2026-08-24,false,false
+vidio.com,true,2026-09-03,false,false
 vidlii.com,true,2026-08-24,false,false
 vids.io,true,2026-08-26,false,false
 vidyard.com,true,2026-08-24,false,false
 viewsb.com,true,NULL,false,false
-vimeo.com,true,2026-08-24,false,false
+vimeo.com,true,2026-09-03,false,false
 vimeopro.com,true,2026-08-26,false,false
 viqeo.tv,true,2026-08-26,false,false
 visir.is,true,2026-08-24,false,false
@@ -1026,7 +1026,7 @@ webex.com,false,NULL,false,false
 webofstories.com,true,2026-08-24,false,false
 weibo.com,true,2026-08-24,false,false
 weiqitv.com,true,NULL,true,false
-wetv.vip,true,2026-08-24,false,false
+wetv.vip,true,2026-09-03,false,false
 weverse.io,true,2026-08-24,false,false
 wevidi.net,true,NULL,false,false
 whowatch.tv,false,NULL,false,false
@@ -1044,7 +1044,7 @@ wp.pl,true,NULL,false,false
 wrestle-universe.com,false,NULL,false,false
 wsj.com,true,2026-08-24,false,false
 wwe.com,true,2026-08-26,false,false
-wyborcza.pl,true,2026-08-24,false,false
+wyborcza.pl,true,2026-09-03,false,false
 wykop.pl,true,2026-08-23,false,false
 x-minus.org,true,2026-08-26,false,false
 xanimu.com,true,2026-08-26,false,false

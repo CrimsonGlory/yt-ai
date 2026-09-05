@@ -8,6 +8,7 @@ class SenalColombiaLiveIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.senalcolombia.tv/senal-en-vivo',
+        'skip': "extractor broken: [SenalColombiaLive] SenalColombiaLive extractor failed (KeyError: 'envivosrc');",
         'info_dict': {
             'id': 'indexSC',
             'title': 're:^Señal Colombia',

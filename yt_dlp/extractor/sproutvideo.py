@@ -68,7 +68,18 @@ class SproutVideoIE(InfoExtractor):
         },
     }]
     _WEBPAGE_TESTS = [{
+        'url': 'https://sproutvideo.github.io/sproutvideo-player-api/example.html',
+        'info_dict': {
+            'id': '709adcb31f19e5c6f8',
+            'ext': 'mp4',
+            'title': 'SproutVideo Superheroes',
+            'duration': 90,
+            'thumbnail': r're:https?://images\.sproutvideo\.com/.+\.jpg',
+        },
+    }, {
+        # yt-dlp urllib gets HTTP 403; embed is still present (works with --impersonate chrome)
         'url': 'https://www.solidarum.org/vivre-ensemble/adrien-labaeye-berlin-des-communautes-aux-communs',
+        'skip': 'HTTP 403/blocked',
         'info_dict': {
             'id': '4c9dddb01910e3c9c4',
             'ext': 'mp4',

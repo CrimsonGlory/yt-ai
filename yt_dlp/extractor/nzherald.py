@@ -12,6 +12,7 @@ class NZHeraldIE(InfoExtractor):
         {
             # Video accessible under 'video' key
             'url': 'https://www.nzherald.co.nz/nz/queen-elizabeth-death-nz-public-holiday-announced-for-september-26/CEOPBSXO2JDCLNK3H7E3BIE2FA/',
+            'skip': 'stale test sample / site changed',
             'info_dict': {
                 'id': '6312191736112',
                 'ext': 'mp4',

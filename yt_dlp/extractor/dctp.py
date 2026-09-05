@@ -9,9 +9,24 @@ from ..utils import (
 
 class DctpTvIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?dctp\.tv/(?:#/)?filme/(?P<id>[^/?#&]+)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'http://www.dctp.tv/filme/news-stories-04-01-1993?thema=architektur-thema',
+            'md5': '3932041f7d0a3d47401c47bb22914c19',
+            'info_dict': {
+            'id': 'fd6b910e87a849c48744d59d204705f7',
+            'ext': 'm4v',
+            'display_id': 'news-stories-04-01-1993',
+            'title': 'Die vier Arten Brücken zu bauen',
+            'alt_title': '',
+            'description': 'md5:99e3b22a61c2be443eafe270f0341bc5',
+            'duration': 2708.12,
+            'thumbnail': 'md5:195e9b18c468e19e8f0687c3d0f968e3',
+        },
+        },{
         # 4x3
         'url': 'http://www.dctp.tv/filme/videoinstallation-fuer-eine-kaufhausfassade/',
+        'skip': 'stale test sample / site changed',
         'md5': '3ffbd1556c3fe210724d7088fad723e3',
         'info_dict': {
             'id': '95eaa4f33dad413aa17b4ee613cccc6c',

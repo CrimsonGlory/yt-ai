@@ -30,6 +30,7 @@ class BitmovinIE(InfoExtractor):
     _WEBPAGE_TESTS = [{
         # bitmovin-stream web component
         'url': 'https://www.institutionalinvestor.com/article/2bsw1in1l9k68mp9kritc/video-war-stories-over-board-games/best-case-i-get-fired-war-stories',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'cuiumeil6g115lc4li3g',
             'ext': 'mp4',
@@ -40,6 +41,7 @@ class BitmovinIE(InfoExtractor):
     }, {
         # iframe embed
         'url': 'https://www.clearblueionizer.com/en/pool-ionizers/mineral-pool-vs-saltwater-pool/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'cvpvfsm1pf7itg7cfvtg',
             'ext': 'mp4',

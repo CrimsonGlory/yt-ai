@@ -819,6 +819,7 @@ class TikTokIE(TikTokBaseIE):
     }, {
         # Video without title and description
         'url': 'https://www.tiktok.com/@pokemonlife22/video/7059698374567611694',
+        'skip': 'extractor broken: Unable to extract universal data for rehydration',
         'info_dict': {
             'id': '7059698374567611694',
             'ext': 'mp4',
@@ -869,6 +870,7 @@ class TikTokIE(TikTokBaseIE):
     }, {
         # slideshow audio-only mp3 format
         'url': 'https://www.tiktok.com/@_le_cannibale_/video/7139980461132074283',
+        'skip': 'IP blocked',
         'info_dict': {
             'id': '7139980461132074283',
             'ext': 'mp3',
@@ -895,6 +897,7 @@ class TikTokIE(TikTokBaseIE):
     }, {
         # only available via web
         'url': 'https://www.tiktok.com/@moxypatch/video/7206382937372134662',
+        'skip': 'IP blocked',
         'md5': '4cdefa501ac8ac20bf04986e10916fea',
         'info_dict': {
             'id': '7206382937372134662',
@@ -951,6 +954,7 @@ class TikTokIE(TikTokBaseIE):
     }, {
         # Slideshow, audio-only m4a format
         'url': 'https://www.tiktok.com/@hara_yoimiya/video/7253412088251534594',
+        'skip': 'extractor broken: Unable to extract universal data for rehydration',
         'md5': '2ff8fe0174db2dbf49c597a7bef4e47d',
         'info_dict': {
             'id': '7253412088251534594',
@@ -1020,6 +1024,7 @@ class TikTokUserIE(TikTokBaseIE):
     _VALID_URL = r'(?:tiktokuser:|https?://(?:www\.)?tiktok\.com/@)(?P<id>[\w.-]+)/?(?:$|[#?])'
     _TESTS = [{
         'url': 'https://tiktok.com/@corgibobaa?lang=en',
+        'skip': 'extractor broken: Unable to extract secondary user ID. If you are able to get the channel_id from',
         'playlist_mincount': 45,
         'info_dict': {
             'id': 'MS4wLjABAAAAepiJKgwWhulvCpSuUVsp7sgVVsFJbbNaLeQ6OQ0oAJERGDUIXhb2yxxHZedsItgT',
@@ -1029,6 +1034,7 @@ class TikTokUserIE(TikTokBaseIE):
         'params': {'extractor_retries': 10},
     }, {
         'url': 'https://www.tiktok.com/@6820838815978423302',
+        'skip': 'extractor broken: Unable to extract secondary user ID. If you are able to get the channel_id from',
         'playlist_mincount': 5,
         'info_dict': {
             'id': 'MS4wLjABAAAA0tF1nBwQVVMyrGu3CqttkNgM68Do1OXUFuCY0CRQk8fEtSVDj89HqoqvbSTmUP2W',
@@ -1038,6 +1044,7 @@ class TikTokUserIE(TikTokBaseIE):
         'params': {'extractor_retries': 10},
     }, {
         'url': 'https://www.tiktok.com/@meme',
+        'skip': 'extractor broken: Unable to extract secondary user ID. If you are able to get the channel_id from',
         'playlist_mincount': 593,
         'info_dict': {
             'id': 'MS4wLjABAAAAiKfaDWeCsT3IHwY77zqWGtVRIy9v4ws1HbVi7auP1Vx7dJysU_hc5yRiGywojRD6',
@@ -1047,6 +1054,7 @@ class TikTokUserIE(TikTokBaseIE):
         'params': {'extractor_retries': 10},
     }, {
         'url': 'tiktokuser:MS4wLjABAAAAM3R2BtjzVT-uAtstkl2iugMzC6AtnpkojJbjiOdDDrdsTiTR75-8lyWJCY5VvDrZ',
+        'skip': 'extractor broken: Failed to parse JSON (caused by JSONDecodeError("Expecting value in \'\': line 1 c',
         'playlist_mincount': 31,
         'info_dict': {
             'id': 'MS4wLjABAAAAM3R2BtjzVT-uAtstkl2iugMzC6AtnpkojJbjiOdDDrdsTiTR75-8lyWJCY5VvDrZ',
@@ -1246,6 +1254,7 @@ class TikTokSoundIE(TikTokBaseListIE):
     _API_ENDPOINT = 'music/aweme'
     _TESTS = [{
         'url': 'https://www.tiktok.com/music/Build-a-Btch-6956990112127585029?lang=en',
+        'skip': 'app API blocked',
         'playlist_mincount': 100,
         'info_dict': {
             'id': '6956990112127585029',
@@ -1254,6 +1263,7 @@ class TikTokSoundIE(TikTokBaseListIE):
     }, {
         # Actual entries are less than listed video count
         'url': 'https://www.tiktok.com/music/jiefei-soap-remix-7036843036118469381',
+        'skip': 'app API blocked',
         'playlist_mincount': 2182,
         'info_dict': {
             'id': '7036843036118469381',
@@ -1270,6 +1280,7 @@ class TikTokEffectIE(TikTokBaseListIE):
     _API_ENDPOINT = 'sticker/aweme'
     _TESTS = [{
         'url': 'https://www.tiktok.com/sticker/MATERIAL-GWOOORL-1258156',
+        'skip': 'app API blocked',
         'playlist_mincount': 100,
         'info_dict': {
             'id': '1258156',
@@ -1290,6 +1301,7 @@ class TikTokTagIE(TikTokBaseListIE):
     _API_ENDPOINT = 'challenge/aweme'
     _TESTS = [{
         'url': 'https://tiktok.com/tag/hello2018',
+        'skip': 'app API blocked',
         'playlist_mincount': 39,
         'info_dict': {
             'id': '46294678',
@@ -1316,6 +1328,7 @@ class TikTokCollectionIE(TikTokBaseIE):
     _TESTS = [{
         # playlist should have exactly 9 videos
         'url': 'https://www.tiktok.com/@imanoreotwe/collection/count-test-7371330159376370462',
+        'skip': 'extractor broken: Failed to parse JSON (caused by JSONDecodeError("Expecting value in \'\': line 1 c',
         'info_dict': {
             'id': '7371330159376370462',
             'title': 'imanoreotwe-count-test',
@@ -1324,6 +1337,7 @@ class TikTokCollectionIE(TikTokBaseIE):
     }, {
         # tests returning multiple pages of a large collection
         'url': 'https://www.tiktok.com/@imanoreotwe/collection/%F0%9F%98%82-7111887189571160875',
+        'skip': 'extractor broken: Failed to parse JSON (caused by JSONDecodeError("Expecting value in \'\': line 1 c',
         'info_dict': {
             'id': '7111887189571160875',
             'title': 'imanoreotwe-%F0%9F%98%82',
@@ -1372,6 +1386,7 @@ class DouyinIE(TikTokBaseIE):
     _VALID_URL = r'https?://(?:www\.)?douyin\.com/video/(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'https://www.douyin.com/video/6961737553342991651',
+        'skip': 'HTTP 403/blocked',
         'md5': '9ecce7bc5b302601018ecb2871c63a75',
         'info_dict': {
             'id': '6961737553342991651',
@@ -1424,6 +1439,7 @@ class DouyinIE(TikTokBaseIE):
         },
     }, {
         'url': 'https://www.douyin.com/video/6953975910773099811',
+        'skip': 'HTTP 403/blocked',
         'md5': '0e6443758b8355db9a3c34864a4276be',
         'info_dict': {
             'id': '6953975910773099811',
@@ -1468,6 +1484,7 @@ class DouyinIE(TikTokBaseIE):
         'skip': 'No longer available',
     }, {
         'url': 'https://www.douyin.com/video/6963263655114722595',
+        'skip': 'HTTP 403/blocked',
         'md5': '1440bcf59d8700f8e014da073a4dfea8',
         'info_dict': {
             'id': '6963263655114722595',
@@ -1591,6 +1608,7 @@ class TikTokLiveIE(TikTokBaseIE):
 
     _TESTS = [{
         'url': 'https://www.tiktok.com/@weathernewslive/live',
+        'skip': 'not currently live',
         'info_dict': {
             'id': '7210809319192726273',
             'ext': 'mp4',

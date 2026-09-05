@@ -18,15 +18,22 @@ class ZypeIE(InfoExtractor):
     _EMBED_REGEX = [fr'<script[^>]+\bsrc=(["\'])(?P<url>(?:https?:)?{_COMMON_RE % _ID_RE}.+?)\1']
     _TEST = {
         'url': 'https://player.zype.com/embed/5b400b834b32992a310622b9.js?api_key=jZ9GUhRmxcPvX7M3SlfejB6Hle9jyHTdk2jVxG7wOHPLODgncEKVdPYBhuz9iWXQ&autoplay=false&controls=true&da=false',
-        'md5': 'eaee31d474c76a955bdaba02a505c595',
+        'md5': 'd45a39207235e72957db3d09317d5a27',
         'info_dict': {
             'id': '5b400b834b32992a310622b9',
             'ext': 'mp4',
+            'display_id': 'smoky-barbecue-favorites',
             'title': 'Smoky Barbecue Favorites',
-            'thumbnail': r're:^https?://.*\.jpe?g',
-            'description': 'md5:5ff01e76316bd8d46508af26dc86023b',
-            'timestamp': 1504915200,
+            'description': 'md5:380c4d0f578647654f0d855c0f6bb49a',
+            'duration': 1366,
+            'thumbnail': 'md5:f3d593ff8feaa75058e167dc3cbe7c8d',
+            'timestamp': 1504929600,
             'upload_date': '20170909',
+            'season': 'Season 10',
+            'season_number': 10,
+            'episode': 'Episode 3',
+            'episode_number': 3,
+            'average_rating': 0,
         },
     }
 

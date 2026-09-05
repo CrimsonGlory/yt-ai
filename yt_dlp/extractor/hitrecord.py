@@ -11,21 +11,21 @@ class HitRecordIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?hitrecord\.org/records/(?P<id>\d+)'
     _TEST = {
         'url': 'https://hitrecord.org/records/2954362',
-        'md5': 'fe1cdc2023bce0bbb95c39c57426aa71',
+        'md5': '4626eef88a2bc551b375b075520c705f',
         'info_dict': {
             'id': '2954362',
             'ext': 'mp4',
             'title': 'A Very Different World (HITRECORD x ACLU)',
-            'description': 'md5:e62defaffab5075a5277736bead95a3d',
-            'duration': 139.327,
-            'timestamp': 1471557582,
-            'upload_date': '20160818',
-            'uploader': 'Zuzi.C12',
+            'description': 'md5:b5abe969dcc05093ff7cd8176184ea21',
+            'uploader': 'Zuzi_C12',
             'uploader_id': '362811',
+            'duration': 139.264264,
+            'timestamp': 1471557604,
+            'upload_date': '20160818',
             'view_count': int,
             'like_count': int,
             'comment_count': int,
-            'tags': list,
+            'tags': ['finished piece', 'a very different world', 'benwizner', 'animation', 'short film', 'hitrecord x aclu', 'aclu'],
         },
     }
 

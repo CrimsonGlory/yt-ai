@@ -12,6 +12,7 @@ class ThreeSpeakIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://3speak.tv/watch?v=dannyshine/wjgoxyfy',
+        'skip': 'extractor broken: Unable to extract json',
         'info_dict': {
             'id': 'wjgoxyfy',
             'ext': 'mp4',

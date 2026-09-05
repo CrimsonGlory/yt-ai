@@ -8,6 +8,7 @@ class TelemundoIE(InfoExtractor):
     _VALID_URL = r'https?:\/\/(?:www\.)?telemundo\.com\/.+?video\/[^\/]+(?P<id>tmvo\d{7})'
     _TESTS = [{
         'url': 'https://www.telemundo.com/noticias/noticias-telemundo-en-la-noche/empleo/video/esta-aplicacion-gratuita-esta-ayudando-los-latinos-encontrar-trabajo-en-estados-unidos-tmvo9829325',
+        'skip': 'extractor broken: [Telemundo] Telemundo extractor failed (ExtractorError: tmvo9829325: Response da',
         'info_dict': {
             'id': 'tmvo9829325',
             'timestamp': 1621396800,

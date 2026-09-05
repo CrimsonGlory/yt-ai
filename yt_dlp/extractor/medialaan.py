@@ -98,23 +98,24 @@ class MedialaanIE(MedialaanBaseIE):
                     '''
     _TESTS = [{
         'url': 'https://www.bndestem.nl/video/de-terugkeer-van-ally-de-aap-en-wie-vertrekt-er-nog-bij-nac~p193993',
+        'md5': '9ac689b678debdbcd0276c3f2163ddf6',
         'info_dict': {
             'id': '193993',
             'ext': 'mp4',
             'title': 'De terugkeer van Ally de Aap en wie vertrekt er nog bij NAC?',
-            'description': 'In een nieuwe Gegenpressing video bespreken Yadran Blanco en Dennis Kas het nieuws omrent NAC.',
-            'duration': 238,
-            'channel': 'BN DeStem',
-            'channel_id': '418',
-            'genres': ['Sports'],
-            'release_date': '20210126',
-            'release_timestamp': 1611663540,
-            'series': 'Korte Reportage',
-            'series_id': '972',
-            'tags': 'count:2',
-            'thumbnail': r're:https?://images\.mychannels\.video/imgix/.+\.(?:jpe?g|png)',
+            'description': 'md5:1942d6eba56ed88624ce5574c41c064a',
             'uploader': 'BN De Stem',
             'uploader_id': '26',
+            'channel': 'BN DeStem',
+            'channel_id': '418',
+            'duration': 238,
+            'genres': ['Sports'],
+            'thumbnail': 'md5:60a706b3babdb358893ccb62acc2bc1d',
+            'release_timestamp': 1611663540,
+            'release_date': '20210126',
+            'series': 'Korte Reportage',
+            'series_id': '972',
+            'tags': ['Sport'],
         },
     }, {
         'url': 'https://www.gelderlander.nl/video/kanalen/degelderlander~c320/series/snel-nieuws~s984/noodbevel-in-doetinchem-politie-stuurt-mensen-centrum-uit~p194093',
@@ -158,6 +159,7 @@ class MedialaanIE(MedialaanBaseIE):
         },
     }, {
         'url': 'https://mychannels.video/embed/313117',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '313117',
             'ext': 'mp4',
@@ -192,6 +194,7 @@ class MedialaanIE(MedialaanBaseIE):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.demorgen.be/snelnieuws/tom-waes-promoot-alcoholtesten-op-werchter-ik-ben-de-laatste-persoon-die-met-de-vinger-moet-wijzen~b7457c0d/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '1576607',
             'ext': 'mp4',

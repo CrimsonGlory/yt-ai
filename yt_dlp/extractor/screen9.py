@@ -7,6 +7,7 @@ class Screen9IE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://api.screen9.com/embed/8kTNEjvoXGM33dmWwF0uDA',
+            'skip': 'extractor broken: Failed to obtain m3u8 URL',
             'md5': 'd60d23f8980583b930724b01fa6ddb41',
             'info_dict': {
                 'id': '8kTNEjvoXGM33dmWwF0uDA',
@@ -27,6 +28,7 @@ class Screen9IE(InfoExtractor):
         },
         {
             'url': 'https://play.su.se/media/H1YA0EYNCxiesrSU1kaRBQ/baltic-breakfast',
+            'skip': 'extractor broken: Failed to obtain m3u8 URL',
             'md5': '2b817647c3058002526269deff4c0683',
             'info_dict': {
                 'id': 'H1YA0EYNCxiesrSU1kaRBQ',

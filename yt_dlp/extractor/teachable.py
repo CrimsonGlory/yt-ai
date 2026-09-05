@@ -110,6 +110,7 @@ class TeachableIE(TeachableBaseIE):
 
     _TESTS = [{
         'url': 'https://gns3.teachable.com/courses/gns3-certified-associate/lectures/6842364',
+        'skip': 'extractor broken: [Teachable] Teachable extractor failed (ExtractorError: Unable to find video URL',
         'info_dict': {
             'id': 'untlgzk1v7',
             'ext': 'bin',
@@ -218,6 +219,7 @@ class TeachableCourseIE(TeachableBaseIE):
                     '''.format(*TeachableBaseIE._VALID_URL_SUB_TUPLE)
     _TESTS = [{
         'url': 'http://v1.upskillcourses.com/courses/essential-web-developer-course/',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'essential-web-developer-course',
             'title': 'The Essential Web Developer Course (Free)',

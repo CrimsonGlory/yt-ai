@@ -94,16 +94,17 @@ class StacommuVODIE(StacommuBaseIE):
     _TESTS = [{
         # not encrypted
         'url': 'https://www.stacommu.jp/videos/episodes/aXcVKjHyAENEjard61soZZ',
+        'md5': '10065750ce7c78b7c844d8b0a4a4587c',
         'info_dict': {
             'id': 'aXcVKjHyAENEjard61soZZ',
             'ext': 'mp4',
             'title': 'スタコミュAWARDの裏側、ほぼ全部見せます！〜晴れ舞台の直前ドキドキ編〜',
             'description': 'md5:6400275c57ae75c06da36b06f96beb1c',
+            'duration': 250,
+            'thumbnail': 'https://image.stacommu.jp/6eLobQan8PFtBoU4RL4uGg/6eLobQan8PFtBoU4RL4uGg',
             'timestamp': 1679652000,
             'upload_date': '20230324',
-            'thumbnail': 'https://image.stacommu.jp/6eLobQan8PFtBoU4RL4uGg/6eLobQan8PFtBoU4RL4uGg',
-            'cast': 'count:11',
-            'duration': 250,
+            'cast': ['桜木心菜', '上田理子', '辻野かなみ', '藤谷美海', '結城りな'],
         },
         'params': {
             'skip_download': 'm3u8',

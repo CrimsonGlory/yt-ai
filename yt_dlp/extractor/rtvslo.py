@@ -67,7 +67,7 @@ class RTVSLOIE(InfoExtractor):
             'series': 'Il giornale della sera',
             'timestamp': 1643743800,
             'release_timestamp': 1643745424,
-            'thumbnail': 'https://img.rtvcdn.si/_up/ava/ava_misc/show_logos/il-giornale-della-sera_wide2.jpg',
+            'thumbnail': 'https://img.rtvcdn.si/_up/ava/ava_misc/channel_logos/CAPO_wide2.jpg',
             'upload_date': '20220201',
             'tbr': 128000,
             'release_date': '20220201',
@@ -171,8 +171,20 @@ class RTVSLOShowIE(InfoExtractor):
     IE_NAME = 'rtvslo.si:show'
     _VALID_URL = r'https?://(?:365|4d)\.rtvslo.si/oddaja/[^/?#&]+/(?P<id>\d+)'
 
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://365.rtvslo.si/oddaja/arsov-glasbeni-observatorij/173251927',
+            'info_dict': {
+                'id': '173251927',
+                'title': 'Arsov glasbeni observatorij',
+                'description': 'md5:ce7b807426e6cabb5562239d76e8e233',
+                'thumbnail': 'https://img.rtvcdn.si/_up/ava/ava_misc/show_logos/173251927/logo_wide1.jpg',
+            },
+            'playlist_mincount': 2,
+            'params': {'skip_download': True},
+        },{
         'url': 'https://365.rtvslo.si/oddaja/ekipa-bled/173250997',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '173250997',
             'title': 'Ekipa Bled',

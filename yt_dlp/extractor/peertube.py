@@ -1486,6 +1486,7 @@ class PeerTubeIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://video.macver.org/w/6gvhZpUGQVd4SQ6oYDc9pC',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '6gvhZpUGQVd4SQ6oYDc9pC',
             'ext': 'mp4',

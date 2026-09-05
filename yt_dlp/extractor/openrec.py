@@ -648,6 +648,7 @@ class OpenRecChannelIE(OpenRecBaseIE):
     _VALID_URL = r'https?://(?:www\.)?(?:mellow-fan\.com|openrec\.tv)/(?:m/)?user/(?P<id>[^/?#]+)$'
     _TESTS = [{
         'url': 'https://www.mellow-fan.com/user/OPENRECPARK',
+        'skip': 'extractor broken: TypeError',
         'info_dict': {
             'id': 'OPENRECPARK',
             'title': 'OPENREC PARK',

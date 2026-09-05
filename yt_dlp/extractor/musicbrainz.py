@@ -80,6 +80,7 @@ class MusicBrainzIE(MusicBrainzBaseIE):
     _VALID_URL = rf'https?://(?:(?:www|beta)\.)?musicbrainz\.org/recording/(?P<id>{_UUID_RE})'
     _TESTS = [{
         'url': 'https://musicbrainz.org/recording/01a292ae-371a-4a46-bc82-f21c30f0bf0e',
+        'skip': 'requires account',
         'md5': 'ea6995055d6649a573a0fdab22690482',
         'info_dict': {
             'id': 'pQEz62B2ASY',

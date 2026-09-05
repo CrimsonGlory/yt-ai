@@ -11,6 +11,7 @@ class TelegraafIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?telegraaf\.nl/video/(?P<id>\d+)'
     _TEST = {
         'url': 'https://www.telegraaf.nl/video/734366489/historisch-scheepswrak-slaat-na-100-jaar-los',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'gaMItuoSeUg2',
             'ext': 'mp4',

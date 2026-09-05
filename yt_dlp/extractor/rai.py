@@ -251,8 +251,30 @@ class RaiBaseIE(InfoExtractor):
 
 class RaiPlayIE(RaiBaseIE):
     _VALID_URL = rf'(?P<base>https?://(?:www\.)?raiplay\.it/.+?-(?P<id>{RaiBaseIE._UUID_RE}))\.(?:html|json)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.raiplay.it/video/2026/09/Alessandro-Di-Battista-le-sue-condizioni-e-lintervista-prima-di-Cuba-1f0271fb-1ab1-4860-9310-c1429f0180c6.html',
+            'md5': '43fcaf9c17d53fb24bcc94c5d8c18913',
+            'info_dict': {
+            'id': '1f0271fb-1ab1-4860-9310-c1429f0180c6',
+            'ext': 'mp4',
+            'title': 'md5:c7d58263e70422657dfcec9e4285ab9c',
+            'alt_title': 'md5:dded2642f2f3f978d3dd58ee0ebf9343',
+            'description': 'md5:6fd69fb14a60b6f945666c83e83924b0',
+            'uploader': 'Rai 3',
+            'duration': 314,
+            'thumbnail': 'https://www.raiplay.it/dl/img/2026/09/30237276.png',
+            'timestamp': 1788258660,
+            'upload_date': '20260901',
+            'series': 'Filorosso',
+            'season': 'Season 2026',
+            'season_number': 2026,
+            'episode': "Alessandro Di Battista, le sue condizioni e l'intervista prima di Cuba - 31/08/2026",
+            'release_year': 2026,
+        },
+        },{
         'url': 'https://www.raiplay.it/video/2014/04/Report-del-07042014-cb27157f-9dd0-4aee-b788-b1f67643a391.html',
+        'skip': 'stale test sample / site changed',
         'md5': '8970abf8caf8aef4696e7b1f2adfc696',
         'info_dict': {
             'id': 'cb27157f-9dd0-4aee-b788-b1f67643a391',
@@ -325,6 +347,7 @@ class RaiPlayIE(RaiBaseIE):
     }, {
         # checking program_info gives false positive for DRM
         'url': 'https://www.raiplay.it/video/2022/10/Ad-ogni-costo---Un-giorno-in-Pretura---Puntata-del-15102022-1dfd1295-ea38-4bac-b51e-f87e2881693b.html',
+        'skip': 'stale test sample / site changed',
         'md5': '572c6f711b7c5f2d670ba419b4ae3b08',
         'info_dict': {
             'id': '1dfd1295-ea38-4bac-b51e-f87e2881693b',
@@ -486,7 +509,25 @@ class RaiPlayPlaylistIE(InfoExtractor):
 
 class RaiPlaySoundIE(RaiBaseIE):
     _VALID_URL = rf'(?P<base>https?://(?:www\.)?raiplaysound\.it/.+?-(?P<id>{RaiBaseIE._UUID_RE}))\.(?:html|json)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.raiplaysound.it/audio/2026/09/GR-Abruzzo-del-03092026-ore-1210-d7686c10-5bbe-4ad0-8c2b-c8960e46ef54.html',
+            'md5': '41e103d9a8bc113eaf45c24ac7e77e5b',
+            'info_dict': {
+            'id': 'd7686c10-5bbe-4ad0-8c2b-c8960e46ef54',
+            'ext': 'mp3',
+            'title': 'GR Abruzzo del 03/09/2026 ore 12:10',
+            'alt_title': 'md5:e81981ef21a91b5ff16b63f4a620f9cc',
+            'uploader': 'rai radio 1',
+            'duration': 903,
+            'thumbnail': 'https://www.raiplaysound.it/dl/img/2022/06/01/1654080282350_Abruzzo_social_2048x1152.jpg',
+            'timestamp': 1788440460,
+            'upload_date': '20260903',
+            'series': 'GR Abruzzo',
+            'episode': 'GR Abruzzo del 03/09/2026 ore 12:10',
+            'creators': ['tgr'],
+        },
+        },{
         'url': 'https://www.raiplaysound.it/audio/2021/12/IL-RUGGITO-DEL-CONIGLIO-1ebae2a7-7cdb-42bb-842e-fe0d193e9707.html',
         'md5': '8970abf8caf8aef4696e7b1f2adfc696',
         'info_dict': {
@@ -509,6 +550,7 @@ class RaiPlaySoundIE(RaiBaseIE):
     }, {
         # case-sensitivity test for uppercase extension
         'url': 'https://www.raiplaysound.it/audio/2020/05/Storia--Lunita-dItalia-e-lunificazione-della-Germania-b4c16390-7f3f-4282-b353-d94897dacb7c.html',
+        'skip': 'stale test sample / site changed',
         'md5': 'c69ebd69282f0effd7ef67b7e2f6c7d8',
         'info_dict': {
             'id': 'b4c16390-7f3f-4282-b353-d94897dacb7c',
@@ -722,15 +764,15 @@ class RaiNewsIE(RaiBaseIE):
     }, {
         # old content with fallback method to extract media urls
         'url': 'https://www.rainews.it/dl/rainews/media/Weekend-al-cinema-da-Hollywood-arriva-il-thriller-di-Tate-Taylor-La-ragazza-del-treno-1632c009-c843-4836-bb65-80c33084a64b.html',
+        'md5': '61c183eb1f13969b5e43ac570e074673',
         'info_dict': {
             'id': '1632c009-c843-4836-bb65-80c33084a64b',
             'ext': 'mp4',
             'title': 'Weekend al cinema, da Hollywood arriva il thriller di Tate Taylor "La ragazza del treno"',
             'description': 'I film in uscita questa settimana.',
-            'thumbnail': r're:^https?://.*\.png$',
             'duration': 833,
+            'thumbnail': 'https://www.rainews.it/dl/img/2016/05/300x169_1463147545239.png',
             'upload_date': '20161103',
-            'formats': 'count:8',
         },
         'params': {'skip_download': True},
         'expected_warnings': ['unable to extract player_data'],

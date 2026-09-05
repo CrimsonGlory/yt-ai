@@ -11,16 +11,22 @@ class AlJazeeraIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://balkans.aljazeera.net/videos/2021/11/6/pojedini-domovi-u-sarajevu-jos-pod-vodom-mjestanima-se-dostavlja-hrana',
+        'md5': '40e3cf9483af0e0d2cce84d7ee621c25',
         'info_dict': {
             'id': '6280641530001',
             'ext': 'mp4',
             'title': 'Pojedini domovi u Sarajevu još pod vodom, mještanima se dostavlja hrana',
-            'timestamp': 1636219149,
-            'description': 'U sarajevskim naseljima Rajlovac i Reljevo stambeni objekti, ali i industrijska postrojenja i dalje su pod vodom.',
+            'description': 'md5:80f26f59ffc5e3567a24d020470262a8',
+            'uploader_id': '911432371001',
+            'duration': 158.315,
+            'thumbnail': 'md5:511c318592ebcaadb4005979305d27eb',
+            'timestamp': 1636218961,
             'upload_date': '20211106',
+            'tags': ['bosnia and herzegovina', 'klima、okoliš i vrijeme'],
         },
     }, {
         'url': 'https://balkans.aljazeera.net/videos/2021/11/6/djokovic-usao-u-finale-mastersa-u-parizu',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '6280654936001',
             'ext': 'mp4',

@@ -75,14 +75,16 @@ class AntennaGrWatchIE(AntennaBaseIE):
             '_old_archive_ids': ['ant1newsgrwatch 1506168'],
         },
     }, {
-        'url': 'https://www.antenna.gr/watch/1643812/oi-prodotes-epeisodio-01',
-        'md5': '8f6f7dd3b1dba4d835ba990e25f31243',
+        'url': 'https://www.antenna.gr/watch/1959615/synagermos-stis-ygeionomikes-arxes-apo-ta-kroysmata-salmonelas-sti-lamia',
+        'md5': '13173c295be995672493f443fd127ead',
         'info_dict': {
-            'id': '1643812',
+            'id': '1959615',
             'ext': 'mp4',
+            'title': 'Συναγερμός στις υγειονομικές Αρχές, από τα κρούσματα σαλμονέλας στη Λαμία',
+            'description': 'Οι ειδικοί συνιστούν, να αποφύγουν οι κάτοικοι την κατανάλωση κοτόπουλου για δύο με τρεις ημέρες.',
+            'thumbnail': r're:https://(?:www\.)?antenna\.gr/imgHandler/\d+/f28dcd2b-b341-458d-852d-7f6a4f429d87\.jpg',
             'format_id': 'mp4',
-            'title': 'ΟΙ ΠΡΟΔΟΤΕΣ – ΕΠΕΙΣΟΔΙΟ 01',
-            'thumbnail': r're:https://ant1media\.azureedge\.net/imgHandler/\d+/b3d63096-e72d-43c4-87a0-00d4363d242f\.jpg',
+            '_old_archive_ids': ['ant1newsgrwatch 1959615'],
         },
     }]
 

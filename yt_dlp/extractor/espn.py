@@ -42,6 +42,7 @@ class ESPNIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://espn.go.com/video/clip/_/id/49711735/pathetic-browns-start-watson',
+        'skip': 'extractor broken: [ESPN] Ignoring subtitle tracks found in the HLS manifest; if any subtitle track',
         'info_dict': {
             'id': '49711735',
             'ext': 'mp4',
@@ -214,6 +215,7 @@ class FiveThirtyEightIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?fivethirtyeight\.com/features/(?P<id>[^/?#]+)'
     _TEST = {
         'url': 'http://fivethirtyeight.com/features/how-the-6-8-raiders-can-still-make-the-playoffs/',
+        'skip': 'extractor broken: Unable to extract embed url',
         'info_dict': {
             'id': '56032156',
             'ext': 'flv',

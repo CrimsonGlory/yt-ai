@@ -95,10 +95,18 @@ class ShowRoomVodIE(ShowRoomBaseIE):
     _VALID_URL = r'https?://(?:www\.)?showroom-live\.com/episode/watch\?(?:[^#]+&)?id=(?P<id>\w+)'
     _TESTS = [{
         'url': 'https://www.showroom-live.com/episode/watch?id=214',
+        'md5': '3d285d62dde5a24f26730e8b234a01a2',
         'info_dict': {
             'id': '214',
             'ext': 'mp4',
-            'title': 'aaa',
+            'title': 'ステラ☆SHOWCASE!! 2026年5月度',
+            'description': 'md5:0dea9b401bc8865db4397aa8f5603c88',
+            'duration': 6748,
+            'thumbnail': 'md5:99e65f55ad2be3deed715b83e9d09149',
+            'timestamp': 1781247625,
+            'upload_date': '20260612',
+            'series': 'ステラ☆SHOWCASE!!',
+            'series_id': '16',
         },
     }]
 

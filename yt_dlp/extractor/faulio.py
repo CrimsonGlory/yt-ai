@@ -151,6 +151,7 @@ class FaulioLiveIE(FaulioBaseIE):
     _VALID_URL = fr'{FaulioBaseIE._BASE_URL_RE}live/(?P<id>[a-zA-Z0-9-]+)'
     _TESTS = [{
         'url': 'https://aloula.sba.sa/live/saudiatv',
+        'skip': 'extractor broken: Extractor failed to obtain "title". Creating a generic title instead; please rep',
         'info_dict': {
             'id': 'aloula.faulio.com_saudiatv',
             'title': str,
@@ -163,6 +164,7 @@ class FaulioLiveIE(FaulioBaseIE):
         },
     }, {
         'url': 'https://bahry.com/live/1',
+        'skip': 'not currently live',
         'info_dict': {
             'id': 'bahry.faulio.com_1',
             'title': str,

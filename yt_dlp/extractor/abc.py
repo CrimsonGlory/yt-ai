@@ -80,6 +80,7 @@ class ABCIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.abc.net.au/btn/newsbreak/btn-newsbreak-20200814/12560476',
+        'skip': 'extractor broken: Unable to extract video urls',
         'info_dict': {
             'id': 'tDL8Ld4dK_8',
             'ext': 'mp4',

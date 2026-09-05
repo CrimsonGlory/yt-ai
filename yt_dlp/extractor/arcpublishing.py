@@ -64,6 +64,7 @@ class ArcPublishingIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.uppermichiganssource.com/2025/07/18/scattered-showers-storms-bring-heavy-rain-potential/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '508116f7-e999-48db-b7c2-60a04842679b',
             'ext': 'mp4',

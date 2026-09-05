@@ -19,6 +19,7 @@ class MagellanTVIE(InfoExtractor):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.magellantv.com/video/tortured-to-death-murdering-the-nanny',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'tortured-to-death-murdering-the-nanny',
             'ext': 'mp4',
@@ -31,12 +32,13 @@ class MagellanTVIE(InfoExtractor):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.magellantv.com/watch/celebration-nation?type=s',
+        'md5': 'f457c329061712ce21fd6592c37c04b2',
         'info_dict': {
             'id': 'celebration-nation',
             'ext': 'mp4',
-            'tags': ['Art & Culture', 'Human Interest', 'Anthropology', 'China', 'History'],
-            'duration': 2640.0,
             'title': 'Ancestors',
+            'duration': 2640,
+            'tags': ['Art & Culture', 'Human Interest', 'Anthropology', 'China'],
         },
         'params': {'skip_download': 'm3u8'},
     }]

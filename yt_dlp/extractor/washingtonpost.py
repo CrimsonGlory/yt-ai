@@ -10,16 +10,16 @@ class WashingtonPostIE(InfoExtractor):
     _EMBED_REGEX = [r'<iframe[^>]+\bsrc=["\'](?P<url>https?://(?:www\.)?washingtonpost\.com/video/c/embed/[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12})']
     _TESTS = [{
         'url': 'https://www.washingtonpost.com/video/c/video/480ba4ee-1ec7-11e6-82c2-a7dcb313287d',
-        'md5': '6f537e1334b714eb15f9563bd4b9cdfa',
+        'md5': 'b3e0a3afed9c03f366de6eed16ff50e4',
         'info_dict': {
             'id': '480ba4ee-1ec7-11e6-82c2-a7dcb313287d',
             'ext': 'mp4',
             'title': 'Egypt finds belongings, debris from plane crash',
             'description': 'md5:a17ceee432f215a5371388c1f680bd86',
-            'upload_date': '20160520',
+            'duration': 570,
+            'thumbnail': 'md5:5b350f305ef73189180d760c49d1c023',
             'timestamp': 1463775187,
-            'duration': int,
-            'thumbnail': r're:https?://.*',
+            'upload_date': '20160520',
         },
     }, {
         'url': 'https://www.washingtonpost.com/video/world/egypt-finds-belongings-debris-from-plane-crash/2016/05/20/480ba4ee-1ec7-11e6-82c2-a7dcb313287d_video.html',
@@ -40,6 +40,7 @@ class WashingtonPostArticleIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?washingtonpost\.com/(?:[^/]+/)*(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'http://www.washingtonpost.com/sf/national/2014/03/22/sinkhole-of-bureaucracy/',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'sinkhole-of-bureaucracy',
             'title': 'Sinkhole of bureaucracy',

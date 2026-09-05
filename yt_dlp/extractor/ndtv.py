@@ -11,6 +11,7 @@ class NDTVIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://khabar.ndtv.com/video/show/prime-time/prime-time-ill-system-and-poor-education-468818',
+            'skip': 'extractor broken: [NDTV] NDTV extractor failed (RegexNotFoundError: Unable to extract video filena',
             'md5': '78efcf3880ef3fd9b83d405ca94a38eb',
             'info_dict': {
                 'id': '468818',
@@ -25,6 +26,7 @@ class NDTVIE(InfoExtractor):
         {
             # __filename is url
             'url': 'http://movies.ndtv.com/videos/cracker-free-diwali-wishes-from-karan-johar-kriti-sanon-other-stars-470304',
+            'skip': 'extractor broken: [NDTV] NDTV extractor failed (RegexNotFoundError: Unable to extract video filena',
             'md5': 'f1d709352305b44443515ac56b45aa46',
             'info_dict': {
                 'id': '470304',

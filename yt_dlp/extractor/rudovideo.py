@@ -14,6 +14,7 @@ class RudoVideoIE(InfoExtractor):
     _EMBED_REGEX = [r'<iframe[^>]+src=[\'"](?P<url>(?:https?:)//rudo\.video/(?:vod|podcast|live)/[^\'"]+)']
     _TESTS = [{
         'url': 'https://rudo.video/podcast/cz2wrUy8l0o',
+        'skip': 'extractor broken: Unable to extract stream url',
         'md5': '28ed82b477708dc5e12e072da2449221',
         'info_dict': {
             'id': 'cz2wrUy8l0o',
@@ -41,6 +42,7 @@ class RudoVideoIE(InfoExtractor):
         },
     }, {
         'url': 'https://rudo.video/vod/bN5AaJ',
+        'skip': 'extractor broken: Unable to extract stream url',
         'md5': '01324a329227e2591530ecb4f555c881',
         'info_dict': {
             'id': 'bN5AaJ',

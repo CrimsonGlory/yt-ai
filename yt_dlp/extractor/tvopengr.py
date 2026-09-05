@@ -21,6 +21,20 @@ class TVOpenGrWatchIE(TVOpenGrBaseIE):
     _API_ENDPOINT = 'https://www.tvopen.gr/templates/data/player'
 
     _TESTS = [{
+        'url': 'https://www.tvopen.gr/watch/100979/se28099agapaomenalla7cepeisodio267cmhthrargiapashskakias',
+        'md5': 'a5f2e52c44f214b961a63550aad3b69d',
+        'info_dict': {
+            'id': '100979',
+            'title': 'md5:e021f3001e16088ee40fa79b20df305b',
+            'display_id': 'se28099agapaomenalla7cepeisodio267cmhthrargiapashskakias',
+            'description': 'md5:ba17db53954134eb8d625d199e2919fb',
+            'duration': 2420.0,
+            'thumbnail': 'https://opentv-static.siliconweb.com/imgHandler/1920/9bb71cf1-21da-43a9-9d65-367950fde4e3.jpg',
+            'ext': 'mp4',
+            'upload_date': '20220108',
+            'timestamp': 1641600000,
+        },
+    }, {
         'url': 'https://www.ethnos.gr/watch/101009/nikoskaprabelosdenexoymekanenanasthenhsemethmethmetallaxhomikron',
         'info_dict': {
             'id': '101009',
@@ -32,19 +46,6 @@ class TVOpenGrWatchIE(TVOpenGrBaseIE):
             'ext': 'mp4',
             'upload_date': '20220109',
             'timestamp': 1641686400,
-        },
-    }, {
-        'url': 'https://www.tvopen.gr/watch/100979/se28099agapaomenalla7cepeisodio267cmhthrargiapashskakias',
-        'info_dict': {
-            'id': '100979',
-            'title': 'md5:e021f3001e16088ee40fa79b20df305b',
-            'display_id': 'se28099agapaomenalla7cepeisodio267cmhthrargiapashskakias',
-            'description': 'md5:ba17db53954134eb8d625d199e2919fb',
-            'duration': 2420.0,
-            'thumbnail': 'https://opentv-static.siliconweb.com/imgHandler/1920/9bb71cf1-21da-43a9-9d65-367950fde4e3.jpg',
-            'ext': 'mp4',
-            'upload_date': '20220108',
-            'timestamp': 1641600000,
         },
     }]
 

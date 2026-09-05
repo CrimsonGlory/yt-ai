@@ -74,7 +74,20 @@ class WyborczaPodcastIE(InfoExtractor):
         )(?:\?(?:[^&#]+?&)*podcast=(?P<id>\d+))?
     '''
     _TESTS = [{
+        'url': 'https://wyborcza.pl/podcast/0,172673.html?podcast=197348',
+        'info_dict': {
+            'id': '197348',
+            'ext': 'mp3',
+            'title': 'Widmo rosyjskiego ataku, fiasko Nawrockiego w Juracie i Zondacrypto',
+            'uploader': 'Roman Imielski',
+            'upload_date': '20260901',
+            'description': 'md5:49a7de786a66b8d310e9bc8071770209',
+            'duration': 1928.0,
+            'thumbnail': r're:https://.+\.jpg',
+        },
+    }, {
         'url': 'https://wyborcza.pl/podcast/0,172673.html?podcast=100720#S.main_topic-K.C-B.6-L.1.podcast',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '100720',
             'ext': 'mp3',
@@ -91,7 +104,7 @@ class WyborczaPodcastIE(InfoExtractor):
             'id': '100673',
             'ext': 'mp3',
             'title': 'Czym jest ubóstwo menstruacyjne i dlaczego dotyczy każdej i każdego z nas?',
-            'uploader': 'Agnieszka Urazińska ',
+            'uploader': 'Agnieszka Urazińska',
             'upload_date': '20210115',
             'description': 'md5:c161dc035f8dbb60077011fc41274899',
             'duration': 1803.0,

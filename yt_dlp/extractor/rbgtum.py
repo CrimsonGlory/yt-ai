@@ -9,6 +9,7 @@ class RbgTumIE(InfoExtractor):
     _TESTS = [{
         # Combined view
         'url': 'https://live.rbg.tum.de/w/cpp/22128',
+        'skip': 'stale test sample / site changed',
         'md5': '53a5e7b3e07128e33bbf36687fe1c08f',
         'info_dict': {
             'id': 'cpp/22128',
@@ -19,16 +20,17 @@ class RbgTumIE(InfoExtractor):
     }, {
         # Presentation only
         'url': 'https://live.rbg.tum.de/w/I2DL/12349/PRES',
-        'md5': '36c584272179f3e56b0db5d880639cba',
+        'md5': 'db240b6b67e592e08d75e64738e7689c',
         'info_dict': {
             'id': 'I2DL/12349/PRES',
             'ext': 'mp4',
             'title': 'Lecture 3: Introduction to Neural Networks',
-            'series': 'Introduction to Deep Learning (IN2346)',
+            'series': 'Introduction to Deep Learning (IN2346): Lecture 3: Introduction to Neural Networks',
         },
     }, {
         # Camera only
         'url': 'https://live.rbg.tum.de/w/fvv-info/16130/CAM',
+        'skip': 'stale test sample / site changed',
         'md5': 'e04189d92ff2f56aedf5cede65d37aad',
         'info_dict': {
             'id': 'fvv-info/16130/CAM',
@@ -74,7 +76,6 @@ class RbgTumCourseIE(InfoExtractor):
         'playlist_count': 13,
     }, {
         'url': 'https://live.rbg.tum.de/old/course/2022/W/set',
-        'skip': 'video gone',
         'info_dict': {
             'title': 'SET FSMPIC',
             'id': '2022/W/set',
@@ -121,7 +122,6 @@ class RbgTumNewCourseIE(InfoExtractor):
         'playlist_count': 13,
     }, {
         'url': 'https://live.rbg.tum.de/?year=2022&term=W&slug=set&view=3',
-        'skip': 'video gone',
         'info_dict': {
             'title': 'SET FSMPIC',
             'id': '2022/W/set',

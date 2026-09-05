@@ -172,30 +172,32 @@ class GameJoltIE(GameJoltBaseIE):
     _TESTS = [{
         # No audio
         'url': 'https://gamejolt.com/p/introducing-ramses-jackson-some-fnf-himbo-i-ve-been-animating-fo-c6achnzu',
-        'md5': 'cd5f733258f6678b0ce500dd88166d86',
+        'md5': '9724896bb0068717f6159defceb25085',
+        'file_minsize': None,
         'info_dict': {
             'id': 'c6achnzu',
             'ext': 'mp4',
             'display_id': 'introducing-ramses-jackson-some-fnf-himbo-i-ve-been-animating-fo-c6achnzu',
-            'title': 'Introducing Ramses Jackson, some FNF himbo I’ve been animating for the past few days, hehe.\n#fnfmod #fridaynightfunkin',
-            'description': 'Introducing Ramses Jackson, some FNF himbo I’ve been animating for the past few days, hehe.\n#fnfmod #fridaynightfunkin',
+            'title': 'md5:b0ed18cf3362563c32bf4cf7625710ae',
+            'description': 'md5:b0ed18cf3362563c32bf4cf7625710ae',
             'uploader': 'Jakeneutron',
             'uploader_id': 'Jakeneutron',
             'uploader_url': 'https://gamejolt.com/@Jakeneutron',
-            'categories': ['Friday Night Funkin\' - Videos'],
-            'tags': ['fnfmod', 'fridaynightfunkin'],
+            'thumbnail': 'md5:fd90d6cc099d59ea36874b81279c37fb',
             'timestamp': 1633499590,
             'upload_date': '20211006',
             'release_timestamp': 1633499655,
             'release_date': '20211006',
-            'thumbnail': 're:^https?://.+wgch9mhq.png$',
+            'view_count': int,
             'like_count': int,
             'comment_count': int,
-            'view_count': int,
+            'categories': ["Friday Night Funkin' - 𝕍𝕚𝕕𝕖𝕠𝕤"],
+            'tags': ['fnfmod', 'fridaynightfunkin'],
         },
     }, {
         # YouTube embed
         'url': 'https://gamejolt.com/p/hey-hey-if-there-s-anyone-who-s-looking-to-get-into-learning-a-n6g4jzpq',
+        'skip': 'site unavailable',
         'md5': '79a931ff500a5c783ef6c3bda3272e32',
         'info_dict': {
             'id': 'XsNA_mzC0q4',
@@ -224,6 +226,7 @@ class GameJoltIE(GameJoltBaseIE):
     }, {
         # Article
         'url': 'https://gamejolt.com/p/i-fuckin-broke-chaos-d56h3eue',
+        'skip': 'stale test sample / site changed',
         'md5': '786c1ccf98fde02c03a2768acb4258d0',
         'info_dict': {
             'id': 'd56h3eue',
@@ -247,6 +250,7 @@ class GameJoltIE(GameJoltBaseIE):
     }, {
         # Single GIF
         'url': 'https://gamejolt.com/p/hello-everyone-i-m-developing-a-pixel-art-style-mod-for-fnf-and-i-vs4gdrd8',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'vs4gdrd8',
             'display_id': 'hello-everyone-i-m-developing-a-pixel-art-style-mod-for-fnf-and-i-vs4gdrd8',
@@ -425,6 +429,7 @@ class GameJoltCommunityIE(GameJoltPostListBaseIE):
     _VALID_URL = r'https?://(?:www\.)?gamejolt\.com/c/(?P<id>(?P<community>[\w-]+)(?:/(?P<channel>[\w-]+))?)(?:(?:\?|\#!?)(?:.*?[&;])??sort=(?P<sort>\w+))?'
     _TESTS = [{
         'url': 'https://gamejolt.com/c/fnf/videos',
+        'skip': 'stale test sample / site changed',
         'playlist_mincount': 50,
         'info_dict': {
             'id': 'fnf/videos',

@@ -11,11 +11,10 @@ class NestIE(InfoExtractor):
         'info_dict': {
             'id': '4fvYdSo8AX',
             'ext': 'mp4',
-            'title': 'startswith:Outside ',
-            'alt_title': 'Outside',
+            'title': 'startswith:Harbor ',
+            'alt_title': 'Harbor',
             'description': '<null>',
             'location': 'Los Angeles',
-            'availability': 'public',
             'thumbnail': r're:https?://',
             'live_status': 'is_live',
         },
@@ -29,6 +28,7 @@ class NestIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.pacificblue.biz/noyo-harbor-webcam/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '4fvYdSo8AX',
             'ext': 'mp4',

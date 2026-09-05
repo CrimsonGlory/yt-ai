@@ -43,6 +43,7 @@ class FranceTVIE(InfoExtractor):
     _TESTS = [{
         # tokenized url is in dinfo['video']['token']
         'url': 'francetv:ec217ecc-0733-48cf-ac06-af1347b849d1',
+        'skip': 'extractor broken: [francetv] francetv said: 2003 "Cette vidéo n\'est malheureusement plus disponibl',
         'info_dict': {
             'id': 'ec217ecc-0733-48cf-ac06-af1347b849d1',
             'ext': 'mp4',
@@ -56,6 +57,7 @@ class FranceTVIE(InfoExtractor):
     }, {
         # tokenized url is in dinfo['video']['token']['akamai']
         'url': 'francetv:c5bda21d-2c6f-4470-8849-3d8327adb2ba',
+        'skip': 'extractor broken: [francetv] francetv said: 2003 "Cette vidéo n\'est malheureusement plus disponibl',
         'info_dict': {
             'id': 'c5bda21d-2c6f-4470-8849-3d8327adb2ba',
             'ext': 'mp4',

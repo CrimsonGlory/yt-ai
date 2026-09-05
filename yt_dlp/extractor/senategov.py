@@ -64,6 +64,7 @@ class SenateISVPIE(InfoExtractor):
     _WEBPAGE_TESTS = [{
         # FIXME: Embed detection
         'url': 'https://www.hsgac.senate.gov/subcommittees/bmfwra/hearings/match-ready-oversight-of-the-federal-governments-border-management-and-personnel-readiness-efforts-for-the-decade-of-sports/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'govtaff061025',
             'ext': 'mp4',
@@ -150,19 +151,20 @@ class SenateGovIE(InfoExtractor):
     _VALID_URL = rf'https?://(?:www\.)?(?:{_SUBDOMAIN_RE})\.senate\.gov'
     _TESTS = [{
         'url': 'https://www.help.senate.gov/hearings/vaccines-saving-lives-ensuring-confidence-and-protecting-public-health',
+        'md5': 'b1812c4dcf9b1bb2eba9e80b45694cdd',
         'info_dict': {
             'id': 'help090920',
+            'ext': 'mp4',
             'display_id': 'vaccines-saving-lives-ensuring-confidence-and-protecting-public-health',
             'title': 'Vaccines: Saving Lives, Ensuring Confidence, and Protecting Public Health',
             'description': 'Full Committee Hearing on September 9, 2020 at 6:00 AM',
-            'ext': 'mp4',
-            'age_limit': 0,
-            'thumbnail': r're:https?://.+\.(?:jpe?g|png)',
+            'thumbnail': 'https://www.help.senate.gov/assets/images/sharelogo.jpg',
             '_old_archive_ids': ['senategov help090920'],
         },
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.appropriations.senate.gov/hearings/watch?hearingid=B8A25434-5056-A066-6020-1F68CB75F0CD',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'appropsA051518',
             'display_id': 'watch?hearingid=B8A25434-5056-A066-6020-1F68CB75F0CD',
@@ -176,6 +178,7 @@ class SenateGovIE(InfoExtractor):
         'expected_warnings': ['Failed to download m3u8 information'],
     }, {
         'url': 'https://www.banking.senate.gov/hearings/21st-century-communities-public-transportation-infrastructure-investment-and-fast-act-reauthorization',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'banking041521',
             'display_id': '21st-century-communities-public-transportation-infrastructure-investment-and-fast-act-reauthorization',

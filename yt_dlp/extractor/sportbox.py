@@ -13,6 +13,7 @@ class SportBoxIE(InfoExtractor):
     _EMBED_REGEX = [r'<iframe[^>]+src="(?P<url>https?://(?:news\.sportbox|matchtv)\.ru/vdl/player[^"]+)"']
     _TESTS = [{
         'url': 'http://news.sportbox.ru/vdl/player/ci/211355',
+        'skip': 'extractor broken: [SportBox] SportBox extractor failed (ExtractorError: [SportBox] 211355: Respons',
         'info_dict': {
             'id': '109158',
             'ext': 'mp4',

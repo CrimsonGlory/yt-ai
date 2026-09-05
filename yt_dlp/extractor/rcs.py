@@ -246,6 +246,7 @@ class RCSEmbedsIE(RCSBaseIE):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.iodonna.it/video-iodonna/personaggi-video/monica-bellucci-piu-del-lavoro-oggi-per-me-sono-importanti-lamicizia-e-la-famiglia/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'iodonna-0002033648',
             'ext': 'mp4',
@@ -338,6 +339,7 @@ class RCSVariousIE(RCSBaseIE):
                     )/(?:[^/]+/)?(?P<id>[^/]+?)(?:$|\?|/)'''
     _TESTS = [{
         'url': 'https://www.leitv.it/benessere/mal-di-testa/',
+        'skip': 'extractor broken: [RCSEmbeds] unable to extract description',
         'md5': '3b7a683d105a7313ec7513b014443631',
         'info_dict': {
             'id': 'leitv-0000125151',
@@ -349,6 +351,7 @@ class RCSVariousIE(RCSBaseIE):
         },
     }, {
         'url': 'https://www.youreporter.it/fiume-sesia-3-ottobre-2020/',
+        'skip': 'stale test sample / site changed',
         'md5': '3989b6d603482611a2abd2f32b79f739',
         'info_dict': {
             'id': 'youreporter-0000332574',

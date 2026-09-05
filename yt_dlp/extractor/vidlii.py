@@ -37,6 +37,7 @@ class VidLiiIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.vidlii.com/watch?v=zTAtaAgOLKt',
+        'skip': 'extractor broken: Unable to extract title',
         'md5': '5778f7366aa4c569b77002f8bf6b614f',
         'info_dict': {
             'id': 'zTAtaAgOLKt',

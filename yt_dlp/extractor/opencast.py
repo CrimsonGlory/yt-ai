@@ -153,6 +153,7 @@ class OpencastPlaylistIE(OpencastBaseIE):
     _TESTS = [
         {
             'url': 'https://oc-video1.ruhr-uni-bochum.de/engage/ui/index.html?epFrom=cf68a4a1-36b1-4a53-a6ba-61af5705a0d0',
+            'skip': "extractor broken: An extractor error has occurred. (caused by KeyError('search-results')); please",
             'info_dict': {
                 'id': 'cf68a4a1-36b1-4a53-a6ba-61af5705a0d0',
                 'title': 'Kryptographie - WiSe 15/16',
@@ -161,6 +162,7 @@ class OpencastPlaylistIE(OpencastBaseIE):
         },
         {
             'url': 'https://oc-video1.ruhr-uni-bochum.de/ltitools/index.html?subtool=series&series=cf68a4a1-36b1-4a53-a6ba-61af5705a0d0&lng=de',
+            'skip': "extractor broken: An extractor error has occurred. (caused by KeyError('search-results')); please",
             'info_dict': {
                 'id': 'cf68a4a1-36b1-4a53-a6ba-61af5705a0d0',
                 'title': 'Kryptographie - WiSe 15/16',

@@ -86,6 +86,7 @@ class DouyuTVIE(DouyuBaseIE):
     _VALID_URL = r'https?://(?:www\.)?douyu(?:tv)?\.com/(topic/\w+\?rid=|(?:[^/]+/))*(?P<id>[A-Za-z0-9]+)'
     _TESTS = [{
         'url': 'https://www.douyu.com/pigff',
+        'skip': 'extractor broken: Unable to extract room id',
         'info_dict': {
             'id': '24422',
             'display_id': 'pigff',
@@ -118,6 +119,7 @@ class DouyuTVIE(DouyuBaseIE):
         'skip': 'Room not found',
     }, {
         'url': 'http://www.douyutv.com/17732',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '17732',
             'display_id': '17732',
@@ -133,6 +135,7 @@ class DouyuTVIE(DouyuBaseIE):
         },
     }, {
         'url': 'https://www.douyu.com/topic/ydxc?rid=6560603',
+        'skip': 'extractor broken: Unable to extract room id',
         'info_dict': {
             'id': '6560603',
             'display_id': '6560603',

@@ -197,6 +197,7 @@ class NitterIE(InfoExtractor):
         {
             # GIF (wrapped in mp4)
             'url': f'https://{current_instance}/firefox/status/1314279897502629888#m',
+            'skip': 'Nitter instance DNS failed',
             'info_dict': {
                 'id': '1314279897502629888',
                 'ext': 'mp4',
@@ -214,6 +215,7 @@ class NitterIE(InfoExtractor):
             },
         }, {  # normal video
             'url': f'https://{current_instance}/Le___Doc/status/1299715685392756737#m',
+            'skip': 'Nitter instance DNS failed',
             'info_dict': {
                 'id': '1299715685392756737',
                 'ext': 'mp4',
@@ -232,6 +234,7 @@ class NitterIE(InfoExtractor):
             },
         }, {  # video embed in a "Streaming Political Ads" box
             'url': f'https://{current_instance}/mozilla/status/1321147074491092994#m',
+            'skip': 'Nitter instance DNS failed',
             'info_dict': {
                 'id': '1321147074491092994',
                 'ext': 'mp4',
@@ -251,6 +254,7 @@ class NitterIE(InfoExtractor):
             'expected_warnings': ['Ignoring subtitle tracks found in the HLS manifest'],
         }, {  # not the first tweet but main-tweet
             'url': f'https://{current_instance}/firefox/status/1354848277481414657#m',
+            'skip': 'Nitter instance DNS failed',
             'info_dict': {
                 'id': '1354848277481414657',
                 'ext': 'mp4',
@@ -269,6 +273,7 @@ class NitterIE(InfoExtractor):
             },
         }, {  # no OpenGraph title
             'url': f'https://{current_instance}/LocalBateman/status/1678455464038735895#m',
+            'skip': 'Nitter instance DNS failed',
             'info_dict': {
                 'id': '1678455464038735895',
                 'ext': 'mp4',

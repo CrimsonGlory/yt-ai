@@ -68,6 +68,7 @@ class ADNIE(ADNBaseIE):
     _VALID_URL = r'https?://(?:www\.)?animationdigitalnetwork\.com/(?:(?P<lang>de)/)?video/[^/?#]+/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://animationdigitalnetwork.com/video/558-fruits-basket/9841-episode-1-a-ce-soir',
+        'skip': 'geo restricted',
         'md5': '3999b7b235ffb3591a385d1913cd3cd1',
         'info_dict': {
             'id': '9841',

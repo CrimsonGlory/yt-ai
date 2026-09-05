@@ -28,7 +28,15 @@ class TV2DKIE(InfoExtractor):
                         (?:[^/?#]+/)*
                         (?P<id>[^/?\#&]+)
                     '''
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.tv2ostjylland.dk/youtube/2026/you-isolation-play',
+            'info_dict': {
+                'id': 'you-isolation-play',
+            },
+            'playlist_mincount': 1,
+            'params': {'skip_download': True},
+        },{
         'url': 'https://www.tvsyd.dk/nyheder/28-10-2019/1930/1930-28-okt-2019?autoplay=1#player',
         'md5': '5758c3c220b0e8ff6e58d43a6d538c79',
         'info_dict': {
@@ -59,6 +67,7 @@ class TV2DKIE(InfoExtractor):
         'playlist_count': 2,
     }, {
         'url': 'https://www.tv2ostjylland.dk/aarhus/dom-kan-fa-alvorlige-konsekvenser',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'dom-kan-fa-alvorlige-konsekvenser',
         },

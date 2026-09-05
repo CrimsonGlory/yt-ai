@@ -9,6 +9,7 @@ class PlyrEmbedIE(InfoExtractor):
     _WEBPAGE_TESTS = [{
         # data-plyr-embed-id="https://player.vimeo.com/video/522319456/90e5c96063?dnt=1"
         'url': 'https://www.dhm.de/zeughauskino/filmreihen/online-filmreihen/filme-des-marshall-plans/200000000-mouths/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '522319456',
             'ext': 'mp4',
@@ -29,6 +30,7 @@ class PlyrEmbedIE(InfoExtractor):
     }, {
         # data-plyr-provider="vimeo" data-plyr-embed-id="803435276"
         'url': 'https://www.inarcassa.it/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '803435276',
             'ext': 'mp4',
@@ -43,6 +45,7 @@ class PlyrEmbedIE(InfoExtractor):
     }, {
         # data-plyr-embed-id="https://youtu.be/GF-BjYKoAqI"
         'url': 'https://www.profile.nl',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'GF-BjYKoAqI',
             'ext': 'mp4',
@@ -72,6 +75,7 @@ class PlyrEmbedIE(InfoExtractor):
     }, {
         # data-plyr-embed-id="B1TZV8rNZoc" data-plyr-provider="youtube"
         'url': 'https://www.vnis.edu.vn',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'vnis.edu',
             'title': 'VNIS Education - Master Agent các Trường hàng đầu Bắc Mỹ',

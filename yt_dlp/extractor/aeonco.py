@@ -6,7 +6,38 @@ from ..utils import ExtractorError, traverse_obj, url_or_none
 class AeonCoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?aeon\.co/videos/(?P<id>[^/?]+)'
     _TESTS = [{
+        'url': 'https://aeon.co/videos/repulsion-at-the-core-of-attraction-on-the-paradox-of-touch',
+        'md5': 'd9a53ecaaf6c7ec3814366b64ee234af',
+        'info_dict': {
+            'id': 'kfgm2eQyywY',
+            'ext': 'webm',
+            'title': '"Tocar",  Karen Barad i Blanca Rego. Un vocabulari per al futur',
+            'description': 'md5:968122e7f85105c526921cc89eb16a62',
+            'media_type': 'video',
+            'uploader': 'CCCB',
+            'uploader_id': '@cccbarcelona',
+            'uploader_url': 'https://www.youtube.com/@cccbarcelona',
+            'channel': 'CCCB',
+            'channel_id': 'UCjEftWZmH4Czj5DXdgnXKgQ',
+            'channel_url': 'https://www.youtube.com/channel/UCjEftWZmH4Czj5DXdgnXKgQ',
+            'duration': 395,
+            'thumbnail': 'https://i.ytimg.com/vi_webp/kfgm2eQyywY/maxresdefault.webp',
+            'timestamp': 1602575267,
+            'upload_date': '20201013',
+            'age_limit': 0,
+            'view_count': int,
+            'like_count': int,
+            'comment_count': int,
+            'channel_follower_count': int,
+            'playable_in_embed': True,
+            'availability': 'public',
+            'live_status': 'not_live',
+            'categories': ['Film & Animation'],
+            'tags': ['CCCB.', 'Biennal de Pensament', 'Karen Barad', 'Blanca Rego'],
+        },
+    }, {
         'url': 'https://aeon.co/videos/raw-solar-storm-footage-is-the-punk-rock-antidote-to-sleek-james-webb-imagery',
+        'skip': 'extractor broken: [vimeo] 1284717: Failed to parse XML: not well-formed (invalid token): line 1, c',
         'md5': 'e5884d80552c9b6ea8d268a258753362',
         'info_dict': {
             'id': '1284717',
@@ -20,6 +51,7 @@ class AeonCoIE(InfoExtractor):
         },
     }, {
         'url': 'https://aeon.co/videos/i-listen-to-the-land-poetry-and-greenery-intertwine-in-emilio-ambaszs-architecture',
+        'skip': 'site unavailable',
         'md5': '03582d795382e49f2fd0b427b55de409',
         'info_dict': {
             'id': 'aQwobrLxmXU',
@@ -33,6 +65,7 @@ class AeonCoIE(InfoExtractor):
         },
     }, {
         'url': 'https://aeon.co/videos/chew-over-the-prisoners-dilemma-and-see-if-you-can-find-the-rational-path-out',
+        'skip': 'stale test sample / site changed',
         'md5': '1cfda0bf3ae24df17d00f2c0cb6cc21b',
         'info_dict': {
             'id': 'emyi4z-O0ls',

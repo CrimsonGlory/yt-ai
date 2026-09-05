@@ -172,6 +172,7 @@ class StreaksIE(StreaksBaseIE):
     }, {
         # https://www.ktv.jp/news/articles/?id=28105
         'url': 'https://playback.api.streaks.jp/v1/projects/ktv-news/medias/714171c4c53c409bb41e1572997ebfcf',
+        'skip': 'video gone',
         'info_dict': {
             'id': '714171c4c53c409bb41e1572997ebfcf',
             'ext': 'mp4',
@@ -228,6 +229,7 @@ class StreaksIE(StreaksBaseIE):
     _WEBPAGE_TESTS = [{
         # https://players.streaks.jp/play/719af2a1d2d544e89bcad3456eeae5d9/index.html?m=2d975178293140dc8074a7fc536a7604
         'url': 'https://event.play.jp/playnext2023/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '2d975178293140dc8074a7fc536a7604',
             'ext': 'mp4',

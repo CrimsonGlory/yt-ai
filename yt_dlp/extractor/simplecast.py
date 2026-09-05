@@ -100,6 +100,7 @@ class SimplecastIE(SimplecastBaseIE):
     _WEBPAGE_TESTS = [{
         # FIXME: Embed detection
         'url': 'https://poddtoppen.se/podcast/1498417306/the-rebindio-podcast/errant-signal-chris-franklin-new-wave-video-essays',
+        'skip': 'webpage sample unavailable',
         'md5': '8c93be7be54251bf29ee97464eabe61c',
         'info_dict': {
             'id': 'b6dc49a2-9404-4853-9aa9-9cfc097be876',

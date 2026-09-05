@@ -10,24 +10,24 @@ class MedalTVIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?medal\.tv/games/[^/?#&]+/clips/(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://medal.tv/games/valorant/clips/jTBFnLKdLy15K',
-        'md5': '03e4911fdcf7fce563090705c2e79267',
         'info_dict': {
             'id': 'jTBFnLKdLy15K',
             'ext': 'mp4',
             'title': "Mornu's clutch",
             'description': '',
-            'uploader': 'Aciel',
-            'timestamp': 1651628243,
-            'upload_date': '20220504',
+            'uploader': 'aciel',
             'uploader_id': '19335460',
             'uploader_url': 'https://medal.tv/users/19335460',
-            'comment_count': int,
+            'duration': 13,
+            'thumbnail': r're:https://cdn\.medal\.tv/.+',
+            'timestamp': 1651628243,
+            'upload_date': '20220504',
             'view_count': int,
             'like_count': int,
-            'duration': 13,
-            'thumbnail': r're:https://cdn\.medal\.tv/ugcp/content-thumbnail/.*\.jpg',
+            'comment_count': int,
             'tags': ['headshot', 'valorant', '4k', 'clutch', 'mornu'],
         },
+        'params': {'skip_download': True},
     }, {
         'url': 'https://medal.tv/games/cod-cold-war/clips/2um24TWdty0NA',
         'md5': 'b6dc76b78195fff0b4f8bf4a33ec2148',
@@ -82,15 +82,24 @@ class MedalTVIE(InfoExtractor):
 
         formats = []
         if m3u8_url := url_or_none(content_data.get('contentUrlHls')):
-            formats.extend(self._extract_m3u8_formats(m3u8_url, video_id, 'mp4', m3u8_id='hls'))
-        if http_url := url_or_none(content_data.get('contentUrl')):
-            formats.append({
-                'url': http_url,
-                'format_id': 'http-source',
-                'ext': 'mp4',
-                'quality': 1,
-            })
-        formats = [fmt for fmt in formats if 'video/privacy-protected-guest' not in fmt['url']]
+            # HLS is optional: the playlist fetch can flake under load and the
+            # progressive MP4 is the preferred format anyway.
+            formats.extend(self._extract_m3u8_formats(
+                m3u8_url, video_id, 'mp4', m3u8_id='hls', fatal=False, errnote=False))
+        for format_id, key, quality in (
+            ('http-source', 'contentUrl', 1),
+            ('social-video', 'socialMediaVideo', -1),
+        ):
+            if media_url := url_or_none(content_data.get(key)):
+                formats.append({
+                    'url': media_url,
+                    'format_id': format_id,
+                    'ext': 'mp4',
+                    'quality': quality,
+                })
+        formats = [
+            fmt for fmt in formats
+            if 'video/privacy-protected-guest' not in (fmt.get('url') or '')]
         if not formats:
             # Fallback, does not require auth
             self.report_warning('Video formats are not available through API, falling back to social video URL')

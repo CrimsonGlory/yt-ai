@@ -61,6 +61,7 @@ class StreamsterIE(InfoExtractor):
         {
             # Custom player iframe with base64 videodata
             'url': 'https://streamster.tv/events/volleyball-openplus-baden-2026-d2/',
+            'skip': 'extractor broken: [youtube] npGzn29bnIo: Signature solving failed: Some formats may be missing. En',
             'info_dict': {
                 'id': 'npGzn29bnIo',
                 'ext': 'mp4',

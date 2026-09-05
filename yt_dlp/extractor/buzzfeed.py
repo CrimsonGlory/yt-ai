@@ -9,6 +9,7 @@ class BuzzFeedIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?buzzfeed\.com/[^?#]*?/(?P<id>[^?#]+)'
     _TESTS = [{
         'url': 'http://www.buzzfeed.com/abagg/this-angry-ram-destroys-a-punching-bag-like-a-boss?utm_term=4ldqpia',
+        'skip': 'HTTP 403/blocked',
         'info_dict': {
             'id': 'this-angry-ram-destroys-a-punching-bag-like-a-boss',
             'title': 'This Angry Ram Destroys A Punching Bag Like A Boss',
@@ -27,6 +28,7 @@ class BuzzFeedIE(InfoExtractor):
         }],
     }, {
         'url': 'http://www.buzzfeed.com/sheridanwatson/look-at-this-cute-dog-omg?utm_term=4ldqpia',
+        'skip': 'HTTP 403/blocked',
         'params': {
             'skip_download': True,  # Got enough YouTube download tests
         },
@@ -48,6 +50,7 @@ class BuzzFeedIE(InfoExtractor):
         }],
     }, {
         'url': 'http://www.buzzfeed.com/craigsilverman/the-most-adorable-crash-landing-ever#.eq7pX0BAmK',
+        'skip': 'HTTP 403/blocked',
         'info_dict': {
             'id': 'the-most-adorable-crash-landing-ever',
             'title': 'Watch This Baby Goose Make The Most Adorable Crash Landing',

@@ -11,8 +11,25 @@ from ..utils.traversal import require, traverse_obj
 
 class WhypIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?whyp\.it/tracks/(?:(?P<id>\d{5,})/)?(?P<display_id>[^/?#]+)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://whyp.it/tracks/fallout-3-intro-remake-SLEphiH9vh0q?t=00:15',
+            'md5': 'cc8f28fde97639bdf1d83215d2c0e51c',
+            'info_dict': {
+            'id': '13721',
+            'ext': 'mp3',
+            'display_id': 'fallout-3-intro-remake',
+            'title': 'Fallout 3 Intro Remake',
+            'description': '',
+            'uploader': 'Brad',
+            'uploader_id': '1',
+            'duration': 46.34,
+            'timestamp': 1764003590,
+            'upload_date': '20251124',
+        },
+        },{
         'url': 'https://whyp.it/tracks/example-track-HPuZgly3yViP',
+        'skip': 'site unavailable',
         'md5': '02fd96427acd9547445979bf0496b013',
         'info_dict': {
             'id': '18337',
@@ -29,6 +46,7 @@ class WhypIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.whyp.it/tracks/18337/home-page-example-track-b4kq7',
+        'skip': 'site unavailable',
         'md5': '02fd96427acd9547445979bf0496b013',
         'info_dict': {
             'id': '18337',

@@ -31,6 +31,7 @@ class VocarooIE(InfoExtractor):
     _WEBPAGE_TESTS = [
         {
             'url': 'https://qbnu.github.io/cool.html',
+            'skip': 'webpage sample unavailable',
             'md5': 'f322e529275dd8a47994919eeac404a5',
             'info_dict': {
                 'id': '19cgWmKO6AmC',

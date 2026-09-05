@@ -91,6 +91,7 @@ class RoosterTeethIE(RoosterTeethBaseIE):
     _VALID_URL = r'https?://(?:.+?\.)?roosterteeth\.com/(?:bonus-feature|episode|watch)/(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'http://roosterteeth.com/episode/million-dollars-but-season-2-million-dollars-but-the-game-announcement',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '9156',
             'display_id': 'million-dollars-but-season-2-million-dollars-but-the-game-announcement',
@@ -115,6 +116,7 @@ class RoosterTeethIE(RoosterTeethBaseIE):
         'params': {'skip_download': True},
     }, {
         'url': 'https://roosterteeth.com/watch/rwby-bonus-25',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '40432',
             'display_id': 'rwby-bonus-25',
@@ -140,6 +142,7 @@ class RoosterTeethIE(RoosterTeethBaseIE):
     }, {
         # bonus feature with /watch/ url
         'url': 'https://roosterteeth.com/watch/rwby-bonus-21',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '33-bonus',
             'display_id': 'rwby-bonus-21',
@@ -161,6 +164,7 @@ class RoosterTeethIE(RoosterTeethBaseIE):
     }, {
         # only works with video_data['attributes']['url'] m3u8 url
         'url': 'https://www.roosterteeth.com/watch/achievement-hunter-achievement-hunter-fatality-walkthrough-deathstroke-lex-luthor-captain-marvel-green-lantern-and-wonder-woman',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '25394',
             'ext': 'mp4',
@@ -186,6 +190,7 @@ class RoosterTeethIE(RoosterTeethBaseIE):
     }, {
         # brightcove fallback extraction needed
         'url': 'https://roosterteeth.com/watch/lets-play-2013-126',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '17845',
             'ext': 'mp4',
@@ -289,6 +294,7 @@ class RoosterTeethSeriesIE(RoosterTeethBaseIE):
     _VALID_URL = r'https?://(?:.+?\.)?roosterteeth\.com/series/(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://roosterteeth.com/series/rwby?season=7',
+        'skip': 'site unavailable',
         'playlist_count': 13,
         'info_dict': {
             'id': 'rwby-7',
@@ -296,6 +302,7 @@ class RoosterTeethSeriesIE(RoosterTeethBaseIE):
         },
     }, {
         'url': 'https://roosterteeth.com/series/the-weird-place',
+        'skip': 'site unavailable',
         'playlist_count': 7,
         'info_dict': {
             'id': 'the-weird-place',
@@ -303,6 +310,7 @@ class RoosterTeethSeriesIE(RoosterTeethBaseIE):
         },
     }, {
         'url': 'https://roosterteeth.com/series/role-initiative',
+        'skip': 'site unavailable',
         'playlist_mincount': 16,
         'info_dict': {
             'id': 'role-initiative',
@@ -310,6 +318,7 @@ class RoosterTeethSeriesIE(RoosterTeethBaseIE):
         },
     }, {
         'url': 'https://roosterteeth.com/series/let-s-play-minecraft?season=9',
+        'skip': 'site unavailable',
         'playlist_mincount': 50,
         'info_dict': {
             'id': 'let-s-play-minecraft-9',

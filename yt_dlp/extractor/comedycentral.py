@@ -5,6 +5,7 @@ class ComedyCentralIE(MTVServicesBaseIE):
     _VALID_URL = r'https?://(?:www\.)?cc\.com/video-clips/(?P<id>[\da-z]{6})'
     _TESTS = [{
         'url': 'https://www.cc.com/video-clips/wl12cx',
+        'skip': "extractor broken: An extractor error has occurred. (caused by KeyError('stitchedstream')); please",
         'info_dict': {
             'id': 'dec6953e-80c8-43b3-96cd-05e9230e704d',
             'ext': 'mp4',

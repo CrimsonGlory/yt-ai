@@ -149,7 +149,7 @@ class PlayVidsIE(PeekVidsBaseIE):
             'display_id': 'bKmGLe3IwjZ',
             'ext': 'mp4',
             'title': 'Brazzers - 1 800 Phone Sex: Madison Ivy Always On The Line 6',
-            'description': 'md5:bdcd2db2b8ad85831a491d7c8605dcef',
+            'description': 'md5:c841d4717278035837ca7a9a530ea0e6',
             'timestamp': 1516958544,
             'upload_date': '20180126',
             'thumbnail': r're:^https?://.*\.jpg$',

@@ -8,21 +8,22 @@ class IltalehtiIE(InfoExtractor):
         # jwplatform embed main_media
         {
             'url': 'https://www.iltalehti.fi/ulkomaat/a/9fbd067f-94e4-46cd-8748-9d958eb4dae2',
-            'md5': 'af12d42c539f1f49f0b62d231fe72dcd',
+            'md5': 'd28a2a6d91163d53e5ea152d62678b88',
             'info_dict': {
                 'id': 'gYjjaf1L',
                 'ext': 'mp4',
                 'title': 'Sensuroimaton Päivärinta, jakso 227: Vieraana Suomen Venäjän ex-suurlähettiläs René Nyberg ja Kenraalimajuri evp Pekka Toveri',
-                'description': '',
+                'description': 'md5:a38c230f5c518c4345951d6f9198ec35',
                 'upload_date': '20220928',
                 'timestamp': 1664360878,
-                'duration': 2089,
+                'duration': 2619.0,
                 'thumbnail': r're:^https?://.*\.jpg',
             },
         },
         # jwplatform embed body
         {
             'url': 'https://www.iltalehti.fi/politiikka/a/1ce49d85-1670-428b-8db8-d2479b9950a4',
+            'skip': 'stale test sample / site changed',
             'md5': '9e50334b8f8330ce8828b567a82a3c65',
             'info_dict': {
                 'id': '18R6zkLi',

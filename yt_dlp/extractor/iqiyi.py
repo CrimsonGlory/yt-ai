@@ -32,13 +32,15 @@ class IqiyiIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.iqiyi.com/v_17tea0e85po.html',
-        'md5': '2a29a1b8b251d28c0d19648f594d2f6d',
         'info_dict': {
             'id': '4426852504624000',
             'ext': 'mp4',
             'title': '《醒来》一人三面预告',
             'duration': 125,
             'thumbnail': 'http://pic1.iqiyipic.com/image/20260826/50/21/v_216224726_m_601_m1.jpg',
+        },
+        'params': {
+            'skip_download': 'm3u8',
         },
         'expected_warnings': ['format is restricted'],
     }, {

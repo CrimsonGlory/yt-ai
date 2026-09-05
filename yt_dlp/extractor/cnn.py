@@ -22,6 +22,7 @@ class CNNIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.cnn.com/2024/05/31/sport/video/jadon-sancho-borussia-dortmund-champions-league-exclusive-spt-intl',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'med0e97ad0d154f56e29aa96e57192a14226734b6b',
             'display_id': '2024/05/31/sport/video/jadon-sancho-borussia-dortmund-champions-league-exclusive-spt-intl',
@@ -37,6 +38,7 @@ class CNNIE(InfoExtractor):
         },
     }, {
         'url': 'https://edition.cnn.com/2024/06/11/politics/video/inmates-vote-jail-nevada-murray-dnt-ac360-digvid',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'me522945c4709b299e5cb8657900a7a21ad3b559f9',
             'display_id': '2024/06/11/politics/video/inmates-vote-jail-nevada-murray-dnt-ac360-digvid',
@@ -98,6 +100,7 @@ class CNNIE(InfoExtractor):
         },
     }, {
         'url': 'https://edition.cnn.com/2024/10/16/politics/kamala-harris-fox-news-interview/index.html',
+        'skip': 'video gone',
         'info_dict': {
             'id': '2024/10/16/politics/kamala-harris-fox-news-interview',
         },

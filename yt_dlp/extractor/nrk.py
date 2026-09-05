@@ -335,7 +335,7 @@ class NRKTVIE(InfoExtractor):
         },
     }, {
         'url': 'https://tv.nrk.no/serie/20-spoersmaal-tv/MUHH48000314/23-05-2014',
-        'md5': '8d40dab61cea8ab0114e090b029a0565',
+        'md5': 'f457c329061712ce21fd6592c37c04b2',
         'info_dict': {
             'id': 'MUHH48000314',
             'ext': 'mp4',
@@ -343,19 +343,24 @@ class NRKTVIE(InfoExtractor):
             'alt_title': '23. mai 2014',
             'description': 'md5:bdea103bc35494c143c6a9acdd84887a',
             'duration': 1741,
-            'series': '20 spørsmål',
-            'episode': '23. mai 2014',
-            'age_limit': 0,
-            'timestamp': 1584593700,
             'thumbnail': 'https://gfx.nrk.no/u7uCe79SEfPVGRAGVp2_uAZnNc4mfz_kjXg6Bgek8lMQ',
-            'season_id': '126936',
+            'timestamp': 1584593700,
             'upload_date': '20200319',
+            'age_limit': 0,
+            'series': '20 spørsmål',
             'season': 'Season 2014',
             'season_number': 2014,
+            'season_id': '126936',
+            'episode': '23. mai 2014',
             'episode_number': 3,
+        },
+        'params': {
+            # HLS fMP4: --test downloads only EXT-X-MAP (~675B), below the 10KiB minsize
+            'skip_download': True,
         },
     }, {
         'url': 'https://tv.nrk.no/program/mdfp15000514',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'MDFP15000514',
             'ext': 'mp4',
@@ -397,6 +402,7 @@ class NRKTVIE(InfoExtractor):
         'skip': 'Ikke tilgjengelig utenfor Norge',
     }, {
         'url': 'https://tv.nrk.no/serie/anno/KMTE50001317/sesong-3/episode-13',
+        'skip': 'extractor broken',
         'info_dict': {
             'id': 'KMTE50001317',
             'ext': 'mp4',
@@ -449,18 +455,25 @@ class NRKTVEpisodeIE(InfoExtractor):
     _VALID_URL = r'https?://tv\.nrk\.no/serie/(?P<id>[^/?#]+/sesong/(?P<season_number>\d+)/episode/(?P<episode_number>\d+))'
     _TESTS = [{
         'url': 'https://tv.nrk.no/serie/hellums-kro/sesong/1/episode/2',
+        'md5': 'f457c329061712ce21fd6592c37c04b2',
         'add_ie': [NRKIE.ie_key()],
         'info_dict': {
             'id': 'MUHH36005220',
             'ext': 'mp4',
             'title': 'Hellums kro - 2. Kro, krig og kjærlighet',
+            'alt_title': '2. Kro, krig og kjærlighet',
             'description': 'md5:b32a7dc0b1ed27c8064f58b97bda4350',
             'duration': 1563.92,
-            'series': 'Hellums kro',
-            'season_number': 1,
-            'episode_number': 2,
-            'episode': '2. Kro, krig og kjærlighet',
+            'thumbnail': 'https://gfx.nrk.no/2_4mhU2JhR-8IYRC_OMmAQDbbOHgwcHqgi2sBrNrsjkg',
+            'timestamp': 1572584520,
+            'upload_date': '20191101',
             'age_limit': 6,
+            'series': 'Hellums kro',
+            'season': 'Season 1',
+            'season_number': 1,
+            'season_id': '124163',
+            'episode': '2. Kro, krig og kjærlighet',
+            'episode_number': 2,
         },
         'params': {
             'skip_download': True,
@@ -780,15 +793,18 @@ class NRKRadioPodkastIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://radio.nrk.no/podkast/ulrikkes_univers/l_96f4f1b0-de54-4e6a-b4f1-b0de54fe6af8',
-        'md5': '8d40dab61cea8ab0114e090b029a0565',
+        'md5': 'a68c3564be2f4426254f026c95a06348',
         'info_dict': {
-            'id': 'MUHH48000314AA',
-            'ext': 'mp4',
-            'title': '20 spørsmål 23.05.2014',
-            'description': 'md5:bdea103bc35494c143c6a9acdd84887a',
-            'duration': 1741,
-            'series': '20 spørsmål',
-            'episode': '23.05.2014',
+            'id': 'l_96f4f1b0-de54-4e6a-b4f1-b0de54fe6af8',
+            'ext': 'mp3',
+            'title': 'Jeg er sinna og det må du tåle!',
+            'alt_title': 'md5:06eae9f8c8ccf0718b54c83654e65550',
+            'description': '',
+            'duration': 1682,
+            'thumbnail': 'https://gfx.nrk.no/CEDlVkEKxLYiBZ-CXjxSxgduDdaL-a4XTZlar9AoJFOA',
+            'timestamp': 1522897200,
+            'upload_date': '20180405',
+            'age_limit': 0,
         },
     }, {
         'url': 'https://radio.nrk.no/podcast/ulrikkes_univers/l_96f4f1b0-de54-4e6a-b4f1-b0de54fe6af8',
@@ -861,6 +877,7 @@ class NRKTVEpisodesIE(NRKPlaylistBaseIE):
     _ITEM_RE = rf'data-episode=["\']{NRKTVIE._EPISODE_RE}'
     _TESTS = [{
         'url': 'https://tv.nrk.no/program/episodes/nytt-paa-nytt/69031',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '69031',
             'title': 'Nytt på nytt, sesong: 201210',
@@ -879,6 +896,7 @@ class NRKSkoleIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.nrk.no/skole/?page=search&q=&mediaId=14099',
+        'skip': 'site unavailable',
         'md5': '18c12c3d071953c3bf8d54ef6b2587b7',
         'info_dict': {
             'id': '6021',

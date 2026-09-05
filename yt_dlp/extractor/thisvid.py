@@ -28,6 +28,7 @@ class ThisVidIE(InfoExtractor):
             'display_id': 'sitting-on-ball-tight-jeans',
             'age_limit': 18,
         },
+        'expected_warnings': ['Untested major version'],
     }, {
         'url': 'https://thisvid.com/embed/3533241/',
         'md5': '839becb572995687e11a69dc4358a386',
@@ -197,6 +198,7 @@ class ThisVidPlaylistIE(ThisVidPlaylistBaseIE):
         'params': {
             'noplaylist': True,
         },
+        'expected_warnings': ['Untested major version'],
     }]
     _PLAYLIST_URL_RE = _VALID_URL
 

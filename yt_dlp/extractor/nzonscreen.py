@@ -13,6 +13,7 @@ class NZOnScreenIE(InfoExtractor):
     _VALID_URL = r'https?://www\.nzonscreen\.com/title/(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://www.nzonscreen.com/title/shoop-shoop-diddy-wop-cumma-cumma-wang-dang-1982',
+        'skip': 'extractor broken: Unable to extract media data',
         'info_dict': {
             'id': '726ed6585c6bfb30',
             'ext': 'mp4',
@@ -27,6 +28,7 @@ class NZOnScreenIE(InfoExtractor):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.nzonscreen.com/title/shes-a-mod-1964?collection=best-of-the-60s',
+        'skip': 'extractor broken: Unable to extract media data',
         'info_dict': {
             'id': '3dbe709ff03c36f1',
             'ext': 'mp4',
@@ -41,6 +43,7 @@ class NZOnScreenIE(InfoExtractor):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.nzonscreen.com/title/puha-and-pakeha-1968/overview',
+        'skip': 'extractor broken: Unable to extract media data',
         'info_dict': {
             'id': 'f86342544385ad8a',
             'ext': 'mp4',

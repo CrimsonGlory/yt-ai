@@ -18,6 +18,7 @@ class AdultSwimIE(TurnerBaseIE):
 
     _TESTS = [{
         'url': 'https://www.adultswim.com/videos/12-oz-mouse/mee-ouse',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'AXMpt2aERs3h4hI_X4PD',
             'ext': 'mp4',

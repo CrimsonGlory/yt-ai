@@ -11,6 +11,7 @@ class KickerIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?kicker\.de/(?P<id>[\w-]+)/video'
     _TESTS = [{
         'url': 'https://www.kicker.de/wagner-ueber-pokal-torjaeger-johannesson-hatte-zu-kaempfen-1247261/video',
+        'skip': 'HTTP 403/blocked',
         'md5': '9a92e6b5a973152a187e3bc610cffdcb',
         'info_dict': {
             'id': '1247261',

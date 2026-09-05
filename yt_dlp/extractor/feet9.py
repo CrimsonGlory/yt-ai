@@ -13,7 +13,7 @@ from ..utils import (
 class Feet9IE(InfoExtractor):
     IE_DESC = 'Feet9'
     _VALID_URL = (
-        r'https?://(?:www\.)?feet9\.com/(?:[a-z]{2}(?:-[a-z]{2})/)?(?P<id>\d+)(?:/(?P<display_id>[^/?#]+))?/?(?:[?#]|$)',
+        r'https?://(?:www\.)?feet9\.com/(?:[a-z]{2}(?:-[a-z]{2})?/)?(?P<id>\d+)(?:/(?P<display_id>[^/?#]+))?/?(?:[?#]|$)',
         r'https?://(?:www\.)?feet9\.com/modules/video/player/embed\.php\?(?:[^#]*&)?id=(?P<id>\d+)',
     )
     _EMBED_REGEX = [r'<iframe[^>]+\bsrc=["\'](?P<url>https?://(?:www\.)?feet9\.com/modules/video/player/embed\.php\?[^"\']*id=\d+[^"\']*)']

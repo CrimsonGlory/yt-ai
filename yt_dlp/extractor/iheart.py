@@ -27,13 +27,15 @@ class IHeartRadioIE(IHeartRadioBaseIE):
     _VALID_URL = r'(?:https?://(?:www\.)?iheart\.com/podcast/[^/]+/episode/(?P<display_id>[^/?&#]+)-|iheartradio:)(?P<id>\d+)'
     _TEST = {
         'url': 'https://www.iheart.com/podcast/105-behind-the-bastards-29236323/episode/part-one-alexander-lukashenko-the-dictator-70346499/?embed=true',
-        'md5': 'c8609c92c8688dcb69d8541042b8abca',
+        'md5': '7a4da8b10e4f5fa00658e12d7e33585b',
         'info_dict': {
             'id': '70346499',
             'ext': 'mp3',
             'title': 'Part One: Alexander Lukashenko: The Dictator of Belarus',
-            'description': 'md5:96cc7297b3a5a9ebae28643801c96fae',
-            'timestamp': 1597741200,
+            'description': 'md5:f50e7b792fc0a97e52fdc07123c4ad76',
+            'duration': 3826,
+            'thumbnail': 'md5:85801ce355c535378a5569a317be7608',
+            'timestamp': 1597730400,
             'upload_date': '20200818',
         },
     }

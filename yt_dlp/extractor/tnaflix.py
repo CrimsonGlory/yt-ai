@@ -189,16 +189,15 @@ class TNAFlixNetworkEmbedIE(TNAFlixNetworkBaseIE):
 
     _TESTS = [{
         'url': 'https://player.tnaflix.com/video/6538',
+        'md5': 'add5a9fa7f4da53d3e9d0845ac58f20c',
         'info_dict': {
             'id': '6538',
-            'display_id': '6538',
             'ext': 'mp4',
             'title': 'Educational xxx video (G Spot)',
             'description': 'md5:b4fab8f88a8621c8fabd361a173fe5b8',
-            'thumbnail': r're:https?://.*\.jpg$',
-            'age_limit': 18,
             'duration': 164,
-            'uploader': 'bobwhite39',
+            'thumbnail': 'https://img.tnaflix.com/a16:9q80w920/106/65/38/6538/thumbs/12.jpg',
+            'age_limit': 18,
             'categories': list,
         },
         'params': {
@@ -227,6 +226,20 @@ class TNAFlixIE(TNAEMPFlixBaseIE):
     _TITLE_REGEX = r'<title>(.+?) - (?:TNAFlix Porn Videos|TNAFlix\.com)</title>'
 
     _TESTS = [{
+        'url': 'https://www.tnaflix.com/blowjob-videos/Costumed-sluts-fuck-during-orgy/video6482224',
+        'md5': '403bc95318ba31edbae730491316356e',
+        'info_dict': {
+            'id': '6482224',
+            'ext': 'mp4',
+            'display_id': 'Costumed-sluts-fuck-during-orgy',
+            'title': 'Costumed sluts fuck during orgy',
+            'description': 'Costumed sluts fuck during orgy and suck dick and get facialized',
+            'duration': 420,
+            'thumbnail': 'https://cdnl.tnaflix.com/thumb/a16:9q80w920/214/64/82/6482224/12.jpg',
+            'age_limit': 18,
+            'categories': list,
+        },
+    }, {
         # anonymous uploader, no categories
         'url': 'http://www.tnaflix.com/porn-stars/Carmella-Decesare-striptease/video553878',
         'md5': '7e569419fe6d69543d01e6be22f5f7c4',
@@ -244,6 +257,7 @@ class TNAFlixIE(TNAEMPFlixBaseIE):
     }, {
         # non-anonymous uploader, categories
         'url': 'https://www.tnaflix.com/teen-porn/Educational-xxx-video/video6538',
+        'skip': 'stale test sample / site changed',
         'md5': 'add5a9fa7f4da53d3e9d0845ac58f20c',
         'info_dict': {
             'id': '6538',
@@ -299,7 +313,23 @@ class MovieFapIE(TNAFlixNetworkBaseIE):
     _AVERAGE_RATING_REGEX = r'Current Rating\s*<br>\s*<strong>([\d.]+)</strong>'
     _CATEGORIES_REGEX = r'(?s)<div[^>]+id="vid_info"[^>]*>\s*<div[^>]*>.+?</div>(.*?)<br>'
 
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.moviefap.com/videos/40d1df2377dac4edb12b/sexy-gf-jade-jantzen-first-time-anal-sex.html',
+            'md5': '91ff9b9812a73ed756601a16ee809250',
+            'info_dict': {
+            'id': '40d1df2377dac4edb12b',
+            'ext': 'mp4',
+            'display_id': 'sexy-gf-jade-jantzen-first-time-anal-sex',
+            'title': 'Sexy gf Jade Jantzen first time anal sex',
+            'description': 'md5:26cb857ca9467f9fd059bf1694467133',
+            'uploader': 'FapKatie',
+            'thumbnail': 'https://img.moviefap.com/a4:3w160r/202/29/16/291653/thumbs/9.jpg',
+            'age_limit': 18,
+            'view_count': int,
+            'comment_count': int,
+        },
+        },{
         # normal, multi-format video
         'url': 'http://www.moviefap.com/videos/be9867c9416c19f54a4a/experienced-milf-amazing-handjob.html',
         'md5': '26624b4e2523051b550067d547615906',

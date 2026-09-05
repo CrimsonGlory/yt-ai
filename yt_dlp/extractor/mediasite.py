@@ -25,15 +25,20 @@ class MediasiteIE(InfoExtractor):
     _EMBED_REGEX = [rf'(?xi)<iframe\b[^>]+\bsrc=(["\'])(?P<url>(?:(?:https?:)?//[^/]+)?/Mediasite/Play/{_ID_RE}(?:\?.*?)?)\1']
     _TESTS = [
         {
-            'url': 'https://hitsmediaweb.h-its.org/mediasite/Play/2db6c271681e4f199af3c60d1f82869b1d',
-            'skip': 'hitsmediaweb.h-its.org is unreachable (TCP 80/443 connection timeout); lectures moved to YouTube',
+            'url': 'https://acc.mediasite.com/Mediasite/Play/41ff07137e8343ec9aa8929df8ecded21d',
             'info_dict': {
-                'id': '2db6c271681e4f199af3c60d1f82869b1d',
+                'id': '41ff07137e8343ec9aa8929df8ecded21d',
                 'ext': 'mp4',
-                'title': 'Lecture: Tuesday, September 20, 2016 - Sir Andrew Wiles',
-                'description': 'Sir Andrew Wiles: “Equations in arithmetic”\\n\\nI will describe some of the interactions between modern number theory and the problem of solving equations in rational numbers or integers\\u0027.',
-                'timestamp': 1474268400.0,
-                'upload_date': '20160919',
+                'title': 'Competency-Based Education: International Perspectives',
+                'description': '',
+                'duration': 642.608,
+                'thumbnail': r're:^https?://.*\.jpg(?:\?.*)?$',
+                'timestamp': 1648823700.0,
+                'upload_date': '20220401',
+            },
+            'params': {
+                # Progressive MP4 400s on Range (test=True); HLS --test fragments are <10KiB
+                'skip_download': True,
             },
         },
         {
@@ -49,6 +54,7 @@ class MediasiteIE(InfoExtractor):
         },
         {
             'url': 'https://collegerama.tudelft.nl/Mediasite/Play/585a43626e544bdd97aeb71a0ec907a01d',
+            'skip': 'site unavailable',
             'md5': '481fda1c11f67588c0d9d8fbdced4e39',
             'info_dict': {
                 'id': '585a43626e544bdd97aeb71a0ec907a01d',
@@ -63,6 +69,7 @@ class MediasiteIE(InfoExtractor):
         },
         {
             'url': 'https://collegerama.tudelft.nl/Mediasite/Play/86a9ea9f53e149079fbdb4202b521ed21d?catalog=fd32fd35-6c99-466c-89d4-cd3c431bc8a4',
+            'skip': 'extractor broken',
             'md5': 'ef1fdded95bdf19b12c5999949419c92',
             'info_dict': {
                 'id': '86a9ea9f53e149079fbdb4202b521ed21d',
@@ -77,15 +84,19 @@ class MediasiteIE(InfoExtractor):
         },
         {
             'url': 'http://digitalops.sandia.gov/Mediasite/Play/24aace4429fc450fb5b38cdbf424a66e1d',
-            'md5': '9422edc9b9a60151727e4b6d8bef393d',
             'info_dict': {
                 'id': '24aace4429fc450fb5b38cdbf424a66e1d',
                 'ext': 'mp4',
-                'title': 'Xyce Software Training - Section 1',
-                'description': r're:(?s)SAND Number: SAND 2013-7800.{200,}',
+                'title': 'Xyce Software Training - Section 1 - Apr. 2012',
+                'description': 'md5:c3b54b3067837d4b88a307f1a856493b',
+                'duration': 7794.0,
+                'thumbnail': r're:^https?://.*\.jpg(?:\?.*)?$',
+                'timestamp': 1333983600.0,
                 'upload_date': '20120409',
-                'timestamp': 1333983600,
-                'duration': 7794,
+            },
+            'params': {
+                # Progressive MP4 GET 400s; HLS --test fragments are <10KiB
+                'skip_download': True,
             },
         },
         {
@@ -97,8 +108,12 @@ class MediasiteIE(InfoExtractor):
             'only_matching': True,
         },
         {
-            # dashed id
+            # dashed id (host unreachable; lectures moved to YouTube)
             'url': 'https://hitsmediaweb.h-its.org/mediasite/Play/2db6c271-681e-4f19-9af3-c60d1f82869b1d',
+            'only_matching': True,
+        },
+        {
+            'url': 'https://hitsmediaweb.h-its.org/mediasite/Play/2db6c271681e4f199af3c60d1f82869b1d',
             'only_matching': True,
         },
     ]
@@ -215,6 +230,10 @@ class MediasiteIE(InfoExtractor):
                 stream_type, 'type%u' % stream_type)
 
             stream_formats = []
+            has_hls = any(
+                mimetype2ext(v.get('MimeType')) in ('m3u', 'm3u8')
+                or 'm3u8' in (url_or_none(v.get('Location')) or '')
+                for v in video_urls if isinstance(v, dict))
             for unum, video in enumerate(video_urls):
                 video_url = url_or_none(video.get('Location'))
                 if not video_url:
@@ -239,6 +258,9 @@ class MediasiteIE(InfoExtractor):
                         m3u8_id=f'{stream_id}-{snum}.{unum}',
                         fatal=False))
                 else:
+                    # Deliver progressive MP4 GET 400s when HLS is listed for the same stream
+                    if has_hls and ext == 'mp4':
+                        continue
                     stream_formats.append({
                         'format_id': f'{stream_id}-{snum}.{unum}',
                         'url': video_url,

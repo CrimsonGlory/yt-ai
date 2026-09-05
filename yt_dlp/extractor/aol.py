@@ -17,6 +17,7 @@ class AolIE(YahooIE):  # XXX: Do not subclass from concrete IE
     _TESTS = [{
         # video with 5min ID
         'url': 'https://www.aol.com/video/view/u-s--official-warns-of-largest-ever-irs-phone-scam/518167793/',
+        'skip': 'site unavailable',
         'md5': '18ef68f48740e86ae94b98da815eec42',
         'info_dict': {
             'id': '518167793',
@@ -34,6 +35,7 @@ class AolIE(YahooIE):  # XXX: Do not subclass from concrete IE
     }, {
         # video with vidible ID
         'url': 'https://www.aol.com/video/view/netflix-is-raising-rates/5707d6b8e4b090497b04f706/',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '5707d6b8e4b090497b04f706',
             'ext': 'mp4',

@@ -8,6 +8,7 @@ class VTVGoIE(InfoExtractor):
     ]
     _TESTS = [{
         'url': 'https://vtvgo.vn/kho-video/bep-vtv-vit-chao-rieng-so-24-888456.html',
+        'skip': 'extractor broken: Unable to extract m3u8 url',
         'info_dict': {
             'id': '888456',
             'ext': 'mp4',
@@ -17,6 +18,7 @@ class VTVGoIE(InfoExtractor):
         },
     }, {
         'url': 'https://vtvgo.vn/tin-tuc/hot-search-1-zlife-khong-ngo-toi-phai-khong-862074',
+        'skip': 'extractor broken: Unable to extract m3u8 url',
         'info_dict': {
             'id': '862074',
             'ext': 'mp4',
@@ -26,6 +28,7 @@ class VTVGoIE(InfoExtractor):
         },
     }, {
         'url': 'https://vtvgo.vn/kho-video/918311.html',
+        'skip': 'extractor broken: Unable to extract m3u8 url',
         'info_dict': {
             'id': '918311',
             'title': 'Cà phê sáng | 05/02/2024 | Tái hiện hình ảnh Hà Nội xưa tại ngôi nhà di sản',

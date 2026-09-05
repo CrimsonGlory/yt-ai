@@ -29,6 +29,7 @@ class APAIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.vol.at/blue-man-group/5593454',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '293f6d17-692a-44e3-9fd5-7b178f3a1029',
             'ext': 'mp4',

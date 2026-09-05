@@ -8,8 +8,26 @@ class IvooxIE(InfoExtractor):
         r'https?://(?:www\.)?ivoox\.com/(?:\w{2}/)?[^/?#]+_rf_(?P<id>[0-9]+)_1\.html',
         r'https?://go\.ivoox\.com/rf/(?P<id>[0-9]+)',
     )
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.ivoox.com/en/larguero-a-00-00-el-mercado-audios-mp3_rf_179951138_1.html',
+            'md5': 'd4869b2af9f855a13932bc784b251a43',
+            'info_dict': {
+            'id': '179951138',
+            'ext': 'mp3',
+            'title': 'md5:24f266fdedafd74daeb7abdd2ccdd81e',
+            'description': 'md5:a0a11dcc92e664557a16f6ac84a05b16',
+            'uploader': 'Cadena SER',
+            'channel': 'El Larguero',
+            'duration': 2056,
+            'thumbnail': 'https://static-1.ivoox.com/audios/f/1/7/2/f17228674b972f3516a183528bbeca89_XXL.jpg',
+            'timestamp': 1788403532,
+            'upload_date': '20260903',
+            'episode': 'md5:24f266fdedafd74daeb7abdd2ccdd81e',
+        },
+        },{
         'url': 'https://www.ivoox.com/dex-08x30-rostros-del-mal-los-asesinos-en-audios-mp3_rf_143594959_1.html',
+        'skip': 'stale test sample / site changed',
         'md5': '993f712de5b7d552459fc66aa3726885',
         'info_dict': {
             'id': '143594959',

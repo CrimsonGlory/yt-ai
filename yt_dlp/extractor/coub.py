@@ -12,7 +12,26 @@ class CoubIE(InfoExtractor):
     _VALID_URL = r'(?:coub:|https?://(?:coub\.com/(?:view|embed|coubs)/|c-cdn\.coub\.com/fb-player\.swf\?.*\bcoub(?:ID|id)=))(?P<id>[\da-z]+)'
 
     _TESTS = [{
+        'url': 'http://coub.com/view/34b9ri9f9d',
+        'md5': '0363454e45f3ee4cd3080833bca1c648',
+        'info_dict': {
+            'id': '34b9ri9f9d',
+            'ext': 'mp4',
+            'title': 'The END',
+            'thumbnail': r're:^https?://.*\.jpg',
+            'duration': 10.0,
+            'timestamp': 1788433136,
+            'upload_date': '20260903',
+            'uploader': 'MARKY_MARK',
+            'uploader_id': 'marky-mark5',
+            'view_count': int,
+            'like_count': int,
+            'repost_count': int,
+            'age_limit': 0,
+        },
+    }, {
         'url': 'http://coub.com/view/5u5n1',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '5u5n1',
             'ext': 'mp4',

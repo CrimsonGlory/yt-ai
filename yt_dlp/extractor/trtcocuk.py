@@ -10,7 +10,7 @@ class TrtCocukVideoIE(InfoExtractor):
             'id': '3789738',
             'ext': 'mp4',
             'season_number': 1,
-            'series': '"Kaptan Pengu ve Arkadaşları"',
+            'series': 'Kaptan Pengu ve Arkadaşları',
             'season': 'Season 1',
             'title': 'Kaptan Pengu ve Arkadaşları 1 Bölüm İzle TRT Çocuk',
             'release_date': '20201209',
@@ -18,6 +18,7 @@ class TrtCocukVideoIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.trtcocuk.net.tr/video/sef-rokanin-lezzet-dunyasi-17',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '10260842',
             'ext': 'mp4',

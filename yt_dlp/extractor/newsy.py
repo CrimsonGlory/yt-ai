@@ -10,6 +10,7 @@ class NewsyIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.newsy.com/stories/nft-trend-leads-to-fraudulent-art-auctions/',
+        'skip': 'extractor broken: Unable to extract data',
         'info_dict': {
             'id': '609d65125b086c24fb529312',
             'ext': 'mp4',

@@ -57,7 +57,6 @@ class IndavideoEmbedIE(InfoExtractor):
         },
     }, {
         'url': 'https://palyazat.indavideo.hu/video/RUSH_1',
-        'skip': 'HTTP Error 403',
         'info_dict': {
             'id': '3808180',
             'ext': 'mp4',
@@ -72,6 +71,7 @@ class IndavideoEmbedIE(InfoExtractor):
             'uploader': '7summerfilms',
             'uploader_id': '1628496',
         },
+        'params': {'skip_download': True},
     }]
 
     def _real_extract(self, url):

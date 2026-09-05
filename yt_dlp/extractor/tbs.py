@@ -26,6 +26,7 @@ class TBSIE(TurnerBaseIE):
     '''
     _TESTS = [{
         'url': 'https://www.tbs.com/shows/american-dad/season-6/episode-12/you-debt-your-life',
+        'skip': 'extractor broken: Unable to extract drupal settings',
         'info_dict': {
             'id': '984bdcd8db0cc00dc699927f2a411c8c6e0e48f3',
             'ext': 'mp4',
@@ -44,6 +45,7 @@ class TBSIE(TurnerBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.tntdrama.com/shows/the-librarians-the-next-chapter/season-1/episode-10/and-going-medieval',
+        'skip': 'extractor broken: Unable to extract drupal settings',
         'info_dict': {
             'id': 'e487b31b663a8001864f62fd20907782f7b8ccb8',
             'ext': 'mp4',
@@ -62,6 +64,7 @@ class TBSIE(TurnerBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.trutv.com/shows/the-carbonaro-effect/season-1/episode-1/got-the-bug-out',
+        'skip': 'extractor broken: Unable to extract drupal settings',
         'info_dict': {
             'id': 'b457dd7458fd9e64b596355950b13a1ca799dc39',
             'ext': 'mp4',

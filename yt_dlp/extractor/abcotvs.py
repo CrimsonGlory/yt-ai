@@ -12,7 +12,28 @@ class ABCOTVSIE(InfoExtractor):
     _VALID_URL = r'https?://(?P<site>abc(?:7(?:news|ny|chicago)?|11|13|30)|6abc)\.com(?:(?:/[^/]+)*/(?P<display_id>[^/]+))?/(?P<id>\d+)'
     _TESTS = [
         {
+            'url': 'https://abc7news.com/post/elderly-san-francisco-woman-loses-14000-wave-bay-area-mail-thefts-check-washing-fraud/19781489/',
+            'md5': 'e325dacaa11f1637ea287bf9bb438ecf',
+            'info_dict': {
+            'id': '19782259',
+            'ext': 'mp4',
+            'display_id': 'elderly-san-francisco-woman-loses-14000-wave-bay-area-mail-thefts-check-washing-fraud',
+            'title': "How Mail Thieves Stole $14K from elderly SF woman's bank account",
+            'description': 'md5:45147bc6e92336a702574353d5c06764',
+            'duration': 223,
+            'thumbnail': 'https://cdn.abcotvs.com/dip/images/19782312_090226-kgo-check-wash-img.png',
+            'timestamp': 1788396682,
+            'upload_date': '20260903',
+        },
+            'params': {
+                'skip_download': True,
+                'ignore_no_formats_error': True,
+            },
+            'expected_warnings': ['Failed to download m3u8'],
+        },
+        {
             'url': 'https://abc7news.com/post/san-francisco-49ers-owner-jed-york-arrested-ohio-prostitution-court-documents/19727825/',
+            'skip': 'video gone',
             'info_dict': {
                 'id': '19727969',
                 'display_id': 'east-bay-museum-celebrates-vintage-synthesizers',

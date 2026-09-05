@@ -25,22 +25,27 @@ class AbcNewsVideoIE(AMPIE):
                     '''
 
     _TESTS = [{
-        'url': 'http://abcnews.go.com/ThisWeek/video/week-exclusive-irans-foreign-minister-zarif-20411932',
+        # Homepage trending video (abcnews.go.com redirects to abcnews.com)
+        'url': 'https://abcnews.go.com/US/video/killer-whale-rams-sailboat-off-coast-spain-136168216',
         'info_dict': {
-            'id': '20411932',
+            'id': '136168216',
             'ext': 'mp4',
-            'display_id': 'week-exclusive-irans-foreign-minister-zarif',
-            'title': '\'This Week\' Exclusive: Iran\'s Foreign Minister Zarif',
-            'description': 'George Stephanopoulos goes one-on-one with Iranian Foreign Minister Dr. Javad Zarif.',
-            'duration': 180,
-            'thumbnail': r're:^https?://.*\.jpg$',
-            'timestamp': 1380454200,
-            'upload_date': '20130929',
+            'display_id': 'killer-whale-rams-sailboat-off-coast-spain',
+            'title': 'Killer whale rams sailboat off the coast of Spain',
+            'description': "American captain speaks out as a pod of killer whales attacked their boat, ripping off the boat's rudder. ",
+            'duration': 92,
+            'thumbnail': r're:https?://.*',
+            'timestamp': int,
+            'upload_date': '20260903',
         },
         'params': {
             # m3u8 download
             'skip_download': True,
         },
+        'expected_warnings': ['Unable to download f4m manifest'],
+    }, {
+        'url': 'http://abcnews.go.com/ThisWeek/video/week-exclusive-irans-foreign-minister-zarif-20411932',
+        'only_matching': True,
     }, {
         'url': 'http://abcnews.go.com/video/embed?id=46979033',
         'only_matching': True,

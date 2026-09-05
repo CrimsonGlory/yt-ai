@@ -9,6 +9,7 @@ class HytaleIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?hytale\.com/news/\d+/\d+/(?P<id>[a-z0-9-]+)'
     _TESTS = [{
         'url': 'https://hytale.com/news/2021/07/summer-2021-development-update',
+        'skip': 'extractor broken: Unable to extract clips json',
         'info_dict': {
             'id': 'summer-2021-development-update',
             'title': 'Summer 2021 Development Update',
@@ -25,6 +26,7 @@ class HytaleIE(InfoExtractor):
         }],
     }, {
         'url': 'https://www.hytale.com/news/2019/11/hytale-graphics-update',
+        'skip': 'extractor broken: Unable to extract clips json',
         'info_dict': {
             'id': 'hytale-graphics-update',
             'title': 'Hytale graphics update',

@@ -40,7 +40,67 @@ class ProkoIE(ProkoBaseIE):
     IE_DESC = 'Proko'
     _VALID_URL = r'https?://(?:www\.)?proko\.com/(?:course-lesson|lesson)/(?P<id>[\w-]+)/?(?:[?#]|$)'
     _TESTS = [{
+        'url': 'https://www.proko.com/course-lesson/how-to-draw-confident-lines-the-tapered-stroke',
+        'md5': '9b31ae4daab6a15886bf96daa5d0d7dc',
+        'info_dict': {
+            'id': 'xZYpXKqY4iA',
+            'ext': 'mp4',
+            'display_id': 'how-to-draw-confident-lines-the-tapered-stroke',
+            'title': 'How to Draw Confident Lines - The Tapered Stroke',
+            'description': 'md5:7269a9429d9379c032500ce47c648068',
+            'media_type': 'video',
+            'uploader': 'Proko',
+            'uploader_id': '@ProkoTV',
+            'uploader_url': 'https://www.youtube.com/@ProkoTV',
+            'channel': 'Proko',
+            'channel_id': 'UClM2LuQ1q5WEc23462tQzBg',
+            'channel_url': 'https://www.youtube.com/channel/UClM2LuQ1q5WEc23462tQzBg',
+            'channel_is_verified': True,
+            'channel_follower_count': int,
+            'duration': 319,
+            'thumbnail': r're:https://img-resizer\.proko\.com/resize/lesson/cover_image/.+',
+            'timestamp': 1677599428,
+            'upload_date': '20230301',
+            'age_limit': 0,
+            'view_count': int,
+            'like_count': int,
+            'comment_count': int,
+            'playable_in_embed': True,
+            'availability': 'public',
+            'live_status': 'not_live',
+            'categories': ['Education'],
+            'tags': 'count:20',
+            'heatmap': 'count:100',
+            'chapters': [{
+                'start_time': 0,
+                'title': 'Intro',
+                'end_time': 43,
+            }, {
+                'start_time': 43,
+                'title': 'Construct Complex Lines',
+                'end_time': 108,
+            }, {
+                'start_time': 108,
+                'title': 'Loose Sketching',
+                'end_time': 245,
+            }, {
+                'start_time': 245,
+                'title': 'Conclusion',
+                'end_time': 319,
+            }],
+        },
+        'add_ie': ['Youtube'],
+        'params': {
+            'format': 'bestvideo[protocol=https][ext=mp4]/best[protocol=https]',
+        },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'No supported JavaScript runtime',
+            'n challenge solving failed',
+        ],
+    }, {
         'url': 'https://www.proko.com/course-lesson/learning-how-to-draw',
+        'skip': 'site unavailable',
         'md5': '8a678469d8182e1ac0c0735fe320452a',
         'info_dict': {
             'id': 'tx5kJvI14Jg',

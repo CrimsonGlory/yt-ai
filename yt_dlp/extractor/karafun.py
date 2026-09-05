@@ -20,6 +20,7 @@ class KarafunIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.karafun.com/web/?song=11524',
+            'skip': 'requires account',
             'md5': 'f8e08ecb6389367d22a3d959c924c93b',
             'info_dict': {
                 'id': '11524',

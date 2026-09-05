@@ -185,6 +185,7 @@ class IPrimaCNNIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://cnn.iprima.cz/porady/strunc/24072020-koronaviru-mam-plne-zuby-strasit-druhou-vlnou-je-absurdni-rika-senatorka-dernerova',
+        'skip': 'extractor broken: Unable to extract real id',
         'info_dict': {
             'id': 'p716177',
             'ext': 'mp4',

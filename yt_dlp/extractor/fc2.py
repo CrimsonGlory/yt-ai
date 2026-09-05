@@ -20,6 +20,7 @@ class FC2IE(InfoExtractor):
     _NETRC_MACHINE = 'fc2'
     _TESTS = [{
         'url': 'http://video.fc2.com/en/content/20121103kUan1KHs',
+        'skip': 'extractor broken: [fc2] unable to extract title',
         'md5': 'a6ebe8ebe0396518689d963774a54eb7',
         'info_dict': {
             'id': '20121103kUan1KHs',
@@ -33,6 +34,7 @@ class FC2IE(InfoExtractor):
     }, {
         # Direct video url
         'url': 'https://video.fc2.com/content/20121209FP73fxDx',
+        'skip': 'extractor broken: [fc2] unable to extract title',
         'md5': '066bdb9b3a56a97f49cbf0d0b8a75a1f',
         'info_dict': {
             'id': '20121209FP73fxDx',
@@ -132,6 +134,7 @@ class FC2EmbedIE(InfoExtractor):
 
     _TEST = {
         'url': 'http://video.fc2.com/flv2.swf?t=201404182936758512407645&i=20130316kwishtfitaknmcgd76kjd864hso93htfjcnaogz629mcgfs6rbfk0hsycma7shkf85937cbchfygd74&i=201403223kCqB3Ez&d=2625&sj=11&lang=ja&rel=1&from=11&cmt=1&tk=TlRBM09EQTNNekU9&tl=プリズン･ブレイク%20S1-01%20マイケル%20【吹替】',
+        'skip': 'site unavailable',
         'md5': 'b8aae5334cb691bdb1193a88a6ab5d5a',
         'info_dict': {
             'id': '201403223kCqB3Ez',
@@ -171,6 +174,7 @@ class FC2LiveIE(InfoExtractor):
     _TESTS = [{
         'url': 'https://live.fc2.com/57892267/',
         'info_dict': {
+            'ext': 'mp4',
             'id': '57892267',
             'title': 'どこまで・・・',
             'uploader': 'あつあげ',

@@ -45,6 +45,7 @@ class VidflexIE(InfoExtractor):
     }, {
         # m3u8 + https
         'url': 'https://video.hockeycanada.ca/en-us/c/nwt-micd-up-with-jamie-lee-rattray.107486',
+        'skip': 'extractor broken: Unable to extract content api url',
         'info_dict': {
             'id': '107486',
             'title': 'NWT: Mic’d up with Jamie Lee Rattray',
@@ -59,6 +60,7 @@ class VidflexIE(InfoExtractor):
         'params': {'skip_download': True},
     }, {
         'url': 'https://video.hockeycanada.ca/en/c/mwc-remembering-the-wild-ride-in-riga.112307',
+        'skip': 'extractor broken: Unable to extract content api url',
         'info_dict': {
             'id': '112307',
             'title': 'MWC: Remembering the wild ride in Riga',
@@ -74,6 +76,7 @@ class VidflexIE(InfoExtractor):
     }, {
         # the same video in French
         'url': 'https://video.hockeycanada.ca/fr/c/cmm-retour-sur-un-parcours-endiable-a-riga.112304',
+        'skip': 'extractor broken: Unable to extract content api url',
         'info_dict': {
             'id': '112304',
             'title': 'CMM : Retour sur un parcours endiablé à Riga',

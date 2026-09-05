@@ -32,6 +32,7 @@ class VidlyIE(InfoExtractor):
     }, {
         # Vidlyplayer
         'url': 'https://vid.ly/5u4h3e',
+        'skip': 'video gone',
         'info_dict': {
             'id': '5u4h3e',
             'ext': 'mp4',
@@ -40,6 +41,7 @@ class VidlyIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.petfinder.com/dog/gus-57378930/tn/ooltewah/furever-furkids-rescue-tn592/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'w8p5b0',
             'ext': 'mp4',

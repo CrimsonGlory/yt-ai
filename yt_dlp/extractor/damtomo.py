@@ -59,7 +59,9 @@ class DamtomoVideoIE(DamtomoBaseIE):
     _DKML_XML_NS = 'https://www.clubdam.com/app/damtomo/karaokeMovie/GetStreamingDkmUrlXML'
     _TESTS = [{
         'url': 'https://www.clubdam.com/app/damtomo/karaokeMovie/StreamingDkm.do?karaokeMovieId=2414316',
+        'skip': 'live/no formats (missing ext)',
         'info_dict': {
+            'ext': 'mp4',
             'id': '2414316',
             'title': 'Get Wild',
             'uploader': 'Ｋドロン',
@@ -79,7 +81,9 @@ class DamtomoRecordIE(DamtomoBaseIE):
     _DKML_XML_NS = 'https://www.clubdam.com/app/damtomo/karaokePost/GetStreamingKrkUrlXML'
     _TESTS = [{
         'url': 'https://www.clubdam.com/app/damtomo/karaokePost/StreamingKrk.do?karaokeContributeId=27376862',
+        'skip': 'live/no formats (missing ext)',
         'info_dict': {
+            'ext': 'mp4',
             'id': '27376862',
             'title': 'イカSUMMER [良音]',
             'uploader': 'ＮＡＮＡ',
@@ -92,7 +96,9 @@ class DamtomoRecordIE(DamtomoBaseIE):
         },
     }, {
         'url': 'https://www.clubdam.com/app/damtomo/karaokePost/StreamingKrk.do?karaokeContributeId=27489418',
+        'skip': 'live/no formats (missing ext)',
         'info_dict': {
+            'ext': 'mp4',
             'id': '27489418',
             'title': '心みだれて〜say it with flowers〜(生音)',
             'uploader_id': 'NjI1MjI2MjU',

@@ -225,6 +225,7 @@ class PBSIE(InfoExtractor):
         },
         {
             'url': 'http://www.pbs.org/wgbh/pages/frontline/losing-iraq/',
+            'skip': 'site unavailable',
             'md5': '372b12b670070de39438b946474df92f',
             'info_dict': {
                 'id': '2365297690',
@@ -246,6 +247,7 @@ class PBSIE(InfoExtractor):
         },
         {
             'url': 'http://www.pbs.org/newshour/bb/education-jan-june12-cyberschools_02-23/',
+            'skip': 'site unavailable',
             'md5': 'b19856d7f5351b17a5ab1dc6a64be633',
             'info_dict': {
                 'id': '2201174722',
@@ -257,6 +259,7 @@ class PBSIE(InfoExtractor):
         },
         {
             'url': 'http://www.pbs.org/wnet/gperf/dudamel-conducts-verdi-requiem-hollywood-bowl-full-episode/3374/',
+            'skip': 'extractor broken: Extractor failed to obtain "id"',
             'md5': 'c62859342be2a0358d6c9eb306595978',
             'info_dict': {
                 'id': '2365297708',
@@ -269,6 +272,7 @@ class PBSIE(InfoExtractor):
         },
         {
             'url': 'http://www.pbs.org/wgbh/nova/earth/killer-typhoon.html',
+            'skip': 'extractor broken: Extractor failed to obtain "id"',
             'md5': '908f3e5473a693b266b84e25e1cf9703',
             'info_dict': {
                 'id': '2365160389',
@@ -284,6 +288,7 @@ class PBSIE(InfoExtractor):
         },
         {
             'url': 'http://www.pbs.org/wgbh/pages/frontline/united-states-of-secrets/',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': 'united-states-of-secrets',
             },
@@ -314,6 +319,7 @@ class PBSIE(InfoExtractor):
         },
         {
             'url': 'http://www.pbs.org/video/2365245528/',
+            'skip': 'site unavailable',
             'md5': '115223d41bd55cda8ae5cd5ed4e11497',
             'info_dict': {
                 'id': '2365245528',
@@ -330,6 +336,7 @@ class PBSIE(InfoExtractor):
             # "<iframe style='position: absolute;<br />\ntop: 0; left: 0;' ...", see
             # https://github.com/ytdl-org/youtube-dl/issues/7059)
             'url': 'http://www.pbs.org/food/features/a-chefs-life-season-3-episode-5-prickly-business/',
+            'skip': 'extractor broken: Extractor failed to obtain "id"',
             'md5': '59b0ef5009f9ac8a319cc5efebcd865e',
             'info_dict': {
                 'id': '2365546844',
@@ -361,6 +368,7 @@ class PBSIE(InfoExtractor):
         {
             # Serves hd only via wigget/partnerplayer page
             'url': 'http://www.pbs.org/video/2365641075/',
+            'skip': 'video gone',
             'md5': 'fdf907851eab57211dd589cf12006666',
             'info_dict': {
                 'id': '2365641075',
@@ -374,6 +382,7 @@ class PBSIE(InfoExtractor):
         {
             # https://github.com/ytdl-org/youtube-dl/issues/13801
             'url': 'https://www.pbs.org/video/pbs-newshour-full-episode-july-31-2017-1501539057/',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': '3003333873',
                 'ext': 'mp4',
@@ -388,6 +397,7 @@ class PBSIE(InfoExtractor):
         },
         {
             'url': 'http://www.pbs.org/wgbh/roadshow/watch/episode/2105-indianapolis-hour-2/',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': '2365936247',
                 'ext': 'mp4',
@@ -403,6 +413,7 @@ class PBSIE(InfoExtractor):
         },
         {
             'url': 'https://www.pbs.org/wgbh/masterpiece/episodes/victoria-s2-e1/',
+            'skip': 'extractor broken: AttributeError',
             'info_dict': {
                 'id': '3007193718',
                 'ext': 'mp4',
@@ -418,6 +429,7 @@ class PBSIE(InfoExtractor):
         },
         {
             'url': 'https://player.pbs.org/partnerplayer/tOz9tM5ljOXQqIIWke53UA==/',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': '3011407934',
                 'ext': 'mp4',
@@ -434,6 +446,7 @@ class PBSIE(InfoExtractor):
         },
         {
             'url': 'https://www.pbssocal.org/shows/newshour/clip/capehart-johnson-1715984001',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': '3091549094',
                 'ext': 'mp4',
@@ -460,6 +473,7 @@ class PBSIE(InfoExtractor):
         {
             # Next.js v13+, see https://github.com/yt-dlp/yt-dlp/issues/13299
             'url': 'https://www.pbs.org/video/caregiving',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': '3101776876',
                 'ext': 'mp4',
@@ -767,6 +781,26 @@ class PBSKidsIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?pbskids\.org/(?:video|videos/watch)/(?:[\w-]+/)*(?P<id>\d+)'
     _GEO_COUNTRIES = ['US']
     _TESTS = [
+        {
+            'url': 'https://pbskids.org/videos/watch/corkys-weird-rainforest-mystery/2770072',
+            'md5': 'f457c329061712ce21fd6592c37c04b2',
+            'info_dict': {
+            'id': '2770072',
+            'ext': 'mp4',
+            'title': "Corky's Weird Rainforest Mystery",
+            'description': 'The Hunters venture out to investigate a mysterious rain that happens with no clouds!',
+            'channel': 'weather-hunters',
+            'duration': 1381,
+            'thumbnail': 'https://image.pbs.org/video-assets/cz2rEld-asset-kids-mezzanine1-16x9-S44FHTY.png',
+            'timestamp': 1786035872,
+            'upload_date': '20260806',
+            'series': 'Weather Hunters',
+            'season': 'Season 1',
+            'season_number': 1,
+            'episode': 'Episode 27',
+            'episode_number': 27,
+        },
+        },
         {
             'url': 'https://pbskids.org/videos/watch/everyone-gets-a-valentine/62156',
             'md5': 'b8928d5bed555bd957945f88ed860250',

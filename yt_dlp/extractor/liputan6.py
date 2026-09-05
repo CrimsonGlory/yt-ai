@@ -6,6 +6,7 @@ class Liputan6IE(InfoExtractor):
     _VALID_URL = r'https?://www\.liputan6\.com/\w+/read/\d+/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://www.liputan6.com/news/read/5007510/video-duh-perawat-rs-di-medan-diduga-salah-berikan-obat-ke-pasien',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '7082548',
             'ext': 'mp4',

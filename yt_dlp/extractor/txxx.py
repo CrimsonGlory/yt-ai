@@ -104,19 +104,18 @@ class TxxxIE(InfoExtractor):
         },
     }, {
         'url': 'https://vxxx.com/video-68925/',
-        'md5': '1fcff3748b0c5b41fe41d0afa22409e1',
+        'md5': '8522220297dc77202f308614cf9d065d',
         'info_dict': {
             'id': '68925',
-            'display_id': '68925',
             'ext': 'mp4',
             'title': 'Malena Morgan',
             'uploader': 'Huge Hughes',
-            'duration': 694,
+            'duration': 476,
+            'thumbnail': 'https://tn.vxxx.com/contents/videos_screenshots/68000/68925/preview.jpg',
+            'age_limit': 18,
             'view_count': int,
             'like_count': int,
             'dislike_count': int,
-            'age_limit': 18,
-            'thumbnail': r're:https?://.*',
         },
     }, {
         'url': 'https://hclips.com/videos/6291073/malena-morgan-masturbates-her-sweet/',
@@ -382,7 +381,28 @@ class TxxxIE(InfoExtractor):
 class PornTopIE(InfoExtractor):
     _VALID_URL = r'https?://(?P<host>(?:www\.)?porntop\.com)/video/(?P<id>\d+)(?:/(?P<display_id>[^/?]+))?'
     _TESTS = [{
+        'url': 'https://porntop.com/video/1381299/oliver-strelly-timo-hardy-and-sasha-rose-in-girl-gets-ass-fucked-while-licking-some-big-balls-anal/',
+        'md5': '13285e5c22586fd0d6114e2628742c28',
+        'info_dict': {
+            'id': '1381299',
+            'ext': 'mp4',
+            'display_id': 'oliver-strelly-timo-hardy-and-sasha-rose-in-girl-gets-ass-fucked-while-licking-some-big-balls-anal',
+            'title': 'md5:29265219bae60ac4788a10566136d3a4',
+            'description': 'md5:6e3d2cc4e06873d78c02c379ee30132f',
+            'uploader': 'PrinceGerry',
+            'duration': 480,
+            'thumbnail': 'https://pttn.m3pd.com/media/tn/1381299_preview.jpg',
+            'timestamp': 1788385800,
+            'upload_date': '20260902',
+            'age_limit': 18,
+            'view_count': int,
+            'like_count': int,
+            'dislike_count': int,
+            'tags': list,
+        },
+    }, {
         'url': 'https://porntop.com/video/101569/triple-threat-with-lia-lor-malena-morgan-and-dani-daniels/',
+        'skip': 'stale test sample / site changed',
         'md5': '612ba7b3cb99455b382972948e200b08',
         'info_dict': {
             'id': '101569',

@@ -202,7 +202,7 @@ class RedGifsSearchIE(RedGifsBaseIE):
                 'title': 'Lesbian',
                 'description': 'RedGifs search for Lesbian, ordered by latest',
             },
-            'playlist_count': 80,
+            'playlist_mincount': 20,
         },
     ]
 
@@ -220,6 +220,7 @@ class RedGifsSearchIE(RedGifsBaseIE):
             'search_text': None,
             'order': 'trending',
             'type': None,
+            'count': self._PAGE_SIZE,
         })
 
         return self.playlist_result(

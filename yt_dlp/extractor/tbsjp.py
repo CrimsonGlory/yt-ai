@@ -95,6 +95,7 @@ class TBSJPProgramIE(TBSJPBaseIE):
     _VALID_URL = r'https?://cu\.tbs\.co\.jp/program/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://cu.tbs.co.jp/program/14694',
+        'skip': 'stale test sample / site changed',
         'playlist_mincount': 1,
         'info_dict': {
             'id': '14694',

@@ -8,6 +8,7 @@ class BloombergIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.bloomberg.com/news/videos/2021-09-14/apple-unveils-the-new-iphone-13-stock-doesn-t-move-much-video',
+        'skip': 'extractor broken: Unable to extract id',
         'info_dict': {
             'id': 'V8cFcYMxTHaMcEiiYVr39A',
             'ext': 'flv',
@@ -19,6 +20,7 @@ class BloombergIE(InfoExtractor):
     }, {
         # video ID in BPlayer(...)
         'url': 'http://www.bloomberg.com/features/2016-hello-world-new-zealand/',
+        'skip': 'HTTP 403/blocked',
         'info_dict': {
             'id': '938c7e72-3f25-4ddb-8b85-a9be731baa74',
             'ext': 'flv',

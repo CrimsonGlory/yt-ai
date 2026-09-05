@@ -14,6 +14,7 @@ class ViouslyIE(InfoExtractor):
     _VALID_URL = False
     _WEBPAGE_TESTS = [{
         'url': 'http://www.turbo.fr/videos-voiture/454443-turbo-du-07-09-2014-renault-twingo-3-bentley-continental-gt-speed-ces-guide-achat-dacia.html',
+        'skip': 'webpage sample unavailable',
         'md5': '37a6c3381599381ff53a7e1e0575c0bc',
         'info_dict': {
             'id': 'F_xQzS2jwb3',

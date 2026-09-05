@@ -31,6 +31,7 @@ class OneNewsNZIE(InfoExtractor):
         }, {
             # YouTube video
             'url': 'https://www.1news.co.nz/2022/09/30/now-is-the-time-to-care-about-womens-rugby/',
+            'skip': 'site unavailable',
             'info_dict': {
                 'id': 'now-is-the-time-to-care-about-womens-rugby',
                 'title': 'Now is the time to care about women\'s rugby',

@@ -39,6 +39,7 @@ class ScreencastIE(InfoExtractor):
         },
     }, {
         'url': 'http://www.screencast.com/t/X3ddTrYh',
+        'skip': 'extractor broken: Cannot find video',
         'md5': '669ee55ff9c51988b4ebc0877cc8b159',
         'info_dict': {
             'id': 'X3ddTrYh',

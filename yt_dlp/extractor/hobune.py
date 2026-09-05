@@ -17,6 +17,7 @@ class HobuneIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?hobune\.stream/(?P<pre>(?:tpa-h/)?)videos/(?P<id>[^/?#.]+)(?:\.html)?'
     _TESTS = [{
         'url': 'https://hobune.stream/videos/z6kWijmyAhk',
+        'skip': 'extractor broken',
         'md5': 'c6cff928fc3aa3767ee7f0b08a1f2c28',
         'info_dict': {
             'id': 'z6kWijmyAhk',

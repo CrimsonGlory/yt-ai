@@ -15,7 +15,7 @@ class ToonGogglesIE(InfoExtractor):
         https?://(?:www\.)?toongoggles\.com/
         (?:[a-z]{2}(?:-[a-z]+)?/)?
         (?:
-            shows/(?P<numeric_id>\d+)(?:/[^/?#]+/episodes/(?P<numeric_episode>\d+))?
+            shows/(?P<numeric_id>\d+)(?:/[^/?#]+(?:/episodes/(?P<numeric_episode>\d+)(?:/[^/?#]+)?)?)?
             |shows/(?P<show_slug>[^/?#]+)(?:/season/\d+/episode/(?P<episode>\d+))?
             |(?:linear|feature)/(?P<video_slug>[^/?#]+)
         )

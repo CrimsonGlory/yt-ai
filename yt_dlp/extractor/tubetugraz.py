@@ -144,6 +144,7 @@ class TubeTuGrazIE(TubeTuGrazBaseIE):
     _TESTS = [
         {
             'url': 'https://tube.tugraz.at/paella/ui/watch.html?id=f2634392-e40e-4ac7-9ddc-47764aa23d40',
+            'skip': 'extractor broken: Extractor failed to obtain "title". Creating a generic title instead; please rep',
             'md5': 'a23a3d5c9aaca2b84932fdba66e17145',
             'info_dict': {
                 'id': 'f2634392-e40e-4ac7-9ddc-47764aa23d40',

@@ -27,17 +27,20 @@ class LEGOIE(InfoExtractor):
     }, {
         # geo-restricted but the contentUrl contain a valid url
         'url': 'http://www.lego.com/nl-nl/videos/themes/nexoknights/episode-20-kingdom-of-heroes-13bdc2299ab24d9685701a915b3d71e7##sp=399',
-        'md5': 'c7420221f7ffd03ff056f9db7f8d807c',
+        'md5': 'f9dbba3cbb87145b0812504f33e51617',
         'info_dict': {
-            'id': '13bdc229-9ab2-4d96-8570-1a915b3d71e7_nl-NL',
+            'id': '13bdc229-9ab2-4d96-8570-1a915b3d71e7_nl-nl',
             'ext': 'mp4',
             'title': 'Aflevering 20:  Helden van het koninkrijk',
-            'description': 'md5:8ee499aac26d7fa8bcb0cedb7f9c3941',
-            'age_limit': 5,
+            'description': 'md5:a52663a1a276ce02ee0bf46f0c67ebc5',
+            'duration': 1320,
+            'thumbnail': 'md5:0ec4dd0fe4cb961fcbce1996d86dafe2',
+            'age_limit': 0,
         },
     }, {
         # with subtitle
         'url': 'https://www.lego.com/nl-nl/kids/videos/classic/creative-storytelling-the-little-puppy-aa24f27c7d5242bc86102ebdc0f24cba',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'aa24f27c-7d52-42bc-8610-2ebdc0f24cba_nl-NL',
             'ext': 'mp4',

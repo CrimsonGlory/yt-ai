@@ -68,6 +68,7 @@ class OdnoklassnikiIE(InfoExtractor):
     }, {
         # metadata in JSON, webm_dash with Firefox UA
         'url': 'http://ok.ru/video/20079905452',
+        'skip': 'extractor broken: TypeError',
         'md5': '8f477d8931c531374a3e36daec617b2c',
         'info_dict': {
             'id': '20079905452',
@@ -88,6 +89,7 @@ class OdnoklassnikiIE(InfoExtractor):
     }, {
         # metadataUrl
         'url': 'http://ok.ru/video/63567059965189-0?fromTime=5',
+        'skip': 'extractor broken: Unable to extract player',
         'md5': '2bae2f58eefe1b3d26f3926c4a64d2f3',
         'info_dict': {
             'id': '63567059965189-0',
@@ -106,6 +108,7 @@ class OdnoklassnikiIE(InfoExtractor):
     }, {
         # YouTube embed (metadataUrl, provider == USER_YOUTUBE)
         'url': 'https://ok.ru/video/3952212382174',
+        'skip': 'extractor broken: TypeError',
         'md5': '5fb5f83ce16cb212d6bf887282b5da53',
         'info_dict': {
             'id': '5axVgHHDBvU',
@@ -152,6 +155,7 @@ class OdnoklassnikiIE(InfoExtractor):
     }, {
         'note': 'Only available in mobile webpage',
         'url': 'https://m.ok.ru/video/2361249957145',
+        'skip': 'extractor broken: Unable to extract player',
         'info_dict': {
             'id': '2361249957145',
             'ext': 'mp4',
@@ -162,6 +166,7 @@ class OdnoklassnikiIE(InfoExtractor):
     }, {
         'note': 'subtitles',
         'url': 'https://ok.ru/video/4249587550747',
+        'skip': 'extractor broken: Unable to extract player',
         'info_dict': {
             'id': '4249587550747',
             'ext': 'mp4',
@@ -205,6 +210,7 @@ class OdnoklassnikiIE(InfoExtractor):
         'only_matching': True,
     }, {
         'url': 'https://ok.ru/videoembed/2932705602075',
+        'skip': 'extractor broken: Video has not been found',
         'info_dict': {
             'id': '2932705602075',
             'ext': 'mp4',

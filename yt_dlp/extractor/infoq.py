@@ -15,6 +15,7 @@ class InfoQIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://www.infoq.com/presentations/A-Few-of-My-Favorite-Python-Things',
+        'skip': 'HTTP 403/blocked',
         'md5': 'b5ca0e0a8c1fed93b0e65e48e462f9a2',
         'info_dict': {
             'id': 'A-Few-of-My-Favorite-Python-Things',
@@ -37,6 +38,7 @@ class InfoQIE(InfoExtractor):
         'skip': 'Sorry, the page you visited does not exist',
     }, {
         'url': 'https://www.infoq.com/presentations/Simple-Made-Easy',
+        'skip': 'stale test sample / site changed',
         'md5': '0e34642d4d9ef44bf86f66f6399672db',
         'info_dict': {
             'id': 'Simple-Made-Easy',

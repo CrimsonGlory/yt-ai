@@ -31,9 +31,24 @@ class MegaTVComIE(MegaTVComBaseIE):
     IE_NAME = 'megatvcom'
     IE_DESC = 'megatv.com videos'
     _VALID_URL = r'https?://(?:www\.)?megatv\.com/(?:\d{4}/\d{2}/\d{2}|[^/]+/(?P<id>\d+))/(?P<slug>[^/]+)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.megatv.com/gtvshows/2389354/2-6-2026/',
+            'md5': '6f35ef7d713047071fcfdc8002cf984e',
+            'info_dict': {
+            'id': '2389354',
+            'ext': 'mp4',
+            'display_id': '2-6-2026',
+            'title': 'Αλ Τσαντίρι Νιουζ: 2/6/2026 ',
+            'description': 'md5:ee11a355f9bda066df633bdaa2d23c76',
+            'thumbnail': 'https://www.megatv.com/wp-content/uploads/2026/06/6-1-1024x576.jpg',
+            'timestamp': 1780488075,
+            'upload_date': '20260603',
+        },
+        },{
         # FIXME: Unable to extract article id
         'url': 'https://www.megatv.com/2021/10/23/egkainia-gia-ti-nea-skini-omega-tou-dimotikou-theatrou-peiraia/',
+        'skip': 'extractor broken: Unable to extract article id',
         'info_dict': {
             'id': '520979',
             'ext': 'mp4',
@@ -46,6 +61,7 @@ class MegaTVComIE(MegaTVComBaseIE):
         },
     }, {
         'url': 'https://www.megatv.com/tvshows/527800/epeisodio-65-12/',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '527800',
             'ext': 'mp4',
@@ -105,6 +121,7 @@ class MegaTVComEmbedIE(MegaTVComBaseIE):
     _TESTS = [{
         # FIXME: Unable to extract article id
         'url': 'https://www.megatv.com/embed/?p=2020520979',
+        'skip': 'extractor broken: Unable to extract article id',
         'md5': '6546a1a37fff0dd51c9dce5f490b7d7d',
         'info_dict': {
             'id': '520979',
@@ -119,6 +136,7 @@ class MegaTVComEmbedIE(MegaTVComBaseIE):
     }, {
         # FIXME: Unable to extract article id
         'url': 'https://www.megatv.com/embed/?p=2020534081',
+        'skip': 'extractor broken: Unable to extract article id',
         'md5': '6ac8b3ce4dc6120c802f780a1e6b3812',
         'info_dict': {
             'id': '534081',
@@ -134,6 +152,7 @@ class MegaTVComEmbedIE(MegaTVComBaseIE):
     _WEBPAGE_TESTS = [{
         # FIXME: Unable to extract article id
         'url': 'https://www.in.gr/2021/12/18/greece/apokalypsi-mega-poios-parelave-tin-ereyna-tsiodra-ek-merous-tis-kyvernisis-o-prothypourgos-telika-gnorize/',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'apokalypsi-mega-poios-parelave-tin-ereyna-tsiodra-ek-merous-tis-kyvernisis-o-prothypourgos-telika-gnorize',
             'title': 'md5:5e569cf996ec111057c2764ec272848f',

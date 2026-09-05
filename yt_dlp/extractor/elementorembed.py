@@ -11,6 +11,7 @@ class ElementorEmbedIE(InfoExtractor):
     _VALID_URL = False
     _WEBPAGE_TESTS = [{
         'url': 'https://capitaltv.cy/2023/12/14/υγεια-και-ζωη-14-12-2023-δρ-ξενια-κωσταντινιδο/',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'KgzuxwuQwM4',
             'ext': 'mp4',

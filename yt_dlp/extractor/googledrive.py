@@ -242,6 +242,7 @@ class GoogleDriveFolderIE(InfoExtractor):
     _VALID_URL = r'https?://(?:docs|drive)\.google\.com/drive/folders/(?P<id>[\w-]{28,})'
     _TESTS = [{
         'url': 'https://drive.google.com/drive/folders/1dQ4sx0-__Nvg65rxTSgQrl7VyW_FZ9QI',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '1dQ4sx0-__Nvg65rxTSgQrl7VyW_FZ9QI',
             'title': 'Forrest',

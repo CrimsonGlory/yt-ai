@@ -16,7 +16,7 @@ class ThreeQSDNIE(InfoExtractor):
     _VALID_URL = r'https?://playout\.3qsdn\.com/(?P<id>[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12})'
     _EMBED_REGEX = [rf'<iframe[^>]+\b(?:data-)?src=(["\'])(?P<url>{_VALID_URL}.*?)\1']
     _TESTS = [{
-        # https://player.3qsdn.com/demo.html
+        # https://player.3qsdn.com/ (public player; demo.html redirects here)
         'url': 'https://playout.3qsdn.com/7201c779-6b3c-11e7-a40e-002590c750be',
         'md5': '64a57396b16fa011b15e0ea60edce918',
         'info_dict': {
@@ -28,19 +28,22 @@ class ThreeQSDNIE(InfoExtractor):
             'timestamp': 1500334803,
             'upload_date': '20170717',
             'duration': 888.032,
+            'thumbnail': r're:https://sdn-global-prog-cache\.3qsdn\.com/.+\.jpg',
             'subtitles': {
-                'eng': 'count:1',
+                'en-US': 'count:1',
             },
         },
         'expected_warnings': ['Unknown MIME type application/mp4 in DASH manifest'],
     }, {
-        # live video stream
+        # live video stream (public player "DVR/Timeshift" preset)
         'url': 'https://playout.3qsdn.com/66e68995-11ca-11e8-9273-002590c750be',
         'info_dict': {
             'id': '66e68995-11ca-11e8-9273-002590c750be',
             'ext': 'mp4',
-            'title': 're:^66e68995-11ca-11e8-9273-002590c750be [0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$',
+            'title': 're:^Test Transcoding [0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$',
+            'description': 'Test Transcoding',
             'is_live': True,
+            'live_status': 'is_live',
         },
         'params': {
             'skip_download': True,  # m3u8 downloads

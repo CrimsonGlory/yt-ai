@@ -97,6 +97,7 @@ class BrilliantpalaElearnIE(BrilliantpalaBaseIE):
         'only_matching': True,
     }, {
         'url': 'https://elearn.brilliantpala.org/courses/98/contents/36683/',
+        'skip': 'requires account',
         'info_dict': {
             'id': '23577',
             'ext': 'mp4',
@@ -121,6 +122,7 @@ class BrilliantpalaClassesIE(BrilliantpalaBaseIE):
         'only_matching': True,
     }, {
         'url': 'https://classes.brilliantpala.org/courses/416/contents/25445/',
+        'skip': 'requires account',
         'info_dict': {
             'id': '9128',
             'ext': 'mp4',

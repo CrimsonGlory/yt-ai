@@ -53,6 +53,7 @@ class PartiLivestreamIE(PartiBaseIE):
     _VALID_URL = r'https?://(?:www\.)?parti\.com/(?!video/)(?P<id>[\w/-]+)'
     _TESTS = [{
         'url': 'https://parti.com/247CryptoTracker',
+        'skip': 'not currently live',
         'info_dict': {
             'ext': 'mp4',
             'id': '247CryptoTracker',

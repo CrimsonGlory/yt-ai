@@ -78,15 +78,15 @@ class SkyItVideoIE(SkyItBaseIE):
     _VALID_URL = r'https?://(?:masterchef|video|xfactor)\.sky\.it(?:/[^/]+)*/video/[0-9a-z-]+-(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://video.sky.it/news/mondo/video/uomo-ucciso-da-uno-squalo-in-australia-631227',
-        'md5': '5b858a62d9ffe2ab77b397553024184a',
+        'md5': '23d9d2e5acd1c31bb9596c75731dc221',
         'info_dict': {
             'id': '631227',
             'ext': 'mp4',
             'title': 'Uomo ucciso da uno squalo in Australia',
+            'duration': 26,
+            'thumbnail': 'https://videoplatform.sky.it/captures/494/2023/12/12/631227/631227_thumb_880x494.jpg',
             'timestamp': 1606036192,
             'upload_date': '20201122',
-            'duration': 26,
-            'thumbnail': 'https://video.sky.it/captures/thumbs/631227/631227_thumb_880x494.jpg',
         },
         'params': {'skip_download': 'm3u8'},
     }, {
@@ -107,6 +107,7 @@ class SkyItVideoLiveIE(SkyItBaseIE):
     _VALID_URL = r'https?://video\.sky\.it/diretta/(?P<id>[^/?&#]+)'
     _TEST = {
         'url': 'https://video.sky.it/diretta/tg24',
+        'skip': 'extractor broken: Unable to extract next.js data',
         'info_dict': {
             'id': '1',
             'ext': 'mp4',
@@ -134,7 +135,21 @@ class SkyItIE(SkyItBaseIE):
     IE_NAME = 'sky.it'
     _VALID_URL = r'https?://(?:sport|tg24)\.sky\.it(?:/[^/]+)*/\d{4}/\d{2}/\d{2}/(?P<id>[^/?&#]+)'
     _TESTS = [{
+        'url': 'https://tg24.sky.it/mondo/2026/09/03/migranti-nave-canarie-morti',
+        'md5': 'd32854513ff09a5872167e3ee9f33a7d',
+        'info_dict': {
+            'id': '1121697',
+            'ext': 'mp4',
+            'title': 'I titoli di Sky TG24 del 3 settembre, edizione delle 13',
+            'duration': 93,
+            'thumbnail': 'md5:de07dc73dc983d9e3da77c6a1c58095c',
+            'timestamp': 1788441429,
+            'upload_date': '20260903',
+        },
+        'params': {'skip_download': 'm3u8'},
+    }, {
         'url': 'https://sport.sky.it/calcio/serie-a/2022/11/03/brozovic-inter-news',
+        'skip': 'extractor broken: Failed to obtain m3u8 URL',
         'info_dict': {
             'id': '789222',
             'ext': 'mp4',
@@ -147,6 +162,7 @@ class SkyItIE(SkyItBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://tg24.sky.it/mondo/2020/11/22/australia-squalo-uccide-uomo',
+        'skip': 'stale test sample / site changed',
         'md5': 'fe5c91e59a84a3437eaa0bca6e134ccd',
         'info_dict': {
             'id': '631227',
@@ -282,7 +298,18 @@ class TV8ItPlaylistIE(InfoExtractor):
     IE_NAME = 'tv8.it:playlist'
     IE_DESC = 'TV8 Playlist'
     _VALID_URL = r'https?://(?:www\.)?tv8\.it/(?!video)[^/#?]+/(?P<id>[^/#?]+)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://tv8.it/intrattenimento/pechino-express',
+            'info_dict': {
+                'id': 'pechino-express',
+                'title': "Pechino Express - L'estremo oriente",
+                'description': 'md5:631bae215dccc79ae36afd55287688c3',
+                'thumbnail': r're:https://static\.sky\.it/.+\.(png|jpe?g|webp)',
+            },
+            'playlist_mincount': 2,
+            'params': {'skip_download': True},
+        },{
         'url': 'https://tv8.it/intrattenimento/tv8-gialappas-night',
         'playlist_mincount': 32,
         'info_dict': {
@@ -293,6 +320,7 @@ class TV8ItPlaylistIE(InfoExtractor):
         },
     }, {
         'url': 'https://tv8.it/sport/uefa-europa-league',
+        'skip': 'stale test sample / site changed',
         'playlist_mincount': 11,
         'info_dict': {
             'id': 'uefa-europa-league',

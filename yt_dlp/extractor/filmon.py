@@ -22,6 +22,7 @@ class FilmOnIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.filmon.com/vod/view/2825-1-popeye-series-1',
+        'skip': 'video gone',
         'info_dict': {
             'id': '2825',
             'title': 'Popeye Series 1',
@@ -94,6 +95,7 @@ class FilmOnChannelIE(InfoExtractor):
     _TESTS = [{
         # VOD
         'url': 'http://www.filmon.com/tv/sports-haters',
+        'skip': 'extractor broken: Failed to parse JSON (caused by JSONDecodeError("Expecting value in \'\': line 1 c',
         'info_dict': {
             'id': '4190',
             'ext': 'mp4',

@@ -70,7 +70,7 @@ class SubsplashIE(SubsplashBaseIE):
     ]
     _TESTS = [{
         'url': 'https://subsplash.com/u/skywatchtv/media/d/5whnx5s-the-grand-delusion-taking-place-right-now',
-        'md5': 'd468729814e533cec86f1da505dec82d',
+        'md5': '6740054754a3d74ae876a4b8f2d46bd7',
         'info_dict': {
             'id': '5whnx5s',
             'ext': 'mp4',
@@ -87,19 +87,19 @@ class SubsplashIE(SubsplashBaseIE):
         },
     }, {
         'url': 'https://subsplash.com/u/prophecywatchers/media/d/n4dr8b2-the-transhumanist-plan-for-humanity-billy-crone',
-        'md5': '01982d58021af81c969958459bd81f13',
+        'md5': '6a463f7e36f25120f6a18cd52aadb268',
         'info_dict': {
             'id': 'n4dr8b2',
             'ext': 'mp4',
             'title': 'The Transhumanist Plan for Humanity | Billy Crone',
             'upload_date': '20240903',
-            'duration': 1709,
+            'duration': 1710,
             'thumbnail': r're:https?://.*\.(?:jpg|png)$',
             'timestamp': 1725321600,
-            'modified_date': '20241010',
+            'modified_date': '20251230',
             'release_date': '20240903',
             'release_timestamp': 1725379200,
-            'modified_timestamp': 1728577804,
+            'modified_timestamp': 1767115595,
         },
     }, {
         'url': 'https://subsplash.com/laiglesiadelcentro/vid/mi/+ecb6a6b?autoplay=true',
@@ -113,8 +113,8 @@ class SubsplashIE(SubsplashBaseIE):
             'timestamp': 1425772800,
             'upload_date': '20150308',
             'description': 'md5:f368221de93176654989ba66bb564798',
-            'modified_timestamp': 1730258864,
-            'modified_date': '20241030',
+            'modified_timestamp': 1767578207,
+            'modified_date': '20260105',
             'release_date': '20161022',
         },
     }, {

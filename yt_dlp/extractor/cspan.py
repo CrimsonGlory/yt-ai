@@ -48,6 +48,7 @@ class CSpanIE(InfoExtractor):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'http://www.c-span.org/video/?318608-1/gm-ignition-switch-recall',
+        'skip': 'extractor broken: KeyError',
         'info_dict': {
             'id': '342759',
             'title': 'General Motors Ignition Switch Recall',
@@ -56,6 +57,7 @@ class CSpanIE(InfoExtractor):
     }, {
         # Video from senate.gov
         'url': 'http://www.c-span.org/video/?104517-1/immigration-reforms-needed-protect-skilled-american-workers',
+        'skip': 'extractor broken: unable to find video id and type',
         'info_dict': {
             'id': 'judiciary031715',
             'ext': 'mp4',

@@ -53,6 +53,7 @@ class JWPlatformIE(InfoExtractor):
     }, {
         # iframe src attribute includes backslash before URL string
         'url': 'https://www.elespectador.com/colombia/video-asi-se-evito-la-fuga-de-john-poulos-presunto-feminicida-de-valentina-trespalacios-explicacion',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'QD3gsexj',
             'title': 'Así se evitó la fuga de John Poulos, presunto feminicida de Valentina Trespalacios',
@@ -65,6 +66,7 @@ class JWPlatformIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.skimag.com/video/ski-people-1980',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': 'YTmgRiNU',
             'ext': 'mp4',

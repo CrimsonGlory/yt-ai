@@ -34,6 +34,7 @@ class StuffIE(InfoExtractor):
         'add_ie': [BrightcoveNewIE.ie_key()],
     }, {
         'url': 'https://www.stuff.co.nz/world-news/361026897/dont-panic-theyre-using-human-brains-power-data-centres',
+        'skip': 'HTTP 403/blocked',
         'info_dict': {
             'id': '361026897',
             'ext': 'mp4',

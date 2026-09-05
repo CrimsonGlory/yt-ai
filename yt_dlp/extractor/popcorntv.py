@@ -11,7 +11,7 @@ from ..utils import (
 
 
 class PopcornTVIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:[^/]+\.)?popcorntv\.it/(?:guarda|streaming/(?:[^/?#]+/)+)(?P<display_id>[^/?#]+)/(?P<id>\d+)'
+    _VALID_URL = r'https?://(?:[^/]+\.)?popcorntv\.it/(?:guarda|streaming(?:/[^/?#]+)*)/(?P<display_id>[^/?#]+)/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.popcorntv.it/streaming/cinema/mank-2020/11418',
         'md5': 'e980d3bf9f98144ea26cd234b325f469',

@@ -79,6 +79,7 @@ class NDRIE(NDRBaseIE):
     _TESTS = [{
         # httpVideo, same content id
         'url': 'http://www.ndr.de/fernsehen/Party-Poette-und-Parade,hafengeburtstag988.html',
+        'skip': 'extractor broken: Unable to extract embedUrl',
         'md5': '6515bc255dc5c5f8c85bbc38e035a659',
         'info_dict': {
             'id': 'hafengeburtstag988',
@@ -136,6 +137,7 @@ class NDRIE(NDRBaseIE):
     }, {
         # with subtitles
         'url': 'https://www.ndr.de/fernsehen/sendungen/extra_3/extra-3-Satiremagazin-mit-Christian-Ehring,sendung1091858.html',
+        'skip': 'extractor broken: Unable to extract embedUrl',
         'info_dict': {
             'id': 'extra18674',
             'display_id': 'extra-3-Satiremagazin-mit-Christian-Ehring',

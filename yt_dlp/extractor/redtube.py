@@ -14,8 +14,25 @@ from ..utils import (
 class RedTubeIE(InfoExtractor):
     _VALID_URL = r'https?://(?:(?:\w+\.)?redtube\.com(?:\.br)?/|embed\.redtube\.com/\?.*?\bid=)(?P<id>[0-9]+)'
     _EMBED_REGEX = [r'<iframe[^>]+?src=["\'](?P<url>(?:https?:)?//embed\.redtube\.com/\?.*?\bid=\d+)']
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://www.redtube.com/194739971',
+            'md5': '5b5e323569e81d339e08fa774aefe344',
+            'info_dict': {
+            'id': '194739971',
+            'ext': 'mp4',
+            'title': 'Anal Creampie to my new date',
+            'description': 'md5:4a3bdc7bbb2a3769e2039023bce59d66',
+            'duration': 2285,
+            'thumbnail': 'md5:fbf846ca689ba36162224ba63584ed87',
+            'timestamp': 1755897146,
+            'upload_date': '20250822',
+            'age_limit': 18,
+            'view_count': int,
+        },
+        },{
         'url': 'https://www.redtube.com/38864951',
+        'skip': 'stale test sample / site changed',
         'md5': '4fba70cbca3aefd25767ab4b523c9878',
         'info_dict': {
             'id': '38864951',

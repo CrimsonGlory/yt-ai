@@ -104,6 +104,7 @@ class CPTwentyFourIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.cp24.com/news/video-shows-atm-being-ripped-out-of-business-by-pickup-truck-driver-in-mississauga-1.5676877',
+        'skip': 'extractor broken: Unable to extract video id and destination',
         'info_dict': {
             'id': '2328005',
             'ext': 'mp4',

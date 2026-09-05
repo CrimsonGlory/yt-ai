@@ -8,8 +8,33 @@ class NTSLiveIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?nts\.live/shows/[^/?#]+/episodes/(?P<id>[^/?#]+)'
     _TESTS = [
         {
+            'url': 'https://www.nts.live/shows/sarah-davachi/episodes/sarah-davachi-24th-august-2026',
+            'info_dict': {
+                'id': '2388199380',
+                'ext': 'm4a',
+                'title': 'Le Jardin w/ Sarah Davachi',
+                'description': 'md5:440e51c5a1b7cbaafa3b2a4b629d8398',
+                'uploader': 'NTS Latest',
+                'uploader_id': '995897410',
+                'uploader_url': 'https://soundcloud.com/user-202286394-991268468',
+                'duration': 3601.509,
+                'thumbnail': 'https://i1.sndcdn.com/artworks-WeulvcXwh1JXtzZo-YTb8Kw-original.jpg',
+                'timestamp': 1787598000,
+                'upload_date': '20260824',
+                'repost_count': int,
+                'tags': ['Psychedelic Rock', 'Modern Classical', 'avant-garde'],
+                'genres': ['Psychedelic Rock', 'Modern Classical', 'avant-garde'],
+                'track': 'Le Jardin w/ Sarah Davachi 240826',
+                'modified_timestamp': 1787700669,
+                'modified_date': '20260825',
+                'license': 'all-rights-reserved',
+            },
+            'params': {'skip_download': 'm3u8'},
+        },
+        {
             # embedded soundcloud
             'url': 'https://www.nts.live/shows/yu-su/episodes/yu-su-2nd-april-2024',
+            'skip': 'stale test sample / site changed',
             'md5': 'b5444c04888c869d68758982de1a27d8',
             'info_dict': {
                 'id': '1791563518',
@@ -33,6 +58,7 @@ class NTSLiveIE(InfoExtractor):
         {
             # embedded mixcloud
             'url': 'https://www.nts.live/shows/absolute-fiction/episodes/absolute-fiction-23rd-july-2022',
+            'skip': 'stale test sample / site changed',
             'info_dict': {
                 'id': 'NTSRadio_absolute-fiction-23rd-july-2022',
                 'ext': 'webm',

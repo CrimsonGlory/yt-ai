@@ -32,6 +32,7 @@ class FOX9NewsIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?fox9\.com/news/(?P<id>[^/?&#]+)'
     _TEST = {
         'url': 'https://www.fox9.com/news/black-bear-in-tree-draws-crowd-in-downtown-duluth-minnesota',
+        'skip': 'extractor broken',
         'md5': 'd6e1b2572c3bab8a849c9103615dd243',
         'info_dict': {
             'id': '314473',

@@ -297,6 +297,7 @@ class SlidesLiveIE(InfoExtractor):
     _WEBPAGE_TESTS = [{
         # only XML slides info
         'url': 'https://iclr.cc/virtual_2020/poster_Hklr204Fvr.html',
+        'skip': 'webpage sample unavailable',
         'info_dict': {
             'id': '38925850',
             'ext': 'mp4',

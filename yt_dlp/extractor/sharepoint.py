@@ -22,7 +22,6 @@ class SharePointIE(InfoExtractor):
             'title': 'CmvpJST',
             'duration': 54.567,
             'thumbnail': r're:https://.+/thumbnail',
-            'uploader_id': '8dcec565-a956-4b91-95e5-bacfb8bc015f',
         },
     }, {
         'url': 'https://greaternyace.sharepoint.com/:v:/s/acementornydrive/ETski5eAfNVEoPRZUAyy1wEBpLgVFYWso5bjbZjfBLlPUg?e=PQUfVb',

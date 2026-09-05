@@ -430,22 +430,23 @@ class GoDiscoveryIE(DiscoveryPlusBaseIE):
         'url': 'https://go.discovery.com/video/in-the-eye-of-the-storm-discovery-atve-us/trapped-in-a-twister',
         'info_dict': {
             'id': '5352642',
-            'display_id': 'in-the-eye-of-the-storm-discovery-atve-us/trapped-in-a-twister',
             'ext': 'mp4',
+            'display_id': 'in-the-eye-of-the-storm-discovery-atve-us/trapped-in-a-twister',
             'title': 'Trapped in a Twister',
             'description': 'Twisters destroy Midwest towns, trapping spotters in the eye of the storm.',
-            'episode_number': 1,
-            'episode': 'Episode 1',
-            'season_number': 1,
-            'season': 'Season 1',
-            'series': 'In The Eye Of The Storm',
             'duration': 2490.237,
-            'upload_date': '20240715',
-            'timestamp': 1721008800,
-            'tags': [],
-            'creators': ['Discovery'],
             'thumbnail': 'https://us1-prod-images.disco-api.com/2024/07/10/5e39637d-cabf-3ab3-8e9a-f4e9d37bc036.jpeg',
+            'timestamp': 1721008800,
+            'upload_date': '20240715',
+            'series': 'In the Eye of the Storm',
+            'season': 'Season 1',
+            'season_number': 1,
+            'episode': 'Episode 1',
+            'episode_number': 1,
+            'creators': ['Discovery'],
+            'tags': [],
         },
+        'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://go.discovery.com/video/dirty-jobs-discovery-atve-us/rodbuster-galvanizer',
         'info_dict': {
@@ -1200,6 +1201,7 @@ class DiscoveryNetworksDeIE(DiscoveryPlusBaseIE):
 
     _TESTS = [{
         'url': 'https://dmax.de/sendungen/goldrausch-in-australien/german-gold',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '4756322',
             'ext': 'mp4',
@@ -1249,6 +1251,7 @@ class DiscoveryNetworksDeIE(DiscoveryPlusBaseIE):
         'only_matching': True,
     }, {
         'url': 'https://dmax.de/sendungen/feuerwache-3-alarm-in-muenchen/24-stunden-auf-der-feuerwache-3',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '8873549',
             'ext': 'mp4',
@@ -1271,6 +1274,7 @@ class DiscoveryNetworksDeIE(DiscoveryPlusBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://tlc.de/sendungen/ghost-adventures/der-poltergeist-im-kostumladen',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '4550602',
             'ext': 'mp4',
@@ -1293,6 +1297,7 @@ class DiscoveryNetworksDeIE(DiscoveryPlusBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://tlc.de/sendungen/evil-gesichter-des-boesen/das-geheimnis-meines-bruders',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': '7792288',
             'ext': 'mp4',

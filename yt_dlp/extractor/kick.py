@@ -34,6 +34,7 @@ class KickIE(KickBaseIE):
     _VALID_URL = r'https?://(?:www\.)?kick\.com/(?!(?:video|categories|search|auth)(?:[/?#]|$))(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://kick.com/buddha',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '92722911-nopixel-40',
             'ext': 'mp4',

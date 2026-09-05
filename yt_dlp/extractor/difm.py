@@ -20,6 +20,7 @@ class DIFMIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?di\.fm/shows/(?P<show>[\w-]+)/episodes/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://www.di.fm/shows/airwaves-progressions-radio/episodes/047',
+        'skip': 'no playable formats',
         'md5': '71b2fb14dc20d8077c73b1976f1056fe',
         'info_dict': {
             'id': '174775',

@@ -12,6 +12,7 @@ class YappyIE(InfoExtractor):
     _VALID_URL = r'https?://yappy\.media/video/(?P<id>\w+)'
     _TESTS = [{
         'url': 'https://yappy.media/video/47fea6d8586f48d1a0cf96a7342aabd2',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '47fea6d8586f48d1a0cf96a7342aabd2',
             'ext': 'mp4',
@@ -29,19 +30,20 @@ class YappyIE(InfoExtractor):
         },
     }, {
         'url': 'https://yappy.media/video/3862451954ad4bd58ae2ccefddb0bd33',
+        'md5': '101d58be0850ddbebb76edca4713cd6e',
         'info_dict': {
             'id': '3862451954ad4bd58ae2ccefddb0bd33',
             'ext': 'mp4',
             'title': 'Опиши свой характер 3 словами🙃\n#психология #дружба #отношения',
-            'timestamp': 1674726985,
-            'like_count': int,
             'description': 'Опиши свой характер 3 словами🙃\n#психология #дружба #отношения',
-            'uploader_id': '6793ee3581974a3586fc01e157de6c99',
-            'view_count': int,
-            'repost_count': int,
             'uploader': 'LENA SHTURMAN',
+            'uploader_id': '6793ee3581974a3586fc01e157de6c99',
+            'thumbnail': 'md5:ff43ef596dba4f4d44ee08deca842a39',
+            'timestamp': 1674726985,
             'upload_date': '20230126',
-            'thumbnail': 'https://cdn-st.ritm.media/static/pic/user_thumbnails/6e76bb4bbad640b6/9ec84c115b2b1967/1674716171.jpg',
+            'view_count': int,
+            'like_count': int,
+            'repost_count': int,
         },
     }]
 

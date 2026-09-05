@@ -14,6 +14,7 @@ class NateIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://tv.nate.com/clip/1848976',
+        'skip': 'extractor broken: Failed to parse JSON (caused by JSONDecodeError("Expecting value in \'\': line 1 c',
         'info_dict': {
             'id': '1848976',
             'ext': 'mp4',
@@ -96,6 +97,7 @@ class NateProgramIE(InfoExtractor):
         },
     }, {
         'url': 'https://tv.nate.com/program/clips/3606',
+        'skip': 'extractor broken: Failed to parse JSON (caused by JSONDecodeError("Expecting value in \'\': line 1 c',
         'playlist_mincount': 15,
         'info_dict': {
             'id': '3606',

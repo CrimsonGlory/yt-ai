@@ -8,6 +8,7 @@ class SkylineWebcamsIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?skylinewebcams\.com/[^/]+/webcam/(?:[^/]+/)+(?P<id>[^/]+)\.html'
     _TEST = {
         'url': 'https://www.skylinewebcams.com/it/webcam/italia/lazio/roma/scalinata-piazza-di-spagna-barcaccia.html',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'scalinata-piazza-di-spagna-barcaccia',
             'ext': 'mp4',

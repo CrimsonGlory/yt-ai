@@ -31,6 +31,10 @@ class XMinusIE(InfoExtractor):
     }, {
         'url': 'http://x-minus.org/track/4542/%D0%BF%D0%B5%D1%81%D0%B5%D0%BD%D0%BA%D0%B0-%D1%88%D0%BE%D1%84%D0%B5%D1%80%D0%B0.html',
         'skip': 'x-minus.org domain has expired',
+        'info_dict': {
+            'id': '4542',
+            'ext': 'mp3',
+        },
     }]
 
     def _media_host(self, webpage, video_id):

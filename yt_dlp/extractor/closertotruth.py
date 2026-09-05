@@ -5,8 +5,47 @@ from .common import InfoExtractor
 
 class CloserToTruthIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?closertotruth\.com/(?:[^/]+/)*(?P<id>[^/?#&]+)'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://closertotruth.com/video/are-there-extra-dimensions/',
+            'md5': '1fe96d8872c83b1c5efb870b668ff0bc',
+            'info_dict': {
+                'id': 'TqqFij2O3L0',
+                'ext': 'mp4',
+                'display_id': 'are-there-extra-dimensions',
+                'title': 'Are there Extra Dimensions? - Closer To Truth',
+                'description': 'md5:47e7b47a90fcf2e2b93b32b1a5697730',
+                'media_type': 'video',
+                'uploader': 'Closer To Truth',
+                'uploader_id': '@CloserToTruthTV',
+                'uploader_url': 'https://www.youtube.com/@CloserToTruthTV',
+                'channel': 'Closer To Truth',
+                'channel_id': 'UCl9StMQ79LtEvlrskzjoYbQ',
+                'channel_url': 'https://www.youtube.com/channel/UCl9StMQ79LtEvlrskzjoYbQ',
+                'channel_follower_count': int,
+                'duration': 1606,
+                'thumbnail': 'https://i.ytimg.com/vi_webp/TqqFij2O3L0/maxresdefault.webp',
+                'timestamp': 1610222414,
+                'upload_date': '20210109',
+                'age_limit': 0,
+                'view_count': int,
+                'like_count': int,
+                'comment_count': int,
+                'playable_in_embed': True,
+                'availability': 'public',
+                'live_status': 'not_live',
+                'categories': ['Education'],
+                'tags': 'count:21',
+                'heatmap': 'count:100',
+            },
+            'expected_warnings': [
+                'Remote component challenge solver script',
+                'No supported JavaScript runtime',
+                'n challenge solving failed',
+            ],
+        }, {
         'url': 'http://closertotruth.com/series/solutions-the-mind-body-problem#video-3688',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '0_zof1ktre',
             'display_id': 'solutions-the-mind-body-problem',
@@ -21,6 +60,7 @@ class CloserToTruthIE(InfoExtractor):
         },
     }, {
         'url': 'http://closertotruth.com/episodes/how-do-brains-work',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '0_iuxai6g6',
             'display_id': 'how-do-brains-work',
@@ -35,6 +75,7 @@ class CloserToTruthIE(InfoExtractor):
         },
     }, {
         'url': 'http://closertotruth.com/interviews/1725',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '1725',
             'title': 'AyaFr-002',

@@ -57,6 +57,7 @@ class MixcloudIE(MixcloudBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'http://www.mixcloud.com/gillespeterson/caribou-7-inch-vinyl-mix-chat/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'gillespeterson_caribou-7-inch-vinyl-mix-chat',
             'ext': 'mp3',

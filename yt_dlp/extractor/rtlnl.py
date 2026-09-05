@@ -279,7 +279,7 @@ class RTLLuTeleVODIE(RTLLuBaseIE):
 
 class RTLLuArticleIE(RTLLuBaseIE):
     IE_NAME = 'rtl.lu:article'
-    _VALID_URL = r'https?://(?:(?:www|5minutes|today|infos)\.)rtl\.lu/(?:[\w-]+/)+(?:a/|(?:[\w-]+-))(?P<id>\d+)(?:\.html)?'
+    _VALID_URL = r'https?://(?:(?:www|5minutes|today|infos)\.)rtl\.lu/(?:[\w-]+/)+(?:a/|(?:[\w-]+-))(?P<id>\d{5,})(?:\.html)?/?$'
     _TESTS = [{
         'url': 'https://www.rtl.lu/news/national/kann-een-als-premier-eigentlech-richteg-ofschalten-1774577552',
         'md5': '7400d306a1c660458f1dc09590bebe51',

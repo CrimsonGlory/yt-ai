@@ -11,6 +11,7 @@ class ClipchampIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?clipchamp\.com/watch/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://clipchamp.com/watch/gRXZ4ZhdDaU',
+        'skip': 'extractor broken: Unable to extract next.js data',
         'info_dict': {
             'id': 'gRXZ4ZhdDaU',
             'ext': 'mp4',

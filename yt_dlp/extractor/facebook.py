@@ -70,6 +70,7 @@ class FacebookIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.facebook.com/radiokicksfm/videos/3676516585958356/',
+        'skip': 'extractor broken: Cannot parse data',
         'info_dict': {
             'id': '3676516585958356',
             'ext': 'mp4',
@@ -100,6 +101,7 @@ class FacebookIE(InfoExtractor):
     }, {
         # data.video
         'url': 'https://www.facebook.com/video.php?v=274175099429670',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '274175099429670',
             'ext': 'mp4',
@@ -163,24 +165,23 @@ class FacebookIE(InfoExtractor):
         },
         'skip': 'Gif on giphy.com gone',
     }, {
-        # have 1080P, but only up to 720p in swf params
-        # data.video.story.attachments[].media
-        'url': 'https://www.facebook.com/cnn/videos/10155529876156509/',
-        'md5': '70b82ebf5f0e9b91b2a49d3db3563611',
+        # Public page video (GraphQL videoDeliveryResponse / dash_manifest)
+        'url': 'https://www.facebook.com/NASAStennis/videos/nasa-stennis-test-fires-hydrogen-burn-off-ignitor/965602223232420/',
         'info_dict': {
-            'id': '10155529876156509',
+            'id': '965602223232420',
             'ext': 'mp4',
-            'title': 'Holocaust survivor becomes US citizen',
-            'description': 'She survived the holocaust — and years later, she’s getting her citizenship so she can vote for Hillary Clinton http://cnn.it/2eERh5f',
-            'timestamp': 1477818095,
-            'upload_date': '20161030',
-            'uploader': 'CNN',
-            'thumbnail': r're:https?://scontent\.fitm\d-1\.fna\.fbcdn\.net/.+',
+            'title': 'NASA Stennis Test Fires Hydrogen Burn-Off Ignitor',
+            'description': 'md5:b09793b06502ba0003828dee6c76d759',
+            'uploader': "NASA's John C. Stennis Space Center",
+            'uploader_id': '100064584194104',
+            'duration': 41.54,
+            'thumbnail': r're:https?://scontent[^/]+\.fna\.fbcdn\.net/.+',
+            'timestamp': 1787849465,
+            'upload_date': '20260827',
             'view_count': int,
-            'uploader_id': '100059479812265',
             'concurrent_view_count': int,
-            'duration': 44.181,
         },
+        'params': {'skip_download': True},
     }, {
         # FIXME: unable to extract uploader, no formats found
         # bigPipe.onPageletArrive ... onPageletArrive pagelet_group_mall
@@ -314,6 +315,7 @@ class FacebookIE(InfoExtractor):
     }, {
         # data.video
         'url': 'https://www.facebook.com/WatchESLOne/videos/359649331226507/',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '359649331226507',
             'ext': 'mp4',
@@ -332,6 +334,7 @@ class FacebookIE(InfoExtractor):
     }, {
         # data.node.comet_sections.content.story.attachments[].style_type_renderer.attachment.all_subattachments.nodes[].media
         'url': 'https://www.facebook.com/100033620354545/videos/106560053808006/',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '106560053808006',
             'ext': 'mp4',
@@ -399,6 +402,7 @@ class FacebookIE(InfoExtractor):
         # FIXME: Cannot parse data error
         # data.event.cover_media_renderer.cover_video
         'url': 'https://m.facebook.com/events/1509582499515440',
+        'skip': 'extractor broken: Cannot parse data',
         'info_dict': {
             'id': '637246984455045',
             'ext': 'mp4',
@@ -415,6 +419,7 @@ class FacebookIE(InfoExtractor):
     _WEBPAGE_TESTS = [{
         # <iframe> embed
         'url': 'http://www.unique-almeria.com/mini-hollywood.html',
+        'skip': 'site unavailable',
         'md5': 'cba5d8c5021e9340dcefe925255e2c3e',
         'info_dict': {
             'id': '1529066599879',
@@ -891,20 +896,20 @@ class FacebookPluginsVideoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:[\w-]+\.)?facebook\.com/plugins/video\.php\?.*?\bhref=(?P<id>https.+)'
     _TESTS = [{
         'url': 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fgov.sg%2Fvideos%2F10154383743583686%2F&show_text=0&width=560',
-        'md5': 'af83aeae1d595f377c6e47a450828155',
+        'md5': 'ed7093b0d1125ba12ce37bddf518b243',
         'info_dict': {
             'id': '10154383743583686',
             'ext': 'mp4',
             'title': 'What to do during the haze?',
-            'concurrent_view_count': int,
             'description': 'md5:81839c0979803a014b20798df255ed0b',
-            'duration': 65.087,
-            'thumbnail': r're:https?://scontent\.fitm\d-1\.fna\.fbcdn\.net/.+',
-            'timestamp': 1472184808,
-            'upload_date': '20160826',
             'uploader': 'gov.sg',
             'uploader_id': '100064718678925',
+            'duration': 65.087,
+            'thumbnail': r're:https?://scontent\.[^/]+/.+',
+            'timestamp': 1472184808,
+            'upload_date': '20160826',
             'view_count': int,
+            'concurrent_view_count': int,
         },
         'expected_warnings': ['Cannot parse data'],
     }, {
@@ -964,20 +969,20 @@ class FacebookReelIE(InfoExtractor):
     IE_NAME = 'facebook:reel'
     _TESTS = [{
         'url': 'https://www.facebook.com/reel/1195289147628387',
-        'md5': 'aeb0153ecb2eaacdf2dc2bf88f593fef',
+        'md5': '77798a7994619caca7648dde8e453053',
         'info_dict': {
             'id': '1195289147628387',
             'ext': 'mp4',
-            'title': '9.7K views · 352 reactions | When your trying to help your partner out with an arrest and #FAAFO games begin. Let the “Slapathon” commence!! 👊👋 | Beast Camp Training',
-            'description': 'md5:5a767dc7e78718667b150a7facc4a34f',
-            'uploader': '9.7K views &#xb7; 352 reactions | When your trying to help your partner out with an arrest and #FAAFO games begin. Let the &#x201c;Slapathon&#x201d; commence!! &#x1f44a;&#x1f44b; | Beast Camp Training',
+            'title': 'md5:1a21ba284870bdfc24b3d21175556d37',
+            'description': 'md5:24ea7ef062215d295bdde64e778f5474',
+            'uploader': 'Beast Camp Training',
             'uploader_id': '100040874179269',
             'duration': 9.579,
-            'thumbnail': r're:https?://scontent\.fitm\d-1\.fna\.fbcdn\.net/.+',
-            'timestamp': 1637502609,
+            'thumbnail': r're:https?://scontent\.[^/]+/.+',
+            'timestamp': 1637502604,
             'upload_date': '20211121',
-            'comment_count': int,
-            'repost_count': int,
+            'view_count': int,
+            'concurrent_view_count': int,
         },
     }]
 

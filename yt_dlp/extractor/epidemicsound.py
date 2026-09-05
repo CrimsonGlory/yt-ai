@@ -34,6 +34,7 @@ class EpidemicSoundIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.epidemicsound.com/track/mj8GTTwsZd/',
+        'skip': 'stale test sample / site changed',
         'md5': 'c82b745890f9baf18dc2f8d568ee3830',
         'info_dict': {
             'id': '148700',
@@ -51,17 +52,17 @@ class EpidemicSoundIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.epidemicsound.com/sound-effects/tracks/2f02f54b-9faa-4daf-abac-1cfe9e9cef69/',
-        'md5': '35d7cf05bd8b614a84f0495a05de9388',
+        'md5': '7e69cd296165f0b40497a5e02022ae5e',
         'info_dict': {
             'id': '208931',
             'ext': 'mp3',
-            'upload_date': '20240603',
-            'timestamp': 1717436529,
-            'categories': ['appliance'],
             'display_id': '6b2NXLURPr',
+            'title': 'Doors, Appliance, Oven, Grill, Door Open, Close 01',
             'duration': 1.0,
-            'title': 'Oven, Grill, Door Open 01',
-            'thumbnail': 'https://cdn.epidemicsound.com/curation-assets/commercial-release-cover-images/default-sfx/3000x3000.jpg',
+            'thumbnail': 'md5:a5033d4bfae45fee6f024bf03a2cd5be',
+            'categories': ['appliance'],
+            'timestamp': 1715874501,
+            'upload_date': '20240516',
         },
     }]
 

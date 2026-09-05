@@ -5,6 +5,7 @@ class TheStarIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?thestar\.com/(?:[^/]+/)*(?P<id>.+)\.html'
     _TEST = {
         'url': 'http://www.thestar.com/life/2016/02/01/mankind-why-this-woman-started-a-men-s-skincare-line.html',
+        'skip': 'HTTP 429',
         'md5': '2c62dd4db2027e35579fefb97a8b6554',
         'info_dict': {
             'id': '4732393888001',

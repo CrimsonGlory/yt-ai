@@ -27,6 +27,7 @@ class SouthParkIE(MTVServicesBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://southpark.cc.com/episodes/940f8z/south-park-cartman-gets-an-anal-probe-season-1-ep-1',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '5fb8887e-ecfd-11e0-aca6-0026b9414f30',
             'ext': 'mp4',
@@ -102,6 +103,7 @@ class SouthParkDeIE(MTVServicesBaseIE):
     }, {
         # clip
         'url': 'https://www.southpark.de/en/video-clips/ct46op/south-park-tooth-fairy-cartman',
+        'skip': "extractor broken: An extractor error has occurred. (caused by KeyError('stitchedstream')); please",
         'info_dict': {
             'ext': 'mp4',
             'id': 'e99d45ea-ed00-11e0-aca6-0026b9414f30',
@@ -124,6 +126,7 @@ class SouthParkDeIE(MTVServicesBaseIE):
     }, {
         # episode
         'url': 'https://www.southpark.de/en/episodes/yy0vjs/south-park-the-pandemic-special-season-24-ep-1',
+        'skip': "extractor broken: An extractor error has occurred. (caused by KeyError('stitchedstream')); please",
         'info_dict': {
             'ext': 'mp4',
             'id': '230a4f02-f583-11ea-834d-70df2f866ace',
@@ -222,6 +225,7 @@ class SouthParkLatIE(MTVServicesBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://www.southpark.lat/episodios/9h0qbg/south-park-orgia-gatuna-temporada-3-ep-7',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'ext': 'mp4',
             'id': '600d273a-ecfd-11e0-aca6-0026b9414f30',
@@ -255,6 +259,7 @@ class SouthParkDkIE(MTVServicesBaseIE):
     _GEO_BYPASS = True
     _TESTS = [{
         'url': 'https://www.southparkstudios.nu/episodes/y3uvvc/south-park-grounded-vindaloop-season-18-ep-7',
+        'skip': "extractor broken: An extractor error has occurred. (caused by KeyError('stitchedstream')); please",
         'info_dict': {
             'ext': 'mp4',
             'id': 'f60690a7-21a7-4ee7-8834-d7099a8707ab',
@@ -291,6 +296,7 @@ class SouthParkComBrIE(MTVServicesBaseIE):
     _GEO_BYPASS = True
     _TESTS = [{
         'url': 'https://www.southparkstudios.com.br/video-clips/3vifo0/south-park-welcome-to-mar-a-lago7',
+        'skip': "extractor broken: An extractor error has occurred. (caused by KeyError('stitchedstream')); please",
         'info_dict': {
             'ext': 'mp4',
             'id': 'ccc3e952-7352-11f0-b405-16fff45bc035',

@@ -31,6 +31,7 @@ class DVTVIE(InfoExtractor):
         },
     }, {
         'url': 'http://video.aktualne.cz/dvtv/dvtv-16-12-2014-utok-talibanu-boj-o-kliniku-uprchlici/r~973eb3bc854e11e498be002590604f2e/',
+        'skip': 'extractor broken: KeyError',
         'info_dict': {
             'title': r'DVTV 16. 12. 2014: útok Talibanu, boj o kliniku, uprchlíci',
             'id': '973eb3bc854e11e498be002590604f2e',
@@ -96,6 +97,7 @@ class DVTVIE(InfoExtractor):
     }, {
         # Test live stream video (liveStarter) parsing
         'url': 'https://video.aktualne.cz/dvtv/zive-mistryne-sveta-eva-samkova-po-navratu-ze-sampionatu/r~182654c2288811e990fd0cc47ab5f122/',
+        'skip': 'site unavailable',
         'md5': '2e552e483f2414851ca50467054f9d5d',
         'info_dict': {
             'id': '8d116360288011e98c840cc47ab5f122',

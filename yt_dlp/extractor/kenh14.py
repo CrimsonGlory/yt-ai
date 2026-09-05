@@ -19,8 +19,26 @@ from ..utils.traversal import traverse_obj
 
 class Kenh14VideoIE(InfoExtractor):
     _VALID_URL = r'https?://video\.kenh14\.vn/(?:video/)?[\w-]+-(?P<id>[0-9]+)\.chn'
-    _TESTS = [{
+    _TESTS = [
+        {
+            'url': 'https://video.kenh14.vn/video/lee-yi-kyung-neu-anh-tran-thanh-ngo-loi-moi-hop-tac-toi-se-nhan-loi-vo-dieu-kien-382916.chn',
+            'md5': '611d4c578f28bf03ebba48800d80507f',
+            'info_dict': {
+                'id': '382916',
+                'ext': 'mp4',
+                'title': 'Lee Yi Kyung: Nếu anh Trấn Thành ngỏ lời mời hợp tác tôi sẽ nhận lời vô điều kiện',
+                'description': 'md5:d3b17cf1ed0f2e6686d8a014178f47ef',
+                'uploader': 't',
+                'duration': 535.48,
+                'thumbnail': r're:^https?://kenh14cdn\.com/.+',
+                'timestamp': 1783653860,
+                'upload_date': '20260710',
+                'view_count': int,
+                'tags': ['HERE TO HEAR'],
+            },
+        }, {
         'url': 'https://video.kenh14.vn/video/mo-hop-iphone-14-pro-max-nguon-unbox-therapy-316173.chn',
+        'skip': 'stale test sample / site changed',
         'md5': '1ed67f9c3a1e74acf15db69590cf6210',
         'info_dict': {
             'id': '316173',
@@ -37,6 +55,7 @@ class Kenh14VideoIE(InfoExtractor):
         },
     }, {
         'url': 'https://video.kenh14.vn/video-316174.chn',
+        'skip': 'stale test sample / site changed',
         'md5': '2b41877d2afaf4a3f487ceda8e5c7cbd',
         'info_dict': {
             'id': '316174',

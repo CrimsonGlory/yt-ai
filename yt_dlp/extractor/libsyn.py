@@ -37,6 +37,7 @@ class LibsynIE(InfoExtractor):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://html5-player.libsyn.com/',
+        'skip': 'webpage sample unavailable',
         'md5': '50cff329596b8f674d4449ed077ef2f9',
         'info_dict': {
             'id': '2378831',

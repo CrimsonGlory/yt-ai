@@ -341,7 +341,6 @@ class VidyardIE(VidyardBaseIE):
     }, {
         # <script ... id="vidyard_embed_code_DXx2sW4WaLA6hTdGFz7ja8" src="//play.vidyard.com/DXx2sW4WaLA6hTdGFz7ja8.js?
         'url': 'http://videos.vivint.com/watch/DXx2sW4WaLA6hTdGFz7ja8',
-        'skip': 'URL certificate expired 2025-09-10. Alternative script embed test case not yet available',
         'info_dict': {
             'id': 'DXx2sW4WaLA6hTdGFz7ja8',
             'display_id': '2746529',
@@ -353,6 +352,7 @@ class VidyardIE(VidyardBaseIE):
     }, {
         # <script id="vidyard_embed_code_MIBHhiLVTxga7wqLsuoDjQ" src="//embed.vidyard.com/embed/MIBHhiLVTxga7wqLsuoDjQ/inline?v=2.1">
         'url': 'https://www.babypips.com/learn/forex/introduction-to-metatrader4',
+        'skip': 'HTTP Error 403: Forbidden',
         'info_dict': {
             'id': 'MIBHhiLVTxga7wqLsuoDjQ',
             'display_id': '20291',
@@ -364,8 +364,8 @@ class VidyardIE(VidyardBaseIE):
         },
     }, {
         # <iframe ... src="//play.vidyard.com/d61w8EQoZv1LDuPxDkQP2Q/type/background?preview=1"
-        'skip': 'URL changed embed method to \'class="vidyard-player-embed"\'. An alternative iframe embed test case is not yet available',
         'url': 'https://www.avaya.com/en/',
+        'skip': 'URL changed embed method to \'class="vidyard-player-embed"\'. An alternative iframe embed test case is not yet available',
         'info_dict': {
             # These values come from the generic extractor and don't matter
             'id': str,
@@ -402,7 +402,7 @@ class VidyardIE(VidyardBaseIE):
         'url': 'https://www.avaya.com/en/',
         'info_dict': {
             'id': 'pMk8eNCYzukzJaEPoo1Hgn',
-            'display_id': '47074153',
+            'display_id': '50140144',
             'ext': 'mp4',
             'title': 'Avaya Infinity Helps Redefine the Contact Center as Your Connection Center',
             'description': r're:Our mission is to help you turn single engagements.+',

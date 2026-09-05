@@ -7,6 +7,7 @@ class CozyTVIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://cozy.tv/beardson/replays/2021-11-19_1',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'beardson-2021-11-19_1',
             'ext': 'mp4',

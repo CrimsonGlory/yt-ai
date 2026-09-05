@@ -231,6 +231,7 @@ class GenericIE(InfoExtractor):
         # RSS feed: Includes enclosure and unsupported URLs
         # https://github.com/ytdl-org/youtube-dl/pull/16189
         'url': 'https://www.interfax.ru/rss.asp',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': 'https://www.interfax.ru/rss.asp',
             'title': 'Интерфакс',
@@ -289,6 +290,7 @@ class GenericIE(InfoExtractor):
         # JW Player: YouTube
         # https://github.com/ytdl-org/youtube-dl/commit/a0f719854463c6f4226e4042dfa80c1b17154e1d
         'url': 'https://media.nationalarchives.gov.uk/index.php/webinar-using-discovery-national-archives-online-catalogue/',
+        'skip': 'site unavailable',
         'info_dict': {
             'id': 'Mrj4DVp2zeA',
             'ext': 'mp4',
@@ -334,6 +336,7 @@ class GenericIE(InfoExtractor):
         # JW Player: JSON Feed URL
         # https://github.com/yt-dlp/yt-dlp/issues/1476
         'url': 'https://foodschmooze.org/',
+        'skip': 'Homepage no longer embeds JW Player JSON feed (now Omnyfm podcast)',
         'info_dict': {
             'id': 'z00Frhnw',
             'ext': 'mp4',
@@ -381,6 +384,7 @@ class GenericIE(InfoExtractor):
             'display_id': 'leningrad-zoj',
             'thumbnail': r're:https?://youix\.com/contents/videos_screenshots/.+\.jpg',
         },
+        'expected_warnings': ['Untested major version'],
     }, {
         # KVS Player v7.10.3
         # kt_player.js?v=12
@@ -390,7 +394,7 @@ class GenericIE(InfoExtractor):
         'info_dict': {
             'id': '346037',
             'ext': 'mp4',
-            'title': 'Fresh out of the shower - Shooshtime',
+            'title': 'Fresh out of the shower | Shooshtime',
             'age_limit': 18,
             'description': 'md5:efd70fd3973f8750d285c743b910580a',
             'display_id': 'fresh-out-of-the-shower',
@@ -403,6 +407,7 @@ class GenericIE(InfoExtractor):
         # kt_player.js?v=2.11.5.1
         # https://github.com/yt-dlp/yt-dlp/commit/a318f59d14792d25b2206c3f50181e03e8716db7
         'url': 'https://www.kvs-demo.com/video/105/kelis-4th-of-july/',
+        'skip': 'kvs-demo video pages no longer expose flashvars (obfuscated JS object instead)',
         'info_dict': {
             'id': '105',
             'ext': 'mp4',
@@ -413,7 +418,7 @@ class GenericIE(InfoExtractor):
         # kt_player.js?v=6.3.2
         # https://github.com/yt-dlp/yt-dlp/commit/a318f59d14792d25b2206c3f50181e03e8716db7
         'url': 'https://www.kvs-demo.com/embed/105/',
-        'md5': '1ff84c70acaddbb03288c6cc5ee1879f',
+        'md5': 'a36ddb3f0a682f5e3f78b084f56d45ae',
         'info_dict': {
             'id': '105',
             'ext': 'mp4',
@@ -421,6 +426,7 @@ class GenericIE(InfoExtractor):
             'display_id': 'kelis-4th-of-july',
             'thumbnail': r're:https?://www\.kvs-demo\.com/contents/videos_screenshots/.+\.jpg',
         },
+        'expected_warnings': ['Untested major version'],
     }, {
         # twitter:player:stream
         # https://github.com/ytdl-org/youtube-dl/commit/371ddb14fe651d4a1e5a8310d6d7c0e395cd92b0
@@ -510,36 +516,45 @@ class GenericIE(InfoExtractor):
     }, {
         # Video.js: YouTube
         # https://github.com/ytdl-org/youtube-dl/commit/63d990d2859d0e981da2e416097655798334431b
-        'url': 'https://ortcam.com/solidworks-%d1%83%d1%80%d0%be%d0%ba-6-%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-%d1%87%d0%b5%d1%80%d1%82%d0%b5%d0%b6%d0%b0_33f9b7351.html?vid=33f9b7351',
+        # ortcam.com sample returns HTTP 500; public video.js-youtube example uses the same .src({type:'video/youtube'}) embed
+        'url': 'https://raw.githubusercontent.com/videojs/videojs-youtube/master/examples/youtube-javascript.html',
         'info_dict': {
-            'id': 'yygqldloqIk',
+            'id': 'y6Sxv-sUYtM',
             'ext': 'mp4',
-            'title': 'SolidWorks. Урок 6 Настройка чертежа',
+            'title': 'Pharrell Williams - Happy (Official Music Video)',
             'age_limit': 0,
             'availability': 'public',
-            'categories': ['Education'],
-            'channel': 'PROстое3D',
+            'categories': ['Music'],
+            'channel': 'iamOTHER',
             'channel_follower_count': int,
-            'channel_id': 'UCy91Bug3dERhbwGh2m2Ijng',
-            'channel_url': 'https://www.youtube.com/channel/UCy91Bug3dERhbwGh2m2Ijng',
+            'channel_id': 'UCE560wL2ftkMrQL40LYFUVg',
+            'channel_is_verified': True,
+            'channel_url': 'https://www.youtube.com/channel/UCE560wL2ftkMrQL40LYFUVg',
             'comment_count': int,
-            'description': 'md5:baf95267792646afdbf030e4d06b2ab3',
-            'duration': 1160,
+            'description': 'md5:7eb5dedbe654e2c6ba2763add173fac0',
+            'duration': 247,
             'heatmap': 'count:100',
             'like_count': int,
             'live_status': 'not_live',
             'media_type': 'video',
             'playable_in_embed': True,
-            'tags': 'count:17',
+            'tags': 'count:36',
             'thumbnail': r're:https?://i\.ytimg\.com/vi/.+',
-            'timestamp': 1363263144,
-            'upload_date': '20130314',
-            'uploader': 'PROстое3D',
-            'uploader_id': '@PROstoe3D',
-            'uploader_url': 'https://www.youtube.com/@PROstoe3D',
+            'timestamp': 1385096400,
+            'upload_date': '20131122',
+            'uploader': 'iamOTHER',
+            'uploader_id': '@iamOTHER',
+            'uploader_url': 'https://www.youtube.com/@iamOTHER',
             'view_count': int,
         },
         'add_ie': ['Youtube'],
+        'params': {'skip_download': 'm3u8'},
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'No supported JavaScript runtime',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
     }, {
         # Redirect
         # https://github.com/ytdl-org/youtube-dl/issues/413

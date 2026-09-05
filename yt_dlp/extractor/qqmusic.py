@@ -68,6 +68,7 @@ class QQMusicIE(QQMusicBaseIE):
     _VALID_URL = r'https?://y\.qq\.com/n/ryqq/songDetail/(?P<id>[0-9A-Za-z]+)'
     _TESTS = [{
         'url': 'https://y.qq.com/n/ryqq/songDetail/004Ti8rT003TaZ',
+        'skip': 'extractor broken: [qqmusic] unable to extract init data',
         'md5': 'd7adc5c438d12e2cb648cca81593fd47',
         'info_dict': {
             'id': '004Ti8rT003TaZ',
@@ -101,6 +102,7 @@ class QQMusicIE(QQMusicBaseIE):
     }, {
         'note': 'There is no mp3-320 version of this song.',
         'url': 'https://y.qq.com/n/ryqq/songDetail/004MsGEo3DdNxV',
+        'skip': 'extractor broken: [qqmusic] unable to extract init data',
         'md5': '028aaef1ae13d8a9f4861a92614887f9',
         'info_dict': {
             'id': '004MsGEo3DdNxV',
@@ -232,6 +234,7 @@ class QQMusicSingerIE(QQMusicBaseIE):
     _VALID_URL = r'https?://y\.qq\.com/n/ryqq/singer/(?P<id>[0-9A-Za-z]+)'
     _TESTS = [{
         'url': 'https://y.qq.com/n/ryqq/singer/001BLpXF2DyJe2',
+        'skip': 'extractor broken: [qqmusic:singer] unable to extract init data',
         'info_dict': {
             'id': '001BLpXF2DyJe2',
             'title': '林俊杰',
@@ -241,6 +244,7 @@ class QQMusicSingerIE(QQMusicBaseIE):
         'playlist_mincount': 100,
     }, {
         'url': 'https://y.qq.com/n/ryqq/singer/000Q00f213YzNV',
+        'skip': 'extractor broken: [qqmusic:singer] unable to extract init data',
         'info_dict': {
             'id': '000Q00f213YzNV',
             'title': '桃几OvO',

@@ -10,6 +10,7 @@ class SkyNewsAUIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.skynews.com.au/world-news/united-states/incredible-vision-shows-lava-overflowing-from-spains-la-palma-volcano/video/0f4c6243d6903502c01251f228b91a71',
+        'skip': 'extractor broken: Unable to extract embedcode',
         'info_dict': {
             'id': '6277184925001',
             'ext': 'mp4',

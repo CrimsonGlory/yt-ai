@@ -36,6 +36,7 @@ class KissasianIE(InfoExtractor):
     _TESTS = [
         {
             "url": "https://ww8.kissasian.video/watch/pearl-in-red-2026/episode-1.html",
+            "skip": "downloaded file is empty",
             "md5": "2035e69f9848d7205ff2de713aa94bcb",
             "info_dict": {
                 "id": "pearl-in-red-2026-episode-1",

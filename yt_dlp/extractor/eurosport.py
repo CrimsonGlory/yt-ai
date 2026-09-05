@@ -25,6 +25,7 @@ class EurosportIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.eurosport.com/tennis/roland-garros/2022/watch-the-top-five-shots-from-men-s-final-as-rafael-nadal-beats-casper-ruud-to-seal-14th-french-open_vid1694283/video.shtml',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '2481254',
             'ext': 'mp4',
@@ -53,6 +54,7 @@ class EurosportIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.eurosport.com/football/champions-league/2022-2023/pep-guardiola-emotionally-destroyed-after-manchester-city-win-over-bayern-munich-in-champions-league_vid1896254/video.shtml',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '3096477',
             'ext': 'mp4',
@@ -66,6 +68,7 @@ class EurosportIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.eurosport.com/football/last-year-s-semi-final-pain-was-still-there-pep-guardiola-after-man-city-reach-cl-final_vid1914115/video.shtml',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '3149108',
             'ext': 'mp4',

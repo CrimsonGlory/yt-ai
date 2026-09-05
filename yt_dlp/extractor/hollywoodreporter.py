@@ -16,6 +16,7 @@ class HollywoodReporterIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?hollywoodreporter\.com/video/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://www.hollywoodreporter.com/video/chris-pine-michelle-rodriguez-dungeons-dragons-cast-directors-on-what-it-took-to-make-film-sxsw-2023/',
+        'skip': 'extractor broken: Unsupported showcase type "connatix"',
         'info_dict': {
             'id': 'zH4jZaR5',
             'ext': 'mp4',

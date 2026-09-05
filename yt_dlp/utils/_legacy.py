@@ -40,7 +40,7 @@ def load_plugins(name, suffix, namespace):
 
 
 def traverse_dict(dictn, keys, casesense=True):
-    return traverse_obj(dictn, keys, casesense=casesense, is_user_input=True, traverse_string=True)
+    return traverse_obj(dictn, keys, casesense=casesense, traverse_string=True)
 
 
 def decode_base(value, digits):
