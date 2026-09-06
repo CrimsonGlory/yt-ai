@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import io
+import optparse
 import os
 import sys
 import unittest
@@ -14,6 +15,7 @@ from yt_dlp.extractor.generic import GenericIE
 from yt_dlp.extractor.videa import VideaIE
 from yt_dlp.extractor.yandexdisk import YandexDiskIE
 from yt_dlp.networking.common import Response
+from yt_dlp.networking.impersonate import ImpersonateTarget
 from yt_dlp.utils import ExtractorError, download_range_func, unsmuggle_url
 from yt_dlp.utils import _legacy as legacy
 from yt_dlp.webvtt import _MatchParser, parse_fragment
@@ -53,6 +55,33 @@ class TestParseOptions(unittest.TestCase):
     def test_parse_options_list_extractors(self):
         parsed = parse_options(['--ignore-config', '--list-extractors'])
         self.assertTrue(parsed.options.list_extractors)
+
+    def test_parse_options_impersonate_defaults_to_chrome(self):
+        parsed = parse_options(['--ignore-config', '-s', '--no-update', 'https://example.com/watch'])
+        self.assertEqual(parsed.ydl_opts['impersonate'], ImpersonateTarget.from_str('chrome'))
+
+    def test_parse_options_impersonate_other_client(self):
+        parsed = parse_options([
+            '--ignore-config', '--impersonate', 'safari', '-s', '--no-update', 'https://example.com/watch'])
+        self.assertEqual(parsed.ydl_opts['impersonate'], ImpersonateTarget.from_str('safari'))
+
+    def test_parse_options_no_impersonate(self):
+        parsed = parse_options([
+            '--ignore-config', '--no-impersonate', '-s', '--no-update', 'https://example.com/watch'])
+        self.assertIsNone(parsed.ydl_opts['impersonate'])
+
+    def test_parse_options_impersonate_flags_are_mutually_exclusive(self):
+        with self.assertRaises(optparse.OptParseError) as cm:
+            parse_options([
+                '--ignore-config', '--impersonate', 'chrome', '--no-impersonate',
+                '-s', 'https://example.com/watch'])
+        self.assertIn('mutually exclusive', str(cm.exception))
+
+        with self.assertRaises(optparse.OptParseError) as cm:
+            parse_options([
+                '--ignore-config', '--no-impersonate', '--impersonate=safari',
+                '-s', 'https://example.com/watch'])
+        self.assertIn('mutually exclusive', str(cm.exception))
 
 
 class TestDownloadRangeFunc(unittest.TestCase):

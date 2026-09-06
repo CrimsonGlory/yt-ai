@@ -1788,6 +1788,18 @@ class TestYoutubeDLNetworking:
         ):
             FakeYDL({'impersonate': ImpersonateTarget('test', None, None, None)})
 
+    def test_raise_impersonate_error_without_curl_cffi(self, monkeypatch):
+        from yt_dlp.networking.common import _REQUEST_HANDLERS
+        monkeypatch.setattr(
+            sys.modules['yt_dlp.YoutubeDL'], '_REQUEST_HANDLERS',
+            {key: handler for key, handler in _REQUEST_HANDLERS.items() if key != 'CurlCFFI'},
+        )
+        with pytest.raises(
+            YoutubeDLError,
+            match=r'curl_cffi, which is not available in this build',
+        ):
+            FakeYDL({'impersonate': ImpersonateTarget('chrome')})
+
     def test_pass_impersonate_param(self, monkeypatch):
 
         class IRH(ImpersonateRequestHandler):

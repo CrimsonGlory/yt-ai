@@ -739,9 +739,22 @@ def get_postprocessors(opts):
 ParsedOptions = collections.namedtuple('ParsedOptions', ('parser', 'options', 'urls', 'ydl_opts'))
 
 
+def _cli_has_option(args, option):
+    prefix = f'{option}='
+    for arg in args:
+        if arg == '--':
+            break
+        if arg == option or arg.startswith(prefix):
+            return True
+    return False
+
+
 def parse_options(argv=None):
     """@returns ParsedOptions(parser, opts, urls, ydl_opts)"""
     parser, opts, urls = parseOpts(argv)
+    cli_args = sys.argv[1:] if argv is None else argv
+    if _cli_has_option(cli_args, '--impersonate') and _cli_has_option(cli_args, '--no-impersonate'):
+        parser.error('--impersonate and --no-impersonate are mutually exclusive')
     urls = get_urls(urls, opts.batchfile, -1 if opts.quiet and not opts.verbose else opts.verbose)
 
     set_compat_opts(opts)

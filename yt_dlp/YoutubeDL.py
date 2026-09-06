@@ -765,6 +765,12 @@ class YoutubeDL:
 
         if impersonate_target := self.params.get('impersonate'):
             if not self._impersonate_target_available(impersonate_target):
+                if not any(isinstance(rh, ImpersonateRequestHandler)
+                           for rh in self._request_director.handlers.values()):
+                    raise YoutubeDLError(
+                        'Browser impersonation requires curl_cffi, which is not available in this build. '
+                        'Install curl_cffi (e.g. pip install "yt-ai[default,curl-cffi]") '
+                        'or pass --no-impersonate.')
                 raise YoutubeDLError(
                     f'Impersonate target "{impersonate_target}" is not available. '
                     f'Use --list-impersonate-targets to see available targets. '

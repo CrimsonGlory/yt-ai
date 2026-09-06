@@ -222,11 +222,13 @@ While all the other dependencies are optional, `ffmpeg`, `ffprobe`, `yt-dlp-ejs`
 
 #### Impersonation
 
-The following provide support for impersonating browser requests. This may be required for some sites that employ TLS fingerprinting.
+yt-ai impersonates Chrome by default (`--impersonate chrome`) so requests match a real browser TLS fingerprint. Pass `--no-impersonate` to disable this. If `curl_cffi` is missing from the build, yt-ai exits unless `--no-impersonate` is set.
+
+The following provide support for impersonating browser requests. This is required by default and for some sites that employ TLS fingerprinting.
 
 * [**curl_cffi**](https://github.com/lexiforest/curl_cffi) (recommended) - Python binding for [curl-impersonate](https://github.com/lexiforest/curl-impersonate). Provides impersonation targets for Chrome, Edge and Safari. Licensed under [MIT](https://github.com/lexiforest/curl_cffi/blob/main/LICENSE)
   * Can be installed with the `curl-cffi` extra, e.g. `pip install "yt-ai[default,curl-cffi]"`
-  * Currently included in most builds *except* `yt-ai` (Unix zipimport binary) and `yt-ai_x86` (Windows 32-bit)
+  * Currently included in most builds *except* `yt-ai` (Unix zipimport binary) and `yt-ai_x86` (Windows 32-bit). Those builds need `--no-impersonate` unless `curl_cffi` is installed separately.
 
 
 ### Metadata
@@ -457,9 +459,11 @@ Tip: Use `CTRL`+`F` (or `Command`+`F`)  to search by keywords
     --impersonate CLIENT[:OS]       Client to impersonate for requests. E.g.
                                     chrome, chrome-110, chrome:windows-10. Pass
                                     --impersonate="" to impersonate any client.
-                                    Note that forcing impersonation for all
-                                    requests may have a detrimental impact on
-                                    download speed and stability
+                                    chrome is used by default. Note that
+                                    impersonation for all requests may have a
+                                    detrimental impact on download speed and
+                                    stability
+    --no-impersonate                Do not impersonate a browser
     --list-impersonate-targets      List available clients to impersonate.
     -4, --force-ipv4                Make all connections via IPv4
     -6, --force-ipv6                Make all connections via IPv6
@@ -2879,6 +2883,7 @@ Relative to **yt-dlp**:
 * The PyPI package is [`yt-ai`](https://pypi.org/project/yt-ai); embedding still uses `import yt_dlp`
 * Sites yt-dlp refused as piracy, and extractors it marked currently broken, are enabled again
 * AI / LLM contributions are required (see [`.NO_HUMAN`](.NO_HUMAN/README.md))
+* Browser impersonation defaults to Chrome (`--impersonate chrome`) via `curl_cffi`. Use `--impersonate` to pick another client, or `--no-impersonate` to disable. yt-ai exits if `curl_cffi` is unavailable unless `--no-impersonate` is set. `--impersonate` and `--no-impersonate` cannot be used together.
 
 CLI defaults (format selection, output template, Python version, and so on) otherwise match yt-dlp. The following differences from youtube-dl / youtube-dlc, and the `--compat-options` that revert them, are inherited from yt-dlp:
 
