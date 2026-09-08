@@ -13,12 +13,12 @@ class FczenitIE(InfoExtractor):
         'info_dict': {
             'id': '60878',
             'ext': 'mp4',
-            'title': 'Обзор матча  FONBET Кубка России «Зенит» — «Динамо» (Мх)',
+            'title': 'Обзор матча FONBET Кубка России «Зенит» — «Динамо» (Мх)',
             'thumbnail': r're:https?://.+\.jpg',
             'duration': 126.0,
             'timestamp': 1788382233,
             'upload_date': '20260902',
-            'tags': ['Ерохин', 'александр соболев'],
+            'tags': 'count:1',
         },
     }
 

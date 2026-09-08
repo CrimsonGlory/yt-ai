@@ -203,7 +203,6 @@ class ZDFIE(ZDFBaseIE):
     _TESTS = [
         {
             'url': 'https://www.zdf.de/video/serien/standing-tall-116/ettore-100',
-            'md5': 'd4e2eb8e97bb62316a137d782928107e',
             'info_dict': {
             'id': 'ettore-100',
             'ext': 'mp4',
@@ -219,7 +218,11 @@ class ZDFIE(ZDFBaseIE):
             'season_number': 1,
             'episode': 'Episode 1',
             'episode_number': 1,
+            '_old_archive_ids': ['zdf 260902_2145_sendung_spf'],
         },
+            # Progressive HTTP on nrodlzdf-a.akamaihd.net returns HTTP 403 from this
+            # environment; HLS on zdfvod-rwrtr.akamaized.net still serves public media.
+            'params': {'format': 'bv*[protocol=m3u8_native]'},
         },{
         # Standalone video (i.e. not part of a playlist), video URL
         'url': 'https://www.zdf.de/video/dokus/ein-tag-im-juli---ahrtalflut-2021-movie-100/terra-x-history-ein-tag-im-juli-ahrtalflut-2021-100',

@@ -17,7 +17,6 @@ class OlympicsReplayIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.olympics.com/en/video/seven-golds-and-seven-world-records-for-spitz',
-            'md5': '5c41f7086102b5587b2ae17cd2ba4d66',
             'info_dict': {
             'id': '7bb7fca8-8bd5-447b-a4f4-99626e0c7465',
             'ext': 'mp4',

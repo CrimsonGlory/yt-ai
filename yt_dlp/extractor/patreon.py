@@ -137,6 +137,12 @@ class PatreonIE(PatreonBaseIE):
             'noplaylist': True,
             'skip_download': True,
         },
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'No supported JavaScript runtime',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
     }, {
         'url': 'https://www.patreon.com/posts/episode-166-of-743933',
         'only_matching': True,

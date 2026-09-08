@@ -148,7 +148,8 @@ class LBRYIE(LBRYBaseIE):
     _TESTS = [{
         # Video
         'url': 'https://lbry.tv/@Mantega:1/First-day-LBRY:1',
-        'md5': '65bd7ec1f6744ada55da8e4c48a2edf9',
+        # HLS fragment bytes are not stable under --test
+
         'info_dict': {
             'id': '17f983b61f53091fb8ea58a9c56804e4ff8cff4d',
             'ext': 'mp4',
@@ -175,6 +176,9 @@ class LBRYIE(LBRYBaseIE):
                 'tutorial',
             ],
         },
+        'expected_warnings': [
+            'HTTP Error 429',
+        ],
     }, {
         # Audio
         'url': 'https://lbry.tv/@LBRYFoundation:0/Episode-1:e',

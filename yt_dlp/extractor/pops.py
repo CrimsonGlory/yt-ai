@@ -59,6 +59,7 @@ class PopsIE(InfoExtractor):
             'Remote component challenge solver script',
             'No supported JavaScript runtime',
             'n challenge solving failed',
+            'Signature solving failed',
         ],
     }, {
         'url': 'https://pops.vn/video/645dee634507cb005fbe2328',

@@ -6,26 +6,31 @@ from ..utils.traversal import require, traverse_obj
 class GameStarIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?game(?P<site>pro|star)\.de/videos/.*,(?P<id>[0-9]+)\.html'
     _TESTS = [{
-        'url': 'http://www.gamestar.de/videos/trailer,3/hobbit-3-die-schlacht-der-fuenf-heere,76110.html',
-        'md5': '3a1b2d7494e6f3230a6835038436d8ac',
+        'url': 'https://www.gamestar.de/videos/der-sargnagel-fuer-aaa-gaming,142100.html',
+        'md5': 'a0d30b989792eba5563739bc450a139b',
         'info_dict': {
-            'id': 'k4b9wq1ir4jtBxy5fgF',
+            'id': 'k3Ccwm2JjIDC5wJuJSW',
             'ext': 'mp4',
-            'title': 'Hobbit 3: Die Schlacht der Fünf Heere - Teaser-Trailer zum dritten Teil',
-            'description': 'md5:d543730d27e0dc4e839cee9d219f42a8',
+            'title': 'Der Sargnagel für AAA-Gaming',
+            'description': 'md5:42d07c5f43d20902e0d24ab99973d522',
             'thumbnail': r're:https?://s\d+\.dmcdn\.net/v/',
-            'duration': 17,
-            'timestamp': 1655790897,
-            'upload_date': '20220621',
+            'duration': 3421,
+            'timestamp': 1788667200,
+            'upload_date': '20260906',
             'uploader': 'GameStar',
             'uploader_id': 'x2mvqg3',
             'age_limit': 0,
             'view_count': int,
             'like_count': int,
-            'tags': ['Trailer', 'Video'],
+            'tags': list,
         },
-        'params': {'format': 'hls-720'},
+        # Dailymotion HLS fMP4 init fragment is <10KiB in --test mode
+        'file_minsize': None,
+        'params': {'format': 'hls-480'},
         'add_ie': ['Dailymotion'],
+    }, {
+        'url': 'http://www.gamestar.de/videos/trailer,3/hobbit-3-die-schlacht-der-fuenf-heere,76110.html',
+        'only_matching': True,
     }, {
         'url': 'http://www.gamepro.de/videos/top-10-indie-spiele-fuer-nintendo-switch-video-tolle-nindies-games-zum-download,95316.html',
         'only_matching': True,

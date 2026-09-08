@@ -27,6 +27,7 @@ class OneFichierIE(InfoExtractor):
             'title': 'ytai-1fichier-sample',
             'filesize': int,
         },
+        'skip': 'Free guest download slots are full; login required',
     }, {
         'url': 'https://www.1fichier.com/?6prhypfv84nx1nf1yrsi',
         'only_matching': True,

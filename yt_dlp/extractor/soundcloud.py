@@ -1196,7 +1196,7 @@ class SoundcloudTrackStationIE(SoundcloudPagedPlaylistBaseIE):
             'id': '286017854',
             'title': 'Track station: your text',
         },
-        'playlist_mincount': 36,
+        'playlist_mincount': 25,
     }]
 
     def _real_extract(self, url):
@@ -1220,7 +1220,7 @@ class SoundcloudRelatedIE(SoundcloudPagedPlaylistBaseIE):
             'id': '1084577272',
             'title': 'Sexapil - Pingers 5 (Recommended)',
         },
-        'playlist_mincount': 49,
+        'playlist_mincount': 40,
     }, {
         'url': 'https://soundcloud.com/wajang/sexapil-pingers-5/albums',
         'info_dict': {

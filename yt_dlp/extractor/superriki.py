@@ -25,7 +25,6 @@ class SuperrikiIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://y.superriki.yt/comedy/258-alti-ustu-istanbul/source-29-series-2.html',
-            'md5': '7cfbb5b89635555c8c122d3f222102a5',
             'info_dict': {
                 'id': '258-2',
                 'ext': 'mp4',

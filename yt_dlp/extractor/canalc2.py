@@ -18,6 +18,7 @@ class Canalc2IE(InfoExtractor):
             'duration': 122,
             'thumbnail': r're:https?://.*',
         },
+        'skip': 'SSL certificate hostname mismatch for vod-stream.di.unistra.fr',
     }, {
         'url': 'http://archives-canalc2.u-strasbg.fr/video.asp?idVideo=11427&voir=oui',
         'only_matching': True,

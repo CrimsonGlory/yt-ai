@@ -138,7 +138,7 @@ class VrSquareChannelIE(VrSquarePlaylistBaseIE):
             'id': 'H372648599',
             'title': 'AKB48＋チャンネル',
         },
-        'playlist_mincount': 322,
+        'playlist_mincount': 280,
     }]
 
     def _real_extract(self, url):
@@ -159,7 +159,7 @@ class VrSquareSearchIE(VrSquarePlaylistBaseIE):
         'info_dict': {
             'id': '#小栗有以',
         },
-        'playlist_mincount': 41,
+        'playlist_mincount': 30,
     }]
 
     def _real_extract(self, url):

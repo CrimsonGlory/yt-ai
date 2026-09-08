@@ -56,17 +56,17 @@ class GenericIE(InfoExtractor):
     IE_NAME = 'generic'
     _NETRC_MACHINE = False  # Suppress username warning
     _TESTS = [{
-        # Direct link
+        # Direct link (CC Big Buck Bunny sample; media.w3.org Sintel trailer is HTTP 403)
         # https://github.com/ytdl-org/youtube-dl/commit/c5fa81fe81ce05cd81c20ff4ea6dac3dccdcbf9d
-        'url': 'https://media.w3.org/2010/05/sintel/trailer.mp4',
-        'md5': '67d406c2bcb6af27fa886f31aa934bbe',
+        'url': 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4',
+        'md5': '7f2c4a4b67d18435343fab91ac93b8c3',
         'info_dict': {
-            'id': 'trailer',
+            'id': 'Big_Buck_Bunny_360_10s_1MB',
             'ext': 'mp4',
-            'title': 'trailer',
+            'title': 'Big_Buck_Bunny_360_10s_1MB',
             'direct': True,
-            'timestamp': 1273772943,
-            'upload_date': '20100513',
+            'timestamp': 1553293243,
+            'upload_date': '20190322',
         },
     }, {
         # Direct link: No HEAD support

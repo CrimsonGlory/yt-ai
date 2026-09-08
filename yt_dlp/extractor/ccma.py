@@ -17,7 +17,7 @@ class CCMAIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.3cat.cat/3cat/mirall-mirall/video/6296765/',
-            'md5': 'f457c329061712ce21fd6592c37c04b2',
+            'md5': 'd1260130ce1795a4005b05a72079f31d',
             'info_dict': {
             'id': '6296765',
             'ext': 'mp4',
@@ -32,6 +32,7 @@ class CCMAIE(InfoExtractor):
             'series': 'Pel·lícula',
             'episode': 'Episode 1',
             'episode_number': 1,
+            'categories': ['Ficció'],
         },
         },{
         # ccma.cat/tv3/alacarta/ URLs redirect to 3cat.cat/3cat/

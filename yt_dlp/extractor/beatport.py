@@ -44,7 +44,9 @@ class BeatportIE(InfoExtractor):
             self.raise_no_formats('Unable to extract track metadata', video_id=track_id)
 
         artists = traverse_obj(track, ('artists', ..., 'name', {str}))
-        title = track['name']
+        title = traverse_obj(track, (('track_name', 'name'), {str}, any))
+        if not title:
+            self.raise_no_formats('Unable to extract track metadata', video_id=track_id)
         if artists:
             title = f'{", ".join(artists)} - {title}'
         mix = traverse_obj(track, ('mix_name', {str}))
@@ -55,9 +57,18 @@ class BeatportIE(InfoExtractor):
         if not sample_url:
             self.raise_no_formats('No preview is available for this track', expected=True, video_id=track_id)
 
-        thumbnails, seen = [], set()
-        for thumb_id, path in (('image', ('image', 'uri')), ('cover', ('release', 'image', 'uri'))):
+        def _image_url(*path):
             image_url = traverse_obj(track, (*path, {url_or_none}))
+            if image_url:
+                return image_url.replace('{w}x{h}', '1400x1400')
+
+        thumbnails, seen = [], set()
+        for thumb_id, path in (
+            ('image', ('image', 'uri')),
+            ('cover', ('release', 'image_url')),
+            ('cover', ('release', 'image', 'uri')),
+        ):
+            image_url = _image_url(*path)
             if image_url and image_url not in seen:
                 seen.add(image_url)
                 thumbnails.append({
@@ -69,11 +80,12 @@ class BeatportIE(InfoExtractor):
             'id': track_id,
             'display_id': display_id,
             'title': title,
-            'track': traverse_obj(track, ('name', {str})),
+            'track': traverse_obj(track, (('track_name', 'name'), {str}, any)),
             'artists': artists or None,
             'album': traverse_obj(track, ('release', 'name', {str})),
-            'duration': float_or_none(track.get('length_ms'), scale=1000),
-            'timestamp': unified_timestamp(track.get('publish_date')),
+            'duration': float_or_none(track.get('track_length_ms') or track.get('length_ms'), scale=1000),
+            'timestamp': unified_timestamp(
+                track.get('publish_date') or traverse_obj(track, ('release', 'release_date', {str}))),
             'thumbnails': thumbnails,
             'genres': traverse_obj(track, ('genre', 'name', {str}, filter, all)),
             'formats': [{

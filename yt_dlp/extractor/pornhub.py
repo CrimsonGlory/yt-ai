@@ -146,7 +146,34 @@ class PornHubIE(PornHubBaseIE):
                     '''
     _EMBED_REGEX = [r'<iframe[^>]+?src=["\'](?P<url>(?:https?:)?//(?:www\.)?pornhub(?:premium)?\.(?:com|net|org)/embed/[\da-z]+)']
     _TESTS = [{
+        'url': 'http://www.pornhub.com/view_video.php?viewkey=ph5dc2ff943e928',
+        'info_dict': {
+            'id': 'ph5dc2ff943e928',
+            'ext': 'mp4',
+            'title': 'Creampie for Hot Victoria Secret Blonde Model Addie Andrews',
+            'uploader': 'Tommy Wood',
+            'uploader_id': '/pornstar/tommy-wood',
+            'duration': 569,
+            'thumbnail': r're:https?://.+',
+            'timestamp': 1573070632,
+            'upload_date': '20191106',
+            'age_limit': 18,
+            'view_count': int,
+            'like_count': int,
+            'comment_count': int,
+            'categories': list,
+            'tags': list,
+            'cast': list,
+        },
+        'params': {
+            'skip_download': True,
+        },
+        'expected_warnings': [
+            'Failed to download m3u8 information',
+        ],
+    }, {
         'url': 'http://www.pornhub.com/view_video.php?viewkey=648719015',
+        'skip': 'video gone',
         'info_dict': {
             'id': '648719015',
             'ext': 'mp4',

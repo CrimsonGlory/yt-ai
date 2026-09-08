@@ -126,7 +126,7 @@ class ThreeNowIE(InfoExtractor):
             'episode': traverse_obj(broadcast, ('episodeName', {str})),
             'episode_number': traverse_obj(broadcast, ('episodeNumber', {int_or_none})),
             'season_number': traverse_obj(broadcast, ('seriesNumber', {int_or_none})),
-            'age_limit': parse_age_limit(traverse_obj(broadcast, ('classification', {str}))),
+            'age_limit': parse_age_limit(traverse_obj(broadcast, ('classification', {str}))) or 0,
             'formats': formats,
             'subtitles': subtitles,
             'is_live': True,

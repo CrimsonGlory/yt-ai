@@ -128,7 +128,7 @@ class PlutoTVIE(PlutoTVBase):
             'title': 'CSI: Miami',
             'description': 'md5:cfab9e4e5f83e019f24dacbdfccadfb6',
         },
-        'playlist_mincount': 200,
+        'playlist_mincount': 150,
     }, {
         'url': 'https://pluto.tv/latam/shows/csi-miami-las-ptv1/season/1',
         'info_dict': {

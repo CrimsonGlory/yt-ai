@@ -27,6 +27,7 @@ class YahooIE(InfoExtractor):
             'info_dict': {
                 'id': '07e68b15-6f9a-49a0-9ffe-dae71cf4132a',
                 'title': 'md5:3dc90225a73e1427dee2a9a84df612cb',
+                'description': 'md5:7c3b46a9f7027d86058e5c8490d1c04b',
             },
             'playlist_mincount': 1,
             'params': {'skip_download': True},

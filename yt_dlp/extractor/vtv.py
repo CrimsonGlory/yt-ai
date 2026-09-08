@@ -83,7 +83,7 @@ class VTVIE(InfoExtractor):
             'id': '108698430',
             'ext': 'mp4',
             'title': 'Loài gián khổng lồ "lai máy" cứu trợ y tế | Shorts Video',
-            'thumbnail': 'https://static.mediacdn.vn/vtv.vn/images/thumb-share-vtv.jpg',
+            'thumbnail': r're:https://static\.mediacdn\.vn/vtv\.vn/images/.+',
         },
     }, {
         'url': 'https://vtv.vn/video/thoi-su-20h-vtv1-12-6-2024-680411.htm',

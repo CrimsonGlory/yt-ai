@@ -51,7 +51,7 @@ class ACastIE(ACastBaseIE):
     _EMBED_REGEX = [rf'(?x)<iframe[^>]+\bsrc=[\'"](?P<url>{_VALID_URL})']
     _TESTS = [{
         'url': 'https://shows.acast.com/sparpodcast/episodes/2.raggarmordet-rosterurdetforflutna',
-        'md5': '452cf6a52afe9965cc06179d770f76a8',
+        'md5': '32c1db16b3e2951b8e61b56dbf2f6a23',
         'info_dict': {
             'id': '2a92b283-1a75-4ad8-8396-499c641de0d9',
             'ext': 'mp3',

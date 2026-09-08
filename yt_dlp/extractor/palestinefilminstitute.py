@@ -73,6 +73,7 @@ class PalestineFilmInstitutePageIE(InfoExtractor):
         r'(?:[a-z]{2}/)?(?P<id>pfp|palestine-film-platform)/?(?:[?#].*)?$')
     _TESTS = [{
         'url': 'https://www.palestinefilminstitute.org/en/pfp',
+        'skip': 'no film currently streaming',
         'playlist_mincount': 1,
         'info_dict': {
             'id': 'pfp',

@@ -27,8 +27,8 @@ class KikaIE(InfoExtractor):
             'duration': 659,
             'timestamp': 1788372005,
             'upload_date': '20260902',
-            'modified_timestamp': 1788372012,
-            'modified_date': '20260902',
+            'modified_timestamp': int,
+            'modified_date': r're:\d{8}',
         },
         'params': {
             # HLS fragment concatenation is not byte-stable; use progressive MP4

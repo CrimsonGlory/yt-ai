@@ -611,6 +611,9 @@ class BiliBiliIE(BilibiliBaseIE):
             '_old_archive_ids': ['bilibili 292734508_part1'],
         },
         'playlist_count': 33,
+        'expected_warnings': [
+            'you have to become a premium member',
+        ],
         'playlist': [{
             'info_dict': {
                 'id': 'BV1af4y1H7ga_400950101',
@@ -1739,6 +1742,7 @@ class BilibiliPlaylistIE(BilibiliSpaceListBaseIE):
             '_old_archive_ids': ['bilibili 687146339_part1'],
         },
         'params': {'noplaylist': True},
+        'skip': 'HTTP 412',
     }, {
         'url': 'https://www.bilibili.com/medialist/play/1958703906?business=space_series&business_id=547718&desc=1',
         'info_dict': {

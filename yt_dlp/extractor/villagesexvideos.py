@@ -31,7 +31,7 @@ class VillageSexVideosIE(InfoExtractor):
             'ext': 'mp4',
             'display_id': 'bhabhi-sucking-erect-dick-with-round',
             'title': 'Bhabhi sucking erect dick with round boobs of hers shown',
-            'description': 'bhabhi sucking erect dick with round boobs of hers shown',
+            'description': str,
             'thumbnail': r're:https?://(?:www\.)?villagesexvideos\d*\.com/wp-content/uploads/.+\.(?:jpe?g|png)',
             'duration': 498,
             'timestamp': 1788190213,

@@ -22,6 +22,7 @@ class UprideIE(InfoExtractor):
             'view_count': int,
         },
         'params': {'format': 'http-orig'},
+        'skip': 'HTTP 500',
     }, {
         'url': 'https://upride.cc/incident/car-didnt-see-me-2/',
         'only_matching': True,

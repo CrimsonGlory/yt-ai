@@ -164,7 +164,21 @@ class NhkVodIE(NhkBaseIE):
         },
     }, {
         # radio
+        'url': 'https://www3.nhk.or.jp/nhkworld/en/shows/audio/livinginjapan-20260301-1/',
+        'info_dict': {
+            'id': 'livinginjapan-20260301-1-en',
+            'ext': 'm4a',
+            'title': 'Living in Japan - Preserving Tsunami Lessons / Calling an Ambulance',
+            'series': 'Living in Japan',
+            'description': 'md5:3f6d0979d2b15215ae1ad68542a6be95',
+            'thumbnail': r're:https://.+/.+\.jpg',
+            'episode': 'Preserving Tsunami Lessons / Calling an Ambulance',
+            'categories': ['Interactive'],
+        },
+    }, {
+        # radio
         'url': 'https://www3.nhk.or.jp/nhkworld/en/shows/audio/livinginjapan-20240901-1/',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'livinginjapan-20240901-1-en',
             'ext': 'm4a',
@@ -322,7 +336,7 @@ class NhkVodProgramIE(NhkBaseIE):
             'description': 'md5:665bb36ec2a12c5a7f598ee713fc2b54',
             'series': 'Living in Japan',
         },
-        'playlist_mincount': 7,
+        'playlist_mincount': 5,
     }, {
         'url': 'https://www3.nhk.or.jp/nhkworld/en/shows/10yearshayaomiyazaki/',
         'only_matching': True,

@@ -76,27 +76,67 @@ class CloseLoadIE(InfoExtractor):
             flags=re.DOTALL,
         )
         value = ''.join(str(part) for part in parts)
-        for op in re.finditer(
-            r'result\s*=\s*atob\(\s*result\s*\)'
-            r'|result\s*=\s*result\.split\([^)]*\)\.reverse\(\)\.join\([^)]*\)'
-            r'|result\s*=\s*result\.replace\(/\[a-zA-Z\]/g,\s*function\s*\(\w+\)\s*\{[^}]+?\+\s*(\d+)\s*\)\s*%\s*26',
-            func_body,
-        ):
-            token = op.group(0)
-            if 'atob' in token:
-                value = self._atob(value)
-            elif 'reverse' in token:
-                value = value[::-1]
-            else:
-                value = self._rot_letters(value, int(op.group(1)))
 
-        acc = int(self._search_regex(r'\bacc\s*=\s*(\d+)', func_body, 'decoder seed'))
-        add = int(self._search_regex(r'acc\s*=\s*\(\s*acc\s*\+\s*(\d+)\s*\)\s*%\s*256', func_body, 'decoder increment'))
-        decoded = bytearray()
-        for byte in value.encode('latin-1'):
-            acc = (acc + add) % 256
-            decoded.append(byte ^ acc)
-            acc = (acc + byte) % 256
+        quoted = re.findall(r'var\s+\w+\s*=\s*["\']([^"\']+)["\']', func_body)
+        seed = ops = None
+        if len(quoted) >= 2:
+            seed = max(quoted, key=len)
+            ops = min(quoted, key=len)
+        if seed and ops:
+            svwsi = mmlg = 0
+            for idx, char in enumerate(seed):
+                code = ord(char)
+                svwsi = (svwsi * 31 + code) % 251
+                mmlg = (mmlg ^ (code + idx)) & 255
+            xor_state = (svwsi + mmlg) % 256
+            xor_add = (svwsi % 13) + 3
+            shuffle_state = ((svwsi * 256 + mmlg) % 65521) + 1
+            for op in reversed(ops):
+                if op == 'b':
+                    value = self._atob(value)
+                elif op == 'v':
+                    value = value[::-1]
+                else:
+                    value = self._rot_letters(value, (26 - ((ord(op) - 64) % 26)) % 26)
+            length = len(value)
+            shuffle = [0] * length
+            for idx in range(length - 1, 0, -1):
+                shuffle_state = (shuffle_state * 75 + 74) % 65537
+                shuffle[idx] = shuffle_state % (idx + 1)
+            chars = list(value)
+            for idx in range(1, length):
+                swap = shuffle[idx]
+                chars[idx], chars[swap] = chars[swap], chars[idx]
+            decoded = bytearray()
+            for byte in ''.join(chars).encode('latin-1'):
+                xor_state = (xor_state + xor_add) % 256
+                decoded.append(byte ^ xor_state)
+                xor_state = (xor_state + byte) % 256
+        else:
+            for op in re.finditer(
+                r'result\s*=\s*atob\(\s*result\s*\)'
+                r'|result\s*=\s*result\.split\([^)]*\)\.reverse\(\)\.join\([^)]*\)'
+                r'|result\s*=\s*result\.replace\(/\[a-zA-Z\]/g,\s*function\s*\(\w+\)\s*\{[^}]+?\+\s*(\d+)\s*\)\s*%\s*26',
+                func_body,
+            ):
+                token = op.group(0)
+                if 'atob' in token:
+                    value = self._atob(value)
+                elif 'reverse' in token:
+                    value = value[::-1]
+                else:
+                    value = self._rot_letters(value, int(op.group(1)))
+
+            acc = int(self._search_regex(r'\bacc\s*=\s*(\d+)', func_body, 'decoder seed', default='0'))
+            add = int(self._search_regex(
+                r'acc\s*=\s*\(\s*acc\s*\+\s*(\d+)\s*\)\s*%\s*256', func_body, 'decoder increment', default='0'))
+            if not acc and not add:
+                return None
+            decoded = bytearray()
+            for byte in value.encode('latin-1'):
+                acc = (acc + add) % 256
+                decoded.append(byte ^ acc)
+                acc = (acc + byte) % 256
         try:
             hls_url = decoded.decode()
         except UnicodeDecodeError:
@@ -110,7 +150,16 @@ class CloseLoadIE(InfoExtractor):
             url, video_id, impersonate=True, headers={'Referer': smuggled.get('referer') or self._HEADERS['Referer']},
         )
 
-        hls_url = self._decode_hls_url(webpage, video_id)
+        try:
+            hls_url = self._decode_hls_url(webpage, video_id)
+        except ExtractorError:
+            hls_url = None
+        if not hls_url:
+            hls_url = url_or_none(traverse_obj(
+                self._search_json_ld(webpage, video_id, default={}), 'url'))
+        if not hls_url:
+            hls_url = url_or_none(self._html_search_regex(
+                r'"contentUrl"\s*:\s*"(https?://[^"]+)"', webpage, 'content url', default=None))
         if not hls_url:
             raise ExtractorError('Unable to decode Closeload HLS URL')
 

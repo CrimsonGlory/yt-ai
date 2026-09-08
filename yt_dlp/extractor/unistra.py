@@ -17,6 +17,7 @@ class UnistraIE(InfoExtractor):
                 'description': 'md5:280c67ed7e363f5eeacef6f1a62b2389',
                 'thumbnail': r're:https?://utv\.unistra\.fr/img/img_video/.+',
             },
+            'skip': 'SSL certificate hostname mismatch for vod-stream.di.unistra.fr',
         },
         {
             'url': 'http://utv.unistra.fr/index.php?id_video=437',
@@ -28,6 +29,7 @@ class UnistraIE(InfoExtractor):
                 'description': 'md5:7a94e0aa49b74a7c2d5c738bc83703d9',
                 'thumbnail': r're:https?://utv\.unistra\.fr/img/img_video/.+',
             },
+            'skip': 'SSL certificate hostname mismatch for vod-stream.di.unistra.fr',
         },
     ]
     _VOD_BASE = 'https://vod-stream.di.unistra.fr/vod-flash/video/vod'

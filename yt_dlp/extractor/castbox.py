@@ -50,7 +50,7 @@ class CastboxIE(InfoExtractor):
             'channel_url': 'https://castbox.fm/channel/id5598686',
             'creators': ['Dr.K'],
             'episode': 'Why Your Brain Is Strongest After You Nut',
-            'categories': ['Mental Health', 'Health & Fitness', 'Society & Culture'],
+            'categories': ['Health & Fitness', 'Society & Culture', 'Mental Health'],
             'language': 'en-us',
             'view_count': int,
             'like_count': int,

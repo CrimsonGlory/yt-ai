@@ -14,7 +14,21 @@ class TimesRadioIE(InfoExtractor):
     IE_DESC = 'Times Radio'
     _VALID_URL = r'https?://(?:www\.)?thetimes\.co(?:m|\.uk)/radio/(?:show/(?P<id>\d{8}-\d+)(?:/\d{4}-\d{2}-\d{2})?|(?P<live>live)(?:-player)?)'
     _TESTS = [{
+        'url': 'https://www.thetimes.com/radio/show/20260908-34719/2026-09-08',
+        'md5': 'a51dac08c61795576089ae9d3ae2a0af',
+        'info_dict': {
+            'id': '20260908-34719',
+            'ext': 'mp3',
+            'title': 'The best of Times Radio',
+            'description': 'Highlights from the day\'s broadcasting',
+            'thumbnail': r're:https?://.+\.(?:png|jpe?g|webp)',
+            'duration': 14400,
+            'upload_date': '20260908',
+            'series': 'Times Radio',
+        },
+    }, {
         'url': 'https://www.thetimes.com/radio/show/20260828-34188/2026-08-28',
+        'skip': 'video gone',
         'md5': '19f18aad115c82627f91bfed29c5e2ca',
         'info_dict': {
             'id': '20260828-34188',

@@ -4,7 +4,17 @@ from .common import InfoExtractor
 class CaltransIE(InfoExtractor):
     _VALID_URL = r'https?://(?:[^/]+\.)?ca\.gov/vm/loc/[^/]+/(?P<id>[a-z0-9_]+)\.htm'
     _TESTS = [{
+        'url': 'https://cwwp2.dot.ca.gov/vm/loc/d7/sr1220crenshawblvd.htm',
+        'info_dict': {
+            'id': 'sr1220crenshawblvd',
+            'ext': 'ts',
+            'title': r're:SR-1 : Torrance : SR-1 : \(220\) Crenshaw Blvd \d{4}-\d{2}-\d{2} \d{2}:\d{2}$',
+            'live_status': 'is_live',
+            'thumbnail': 'https://cwwp2.dot.ca.gov/data/d7/cctv/image/sr1220crenshawblvd/sr1220crenshawblvd.jpg',
+        },
+    }, {
         'url': 'https://cwwp2.dot.ca.gov/vm/loc/d11/c214sb5viadesanysidro.htm',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'c214sb5viadesanysidro',
             'ext': 'ts',

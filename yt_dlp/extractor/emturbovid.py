@@ -22,7 +22,6 @@ class EmturbovidIE(InfoExtractor):
             'id': '68b737d26c659',
             'ext': 'mp4',
             'title': 'SABA-878',
-            'thumbnail': 'https://ver1.sptvp.com/poster/A/E0/68b737d26c659.png',
             'age_limit': 18,
         },
         'params': {'format': 'best[height=480]'},

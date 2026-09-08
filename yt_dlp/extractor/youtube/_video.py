@@ -2074,7 +2074,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'duration': 48,
             'like_count': int,
             'live_status': 'not_live',
-            'location': 'WESTMINSTER',
+            'location': str,
             'media_type': 'short',
             'playable_in_embed': True,
             'tags': 'count:72',

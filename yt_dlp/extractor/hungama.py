@@ -21,7 +21,14 @@ class HungamaBaseIE(InfoExtractor):
 
     def _extract_playable_formats(self, content_id, content_type=None):
         formats, subtitles, seen = [], {}, set()
-        query = {'user': 'free'}
+        query = {
+            'user': 'free',
+            'platform': 'a',
+            'storeId': '1',
+            'alang': 'en',
+            'mlang': 'en',
+            'vlang': 'en',
+        }
         if content_type is not None:
             query['contentType'] = content_type
 
@@ -30,6 +37,14 @@ class HungamaBaseIE(InfoExtractor):
                 f'https://chraurls.api.hungama.com/v1/content/{content_id}/url/playable',
                 content_id, fatal=False,
                 query={**query, **({} if device is None else {'device': device})},
+                headers={
+                    'identifier': 'watch',
+                    'mlang': 'en',
+                    'vlang': 'en',
+                    'alang': 'en',
+                    'Origin': 'https://www.hungama.com',
+                    'Referer': 'https://www.hungama.com/',
+                },
                 note='Downloading playable URL JSON' + ('' if device else ' (no device)'))
             streams = []
             for stream in traverse_obj(playable, (
@@ -76,6 +91,7 @@ class HungamaIE(HungamaBaseIE):
                     '''
     _TESTS = [{
         'url': 'http://www.hungama.com/video/krishna-chants/39349649/',
+        'skip': 'no playable formats',
         'md5': '5d2be70f908fde3ecd7b7c107b0ad4b1',
         'info_dict': {
             'id': '39349649',

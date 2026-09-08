@@ -328,6 +328,8 @@ class MovieFapIE(TNAFlixNetworkBaseIE):
             'age_limit': 18,
             'view_count': int,
             'comment_count': int,
+            'average_rating': float,
+            'categories': ['Anal', 'Latina/Latino', 'Oral', 'Teen'],
         },
         },{
         # normal, multi-format video

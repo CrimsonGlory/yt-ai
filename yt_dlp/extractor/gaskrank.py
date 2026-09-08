@@ -12,7 +12,24 @@ class GaskrankIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?gaskrank\.tv/tv/(?P<categories>[^/]+)/(?P<id>[^/]+)\.htm'
     _TESTS = [
         {
+            'url': 'http://www.gaskrank.tv/tv/wsbk/superpole-race-highlights-magny-cours-worldsbk-frenchworldsbk-2026.htm',
+            'md5': '7e33e6e41f0813eb0627e187369a8b84',
+            'info_dict': {
+                'id': '202609/42367',
+                'ext': 'mp4',
+                'display_id': 'superpole-race-highlights-magny-cours-worldsbk-frenchworldsbk-2026',
+                'title': 'Superpole-Race Highlights, Magny Cours WorldSBK - FrenchWorldSBK 2026',
+                'uploader_id': 'SBK Devinox',
+                'uploader_url': 'https://www.worldsbk.com',
+                'upload_date': '20260907',
+                'view_count': int,
+                'average_rating': float,
+                'categories': ['wsbk'],
+                'tags': ['superpole race', 'superpolerace', 'magnycours', 'magny cours', 'frankreich', 'france', 'worldsbk', 'sbk devinox', 'sbkdevinox', 'wsbk', 'worldsbk 2026', 'superbikewm 2026', 'superbike wm', 'motoxx'],
+            },
+        }, {
             'url': 'http://www.gaskrank.tv/tv/racing/aragongp-2026-nach-dem-zieleinlauf-stimmen-party.htm',
+            'skip': 'video gone',
             'info_dict': {
                 'id': '202609/42350',
                 'ext': 'mp4',
@@ -27,7 +44,7 @@ class GaskrankIE(InfoExtractor):
                 'tags': ['zieleinlauf', 'party', 'devinox', 'motogp', 'aragongp', 'aragon', '2026', 'motoxx'],
             },
             'params': {'skip_download': True},
-        },{
+        }, {
         'url': 'http://www.gaskrank.tv/tv/motorrad-fun/strike-einparken-durch-anfaenger-crash-mit-groesserem-flurschaden.htm',
         'skip': 'stale test sample / site changed',
         'md5': '1ae88dbac97887d85ebd1157a95fc4f9',

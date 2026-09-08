@@ -46,7 +46,7 @@ class InaIE(InfoExtractor):
             'id': 'I22203233',
             'ext': 'mp4',
             'title': 'Arletty sur le métier d\'actrice',
-            'description': 'md5:3d89b5e419d8514c934f146045ccdbad',
+            'description': 'md5:8182a0eefc5ecc2031fb7dd515af5109',
             'upload_date': '19581128',
             'thumbnail': 'https://cdn-hub.ina.fr/notice/690x517/082/I22203233.jpeg',
             'duration': int,

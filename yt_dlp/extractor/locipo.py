@@ -36,7 +36,25 @@ class LocipoIE(LocipoBaseIE):
     ]
     _TESTS = [{
         # News/press creative: source MP4 is public (Streaks VOD is JP-geo-restricted)
+        'url': 'https://locipo.jp/creative/bd71e97e-43d8-410a-acc2-c4631cd8fc33',
+        'md5': '4c1f801687322ae58f63b04e7d326429',
+        'info_dict': {
+            'id': 'bd71e97e-43d8-410a-acc2-c4631cd8fc33',
+            'ext': 'mp4',
+            'title': '愛知・岐阜・三重に線状降水帯発生のおそれ 気象台が半日前予測を発表',
+            'display_id': 'a962bf00d38e4278942bf15d0cb178c0',
+            'live_status': 'not_live',
+            'release_timestamp': 1788836820,
+            'release_date': '20260908',
+            'series': 'ニュース',
+            'series_id': '57',
+            'uploader': '中京テレビ',
+            'uploader_id': 'locipo-prod',
+        },
+    }, {
+        # News/press creative: source MP4 is public (Streaks VOD is JP-geo-restricted)
         'url': 'https://locipo.jp/creative/a4db5450-24aa-4108-b8d7-15710ff25709',
+        'skip': 'video gone',
         'md5': 'a0712dda7609a33787cb02c07e0e344d',
         'info_dict': {
             'id': 'a4db5450-24aa-4108-b8d7-15710ff25709',

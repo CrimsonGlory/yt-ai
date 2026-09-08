@@ -140,7 +140,13 @@ class StuffIE(InfoExtractor):
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        story = self._download_json(self._API_URL.format(display_id), display_id)
+        story = self._download_json(
+            self._API_URL.format(display_id), display_id,
+            headers={
+                'Accept': 'application/json, text/plain, */*',
+                'Accept-Language': 'en-NZ,en-US;q=0.9,en;q=0.8',
+            },
+            impersonate=True)
 
         assets = []
         hero = traverse_obj(story, ('content', 'asset', {dict}))

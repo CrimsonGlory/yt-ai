@@ -36,6 +36,22 @@ class DoramasPrincessIE(InfoExtractor):
             'episode': 'Episode 8',
             'episode_number': 8,
         },
+        'skip': 'timeout',
+    }, {
+        'url': 'https://doramasprincess.com/serie/the-one-2077-1-season-2-episode',
+        'info_dict': {
+            'id': 'the-one-2077-1-season-2-episode',
+            'ext': 'mp4',
+            'title': 'Ver The One capitulo 2 sub español gratis✅',
+            'description': 'md5:899d17c8eec9223dd29ab17fc9235d77',
+            'thumbnail': r're:https?://doramasprincess\.com/public/upload/cover/.+',
+            'duration': 571.0,
+            'series': 'The One',
+            'season': 'Season 1',
+            'season_number': 1,
+            'episode': 'Episode 2',
+            'episode_number': 2,
+        },
     }, {
         'url': 'https://doramasprincess.com/serie/the-one-2077',
         'info_dict': {

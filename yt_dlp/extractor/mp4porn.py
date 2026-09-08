@@ -25,6 +25,7 @@ class Mp4PornIE(InfoExtractor):
             'categories': ['italian', 'celebrity', 'compilation', 'funny', 'it', 'lingerie', 'nude', 'vintage'],
             'tags': 'count:27',
         },
+        'expected_warnings': ['Failed to download m3u8 information'],
     }, {
         'url': 'https://mp4-porn.org/video/edwige+fenech+nude+scene+compilation+2693877',
         'only_matching': True,

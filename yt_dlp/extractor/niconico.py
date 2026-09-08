@@ -16,6 +16,7 @@ from ..utils import (
     float_or_none,
     int_or_none,
     join_nonempty,
+    orderedSet,
     parse_bitrate,
     parse_iso8601,
     parse_qs,
@@ -752,9 +753,11 @@ class NicovideoSearchBaseIE(InfoExtractor):
         for page_num in pages:
             query['page'] = str(page_num)
             webpage = self._download_webpage(url, item_id, query=query, note=note % {'page': page_num})
-            results = re.findall(r'(?<=data-video-id=)["\']?(?P<videoid>.*?)(?=["\'])', webpage)
-            for item in results:
-                yield self.url_result(f'https://www.nicovideo.jp/watch/{item}', 'Niconico', item)
+            results = re.findall(
+                r'(?:data-video-id=["\']|/watch/)(?P<videoid>(?:[a-z]{2})?\d+)', webpage)
+            for item in orderedSet(results):
+                yield self.url_result(
+                    f'https://www.nicovideo.jp/watch/{item}', 'Niconico', item, display_id=item)
             if not results:
                 break
 
@@ -777,10 +780,12 @@ class NicovideoSearchURLIE(NicovideoSearchBaseIE):
         {
             'url': 'https://www.nicovideo.jp/search/',
             'info_dict': {
+                'id': 'search',
+                'title': 'search',
             },
             'playlist_mincount': 2,
             'params': {'skip_download': True},
-        },{
+        }, {
         'url': 'http://www.nicovideo.jp/search/sm9',
         'skip': 'video gone',
         'info_dict': {
@@ -800,7 +805,8 @@ class NicovideoSearchURLIE(NicovideoSearchBaseIE):
 
     def _real_extract(self, url):
         query = self._match_id(url)
-        return self.playlist_result(self._entries(url, query), query, query)
+        playlist_id = query or 'search'
+        return self.playlist_result(self._entries(url, playlist_id), playlist_id, playlist_id)
 
 
 class NicovideoSearchDateIE(NicovideoSearchBaseIE, SearchInfoExtractor):

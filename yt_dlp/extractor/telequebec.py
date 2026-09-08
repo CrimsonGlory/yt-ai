@@ -140,7 +140,23 @@ class TeleQuebecEmissionIE(TeleQuebecBaseIE):
                         (?P<id>[^?#&]+)
                     '''
     _TESTS = [{
+        'url': 'https://telequebec.tv/regarder/qui-a-eclabousse-le-ministre/1/1',
+        'md5': '76ac1d59e5fcf7e480c0de32b14db19e',
+        'info_dict': {
+            'id': 'ref:100794156',
+            'ext': 'mp4',
+            'title': "L'ancien raton",
+            'description': 'md5:5cd20dd5e228d0456612a106979e5f92',
+            'timestamp': 1788327473,
+            'upload_date': '20260902',
+            'uploader_id': '6150020952001',
+            'duration': 1315.093,
+            'thumbnail': r're:https?://.+\.jpg',
+        },
+        'add_ie': ['BrightcoveNew'],
+    }, {
         'url': 'https://telequebec.tv/regarder/marie-antoinette',
+        'skip': 'video gone',
         'md5': '66d5b1d4e107260c990081ff177da323',
         'info_dict': {
             'id': 'ref:100695678',

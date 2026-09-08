@@ -26,7 +26,7 @@ class YouPornIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'http://www.youporn.com/watch/16932376/empurrei-a-piroca-no-cuzinho-dela-e-botei-pra-mamar-tudo/',
-            'md5': 'efaf936eca97b7ec99a8bb3d2853e376',
+            'md5': 'c6012b6845df3780dd662a9c3f49589a',
             'info_dict': {
             'id': '16932376',
             'ext': 'mp4',
@@ -39,6 +39,8 @@ class YouPornIE(InfoExtractor):
             'upload_date': '20220619',
             'age_limit': 18,
             'view_count': int,
+            'categories': list,
+            'tags': list,
         },
         },{
         'url': 'http://www.youporn.com/watch/505835/sex-ed-is-it-safe-to-masturbate-daily/',
@@ -190,8 +192,10 @@ class YouPornIE(InfoExtractor):
             (r'UPLOADED:\s*<span>([^<]+)',
              r'Date\s+[Aa]dded:\s*<span>([^<]+)',
              r'''(?s)<div[^>]+class=["']videoInfo(?:Date|Time)\b[^>]*>(.+?)</div>''',
-             r'(?s)<label\b[^>]*>Uploaded[^<]*</label>\s*<span\b[^>]*>(.+?)</span>'),
-            webpage, 'upload date', fatal=False))
+             r'(?s)<label\b[^>]*>Uploaded[^<]*</label>\s*<span\b[^>]*>(.+?)</span>',
+             r'Published on\s+([^<]+)',
+             r'"uploadDate"\s*:\s*"([^"]+)"'),
+            webpage, 'upload date', default=None))
 
         age_limit = self._rta_search(webpage)
 

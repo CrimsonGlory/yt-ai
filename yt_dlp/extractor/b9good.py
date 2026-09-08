@@ -3,6 +3,7 @@ import hashlib
 import random
 import string
 import time
+import urllib.parse
 
 from .common import InfoExtractor
 from ..aes import aes_gcm_decrypt_and_verify_bytes
@@ -19,9 +20,8 @@ class B9GoodIE(InfoExtractor):
     IE_NAME = 'b9good'
     IE_DESC = 'B9GOOD'
     _VALID_URL = r'https?://(?:www\.)?b9good\.org/anime/(?P<id>\d+)(?:\.html)?'
-    _EMBED_HOST = 'https://korxime.guru'
-    _KORXIME_SECRET = '732d2574bd7fdf58b5916136'
-    _KORXIME_AES_KEY = bytes.fromhex('442e06c44c8aff31e87604463d83ae4481e722e7d99c47f52b91b8d58fd94e6c')
+    _KORXIME_SECRET = '123704509f691a5d6dc69d5a'
+    _KORXIME_AES_KEY = bytes.fromhex('528ba1d908eb85e3f765c70e2afcef2b81afda3f7f5bf86e67f74480c5eb68e1')
     _TESTS = [
         {
             'url': 'https://b9good.org/anime/126946.html',
@@ -43,7 +43,9 @@ class B9GoodIE(InfoExtractor):
     ]
 
     def _user_agent(self):
-        return traverse_obj(self.get_param('http_headers'), 'User-Agent', {str}) or std_headers['User-Agent']
+        # Must differ from std_headers so impersonate does not strip it
+        ua = traverse_obj(self.get_param('http_headers'), 'User-Agent', {str}) or std_headers['User-Agent']
+        return ua if ua.endswith(' B9') else f'{ua} B9'
 
     def _korxime_hash(self, playlist_id, user_agent):
         timestamp = str(int(time.time() * 1000))
@@ -82,8 +84,10 @@ class B9GoodIE(InfoExtractor):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
         embed_url = self._search_regex(
-            r'<iframe[^>]+\bsrc="(https?://korxime\.guru/embed/[^"]+)"', webpage, 'embed url',
+            r'<iframe[^>]+\bsrc="(https?://[^"]+/embed/[^"]+)"', webpage, 'embed url',
         )
+        embed_parts = urllib.parse.urlparse(embed_url)
+        embed_host = f'{embed_parts.scheme}://{embed_parts.netloc}'
         user_agent = self._user_agent()
         embed_headers = {
             'Referer': url,
@@ -93,11 +97,11 @@ class B9GoodIE(InfoExtractor):
         playlist_id = self._search_regex(r'getPlaylist\(\s*[`\'"]([0-9a-f]{32})[`\'"]', embed_page, 'playlist id')
         player_headers = {
             'Referer': embed_url,
-            'Origin': self._EMBED_HOST,
+            'Origin': embed_host,
             'User-Agent': user_agent,
         }
         sources = self._download_json(
-            f'{self._EMBED_HOST}/ajax/getSources',
+            f'{embed_host}/ajax/getSources',
             video_id,
             'Downloading korxime sources',
             query={'id': playlist_id},
@@ -115,7 +119,7 @@ class B9GoodIE(InfoExtractor):
         playlist = sources.get('playlist')
         if not playlist:
             self.raise_no_formats('No korxime playlist', expected=True, video_id=video_id)
-        m3u8_url = urljoin(self._EMBED_HOST, self._decrypt_playlist(playlist))
+        m3u8_url = urljoin(embed_host, self._decrypt_playlist(playlist))
         formats, subtitles = self._extract_m3u8_formats_and_subtitles(
             m3u8_url, video_id, 'mp4', m3u8_id='hls', headers=player_headers,
         )
@@ -123,7 +127,7 @@ class B9GoodIE(InfoExtractor):
             src = track.get('file') or track.get('src')
             if not src:
                 continue
-            track_url = urljoin(self._EMBED_HOST, src)
+            track_url = urljoin(embed_host, src)
             lang = track.get('label') or track.get('srclang') or 'und'
             subtitles.setdefault(lang, []).append(
                 {

@@ -75,7 +75,18 @@ class RbgTumCourseIE(InfoExtractor):
         },
         'playlist_count': 13,
     }, {
+        'url': 'https://tum.live/old/course/2025/W/WiSe25_26_ItDL',
+        'info_dict': {
+            'title': 'Introduction to Deep Learning (IN2346)',
+            'id': '2025/W/WiSe25_26_ItDL',
+        },
+        'params': {
+            'noplaylist': False,
+        },
+        'playlist_count': 1,
+    }, {
         'url': 'https://live.rbg.tum.de/old/course/2022/W/set',
+        'skip': 'video gone',
         'info_dict': {
             'title': 'SET FSMPIC',
             'id': '2022/W/set',
@@ -93,7 +104,7 @@ class RbgTumCourseIE(InfoExtractor):
         course_id, hostname, year, term, slug = self._match_valid_url(url).group('id', 'hostname', 'year', 'term', 'slug')
         meta = self._download_json(
             f'https://{hostname}/api/courses/{slug}/', course_id, fatal=False,
-            query={'year': year, 'term': term}) or {}
+            errnote=False, query={'year': year, 'term': term}) or {}
         lecture_series_title = meta.get('Name')
         lectures = [self.url_result(f'https://{hostname}/w/{slug}/{stream_id}', RbgTumIE)
                     for stream_id in traverse_obj(meta, ('Streams', ..., 'ID'))]
@@ -121,7 +132,18 @@ class RbgTumNewCourseIE(InfoExtractor):
         },
         'playlist_count': 13,
     }, {
+        'url': 'https://tum.live/?year=2025&term=W&slug=WiSe25_26_ItDL&view=3',
+        'info_dict': {
+            'title': 'Introduction to Deep Learning (IN2346)',
+            'id': '2025/W/WiSe25_26_ItDL',
+        },
+        'params': {
+            'noplaylist': False,
+        },
+        'playlist_count': 1,
+    }, {
         'url': 'https://live.rbg.tum.de/?year=2022&term=W&slug=set&view=3',
+        'skip': 'video gone',
         'info_dict': {
             'title': 'SET FSMPIC',
             'id': '2022/W/set',

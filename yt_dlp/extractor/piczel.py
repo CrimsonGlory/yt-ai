@@ -17,7 +17,29 @@ class PiczelIE(InfoExtractor):
     IE_DESC = 'Piczel.tv live streams and recordings'
     _VALID_URL = r'https?://(?:www\.)?piczel\.tv/watch/(?P<id>[^/?#]+)'
     _TESTS = [{
+        'url': 'https://piczel.tv/watch/JJJMEK?recording=514087',
+        'md5': 'b62a9e8a90f07a4c18fdee9e7283d162',
+        'info_dict': {
+            'id': '514087',
+            'ext': 'mp4',
+            'display_id': 'JJJMEK',
+            'title': '⋆working on comms🍆🍑⋆',
+            'description': 'md5:63f1555337aabf40f07362e389f27f8d',
+            'thumbnail': 'https://recordings-production.piczel.tv/129751/stream_1FMIq2G9rlU3uQYh.webp',
+            'channel': 'JJJMEK',
+            'channel_id': '129751',
+            'channel_url': 'https://piczel.tv/watch/JJJMEK',
+            'channel_follower_count': int,
+            'uploader': 'JJJMEK',
+            'uploader_id': '135573',
+            'uploader_url': 'https://piczel.tv/watch/JJJMEK',
+            'age_limit': 18,
+            'tags': ['furry', 'art', 'digital art', 'nsfw'],
+            'live_status': 'was_live',
+        },
+    }, {
         'url': 'https://piczel.tv/watch/Nifffi?recording=512592',
+        'skip': 'video gone',
         'md5': '99320eb7aa3e9a9e30f10bb4a4486f03',
         'info_dict': {
             'id': '512592',
@@ -69,7 +91,7 @@ class PiczelIE(InfoExtractor):
     }]
 
     def _extract_stream(self, channel):
-        data = self._download_json(f'https://piczel.tv/api/streams/{channel}', channel)
+        data = self._download_json(f'https://api.piczel.tv/streams/{channel}', channel)
         if traverse_obj(data, 'status') == 'error':
             raise ExtractorError(
                 traverse_obj(data, 'message', {str}) or 'Unable to find stream',

@@ -399,7 +399,6 @@ class ORFONIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://on.orf.at/video/14333940/isabell-pannagl-neues-aus-dem-dachgeschoss',
-            'md5': 'f457c329061712ce21fd6592c37c04b2',
             'info_dict': {
             'id': '14333940',
             'ext': 'mp4',
@@ -412,6 +411,9 @@ class ORFONIE(InfoExtractor):
             'upload_date': '20260804',
             'release_timestamp': 1785781243,
             'release_date': '20260803',
+            'modified_timestamp': int,
+            'modified_date': r're:\d{8}',
+            '_old_archive_ids': ['orftvthek 14333940'],
         },
         },{
         'url': 'https://on.orf.at/video/14210000/school-of-champions-48',

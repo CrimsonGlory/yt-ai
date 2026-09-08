@@ -39,6 +39,7 @@ class PremiershipRugbyIE(InfoExtractor):
             'availability': 'public',
             'live_status': 'not_live',
             'media_type': 'video',
+            'channel_is_verified': True,
         },
         'add_ie': ['Youtube'],
         'params': {

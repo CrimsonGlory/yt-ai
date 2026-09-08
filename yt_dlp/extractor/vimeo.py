@@ -2042,7 +2042,7 @@ class VimeoEventIE(VimeoBaseInfoExtractor):
         # "24/7" livestream
         'url': 'https://vimeo.com/event/4768062',
         'info_dict': {
-            'id': '1221543425',
+            'id': r're:\d+',
             'ext': 'mp4',
             'display_id': '4768062',
             'title': r're:Graceland Cam \d{4}-\d{2}-\d{2} \d{2}:\d{2}$',
@@ -2050,11 +2050,15 @@ class VimeoEventIE(VimeoBaseInfoExtractor):
             'uploader': "Elvis Presley's Graceland",
             'uploader_id': 'visitgraceland',
             'uploader_url': 'https://vimeo.com/visitgraceland',
-            'release_timestamp': 1787766004,
-            'release_date': '20260826',
+            'release_timestamp': int,
+            'release_date': r're:\d{8}',
             'live_status': 'is_live',
         },
-        'params': {'skip_download': 'livestream'},
+        # Recurring 24/7 event: clip id/release time change; filename uses stable display_id
+        'params': {
+            'skip_download': 'livestream',
+            'outtmpl': '%(display_id)s.%(ext)s',
+        },
     }, {
         # stream_privacy.view: 'unlisted' with unlisted_hash in URL path (stream_privacy.embed: 'whitelist')
         'url': 'https://vimeo.com/event/4259978/3db517c479',

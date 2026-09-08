@@ -15,7 +15,23 @@ class AiryTVIE(InfoExtractor):
     _VALID_URL = r'https?://(?:(?:www|live)\.)?airy\.tv/(?:on-demand|vod)/(?:episode|movie)/(?P<id>\d+)'
     _API_BASE = 'https://api.airy.tv/api/v2.1.7'
     _TESTS = [{
+        'url': 'https://airy.tv/on-demand/movie/1539125',
+        'md5': '70a7a5a542d03f5130e6c4e50a49f1df',
+        'info_dict': {
+            'id': '1539125',
+            'ext': 'mp4',
+            'title': 'Billionaire Boys Club',
+            'description': 'md5:4c591c0da31b2676034137fce11c2de6',
+            'thumbnail': 'https://storage.googleapis.com/showfer_thumbnail/psYeL7oCLAwP-VtXz0dky.jpg',
+            'duration': 11067,
+            'categories': ['Drama'],
+            'tags': ['Drama'],
+            'genres': ['Thriller', 'TV Movie'],
+            'average_rating': 6.733,
+        },
+    }, {
         'url': 'https://live.airy.tv/on-demand/episode/1537775',
+        'skip': 'video gone',
         'md5': 'd441d11e93a7478d92addbd677b8981a',
         'info_dict': {
             'id': '1537775',

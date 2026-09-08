@@ -71,6 +71,7 @@ class MediaStreamIE(MediaStreamBaseIE):
             'description': str,
             'thumbnail': r're:^https?://',
             'ext': 'mp4',
+            'live_status': str,
         },
         'params': {
             'skip_download': 'm3u8',

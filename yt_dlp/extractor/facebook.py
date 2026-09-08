@@ -1113,19 +1113,16 @@ class FacebookAdsIE(InfoExtractor):
         try:
             return self._download_webpage(url, video_id)
         except ExtractorError as e:
-            if (
-                not isinstance(e.cause, HTTPError)
-                or e.cause.status != 403
-                or e.cause.reason != 'Client challenge'
-            ):
+            if not isinstance(e.cause, HTTPError) or e.cause.status != 403:
                 raise
             error_page = self._webpage_read_content(e.cause.response, url, video_id)
+            challenge_path = self._search_regex(
+                r'fetch\s*\(\s*["\'](/__rd_verify[^"\']+)["\']',
+                error_page, 'challenge path', default=None)
+            if not challenge_path:
+                raise
 
         self.write_debug('Received a client challenge response')
-
-        challenge_path = self._search_regex(
-            r'fetch\s*\(\s*["\'](/__rd_verify[^"\']+)["\']',
-            error_page, 'challenge path')
 
         # Successful response will set the necessary cookie
         self._request_webpage(

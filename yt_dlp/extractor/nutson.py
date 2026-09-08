@@ -99,6 +99,7 @@ class NutsonIE(NutsonBaseIE):
             'like_count': int,
             'comment_count': int,
         },
+        'skip': 'timeout',
     }, {
         'url': 'https://www.nutson.us/media/6446953bf9718fb00cc29ffe:630fc1a519f4b86b8ba76d44',
         'only_matching': True,
@@ -174,6 +175,7 @@ class NutsonUserIE(NutsonBaseIE):
             'extract_flat': True,
             'skip_download': True,
         },
+        'skip': 'timeout',
     }, {
         'url': 'https://nutson.us/users/6201867a749f9779a56fde2a/all',
         'only_matching': True,

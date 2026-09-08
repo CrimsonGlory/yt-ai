@@ -26,6 +26,7 @@ class HearThisAtIE(InfoExtractor):
             'timestamp': 1465663094,
             'upload_date': '20160611',
             'view_count': int,
+            'genres': ['Other'],
         },
         },{
         'url': 'https://hearthis.at/moofi/dr-kreep',

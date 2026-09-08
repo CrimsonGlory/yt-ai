@@ -10,7 +10,29 @@ class LeCinemaClubIE(InfoExtractor):
         r'(?:/now-showing(?:/(?P<id>[\w-]+))?/?|/?)'
         r'(?:[?#]|$)')
     _TESTS = [{
+        'url': 'https://www.lecinemaclub.com/now-showing/gutz-and-glitz/',
+        'md5': '0a0359cf67b40ce827a3035ab209e2a1',
+        'info_dict': {
+            'id': '1221839271',
+            'ext': 'mp4',
+            'display_id': 'gutz-and-glitz',
+            'title': 'Guts and Glitz',
+            'description': 'md5:0155f16496f38e30d0d9ae38699f6b4c',
+            'duration': 4200,
+            'thumbnail': 'https://www.lecinemaclub.com/wp-content/uploads/2026/09/GutzandGlitz_A-1200x675.png',
+            'uploader': 'LCC',
+            'uploader_id': 'user33221439',
+            'uploader_url': 'https://vimeo.com/user33221439',
+        },
+        'params': {
+            'format': 'bv*[height<=360][protocol^=m3u8]/bv*',
+            'external_downloader': 'ffmpeg',
+        },
+        'expected_warnings': ['Failed to parse XML: not well-formed'],
+        'add_ie': ['Vimeo'],
+    }, {
         'url': 'https://www.lecinemaclub.com/now-showing/vengeance-is-mine/',
+        'skip': 'video gone',
         'md5': 'f23dcd7662378c0cf567fd01bef82516',
         'info_dict': {
             'id': '1215903307',

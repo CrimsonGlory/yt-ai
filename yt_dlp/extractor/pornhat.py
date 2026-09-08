@@ -22,7 +22,7 @@ class PornHatIE(InfoExtractor):
             'id': '507630',
             'ext': 'mp4',
             'display_id': 'cover-girl-ava-koxxx-at-milf-video',
-            'title': 'Cover-girl Ava Koxxx at milf video',
+            'title': 'Ava Koxxx Horny MILF Gets Fucked Hard',
             'description': 'md5:2fca3d3f07b2cf65c1f0785215f97c83',
             'thumbnail': r're:https?://.*\.(?:jpg|jpeg|png)',
             'duration': 359,

@@ -206,6 +206,7 @@ class DPlayIE(DPlayBaseIE):
             'thumbnail': r're:https://.+\.jpeg',
             'tags': [],
         },
+        'skip': 'HTTP 502',
     }, {
         # non geo restricted, via secure api, unsigned download hls URL
         'url': 'https://www.dplay.se/videos/nugammalt-77-handelser-som-format-sverige/nugammalt-77-handelser-som-format-sverige-101',
@@ -407,6 +408,7 @@ class HGTVDeIE(DiscoveryPlusBaseIE):
             'tags': [],
             'thumbnail': 'https://eu1-prod-images.disco-api.com/2024/08/09/82a386b9-c688-32c7-b9ff-0b13865f0bae.jpeg',
         },
+        'skip': 'HTTP 502',
     }]
 
     _PRODUCT = 'hgtv'

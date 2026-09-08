@@ -13,7 +13,23 @@ class XinpianchangIE(InfoExtractor):
     IE_DESC = '新片场'
     _TESTS = [
         {
+            'url': 'https://www.xinpianchang.com/a13809870',
+            'md5': '3af9a08c9f08dfd58ba49050bed1990c',
+            'info_dict': {
+                'id': 'a13809870',
+                'ext': 'mp4',
+                'title': '《不如让小狗决定》Let the Puppy Decide',
+                'description': 'md5:0d8e5bb50938b7a5ff4e987502b25f15',
+                'uploader': '刘梓琦 (LAW ZHI QI)',
+                'uploader_id': '16164754',
+                'duration': 441,
+                'thumbnail': 'https://oss-xpc0.xpccdn.com/uploadfile/article/2026/9/7/5fe7375c01af562ec8cb01a0ad0fe2d8',
+                'categories': ['AIGC', '创意', '剧情短片', '喜剧'],
+                'tags': ['#Shotlab', '#Shotlab无限世界赛', '#新片场Shotlab', '#海浪电影周', '#AIGC', '#AIGC创作', '#AIGC视频'],
+            },
+        }, {
             'url': 'https://www.xinpianchang.com/a13805701',
+            'skip': 'video gone',
             'md5': 'ec93b242ac8475cf8886e4572b582be1',
             'info_dict': {
                 'id': 'a13805701',

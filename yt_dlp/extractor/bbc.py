@@ -610,6 +610,7 @@ class BBCIE(BBCCoUkIE):  # XXX: Do not subclass from concrete IE
             'info_dict': {
                 'id': 'cj6482r6yl4o',
                 'title': 'BBC reports from Palestinian village under weekly attack by Israeli settlers',
+                'description': 'BBC reports from Palestinian village under weekly attack by Israeli settlers',
             },
             'playlist_mincount': 1,
             'params': {'skip_download': True},
@@ -778,11 +779,9 @@ class BBCIE(BBCCoUkIE):  # XXX: Do not subclass from concrete IE
         'info_dict': {
             'id': 'p034ppnv',
             'ext': 'mp4',
-            'title': 'All you need to know about Jurgen Klopp',
-            'timestamp': 1444335081,
-            'upload_date': '20151008',
+            'title': 'Liverpool: All you need to know about Jurgen Klopp',
             'duration': 122.0,
-            'thumbnail': 'https://ichef.bbci.co.uk/onesport/cps/976/cpsprodpb/7542/production/_85981003_klopp.jpg',
+            'thumbnail': 'https://ichef.bbci.co.uk/images/ic/$recipe/p034pqxg.jpg',
         },
         'params': {
             'noplaylist': True,

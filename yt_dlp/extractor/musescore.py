@@ -1,6 +1,11 @@
 import hashlib
 
 from .common import InfoExtractor
+from ..utils import (
+    ExtractorError,
+    traverse_obj,
+    url_or_none,
+)
 
 
 class MuseScoreIE(InfoExtractor):
@@ -31,6 +36,7 @@ class MuseScoreIE(InfoExtractor):
         },
     }, {
         'url': 'https://musescore.com/classicman/fur-elise',
+        'skip': 'CAPTCHA required',
         'md5': '5001c69cdef24101a15a26a8e736cbcc',
         'info_dict': {
             'id': '33816',
@@ -54,7 +60,7 @@ class MuseScoreIE(InfoExtractor):
         webpage = self._download_webpage(url, None, impersonate=True)
         url = self._og_search_url(webpage) or url
         video_id = self._match_id(url)
-        mp3_url = self._download_json(
+        jmuse = self._download_json(
             'https://musescore.com/api/jmuse', video_id,
             headers={
                 'Authorization': self._generate_auth_token(video_id),
@@ -62,7 +68,12 @@ class MuseScoreIE(InfoExtractor):
                 'Origin': 'https://musescore.com',
             },
             query={'id': video_id, 'index': '0', 'type': 'mp3'},
-            impersonate=True)['info']['url']
+            impersonate=True, expected_status=(422, 403))
+        mp3_url = traverse_obj(jmuse, ('info', 'url', {url_or_none}))
+        if not mp3_url:
+            error = traverse_obj(jmuse, ('error', 'message', {str})) or jmuse
+            raise ExtractorError(
+                f'Unable to download JSON metadata: {error}', expected=True, video_id=video_id)
         formats = [{
             'url': mp3_url,
             'ext': 'mp3',

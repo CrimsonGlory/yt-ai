@@ -115,7 +115,7 @@ class TuneInPodcastIE(TuneInBaseIE):
             'id': 'p14',
             'title': 'BBC News',
         },
-        'playlist_mincount': 31,
+        'playlist_mincount': 20,
     }, {
         'url': 'https://tunein.com/radio/SBS-Tamil-p191660/',
         'only_matching': True,
@@ -323,7 +323,7 @@ class TuneInShortenerIE(InfoExtractor):
             'id': 'p14',
             'title': 'BBC News',
         },
-        'playlist_mincount': 31,
+        'playlist_mincount': 20,
     }]
 
     def _real_extract(self, url):

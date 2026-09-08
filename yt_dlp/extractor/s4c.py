@@ -21,7 +21,7 @@ class S4CIE(InfoExtractor):
             'duration': 840,
             'thumbnail': 'https://www.s4c.cymru/amg/1920x1080/Deian_a_Loli_2020S4C_C3_R020_0002.jpg',
             'upload_date': '20260828',
-            'release_date': '20260829',
+            'release_date': r're:\d{8}',
             'series': 'Deian a Loli',
             'series_id': '810357027',
         },

@@ -783,7 +783,7 @@ class PBSKidsIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://pbskids.org/videos/watch/corkys-weird-rainforest-mystery/2770072',
-            'md5': 'f457c329061712ce21fd6592c37c04b2',
+            'md5': '51d66b7380c67d73c055ab2811820a63',
             'info_dict': {
             'id': '2770072',
             'ext': 'mp4',
@@ -799,6 +799,7 @@ class PBSKidsIE(InfoExtractor):
             'season_number': 1,
             'episode': 'Episode 27',
             'episode_number': 27,
+            'categories': ['fullEpisode'],
         },
         },
         {

@@ -33,7 +33,25 @@ class TwitCastingIE(InfoExtractor):
     }
     _TESTS = [{
         # Public live from https://twitcasting.tv/ (VODs require login)
+        'url': 'https://twitcasting.tv/0meimi0/movie/840623888',
+        'skip': 'livestream ended',
+        'info_dict': {
+            'id': '840623888',
+            'ext': 'mp4',
+            'title': r're:.+ \d{4}-\d{2}-\d{2} \d{2}:\d{2}$',
+            'description': str,
+            'uploader_id': '0meimi0',
+            'thumbnail': r're:^https?://.*\.jpg$',
+            'timestamp': int,
+            'upload_date': str,
+            'live_status': 'is_live',
+        },
+        'params': {
+            'skip_download': True,
+        },
+    }, {
         'url': 'https://twitcasting.tv/oreore17859/movie/840389816',
+        'skip': 'video gone',
         'info_dict': {
             'id': '840389816',
             'ext': 'mp4',
@@ -161,7 +179,9 @@ class TwitCastingIE(InfoExtractor):
             r'data-toggle="true"[^>]+datetime="([^"]+)"',
             webpage, 'datetime', None))
 
-        is_live = any(f'data-{x}' in webpage for x in ['is-onlive="true"', 'live-type="live"', 'status="online"'])
+        is_live = any(f'data-{x}' in webpage for x in [
+            'is-onlive="true"', 'live-type="live"', 'status="online"', 'status="live"',
+        ])
 
         base_dict = {
             'title': title,

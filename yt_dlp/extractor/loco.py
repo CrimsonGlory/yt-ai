@@ -3,7 +3,7 @@ import random
 import time
 
 from .common import InfoExtractor
-from ..utils import int_or_none, jwt_decode_hs256, try_call, url_or_none
+from ..utils import UserNotLive, int_or_none, jwt_decode_hs256, try_call, url_or_none
 from ..utils.traversal import require, traverse_obj
 
 
@@ -11,6 +11,7 @@ class LocoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?loco\.com/(?P<type>streamers|stream)/(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://loco.com/streamers/Archax13',
+        'skip': 'User not live',
         'info_dict': {
             'id': 'Archax13',
             'ext': 'mp4',
@@ -117,8 +118,20 @@ class LocoIE(InfoExtractor):
     def _real_extract(self, url):
         video_type, video_id = self._match_valid_url(url).group('type', 'id')
         webpage = self._download_webpage(url, video_id)
-        stream = traverse_obj(self._search_nextjs_v13_data(webpage, video_id), (
-            ..., (None, 'ssrData'), ('liveStreamData', 'stream', 'liveStream'), {dict}, any, {require('stream info')}))
+        page_data = self._search_nextjs_v13_data(webpage, video_id)
+        stream = traverse_obj(page_data, (
+            ..., (None, 'ssrData'), ('liveStreamData', 'stream', 'liveStream'), {dict}, any))
+        if not stream:
+            stream = traverse_obj(page_data, (
+                ..., 'allVODS', lambda _, v: video_type == 'stream' and v.get('uid') == video_id, {dict}, any))
+        if not stream:
+            if video_type == 'streamers' and traverse_obj(
+                page_data, (..., 'streamerProfile', 'is_live', {bool}, any),
+            ) is False:
+                raise UserNotLive(video_id=video_id)
+            stream = traverse_obj(page_data, (
+                ..., (None, 'ssrData'), ('liveStreamData', 'stream', 'liveStream'), {dict}, any,
+                {require('stream info')}))
 
         hls_url = traverse_obj(stream, ('conf', 'hls', {url_or_none}))
         if access_token := self._get_access_token(video_id):
