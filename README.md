@@ -1,7 +1,7 @@
 <!-- MANPAGE: BEGIN EXCLUDED SECTION -->
 <div align="center">
 
-[![YT-AI](https://raw.githubusercontent.com/CrimsonGlory/yt-ai/master/.github/banner.svg)](#readme)
+[![YT-AI](https://raw.githubusercontent.com/CrimsonGlory/yt-ai/master/.github/banner.jpg)](#readme)
 
 [![Release version](https://img.shields.io/github/v/release/CrimsonGlory/yt-ai?color=brightgreen&label=Latest&style=for-the-badge)](#installation "Installation")
 [![Python Version](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2FCrimsonGlory%2Fyt-ai%2Frefs%2Fheads%2Fmaster%2Fpyproject.toml&style=for-the-badge)](https://github.com/CrimsonGlory/yt-ai/blob/master/pyproject.toml "Python Version")
