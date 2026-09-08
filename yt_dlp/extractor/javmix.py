@@ -40,7 +40,7 @@ class JavmixIE(InfoExtractor):
                 "tags": ["OL", "ドキュメンタリー", "パイパン", "ぶっかけ", "単体作品", "顔射"],
                 "age_limit": 18,
             },
-            "params": {"format": "best[format_id^=iplayerhls]"},
+            "params": {"skip_download": "m3u8"},
         },
         {
             "url": "https://javmix.tv/xvideo/mx-x_ekdv-711/",

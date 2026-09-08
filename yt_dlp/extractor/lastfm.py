@@ -2,15 +2,24 @@ import itertools
 import re
 
 from .common import InfoExtractor
-from ..utils import int_or_none, parse_qs, traverse_obj
+from ..networking.exceptions import HTTPError
+from ..utils import ExtractorError, int_or_none, parse_qs, traverse_obj
 
 
 class LastFMPlaylistBaseIE(InfoExtractor):
     def _entries(self, url, playlist_id):
         single_page = traverse_obj(parse_qs(url), ('page', -1, {int_or_none}))
         for page in itertools.count(single_page or 1):
-            webpage = self._download_webpage(
-                url, playlist_id, f'Downloading page {page}', query={'page': page})
+            try:
+                webpage = self._download_webpage(
+                    url, playlist_id, f'Downloading page {page}', query={'page': page},
+                    impersonate=True)
+            except ExtractorError as e:
+                if not (isinstance(e.cause, HTTPError) and e.cause.status in (500, 502, 503, 600)):
+                    raise
+                webpage = self._download_webpage(
+                    url, playlist_id, f'Retrying page {page}', query={'page': page},
+                    impersonate=True)
             videos = re.findall(r'data-youtube-url="([^"]+)"', webpage)
             yield from videos
             if single_page or not videos:
@@ -69,6 +78,7 @@ class LastFMUserIE(LastFMPlaylistBaseIE):
     _VALID_URL = r'https?://(?:www\.)?last\.fm/user/[^/]+/playlists/(?P<id>[^/#?]+)'
     _TESTS = [{
         'url': 'https://www.last.fm/user/mehq/playlists/12319471',
+        'skip': 'last.fm playlist pages return HTTP 600',
         'info_dict': {
             'id': '12319471',
         },

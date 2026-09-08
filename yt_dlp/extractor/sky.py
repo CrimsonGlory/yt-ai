@@ -2,6 +2,7 @@ import base64
 import re
 
 from .common import InfoExtractor
+from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
     extract_attributes,
@@ -221,8 +222,13 @@ class SkyNewsIE(SkyBaseIE):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id, impersonate=True)
-        entries = self._extract_player_entries(webpage, url)
+        try:
+            webpage = self._download_webpage(url, video_id, impersonate=True)
+        except ExtractorError as e:
+            if not (isinstance(e.cause, HTTPError) and e.cause.status in (401, 403, 429)):
+                raise
+            webpage = ''
+        entries = self._extract_player_entries(webpage, url) if webpage else []
         if self._is_akamai_challenge(webpage) or not entries:
             widget_url = self._widget_url_from_sitemap(url, video_id)
             if not widget_url:

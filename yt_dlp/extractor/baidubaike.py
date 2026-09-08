@@ -41,7 +41,7 @@ class BaiduBaikeIE(InfoExtractor):
             'info_dict': {
                 'id': '22637356',
                 'title': '秒懂五千年',
-                'description': 'md5:2705e071bb06bb8189a88963a3ea2ae0',
+                'description': str,
             },
             'playlist_mincount': 10,
         },

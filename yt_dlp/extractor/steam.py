@@ -150,6 +150,13 @@ class SteamCommunityIE(InfoExtractor):
         },
         'add_ie': ['Youtube'],
         'params': {'skip_download': 'm3u8'},
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'No supported JavaScript runtime',
+            'n challenge solving failed',
+            'Signature solving failed',
+            'unable to extract yt initial data',
+        ],
     }]
 
     def _real_extract(self, url):

@@ -222,6 +222,7 @@ class VQQVideoIE(VQQBaseIE):
             'description': 'md5:e7ed70be89244017dac2a835a10aeb1e',
             'thumbnail': r're:^https?://[^?#]+q326831cny0',
             'format_id': r're:^shd',
+            'series': str,
         },
     }, {
         'url': 'https://v.qq.com/x/page/o3013za7cse.html',
@@ -232,6 +233,8 @@ class VQQVideoIE(VQQBaseIE):
             'title': '欧阳娜娜VLOG',
             'thumbnail': r're:^https?://[^?#]+o3013za7cse',
             'format_id': r're:^shd',
+            'description': str,
+            'series': str,
         },
     }, {
         'url': 'https://v.qq.com/x/cover/7ce5noezvafma27/a00269ix3l8.html',

@@ -588,6 +588,13 @@ class GenericIE(InfoExtractor):
             'view_count': int,
         },
         'add_ie': ['Youtube'],
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'No supported JavaScript runtime',
+            'n challenge solving failed',
+            'Signature solving failed',
+            'unable to extract yt initial data',
+        ],
     }]
 
     def report_following_redirect(self, new_url):

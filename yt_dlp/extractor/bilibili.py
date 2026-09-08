@@ -730,8 +730,14 @@ class BiliBiliIE(BilibiliBaseIE):
     def _real_extract(self, url):
         video_id, prefix = self._match_valid_url(url).group('id', 'prefix')
         headers = self.geo_verification_headers()
-        webpage, urlh = self._download_webpage_handle(url, video_id, headers=headers)
-        if not self._match_valid_url(urlh.url):
+        try:
+            webpage, urlh = self._download_webpage_handle(
+                url, video_id, headers=headers, impersonate=True)
+        except ExtractorError as e:
+            if not (isinstance(e.cause, HTTPError) and e.cause.status in (403, 412)):
+                raise
+            webpage, urlh = '', None
+        if urlh and not self._match_valid_url(urlh.url):
             return self.url_result(urlh.url)
 
         headers.update({
@@ -756,7 +762,15 @@ class BiliBiliIE(BilibiliBaseIE):
             new_url = traverse_obj(detail, ('data', 'View', 'redirect_url', {url_or_none}))
             if new_url and BiliBiliBangumiIE.suitable(new_url):
                 return self.url_result(new_url, BiliBiliBangumiIE)
-            raise ExtractorError('Unable to extract initial state')
+            view = traverse_obj(detail, ('data', 'View', {dict}))
+            if view:
+                initial_state = {
+                    'videoData': view,
+                    'upData': traverse_obj(detail, ('data', 'Card', 'card', {dict})) or {},
+                    'tags': traverse_obj(detail, ('data', 'Tags', {list})) or [],
+                }
+            else:
+                raise ExtractorError('Unable to extract initial state')
 
         if traverse_obj(initial_state, ('error', 'trueCode')) == -403:
             self.raise_login_required()
@@ -819,6 +833,10 @@ class BiliBiliIE(BilibiliBaseIE):
                 'timestamp': ('pubdate', {int_or_none}),
                 'view_count': (('viewCount', ('stat', 'view')), {int_or_none}),
                 'comment_count': ('stat', 'reply', {int_or_none}),
+                'uploader': ('owner', 'name', {str}),
+                'uploader_id': ('owner', 'mid', {str_or_none}),
+                'thumbnail': ('pic', {url_or_none}),
+                'like_count': ('stat', 'like', {int_or_none}),
             }, get_all=False),
             'id': f'{video_id}{format_field(part_id, None, "_p%d")}',
             '_old_archive_ids': [make_archive_id(self, old_video_id)] if old_video_id else None,
@@ -1001,8 +1019,13 @@ class BiliBiliBangumiIE(BilibiliBaseIE):
     def _real_extract(self, url):
         episode_id = self._match_id(url)
         headers = self.geo_verification_headers()
-        webpage = self._download_webpage(
-            url, episode_id, headers=headers, impersonate=True, fatal=False) or ''
+        try:
+            webpage = self._download_webpage(
+                url, episode_id, headers=headers, impersonate=True) or ''
+        except ExtractorError as e:
+            if not (isinstance(e.cause, HTTPError) and e.cause.status in (403, 412)):
+                raise
+            webpage = ''
 
         if '您所在的地区无法观看本片' in webpage:
             raise GeoRestrictedError('This video is restricted')

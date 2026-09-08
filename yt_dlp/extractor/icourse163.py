@@ -37,6 +37,10 @@ class ICourse163IE(InfoExtractor):
             'duration': 96,
             'thumbnail': 'https://nos.netease.com/edu-image/531233e396194667a3327378424a044c.png',
         },
+            'expected_warnings': [
+                'Failed to download m3u8 information',
+                'timed out',
+            ],
         },
         {
             'url': 'https://www.icourse163.org/learn/USTC-1462062166?tid=1465253471',

@@ -2570,7 +2570,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **allocine**: Extract Dailymotion videos via `DailymotionIE`
     * **amazon**: Product-gallery `jQuery.parseJSON` videos; extract VSE HLS as MP4 formats; impersonate Chrome when the storefront serves a captcha interstitial
     * **beatport**: Next.js `track_name` / `track_length_ms` / release `image_url` fields
-    * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate bangumi play pages, fall back to `pgc/player/web/v2/playurl` on 412
+    * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate video and bangumi play pages, and on 412 fall back to `wbi/view/detail` / `pgc/player/web/v2/playurl`
     * **bunnycdn**: Fall back to `playlist.m3u8` when JSON-LD is missing
     * **cam4**: Profile `/rest/v1.0/profile/{id}/streamInfo` HLS `cdnURL`/`edgeURL` (try each until one plays); empty 204 means the room is offline
     * **cliprs**: Extract Ring Publishing embeds
@@ -2648,6 +2648,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **kukululive**: `live.player.php` `getStreamAddr` API
     * **kuwo**: HTTPS antiserver + current song pages
     * **laracasts**: Inertia `data-page` JSON
+    * **lastfm**: Impersonate playlist pages and retry on HTTP 600
     * **leeco**: Guard missing `playstatus`
     * **lefigaro**: JW Platform on non-embed video URLs
     * **lemonde**: Dailymotion / YouTube / Digiteka provider map
@@ -2668,7 +2669,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **mellowfan**: Fall back to the public movies API and `url_public` HLS when the authenticated detail API requires login
     * **meipai**: Signed media API instead of `encodeURIComponent` m3u8 on the page
     * **metacritic**: JW Platform on movie/game/tv pages
-    * **microsoft:medius**: Extract HLS manifests when Smooth Streaming is gone
+    * **microsoft:medius**: Extract HLS from JSON `StreamUrl` / `master.m3u8` when Smooth Streaming is gone
     * **minds**: v2 entities API
     * **mirrorcouk**: JSON-LD media
     * **mit**: YouTube embeds on current OCW course URLs
@@ -2769,7 +2770,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **scrolller**: Use the current `api.scrolller.com/admin` GraphQL `getPost` query
     * **sexu**: Use `/api/video-info` (HLS + MP4) and JSON-LD instead of the old JWPlayer setup
     * **showroom**: Use the public room API instead of Nuxt + login cookie
-    * **sky:news**: Impersonate the browser and extract Brightcove IDs from the video sitemap / iframe widget when Akamai blocks the page
+    * **sky:news**: Impersonate the browser and extract Brightcove IDs from the video sitemap / iframe widget when Akamai returns 403 or a challenge page
     * **sky:sports**: Fetch a Condatis Brightcove JWT and match current `/{sport}/video/` clip URLs
     * **slideshare**: Extract public slide images from the GraphQL API after the Next.js rebrand; keep slideshow HTML parsing internal so Generic webpage extraction is not shadowed
     * **slutload**: Impersonate the browser and extract HLS from CamSoda `/porn/video/` preloaded JSON

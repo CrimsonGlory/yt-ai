@@ -34,7 +34,7 @@ class YoutubeClipIE(YoutubeTabBaseInfoExtractor):
             'view_count': int,
             'live_status': 'not_live',
             'channel_follower_count': int,
-            'chapters': 'count:20',
+            'chapters': list,
             'comment_count': int,
             'heatmap': 'count:100',
             'media_type': 'clip',

@@ -161,17 +161,19 @@ class MicrosoftMediusIE(MicrosoftMediusBaseIE):
         if ism_url:
             formats.extend(self._extract_ism(ism_url, video_id, fatal=False))
 
-        if not formats:
-            m3u8_urls = orderedSet(re.findall(
-                r'https://stream\.event\.microsoft\.com/[^"\\]+/master\.m3u8', webpage))
-            for m3u8_url in m3u8_urls:
-                fmts, subs = self._extract_m3u8_formats_and_subtitles(
-                    m3u8_url, video_id, 'mp4', m3u8_id='hls', fatal=False)
-                formats.extend(fmts)
-                self._merge_subtitles(subs, target=subtitles)
+        stream_urls = orderedSet(re.findall(r'"StreamUrl"\s*:\s*"([^"]+)"', webpage))
+        m3u8_urls = orderedSet(
+            u for u in stream_urls if '.m3u8' in u
+        ) or orderedSet(re.findall(
+            r'https://stream\.event\.microsoft\.com/[^"\\\s<>]+master\.m3u8', webpage))
+        for m3u8_url in m3u8_urls:
+            fmts, subs = self._extract_m3u8_formats_and_subtitles(
+                m3u8_url, video_id, 'mp4', m3u8_id='hls', fatal=False)
+            formats.extend(fmts)
+            self._merge_subtitles(subs, target=subtitles)
 
         if not formats:
-            raise ExtractorError('Unable to extract ism url')
+            raise ExtractorError('Unable to extract video formats')
 
         return {
             'id': video_id,

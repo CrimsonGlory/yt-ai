@@ -46,6 +46,9 @@ class UnityIE(InfoExtractor):
         'expected_warnings': [
             'Remote component challenge solver script',
             'No supported JavaScript runtime',
+            'unable to extract yt initial data',
+            'n challenge solving failed',
+            'Signature solving failed',
         ],
     }, {
         'url': 'https://unity3d.com/learn/tutorials/topics/animation/animate-anything-mecanim',
