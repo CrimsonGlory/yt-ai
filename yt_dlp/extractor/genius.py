@@ -62,13 +62,17 @@ class GeniusIE(InfoExtractor):
         display_id, is_article = self._match_valid_url(url).group('id', 'article')
         webpage = self._download_webpage(url, display_id)
 
-        metadata = self._search_json(
-            r'<meta content="', webpage, 'metadata', display_id,
-            end_pattern=r'"\s+itemprop="page_data"', transform_source=unescapeHTML)
+        metadata = self._parse_json(
+            unescapeHTML(self._html_search_meta('page_data', webpage, 'metadata', default='{}')),
+            display_id, fatal=False) or {}
         video_id = traverse_obj(metadata, (
             (('article', 'media', ...), ('video', None)),
             ('provider_id', ('dfp_kv', lambda _, v: v['name'] == 'brightcove_video_id', 'values', ...))),
             get_all=False)
+        if not video_id:
+            video_id = self._search_regex(
+                r'brightcove_video_id["\']?\s*[:=]\s*["\']?(\d+)',
+                webpage, 'brightcove video id', default=None)
         if not video_id:
             # Not all article pages have videos, expect the error
             raise ExtractorError('Brightcove video ID not found in webpage', expected=bool(is_article))

@@ -430,6 +430,7 @@ class LBRYPlaylistIE(LBRYBaseIE):
         'playlist_mincount': 34,
     }, {
         'url': 'https://odysee.com/$/playlist/938fb11d-215f-4d1c-ad64-723954df2184',
+        'skip': 'Rate limited',
         'info_dict': {
             'id': '938fb11d-215f-4d1c-ad64-723954df2184',
         },

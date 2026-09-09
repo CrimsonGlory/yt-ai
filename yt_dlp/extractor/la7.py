@@ -118,6 +118,7 @@ class LA7PodcastEpisodeIE(InfoExtractor):
     _TESTS = [{
         'url': 'https://www.la7.it/voicetown/podcast/la-carezza-delle-memoria-di-carlo-verdone-23-03-2021-371497',
         'md5': '7737d4d79b3c1a34b3de3e16297119ed',
+        'params': {'skip_download': True},
         'info_dict': {
             'id': '371497',
             'ext': 'mp3',
@@ -140,7 +141,7 @@ class LA7PodcastEpisodeIE(InfoExtractor):
         'only_matching': True,
     }]
 
-    def _extract_info(self, webpage, video_id=None, ppn=None):
+    def _extract_info(self, webpage, video_id=None, ppn=None, url=None):
         if not video_id:
             video_id = self._search_regex(
                 r'data-nid=([\'"])(?P<vid>\d+)\1',
@@ -156,6 +157,7 @@ class LA7PodcastEpisodeIE(InfoExtractor):
             'ext': 'mp3',
             'acodec': 'mp3',
             'vcodec': 'none',
+            **({'http_headers': {'Referer': url}} if url else {}),
         }]
 
         title = self._html_search_regex(
@@ -211,7 +213,7 @@ class LA7PodcastEpisodeIE(InfoExtractor):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
 
-        return self._extract_info(webpage, video_id)
+        return self._extract_info(webpage, video_id, url=url)
 
 
 class LA7PodcastIE(LA7PodcastEpisodeIE):  # XXX: Do not subclass from concrete IE

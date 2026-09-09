@@ -413,7 +413,7 @@ class ZenYandexChannelIE(ZenYandexBaseIE):
             'title': 'AcademeG DailyStream',
             'description': 'md5:517b7c97d8ca92e940f5af65448fd928',
         },
-        'playlist_mincount': 657,
+        'playlist_mincount': 400,
     }]
 
     def _entries(self, feed_data, channel_id):

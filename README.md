@@ -2431,7 +2431,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **MissAV** (`missav`): Impersonate Cloudflare, unpack packed player JS, and download `surrit.com` HLS. Request: [yt-dlp/yt-dlp#11458](https://github.com/yt-dlp/yt-dlp/issues/11458)
     * **MissEvan** (`missevan.com`): Public `/sound/getsound` JSON for progressive M4A; SAMPLE-AES HLS is DRM. Request: [yt-dlp/yt-dlp#15517](https://github.com/yt-dlp/yt-dlp/issues/15517)
     * **MisterRogers** (`misterrogers.org`): Brightcove `video-js` player IDs from public `/videos/` clips and `/video-playlist/` pages. Request: [yt-dlp/yt-dlp#8263](https://github.com/yt-dlp/yt-dlp/issues/8263)
-    * **MoverUz** (`mover.uz`): Decode obfuscated Playerjs `#2` config for labeled `v.mover.uz` MP4s. Request: [yt-dlp/yt-dlp#9579](https://github.com/yt-dlp/yt-dlp/issues/9579)
+    * **MoverUz** (`mover.uz`): Decode obfuscated Playerjs `#2` config (variable-length `//` junk) and fall back to labeled `v.mover.uz` `{id}_h/_m.mp4` URLs. Request: [yt-dlp/yt-dlp#9579](https://github.com/yt-dlp/yt-dlp/issues/9579)
     * **Mp4Porn** (`mp4porn.space`): Player `url_v` `/play` MP4 and `/play_hls` HLS with a site Referer. Request: [yt-dlp/yt-dlp#15302](https://github.com/yt-dlp/yt-dlp/issues/15302)
     * **Mp4Upload** (`mp4upload.com`): Video.js `player.src` MP4 from embed pages with a site Referer. Request: [yt-dlp/yt-dlp#14075](https://github.com/yt-dlp/yt-dlp/issues/14075)
     * **Musi** (`feelthemusi.com`): Public `/api/v4/playlists/fetch` JSON and YouTube video IDs. Request: [yt-dlp/yt-dlp#12931](https://github.com/yt-dlp/yt-dlp/issues/12931)
@@ -2611,6 +2611,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **gamestar**: Dailymotion player config (impersonate Firefox)
     * **gazeta**: Extract current article video embeds
     * **gedidigital**: Broader lastampa / repubblica video URLs
+    * **genius**: Parse Brightcove IDs from `itemprop=page_data` regardless of meta attribute order
     * **giantbomb**: JW Platform on current show/video slugs
     * **glide**: Nested share path IDs
     * **globalplayer:live**: Fetch the stream from the guacamole playables API
@@ -2647,6 +2648,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **ku6**: `video/detail?id=` pages
     * **kukululive**: `live.player.php` `getStreamAddr` API
     * **kuwo**: HTTPS antiserver + current song pages
+    * **la7.it:pod:episode**: Send the episode page as `Referer` for `limone.iltrovatore.it` MP3s
     * **laracasts**: Inertia `data-page` JSON
     * **lastfm**: Impersonate playlist pages and retry on HTTP 600
     * **leeco**: Guard missing `playstatus`

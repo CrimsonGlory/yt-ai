@@ -351,6 +351,7 @@ class TestDemocracynowSubtitles(BaseTestSubtitles):
     url = 'http://www.democracynow.org/shows/2015/7/3'
     IE = DemocracynowIE
 
+    @unittest.skip('HTTP 429 Too Many Requests')
     def test_allsubtitles(self):
         self.DL.params['writesubtitles'] = True
         self.DL.params['allsubtitles'] = True

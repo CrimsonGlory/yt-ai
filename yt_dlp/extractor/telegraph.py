@@ -21,6 +21,7 @@ class TelegraphIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.telegraph.co.uk/us/news/2026/08/31/flash-flooding-grand-canyon-national-park-arizona/',
+            'skip': 'HTTP 402',
             'md5': 'a0a995ac9b1dffc3ff482452af359476',
             'info_dict': {
             'id': 'bbd4e244',
@@ -37,6 +38,7 @@ class TelegraphIE(InfoExtractor):
         },
         {
             'url': 'https://www.telegraph.co.uk/world-news/2024/06/28/biden-trump-first-presidential-debate-cnn-key-moments/',
+            'skip': 'HTTP 402',
             'info_dict': {
                 'id': 'biden-trump-first-presidential-debate-cnn-key-moments',
                 'title': 'Five key moments from the Biden Trump debate',

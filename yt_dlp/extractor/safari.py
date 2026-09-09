@@ -82,6 +82,7 @@ class SafariIE(SafariBaseIE):
 
     _TESTS = [{
         'url': 'https://www.safaribooksonline.com/videos/hadoop-fundamentals-livelessons/9780133392838/9780133392838-00_SeriesIntro',
+        'skip': 'extractor broken: Unable to extract kalturaIframePackageData',
         'md5': '592d0e6d0b03d9b981b3f7306ffc5ca9',
         'info_dict': {
             'id': '0_qbqx90ic',

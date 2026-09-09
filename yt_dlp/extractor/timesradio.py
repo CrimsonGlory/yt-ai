@@ -15,6 +15,7 @@ class TimesRadioIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?thetimes\.co(?:m|\.uk)/radio/(?:show/(?P<id>\d{8}-\d+)(?:/\d{4}-\d{2}-\d{2})?|(?P<live>live)(?:-player)?)'
     _TESTS = [{
         'url': 'https://www.thetimes.com/radio/show/20260908-34719/2026-09-08',
+        'skip': 'device verification interstitial',
         'md5': 'a51dac08c61795576089ae9d3ae2a0af',
         'info_dict': {
             'id': '20260908-34719',

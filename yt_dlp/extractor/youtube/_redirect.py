@@ -242,6 +242,12 @@ class YoutubeConsentRedirectIE(YoutubeBaseInfoExtractor):
         },
         'add_ie': ['Youtube'],
         'params': {'skip_download': 'Youtube'},
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'No supported JavaScript runtime',
+            'n challenge solving failed',
+            'Signature solving failed',
+        ],
     }]
 
     def _real_extract(self, url):

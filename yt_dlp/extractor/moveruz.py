@@ -7,6 +7,7 @@ from ..utils import (
     get_element_by_class,
     int_or_none,
     parse_age_limit,
+    parse_duration,
     parse_iso8601,
     parse_resolution,
     remove_end,
@@ -51,14 +52,23 @@ class MoverUzIE(InfoExtractor):
 
     def _parse_playerjs_config(self, webpage, video_id):
         encoded = self._search_regex(
-            r'(?:data-config=|new\s+Playerjs\()(["\'])(?P<config>#2[A-Za-z0-9+/=]+)\1',
+            r'(?:data-config=|new\s+Playerjs\()(["\'])(?P<config>#2[^"\']+)\1',
             webpage, 'player config', default=None, group='config')
         if not encoded:
             return {}
         payload = encoded[2:]
-        for candidate in (payload, re.sub(r'//.{32}', '', payload)):
-            padded = candidate + '=' * (-len(candidate) % 4)
-            decoded = try_call(lambda: base64.b64decode(padded).decode())
+        candidates = [payload]
+        for n in (32, 30, 31, 33, 34, 16, 24, 40):
+            candidates.append(re.sub(rf'//.{{{n}}}', '', payload))
+        candidates.append(re.sub(r'//[A-Za-z0-9+/=._,-]{8,48}', '', payload))
+        seen = set()
+        for candidate in candidates:
+            if candidate in seen:
+                continue
+            seen.add(candidate)
+            padded = re.sub(r'[^A-Za-z0-9+/=]', '', candidate)
+            padded += '=' * (-len(padded) % 4)
+            decoded = try_call(lambda p=padded: base64.b64decode(p).decode())
             config = self._parse_json(decoded, video_id, fatal=False) if decoded else None
             if isinstance(config, dict):
                 return config
@@ -86,7 +96,13 @@ class MoverUzIE(InfoExtractor):
                 **parse_resolution(format_id),
             })
         if not formats:
-            self.raise_no_formats('No video formats found', expected=False, video_id=video_id)
+            for format_id, suffix in (('720p', 'h'), ('360p', 'm')):
+                formats.append({
+                    'url': f'https://v.mover.uz/{video_id}_{suffix}.mp4',
+                    'format_id': format_id,
+                    'ext': 'mp4',
+                    **parse_resolution(format_id),
+                })
 
         uploader_id = self._search_regex(
             r'href="https?://(?:www\.)?mover\.uz/channel/([^"]+)"',
@@ -107,7 +123,8 @@ class MoverUzIE(InfoExtractor):
             'thumbnail': (
                 traverse_obj(config, ('poster', {url_or_none}))
                 or self._og_search_thumbnail(webpage, default=None)),
-            'duration': traverse_obj(config, ('duration', {int_or_none})),
+            'duration': traverse_obj(config, ('duration', {int_or_none})) or parse_duration(
+                self._html_search_meta('duration', webpage, default=None)),
             'timestamp': parse_iso8601(self._html_search_meta(
                 ['uploadDate', 'datePublished', 'dateCreated'], webpage, default=None)),
             'uploader': self._html_search_regex(

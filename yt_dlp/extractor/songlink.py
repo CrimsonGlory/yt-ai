@@ -62,6 +62,7 @@ class SonglinkIE(InfoExtractor):
             'Remote component challenge solver script',
             'No supported JavaScript runtime',
             'n challenge solving failed',
+            'Signature solving failed',
         ],
     }, {
         'url': 'https://song.link/s/1np8LVImKHn43mnpNOZDBJ',

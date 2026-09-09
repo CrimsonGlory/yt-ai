@@ -44,6 +44,8 @@ class HotNewHipHopIE(InfoExtractor):
         'expected_warnings': [
             'Remote component challenge solver script',
             'No supported JavaScript runtime',
+            'n challenge solving failed',
+            'Signature solving failed',
         ],
     }, {
         'url': 'http://www.hotnewhiphop.com/freddie-gibbs-lay-it-down-song.1435540.html',

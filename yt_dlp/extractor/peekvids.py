@@ -162,6 +162,7 @@ class PlayVidsIE(PeekVidsBaseIE):
         },
     }, {
         'url': 'https://www.playvids.com/v/47iUho33toY',
+        'skip': 'Connection refused',
         'md5': 'b056b5049d34b648c1e86497cf4febce',
         'info_dict': {
             'id': '700621',

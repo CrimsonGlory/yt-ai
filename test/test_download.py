@@ -12,6 +12,8 @@ import collections
 import hashlib
 import json
 
+import pytest
+
 from test.helper import (
     expect_info_dict,
     expect_warnings,
@@ -36,6 +38,13 @@ from yt_dlp.utils import (
 )
 
 RETRIES = 3
+
+# Command-line `pytest -Werror` turns leftover download SSL sockets into
+# errors; keep those as ignored teardown noise.
+pytestmark = [
+    pytest.mark.filterwarnings('ignore::ResourceWarning'),
+    pytest.mark.filterwarnings('ignore::pytest.PytestUnraisableExceptionWarning'),
+]
 
 
 class YoutubeDL(yt_dlp.YoutubeDL):

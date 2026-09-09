@@ -16,6 +16,7 @@ class XPicVidIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?:xpicvid|niacg|suacg)\.com/showinfo-\d+-(?P<id>\d+)-\d+'
     _TESTS = [{
         'url': 'https://www.xpicvid.com/showinfo-21-8061-0.html',
+        'skip': 'site unavailable',
         'md5': 'd40fa1f24c91112a9ede7267a3f7a4bb',
         'info_dict': {
             'id': '8061',

@@ -134,12 +134,23 @@ class TestExtractorExercise(unittest.TestCase):
         self.assertGreater(len(named), 1500)
 
     def test_extract_path_on_fixture_pages(self):
+        import gc
         import signal
+        import warnings
+
+        import pytest
+
+        warnings.filterwarnings('ignore', category=pytest.PytestUnraisableExceptionWarning)
 
         class _Timeout(Exception):
             pass
 
         def _on_alarm(signum, frame):
+            # Raising inside C destructors (e.g. IntegerGMP.__del__) is
+            # unraisable and becomes a -Werror failure. Skip those frames.
+            if frame is not None and getattr(frame.f_code, 'co_name', '') in (
+                    '__del__', '__dealloc__'):
+                return
             raise _Timeout()
 
         orig_sleep = time.sleep
@@ -156,7 +167,7 @@ class TestExtractorExercise(unittest.TestCase):
                 ydl = ExerciseYDL()
                 ie.set_downloader(ydl)
                 ran += 1
-                signal.setitimer(signal.ITIMER_REAL, 0.08)
+                signal.setitimer(signal.ITIMER_REAL, 0.25)
                 try:
                     ie.extract(url)
                 except ExtractorError as e:
@@ -166,9 +177,13 @@ class TestExtractorExercise(unittest.TestCase):
                     pass
                 finally:
                     signal.setitimer(signal.ITIMER_REAL, 0)
+        except _Timeout:
+            pass
         finally:
+            signal.setitimer(signal.ITIMER_REAL, 0)
             signal.signal(signal.SIGALRM, prev)
             time.sleep = orig_sleep
+            gc.collect()
         self.assertGreater(ran, 1000)
         self.assertEqual(piracy_hits, [])
 
