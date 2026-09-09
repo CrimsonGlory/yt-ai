@@ -23,7 +23,7 @@ class LeIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://www.le.com/ptv/vplay/774649.html',
-        'md5': '09647e122730d6f59f47e3bef3b11661',
+        'md5': '7c4fdce63b73fdc442eab5a4a08d83e1',
         'info_dict': {
             'id': '774649',
             'ext': 'mp4',

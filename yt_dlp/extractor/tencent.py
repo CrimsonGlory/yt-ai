@@ -149,7 +149,7 @@ class TencentBaseIE(InfoExtractor):
 
     def _get_clean_title(self, title):
         return re.sub(
-            r'\s*[_\-]\s*(?:Watch online|Watch HD Video Online|WeTV|腾讯视频|(?:高清)?1080P在线观看平台).*?$',
+            r'(?:\s+Watch Free(?: with Eng Sub)?)?(?:\s*[_\-|]\s*)(?:Watch online|Watch HD Video Online|WeTV|腾讯视频|(?:高清)?1080P在线观看平台).*$',
             '', title or '').strip() or None
 
 
@@ -365,8 +365,10 @@ class WeTvBaseIE(TencentBaseIE):
         formats, subtitles = self._extract_all_video_formats_and_subtitles(url, video_id, series_id)
         return {
             'id': video_id,
-            'title': self._get_clean_title(self._og_search_title(webpage)
-                                           or traverse_obj(webpage_metadata, ('coverInfo', 'title'))),
+            'title': self._get_clean_title(
+                traverse_obj(webpage_metadata, ('videoInfo', 'title', {str}))
+                or self._og_search_title(webpage, default=None)
+                or traverse_obj(webpage_metadata, ('coverInfo', 'title', {str}))),
             'description': (traverse_obj(webpage_metadata, ('coverInfo', 'description'))
                             or self._og_search_description(webpage)),
             'formats': formats,
@@ -433,7 +435,7 @@ class WeTvEpisodeIE(WeTvBaseIE):
         'info_dict': {
             'id': 'i0042y00lxp',
             'ext': 'mp4',
-            'title': 'Zhao Lusi Describes The First Experiences She Had In Who Rules The Wor...',
+            'title': 'Zhao Lusi Describes The First Experiences She Had In Who Rules The World',
             'description': 'md5:76260cb9cdc0ef76826d7ca9d92fadfa',
             'thumbnail': r're:^https?://[^?#]+i0042y00lxp',
             'series': 'WeTV PICK-A-BOO',

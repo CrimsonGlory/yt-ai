@@ -47,17 +47,21 @@ class DocumaniaTVIE(InfoExtractor):
 
     def _download_jw_playlist(self, video_id, url):
         json_path = "/embjson/" if "/embed/" in url else "/json/"
-        return self._download_json(
+        raw = self._download_webpage(
             urljoin(self._ORIGIN, f"{json_path}{video_id}"),
             video_id,
             "Downloading JWPlayer playlist",
             fatal=False,
+            errnote=False,
             headers={
                 "Referer": url,
                 "Origin": self._ORIGIN,
                 "Accept": "application/json, text/javascript, */*; q=0.01",
             },
         )
+        if not raw or raw.lstrip()[:1] not in "{[":
+            return None
+        return self._parse_json(raw, video_id, fatal=False)
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
@@ -73,7 +77,17 @@ class DocumaniaTVIE(InfoExtractor):
             default={},
         )
 
-        entry = traverse_obj(self._download_jw_playlist(video_id, url), (0, {dict}), ("playlist", 0, {dict})) or {}
+        # /json/{id} often returns a PHP DB-error page; JWPlayer setup is on the video page.
+        entry = self._search_json(
+            r"playerInstance\.setup\s*\(",
+            webpage,
+            "jwplayer setup",
+            video_id,
+            transform_source=js_to_json,
+            default={},
+        ) or traverse_obj(
+            self._download_jw_playlist(video_id, url), (0, {dict}), ("playlist", 0, {dict})
+        ) or {}
         video_url = url_or_none(unescapeHTML(traverse_obj(entry, ("file", {str}))))
         if not video_url:
             video_url = urljoin(self._ORIGIN, f"/stream/{video_id}")

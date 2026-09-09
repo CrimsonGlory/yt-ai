@@ -1135,14 +1135,22 @@ class FacebookAdsIE(InfoExtractor):
         video_id = self._match_id(url)
         webpage = self._download_fb_webpage_and_verify(url, video_id)
 
-        post_data = traverse_obj(
-            re.findall(r'data-sjs>({.*?ScheduledServerJS.*?})</script>', webpage), (..., {json.loads}))
+        post_data = []
+        for blob in re.findall(r'data-sjs>({.*?ScheduledServerJS.*?})</script>', webpage):
+            try:
+                post_data.append(json.loads(blob))
+            except json.JSONDecodeError:
+                continue
         data = get_first(post_data, (
             'require', ..., ..., ..., '__bbox', 'require', ..., ..., ..., (
                 ('__bbox', 'result', 'data', 'ad_library_main', 'deeplink_ad_archive_result', 'deeplink_ad_archive'),
                 # old path
                 ('entryPointRoot', 'otherProps', 'deeplinkAdCard'),
             ), 'snapshot', {dict}))
+        if not data:
+            data = traverse_obj(post_data, (
+                ..., '__bbox', 'result', 'data', 'ad_library_main',
+                'deeplink_ad_archive_result', 'deeplink_ad_archive', 'snapshot', {dict}, any))
         if not data:
             raise ExtractorError('Unable to extract ad data')
 

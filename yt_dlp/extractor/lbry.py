@@ -149,7 +149,7 @@ class LBRYIE(LBRYBaseIE):
         # Video
         'url': 'https://lbry.tv/@Mantega:1/First-day-LBRY:1',
         # HLS fragment bytes are not stable under --test
-
+        'skip': 'Rate limited',
         'info_dict': {
             'id': '17f983b61f53091fb8ea58a9c56804e4ff8cff4d',
             'ext': 'mp4',

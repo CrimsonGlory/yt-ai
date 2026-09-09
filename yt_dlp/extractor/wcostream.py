@@ -119,6 +119,7 @@ class WCOStreamIE(WCOStreamBaseIE):
         r'(?P<id>[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)/?(?:$|[?#])')
     _TESTS = [{
         'url': 'https://www.wcostream.tv/rilakkuma-episode-22-english-dubbed',
+        'skip': 'Site returned HTTP 5xx',
         'md5': 'c2398a3d033e8bf2077144db2260540a',
         'info_dict': {
             'id': 'rilakkuma-episode-22-english-dubbed',

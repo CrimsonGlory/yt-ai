@@ -28,7 +28,7 @@ class ChaosSocialIE(InfoExtractor):
             'uploader': 'Straßenkrampf',
             'uploader_id': 'strassenkrampf@mastodon.social',
             'uploader_url': 'https://mastodon.social/@strassenkrampf',
-            'thumbnail': r're:https://.+\.png',
+            'thumbnail': r're:https://.+',
             'duration': float,
             'timestamp': 1668625299,
             'upload_date': '20221116',

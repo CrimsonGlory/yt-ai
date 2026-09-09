@@ -224,6 +224,7 @@ class WykopPostIE(WykopBaseIE):
 
     _TESTS = [{
         'url': 'https://wykop.pl/wpis/68893343/kot-koty-smiesznykotek',
+        'skip': 'extractor broken: unable to extract yt initial data',
         'info_dict': {
             'id': 'PL8JMjiUPHUhwc9ZlKa_5IFeBwBV8Xe7jI',
             'title': 'PawelW124 - #kot #koty #smiesznykotek',

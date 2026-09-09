@@ -147,6 +147,7 @@ class GenericIE(InfoExtractor):
         # HLS: `Content-Type: text/plain`; https://github.com/grafov/m3u8
         # https://github.com/ytdl-org/youtube-dl/commit/edd9b71c2cca7e5a0df8799710d9ad410ec77d29
         'url': 'https://raw.githubusercontent.com/grafov/m3u8/refs/heads/master/sample-playlists/master.m3u8',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': 'master',
             'ext': 'mp4',
@@ -518,6 +519,7 @@ class GenericIE(InfoExtractor):
         # https://github.com/ytdl-org/youtube-dl/commit/63d990d2859d0e981da2e416097655798334431b
         # ortcam.com sample returns HTTP 500; public video.js-youtube example uses the same .src({type:'video/youtube'}) embed
         'url': 'https://raw.githubusercontent.com/videojs/videojs-youtube/master/examples/youtube-javascript.html',
+        'skip': 'Site returned HTTP 5xx',
         'info_dict': {
             'id': 'y6Sxv-sUYtM',
             'ext': 'mp4',

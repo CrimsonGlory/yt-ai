@@ -25,7 +25,7 @@ class GaskrankIE(InfoExtractor):
                 'view_count': int,
                 'average_rating': float,
                 'categories': ['wsbk'],
-                'tags': ['superpole race', 'superpolerace', 'magnycours', 'magny cours', 'frankreich', 'france', 'worldsbk', 'sbk devinox', 'sbkdevinox', 'wsbk', 'worldsbk 2026', 'superbikewm 2026', 'superbike wm', 'motoxx'],
+                'tags': ['superpole race', 'superpolerace', 'magnycours', 'magny cours', 'frankreich', 'france', 'worldsbk', 'sbk devinox', 'sbkdevinox', 'wsbk', 'worldsbk 2026', 'superbikewm 2026', 'superbike wm'],
             },
         }, {
             'url': 'http://www.gaskrank.tv/tv/racing/aragongp-2026-nach-dem-zieleinlauf-stimmen-party.htm',

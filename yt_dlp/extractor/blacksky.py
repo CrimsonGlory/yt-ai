@@ -27,6 +27,8 @@ class BlackskyIE(BlueskyIE):
             'comment_count': int,
             'tags': [],
         },
+        # PDS getBlob (blacksky.app) SSL handshake often times out; HLS is enough to test extraction
+        'params': {'skip_download': True},
     }, {
         'url': 'https://blacksky.community/profile/enoch.kim/post/3mgjxbnwktk26',
         'only_matching': True,
@@ -48,3 +50,12 @@ class BlackskyIE(BlueskyIE):
     @staticmethod
     def _build_profile_url(path):
         return format_field(path, None, 'https://blacksky.community/profile/%s', default=None)
+
+    def _extract_videos(self, *args, **kwargs):
+        entries = super()._extract_videos(*args, **kwargs)
+        for entry in entries:
+            for fmt in entry.get('formats') or []:
+                if fmt.get('format_id') == 'blob':
+                    # Prefer HLS: author PDS getBlob (blacksky.app) frequently times out
+                    fmt['quality'] = -1
+        return entries

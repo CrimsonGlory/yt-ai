@@ -148,8 +148,9 @@ class NTVRuIE(InfoExtractor):
         display_id = self._match_id(url)
         webpage = self._download_webpage(url, display_id)
 
-        video_id = self._html_search_regex(
-            r'<meta property="ya:ovs:feed_url" content="https?://www\.ntv\.ru/(?:exp/)?video/(\d+)', webpage, 'video id')
+        video_id = self._search_regex(
+            r'(?:ya:ovs:feed_url["\'][^>]*|https?://(?:www\.)?ntv\.ru/)(?:exp/)?video/(\d+)',
+            webpage, 'video id')
 
         player = self._download_xml(
             f'http://www.ntv.ru/vi{video_id}/',

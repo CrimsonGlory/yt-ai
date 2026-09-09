@@ -171,6 +171,7 @@ class NewgroundsIE(NewgroundsBaseIE):
     _VALID_URL = r'https?://(?:www\.)?newgrounds\.com/(?:audio/listen|portal/view)/(?P<id>\d+)(?:/format/flash)?'
     _TESTS = [{
         'url': 'https://www.newgrounds.com/audio/listen/549479',
+        'skip': 'HTTP 403',
         'md5': 'fe6033d297591288fa1c1f780386f07a',
         'info_dict': {
             'id': '549479',
