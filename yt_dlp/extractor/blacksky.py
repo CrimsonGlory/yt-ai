@@ -12,7 +12,7 @@ class BlackskyIE(BlueskyIE):
         'info_dict': {
             'id': '3mgjxbnwktk26',
             'ext': 'mp4',
-            'uploader': "DJ ROKO'S INSURANCE ADJUSTER (@Dragoncon for like a lil bit idk)",
+            'uploader': 'DJ WE ARE CHARLIE KIRK',
             'uploader_id': 'enoch.kim',
             'uploader_url': 'https://blacksky.community/profile/enoch.kim',
             'channel_id': 'did:plc:tpv66pk3fqlpfudmh5zi3hzo',

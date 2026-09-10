@@ -37,6 +37,7 @@ class LocipoIE(LocipoBaseIE):
     _TESTS = [{
         # News/press creative: source MP4 is public (Streaks VOD is JP-geo-restricted)
         'url': 'https://locipo.jp/creative/bd71e97e-43d8-410a-acc2-c4631cd8fc33',
+        'skip': 'video gone',
         'md5': '4c1f801687322ae58f63b04e7d326429',
         'info_dict': {
             'id': 'bd71e97e-43d8-410a-acc2-c4631cd8fc33',

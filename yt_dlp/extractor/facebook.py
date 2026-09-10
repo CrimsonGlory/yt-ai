@@ -1111,7 +1111,7 @@ class FacebookAdsIE(InfoExtractor):
         # See https://github.com/yt-dlp/yt-dlp/issues/15577
 
         try:
-            return self._download_webpage(url, video_id)
+            return self._download_webpage(url, video_id, impersonate=True)
         except ExtractorError as e:
             if not isinstance(e.cause, HTTPError) or e.cause.status != 403:
                 raise
@@ -1127,9 +1127,9 @@ class FacebookAdsIE(InfoExtractor):
         # Successful response will set the necessary cookie
         self._request_webpage(
             urljoin(url, challenge_path), video_id, 'Requesting verification cookie',
-            'Unable to get verification cookie', data=b'')
+            'Unable to get verification cookie', data=b'', impersonate=True)
 
-        return self._download_webpage(url, video_id)
+        return self._download_webpage(url, video_id, impersonate=True)
 
     def _real_extract(self, url):
         video_id = self._match_id(url)

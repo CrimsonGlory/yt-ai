@@ -20,6 +20,7 @@ class ThotDeepIE(InfoExtractor):
     _TESTS = [
         {
             "url": "https://thotdeep.com/60793/not-aespa-winter-winteo-the-prettiest-little-cocksucker-full-video-13-56",
+            "skip": "SSL certificate hostname mismatch for thotdeep.com",
             "md5": "9a53afc608b6c128f92db6e7bcf1c4d7",
             "info_dict": {
                 "id": "60793",

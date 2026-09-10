@@ -142,7 +142,11 @@ def generator(test_case, tname):
             if status['status'] == 'finished':
                 finished_hook_called.add(status['filename'])
         ydl.add_progress_hook(_hook)
-        expect_warnings(ydl, test_case.get('expected_warnings', []))
+        expect_warnings(ydl, [
+            *(test_case.get('expected_warnings') or []),
+            # YouTube player responses are often empty under bot checks; title fallback is expected
+            'No title found in player responses',
+        ])
 
         def get_tc_filename(tc):
             # Filename is generated from expected info dict, so filter out type wildcard values

@@ -62,7 +62,7 @@ class RadLiveIE(InfoExtractor):
                 'title': 'After Us - "Alligator" (Official Music Video)',
                 'description': "\"Alligator'\" by After Us (featuring Elijah Finn and Kellison Porter.)\nFrom the album 'Say It Like You Mean It', out September 4th,.",
                 'language': 'en',
-                'thumbnail': 'https://12core-tus-ingestion.s3.amazonaws.com/8ff5f96c554832ed551f4bce3cd709c3',
+                'thumbnail': r're:https://(?:12core-tus-ingestion\.s3\.amazonaws\.com|static\.12core\.net/media/content/feature/.+)/8ff5f96c554832ed551f4bce3cd709c3',
                 'duration': 254.933323,
                 'release_timestamp': 1785507988,
                 'release_date': '20260731',

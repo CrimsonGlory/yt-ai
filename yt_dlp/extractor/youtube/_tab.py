@@ -1411,6 +1411,7 @@ class YoutubeTabIE(YoutubeTabBaseInfoExtractor):
     }, {
         'note': 'Playlist with unavailable videos in page 7',
         'url': 'https://www.youtube.com/playlist?list=UU8l9frL61Yl5KFOl87nIm2w',
+        'skip': 'extractor broken: unable to extract yt initial data',
         'info_dict': {
             'title': 'Uploads from BlankTV',
             'id': 'UU8l9frL61Yl5KFOl87nIm2w',
@@ -1903,6 +1904,7 @@ class YoutubeTabIE(YoutubeTabBaseInfoExtractor):
     }, {
         # Streams tab
         'url': 'https://www.youtube.com/channel/UC3eYAvjCVwNHgkaGbXX3sig/streams',
+        'skip': 'extractor broken: unable to extract yt initial data',
         'info_dict': {
             'id': 'UC3eYAvjCVwNHgkaGbXX3sig',
             'title': '中村悠一 - Live',

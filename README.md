@@ -2597,7 +2597,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **epicon**: Extract HLS from the page when `ajaxplayer` returns 405 or has no trailer cid
     * **erocast**: Impersonate the browser
     * **ettutv**: Match live/videos player URLs and extract current streams
-    * **facebook**: Treat 403 bodies with `/__rd_verify` as a client challenge; read Ads Library `deeplink_ad_archive` snapshot from nested ScheduledServerJS
+    * **facebook**: Impersonate Chrome for Ads Library pages; treat 403 bodies with `/__rd_verify` as a client challenge; read `deeplink_ad_archive` snapshot from nested ScheduledServerJS
     * **fancode**: Support current GraphQL / public video pages
     * **faz**: Follow YouTube embeds
     * **filmweb**: GraphQL clip query and YouTube embeds; broader article URLs
@@ -2745,7 +2745,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **r7**: Read Fusion `globalContent` streams on current video pages; scrape `player.r7.com` HTML when `player-api` is gone
     * **radlive**: Extract HLS from the 12core GraphQL API and match `/watch/` feature/episode URLs
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
-    * **radiofrance:programschedule**: Parse SvelteKit `loadProgramGrid` (devalue) from public `grille-programmes` pages
+    * **radiofrance:programschedule**: Parse SvelteKit `programs` Expression objects (and `loadProgramGrid` devalue) from public `grille-programmes` pages
     * **radiojavan**: Use the public play.radiojavan.com video API instead of the old `video_host` page scrape
     * **radiokapital**: Use the `api.radiokapital.pl` WordPress REST API
     * **rbgtum**: Silent 404 on the old course API, then HTML fallback
@@ -2876,7 +2876,9 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * Offline coverage and extractor/CLI fixture tests
     * Refreshed live download `_TESTS` (sample URLs, `md5`, `info_dict`, skip reasons) for extractors that drifted
     * Live byte-fetch tests from confirmed public URLs, plus many live extractor test updates (`live-site-status.csv`)
+    * Live DASH tests (`1tv:live`) keep `skip_download`: ffmpeg `-re` plus `--test` `-fs` can hang on the DVR window
     * Node as the JS runtime for download tests
+    * Download tests expect YouTube's "No title found in player responses" fallback (bot checks empty the player response)
     * Skip dead / geo / login tests and refresh stale sample metadata
     * Pytest ignores unclosed-SSL `ResourceWarning` / `PytestUnraisableExceptionWarning` at download-test teardown so `-Werror` does not fail skipped tests
     * `make_changelog` attributes fork commits to the git author and `CrimsonGlory/yt-ai`

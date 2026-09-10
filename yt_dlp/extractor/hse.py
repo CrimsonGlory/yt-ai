@@ -72,7 +72,7 @@ class HSEProductIE(HSEShowBaseIE):
         'info_dict': {
             'id': '489206',
             'ext': 'mp4',
-            'title': 'Ring mit Tansanit AAAAA',
+            'title': 'Ring mit Tansanit AAAAA und Diamant',
             'uploader': 'Harry Ivens',
             'thumbnail': r're:https://.+\.jpg',
         },

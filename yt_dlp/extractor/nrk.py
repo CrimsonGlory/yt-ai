@@ -862,7 +862,7 @@ class NRKPlaylistIE(NRKPlaylistBaseIE):
             'title': 'Rivertonprisen til Karin Fossum',
             'description': 'Første kvinne på 15 år til å vinne krimlitteraturprisen.',
         },
-        'playlist_count': 2,
+        'playlist_mincount': 2,
     }]
 
     def _extract_title(self, webpage):

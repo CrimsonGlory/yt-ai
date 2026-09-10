@@ -19,6 +19,7 @@ class TipeeeIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://fr.tipeee.com/french-wargame-studio/news/204867',
+            'skip': 'HTTP 522',
             'md5': 'dba0df16719ded115c6a979dc88e1011',
             'info_dict': {
                 'id': 'egwrk-AsMKA',

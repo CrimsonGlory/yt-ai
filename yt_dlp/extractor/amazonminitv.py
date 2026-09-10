@@ -44,6 +44,7 @@ class AmazonMiniTVIE(AmazonMiniTVBaseIE):
     _VALID_URL = r'(?:https?://(?:www\.)?amazon\.in/minitv/tp/(?:[^/?#]+/)*|amazonminitv:(?:amzn1\.dv\.gti\.)?)(?P<id>[a-f0-9-]+)'
     _TESTS = [{
         'url': 'https://www.amazon.in/minitv/tp/7e03b04f-057c-4d83-b9d5-21ad7461f8f7',
+        'skip': 'HTTP 503',
         'md5': '09a4c38c2ce3941d202d2027bd30e7bf',
         'info_dict': {
             'id': 'amzn1.dv.gti.7e03b04f-057c-4d83-b9d5-21ad7461f8f7',

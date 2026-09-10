@@ -28,7 +28,7 @@ class GiphyIE(InfoExtractor):
             'info_dict': {
                 'id': 'XHeLeuirRbwptHhSWd',
                 'ext': 'mp4',
-                'title': 'Meme Lol GIF by ALL SEEING EYES',
+                'title': 'Laugh Lol GIF',
                 'thumbnail': r're:https?://media\d*\.giphy\.com/media/.+',
                 'uploader': 'ALL SEEING EYES',
                 'uploader_id': 'allsxxingeyes',

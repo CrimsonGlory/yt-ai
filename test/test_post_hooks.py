@@ -24,6 +24,7 @@ EXPECTED_NAME = 'gr51aVj-mLg'
 
 
 @is_download_test
+@unittest.skip('Sign in to confirm you’re not a bot')
 class TestPostHooks(unittest.TestCase):
     def setUp(self):
         self.stored_name_1 = None

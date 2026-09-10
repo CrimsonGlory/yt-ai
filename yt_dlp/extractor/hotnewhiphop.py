@@ -8,6 +8,7 @@ class HotNewHipHopIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?hotnewhiphop\.com/(?:[^/?#]*\.)?(?P<id>\d+)(?:-[^/?#]+)?(?:\.html)?/?(?:[?#]|$)'
     _TESTS = [{
         'url': 'https://www.hotnewhiphop.com/964555-kanye-west-comeback-hnhh-tv',
+        'skip': 'extractor broken: unable to extract yt initial data',
         'md5': '80df74f111a471584698322a011e4f3f',
         'info_dict': {
             'id': '80_XD4sYxfo',

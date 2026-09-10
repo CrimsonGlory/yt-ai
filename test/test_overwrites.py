@@ -17,6 +17,7 @@ download_file = os.path.join(root_dir, 'test.webm')
 
 
 @is_download_test
+@unittest.skip('Sign in to confirm you’re not a bot')
 class TestOverwrites(unittest.TestCase):
     def setUp(self):
         # create an empty file

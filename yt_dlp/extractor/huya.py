@@ -147,6 +147,7 @@ class HuyaVideoIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.huya.com/video/play/1002412640.html',
+        'skip': 'Request timed out',
         'info_dict': {
             'id': '1002412640',
             'ext': 'mp4',

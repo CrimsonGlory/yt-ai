@@ -55,6 +55,7 @@ class DacastVODIE(DacastBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {  # /uspaes/ in hls_url
         'url': 'https://iframe.dacast.com/vod/f9823fc6-faba-b98f-0d00-4a7b50a58c5b/348c5c84-b6af-4859-bb9d-1d01009c795b',
+        'skip': 'HTTP 403',
         'info_dict': {
             'id': '348c5c84-b6af-4859-bb9d-1d01009c795b',
             'ext': 'mp4',

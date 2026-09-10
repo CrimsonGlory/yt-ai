@@ -153,6 +153,10 @@ class FirstTVLiveIE(InfoExtractor):
             'title': r're:ПЕРВЫЙ КАНАЛ ПРЯМОЙ ЭФИР СМОТРЕТЬ ОНЛАЙН \d{4}-\d{2}-\d{2} \d{2}:\d{2}$',
             'live_status': 'is_live',
         },
+        # Live DASH is handed to ffmpeg with `-re`. `--test` `-fs` never
+        # trips if ffmpeg is waiting on the 12h DVR window, so the download
+        # test hangs until interrupted.
+        'params': {'skip_download': 'livestream'},
     }]
 
     def _real_extract(self, url):

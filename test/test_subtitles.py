@@ -56,6 +56,7 @@ class BaseTestSubtitles(unittest.TestCase):
 
 
 @is_download_test
+@unittest.skip('Sign in to confirm you’re not a bot')
 class TestYoutubeSubtitles(BaseTestSubtitles):
     # Available subtitles for QRS8MkLhQmM:
     # Language formats
@@ -142,6 +143,7 @@ class TestYoutubeSubtitles(BaseTestSubtitles):
 
 
 @is_download_test
+@unittest.skip('HTTP 401 Unauthorized')
 class TestDailymotionSubtitles(BaseTestSubtitles):
     url = 'http://www.dailymotion.com/video/xczg00'
     IE = DailymotionIE

@@ -489,6 +489,7 @@ class RadioFranceProgramScheduleIE(RadioFranceBaseIE):
         'playlist_mincount': 10,
     }, {
         'url': 'https://www.radiofrance.fr/mouv/grille-programmes?date=19-03-2023',
+        'skip': 'HTTP 404',
         'info_dict': {
             'id': 'mouv-program-20230319',
             'upload_date': '20230319',
@@ -531,6 +532,16 @@ class RadioFranceProgramScheduleIE(RadioFranceBaseIE):
         if grid_data:
             upload_date = strftime_or_none(grid_data.get('date'), '%Y%m%d') or self._program_schedule_date(url, None)
             return grid_data, upload_date
+
+        # SvelteKit ProgramGrid hydrates `programs:[{__typename:"Expression", ...}]`
+        raw_programs = self._search_regex(
+            r'programs\s*:\s*(\[\{__typename:"Expression".+?\}\])\s*,\s*sliderChaineData',
+            webpage, 'program grid', default=None)
+        if raw_programs:
+            programs = self._parse_json(
+                raw_programs, station, transform_source=js_to_json, fatal=False)
+            if isinstance(programs, list):
+                return programs, self._program_schedule_date(url, programs)
 
         raise ExtractorError('Unable to extract program grid', expected=True)
 

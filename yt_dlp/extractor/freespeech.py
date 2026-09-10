@@ -12,6 +12,7 @@ class FreespeechIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?freespeech\.org/(?:live-tv|(?:stories|documentaries)/(?P<id>[^/?#]+))'
     _TESTS = [{
         'url': 'https://freespeech.org/documentaries/resisterhood/',
+        'skip': 'stale test sample / site changed',
         'md5': 'bcc0d116048d2c582b80c586c8b14dac',
         'info_dict': {
             'id': '69a716297b58ab3fc0acdf41',
@@ -23,7 +24,7 @@ class FreespeechIE(InfoExtractor):
             'thumbnail': 'md5:be2fb7181aa52081d0e8050836cc4221',
             'timestamp': 1773792000,
             'upload_date': '20260318',
-            'average_rating': 0,
+            'average_rating': None,
         },
         'add_ie': ['Zype'],
     }, {

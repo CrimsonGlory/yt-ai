@@ -14,6 +14,7 @@ class MovingImageIE(InfoExtractor):
     _VALID_URL = r'https?://movingimage\.nls\.uk/film/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://movingimage.nls.uk/film/3561',
+        'skip': 'HTTP 429 Too Many Requests',
         'md5': '87b63ba3b7568d27522395f305a4aca5',
         'info_dict': {
             'id': '3561',

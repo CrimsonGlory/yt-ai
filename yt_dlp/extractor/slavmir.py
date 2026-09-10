@@ -17,6 +17,7 @@ class SlavmirIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?slavmir\.tv/video/detail/(?P<id>[\w-]+)/?(?:$|[?#])'
     _TESTS = [{
         'url': 'https://www.slavmir.tv/video/detail/kak-odezhda-vliyaet-na-nashu-zhizn-kak-pravilno-odevatsya/',
+        'skip': 'HTTP 502',
         'md5': '6cb573676e6b06ddd285081883db2d2b',
         'info_dict': {
             'id': 'kak-odezhda-vliyaet-na-nashu-zhizn-kak-pravilno-odevatsya',

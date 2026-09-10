@@ -35,6 +35,7 @@ class PiaproIE(InfoExtractor):
     }, {
         'note': 'There are break lines in description, mandating (?s) flag',
         'url': 'https://piapro.jp/t/9cSd',
+        'skip': 'HTTP 500',
         'md5': '952bb6d1e8de95050206408a87790676',
         'info_dict': {
             'id': '9cSd',

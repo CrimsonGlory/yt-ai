@@ -27,6 +27,7 @@ class TVPIE(InfoExtractor):
         # TVPlayer 2 in js wrapper. swipeto.pl frontend 301s to vod.tvp.pl
         # but the numeric id is still a public TVP player object.
         'url': 'https://swipeto.pl/75545925/ferment-on-tour-shepard-fairey-jak-street-art-moglby-sie-bez-niego-obeysc',
+        'skip': 'Livestream has ended',
         'info_dict': {
             'id': '75545925',
             'ext': 'mp4',

@@ -24,6 +24,7 @@ class TeraBoxIE(InfoExtractor):
     '''
     _TESTS = [{
         'url': 'https://www.terabox.app/sharing/link?surl=DdE5omp0kAF1UGFQ_TGFHg',
+        'skip': 'TeraBox requires captcha verification for this share',
         'md5': '12ff2f8a57beb4da70b4e8064cb6039c',
         'info_dict': {
             'id': 'DdE5omp0kAF1UGFQ_TGFHg',
@@ -39,6 +40,7 @@ class TeraBoxIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.terabox.com/sharing/link?surl=DdE5omp0kAF1UGFQ_TGFHg',
+        'skip': 'TeraBox requires captcha verification for this share',
         'md5': '12ff2f8a57beb4da70b4e8064cb6039c',
         'info_dict': {
             'id': 'DdE5omp0kAF1UGFQ_TGFHg',
