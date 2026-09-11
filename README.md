@@ -2884,7 +2884,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * `make_changelog` attributes fork commits to the git author and `CrimsonGlory/yt-ai`
     * [Development Docker workflow](https://github.com/CrimsonGlory/yt-ai/commit/13d780d260672007c07b37e4b5060a06c27d5b15) (`docker/Dockerfile` + compose) to run yt-ai and the offline suite in a container
     * `release.sh` crontab helper: dispatch the GitHub `Release` workflow only when `master` has commits after the latest GitHub release (no nightly/stable channel)
-    * Linux armv7l onedir verification ignores expired Debian 11 apt `Valid-Until` (LTS ended 2026-08-31) and falls back to archive.debian.org so nightly releases are not blocked by `bullseye-security` metadata expiry
+    * Linux armv7l onedir verification drops EOL Debian 11 security mirrors (LTS ended 2026-08-31) so nightly releases are not blocked by expired `bullseye-security` metadata / 404s
 
 See [commits](https://github.com/CrimsonGlory/yt-ai/commits) for the full list of changes
 

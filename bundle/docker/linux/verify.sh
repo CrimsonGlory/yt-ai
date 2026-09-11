@@ -16,30 +16,38 @@ if [ -n "${SKIP_ONEFILE_BUILD:-}" ]; then
         elif command -v yum >/dev/null 2>&1; then
             yum -y install unzip
         elif command -v apt-get >/dev/null 2>&1; then
-            # Debian 11 (bullseye) LTS ended 2026-08-31. The last
-            # bullseye-security InRelease is Valid-Until 2026-09-07, after
-            # which apt-get update fails with exit 100 and blocks releases.
+            # Debian 11 (bullseye) LTS ended 2026-08-31. After that:
+            # - bullseye-security InRelease Valid-Until expired 2026-09-07
+            #   (apt-get update exit 100)
+            # - security .debs 404 even with Check-Valid-Until=false
+            # Drop security so unzip is installed from main/updates.
+            if [ -f /etc/apt/sources.list ]; then
+                sed -i '/security/d' /etc/apt/sources.list
+            fi
+            if [ -d /etc/apt/sources.list.d ]; then
+                for src in /etc/apt/sources.list.d/*; do
+                    [ -f "${src}" ] || continue
+                    if grep -q security "${src}"; then
+                        rm -f "${src}"
+                    fi
+                done
+            fi
             apt_update() {
                 DEBIAN_FRONTEND=noninteractive apt-get \
                     -o Acquire::Check-Valid-Until=false \
                     update -qq
             }
             if ! apt_update; then
-                echo "apt-get update failed; retrying via archive.debian.org without security"
+                echo "apt-get update failed; retrying via archive.debian.org"
                 if [ -f /etc/apt/sources.list ]; then
-                    sed -i \
-                        -e '/security/d' \
-                        -e 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' \
+                    sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' \
                         /etc/apt/sources.list
                 fi
                 if [ -d /etc/apt/sources.list.d ]; then
                     for src in /etc/apt/sources.list.d/*; do
                         [ -f "${src}" ] || continue
-                        if grep -q security "${src}"; then
-                            rm -f "${src}"
-                        else
-                            sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' "${src}"
-                        fi
+                        sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' \
+                            "${src}"
                     done
                 fi
                 apt_update
