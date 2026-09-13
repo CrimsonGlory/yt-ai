@@ -19,6 +19,7 @@ class CollegeDeFranceIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.college-de-france.fr/fr/agenda/cours/reproduction-et-demographie-chez-les-hominines/organisation-sociale-et-reproduction-chez-les-primates',
+            'skip': 'HTTP Error 502: Bad Gateway',
             'md5': '1c97b38513d6945749c5cdd088d1b18c',
             'info_dict': {
                 'id': 'ATbrO9DpAaw',

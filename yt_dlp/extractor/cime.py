@@ -107,6 +107,7 @@ class CimeVODIE(CimeBaseIE):
     _VALID_URL = r'https?://(?:www\.)?ci\.me/@[\w-]+/vods/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://ci.me/@koyotempest/vods/4671',
+        'skip': 'HTTP Error 403: Forbidden',
         'info_dict': {
             'id': '4671',
             'ext': 'mp4',
@@ -158,6 +159,7 @@ class CimeClipIE(CimeBaseIE):
     _VALID_URL = r'https?://(?:www\.)?ci\.me/clips/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://ci.me/clips/74',
+        'skip': 'HTTP Error 403: Forbidden',
         'md5': 'dfe74b77dafb4b556d861d56b02cdcb8',
         'info_dict': {
             'id': '74',

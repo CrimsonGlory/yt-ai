@@ -5,6 +5,7 @@ class CaltransIE(InfoExtractor):
     _VALID_URL = r'https?://(?:[^/]+\.)?ca\.gov/vm/loc/[^/]+/(?P<id>[a-z0-9_]+)\.htm'
     _TESTS = [{
         'url': 'https://cwwp2.dot.ca.gov/vm/loc/d7/sr1220crenshawblvd.htm',
+        'skip': 'HTTP Error 403: Forbidden',
         'info_dict': {
             'id': 'sr1220crenshawblvd',
             'ext': 'ts',

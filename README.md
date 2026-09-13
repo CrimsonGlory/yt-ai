@@ -2678,6 +2678,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **mocha**: Current mocha.com.vn API
     * **MovingImage**: Fall back to a Wayback Machine snapshot when AWS WAF captcha blocks the catalogue page
     * **mtg**: Use the TV3 Play/GO3 products API (via play.tv3.lt, tenant AVOD_*) instead of the dead playapi.mtgx.tv; download the public preview MP4 when full streams are DRM
+    * **mtv**: Raise geo-restriction when Topaz MICA returns a region policy error instead of `stitchedstream`
     * **murrtube**: Current app JSON
     * **museai**: skiv.com rebrand
     * **musescore**: New auth token + impersonate; treat jmuse CAPTCHA 422 as expected

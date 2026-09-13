@@ -180,9 +180,18 @@ class MTVServicesBaseIE(InfoExtractor):
                 'props', 'authSuiteConfig', {dict}, {require('auth suite config')}))
             headers['X-VIA-TVE-MEDIATOKEN'] = self._get_media_token(video_config, config, display_id)
 
-        stream_info = self._download_json(
+        stream_data = self._download_json(
             service_url, video_id, 'Downloading API JSON', 'Unable to download API JSON',
-            query={'clientPlatform': 'desktop'}, headers=headers)['stitchedstream']
+            query={'clientPlatform': 'desktop'}, headers=headers)
+        error = traverse_obj(stream_data, ('error', {dict})) or {}
+        if error:
+            err_msg = traverse_obj(error, ('errormessage', {str})) or 'Unable to download stream'
+            if error.get('requestregion') or 'not found in any policy rules' in err_msg:
+                self.raise_geo_restricted(err_msg, countries=self._GEO_COUNTRIES)
+            raise ExtractorError(err_msg, expected=True)
+        stream_info = traverse_obj(stream_data, ('stitchedstream', {dict}))
+        if not stream_info:
+            raise ExtractorError('Unable to extract stream information', expected=True)
 
         manifest_type = stream_info['manifesttype']
         if manifest_type == 'hls':

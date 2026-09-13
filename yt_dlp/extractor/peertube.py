@@ -1695,6 +1695,7 @@ class PeerTubePlaylistIE(InfoExtractor):
         'playlist_mincount': 9,
     }, {
         'url': 'https://peertube2.cpy.re/a/chocobozzz/videos',
+        'skip': 'account has no videos',
         'info_dict': {
             'id': 'chocobozzz',
             'title': 'chocobozzz',

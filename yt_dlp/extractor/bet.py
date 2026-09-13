@@ -24,6 +24,7 @@ class BetIE(MTVServicesBaseIE):
             'release_timestamp': 1782820800,
             'release_date': '20260630',
         },
+        'skip': 'geo-restricted (Topaz MICA region policy; X-Forwarded-For is ignored)',
         'expected_warnings': [r'pycryptodomex'],
         'params': {'skip_download': 'm3u8'},
     }, {

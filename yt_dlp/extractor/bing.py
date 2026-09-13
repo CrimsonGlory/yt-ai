@@ -29,6 +29,7 @@ class BingIE(InfoExtractor):
             'thumbnail': r're:https?://media-cldnry\.s-nbcnews\.com/.+',
             'display_id': '269123141763',
         },
+        'skip': 'HTTP Error 429: Too Many Requests',
         'params': {'format': 'best[protocol^=http]'},
         'add_ie': ['NBCNews'],
     }, {
@@ -37,6 +38,7 @@ class BingIE(InfoExtractor):
             'id': 'cantajuego lo mejor de',
             'title': 'cantajuego lo mejor de',
         },
+        'skip': 'HTTP Error 429: Too Many Requests',
         'playlist_mincount': 5,
         'params': {
             'skip_download': True,

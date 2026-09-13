@@ -29,6 +29,7 @@ class AsianPinayIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://asianpinay.cc/lumiban-sa-klase-para-magkantotan-2/',
+            'skip': 'HTTP Error 503: Service Unavailable',
             'md5': 'e0a9eecc989799c1eda26f13b8ec9f74',
             'info_dict': {
                 'id': 'lumiban-sa-klase-para-magkantotan-2',

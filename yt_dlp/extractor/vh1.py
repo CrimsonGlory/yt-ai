@@ -25,6 +25,7 @@ class VH1IE(MTVServicesBaseIE):
             'release_timestamp': 1576497600,
             'release_date': '20191216',
         },
+        'skip': 'geo-restricted (Topaz MICA region policy; X-Forwarded-For is ignored)',
         'expected_warnings': [r'pycryptodomex'],
         'params': {'skip_download': 'm3u8'},
     }, {

@@ -255,6 +255,7 @@ class TuneInEmbedIE(TuneInBaseIE):
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.martiniinthemorning.com/',
+        'skip': 'HTTP Error 500: Internal Server Error',
         'info_dict': {
             'id': 's55412',
             'ext': 'mp3',

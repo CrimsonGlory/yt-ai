@@ -17,16 +17,16 @@ class HBOIE(InfoExtractor):
         r'(?:/[^/?#]+)*/(?P<id>[^/?#]+)/?(?:[?#]|$)')
     _TESTS = [{
         'url': 'https://www.hbo.com/content/lanterns',
-        'md5': '62f54f87ac62e4d334c66ea1805ebcd7',
+        'md5': '9245e1233436292496bc7344ef3250cf',
         'info_dict': {
-            'id': 'me517d9dc51bbc7a2d6bbec453837451815d65db26',
+            'id': 'me8a2ce59323807dbdb02d7475d5692be6d7a29303',
             'ext': 'mp4',
             'display_id': 'lanterns',
-            'title': 'Lanterns - Watch the Teaser',
+            'title': 'Lanterns - Watch the Trailer',
             'alt_title': 'Lanterns',
             'description': 'md5:8d1530405339d84a584c61911ff82ef4',
             'thumbnail': r're:https://.+\.(?:jpe?g|png)',
-            'duration': 107.940956,
+            'duration': 179.813,
         },
         # Native HLS --test only fetches the CMAF init segment (~1KB)
         'params': {'downloader': 'ffmpeg'},

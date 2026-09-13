@@ -56,6 +56,7 @@ class VGTVIE(InfoExtractor):
         {
             # streamType: vod
             'url': 'http://www.vgtv.no/#!/video/84196/hevnen-er-soet-episode-10-abu',
+            'skip': 'HTTP Error 504: Gateway Time-out',
             'md5': '660c55b9b1947313c33970a149b7433b',
             'info_dict': {
                 'id': '84196',

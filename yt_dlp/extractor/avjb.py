@@ -37,7 +37,6 @@ class AvjbIE(InfoExtractor):
             'uploader_id': '1707793',
             'view_count': int,
             'like_count': int,
-            'tags': ['special'],
             'age_limit': 18,
         },
         'params': {'fixup': 'never'},

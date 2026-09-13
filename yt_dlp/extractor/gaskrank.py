@@ -13,6 +13,7 @@ class GaskrankIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'http://www.gaskrank.tv/tv/wsbk/superpole-race-highlights-magny-cours-worldsbk-frenchworldsbk-2026.htm',
+            'skip': 'video gone',
             'md5': '7e33e6e41f0813eb0627e187369a8b84',
             'info_dict': {
                 'id': '202609/42367',
@@ -26,6 +27,21 @@ class GaskrankIE(InfoExtractor):
                 'average_rating': float,
                 'categories': ['wsbk'],
                 'tags': ['superpole race', 'superpolerace', 'magnycours', 'magny cours', 'frankreich', 'france', 'worldsbk', 'sbk devinox', 'sbkdevinox', 'wsbk', 'worldsbk 2026', 'superbikewm 2026', 'superbike wm'],
+            },
+        }, {
+            'url': 'http://www.gaskrank.tv/tv/racing/highlights-sprint-race-misano-sanmarinogp-2026.htm',
+            'info_dict': {
+                'id': '202609/42380',
+                'ext': 'mp4',
+                'display_id': 'highlights-sprint-race-misano-sanmarinogp-2026',
+                'title': 'Highlights Sprint-Race Misano - SanMarinoGP 2026',
+                'uploader_id': 'Devinox',
+                'uploader_url': 'https://www.motogp.com/en/videopass',
+                'upload_date': '20260913',
+                'view_count': int,
+                'average_rating': float,
+                'categories': ['racing'],
+                'tags': ['sprintrace', 'sprint race', 'misano', 'sanmarinogp 2026', 'san marino gp', 'devinox', 'motogp'],
             },
         }, {
             'url': 'http://www.gaskrank.tv/tv/racing/aragongp-2026-nach-dem-zieleinlauf-stimmen-party.htm',

@@ -147,7 +147,7 @@ class EggsArtistIE(EggsBaseIE):
         'info_dict': {
             'id': 'strobogram_band',
             'title': 'strobogram',
-            'description': 'クドウキリト（Gt./Vo.）、OTO（Dr.）、ダイスケ（Gt.）、Jun（Ba.）、オークボ（Key.）からなる5ピースバンド「strobogram」。 2024年春結成、東京を拠点に活動中。 ポップスに軸足を置きつつ、一つの色に留まらないサウンドでライブを重ねている。',
+            'description': 'クドウキリト（Gt./Vo.）、OTO（Dr.）、ダイスケ（Gt.）、Jun（Ba.）、オークボ（Key.）からなる5ピースバンド「strobogram」。 \n2024年春結成、東京を拠点に活動中。 ポップスに軸足を置きつつ、一つの色に留まらないサウンドでライブを重ねている。',
             'thumbnail': r're:https?://image-pro\.eggs\.mu/profile/\d+\.(?:jpe?g|png)(?:\?.*)?$',
         },
         'playlist_mincount': 2,

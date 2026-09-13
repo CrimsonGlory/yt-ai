@@ -76,6 +76,7 @@ class RbgTumCourseIE(InfoExtractor):
         'playlist_count': 13,
     }, {
         'url': 'https://tum.live/old/course/2025/W/WiSe25_26_ItDL',
+        'skip': 'video gone',
         'info_dict': {
             'title': 'Introduction to Deep Learning (IN2346)',
             'id': '2025/W/WiSe25_26_ItDL',
@@ -133,6 +134,7 @@ class RbgTumNewCourseIE(InfoExtractor):
         'playlist_count': 13,
     }, {
         'url': 'https://tum.live/?year=2025&term=W&slug=WiSe25_26_ItDL&view=3',
+        'skip': 'video gone',
         'info_dict': {
             'title': 'Introduction to Deep Learning (IN2346)',
             'id': '2025/W/WiSe25_26_ItDL',

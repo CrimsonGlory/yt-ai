@@ -27,6 +27,7 @@ class SmuleIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.smule.com/recording/billie-happier-than-ever-acoustic/33197115_4356089929',
+            'skip': 'HTTP Error 403: Forbidden',
             'md5': 'e89bdc24625b881f045162ddd71807a0',
             'info_dict': {
                 'id': '33197115_4356089929',

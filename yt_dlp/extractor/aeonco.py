@@ -7,10 +7,10 @@ class AeonCoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?aeon\.co/videos/(?P<id>[^/?]+)'
     _TESTS = [{
         'url': 'https://aeon.co/videos/repulsion-at-the-core-of-attraction-on-the-paradox-of-touch',
-        'md5': 'd9a53ecaaf6c7ec3814366b64ee234af',
+        'md5': '74f6b8a4a245675bead24e7ac886083d',
         'info_dict': {
             'id': 'kfgm2eQyywY',
-            'ext': 'webm',
+            'ext': 'mp4',
             'title': '"Tocar",  Karen Barad i Blanca Rego. Un vocabulari per al futur',
             'description': 'md5:968122e7f85105c526921cc89eb16a62',
             'media_type': 'video',

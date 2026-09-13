@@ -18,6 +18,7 @@ class KikaIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.kika.de/ackley/v1/videos/basketball-mit-nationalspielerin-marie-guelich-102',
+        'skip': 'geo-restricted to Germany; HLS returns HTTP 403 (X-Forwarded-For is ignored)',
         'md5': 'e3a5e16176b2c5f5a4f74800e38dc3fb',
         'info_dict': {
             'id': 'basketball-mit-nationalspielerin-marie-guelich-102',

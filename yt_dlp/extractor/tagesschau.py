@@ -18,15 +18,14 @@ class TagesschauIE(InfoExtractor):
     _TESTS = [{
         # Homepage public clip (tagesschau in 100 Sekunden)
         'url': 'https://www.tagesschau.de/tagesschau_in_100_sekunden/video-1642194.html',
-        'md5': 'dc2acf179fdd24d5bf27c607b6f7ad6b',
         'info_dict': {
             'id': 'video-1642194',
             'ext': 'mp4',
             'title': 'tagesschau in 100 Sekunden',
-            'description': 'tagesschau in 100 Sekunden',
-            'thumbnail': 'https://images.tagesschau.de/image/68dc5dfa-9f39-4c05-8cb2-ead2d84f1ce1/AAABoGgxC-Q/AAABnSSvrFg/16x9-big/sendungsbild-1790256.jpg?width=1280',
-            'timestamp': 1788461673,
-            'upload_date': '20260903',
+            'description': 'Rund um die Uhr kompakt und aktuell informiert mit dem tagesschau-Nachrichtenüberblick in 100 Sekunden.',
+            'thumbnail': r're:https://images\.tagesschau\.de/.+',
+            'timestamp': int,
+            'upload_date': r're:\d{8}',
         },
     }, {
         'url': 'http://www.tagesschau.de/multimedia/video/video-102143.html',

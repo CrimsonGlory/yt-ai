@@ -11,6 +11,7 @@ class LeCinemaClubIE(InfoExtractor):
         r'(?:[?#]|$)')
     _TESTS = [{
         'url': 'https://www.lecinemaclub.com/now-showing/gutz-and-glitz/',
+        'skip': 'video gone',
         'md5': '0a0359cf67b40ce827a3035ab209e2a1',
         'info_dict': {
             'id': '1221839271',

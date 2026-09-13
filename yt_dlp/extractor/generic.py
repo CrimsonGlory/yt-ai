@@ -395,9 +395,9 @@ class GenericIE(InfoExtractor):
         'info_dict': {
             'id': '346037',
             'ext': 'mp4',
-            'title': 'Fresh out of the shower | Shooshtime',
+            'title': 'Fresh out of the shower - Shooshtime',
             'age_limit': 18,
-            'description': 'md5:efd70fd3973f8750d285c743b910580a',
+            'description': 'md5:50182dc8cc91564a9d122dc3b9395ce3',
             'display_id': 'fresh-out-of-the-shower',
             'thumbnail': r're:https?://.*',
         },

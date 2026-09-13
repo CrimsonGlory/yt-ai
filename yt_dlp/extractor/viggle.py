@@ -22,7 +22,7 @@ class ViggleIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'This video sucks #dance',
             'description': 'md5:17f5c191d913f0826e5fc5d9bbb02365',
-            'thumbnail': 'https://cdn.viggle.ai/template/1751828823149-f21d9ff3-3b41-4ce2-9cda-92561697a1f7.jpg',
+            'thumbnail': r're:https://.+\.(?:jpe?g|png|webp)',
             'duration': 32.880204,
             'timestamp': 1751828946,
             'upload_date': '20250706',

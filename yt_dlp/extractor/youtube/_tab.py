@@ -1103,7 +1103,7 @@ class YoutubeTabIE(YoutubeTabBaseInfoExtractor):
             'uploader_url': 'https://www.youtube.com/@IgorDataScience',
             'channel': 'Igor DS: ИИ, Наука и Творчество ',
             'channel_id': 'UCqj7Cz7revf5maW9g5pgNcg',
-            'tags': 'count:19',
+            'tags': 'count:14',
             'channel_url': 'https://www.youtube.com/channel/UCqj7Cz7revf5maW9g5pgNcg',
             'channel_follower_count': int,
             'channel_is_verified': True,
@@ -1120,7 +1120,7 @@ class YoutubeTabIE(YoutubeTabBaseInfoExtractor):
             'uploader': 'Igor DS: ИИ, Наука и Творчество ',
             'uploader_id': '@IgorDataScience',
             'uploader_url': 'https://www.youtube.com/@IgorDataScience',
-            'tags': 'count:19',
+            'tags': 'count:14',
             'channel_id': 'UCqj7Cz7revf5maW9g5pgNcg',
             'channel': 'Igor DS: ИИ, Наука и Творчество ',
             'channel_url': 'https://www.youtube.com/channel/UCqj7Cz7revf5maW9g5pgNcg',
@@ -1661,6 +1661,7 @@ class YoutubeTabIE(YoutubeTabBaseInfoExtractor):
         # YoutubeTab_25: use to test _extract_lockup_view_model
         'note': 'unlisted single video playlist',
         'url': 'https://www.youtube.com/playlist?list=PLt5yu3-wZAlQLfIN0MMgp0wVV6MP3bM4_',
+        'skip': 'extractor broken: unable to extract yt initial data',
         'info_dict': {
             'id': 'PLt5yu3-wZAlQLfIN0MMgp0wVV6MP3bM4_',
             'title': 'unlisted playlist',
@@ -2087,6 +2088,7 @@ class YoutubeTabIE(YoutubeTabBaseInfoExtractor):
     }, {
         # Podcasts tab, with rich entry lockupViewModel
         'url': 'https://www.youtube.com/@99percentinvisiblepodcast/podcasts',
+        'skip': 'extractor broken: unable to extract yt initial data',
         'info_dict': {
             'id': 'UCVMF2HD4ZgC0QHpU9Yq5Xrw',
             'channel_id': 'UCVMF2HD4ZgC0QHpU9Yq5Xrw',

@@ -16,6 +16,7 @@ class ThisVidIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?thisvid\.com/(?P<type>videos|embed)/(?P<id>[A-Za-z0-9-]+)'
     _TESTS = [{
         'url': 'https://thisvid.com/videos/sitting-on-ball-tight-jeans/',
+        'skip': 'HTTP Error 502: Bad Gateway',
         'md5': '839becb572995687e11a69dc4358a386',
         'info_dict': {
             'id': '3533241',
@@ -31,6 +32,7 @@ class ThisVidIE(InfoExtractor):
         'expected_warnings': ['Untested major version'],
     }, {
         'url': 'https://thisvid.com/embed/3533241/',
+        'skip': 'HTTP Error 502: Bad Gateway',
         'md5': '839becb572995687e11a69dc4358a386',
         'info_dict': {
             'id': '3533241',
@@ -146,6 +148,7 @@ class ThisVidMemberIE(ThisVidPlaylistBaseIE):
     _VALID_URL = r'https?://thisvid\.com/members/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://thisvid.com/members/2140501/',
+        'skip': 'HTTP Error 502: Bad Gateway',
         'info_dict': {
             'id': '2140501',
             'title': 'Rafflesia\'s Profile',
@@ -161,6 +164,7 @@ class ThisVidMemberIE(ThisVidPlaylistBaseIE):
         'playlist_mincount': 15,
     }, {
         'url': 'https://thisvid.com/members/636468/public_videos/',
+        'skip': 'HTTP Error 502: Bad Gateway',
         'info_dict': {
             'id': '636468',
             'title': 'Happymouth\'s Public Videos',
@@ -177,6 +181,7 @@ class ThisVidPlaylistIE(ThisVidPlaylistBaseIE):
     _VALID_URL = r'https?://thisvid\.com/playlist/(?P<id>\d+)/video/(?P<video_id>[A-Za-z0-9-]+)'
     _TESTS = [{
         'url': 'https://thisvid.com/playlist/6615/video/big-italian-booty-28/',
+        'skip': 'HTTP Error 502: Bad Gateway',
         'info_dict': {
             'id': '6615',
             'title': 'Underwear Stuff',
@@ -184,6 +189,7 @@ class ThisVidPlaylistIE(ThisVidPlaylistBaseIE):
         'playlist_mincount': 174,
     }, {
         'url': 'https://thisvid.com/playlist/6615/video/big-italian-booty-28/',
+        'skip': 'HTTP Error 502: Bad Gateway',
         'info_dict': {
             'id': '1072387',
             'ext': 'mp4',
