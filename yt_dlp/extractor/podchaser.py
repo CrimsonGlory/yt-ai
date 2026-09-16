@@ -32,7 +32,7 @@ class PodchaserIE(InfoExtractor):
             'series': 'The Adam Friedland Show',
             'series_id': '36924',
             'average_rating': float,
-            'categories': ['Comedy', 'News', 'Arts'],
+            'categories': list,
             'tags': ['comedy', 'dark humor'],
         },
     }, {

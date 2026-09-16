@@ -81,6 +81,7 @@ class ZapiksIE(InfoExtractor):
     }, {
         # https://www.youtube.com/watch?v=UBAABvegu2M
         'url': 'https://www.zapiks.com/live-fwt18-vallnord-arcalis-.html',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'info_dict': {
             'id': 'UBAABvegu2M',
             'ext': 'mp4',

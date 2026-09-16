@@ -207,6 +207,7 @@ class YoutubeConsentRedirectIE(YoutubeBaseInfoExtractor):
     IE_DESC = False  # Do not list
     _VALID_URL = r'https?://consent\.youtube\.com/m\?'
     _TESTS = [{
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'url': 'https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2Flive%2FqVv6vCqciTM%3Fcbrd%3D1&gl=NL&m=0&pc=yt&hl=en&src=1',
         'info_dict': {
             'id': 'qVv6vCqciTM',

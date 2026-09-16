@@ -78,6 +78,7 @@ class WykopDigIE(WykopBaseIE):
 
     _TESTS = [{
         'url': 'https://wykop.pl/link/8006961/bobrza-mafia-opanowala-nadlesnictwo-opole-lesnicy-weszli-w-uklad',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'info_dict': {
             'id': '7arwnZKf0os',
             'ext': 'mp4',

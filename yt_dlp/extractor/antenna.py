@@ -64,6 +64,7 @@ class AntennaGrWatchIE(AntennaBaseIE):
 
     _TESTS = [{
         'url': 'https://www.ant1news.gr/watch/1506168/ant1-news-09112021-stis-18-45',
+        'skip': 'SSL incomplete certificate chain for antenna.gr (unable to get local issuer certificate)',
         'md5': 'c472d9dd7cd233c63aff2ea42201cda6',
         'info_dict': {
             'id': '1506168',
@@ -76,6 +77,7 @@ class AntennaGrWatchIE(AntennaBaseIE):
         },
     }, {
         'url': 'https://www.antenna.gr/watch/1959615/synagermos-stis-ygeionomikes-arxes-apo-ta-kroysmata-salmonelas-sti-lamia',
+        'skip': 'SSL incomplete certificate chain for antenna.gr (unable to get local issuer certificate)',
         'md5': '13173c295be995672493f443fd127ead',
         'info_dict': {
             'id': '1959615',
@@ -106,6 +108,7 @@ class Ant1NewsGrArticleIE(AntennaBaseIE):
 
     _TESTS = [{
         'url': 'https://www.ant1news.gr/Society/article/4/1004924/rodopi-i-44xroni-gyrise-sto-xorio-gia-ta-genethlia-tis-koris-toys-kai-o-syzygos-tis-ti-dolofonise',
+        'skip': 'SSL incomplete certificate chain for antenna.gr (unable to get local issuer certificate)',
         'md5': '4785fff9d335e5d45907d39a9b5105a0',
         'info_dict': {
             'id': 'k_qw_f_s7_zn_s_l0=',
@@ -163,6 +166,7 @@ class Ant1NewsGrEmbedIE(AntennaBaseIE):
 
     _TESTS = [{
         'url': 'https://www.antenna.gr/templates/pages/player?cid=3f_li_c_az_jw_y_u=&w=670&h=377',
+        'skip': 'SSL incomplete certificate chain for antenna.gr (unable to get local issuer certificate)',
         'md5': '6c8a50115fb220500ed79b552fcb52a1',
         'info_dict': {
             'id': '3f_li_c_az_jw_y_u=',

@@ -22,6 +22,7 @@ class StreamsterIE(InfoExtractor):
         {
             # HTML5 MediaElement source with the non-standard video/youtube MIME type
             'url': 'https://streamster.tv/events/tischtennis-mixed-team-aut-pol/',
+            'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
             'md5': '94c080940edb57e220de8d5ca84694af',
             'info_dict': {
                 'id': 'Hz_k9w2CZvA',

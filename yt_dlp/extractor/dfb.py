@@ -12,6 +12,7 @@ class DFBIE(InfoExtractor):
     )
     _TESTS = [{
         'url': 'https://www.dfb.de/news/video-ungeschlagen-durch-die-wm-qualifikation',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'md5': '4b21d7a837aa8f5443d7e8fd711bce95',
         'info_dict': {
             'id': 'VzEMKMkWYN8',

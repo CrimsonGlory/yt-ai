@@ -7,6 +7,7 @@ class AeonCoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?aeon\.co/videos/(?P<id>[^/?]+)'
     _TESTS = [{
         'url': 'https://aeon.co/videos/repulsion-at-the-core-of-attraction-on-the-paradox-of-touch',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'md5': '74f6b8a4a245675bead24e7ac886083d',
         'info_dict': {
             'id': 'kfgm2eQyywY',

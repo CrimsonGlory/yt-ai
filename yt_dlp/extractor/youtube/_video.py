@@ -152,6 +152,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
 
     IE_NAME = 'youtube'
     _TESTS = [{
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'url': 'https://www.youtube.com/watch?v=YE7VzlLtp-4&t=1s&end=9',
         'info_dict': {
             'id': 'YE7VzlLtp-4',
@@ -204,6 +205,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         },
         'skip': 'Private video',
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'note': 'Use the first video ID in the URL',
         'url': 'https://www.youtube.com/watch?v=YE7VzlLtp-4&v=BaW_jenozKc',
         'info_dict': {
@@ -279,6 +281,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         },
         'skip': 'format 141 not served anymore',
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # DASH manifest with encrypted signature
         'url': 'https://www.youtube.com/watch?v=IB3lcPjvWLA',
         'info_dict': {
@@ -366,6 +369,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         'params': {'skip_download': True},
         'skip': 'Age-restricted; requires authentication',
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'note': 'Formerly an age-gated video with embed allowed in public site',
         'url': 'https://youtube.com/watch?v=HsUATh_Nc2U',
         'info_dict': {
@@ -437,6 +441,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         },
         'skip': 'Age-restricted; requires authentication',
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'note': 'Non-age-gated non-embeddable video',
         'url': 'https://youtube.com/watch?v=MeJVWBSsPAY',
         'info_dict': {
@@ -477,6 +482,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         'url': 'https://youtube.com/watch?v=Cr381pDsSsA',
         'only_matching': True,
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # video_info is None
         # https://github.com/ytdl-org/youtube-dl/issues/4421
         # YouTube Red ad is not captured for creator
@@ -520,6 +526,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         ],
         'params': {'skip_download': True},
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # https://github.com/ytdl-org/youtube-dl/issues/4431
         'url': 'lqQg6PlCWgI',
         'info_dict': {
@@ -559,6 +566,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         ],
         'params': {'skip_download': True},
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # Non-square pixels
         'url': 'https://www.youtube.com/watch?v=_b-2C3KPAM0',
         'info_dict': {
@@ -604,6 +612,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         'url': 'qEJwOuvDf7I',
         'only_matching': True,
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # Extraction from multiple DASH manifests
         # https://github.com/ytdl-org/youtube-dl/pull/6097
         'url': 'https://www.youtube.com/watch?v=FIl7x6_3R5Y',
@@ -642,6 +651,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         ],
         'params': {'skip_download': True},
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # DASH manifest with segment_list
         # https://github.com/ytdl-org/youtube-dl/pull/5886
         'url': 'https://www.youtube.com/embed/CsmdDsKjzN8',
@@ -703,6 +713,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         'url': 'https://zwearz.com/watch/9lWxNJF-ufM/electra-woman-dyna-girl-official-trailer-grace-helbig.html',
         'only_matching': True,
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # Title with JS-like syntax "};"
         # https://github.com/ytdl-org/youtube-dl/issues/7468
         # Also tests cut-off URL expansion in video description
@@ -765,6 +776,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         'url': 'https://www.youtube.com/watch?v=FRhJzUSJbGI',
         'only_matching': True,
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # Video licensed under Creative Commons
         'url': 'https://www.youtube.com/watch?v=M4gD1WSo5mA',
         'info_dict': {
@@ -804,6 +816,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         ],
         'params': {'skip_download': True},
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # https://github.com/ytdl-org/youtube-dl/commit/fd050249afce1bcc9e7f4a127069375467007b55
         'url': 'https://www.youtube.com/watch?v=eQcmzGIKrzg',
         'info_dict': {
@@ -867,6 +880,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         },
         'skip': 'This video is not available.',
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # YouTube Red video with episode data
         'url': 'https://www.youtube.com/watch?v=iqKdEhx-dD4',
         'info_dict': {
@@ -948,6 +962,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         'url': 'https://www.youtube.com/watch?v=Z4Vy8R84T1U',
         'only_matching': True,
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # Youtube Music Auto-generated description
         # TODO: fix metadata extraction
         # https://github.com/ytdl-org/youtube-dl/issues/20599
@@ -1012,6 +1027,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         },
         'skip': 'Video unavailable',
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # empty description results in an empty string
         # https://github.com/ytdl-org/youtube-dl/pull/26575
         'url': 'https://www.youtube.com/watch?v=x41yOUIvK2k',
@@ -1051,6 +1067,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         ],
         'params': {'skip_download': True},
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # with '};' inside yt initial data (see [1])
         # see [2] for an example with '};' inside ytInitialPlayerResponse
         # 1. https://github.com/ytdl-org/youtube-dl/issues/27093
@@ -1102,6 +1119,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         'url': 'https://www.youtube.com/watch_popup?v=63RmMXCd_bQ',
         'only_matching': True,
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # https://github.com/ytdl-org/youtube-dl/pull/28094
         'url': 'OtqTfy26tG0',
         'info_dict': {
@@ -1183,6 +1201,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         },
         'skip': 'Age-restricted; requires authentication',
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # restricted location
         # https://github.com/ytdl-org/youtube-dl/issues/28685
         'url': 'cBvYw8_A0vQ',
@@ -1280,6 +1299,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         'url': 'https://www.youtube.com/shorts/BGQWPY4IigY',
         'only_matching': True,
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'note': 'Storyboards',
         'url': 'https://www.youtube.com/watch?v=5KLPxDtMqe8',
         'info_dict': {
@@ -1324,6 +1344,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'skip_download': True,
         },
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # Ensure video upload_date is in UTC timezone (video was uploaded 1641170939)
         'url': 'https://www.youtube.com/watch?v=2NUZ8W2llS4',
         'info_dict': {
@@ -1363,6 +1384,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         ],
         'params': {'skip_download': True},
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # date text is premiered video, ensure upload date in UTC (published 1641172509)
         'url': 'https://www.youtube.com/watch?v=mzZzzBU6lrM',
         'info_dict': {
@@ -1405,6 +1427,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         ],
         'params': {'skip_download': True},
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # continuous livestream.
         # Upload date was 2023-07-02T16:57:31+00:00, while stream start is 2023-07-02T17:10:22+00:00
         'url': 'https://www.youtube.com/watch?v=4xDzrJKXOOY',
@@ -1446,6 +1469,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         ],
         'params': {'skip_download': True},
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'url': 'https://www.youtube.com/watch?v=tjjjtzRLHvA',
         'info_dict': {
             'id': 'tjjjtzRLHvA',
@@ -1482,6 +1506,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         ],
         'params': {'skip_download': True},
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # Prefer primary title+description language metadata by default
         # Do not prefer translated description if primary is empty
         'url': 'https://www.youtube.com/watch?v=el3E4MbxRqQ',
@@ -1519,6 +1544,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         ],
         'params': {'skip_download': True},
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # Extractor argument: prefer translated title+description
         'url': 'https://www.youtube.com/watch?v=gHKT4uU8Zng',
         'info_dict': {
@@ -1637,6 +1663,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         },
         'skip': 'Age-restricted; requires authentication',
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'note': 'Support /live/ URL + media type for post-live content',
         'url': 'https://www.youtube.com/live/qVv6vCqciTM',
         'info_dict': {
@@ -1721,6 +1748,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         },
         'skip': 'PO Token Required',
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # uploader_id has non-ASCII characters that are percent-encoded in YT's JSON
         # https://github.com/yt-dlp/yt-dlp/pull/11818
         'url': 'https://www.youtube.com/shorts/18NGQq7p3LY',
@@ -1759,6 +1787,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         ],
         'params': {'skip_download': True},
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # Youtube Music Auto-generated description with dot in artist name
         'url': 'https://music.youtube.com/watch?v=DbCvuSGfR3Y',
         'info_dict': {
@@ -1806,6 +1835,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'skip_download': True,
         },
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # Video with two collaborators
         'url': 'https://www.youtube.com/watch?v=brhfDfLdDZ8',
         'info_dict': {
@@ -1848,6 +1878,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         ],
         'params': {'skip_download': True},
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # Video with five collaborators
         'url': 'https://www.youtube.com/watch?v=_A9KsMbWh4E',
         'info_dict': {
@@ -1889,6 +1920,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         ],
         'params': {'skip_download': True},
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # Comment subthreads with 4 levels of depth
         'url': 'https://www.youtube.com/watch?v=f6HNySwZV4c',
         'info_dict': {
@@ -1933,6 +1965,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'getcomments': True,
         },
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # Comments: `subThreads` containing `commentThreadRenderer`s AND `continuationItemRenderer`
         'url': 'https://www.youtube.com/watch?v=3dHQb2Nhma0',
         'info_dict': {
@@ -1976,6 +2009,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         },
     }]
     _WEBPAGE_TESTS = [{
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # <object>
         # https://github.com/ytdl-org/youtube-dl/pull/12696
         'url': 'http://www.improbable.com/2017/04/03/untrained-modern-youths-and-ancient-masters-in-selfie-portraits/',
@@ -2016,6 +2050,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         ],
         'params': {'skip_download': True},
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # <embed>
         # https://github.com/ytdl-org/youtube-dl/commit/2b88feedf7993c24b03e0a7ff169a548794de70c
         'url': 'https://badzine.de/news/als-marc-zwiebler-taufik-hidayat-schlug',
@@ -2055,6 +2090,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         ],
         'params': {'skip_download': True},
     }, {
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # WordPress Plugin: YouTube Video Importer
         # https://github.com/ytdl-org/youtube-dl/commit/7deef1ba6743bf11247565e63ed7e31d2e8a9382
         'url': 'https://lothype.com/2025-chino-hills-hs-snare-quad-features-wgi2025-drumline/',

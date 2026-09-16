@@ -1,10 +1,12 @@
 from .common import InfoExtractor
 from ..utils import (
+    ExtractorError,
     clean_html,
     determine_ext,
     int_or_none,
     parse_duration,
     parse_resolution,
+    traverse_obj,
     try_get,
     unified_timestamp,
     url_or_none,
@@ -16,131 +18,167 @@ class CCMAIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?3cat\.cat/(?:3cat|tv3/sx3)/[^/?#]+/(?P<type>video|audio)/(?P<id>\d+)'
     _TESTS = [
         {
+            'url': 'https://www.3cat.cat/3cat/el-cas-de-lavi-pistoler/video/6424022/',
+            'md5': 'bd15ec194343b851de773f2d9c020348',
+            'info_dict': {
+                'id': '6424022',
+                'ext': 'mp4',
+                'title': "El cas de l'avi pistoler",
+                'alt_title': "El cas de l'avi pistoler - 1 - El cas de l'avi pistoler - El cas de l'avi pistoler",
+                'description': 'md5:fbe7cb44ca4303b345ba6fe29172ca29',
+                'duration': 2927,
+                'thumbnail': 'https://img.3cat.cat/multimedia/jpg/6/0/1789390291506.jpg',
+                'timestamp': 1789502700,
+                'upload_date': '20260915',
+                'age_limit': 12,
+                'series': 'Sense ficció',
+                'episode': 'Episode 1',
+                'episode_number': 1,
+                'categories': ['Actualitat'],
+            },
+        },
+        {
             'url': 'https://www.3cat.cat/3cat/mirall-mirall/video/6296765/',
             'md5': 'd1260130ce1795a4005b05a72079f31d',
             'info_dict': {
-            'id': '6296765',
-            'ext': 'mp4',
-            'title': 'Mirall, mirall',
-            'alt_title': 'Mirall, mirall - Mirall, mirall',
-            'description': 'md5:a405abc98b1216acba3a6d0ded604c86',
-            'duration': 4748,
-            'thumbnail': 'https://img.3cat.cat/multimedia/jpg/6/3/1724225211536.jpg',
-            'timestamp': 1724965875,
-            'upload_date': '20240829',
-            'age_limit': 12,
-            'series': 'Pel·lícula',
-            'episode': 'Episode 1',
-            'episode_number': 1,
-            'categories': ['Ficció'],
+                'id': '6296765',
+                'ext': 'mp4',
+                'title': 'Mirall, mirall',
+                'alt_title': 'Mirall, mirall - Mirall, mirall',
+                'description': 'md5:a405abc98b1216acba3a6d0ded604c86',
+                'duration': 4748,
+                'thumbnail': 'https://img.3cat.cat/multimedia/jpg/6/3/1724225211536.jpg',
+                'timestamp': 1724965875,
+                'upload_date': '20240829',
+                'age_limit': 12,
+                'series': 'Pel·lícula',
+                'episode': 'Episode 1',
+                'episode_number': 1,
+                'categories': ['Ficció'],
+            },
+            'skip': 'video gone',
         },
-        },{
-        # ccma.cat/tv3/alacarta/ URLs redirect to 3cat.cat/3cat/
-        'url': 'https://www.3cat.cat/3cat/lespot-de-la-marato-de-tv3/video/5630208/',
-        'md5': '7296ca43977c8ea4469e719c609b0871',
-        'info_dict': {
-            'id': '5630208',
-            'ext': 'mp4',
-            'title': 'L\'espot de La Marató 2016: Ictus i les lesions medul·lars i cerebrals traumàtiques',
-            'description': 'md5:f12987f320e2f6e988e9908e4fe97765',
-            'timestamp': 1478608140,
-            'upload_date': '20161108',
-            'age_limit': 0,
-            'alt_title': 'EsportMarató2016WEB_PerPublicar',
-            'duration': 79,
-            'thumbnail': 'https://img.3cat.cat/multimedia/jpg/4/6/1478536106664.jpg',
-            'series': 'Dedicada a l\'ictus i les lesions medul·lars i cerebrals traumàtiques',
-            'categories': ['Divulgació'],
+        {
+            # ccma.cat/tv3/alacarta/ URLs redirect to 3cat.cat/3cat/
+            'url': 'https://www.3cat.cat/3cat/lespot-de-la-marato-de-tv3/video/5630208/',
+            'md5': '7296ca43977c8ea4469e719c609b0871',
+            'info_dict': {
+                'id': '5630208',
+                'ext': 'mp4',
+                'title': "L'espot de La Marató 2016: Ictus i les lesions medul·lars i cerebrals traumàtiques",
+                'description': 'md5:f12987f320e2f6e988e9908e4fe97765',
+                'timestamp': 1478608140,
+                'upload_date': '20161108',
+                'age_limit': 0,
+                'alt_title': 'EsportMarató2016WEB_PerPublicar',
+                'duration': 79,
+                'thumbnail': 'https://img.3cat.cat/multimedia/jpg/4/6/1478536106664.jpg',
+                'series': "Dedicada a l'ictus i les lesions medul·lars i cerebrals traumàtiques",
+                'categories': ['Divulgació'],
+            },
         },
-    }, {
-        # ccma.cat/catradio/alacarta/ URLs redirect to 3cat.cat/3cat/
-        'url': 'https://www.3cat.cat/3cat/el-consell-de-savis-analitza-el-derbi/audio/943685/',
-        'md5': 'fa3e38f269329a278271276330261425',
-        'info_dict': {
-            'id': '943685',
-            'ext': 'mp3',
-            'title': 'El Consell de Savis analitza el derbi',
-            'description': 'md5:e2a3648145f3241cb9c6b4b624033e53',
-            'upload_date': '20161217',
-            'timestamp': 1482011700,
-            'vcodec': 'none',
-            'categories': ['Esports'],
-            'series': 'Tot gira',
-            'duration': 821,
-            'thumbnail': 'https://img.3cat.cat/multimedia/jpg/8/9/1482002602598.jpg',
+        {
+            # ccma.cat/catradio/alacarta/ URLs redirect to 3cat.cat/3cat/
+            'url': 'https://www.3cat.cat/3cat/el-consell-de-savis-analitza-el-derbi/audio/943685/',
+            'md5': 'fa3e38f269329a278271276330261425',
+            'info_dict': {
+                'id': '943685',
+                'ext': 'mp3',
+                'title': 'El Consell de Savis analitza el derbi',
+                'description': 'md5:e2a3648145f3241cb9c6b4b624033e53',
+                'upload_date': '20161217',
+                'timestamp': 1482011700,
+                'vcodec': 'none',
+                'categories': ['Esports'],
+                'series': 'Tot gira',
+                'duration': 821,
+                'thumbnail': 'https://img.3cat.cat/multimedia/jpg/8/9/1482002602598.jpg',
+            },
         },
-    }, {
-        'url': 'https://www.3cat.cat/3cat/crims-josep-tallada-lespereu-me-part-1/video/6031387/',
-        'skip': 'stale test sample / site changed',
-        'md5': '27493513d08a3e5605814aee9bb778d2',
-        'info_dict': {
-            'id': '6031387',
-            'ext': 'mp4',
-            'title': 'T1xC5 - Josep Talleda, l\'"Espereu-me" (part 1)',
-            'description': 'md5:7cbdafb640da9d0d2c0f62bad1e74e60',
-            'timestamp': 1582577919,
-            'upload_date': '20200224',
-            'subtitles': 'mincount:1',
-            'age_limit': 13,
-            'series': 'Crims',
-            'thumbnail': 'https://img.3cat.cat/multimedia/jpg/1/9/1582564376991.jpg',
-            'duration': 3203,
-            'categories': ['Divulgació'],
-            'alt_title': 'Crims - 5 - Josep Talleda, l\'"Espereu-me" (1a part) - Josep Talleda, l\'"Espereu-me" (part 1)',
-            'episode_number': 5,
-            'episode': 'Episode 5',
+        {
+            'url': 'https://www.3cat.cat/3cat/crims-josep-tallada-lespereu-me-part-1/video/6031387/',
+            'skip': 'stale test sample / site changed',
+            'md5': '27493513d08a3e5605814aee9bb778d2',
+            'info_dict': {
+                'id': '6031387',
+                'ext': 'mp4',
+                'title': 'T1xC5 - Josep Talleda, l\'"Espereu-me" (part 1)',
+                'description': 'md5:7cbdafb640da9d0d2c0f62bad1e74e60',
+                'timestamp': 1582577919,
+                'upload_date': '20200224',
+                'subtitles': 'mincount:1',
+                'age_limit': 13,
+                'series': 'Crims',
+                'thumbnail': 'https://img.3cat.cat/multimedia/jpg/1/9/1582564376991.jpg',
+                'duration': 3203,
+                'categories': ['Divulgació'],
+                'alt_title': 'Crims - 5 - Josep Talleda, l\'"Espereu-me" (1a part) - Josep Talleda, l\'"Espereu-me" (part 1)',
+                'episode_number': 5,
+                'episode': 'Episode 5',
+            },
         },
-    }, {
-        'url': 'https://www.3cat.cat/tv3/sx3/una-mosca-volava-per-la-llum/video/5759227/',
-        'info_dict': {
-            'id': '5759227',
-            'ext': 'mp4',
-            'title': 'Una mosca volava per la llum',
-            'alt_title': '17Z004Ç UNA MOSCA VOLAVA PER LA LLUM',
-            'description': 'md5:091eb805b43077e11b1c183c5ca5c843',
-            'series': 'Mic',
-            'upload_date': '20180411',
-            'timestamp': 1523440105,
-            'duration': 160,
-            'age_limit': 0,
-            'thumbnail': 'https://img.3cat.cat/multimedia/jpg/6/1/1524071667216.jpg',
-            'categories': ['Música'],
+        {
+            'url': 'https://www.3cat.cat/tv3/sx3/una-mosca-volava-per-la-llum/video/5759227/',
+            'info_dict': {
+                'id': '5759227',
+                'ext': 'mp4',
+                'title': 'Una mosca volava per la llum',
+                'alt_title': '17Z004Ç UNA MOSCA VOLAVA PER LA LLUM',
+                'description': 'md5:091eb805b43077e11b1c183c5ca5c843',
+                'series': 'Mic',
+                'upload_date': '20180411',
+                'timestamp': 1523440105,
+                'duration': 160,
+                'age_limit': 0,
+                'thumbnail': 'https://img.3cat.cat/multimedia/jpg/6/1/1524071667216.jpg',
+                'categories': ['Música'],
+            },
         },
-    }]
+    ]
 
     def _real_extract(self, url):
         media_type, media_id = self._match_valid_url(url).group('type', 'id')
 
         media = self._download_json(
-            'http://api-media.3cat.cat/pvideo/media.jsp', media_id, query={
+            'http://api-media.3cat.cat/pvideo/media.jsp',
+            media_id,
+            query={
                 'media': media_type,
                 'idint': media_id,
                 'format': 'dm',
-            })
+            },
+        )
+
+        media_url = traverse_obj(media, ('media', 'url'))
+        if not media_url:
+            status = traverse_obj(media, ('informacio', 'estat', {dict})) or {}
+            raise ExtractorError(status.get('text') or 'This video is unpublished or unavailable', expected=True)
 
         formats = []
-        media_url = media['media']['url']
         if isinstance(media_url, list):
             for format_ in media_url:
                 format_url = url_or_none(format_.get('file'))
                 if not format_url:
                     continue
                 if determine_ext(format_url) == 'mpd':
-                    formats.extend(self._extract_mpd_formats(
-                        format_url, media_id, mpd_id='dash', fatal=False))
+                    formats.extend(self._extract_mpd_formats(format_url, media_id, mpd_id='dash', fatal=False))
                     continue
                 label = format_.get('label')
                 f = parse_resolution(label)
-                f.update({
-                    'url': format_url,
-                    'format_id': label,
-                })
+                f.update(
+                    {
+                        'url': format_url,
+                        'format_id': label,
+                    },
+                )
                 formats.append(f)
         else:
-            formats.append({
-                'url': media_url,
-                'vcodec': 'none' if media_type == 'audio' else None,
-            })
+            formats.append(
+                {
+                    'url': media_url,
+                    'vcodec': 'none' if media_type == 'audio' else None,
+                },
+            )
 
         informacio = media['informacio']
         title = informacio['titol']
@@ -158,21 +196,24 @@ class CCMAIE(InfoExtractor):
         for st in subtitols:
             sub_url = st.get('url')
             if sub_url:
-                subtitles.setdefault(
-                    st.get('iso') or st.get('text') or 'ca', []).append({
+                subtitles.setdefault(st.get('iso') or st.get('text') or 'ca', []).append(
+                    {
                         'url': sub_url,
-                    })
+                    },
+                )
 
         thumbnails = []
         imatges = media.get('imatges', {})
         if imatges:
             thumbnail_url = imatges.get('url')
             if thumbnail_url:
-                thumbnails = [{
-                    'url': thumbnail_url,
-                    'width': int_or_none(imatges.get('amplada')),
-                    'height': int_or_none(imatges.get('alcada')),
-                }]
+                thumbnails = [
+                    {
+                        'url': thumbnail_url,
+                        'width': int_or_none(imatges.get('amplada')),
+                        'height': int_or_none(imatges.get('alcada')),
+                    },
+                ]
 
         age_limit = None
         codi_etic = try_get(informacio, lambda x: x['codi_etic']['id'])

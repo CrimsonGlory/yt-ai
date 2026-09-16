@@ -15,6 +15,7 @@ class EinthusanIE(InfoExtractor):
     _VALID_URL = r'https?://(?P<host>einthusan\.(?:tv|com|ca))/movie/watch/(?P<id>[^/?#&]+)'
     _TESTS = [{
         'url': 'https://einthusan.tv/movie/watch/9097/',
+        'skip': 'CDN SSL certificate has expired',
         'md5': 'ff0f7f2065031b8a2cf13a933731c035',
         'info_dict': {
             'id': '9097',
@@ -22,7 +23,7 @@ class EinthusanIE(InfoExtractor):
             'title': 'Ae Dil Hai Mushkil',
             'description': 'md5:13739ab7ebbf8f2446cb84ccf7484dac',
             'thumbnail': r're:^https?://.*\.jpg$',
-        }
+        },
     }, {
         'url': 'https://einthusan.tv/movie/watch/51MZ/?lang=hindi',
         'only_matching': True,
@@ -36,9 +37,9 @@ class EinthusanIE(InfoExtractor):
 
     # reversed from jsoncrypto.prototype.decrypt() in einthusan-PGMovieWatcher.js
     def _decrypt(self, encrypted_data, video_id):
-        return self._parse_json(base64.b64decode((
-            encrypted_data[:10] + encrypted_data[-1] + encrypted_data[12:-1]
-        )).decode('utf-8'), video_id)
+        return self._parse_json(base64.b64decode(
+            encrypted_data[:10] + encrypted_data[-1] + encrypted_data[12:-1],
+        ).decode('utf-8'), video_id)
 
     def _real_extract(self, url):
         mobj = self._match_valid_url(url)
@@ -60,7 +61,7 @@ class EinthusanIE(InfoExtractor):
                 'xEvent': 'UIVideoPlayer.PingOutcome',
                 'xJson': json.dumps({
                     'EJOutcomes': player_params['data-ejpingables'],
-                    'NativeHLS': False
+                    'NativeHLS': False,
                 }),
                 'arcVersion': 3,
                 'appVersion': 59,

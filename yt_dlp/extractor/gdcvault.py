@@ -18,6 +18,7 @@ class GDCVaultIE(InfoExtractor):
                 'ext': 'mp4',
                 'title': 'Doki-Doki Universe: Sweet, Simple and Genuine (GDC Next 10)',
             },
+            'skip': 'gdcvault.com HTTP 504 Gateway Timeout from this environment',
         },
         {
             'url': 'https://www.gdcvault.com/play/1015683/Embracing-the-Dark-Art-of',
@@ -27,6 +28,7 @@ class GDCVaultIE(InfoExtractor):
                 'ext': 'mp4',
                 'title': 'Embracing the Dark Art of Mathematical Modeling in AI',
             },
+            'skip': 'gdcvault.com HTTP 504 Gateway Timeout from this environment',
         },
         {
             # missing login to assert correct MD5 for test case
@@ -54,6 +56,7 @@ class GDCVaultIE(InfoExtractor):
                 'display_id': 'Tenacious-Design-and-The-Interface',
                 'title': 'Tenacious Design and The Interface of \'Destiny\'',
             },
+            'skip': 'gdcvault.com HTTP 504 Gateway Timeout from this environment',
         },
         {
             # Includes Ja/En Subtitles. Historically had multiple audio streams. Currently only
@@ -68,6 +71,7 @@ class GDCVaultIE(InfoExtractor):
             'params': {
                 'skip_download': True,  # Requires rtmpdump
             },
+            'skip': 'gdcvault.com HTTP 504 Gateway Timeout from this environment',
         },
         {
             # legacy native HTML video player
@@ -78,6 +82,7 @@ class GDCVaultIE(InfoExtractor):
                 'ext': 'mp4',
                 'title': 'An American engine in Tokyo: The collaboration of Epic Games and Square Enix for THE LAST REMNANT',
             },
+            'skip': 'gdcvault.com HTTP 504 Gateway Timeout from this environment',
         },
         {
             # HTML5 video

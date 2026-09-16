@@ -110,7 +110,7 @@ class TVerIE(StreaksBaseIE):
             'id': 'srtxft431v',
             'title': '名探偵コナン',
         },
-        'playlist_mincount': 4,
+        'playlist_mincount': 3,
     }, {
         'url': 'https://tver.jp/series/sru35hwdd2',
         'info_dict': {

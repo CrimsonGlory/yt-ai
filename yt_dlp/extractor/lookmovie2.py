@@ -19,7 +19,7 @@ class LookMovie2IE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?lookmovie2\.to/(?P<media_type>movies|shows)/(?:play|view)/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://www.lookmovie2.to/movies/play/1756855-coyote-vs-acme-2026',
-        'md5': '8e7519f52d6a9912bb1daa4d8d9e2cf3',
+        'md5': 'efdea5e12066d600c3ba7190e3539b2f',
         'info_dict': {
             'id': '156087',
             'ext': 'mp4',

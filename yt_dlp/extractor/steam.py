@@ -121,6 +121,7 @@ class SteamCommunityIE(InfoExtractor):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://steamcommunity.com/sharedfiles/filedetails/?id=3544291945',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'info_dict': {
             'id': '5JZZlsAdsvI',
             'ext': 'mp4',

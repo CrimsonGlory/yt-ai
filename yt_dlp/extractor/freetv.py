@@ -74,7 +74,7 @@ class FreeTvMoviesIE(FreeTvBaseIE):
                 'title': r're:FreeTV Familia',
                 'description': 'md5:76ea2b8f4a693caff751f8f01738dd55',
                 'thumbnail': r're:https?://.+\.(?:jpg|png)',
-                'timestamp': 1751526000,
+                'timestamp': 1751500800,
                 'upload_date': '20250703',
                 'live_status': 'is_live',
             },

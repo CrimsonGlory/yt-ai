@@ -16,6 +16,7 @@ class TheInterceptIE(InfoExtractor):
     _TESTS = [{
         # Current video articles embed YouTube in FeaturedImageHero
         'url': 'https://theintercept.com/2025/09/03/ice-la-immigrants-activists-teacher-union-del-barrio/',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'md5': '481349799d62e5cc5854931e07c86b3c',
         'info_dict': {
             'id': 'e9lRq9nfevs',

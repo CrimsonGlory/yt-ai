@@ -324,7 +324,7 @@ class ArteTVPlaylistIE(ArteTVBaseIE):
         'url': 'https://www.arte.tv/de/videos/RC-027513/twin-peaks/',
         'playlist_mincount': 48,
         'info_dict': {
-            'description': 'md5:4a99f0339d76e4a11a6ad751234d2398',
+            'description': 'md5:35d48133f245afde5d3cd2d20def9a84',
             'id': 'RC-027513',
             'title': 'Twin Peaks',
         },

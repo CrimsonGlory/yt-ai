@@ -7,6 +7,7 @@ class YoutubeClipIE(YoutubeTabBaseInfoExtractor):
     IE_NAME = 'youtube:clip'
     _VALID_URL = r'https?://(?:www\.)?youtube\.com/clip/(?P<id>[^/?#]+)'
     _TESTS = [{
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         # FIXME: Other metadata should be extracted from the clip, not from the base video
         'url': 'https://www.youtube.com/clip/UgytZKpehg-hEMBSn3F4AaABCQ',
         'info_dict': {

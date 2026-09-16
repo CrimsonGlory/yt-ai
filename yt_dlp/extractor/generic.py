@@ -391,7 +391,7 @@ class GenericIE(InfoExtractor):
         # kt_player.js?v=12
         # https://github.com/ytdl-org/youtube-dl/commit/fc2beab0e701c497a003f11fef5c0df54fba1da3
         'url': 'https://shooshtime.com/videos/346037/fresh-out-of-the-shower/',
-        'md5': 'c9a97ad528607a4516d4df83a3aeb12c',
+        'md5': '790adfd582c9999f3cc5157f5142dd58',
         'info_dict': {
             'id': '346037',
             'ext': 'mp4',

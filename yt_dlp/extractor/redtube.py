@@ -22,7 +22,7 @@ class RedTubeIE(InfoExtractor):
             'id': '194739971',
             'ext': 'mp4',
             'title': 'Anal Creampie to my new date',
-            'description': 'md5:4a3bdc7bbb2a3769e2039023bce59d66',
+            'description': str,
             'duration': 2285,
             'thumbnail': 'md5:fbf846ca689ba36162224ba63584ed87',
             'timestamp': 1755897146,

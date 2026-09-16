@@ -22,7 +22,29 @@ class SpinitronIE(InfoExtractor):
     IE_DESC = 'Spinitron'
     _VALID_URL = r'https?://(?:www\.)?spinitron\.com/(?P<station>[^/?#]+)/pl/(?P<id>\d+)'
     _TESTS = [{
+        'url': 'https://spinitron.com/KPOV/pl/22981420/Calling-All-Cowboys',
+        'md5': 'ae5e7f4f58b915bbd42df8c585458d9b',
+        'info_dict': {
+            'id': '22981420',
+            'ext': 'mp4',
+            'title': 'Calling All Cowboys Sun Sep 6 with Chuckaroo The Buckaroo on 88.9FM KPOV Bend',
+            'description': 'md5:e41316b6bf2a1e2c7f81fc94c137429e',
+            'thumbnail': 'https://spinitron.com/images/Show/01/18/11860-img_show.225x225.jpg?v=1675713243',
+            'timestamp': 1788728400,
+            'upload_date': '20260906',
+            'series': 'Calling All Cowboys',
+            'series_id': '11860',
+            'uploader': '88.9FM KPOV Bend',
+            'uploader_id': 'KPOV',
+            'channel': '88.9FM KPOV Bend',
+            'channel_id': 'KPOV',
+            'channel_url': 'https://spinitron.com/KPOV/',
+            'creators': ['Chuckaroo The Buckaroo'],
+            'genres': ['Music'],
+        },
+    }, {
         'url': 'https://spinitron.com/KPOV/pl/22946778/Calling-All-Cowboys',
+        'skip': 'audio expired',
         'md5': '2732de5b7b2db252e780eaefbbd4c2d2',
         'info_dict': {
             'id': '22946778',

@@ -10,6 +10,7 @@ class UnityIE(InfoExtractor):
     )
     _TESTS = [{
         'url': 'https://unity3d.com/learn/tutorials/tutorial/introduction-to-unity-studio',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'md5': 'd79bc354eeb679b0054b2f4eb8a85b00',
         'info_dict': {
             'id': 'elSPChXnOhA',

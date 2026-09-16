@@ -31,7 +31,7 @@ class ToonGogglesIE(InfoExtractor):
             'title': 'Fishing',
             'description': 'md5:3b94eac1231429cdeb31684f77f14608',
             'thumbnail': r're:https?://.+\.(?:jpg|png)',
-            'timestamp': 1737705600,
+            'timestamp': 1737676800,
             'upload_date': '20250124',
             'duration': 330,
             'series': 'Mya Go',

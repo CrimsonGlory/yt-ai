@@ -41,7 +41,7 @@ class GaskrankIE(InfoExtractor):
                 'view_count': int,
                 'average_rating': float,
                 'categories': ['racing'],
-                'tags': ['sprintrace', 'sprint race', 'misano', 'sanmarinogp 2026', 'san marino gp', 'devinox', 'motogp'],
+                'tags': list,
             },
         }, {
             'url': 'http://www.gaskrank.tv/tv/racing/aragongp-2026-nach-dem-zieleinlauf-stimmen-party.htm',

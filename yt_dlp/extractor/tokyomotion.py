@@ -22,6 +22,7 @@ class TokyoMotionIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.tokyomotion.net/video/6002672/',
+            'skip': 'video gone',
             'md5': '89d605d59fc9b0077caa9aaa33b4ab87',
             'info_dict': {
                 'id': '6002672',
@@ -49,7 +50,23 @@ class TokyoMotionIE(InfoExtractor):
         },
         {
             'url': 'https://tokyomotion.net/video/6887876/amateur-threesome-at-a-wild-party',
-            'only_matching': True,
+            'md5': 'e0a5d3764d97b1b2fe877f5cbe4f6fd1',
+            'info_dict': {
+                'id': '6887876',
+                'ext': 'mp4',
+                'display_id': 'amateur-threesome-at-a-wild-party',
+                'title': 'Amateur Threesome at a Wild Party',
+                'description': 'threesome cam party',
+                'thumbnail': r're:https?://cdn\.tokyo-motion\.net/media/videos/tmb\d+/6887876/default\.jpg',
+                'duration': 544.83,
+                'view_count': int,
+                'like_count': int,
+                'dislike_count': int,
+                'uploader': 'wildpennie',
+                'uploader_id': '1087139',
+                'tags': ['amateur', 'party', 'threesome', 'webcam', 'my', 'cam', 'parties', 'threesomes', 'trio'],
+                'age_limit': 18,
+            },
         },
     ]
 

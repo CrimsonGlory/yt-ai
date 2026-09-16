@@ -1244,6 +1244,7 @@ class YoutubeTabIE(YoutubeTabBaseInfoExtractor):
         'playlist_mincount': 239,
     }, {
         'note': 'Videos tab, sorted by popular',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'url': 'https://www.youtube.com/channel/UCTwECeGqMZee77BjdoYtI2Q/videos?view=0&sort=p&flow=grid',
         'info_dict': {
             'id': 'UCTwECeGqMZee77BjdoYtI2Q',
@@ -1479,6 +1480,7 @@ class YoutubeTabIE(YoutubeTabBaseInfoExtractor):
         'only_matching': True,
     }, {
         'note': 'Channel /live redirects to current livestream; video id changes',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'url': 'https://www.youtube.com/channel/UCoMdktPbSTixAyNGwb-UYkQ/live',
         'info_dict': {
             'id': r're:[A-Za-z0-9_-]{11}',

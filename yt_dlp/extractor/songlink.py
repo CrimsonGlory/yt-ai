@@ -24,6 +24,7 @@ class SonglinkIE(InfoExtractor):
         r'(?P<kind>[a-z]{1,3})/(?P<id>[\w-]+)')
     _TESTS = [{
         'url': 'https://song.link/y/nov2mB552aI',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'md5': '74705a2a496ed91944cd55da897c75fc',
         'info_dict': {
             'id': 'nov2mB552aI',

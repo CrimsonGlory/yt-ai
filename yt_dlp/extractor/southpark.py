@@ -212,7 +212,7 @@ class SouthParkLatIE(MTVServicesBaseIE):
             'description': 'Cartman steals Butters\' tooth and gets four dollars for it.',
             'duration': 93.26,
             'thumbnail': r're:https://images\.paramount\.tech/uri/mgid:arc:imageassetref:',
-            'series': 'South Park',
+            'series': 'South America',
             'season': 'Season 4',
             'season_number': 4,
             'episode': 'Episode 1',

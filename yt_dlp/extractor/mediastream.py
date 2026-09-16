@@ -64,6 +64,7 @@ class MediaStreamIE(MediaStreamBaseIE):
 
     _WEBPAGE_TESTS = [{
         # Homepage CMS JSON (transmissionVideoURL) rotates between live-stream and VOD
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'url': 'https://www.latercera.com/',
         'info_dict': {
             'id': r're:[0-9a-f]{24}$',

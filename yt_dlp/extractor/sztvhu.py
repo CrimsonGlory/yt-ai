@@ -7,6 +7,7 @@ class SztvHuIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?:sztv|tvszombathely)\.hu/(?:[^/?#]+)/(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://www.sztv.hu/hirek/tobb-tizezren-jelentkeztek-augusztus-19-e-ota-a-civilek-altal-inditott-orszagos-erintok-programra',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'md5': '2ef73a9a9d90a90522f9d19bab761ed8',
         'info_dict': {
             'id': 'KCUimKtJrLg',
@@ -44,6 +45,7 @@ class SztvHuIE(InfoExtractor):
         ],
     }, {
         'url': 'https://www.sztv.hu/hirado/hirado-2026-augusztus-28',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'md5': '9e1f47c4372da699c4e7bd80ff6436a6',
         'info_dict': {
             'id': '2SEHYeO2YaM',

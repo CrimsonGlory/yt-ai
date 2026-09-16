@@ -2570,9 +2570,10 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **allocine**: Extract Dailymotion videos via `DailymotionIE`
     * **amazon**: Product-gallery `jQuery.parseJSON` videos; extract VSE HLS as MP4 formats; impersonate Chrome when the storefront serves a captcha interstitial
     * **beatport**: Next.js `track_name` / `track_length_ms` / release `image_url` fields
-    * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate video and bangumi play pages, and on 412 fall back to `wbi/view/detail` / `pgc/player/web/v2/playurl`
+    * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate video, bangumi, and dynamic play pages; on 412 fall back to `wbi/view/detail` / `pgc/player/web/v2/playurl`; resolve opus/dynamic `bvid` when `jump_url` is missing
     * **bunnycdn**: Fall back to `playlist.m3u8` when JSON-LD is missing
     * **cam4**: Profile `/rest/v1.0/profile/{id}/streamInfo` HLS `cdnURL`/`edgeURL` (try each until one plays); empty 204 means the room is offline
+    * **ccma**: Raise an expected error when the 3cat media API omits `media` (unpublished/expired)
     * **cliprs**: Extract Ring Publishing embeds
     * **cspan**: Fall back to JSON-LD / m3u8 when player JS is blocked
     * **cu.ntv.co.jp**: Raise geo-restriction when CloudFront / Streaks block playback outside Japan
@@ -2607,6 +2608,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **freetv**: Use the current playback API instead of WordPress admin-ajax
     * **funker530**: Follow BunnyCDN / current embeds instead of Rumble-only
     * **gamedevtv**: Extract public course preview media via sales-data / BunnyCDN without login
+    * **gamejolt**: Skip incomplete search posts without `action_resource_model`
     * **gamespot**: JW Platform embeds and slug URLs
     * **gamestar**: Dailymotion player config (impersonate Firefox)
     * **gazeta**: Extract current article video embeds
@@ -2629,6 +2631,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **ign**: Tolerate missing `videoId` and extra m3u8 paths
     * **ilpost**: Next.js episode data and podcast path URLs
     * **imdb**: GraphQL `VideoPlayback` API
+    * **imagentv**: Follow meta-refresh to `/programas/` and extract Dailymotion/YouTube from JSON-LD
     * **indavideo**: Referer + JSONP callback on `playerHandler`
     * **iqiyi**: Current IQ/iQIYI playback (bid quality tags and signed play URLs)
     * **islamchannel**: VOD paths and a fallback stream URL
@@ -2855,6 +2858,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **wwe**: Read Drupal 10 `drupal-settings-json` instead of the old `Drupal.settings` JS
     * **xanimu**: Impersonate the browser to bypass Cloudflare and read JSON-LD metadata
     * **xfileshare**: Match current Uqload TLDs (`uqload.vc` and related mirrors) after `uqload.com` started redirecting
+    * **xiaohongshu**: Impersonate the browser and fall back to `og:title` when note JSON omits title
     * **xinpianchang**: Read Next.js `_next/data` instead of WAF-blocked article HTML; send Referer on media CDN requests
     * **XMinus**: Reconstruct xmst.cc `/dl/minus` URLs from the current x-minus.pro player after x-minus.org expired
     * **yandexdisk**: Support password-protected public files (`--video-password`)
