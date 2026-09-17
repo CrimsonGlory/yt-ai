@@ -64,7 +64,7 @@ class SkyItPlayerIE(SkyItBaseIE):
             url).query).get('domain', [None])[0]
         token = dict_get(self._TOKEN_MAP, (domain, 'sky'))
         video = self._download_json(
-            'https://apid.sky.it/vdp/v1/getVideoData',
+            'https://video.sky.it/api/v1/getVideoData',
             video_id, query={
                 'caller': 'sky',
                 'id': video_id,
@@ -126,7 +126,7 @@ class SkyItVideoLiveIE(SkyItBaseIE):
         webpage = self._download_webpage(url, display_id)
         asset_id = str(self._search_nextjs_data(webpage, display_id)['props']['initialState']['livePage']['content']['asset_id'])
         livestream = self._download_json(
-            'https://apid.sky.it/vdp/v1/getLivestream',
+            'https://video.sky.it/api/v1/getLivestream',
             asset_id, query={'id': asset_id})
         return self._parse_video(livestream, asset_id)
 
@@ -281,7 +281,7 @@ class TV8ItLiveIE(SkyItBaseIE):
     def _real_extract(self, url):
         video_id = 'tv8'
         livestream = self._download_json(
-            'https://apid.sky.it/vdp/v1/getLivestream', video_id,
+            'https://video.sky.it/api/v1/getLivestream', video_id,
             'Downloading manifest JSON', query={'id': '7'})
         metadata = self._download_json('https://tv8.it/api/getStreaming', video_id, fatal=False)
 

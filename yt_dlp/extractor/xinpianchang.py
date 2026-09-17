@@ -61,6 +61,7 @@ class XinpianchangIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.xinpianchang.com/a11766551',
+        'skip': 'video gone',
         'md5': '0db6e8566cb82c01ec12b587b4a78cf8',
         'info_dict': {
             'id': 'a11766551',

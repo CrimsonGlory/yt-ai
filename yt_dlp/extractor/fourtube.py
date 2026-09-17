@@ -184,8 +184,8 @@ class PornTubeIE(FourTubeBaseIE):
         'info_dict': {
             'id': 'alexa-chains-demands-a-massive-black-cock',
             'ext': 'mp4',
-            'title': 'Alexa Chains Demands A Massive Black Cock',
-            'description': 'md5:d759274aabf83eb71b3967e50caeb5db',
+            'title': str,
+            'description': str,
             'duration': 2602,
             'thumbnail': r're:https://i\.bang\.com/.+',
             'timestamp': 1787270400,

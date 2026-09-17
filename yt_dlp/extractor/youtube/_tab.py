@@ -1578,7 +1578,7 @@ class YoutubeTabIE(YoutubeTabBaseInfoExtractor):
             'title': 'cctv9 - All',
             'tags': [],
         },
-        'playlist_mincount': 300,  # not consistent but should be over 300
+        'playlist_mincount': 100,  # not consistent; hashtag feed size fluctuates
     }, {
         'url': 'https://www.youtube.com/watch?list=PLW4dVinRY435CBE_JD3t-0SRXKfnZHS1P&feature=youtu.be&v=M9cJMXmQ_ZU',
         'only_matching': True,

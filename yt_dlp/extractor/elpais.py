@@ -62,12 +62,15 @@ class ElPaisIE(InfoExtractor):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
 
-        # Current pages expose the media URL in schema.org VideoObject JSON-LD.
-        json_ld = self._search_json_ld(
-            webpage, video_id, expected_type='VideoObject', default={})
+        # Current pages nest VideoObject under NewsArticle JSON-LD (`video.contentUrl`).
+        # Do not pass expected_type='VideoObject': that skips the parent NewsArticle.
+        json_ld = self._search_json_ld(webpage, video_id, default={})
         # encodingFormat is often advertised as video/mpeg for actual MP4 files.
         json_ld.pop('ext', None)
         video_url = url_or_none(json_ld.get('url'))
+        if not video_url:
+            video_url = url_or_none(self._search_regex(
+                r'"contentUrl"\s*:\s*"([^"]+\.mp4)"', webpage, 'content URL', default=None))
         thumbnail = None
         title = json_ld.get('title')
         upload_date = None

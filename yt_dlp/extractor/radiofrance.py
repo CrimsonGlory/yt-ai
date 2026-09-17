@@ -534,14 +534,12 @@ class RadioFranceProgramScheduleIE(RadioFranceBaseIE):
             return grid_data, upload_date
 
         # SvelteKit ProgramGrid hydrates `programs:[{__typename:"Expression", ...}]`
-        raw_programs = self._search_regex(
-            r'programs\s*:\s*(\[\{__typename:"Expression".+?\}\])\s*,\s*sliderChaineData',
-            webpage, 'program grid', default=None)
-        if raw_programs:
-            programs = self._parse_json(
-                raw_programs, station, transform_source=js_to_json, fatal=False)
-            if isinstance(programs, list):
-                return programs, self._program_schedule_date(url, programs)
+        programs = self._search_json(
+            r'programs\s*:', webpage, 'program grid', station,
+            contains_pattern=r'\[\{__typename:"Expression"(?s:.+)\]',
+            transform_source=js_to_json, default=None)
+        if isinstance(programs, list):
+            return programs, self._program_schedule_date(url, programs)
 
         raise ExtractorError('Unable to extract program grid', expected=True)
 

@@ -33,6 +33,7 @@ class MediasetIE(ThePlatformBaseIE):
     ]
     _TESTS = [{
         'url': 'https://mediasetinfinity.mediaset.it/video/yogaradioestate/green-o-red-flag_FD00000000540346',
+        'skip': 'geo-restricted (ThePlatform SMIL 400 / no formats)',
         'md5': '65d32af3dbc375b42aa975aef1a0e151',
         'info_dict': {
             'id': 'FD00000000540346',

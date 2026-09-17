@@ -295,32 +295,35 @@ class TikTokBaseIE(InfoExtractor):
 
             return webpage
 
-        webpage = get_webpage()
-        if webpage is False:
-            return video_data, status
+        cookie_names = ()
+        universal_data = {}
+        last_challenge_error = None
+        for attempt in range(1, 4):
+            note = 'Downloading webpage' if attempt == 1 else f'Downloading webpage (attempt {attempt})'
+            webpage = get_webpage(note=note)
+            if cookie_names:
+                # Challenge cookies are single-use (Max-Age=1 in the site JS).
+                for cookie_name in filter(None, cookie_names):
+                    self.cookiejar.clear(domain='.tiktok.com', path='/', name=cookie_name)
+                cookie_names = ()
+            if webpage is False:
+                return video_data, status
 
-        universal_data = self._get_universal_data(webpage, video_id)
-        if not universal_data:
+            universal_data = self._get_universal_data(webpage, video_id)
+            if universal_data:
+                break
             try:
                 cookie_names = self._solve_challenge_and_set_cookies(webpage)
             except ExtractorError as e:
-                if fatal:
-                    raise
-                self.report_warning(e.orig_msg, video_id=video_id)
-                return video_data, status
-
-            webpage = get_webpage(note='Downloading webpage with challenge cookie')
-            # Manually clear challenge cookies that should expire immediately after webpage request
-            for cookie_name in filter(None, cookie_names):
-                self.cookiejar.clear(domain='.tiktok.com', path='/', name=cookie_name)
-            if webpage is False:
-                return video_data, status
-            universal_data = self._get_universal_data(webpage, video_id)
+                last_challenge_error = e
+                if attempt == 3:
+                    break
+                self.write_debug(f'{e.orig_msg}; retrying')
 
         if not universal_data:
             message = 'Unable to extract universal data for rehydration'
             if fatal:
-                raise ExtractorError(message)
+                raise last_challenge_error or ExtractorError(message)
             self.report_warning(message, video_id=video_id)
             return video_data, status
 

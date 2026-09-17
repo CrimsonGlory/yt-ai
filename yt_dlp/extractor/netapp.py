@@ -57,6 +57,7 @@ class NetAppVideoIE(NetAppBaseIE):
         'expected_warnings': [
             'Remote component challenge solver script',
             'No supported JavaScript runtime',
+            'n challenge solving failed',
         ],
     }, {
         'url': 'https://media.netapp.com/video-detail/da25fc01-82ad-5284-95bc-26920200a222/seamless-storage-for-modern-kubernetes-deployments',

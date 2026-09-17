@@ -45,6 +45,7 @@ class MyVidsterIE(InfoExtractor):
         'expected_warnings': [
             'Remote component challenge solver script',
             'No supported JavaScript runtime',
+            'n challenge solving failed',
         ],
     }, {
         'url': 'http://www.myvidster.com/video/32059805/Hot_chemistry_with_raw_love_making',

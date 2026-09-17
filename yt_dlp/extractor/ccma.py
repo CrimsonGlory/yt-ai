@@ -28,7 +28,7 @@ class CCMAIE(InfoExtractor):
                 'description': 'md5:fbe7cb44ca4303b345ba6fe29172ca29',
                 'duration': 2927,
                 'thumbnail': 'https://img.3cat.cat/multimedia/jpg/6/0/1789390291506.jpg',
-                'timestamp': 1789502700,
+                'timestamp': 1789503128,
                 'upload_date': '20260915',
                 'age_limit': 12,
                 'series': 'Sense ficció',

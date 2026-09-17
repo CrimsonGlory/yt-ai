@@ -1152,6 +1152,12 @@ class FacebookAdsIE(InfoExtractor):
                 ..., '__bbox', 'result', 'data', 'ad_library_main',
                 'deeplink_ad_archive_result', 'deeplink_ad_archive', 'snapshot', {dict}, any))
         if not data:
+            # Challenge/SSR pages may omit ScheduledServerJS; the archive snapshot is still inline.
+            data = traverse_obj(
+                self._search_json(
+                    r'"deeplink_ad_archive"\s*:\s*', webpage, 'ad archive', video_id, default=None),
+                ('snapshot', {dict}))
+        if not data:
             raise ExtractorError('Unable to extract ad data')
 
         title = data.get('title')

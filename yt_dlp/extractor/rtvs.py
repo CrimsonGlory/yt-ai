@@ -21,7 +21,7 @@ class RTVSIE(InfoExtractor):
             'ext': 'mp3',
             'title': 'Ostrov pokladov 1 časť.mp3',
             'duration': 2854,
-            'thumbnail': 'https://www.stvr.sk/media/a501/image/file/2/0000/stvr.jpg',
+            'thumbnail': 'https://www.stvr.sk/media/a501/image/file/2/1548/stvr-placeholder.jpg',
             'display_id': '135331',
             'timestamp': 1507569121,
             'upload_date': '20171009',

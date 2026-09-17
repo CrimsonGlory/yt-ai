@@ -19,7 +19,7 @@ class BFIPlayerIE(InfoExtractor):
         'info_dict': {
             'id': '6399173210112',
             'ext': 'mp4',
-            'title': "Callum Turner's 3 You Must See on BFI Player",
+            'title': "Callum Turner's 3 You Must See",
             'uploader_id': '6057949427001',
             'duration': 117.931,
             'timestamp': 1782224497,

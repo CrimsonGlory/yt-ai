@@ -16,6 +16,7 @@ class RDSIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.rds.ca/videos/2025/09/17/la-f1-lautre-amour-de-pierre-houde/',
+        'skip': 'video gone',
         'md5': '8042381a9ae3e00297b945a68d41f246',
         'info_dict': {
             'id': '3219322',
@@ -53,6 +54,15 @@ class RDSIE(InfoExtractor):
     }, {
         'url': 'http://www.rds.ca/vid%C3%A9os/un-voyage-positif-3.877934',
         'only_matching': True,
+    }, {
+        'url': 'https://www.rds.ca/videos/2026/08/28/sans-cheveux-haaland-ouvre-son-compteur-de-la-tete/',
+        'info_dict': {
+            'id': '3435999',
+            'ext': 'mp4',
+            'display_id': 'sans-cheveux-haaland-ouvre-son-compteur-de-la-tete',
+            'title': str,
+        },
+        'skip': 'geo-restricted to Canada (HLS/DASH 403)',
     }, {
         'url': 'https://www.rds.ca/hockey/canadiens/videos/2026/08/27/du-golf-un-helicoptere-militaire-et-des-pitous-pour-suzuki/',
         'only_matching': True,

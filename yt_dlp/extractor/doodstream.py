@@ -16,7 +16,7 @@ class DoodStreamIE(InfoExtractor):
             'id': 'zn9kojocfiey',
             'ext': 'mp4',
             'title': 'da-nai-tu-ya-mei-mei-zhua-nai-rou-mao-bi 1080p - DoodStream',
-            'thumbnail': 'https://dodoimg.com/splash/ygbnt7ux6xdcy799.jpg',
+            'thumbnail': 'https://imgds.net/splash/ygbnt7ux6xdcy799.jpg',
         },
     }, {
         'url': 'http://dood.to/e/5s1wmbdacezb',

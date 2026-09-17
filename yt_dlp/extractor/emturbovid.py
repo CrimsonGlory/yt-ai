@@ -22,6 +22,7 @@ class EmturbovidIE(InfoExtractor):
             'id': '68b737d26c659',
             'ext': 'mp4',
             'title': 'SABA-878',
+            'thumbnail': r're:https?://.+',
             'age_limit': 18,
         },
         'params': {'format': 'best[height=480]'},

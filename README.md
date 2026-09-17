@@ -2594,11 +2594,11 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **dumpert**: Use the HTTPS API and impersonate the browser
     * **duoplay**: Register sessions on `sts.euddn.net`
     * **ebaumsworld**: Parse the current HTML/JSON player instead of the old XML API
-    * **elpais**: Fall back to JSON-LD media, then a YouTube embed, when `url_cache` is missing
+    * **elpais**: Read nested NewsArticle `VideoObject` JSON-LD (`contentUrl`), then a YouTube embed, when `url_cache` is missing
     * **epicon**: Extract HLS from the page when `ajaxplayer` returns 405 or has no trailer cid
     * **erocast**: Impersonate the browser
     * **ettutv**: Match live/videos player URLs and extract current streams
-    * **facebook**: Impersonate Chrome for Ads Library pages; treat 403 bodies with `/__rd_verify` as a client challenge; read `deeplink_ad_archive` snapshot from nested ScheduledServerJS
+    * **facebook**: Impersonate Chrome for Ads Library pages; treat 403 bodies with `/__rd_verify` as a client challenge; read `deeplink_ad_archive` snapshot from nested ScheduledServerJS or inline JSON
     * **fancode**: Support current GraphQL / public video pages
     * **faz**: Follow YouTube embeds
     * **filmweb**: GraphQL clip query and YouTube embeds; broader article URLs
@@ -2749,7 +2749,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **r7**: Read Fusion `globalContent` streams on current video pages; scrape `player.r7.com` HTML when `player-api` is gone
     * **radlive**: Extract HLS from the 12core GraphQL API and match `/watch/` feature/episode URLs
     * **radiofrance:live**: Use public HLS streams instead of `/api/live`
-    * **radiofrance:programschedule**: Parse SvelteKit `programs` Expression objects (and `loadProgramGrid` devalue) from public `grille-programmes` pages
+    * **radiofrance:programschedule**: Parse SvelteKit `programs` Expression objects from public `grille-programmes` pages (JSON array, `loadProgramGrid` devalue fallback)
     * **radiojavan**: Use the public play.radiojavan.com video API instead of the old `video_host` page scrape
     * **radiokapital**: Use the `api.radiokapital.pl` WordPress REST API
     * **rbgtum**: Silent 404 on the old course API, then HTML fallback
@@ -2778,6 +2778,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **scrolller**: Use the current `api.scrolller.com/admin` GraphQL `getPost` query
     * **sexu**: Use `/api/video-info` (HLS + MP4) and JSON-LD instead of the old JWPlayer setup
     * **showroom**: Use the public room API instead of Nuxt + login cookie
+    * **sky.it**: Call `video.sky.it/api/v1` instead of the decommissioned `apid.sky.it/vdp/v1` host
     * **sky:news**: Impersonate the browser and extract Brightcove IDs from the video sitemap / iframe widget when Akamai returns 403 or a challenge page
     * **sky:sports**: Fetch a Condatis Brightcove JWT and match current `/{sport}/video/` clip URLs
     * **slideshare**: Extract public slide images from the GraphQL API after the Next.js rebrand; keep slideshow HTML parsing internal so Generic webpage extraction is not shadowed
@@ -2807,7 +2808,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **theplatform**: Treat `link.theplatform.com` `/guid/` release URLs as SMIL instead of scraping a player page that now 302s to media
     * **thisamericanlife**: Parse playlist JSON for MP3/HLS instead of the old hardcoded stream path
     * **thisav**: Raise an expected error that thisav.com was seized by FANZA in 2025 and no longer hosts videos
-    * **tiktok**: Googlebot headers on aweme detail
+    * **tiktok**: Googlebot headers on aweme detail; retry the WAF JS challenge when rehydration JSON is missing
     * **tnaflix**: Impersonate the browser (including Empflix)
     * **toongoggles**: Use the OTTera API and embedded player HLS instead of the old numeric show API; still match legacy `/shows/{id}/...` URLs
     * **toypics**: Extract OvenPlayer / og:video MP4s from current `/u/{user}/{id}` pages

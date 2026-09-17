@@ -23,6 +23,7 @@ class SinaIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'http://video.sina.com.cn/news/spj/topvideoes20160504/?opsubject_id=top1#250576622',
+            'skip': 'CDN access denied (v_play_ipad.php HTTP 400)',
             'md5': 'd38433e2fc886007729735650ae4b3e9',
             'info_dict': {
                 'id': '250576622',
@@ -43,6 +44,7 @@ class SinaIE(InfoExtractor):
         },
         {
             'url': 'http://video.sina.com.cn/view/250587748.html',
+            'skip': 'CDN access denied (v_play_ipad.php HTTP 400)',
             'md5': '3d1807a25c775092aab3bc157fff49b4',
             'info_dict': {
                 'id': '250587748',
