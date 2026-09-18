@@ -27,6 +27,7 @@ class OyezIE(InfoExtractor):
     _TESTS = [
         {
             "url": "https://api.oyez.org/case_media/oral_argument_audio/24834",
+            "skip": "api.oyez.org TLS certificate expired (notAfter=2026-09-17)",
             "md5": "a9d5d41aeda73455dcf43a7f8783cef7",
             "info_dict": {
                 "id": "24834",
@@ -134,6 +135,7 @@ class OyezCaseIE(OyezIE):
         {
             # Single oral argument (no opinion announcement)
             "url": "https://www.oyez.org/cases/2019/18-328",
+            "skip": "api.oyez.org TLS certificate expired (notAfter=2026-09-17)",
             "md5": "e269fadc6d39c4376dc201f864b48a5b",
             "info_dict": {
                 "id": "25084",
@@ -149,6 +151,7 @@ class OyezCaseIE(OyezIE):
         },
         {
             "url": "https://www.oyez.org/cases/2018/17-9560",
+            "skip": "api.oyez.org TLS certificate expired (notAfter=2026-09-17)",
             "info_dict": {
                 "id": "2018-17-9560",
                 "title": "Rehaif v. United States",

@@ -2571,6 +2571,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **amazon**: Product-gallery `jQuery.parseJSON` videos; extract VSE HLS as MP4 formats; impersonate Chrome when the storefront serves a captcha interstitial
     * **beatport**: Next.js `track_name` / `track_length_ms` / release `image_url` fields
     * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate video, bangumi, and dynamic play pages; on 412 fall back to `wbi/view/detail` / `pgc/player/web/v2/playurl`; resolve opus/dynamic `bvid` when `jump_url` is missing
+    * **bleacherreport**: Fall back to a YouTube embed URL when Next.js Article hydration omits video
     * **bunnycdn**: Fall back to `playlist.m3u8` when JSON-LD is missing
     * **cam4**: Profile `/rest/v1.0/profile/{id}/streamInfo` HLS `cdnURL`/`edgeURL` (try each until one plays); empty 204 means the room is offline
     * **ccma**: Raise an expected error when the 3cat media API omits `media` (unpublished/expired)
@@ -2610,7 +2611,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **gamedevtv**: Extract public course preview media via sales-data / BunnyCDN without login
     * **gamejolt**: Skip incomplete search posts without `action_resource_model`
     * **gamespot**: JW Platform embeds and slug URLs
-    * **gamestar**: Dailymotion player config (impersonate Firefox)
+    * **gamestar**: Dailymotion player config; impersonate Chrome, then Safari, then Firefox on HTTP 403
     * **gazeta**: Extract current article video embeds
     * **gedidigital**: Broader lastampa / repubblica video URLs
     * **genius**: Parse Brightcove IDs from `itemprop=page_data` regardless of meta attribute order

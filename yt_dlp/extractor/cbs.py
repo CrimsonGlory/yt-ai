@@ -180,6 +180,7 @@ class ParamountPressExpressIE(InfoExtractor):
     _GEO_COUNTRIES = ['US']
     _TESTS = [{
         'url': 'https://www.paramountpressexpress.com/paramount-plus/yt-video/?watch=zJ0swZr6-tg',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'md5': '1a42b5ca518c3b5128cb777109e4a672',
         'info_dict': {
             'id': 'zJ0swZr6-tg',
@@ -209,6 +210,7 @@ class ParamountPressExpressIE(InfoExtractor):
             'categories': ['Entertainment'],
             'tags': ['Little Disasters'],
             'heatmap': 'count:100',
+            'chapters': list,
         },
         'params': {
             'format': 'bestvideo[protocol=https][ext=mp4]/best[protocol=https]',
@@ -217,6 +219,18 @@ class ParamountPressExpressIE(InfoExtractor):
         'expected_warnings': [
             'Remote component challenge solver script',
             'No supported JavaScript runtime',
+            'n challenge solving failed',
+            'Signature solving failed',
+            'unable to extract yt initial data',
+            'Incomplete yt initial data',
+            'Incomplete data received',
+            'formats have been skipped',
+            'formats are possibly damaged',
+            'Requested format is not available',
+            'No video formats found',
+            'Error solving',
+            'GVS PO Token',
+            'JS Challenge Provider',
         ],
     }, {
         'url': 'https://www.paramountpressexpress.com/cbs-entertainment/shows/survivor/video/?watch=pnzew7e2hx',

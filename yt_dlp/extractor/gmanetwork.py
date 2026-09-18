@@ -7,6 +7,7 @@ class GMANetworkVideoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www)\.gmanetwork\.com/(?:\w+/){3}(?P<id>\d+)/(?P<display_id>[\w-]+)/video'
     _TESTS = [{
         'url': 'https://www.gmanetwork.com/fullepisodes/home/running_man_philippines/168677/running-man-philippines-catch-the-thief-full-chapter-2/video?section=home',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'md5': '0aac6880771c397a825b6112c5868b6d',
         'info_dict': {
             'id': '28BqW0AXPe0',
@@ -46,6 +47,18 @@ class GMANetworkVideoIE(InfoExtractor):
         'expected_warnings': [
             'Remote component challenge solver script',
             'No supported JavaScript runtime',
+            'unable to extract yt initial data',
+            'Incomplete yt initial data',
+            'Incomplete data received',
+            'n challenge solving failed',
+            'Signature solving failed',
+            'formats have been skipped',
+            'formats are possibly damaged',
+            'Requested format is not available',
+            'No video formats found',
+            'Error solving',
+            'GVS PO Token',
+            'JS Challenge Provider',
         ],
     }, {
         'url': 'https://www.gmanetwork.com/fullepisodes/home/more_than_words/87059/more-than-words-full-episode-80/video?section=home',

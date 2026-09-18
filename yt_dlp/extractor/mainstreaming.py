@@ -101,6 +101,7 @@ class MainStreamingIE(InfoExtractor):
             'thumbnail': r're:https?://[\w-]+\.msvdn\.net/image/\w+/poster',
         },
         'params': {'skip_download': 'm3u8'},
+        'skip': 'live stream offline',
     }, {
         # no host
         'url': 'https://webtools.msvdn.net/embed/MfuWmzL2lGkA',

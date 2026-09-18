@@ -1,5 +1,7 @@
 from .common import InfoExtractor
 from .dailymotion import DailymotionIE
+from ..networking.exceptions import HTTPError
+from ..utils import ExtractorError
 from ..utils.traversal import require, traverse_obj
 
 
@@ -44,7 +46,18 @@ class GameStarIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id, impersonate='firefox')
+        webpage, last_err = None, None
+        for impersonate in ('chrome', 'safari', 'firefox'):
+            try:
+                webpage = self._download_webpage(url, video_id, impersonate=impersonate)
+                break
+            except ExtractorError as e:
+                last_err = e
+                cause = getattr(e, 'cause', None)
+                if not isinstance(cause, HTTPError) or cause.status != 403:
+                    raise
+        if webpage is None:
+            raise last_err
 
         player = self._search_json(
             r'setupVideoPlayer\(', webpage, 'player config', video_id)

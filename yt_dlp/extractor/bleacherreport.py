@@ -47,6 +47,7 @@ class BleacherReportIE(InfoExtractor):
         'add_ie': ['Youtube'],
     }, {
         'url': 'https://bleacherreport.com/articles/25484400-nhl-27-drops-gameplay-and-presentation-deep-dive-video-detailing-video-games-new-features',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'md5': 'aafed707585121d59eab0e0ba34a3cf6',
         'info_dict': {
             'id': 'OCIx-zOwCBc',
@@ -100,6 +101,22 @@ class BleacherReportIE(InfoExtractor):
             'media_type': 'video',
         },
         'add_ie': ['Youtube'],
+        'expected_warnings': [
+            'Remote component challenge solver script',
+            'No supported JavaScript runtime',
+            'n challenge solving failed',
+            'Signature solving failed',
+            'unable to extract yt initial data',
+            'Incomplete yt initial data',
+            'Incomplete data received',
+            'formats have been skipped',
+            'formats are possibly damaged',
+            'Requested format is not available',
+            'No video formats found',
+            'Error solving',
+            'GVS PO Token',
+            'JS Challenge Provider',
+        ],
     }]
 
     def _resolve_nextjs(self, obj, table, _seen=frozenset()):
@@ -174,6 +191,21 @@ class BleacherReportIE(InfoExtractor):
             info = self._extract_embed(article_id, article)
             if info:
                 return info
+
+        # Impersonated RSC payloads nest Article under $ children that
+        # _search_nextjs_v13_data does not flatten; the YouTube embed is
+        # still present as a URL in the page HTML.
+        yt_id = self._search_regex(
+            r'(?:youtube\.com/embed/|youtu\.be/)([0-9A-Za-z_-]{11})',
+            webpage, 'youtube id', default=None)
+        if yt_id:
+            return {
+                '_type': 'url_transparent',
+                'url': f'https://www.youtube.com/watch?v={yt_id}',
+                'ie_key': 'Youtube',
+                'id': article_id,
+                'title': self._og_search_title(webpage, default=None),
+            }
 
         raise ExtractorError('no video in the article', expected=True)
 

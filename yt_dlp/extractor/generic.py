@@ -193,10 +193,19 @@ class GenericIE(InfoExtractor):
         # XSPF playlist; https://shellac-archive.ch/de/index.html
         # https://github.com/ytdl-org/youtube-dl/commit/1de5cd3ba51ce67d9a1cd3b40157058e78e46692
         'url': 'https://shellac-archive.ch/repository/xspf/22-AL0019Z.xspf',
+        'skip': 'Connection refused (shellac-archive.ch is down)',
         'info_dict': {
             'id': '22-AL0019Z',
         },
         'playlist_count': 12,
+        'params': {'skip_download': True},
+    }, {
+        # XSPF playlist (ccMixter public query feed)
+        'url': 'https://ccmixter.org/api/query?f=xspf',
+        'info_dict': {
+            'id': 'query?f=xspf',
+        },
+        'playlist_mincount': 5,
         'params': {'skip_download': True},
     }, {
         # RSS feed
@@ -391,6 +400,7 @@ class GenericIE(InfoExtractor):
         # kt_player.js?v=12
         # https://github.com/ytdl-org/youtube-dl/commit/fc2beab0e701c497a003f11fef5c0df54fba1da3
         'url': 'https://shooshtime.com/videos/346037/fresh-out-of-the-shower/',
+        'skip': 'video gone',
         'md5': '790adfd582c9999f3cc5157f5142dd58',
         'info_dict': {
             'id': '346037',
@@ -399,6 +409,21 @@ class GenericIE(InfoExtractor):
             'age_limit': 18,
             'description': 'md5:50182dc8cc91564a9d122dc3b9395ce3',
             'display_id': 'fresh-out-of-the-shower',
+            'thumbnail': r're:https?://.*',
+        },
+        'expected_warnings': ['Untested major version'],
+    }, {
+        # KVS Player v7.10.3
+        # kt_player.js?v=12
+        'url': 'https://shooshtime.com/videos/204906/we-made-sure-to-film-this-one/',
+        'md5': '9d5bb3b3b2530b3501c130270f874897',
+        'info_dict': {
+            'id': '204906',
+            'ext': 'mp4',
+            'title': r're:We made sure to film this one!.+Shooshtime',
+            'age_limit': 18,
+            'description': str,
+            'display_id': 'we-made-sure-to-film-this-one',
             'thumbnail': r're:https?://.*',
         },
         'expected_warnings': ['Untested major version'],

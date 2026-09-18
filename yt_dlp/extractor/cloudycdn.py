@@ -15,6 +15,7 @@ class CloudyCDNIE(InfoExtractor):
     _EMBED_REGEX = [rf'<iframe[^>]+\bsrc=[\'"](?P<url>{_VALID_URL})']
     _TESTS = [{
         'url': 'https://embed.cloudycdn.services/ltv/media/46k_d23-6000-105?',
+        'skip': 'video gone',
         'md5': '64f72a360ca530d5ed89c77646c9eee5',
         'info_dict': {
             'id': '46k_d23-6000-105',
@@ -40,6 +41,7 @@ class CloudyCDNIE(InfoExtractor):
     }, {
         # Video-only m3u8 formats need manual fixup
         'url': 'https://embed.cloudycdn.services/ltv/media/08j_d24-6000-074',
+        'skip': 'video gone',
         'md5': 'fc472e40f6e6238446509be411c920e2',
         'info_dict': {
             'id': '08j_d24-6000-074',
@@ -53,6 +55,7 @@ class CloudyCDNIE(InfoExtractor):
         'params': {'format': 'bv'},
     }, {
         'url': 'https://embed.backscreen.com/ltv/media/32j_z25-0600-127?',
+        'skip': 'video gone',
         'md5': '9b6fa09ac1a4de53d4f42b94affc3b42',
         'info_dict': {
             'id': '32j_z25-0600-127',
@@ -63,6 +66,21 @@ class CloudyCDNIE(InfoExtractor):
             'timestamp': 1746632402,
             'upload_date': '20250507',
         },
+    }, {
+        'url': 'https://embed.cloudycdn.services/helio/media/ink_slavenibas_b',
+        'info_dict': {
+            'id': 'ink_slavenibas_b',
+            'ext': 'mp4',
+            'title': 'Liene Ušakova vēlas, lai latvietēm mēnešreižu laikā tiktu piešķirta brīvdiena',
+            'duration': 181,
+            'timestamp': 1708352462,
+            'upload_date': '20240219',
+            'thumbnail': 'https://store.bstrm.net/tmsp00141/assets/media/708536/placeholder1708352671.jpg',
+        },
+        'params': {'format': 'bv'},
+    }, {
+        'url': 'https://embed.backscreen.com/helio/media/ink_slavenibas_b',
+        'only_matching': True,
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.tavaklase.lv/video/es-esmu-mina-um-2/',

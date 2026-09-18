@@ -18,6 +18,7 @@ class NewsNationIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.newsnationnow.com/video/trump-seals-new-deals-to-lower-drug-prices-for-americans-newsnation-live/12122908/',
+            'skip': 'Anvato video unpublished (HTTP 404)',
             'md5': 'b29cb1c85e2ea12d572c498484be4dc2',
             'info_dict': {
                 'id': '12122908',
@@ -31,6 +32,23 @@ class NewsNationIE(InfoExtractor):
                 'duration': 133,
                 'tags': ['WatchNewsNationNow', 'trump', 'drug prices', 'americans'],
                 'categories': ['NewsNation\\NewsNation Live', 'Status\\Published', 'Genre\\Politics', 'Genre\\Health'],
+            },
+            'add_ie': [AnvatoIE.ie_key()],
+        },
+        {
+            'url': 'https://www.newsnationnow.com/crime/authorities-identify-women-horsch-probe/',
+            'info_dict': {
+                'id': '12181514',
+                'ext': 'mp4',
+                'title': 'Cousin of victim in Philadelphia case of missing women furious at police press conference | CUOMO',
+                'description': str,
+                'thumbnail': r're:https?://.+\.(?:jpg|png|jpeg)',
+                'timestamp': 1789714800,
+                'upload_date': '20260918',
+                'uploader': 'LIN',
+                'duration': 518,
+                'tags': list,
+                'categories': list,
             },
             'add_ie': [AnvatoIE.ie_key()],
         },

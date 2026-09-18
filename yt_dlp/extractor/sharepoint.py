@@ -25,6 +25,7 @@ class SharePointIE(InfoExtractor):
         },
     }, {
         'url': 'https://greaternyace.sharepoint.com/:v:/s/acementornydrive/ETski5eAfNVEoPRZUAyy1wEBpLgVFYWso5bjbZjfBLlPUg?e=PQUfVb',
+        'skip': 'Share requires login (redirects to Microsoft login)',
         'md5': 'c496a01644223273bff12e93e501afd1',
         'info_dict': {
             'id': '01QI4AVTZ3ESFZPAD42VCKB5CZKAGLFVYB',
