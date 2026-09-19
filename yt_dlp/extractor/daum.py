@@ -30,7 +30,7 @@ class DaumIE(DaumBaseIE):
 
     _TESTS = [{
         'url': 'https://www.daum.net/video/v/6pqckdh4fr0wzdww',
-        'md5': 'e260eebc0d860aeea2854e5effa6e9a8',
+        'md5': '5c05fd4b7279f82494a28429b73d97df',
         'info_dict': {
             'id': '6pqckdh4fr0wzdww',
             'ext': 'mp4',
@@ -44,7 +44,8 @@ class DaumIE(DaumBaseIE):
             'upload_date': '20260827',
         },
         'params': {
-            'format': 'preview',
+            # peekViewUrl is gone; progressive MP4 is stable
+            'format': 'mp4-LOW',
         },
     }, {
         'url': 'https://www.daum.net/video/loop/r5bf3438v154thbq',
@@ -206,14 +207,16 @@ class DaumIE(DaumBaseIE):
                     {'clipLinkId': clip_link_id}).get('clipLink') or {}
 
         clip = traverse_obj(clip_link, ('clip', {dict})) or {}
-        preview_url = url_or_none(clip.get('peekViewUrl')) or f'https://www.daum.net/video/preview/{video_id}'
-        formats = [{
-            'url': preview_url,
-            'format_id': 'preview',
-            'ext': 'mp4',
-            'quality': -10,
-            'format_note': 'preview',
-        }]
+        formats = []
+        preview_url = url_or_none(clip.get('peekViewUrl'))
+        if preview_url:
+            formats.append({
+                'url': preview_url,
+                'format_id': 'preview',
+                'ext': 'mp4',
+                'quality': -10,
+                'format_note': 'preview',
+            })
         src_vid, tid, token = play_token.get('vid'), play_token.get('tid'), play_token.get('token')
         if src_vid and tid and token:
             formats.extend(self._extract_kamp_formats(src_vid, tid, token, video_id))

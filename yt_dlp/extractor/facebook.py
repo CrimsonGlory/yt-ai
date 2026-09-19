@@ -973,7 +973,7 @@ class FacebookReelIE(InfoExtractor):
         'info_dict': {
             'id': '1195289147628387',
             'ext': 'mp4',
-            'title': 'md5:1a21ba284870bdfc24b3d21175556d37',
+            'title': 'md5:b7634b0e0cb632655c13cf09824ddeaf',
             'description': 'md5:24ea7ef062215d295bdde64e778f5474',
             'uploader': 'Beast Camp Training',
             'uploader_id': '100040874179269',

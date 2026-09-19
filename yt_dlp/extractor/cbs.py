@@ -293,6 +293,7 @@ class ParamountPressExpressIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.paramountpressexpress.com/showtime/yt-video/?watch=_ljssSoDLkw',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'info_dict': {
             'id': '_ljssSoDLkw',
             'ext': 'mp4',

@@ -14,10 +14,11 @@ from ..utils import (
 class RedTubeIE(InfoExtractor):
     _VALID_URL = r'https?://(?:(?:\w+\.)?redtube\.com(?:\.br)?/|embed\.redtube\.com/\?.*?\bid=)(?P<id>[0-9]+)'
     _EMBED_REGEX = [r'<iframe[^>]+?src=["\'](?P<url>(?:https?:)?//embed\.redtube\.com/\?.*?\bid=\d+)']
+    _HEADERS = {'Referer': 'https://www.redtube.com/'}
     _TESTS = [
         {
             'url': 'https://www.redtube.com/194739971',
-            'md5': '5b5e323569e81d339e08fa774aefe344',
+            'md5': 'e4423205889a9b3c780df06804ff108f',
             'info_dict': {
             'id': '194739971',
             'ext': 'mp4',
@@ -30,6 +31,10 @@ class RedTubeIE(InfoExtractor):
             'age_limit': 18,
             'view_count': int,
         },
+            'params': {
+                # HLS needs Referer; progressive MP4 is a stable 10KB --test fetch
+                'format': 'best[protocol=https]',
+            },
         },{
         'url': 'https://www.redtube.com/38864951',
         'skip': 'stale test sample / site changed',
@@ -93,6 +98,7 @@ class RedTubeIE(InfoExtractor):
                         'url': format_url,
                         'format_id': format_id,
                         'height': int_or_none(format_id),
+                        'http_headers': self._HEADERS,
                     })
         medias = self._parse_json(
             self._search_regex(
@@ -118,7 +124,7 @@ class RedTubeIE(InfoExtractor):
                     formats.extend(self._extract_m3u8_formats(
                         format_url, video_id, 'mp4',
                         entry_protocol='m3u8_native', m3u8_id=format_id or 'hls',
-                        fatal=False))
+                        fatal=False, headers=self._HEADERS))
                     continue
                 format_id = media.get('quality')
                 formats.append({
@@ -126,11 +132,12 @@ class RedTubeIE(InfoExtractor):
                     'ext': 'mp4',
                     'format_id': format_id,
                     'height': int_or_none(format_id),
+                    'http_headers': self._HEADERS,
                 })
         if not formats:
             video_url = self._html_search_regex(
                 r'<source src="(.+?)" type="video/mp4">', webpage, 'video URL')
-            formats.append({'url': video_url, 'ext': 'mp4'})
+            formats.append({'url': video_url, 'ext': 'mp4', 'http_headers': self._HEADERS})
 
         thumbnail = self._og_search_thumbnail(webpage)
         upload_date = unified_strdate(self._search_regex(
@@ -158,4 +165,5 @@ class RedTubeIE(InfoExtractor):
             'view_count': view_count,
             'age_limit': age_limit,
             'formats': formats,
+            'http_headers': self._HEADERS,
         })

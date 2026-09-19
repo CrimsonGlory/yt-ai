@@ -14,6 +14,7 @@ class RTRFMIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://rtrfm.com.au/shows/breakfast/?date=2026-08-21',
+            'skip': 'video gone',
             'md5': '2fcabd7eceb2309dd94344c6774c8e26',
             'info_dict': {
                 'id': 'breakfast-2026-08-21',
@@ -22,6 +23,19 @@ class RTRFMIE(InfoExtractor):
                 'title': 'Breakfast with Pam 2026-08-21',
                 'description': 'md5:82e0c923f8dddf279c471b73fd964cb1',
                 'release_date': '20260821',
+                'duration': 10800,
+            },
+        },
+        {
+            'url': 'https://rtrfm.com.au/shows/breakfast/?date=2026-09-18',
+            'md5': '14d543e7c76ff1faf826816ae8927d54',
+            'info_dict': {
+                'id': 'breakfast-2026-09-18',
+                'ext': 'mp3',
+                'series': 'Breakfast with Pam',
+                'title': 'Breakfast with Pam 2026-09-18',
+                'description': 'md5:82e0c923f8dddf279c471b73fd964cb1',
+                'release_date': '20260918',
                 'duration': 10800,
             },
         },

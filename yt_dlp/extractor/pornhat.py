@@ -31,7 +31,7 @@ class PornHatIE(InfoExtractor):
             'view_count': int,
             'uploader': 'Adult Prime',
             'cast': ['Ava Koxxx'],
-            'tags': ['blowjob', 'big tits', 'big ass', 'big cock', 'doggystyle', 'brunette', 'cowgirl', 'oral', 'missionary', 'milf', 'side fuck', 'curvy', 'long legs', 'long hair', 'straight hair'],
+            'tags': ['blowjob', 'big tits', 'big ass', 'big cock', 'brunette', 'doggystyle', 'cowgirl', 'oral', 'missionary', 'milf', 'side fuck', 'curvy', 'long legs', 'long hair', 'straight hair'],
             'age_limit': 18,
         },
     }, {

@@ -30,6 +30,7 @@ class GaskrankIE(InfoExtractor):
             },
         }, {
             'url': 'http://www.gaskrank.tv/tv/racing/highlights-sprint-race-misano-sanmarinogp-2026.htm',
+            'skip': 'video gone',
             'info_dict': {
                 'id': '202609/42380',
                 'ext': 'mp4',
@@ -38,6 +39,22 @@ class GaskrankIE(InfoExtractor):
                 'uploader_id': 'Devinox',
                 'uploader_url': 'https://www.motogp.com/en/videopass',
                 'upload_date': '20260913',
+                'view_count': int,
+                'average_rating': float,
+                'categories': ['racing'],
+                'tags': list,
+            },
+        }, {
+            'url': 'http://www.gaskrank.tv/tv/racing/highlights-der-ersten-6-stunden-bei-den-24-stunden-von-le-mans-2026.htm',
+            'md5': 'ea60b661de738c80d6ecb9e3bb9e1ecd',
+            'info_dict': {
+                'id': '202604/42017',
+                'ext': 'mp4',
+                'display_id': 'highlights-der-ersten-6-stunden-bei-den-24-stunden-von-le-mans-2026',
+                'title': 'Highlights der ersten 6 Stunden bei den 24 Stunden von Le Mans 2026',
+                'uploader_id': '24 Heures Motos',
+                'uploader_url': 'https://www.24h-motos.com/',
+                'upload_date': '20260419',
                 'view_count': int,
                 'average_rating': float,
                 'categories': ['racing'],

@@ -416,7 +416,7 @@ class GenericIE(InfoExtractor):
         # KVS Player v7.10.3
         # kt_player.js?v=12
         'url': 'https://shooshtime.com/videos/204906/we-made-sure-to-film-this-one/',
-        'md5': '9d5bb3b3b2530b3501c130270f874897',
+        'md5': '0d504730dd67421beec9768e08bdd4b1',
         'info_dict': {
             'id': '204906',
             'ext': 'mp4',

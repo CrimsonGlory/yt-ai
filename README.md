@@ -2581,7 +2581,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **cybrary**: Call the catalog API without requiring a login token
     * **dailywire**: Use the GraphQL API instead of Next.js page data
     * **dangalplay**: Extract public Akamai HLS from `smart_url` without login
-    * **daum**: Extract the current Kakao/Daum VOD player instead of the dead tvpot embed
+    * **daum**: Extract the current Kakao/Daum VOD player instead of the dead tvpot embed; only advertise `peekViewUrl` when the clip actually has one
     * **daystar**: Read Lightcast `configUrl` from the player iframe (including `/live/` URLs)
     * **dfb**: Follow YouTube embeds and match `dfb.de` news video URLs
     * **dhm**: Support journal articles and JWPlayer/HLS when the XSPF playlist is gone
@@ -2758,6 +2758,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **redbull**: Use GraphQL `v1:pageConfig` and `api-player.redbull.com` HLS instead of the dead crepo GraphQL / `v1:hero` schema
     * **redbulltv**: Play `api.redbull.tv` products via rrn content IDs and `dms.redbull.tv` HLS
     * **redgifs:search**: Pass `count` matching `_PAGE_SIZE` on `/v2/gifs/search` after the default page size dropped
+    * **redtube**: Send a site Referer on CDN MP4/HLS (otherwise rdtcdn returns HTTP 410)
     * **reuters**: Read Fusion `globalContent` HLS on current `/video/watch/` pages (impersonate for DataDome)
     * **rockstargames**: Read v4 player JSON (`/v4/{id}/data/{locale}.json`) instead of the dead get-video.json API
     * **rozhlas**: Resolve slugs via the search API; unwrap single-item station playlists

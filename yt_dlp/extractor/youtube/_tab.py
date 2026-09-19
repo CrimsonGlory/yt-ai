@@ -1281,6 +1281,7 @@ class YoutubeTabIE(YoutubeTabBaseInfoExtractor):
         'playlist_mincount': 20,
     }, {
         'note': 'Posts tab',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'url': 'https://www.youtube.com/channel/UCtS3BcCw-tITPFYSvkbP0Bg/posts',
         'info_dict': {
             'id': 'UCtS3BcCw-tITPFYSvkbP0Bg',

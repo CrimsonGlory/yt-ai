@@ -235,7 +235,7 @@ class RidoMoviesIE(InfoExtractor):
                 'display_id': 'boss-2025',
                 'title': 'Boss',
                 'description': 'md5:c4ba6c032e29f737a351852c52504b7b',
-                'thumbnail': r're:https?://ridomovies\.su/uploads/movies/.+',
+                'thumbnail': r're:https?://rido(?:movies\.su|movie\.to)/uploads/movies/.+',
                 'duration': 5940,
                 'timestamp': 1787999748,
                 'upload_date': '20260829',
