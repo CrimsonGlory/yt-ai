@@ -2539,6 +2539,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **UKDevilz** (`ukdevilz.com`): Impersonate Cloudflare and extract JWPlayer `window.playlist` MP4 sources. Request: [yt-dlp/yt-dlp#14166](https://github.com/yt-dlp/yt-dlp/issues/14166)
     * **UKDevilz18** (`18.ukdevilz.com`): Impersonate Cloudflare and extract JWPlayer `window.playlist` MP4 sources. Request: [yt-dlp/yt-dlp#4004](https://github.com/yt-dlp/yt-dlp/issues/4004)
     * **UnitedNationsMedia** (`media.un.org`): Kaltura Playkit `entryId`/`partnerId` on Audiovisual Library pages; JWPlayer S3 MP4 on UNifeed. Request: [yt-dlp/yt-dlp#2855](https://github.com/yt-dlp/yt-dlp/issues/2855)
+    * **UploadNow** (`uploadnow.io`): Firebase anonymous token, then `/api/file/search/folder-content` listings and `/api/file/downloads/links` CDN URLs
     * **UpRide** (`upride.cc`): Impersonate Cloudflare, then JSON-LD `contentURL` original upload plus Cloudflare Stream iframe HLS/DASH. Request: [yt-dlp/yt-dlp#7858](https://github.com/yt-dlp/yt-dlp/issues/7858)
     * **USNewsOn** (`usnewson.com`): Video.js `pllrc` onestream API (`pro.usnlive.com/api/stream`) and direct HLS. Request: [yt-dlp/yt-dlp#6985](https://github.com/yt-dlp/yt-dlp/issues/6985)
     * **Veev** (`veev.to`): Decode the player `fc` token and `/dl?op=player_api` source URL. Request: [yt-dlp/yt-dlp#10092](https://github.com/yt-dlp/yt-dlp/issues/10092)
