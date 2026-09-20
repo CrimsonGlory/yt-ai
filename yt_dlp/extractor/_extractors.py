@@ -2523,6 +2523,7 @@ from .unsupported import (
     KnownLiabilityIE,
 )
 from .uol import UOLIE
+from .uploadnow import UploadNowIE
 from .uplynk import (
     UplynkIE,
     UplynkPreplayIE,
