@@ -2291,7 +2291,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **AlphaTV** (`alphatv.gr`): Kwik player `data-video-url` MP4/HLS with JSON-LD `embedUrl` fallback. Request: [yt-dlp/yt-dlp#14945](https://github.com/yt-dlp/yt-dlp/issues/14945)
     * **americanarchive** (`americanarchive.org`): PBCore `/api/{id}` metadata, Sony Ci progressive MP4 from `/media/{id}/download`, HLS fallback; both need a site Referer. Request: [yt-dlp/yt-dlp#1894](https://github.com/yt-dlp/yt-dlp/issues/1894)
     * **AnimationFilmArchives** (`animation.filmarchives.jp`): NII `h10.cs.nii.ac.jp` iframe DASH/HLS (`video_view.php`) from play and playen pages. Request: [yt-dlp/yt-dlp#8982](https://github.com/yt-dlp/yt-dlp/issues/8982)
-    * [AnonMP4](https://github.com/CrimsonGlory/yt-ai/commit/7e1d8ceb53acea50102343d0cd3db56e1fc2dbc8) (`anonmp4.art` / `anonmp4.to`)
+    * **AnonMP4** (`anonmp4.art` / `anonmp4.to`): Session `PLAY_SEED`/`PLAY_SIG` POST to `/video-api` for HLS (and original MP4 when HLS is missing).
     * **Archivebate** (`archivebate.com`): Mixdrop iframe packed `MDCore.wurl` MP4, with native HLS embed fallback. Request: [yt-dlp/yt-dlp#8262](https://github.com/yt-dlp/yt-dlp/issues/8262)
     * **ArteRadioAudioblog** (`audioblog.arteradio.com`): Public Drupal `/node/{id}` JSON and Podtrac-unwrapped `file_url` MP3. Request: [yt-dlp/yt-dlp#1813](https://github.com/yt-dlp/yt-dlp/issues/1813)
     * **artmuseum** (`artmuseum.pl`): Next.js exhibit `filmLinks` MP4/WebM, with ROT-1 jPlayer sources on `archiwum.artmuseum.pl`. Request: [yt-dlp/yt-dlp#4957](https://github.com/yt-dlp/yt-dlp/issues/4957)
