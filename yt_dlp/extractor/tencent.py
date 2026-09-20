@@ -212,6 +212,7 @@ class VQQVideoIE(VQQBaseIE):
             'series': str,
         },
             'params': {'skip_download': 'm3u8'},
+            'expected_warnings': ['Failed to download m3u8 information'],
         },{
         'url': 'https://v.qq.com/x/page/q326831cny0.html',
         'md5': 'b11c9cb781df710d686b950376676e2a',

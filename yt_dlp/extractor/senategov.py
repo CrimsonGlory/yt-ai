@@ -150,7 +150,20 @@ class SenateGovIE(InfoExtractor):
     )))
     _VALID_URL = rf'https?://(?:www\.)?(?:{_SUBDOMAIN_RE})\.senate\.gov'
     _TESTS = [{
+        'url': 'https://www.help.senate.gov/hearings/the-impact-of-ai-on-the-workforce',
+        'info_dict': {
+            'id': 'help072926',
+            'ext': 'mp4',
+            'display_id': 'the-impact-of-ai-on-the-workforce',
+            'title': 'The Impact of AI on the Workforce',
+            'description': str,
+            'thumbnail': r're:https?://www\.help\.senate\.gov/.+',
+            '_old_archive_ids': ['senategov help072926'],
+        },
+        'params': {'skip_download': 'm3u8'},
+    }, {
         'url': 'https://www.help.senate.gov/hearings/vaccines-saving-lives-ensuring-confidence-and-protecting-public-health',
+        'skip': 'video gone',
         'md5': 'b1812c4dcf9b1bb2eba9e80b45694cdd',
         'info_dict': {
             'id': 'help090920',

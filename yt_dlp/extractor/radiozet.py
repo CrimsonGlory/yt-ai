@@ -9,6 +9,7 @@ class RadioZetPodcastIE(InfoExtractor):
     _VALID_URL = r'https?://player\.radiozet\.pl\/Podcasty/.*?/(?P<id>.+)'
     _TESTS = [{
         'url': 'https://player.radiozet.pl/Podcasty/Gosc-Radia-ZET/Rafal-Leskiewicz-o-aferze-Zondacrypto-Mamy-bardzo-duzo-znakow-zapytania',
+        'skip': 'CDN TLS certificate expired (redir.atmcdn.pl notAfter 2026-09-19)',
         'md5': '5a45137aa2528c9b1923e7950ec61523',
         'info_dict': {
             'id': '877865',
@@ -45,11 +46,11 @@ class RadioZetPodcastIE(InfoExtractor):
     def _call_api(self, podcast_id, display_id):
         return self._download_json(
             f'https://player.radiozet.pl/api/podcasts/getPodcast/(node)/{podcast_id}/(station)/radiozet',
-            display_id)
+            display_id, impersonate=True)
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        webpage = self._download_webpage(url, display_id)
+        webpage = self._download_webpage(url, display_id, impersonate=True)
         podcast_id = self._html_search_regex(r'<div.*?\sid="player".*?\sdata-id=[\'"]([^\'"]+)[\'"]',
                                              webpage, 'podcast id')
         data = self._call_api(podcast_id, display_id)['data'][0]

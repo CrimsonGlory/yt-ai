@@ -58,23 +58,91 @@ class CloseLoadIE(InfoExtractor):
                 chars.append(char)
         return ''.join(chars)
 
+    def _parse_hls_parts(self, packed, video_id):
+        packed = packed.strip()
+        split_m = re.match(
+            r'(?P<s>(["\']).*?\2)\s*\.\s*split\s*\(\s*(?P<sep>(["\']).*?\4)\s*\)',
+            packed, re.DOTALL)
+        if split_m:
+            raw = self._parse_json(split_m.group('s'), video_id, transform_source=js_to_json)
+            sep = self._parse_json(split_m.group('sep'), video_id, transform_source=js_to_json)
+            if not isinstance(raw, str) or not isinstance(sep, str):
+                raise ExtractorError('Unable to parse encoded HLS source')
+            return list(raw.split(sep))
+        parts = self._parse_json(packed, video_id, transform_source=js_to_json)
+        if not isinstance(parts, list) or not parts:
+            raise ExtractorError('Unable to parse encoded HLS source')
+        return [str(part) for part in parts]
+
+    def _decode_spliced_hls(self, parts):
+        # Closeload splice decoder: pull ops/seed out of the payload array, then
+        # rot13-family ops, Fisher-Yates unshuffle, and a multiplicative XOR.
+        payload = list(parts)
+        length = len(payload) - 2
+        seed_idx = length % 7
+        ops_idx = 8 + (length % 5)
+        ops = payload.pop(ops_idx)
+        seed = payload.pop(seed_idx)
+        value = ''.join(payload)
+        if len(ops) > 2048:
+            value = value[::-1]
+        svwsi = mmlg = 0
+        for idx, char in enumerate(seed):
+            code = ord(char)
+            svwsi = (svwsi * 37 + code) % 241
+            mmlg = (mmlg + ((code << 1) ^ idx)) & 255
+        xor_state = (svwsi * 3 + mmlg) % 256
+        xor_add = (mmlg % 11) + 5
+        shuffle_state = ((mmlg * 251 + svwsi) % 65519) + 1
+        for op in reversed(ops):
+            if op == '7':
+                value = self._atob(value)
+            elif op == '3':
+                value = value[::-1]
+            else:
+                value = self._rot_letters(value, (26 - ((ord(op) - 96) % 26)) % 26)
+        if len(seed) > 4096:
+            value = self._atob(value)
+        length = len(value)
+        shuffle = [0] * length
+        for idx in range(length - 1, 0, -1):
+            shuffle_state = (shuffle_state * 97 + 41) % 65519
+            shuffle[idx] = shuffle_state % (idx + 1)
+        chars = list(value)
+        for idx in range(1, length):
+            swap = shuffle[idx]
+            chars[idx], chars[swap] = chars[swap], chars[idx]
+        decoded = bytearray()
+        for byte in ''.join(chars).encode('latin-1'):
+            xor_state = (xor_state * 5 + xor_add) % 256
+            decoded.append(byte ^ xor_state)
+            xor_state = (xor_state + byte) % 256
+        return decoded
+
     def _decode_hls_url(self, webpage, video_id):
         source_var = self._search_regex(
             r'sources\s*:\s*\[\s*\{\s*file\s*:\s*(\w+)', webpage, 'jwplayer source variable',
         )
         func_name, packed = self._search_regex(
-            rf'var\s+{re.escape(source_var)}\s*=\s*(\w+)\s*\((\[.*?\])\)\s*;', webpage, 'encoded source', group=(1, 2),
+            rf'var\s+{re.escape(source_var)}\s*=\s*(\w+)\s*\((.*?)\)\s*;',
+            webpage, 'encoded source', group=(1, 2), flags=re.DOTALL,
         )
-        parts = self._parse_json(packed, video_id, transform_source=js_to_json)
-        if not isinstance(parts, list) or not parts:
-            raise ExtractorError('Unable to parse encoded HLS source')
+        parts = self._parse_hls_parts(packed, video_id)
 
         func_body = self._search_regex(
-            rf'function\s+{re.escape(func_name)}\s*\([^)]*\)\s*\{{(.*?)\breturn\s+\w+\s*;',
+            rf'(?:function\s+{re.escape(func_name)}|var\s+{re.escape(func_name)}\s*=\s*function)\s*\([^)]*\)\s*\{{(.*?)\breturn\s+\w+\s*;',
             webpage,
             'source decoder',
             flags=re.DOTALL,
         )
+        if 'splice' in func_body:
+            decoded = self._decode_spliced_hls(parts)
+            try:
+                hls_url = decoded.decode()
+            except UnicodeDecodeError:
+                raise ExtractorError('Unable to decode Closeload HLS URL')
+            return url_or_none(hls_url)
+
         value = ''.join(str(part) for part in parts)
 
         quoted = re.findall(r'var\s+\w+\s*=\s*["\']([^"\']+)["\']', func_body)

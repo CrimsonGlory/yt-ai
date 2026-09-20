@@ -34,8 +34,6 @@ class Porn3dxIE(InfoExtractor):
             'uploader_id': '209987',
             'uploader_url': 'https://porn3dx.com/Ztulian',
             'view_count': int,
-            'like_count': int,
-            'comment_count': int,
             'tags': ['Virtamate', 'Vam', 'Ztulian', 'Lap Dance', 'Natural Tits', 'Vex'],
             'age_limit': 18,
         },

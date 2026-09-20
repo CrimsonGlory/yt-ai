@@ -2488,7 +2488,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Rahatupu** (`rahatupu.net`): Schema.org VideoObject `contentUrl` MP4 (Clean Tube player iframe fallback). Request: [yt-dlp/yt-dlp#12300](https://github.com/yt-dlp/yt-dlp/issues/12300)
     * **RedziDzirdiLatviju** (`redzidzirdilatviju.lv`): Solr `/index` JSON for movies (Nimble HLS on `filmas.arhivi.lv`) and sound samples (archive MP3). Request: [yt-dlp/yt-dlp#15886](https://github.com/yt-dlp/yt-dlp/issues/15886)
     * **Rezka** (`rezka.ag`): Anubis PoW plus `initCDN*Events` / `ajax/get_cdn_series` voidboost HLS and MP4. Request: [yt-dlp/yt-dlp#17096](https://github.com/yt-dlp/yt-dlp/issues/17096)
-    * **RidoMovies** (`ridomovies.tv`): Impersonate Cloudflare, follow Closeload JWPlayer embeds, and decode yo82 seed/shuffle/XOR HLS. Request: [yt-dlp/yt-dlp#13566](https://github.com/yt-dlp/yt-dlp/issues/13566)
+    * **RidoMovies** (`ridomovies.tv`): Impersonate Cloudflare, follow Closeload JWPlayer embeds, and decode splice/split payload HLS (ops/seed pulled from the array, then rot/unshuffle/XOR). Request: [yt-dlp/yt-dlp#13566](https://github.com/yt-dlp/yt-dlp/issues/13566)
     * **RTHK** (`rthk.hk`): JWPlayer HLS from radio/TV episode pages and `/radio|/tv/catchUp` programme listings. Request: [yt-dlp/yt-dlp#4247](https://github.com/yt-dlp/yt-dlp/issues/4247)
     * **RuntimeTV** (`runtime.tv`): Ottera Drupal `cs_auth_token` plus `api-ott.runtime.tv` `embeddedVideoPlayer` HLS (Kaltura). Request: [yt-dlp/yt-dlp#5190](https://github.com/yt-dlp/yt-dlp/issues/5190)
     * **Sasflix** (`sasflix.ru`): Public `/api/web/topics/{id}` JSON plus HLS and progressive `/api/video` downloads. Request: [yt-dlp/yt-dlp#15373](https://github.com/yt-dlp/yt-dlp/issues/15373)
@@ -2753,6 +2753,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **radiofrance:programschedule**: Parse SvelteKit `programs` Expression objects from public `grille-programmes` pages (JSON array, `loadProgramGrid` devalue fallback)
     * **radiojavan**: Use the public play.radiojavan.com video API instead of the old `video_host` page scrape
     * **radiokapital**: Use the `api.radiokapital.pl` WordPress REST API
+    * **radiozet**: Impersonate the player page and podcast API (plain urllib times out from this environment)
     * **rbgtum**: Silent 404 on the old course API, then HTML fallback
     * **rds**: Read Jasper embed / Fusion Axis ids on current Arc video pages
     * **redbull**: Use GraphQL `v1:pageConfig` and `api-player.redbull.com` HLS instead of the dead crepo GraphQL / `v1:hero` schema
@@ -2869,6 +2870,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **yapfiles**: Parse the current yaplayer load URL and `file`/`file_hd` from the API instead of the old `player.init` playlist
     * **youjizz**: Read duration and uploader from current Runtime/Submitted By HTML
     * **youporn**: Upload date is optional
+    * **youtube:tab**: Treat lockup `LOCKUP_CONTENT_TYPE_SHOW` as a playlist (same as playlists/podcasts)
     * **younow**: Raise an expected error that live playback is WebRTC (Props SFU) and that public HLS/moments are gone
     * **zenyandex**: Treat a missing channel feed-page JSON as end of playlist
     * **zetland**: Extract `storyServer` audio from Next.js App Router flight data

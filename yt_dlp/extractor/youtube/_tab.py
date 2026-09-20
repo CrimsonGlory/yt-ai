@@ -323,7 +323,11 @@ class YoutubeTabBaseInfoExtractor(YoutubeBaseInfoExtractor):
             ie = YoutubeIE
             url = f'https://www.youtube.com/watch?v={content_id}'
             thumb_keys = (None,)
-        elif content_type in ('LOCKUP_CONTENT_TYPE_PLAYLIST', 'LOCKUP_CONTENT_TYPE_PODCAST'):
+        elif content_type in (
+            'LOCKUP_CONTENT_TYPE_PLAYLIST',
+            'LOCKUP_CONTENT_TYPE_PODCAST',
+            'LOCKUP_CONTENT_TYPE_SHOW',
+        ):
             ie = YoutubeTabIE
             url = f'https://www.youtube.com/playlist?list={content_id}'
             thumb_keys = ('collectionThumbnailViewModel', 'primaryThumbnail')
