@@ -64,7 +64,7 @@ class KHInsiderIE(KHInsiderBaseIE):
         raw_id = urllib.parse.unquote(urllib.parse.unquote(self._match_valid_url(url).group('id')))
         display_id = re.sub(r'\.(?:mp3|flac|ogg|wav|m4a)$', '', raw_id, flags=re.I)
 
-        webpage = self._download_webpage(url, display_id)
+        webpage = self._download_webpage(url, display_id, impersonate=True)
         formats = self._extract_formats(webpage, url)
         if not formats:
             self.raise_no_formats('No MP3 or FLAC download found', expected=True, video_id=display_id)
@@ -110,7 +110,7 @@ class KHInsiderAlbumIE(KHInsiderBaseIE):
 
     def _real_extract(self, url):
         album_id = self._match_id(url)
-        webpage = self._download_webpage(url, album_id)
+        webpage = self._download_webpage(url, album_id, impersonate=True)
 
         title = self._html_search_regex(
             r'<h2>([^<]+)</h2>', webpage, 'title', default=None) or album_id.replace('-', ' ').title()

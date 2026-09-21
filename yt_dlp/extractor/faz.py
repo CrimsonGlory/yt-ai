@@ -47,6 +47,7 @@ class FazIE(InfoExtractor):
             'media_type': 'video',
         },
         'add_ie': ['Youtube'],
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'params': {
             'format': 'bestvideo[protocol=https][ext=mp4]/best[protocol=https]',
         },

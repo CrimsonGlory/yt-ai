@@ -35,8 +35,8 @@ class SonyLIVIE(InfoExtractor):
             'description': 'md5:3957fa31d9309bf336ceb3f37ad5b7cb',
             'duration': 189,
             'thumbnail': 'https://origin-staticv2.sonyliv.com/cms/5024612095001/poster/5024612095001_poster.jpg',
-            'timestamp': 1788273523,
-            'upload_date': '20260901',
+            'timestamp': 1789935218,
+            'upload_date': '20260920',
             'series': 'Bachelors Delight',
             'season': 'Season 1',
             'season_number': 1,
@@ -47,6 +47,9 @@ class SonyLIVIE(InfoExtractor):
         'params': {
             'skip_download': True,
         },
+        'expected_warnings': [
+            'Failed to download MPD manifest',
+        ],
     }, {
         'url': 'https://www.sonyliv.com/movies/tahalka-1000050121?watch=true',
         'only_matching': True,

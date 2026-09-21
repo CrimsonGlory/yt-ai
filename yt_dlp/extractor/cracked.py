@@ -45,6 +45,7 @@ class CrackedIE(InfoExtractor):
             'live_status': 'not_live',
         },
         'add_ie': ['Youtube'],
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
     }, {
         'url': 'http://www.cracked.com/video_19070_if-animal-actors-got-e21-true-hollywood-stories.html',
         'skip': 'video gone',

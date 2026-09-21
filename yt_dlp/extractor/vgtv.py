@@ -313,6 +313,9 @@ class BTVestlendingenIE(InfoExtractor):
             # HLS playlist can 504; progressive MP4 is stable
             'format': 'best[protocol=https]',
         },
+        'expected_warnings': [
+            'Failed to download m3u8 information',
+        ],
     }]
 
     def _real_extract(self, url):

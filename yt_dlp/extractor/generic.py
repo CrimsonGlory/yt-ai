@@ -586,6 +586,7 @@ class GenericIE(InfoExtractor):
         # Redirect
         # https://github.com/ytdl-org/youtube-dl/issues/413
         'url': 'https://www.google.com/url?rct=j&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DcmQHVoWB5FY',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'info_dict': {
             'id': 'cmQHVoWB5FY',
             'ext': 'mp4',

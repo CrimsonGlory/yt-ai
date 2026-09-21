@@ -263,6 +263,7 @@ class VQQVideoIE(VQQBaseIE):
             'format_id': r're:^shd',
         },
         'params': {'skip_download': 'm3u8'},
+        'expected_warnings': ['Failed to download m3u8 information'],
     }, {
         # Geo-restricted to China
         'url': 'https://v.qq.com/x/cover/mcv8hkc8zk8lnov/x0036x5qqsr.html',

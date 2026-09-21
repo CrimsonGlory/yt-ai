@@ -2403,7 +2403,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Karafun** (`karafun.com`): Signed web-session `/api` plus `.kit` container Ogg-track extraction. Request: [yt-dlp/yt-dlp#15470](https://github.com/yt-dlp/yt-dlp/issues/15470)
     * **KaruselTV** (`karusel-tv.ru`): Public `video/api/get/{id}` MP4 sources from video and announce pages. Request: [yt-dlp/yt-dlp#17236](https://github.com/yt-dlp/yt-dlp/issues/17236)
     * **Keporn** (`f1.keporn.vip`): Public `/api/json/video` metadata and `/api/videofile.php` Cyrillic-base64 `get_file` MP4s. Request: [yt-dlp/yt-dlp#14612](https://github.com/yt-dlp/yt-dlp/issues/14612)
-    * **KHInsider** (`downloads.khinsider.com`): Public MP3/FLAC CDN links from track pages; albums as track playlists. Request: [yt-dlp/yt-dlp#16713](https://github.com/yt-dlp/yt-dlp/issues/16713)
+    * **KHInsider** (`downloads.khinsider.com`): Impersonate Cloudflare, then public MP3/FLAC CDN links from track pages; albums as track playlists. Request: [yt-dlp/yt-dlp#16713](https://github.com/yt-dlp/yt-dlp/issues/16713)
     * **KickBot** (`kickbot.app`): SvelteKit `__data.json` clip metadata and `clips.kickbotcdn.com` HLS/MP4. Request: [yt-dlp/yt-dlp#8861](https://github.com/yt-dlp/yt-dlp/issues/8861)
     * **Kidoodle** (`kidoodle.tv`): Folks guest token plus Albedo `content/episodes` AVOD HLS. Request: [yt-dlp/yt-dlp#6209](https://github.com/yt-dlp/yt-dlp/issues/6209)
     * **Kinescope** (`kinescope.io`): Parse `playerOptions` HLS/HTTP plus JSON-LD `contentUrl` fallback. Request: [yt-dlp/yt-dlp#3391](https://github.com/yt-dlp/yt-dlp/issues/3391)
@@ -2681,6 +2681,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **mirrorcouk**: JSON-LD media
     * **mit**: YouTube embeds on current OCW course URLs
     * **mocha**: Current mocha.com.vn API
+    * **moviepilot**: Impersonate Cloudflare on trailer pages, then follow the Dailymotion `remoteId`
     * **MovingImage**: Fall back to a Wayback Machine snapshot when AWS WAF captcha blocks the catalogue page
     * **mtg**: Use the TV3 Play/GO3 products API (via play.tv3.lt, tenant AVOD_*) instead of the dead playapi.mtgx.tv; download the public preview MP4 when full streams are DRM
     * **mtv**: Raise geo-restriction when Topaz MICA returns a region policy error instead of `stitchedstream`

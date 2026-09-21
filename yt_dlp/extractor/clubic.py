@@ -46,6 +46,7 @@ class ClubicIE(InfoExtractor):
             'format': 'bestvideo[protocol=https][ext=mp4]/best[protocol=https]',
         },
         'add_ie': ['Youtube'],
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'expected_warnings': [
             'Remote component challenge solver script',
             'No supported JavaScript runtime',

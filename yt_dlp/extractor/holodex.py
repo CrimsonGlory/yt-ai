@@ -39,6 +39,7 @@ class HolodexIE(InfoExtractor):
             'tags': list,
             'heatmap': 'count:100',
         },
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'params': {
             'skip_download': True,
             'ignore_no_formats_error': True,

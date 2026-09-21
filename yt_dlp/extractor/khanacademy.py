@@ -95,6 +95,7 @@ class KhanAcademyIE(KhanAcademyBaseIE):
             'media_type': 'video',
         },
         'add_ie': ['Youtube'],
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
     }
 
     def _parse_component_props(self, component_props, display_id):

@@ -8,6 +8,7 @@ class DigiviewIE(InfoExtractor):
     _TESTS = [{
         # normal video
         'url': 'https://ladigitale.dev/digiview/#/v/67a8e50aee2ec',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'expected_warnings': [
             'Remote component challenge solver script',
             'n challenge solving failed',
@@ -47,6 +48,7 @@ class DigiviewIE(InfoExtractor):
     }, {
         # cut video
         'url': 'https://ladigitale.dev/digiview/#/v/67a8e51d0dd58',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'expected_warnings': [
             'Remote component challenge solver script',
             'n challenge solving failed',
@@ -86,6 +88,7 @@ class DigiviewIE(InfoExtractor):
     }, {
         # changed title
         'url': 'https://ladigitale.dev/digiview/#/v/67a8ea5644d7a',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'expected_warnings': [
             'Remote component challenge solver script',
             'n challenge solving failed',

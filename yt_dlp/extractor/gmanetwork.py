@@ -92,6 +92,7 @@ class GMANetworkVideoIE(InfoExtractor):
             'live_status': 'not_live',
             'heatmap': 'count:100',
         },
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'params': {
             'skip_download': True,
             # Avoid colliding with suite/isolated reruns of test_GMANetworkVideo_1_%(id)s.*

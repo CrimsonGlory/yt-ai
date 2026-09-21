@@ -2179,6 +2179,7 @@ class YoutubeTabIE(YoutubeTabBaseInfoExtractor):
         # https://github.com/yt-dlp/yt-dlp/issues/12933
         'note': 'streams tab, some scheduled streams. Empty intermediate response with only continuation - must follow',
         'url': 'https://www.youtube.com/@sbcitygov/streams',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'playlist_mincount': 150,
         'info_dict': {
             'id': 'UCH6-qfQwlUgz9SAf05jvc_w',

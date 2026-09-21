@@ -53,6 +53,7 @@ class EmbedlyIE(InfoExtractor):
             'skip_download': True,
             'ignore_no_formats_error': True,
         },
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'info_dict': {
             'id': 'SU4fj_aEMVw',
             'ext': 'mp4',

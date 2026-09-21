@@ -37,6 +37,7 @@ class MoviepilotIE(InfoExtractor):
         'only_matching': True,
     }, {
         'url': 'https://www.moviepilot.de/movies/queen-slim/trailer',
+        'skip': 'Cloudflare 403 from this environment (chrome/safari/firefox/edge impersonate)',
         'info_dict': {
             'id': 'x7xj6o7',
             'display_id': 'queen-slim',
@@ -64,6 +65,7 @@ class MoviepilotIE(InfoExtractor):
         'skip': 'No trailer for this movie.',
     }, {
         'url': 'https://www.moviepilot.de/movies/muellers-buero/',
+        'skip': 'Cloudflare 403 from this environment (chrome/safari/firefox/edge impersonate)',
         'info_dict': {
             'id': 'x7xcw1i',
             'display_id': 'muellers-buero',
@@ -86,7 +88,8 @@ class MoviepilotIE(InfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url)
 
-        webpage = self._download_webpage(f'https://www.moviepilot.de/movies/{video_id}/trailer', video_id)
+        webpage = self._download_webpage(
+            f'https://www.moviepilot.de/movies/{video_id}/trailer', video_id, impersonate=True)
 
         clip = self._search_nextjs_data(webpage, video_id)['props']['initialProps']['pageProps']
 
