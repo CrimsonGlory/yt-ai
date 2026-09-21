@@ -27,6 +27,16 @@ class AnonMP4IE(InfoExtractor):
             'duration': 6.0,
         },
     }, {
+        'url': 'https://anonmp4.art/v/DJr7JD4DBZ3PQ3P',
+        'info_dict': {
+            'id': 'DJr7JD4DBZ3PQ3P',
+            'ext': 'mp4',
+            'title': 'Estre 5 Foro.mp4',
+            'thumbnail': r're:https?://.+',
+            'duration': 220.0,
+        },
+        'params': {'skip_download': 'm3u8'},
+    }, {
         'url': 'https://anonmp4.art/embed/gfFKPZb6t2HURbQ',
         'only_matching': True,
     }, {
@@ -40,6 +50,14 @@ class AnonMP4IE(InfoExtractor):
     def _js_var(self, webpage, name, default=None):
         return self._search_regex(
             rf'{name}\s*=\s*["\']([^"\']+)["\']', webpage, name, default=default)
+
+    def _cdn_headers(self, referer):
+        parsed = urllib.parse.urlparse(referer)
+        return {
+            'Accept': '*/*',
+            'Origin': f'{parsed.scheme}://{parsed.netloc}',
+            'Referer': referer,
+        }
 
     def _call_video_api(self, host, video_id, webpage, referer):
         ticket = self._js_var(webpage, 'PLAY_SEED')
@@ -58,7 +76,8 @@ class AnonMP4IE(InfoExtractor):
                 'Sec-Fetch-Site': 'same-origin',
             })
 
-    def _parse_stream(self, stream, video_id, base_url=None):
+    def _parse_stream(self, stream, video_id, base_url=None, headers=None):
+        headers = headers or {}
         error_type = traverse_obj(stream, ('type', {str}))
         if error_type in ('notready', 'remotepending'):
             raise ExtractorError('This video is still processing', expected=True)
@@ -77,6 +96,7 @@ class AnonMP4IE(InfoExtractor):
                     'url': original,
                     'format_id': 'http',
                     'ext': 'mp4',
+                    'http_headers': headers,
                 }],
                 'subtitles': {},
                 **traverse_obj(stream, {
@@ -93,13 +113,16 @@ class AnonMP4IE(InfoExtractor):
         formats, subtitles = [], {}
         if hls_url:
             formats, subtitles = self._extract_m3u8_formats_and_subtitles(
-                hls_url, video_id, 'mp4', m3u8_id='hls')
+                hls_url, video_id, 'mp4', m3u8_id='hls', headers=headers)
+            for fmt in formats:
+                fmt.setdefault('http_headers', {}).update(headers)
         if original:
             formats.append({
                 'url': original,
                 'format_id': 'http',
                 'ext': 'mp4',
                 'quality': 1,
+                'http_headers': headers,
             })
 
         for sub in traverse_obj(stream, ('subtitles', lambda _, v: url_or_none(v['url']))) or []:
@@ -119,8 +142,9 @@ class AnonMP4IE(InfoExtractor):
         }
 
     def _extract_stream(self, api_url, video_id, referer, note='Downloading stream JSON'):
-        stream = self._download_json(api_url, video_id, note, headers={'Referer': referer})
-        return self._parse_stream(stream, video_id, api_url)
+        headers = self._cdn_headers(referer)
+        stream = self._download_json(api_url, video_id, note, headers=headers)
+        return self._parse_stream(stream, video_id, api_url, headers=headers)
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
@@ -150,6 +174,7 @@ class AnonMP4IE(InfoExtractor):
 
         formats, subtitles = [], {}
         thumbnail = duration = None
+        headers = self._cdn_headers(referer)
         initial = self._call_video_api(host, video_id, webpage, referer)
         if video_type == '1':
             tracks = traverse_obj(
@@ -172,7 +197,7 @@ class AnonMP4IE(InfoExtractor):
                 thumbnail = thumbnail or data.get('thumbnail')
                 duration = duration or data.get('duration')
         else:
-            data = self._parse_stream(initial, video_id)
+            data = self._parse_stream(initial, video_id, headers=headers)
             formats, subtitles = data['formats'], data['subtitles']
             thumbnail, duration = data.get('thumbnail'), data.get('duration')
 
