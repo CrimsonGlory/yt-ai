@@ -17,7 +17,7 @@ class UploadNowIE(InfoExtractor):
     IE_DESC = 'UploadNow'
     _VALID_URL = (
         r'https?://(?:www\.)?uploadnow\.io/(?:[a-z]{2}/)?'
-        r'(?:files/(?P<id>[^/?#]+)|f/(?P<file_id>[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}))')
+        r'(?:files/(?P<id>[^/?#]+)|f/(?P<folder_share>[^/?#]+)|s/(?P<file_id>[^/?#]+)|share/?(?:$|[?#]))')
     _TESTS = [{
         'url': 'https://uploadnow.io/files/TWKzN8d',
         'skip': 'Guest sample folder; files expire',
@@ -27,14 +27,16 @@ class UploadNowIE(InfoExtractor):
         },
         'playlist_count': 3,
     }, {
-        'url': 'https://uploadnow.io/f/dfd16b2a-809d-4194-91d2-9a08763bb79b',
-        'skip': 'Guest sample file; files expire',
+        'url': 'https://uploadnow.io/f/g6dMJDT',
         'info_dict': {
-            'id': 'dfd16b2a-809d-4194-91d2-9a08763bb79b',
-            'ext': 'mp4',
-            'title': 'emerson-lake-and-palmer_sin_marca_ia_final',
-            'filesize': 110680,
+            'id': 'g6dMJDT',
+            'title': 'SMB0RoUS',
         },
+        'playlist_mincount': 1,
+        'params': {'skip_download': True},
+    }, {
+        'url': 'https://uploadnow.io/en/share?utm_source=g6dMJDT',
+        'only_matching': True,
     }, {
         'url': 'https://uploadnow.io/en/files/TWKzN8d',
         'only_matching': True,
@@ -42,7 +44,7 @@ class UploadNowIE(InfoExtractor):
         'url': 'https://www.uploadnow.io/files/TWKzN8d',
         'only_matching': True,
     }, {
-        'url': 'https://uploadnow.io/fr/f/dfd16b2a-809d-4194-91d2-9a08763bb79b',
+        'url': 'https://uploadnow.io/s/dfd16b2a-809d-4194-91d2-9a08763bb79b',
         'only_matching': True,
     }]
     _API_BASE = 'https://uploadnow.io/api'
@@ -100,8 +102,8 @@ class UploadNowIE(InfoExtractor):
             raise ExtractorError('Requested content was not found', expected=True, video_id=video_id)
         if 'NO_FILES_TO_DOWNLOAD' in codes:
             raise ExtractorError('No files found at provided URL', expected=True, video_id=video_id)
-        if status in (401, 403):
-            if self.get_param('videopassword'):
+        if status in (401, 403) or 'PASSWORD_REQUIRED' in codes or 'INVALID_PASSWORD' in codes:
+            if self.get_param('videopassword') or 'INVALID_PASSWORD' in codes:
                 raise ExtractorError('Invalid password', expected=True, video_id=video_id)
             raise ExtractorError(
                 'This content is private or password protected, use --video-password',
@@ -237,12 +239,19 @@ class UploadNowIE(InfoExtractor):
 
     def _real_extract(self, url):
         mobj = self._match_valid_url(url)
+        qs = urllib.parse.parse_qs(urllib.parse.urlparse(url).query)
         extra = {
-            'token': traverse_obj(
-                urllib.parse.parse_qs(urllib.parse.urlparse(url).query),
-                ('token', 0, {str})),
+            'token': (
+                traverse_obj(qs, ('token', 0, {str}))
+                or traverse_obj(qs, ('utm_content', 0, {str}))),
         }
-        file_id = mobj.group('file_id')
-        if file_id:
+        folder_id = (
+            mobj.group('id')
+            or mobj.group('folder_share')
+            or traverse_obj(qs, ('utm_source', 0, {str})))
+        file_id = mobj.group('file_id') or traverse_obj(qs, ('utm_medium', 0, {str}))
+        if file_id and not folder_id:
             return self._extract_file(file_id, extra)
-        return self._extract_folder(self._match_id(url), extra)
+        if folder_id:
+            return self._extract_folder(folder_id, extra)
+        raise ExtractorError('Unable to determine UploadNow folder or file id', expected=True)
