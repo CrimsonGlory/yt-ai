@@ -1,5 +1,5 @@
 from .common import InfoExtractor
-from ..utils import parse_duration, parse_iso8601, traverse_obj
+from ..utils import int_or_none, parse_duration, parse_iso8601, traverse_obj, url_or_none
 
 
 class NOSNLArticleIE(InfoExtractor):
@@ -70,30 +70,78 @@ class NOSNLArticleIE(InfoExtractor):
         },
     ]
 
-    def _entries(self, nextjs_json, display_id):
-        for item in nextjs_json:
-            if item.get('type') == 'video':
-                formats, subtitle = self._extract_m3u8_formats_and_subtitles(
-                    traverse_obj(item, ('source', 'url')), display_id, ext='mp4')
+    def _labels(self, value):
+        if isinstance(value, list) and value and isinstance(value[0], dict):
+            return traverse_obj(value, (..., 'label', {str})) or None
+        return value or None
+
+    def _iter_media(self, node):
+        if isinstance(node, list):
+            for child in node:
+                yield from self._iter_media(child)
+            return
+        if not isinstance(node, dict):
+            return
+        kind = node.get('__typename') or node.get('type')
+        if kind in ('VideoElement', 'AudioElement', 'video', 'audio'):
+            yield node
+            return
+        for value in node.values():
+            if isinstance(value, (dict, list)):
+                yield from self._iter_media(value)
+
+    def _video_url(self, item):
+        source = traverse_obj(item, ('source', 'url', {url_or_none}))
+        if source:
+            return source
+        return traverse_obj(item, (
+            'videoAsset', 'formats', lambda _, v: (
+                'mpegurl' in (v.get('mimetype') or '') or '.m3u8' in (v.get('url') or '')),
+            'url', {url_or_none}), get_all=False)
+
+    def _thumbnails(self, item):
+        images = traverse_obj(item, ('imagesByRatio', ...))
+        if images and isinstance(images[0], list):
+            images = images[0]
+        if not images:
+            images = traverse_obj(item, ('videoAsset', 'imageAsset', 'Ratio16x9', ...)) or []
+        thumbnails = []
+        for image in images:
+            if not isinstance(image, dict):
+                continue
+            url = url_or_none(image.get('url')) or traverse_obj(image, ('url', ...), get_all=False)
+            if url:
+                thumbnails.append({
+                    'url': url,
+                    'width': int_or_none(image.get('width')),
+                    'height': int_or_none(image.get('height')),
+                })
+        return thumbnails
+
+    def _entries(self, nodes, display_id):
+        for item in self._iter_media(nodes):
+            kind = item.get('__typename') or item.get('type')
+            if kind in ('VideoElement', 'video'):
+                video_url = self._video_url(item)
+                formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+                    video_url, display_id, ext='mp4', fatal=False) if video_url else ([], {})
                 yield {
-                    'id': str(item['id']),
+                    'id': str(item.get('id') or traverse_obj(item, ('videoAsset', 'id')) or display_id),
                     'title': item.get('title'),
                     'description': item.get('description'),
                     'formats': formats,
-                    'subtitles': subtitle,
-                    'duration': parse_duration(item.get('duration')),
-                    'thumbnails': [{
-                        'url': traverse_obj(image, ('url', ...), get_all=False),
-                        'width': image.get('width'),
-                        'height': image.get('height'),
-                    } for image in traverse_obj(item, ('imagesByRatio', ...))[0]],
+                    'subtitles': subtitles,
+                    'duration': (
+                        int_or_none(traverse_obj(item, ('videoAsset', 'durationInSeconds')))
+                        or parse_duration(item.get('duration'))),
+                    'thumbnails': self._thumbnails(item),
                 }
-
-            elif item.get('type') == 'audio':
+            elif kind in ('AudioElement', 'audio'):
                 yield {
-                    'id': str(item['id']),
+                    'id': str(item.get('id') or traverse_obj(item, ('asset', 'id')) or display_id),
                     'title': item.get('title'),
-                    'url': traverse_obj(item, ('media', 'src')),
+                    'description': item.get('description'),
+                    'url': traverse_obj(item, ('media', 'src'), ('asset', 'formats', ..., 'url'), get_all=False),
                     'ext': 'mp3',
                 }
 
@@ -103,18 +151,27 @@ class NOSNLArticleIE(InfoExtractor):
             site_type = 'video'
         webpage = self._download_webpage(url, display_id)
 
-        nextjs_json = self._search_nextjs_data(webpage, display_id)['props']['pageProps']['data']
+        page = self._search_nextjs_data(webpage, display_id)['props']['pageProps']
+        data = page.get('data') or page.get('article') or {}
+        if site_type == 'video' and isinstance(data.get('video'), dict):
+            media_root = [data['video']]
+        elif isinstance(data.get('items'), list):
+            media_root = data['items']
+        else:
+            media_root = data.get('content') or []
         return {
             '_type': 'playlist',
-            'entries': self._entries(
-                [nextjs_json['video']] if site_type == 'video' else nextjs_json['items'], display_id),
-            'id': str(nextjs_json['id']),
-            'title': nextjs_json.get('title') or self._html_search_meta(['title', 'og:title', 'twitter:title'], webpage),
-            'description': (nextjs_json.get('description')
+            'entries': self._entries(media_root, display_id),
+            'id': str(data['id']),
+            'title': data.get('title') or self._html_search_meta(['title', 'og:title', 'twitter:title'], webpage),
+            'description': (data.get('description')
                             or self._html_search_meta(['description', 'twitter:description', 'og:description'], webpage)),
-            'tags': nextjs_json.get('keywords'),
-            'modified_timestamp': parse_iso8601(nextjs_json.get('modifiedAt')),
-            'thumbnail': nextjs_json.get('shareImageSrc') or self._html_search_meta(['og:image', 'twitter:image'], webpage),
-            'timestamp': parse_iso8601(nextjs_json.get('publishedAt')),
-            'categories': traverse_obj(nextjs_json, ('categories', ..., 'label')),
+            'tags': self._labels(data.get('keywords')),
+            'modified_timestamp': parse_iso8601(data.get('modifiedAt')),
+            'thumbnail': (
+                url_or_none(data.get('shareImageSrc'))
+                or traverse_obj(data, ('indexImage', 'Ratio16x9', -1, 'url', {url_or_none}))
+                or self._html_search_meta(['og:image', 'twitter:image'], webpage)),
+            'timestamp': parse_iso8601(data.get('publishedAt') or data.get('createdAt')),
+            'categories': self._labels(data.get('categories')),
         }

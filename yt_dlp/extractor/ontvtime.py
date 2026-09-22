@@ -19,6 +19,7 @@ class OnTVTimeIE(InfoExtractor):
     ]
     _TESTS = [{
         'url': 'https://www.ontvtime.ru/index.php?option=com_content&task=view_record&id=1450&start_record=2026-08-28-21-30',
+        'skip': 'TLS chain sends a GlobalSign R6 intermediate for an R46 leaf, so certificate verification fails',
         'md5': 'aa294b904e438760f7305a74ac260d8f',
         'info_dict': {
             'id': '1450_2026-08-28-21-30',

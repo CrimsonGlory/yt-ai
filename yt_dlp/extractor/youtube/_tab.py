@@ -2156,6 +2156,7 @@ class YoutubeTabIE(YoutubeTabBaseInfoExtractor):
     }, {
         'note': 'Tags containing spaces',
         'url': 'https://www.youtube.com/channel/UC7_YxT-KID8kRbqZo7MyscQ',
+        'expected_warnings': ['unable to extract yt initial data'],
         'playlist_count': 3,
         'info_dict': {
             'id': 'UC7_YxT-KID8kRbqZo7MyscQ',

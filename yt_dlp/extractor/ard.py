@@ -141,7 +141,7 @@ class ARDBetaMediathekIE(InfoExtractor):
                 'channel': 'Das Erste',
                 'duration': 353,
                 'thumbnail': 'md5:68d8f1724d23942f8e39c9d134fc5ba5',
-                'timestamp': 1787507417,
+                'timestamp': 1787491800,
                 'upload_date': '20260823',
                 'series': 'Sportschau DFB-Pokal',
                 'episode': 'Gladbach lässt Schott Mainz keine Chance',

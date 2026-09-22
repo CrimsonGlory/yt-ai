@@ -35,7 +35,7 @@ class CrowdBunkerIE(InfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url)
         data_json = self._download_json(
-            f'https://api.divulg.org/post/{video_id}/details', video_id,
+            f'https://api.crowdbunker.com/post/{video_id}/details', video_id,
             headers={'accept': 'application/json, text/plain, */*'})
         video_json = data_json['video']
         formats, subtitles = [], {}
@@ -95,7 +95,7 @@ class CrowdBunkerChannelIE(InfoExtractor):
 
         for page in itertools.count():
             channel_json = self._download_json(
-                f'https://api.divulg.org/organization/{playlist_id}/posts', playlist_id,
+                f'https://api.crowdbunker.com/organization/{playlist_id}/posts', playlist_id,
                 headers={'accept': 'application/json, text/plain, */*'},
                 query={'after': last} if last else {}, note=f'Downloading Page {page}')
             for item in channel_json.get('items') or []:

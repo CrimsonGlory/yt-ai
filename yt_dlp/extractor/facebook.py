@@ -504,8 +504,13 @@ class FacebookIE(InfoExtractor):
                 or get_first(post, ('video', 'creation_story', 'short_form_video_context', 'video_owner', {dict})) or {})
             uploader = uploader_data.get('name') or (
                 clean_html(get_element_by_id('fbPhotoPageAuthorName', webpage))
-                or self._search_regex(
-                    (r'ownerName\s*:\s*"([^"]+)"', *self._og_regexes('title')), webpage, 'uploader', fatal=False))
+                or self._html_search_regex(
+                    (r'ownerName\s*:\s*"([^"]+)"', *self._og_regexes('title')),
+                    webpage, 'uploader', default=None))
+            # Reel og:title is "{views} · {reactions} | {message} | {page name}".
+            reel_og_title = bool(uploader and re.search(r'\bviews\b', uploader) and '|' in uploader)
+            if reel_og_title:
+                uploader = re.split(r'\s+\|\s+', uploader)[-1].strip() or uploader
             timestamp = int_or_none(self._search_regex(
                 r'<abbr[^>]+data-utime=["\'](\d+)', webpage,
                 'timestamp', default=None))
@@ -523,7 +528,11 @@ class FacebookIE(InfoExtractor):
                 'timestamp': timestamp,
                 'thumbnail': thumbnail,
                 'view_count': parse_count(self._search_regex(
-                    (r'\bviewCount\s*:\s*["\']([\d,.]+)', r'video_view_count["\']\s*:\s*(\d+)'),
+                    (
+                        r'\bviewCount\s*:\s*["\']([\d,.]+)',
+                        r'video_view_count["\']\s*:\s*(\d+)',
+                        *((r'([\d,.]+[KMBkmb]?)\s+views\b',) if reel_og_title else ()),
+                    ),
                     webpage, 'view count', default=None)),
                 'concurrent_view_count': get_first(post, (
                     ('video', (..., ..., 'attachments', ..., 'media')), 'liveViewerCount', {int_or_none})),
@@ -533,6 +542,8 @@ class FacebookIE(InfoExtractor):
                     'repost_count': ('share_count_reduced', {parse_count}),
                 }), get_all=False),
             }
+            if reel_og_title and info_dict.get('concurrent_view_count') is None:
+                info_dict['concurrent_view_count'] = 0
 
             info_json_ld = self._search_json_ld(webpage, video_id, default={})
             info_json_ld['title'] = (re.sub(r'\s*\|\s*Facebook$', '', title or info_json_ld.get('title') or page_title or '')

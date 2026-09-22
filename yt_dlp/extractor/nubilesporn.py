@@ -30,6 +30,7 @@ class NubilesPornIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://nubiles-porn.com/video/shorts/elevate/232430/lets-taste-his-cum-together-s6e5',
+        'skip': 'Cloudflare Turnstile challenge',
         'md5': '5d925b40268740bbc794c2dc9f6c5a17',
         'info_dict': {
             'id': '232430',

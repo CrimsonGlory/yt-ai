@@ -16,8 +16,14 @@ class PragmaticWorksTrainingBaseIE(InfoExtractor):
     }
 
     def _call_api(self, path, video_id, note=None):
-        data = self._download_json(
-            f'{self._API_BASE}/{path}', video_id, note=note, headers=self._HEADERS)
+        # Lesson preview now 302s to /login with an empty body. Course metadata
+        # endpoints still return JSON.
+        raw = self._download_webpage(
+            f'{self._API_BASE}/{path}', video_id, note=note, headers=self._HEADERS,
+            expected_status=(301, 302, 401, 403))
+        if not raw or raw.lstrip()[:1] not in '{[':
+            self.raise_login_required('This video requires a login')
+        data = self._parse_json(raw, video_id)
         if data.get('Success') is False:
             raise ExtractorError(
                 traverse_obj(data, ('Message', {str})) or 'Pragmatic Works Training API error',
@@ -39,6 +45,7 @@ class PragmaticWorksTrainingIE(PragmaticWorksTrainingBaseIE):
         r'(?P<id>[\da-fA-F]{8}-(?:[\da-fA-F]{4}-){3}[\da-fA-F]{12})')
     _TESTS = [{
         'url': 'https://learning.pragmaticworkstraining.com/coursePlayer/95ff61b1-1c80-4c35-acc3-3cc136b71b46/F6305848-CEC5-424E-B56F-F5EE9B5DD4DF',
+        'skip': 'GetVideoPreview now redirects to login',
         'md5': '6be83b9107b74b671856d3c3f6159110',
         'info_dict': {
             'id': 'F6305848-CEC5-424E-B56F-F5EE9B5DD4DF',
@@ -88,6 +95,24 @@ class PragmaticWorksTrainingCourseIE(PragmaticWorksTrainingBaseIE):
         'playlist_mincount': 19,
         'params': {'skip_download': True, 'extract_flat': 'in_playlist'},
     }, {
+        # Public course intro. Lesson player URLs require a login.
+        'url': 'https://learning.pragmaticworkstraining.com/course/automationinaday',
+        'info_dict': {
+            'id': 'automationinaday',
+            'title': 'Automation in a Day',
+            'description': 'md5:5d5e611046e3c2bc13eb8b907c6d0c68',
+            'thumbnail': r're:https://learning\.pragmaticworkstraining\.com/api/upload/getCourseImage/.+',
+        },
+        'playlist': [{
+            'info_dict': {
+                'id': 'EwhIg8aS4YJUJp4k4r36202buEPrIxwOVXwVYUht5tiA',
+                'ext': 'mp4',
+                'title': 'Intro: Automation in a Day',
+                'thumbnail': r're:https://image\.mux\.com/.+',
+            },
+        }],
+        'params': {'playlistend': 1},
+    }, {
         'url': 'https://learning.pragmaticworkstraining.com/course/advancedazuredatafactory',
         'only_matching': True,
     }]
@@ -101,8 +126,20 @@ class PragmaticWorksTrainingCourseIE(PragmaticWorksTrainingBaseIE):
         course_guid = traverse_obj(course, ('CourseGuid', {str}))
         if not course_guid:
             raise ExtractorError('Unable to extract course GUID', expected=True)
+        course_title = traverse_obj(course, ('CourseTitle', {str}))
 
         entries = []
+        intro_id = traverse_obj(course, ('IntroMuxPlaybackId', {str}))
+        if intro_id:
+            formats, subtitles = self._extract_mux_video(intro_id, course_id)
+            if formats:
+                entries.append({
+                    'id': intro_id,
+                    'title': f'Intro: {course_title}' if course_title else 'Intro',
+                    'formats': formats,
+                    'subtitles': subtitles,
+                    'thumbnail': f'https://image.mux.com/{intro_id}/thumbnail.jpg',
+                })
         for module in traverse_obj(modules, (..., {dict})):
             for item in traverse_obj(module, ('CourseModuleContent', ..., {dict})):
                 if traverse_obj(item, ('ContentType', {int})) != 3:
