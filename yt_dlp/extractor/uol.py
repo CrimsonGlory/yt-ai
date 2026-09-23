@@ -16,6 +16,7 @@ class UOLIE(InfoExtractor):
     _VALID_URL = r'https?://(?:.+?\.)?uol\.com\.br/.*?(?:(?:mediaId|v)=|view/(?:[a-z0-9]+/)?|video(?:=|/(?:\d{4}/\d{2}/\d{2}/)?))(?P<id>\d+|[\w-]+-[A-Z0-9]+)'
     _TESTS = [{
         'url': 'https://mais.uol.com.br/view/17414108',
+        'skip': 'api.mais.uol.com.br unreachable (connection timeout)',
         'md5': '38e748c3d80c102b057fc76b4a2d1bfe',
         'info_dict': {
             'id': '17414108',

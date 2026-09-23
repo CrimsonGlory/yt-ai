@@ -2868,6 +2868,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **xiaohongshu**: Impersonate the browser and fall back to `og:title` when note JSON omits title
     * **xinpianchang**: Read Next.js `_next/data` instead of WAF-blocked article HTML; send Referer on media CDN requests
     * **XMinus**: Reconstruct xmst.cc `/dl/minus` URLs from the current x-minus.pro player after x-minus.org expired
+    * **yahoo**: Fall back to JSON-LD `VideoObject` UUIDs (impersonate; the default UA is HTTP 429) and the streams API when the caas article API returns HTTP 404 or 500
     * **yandexdisk**: Support password-protected public files (`--video-password`)
     * **yandexvideo**: Read preview player JSON from `<noframes>` and follow the host video URL
     * **yapfiles**: Parse the current yaplayer load URL and `file`/`file_hd` from the API instead of the old `player.init` playlist

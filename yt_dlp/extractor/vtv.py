@@ -78,7 +78,16 @@ class VTVGoIE(InfoExtractor):
 class VTVIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?vtv\.vn/video/[\w-]*?(?P<id>\d+)\.htm'
     _TESTS = [{
+        'url': 'https://vtv.vn/video/an-do-nhat-ban-tap-tran-khong-quan-108699344.htm',
+        'info_dict': {
+            'id': '108699344',
+            'ext': 'mp4',
+            'title': 'Ấn Độ - Nhật Bản tập trận không quân | Shorts Video',
+            'thumbnail': r're:https://static\.mediacdn\.vn/vtv\.vn/images/.+',
+        },
+    }, {
         'url': 'https://vtv.vn/video/loai-gian-khong-lo-lai-may-cuu-tro-y-te-108698430.htm',
+        'skip': 'cdn-videos.vtv.vn master playlist times out',
         'info_dict': {
             'id': '108698430',
             'ext': 'mp4',

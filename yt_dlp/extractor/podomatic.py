@@ -21,6 +21,7 @@ class PodomaticIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.podomatic.com/podcasts/judgejules/episodes/2026-08-27T21_17_53-07_00',
+        'skip': 'podomatic.com is on clientHold and does not resolve',
         'md5': '9ad35fa3b52a62789af982c5ed683285',
         'info_dict': {
             'id': '2026-08-27T21_17_53-07_00',

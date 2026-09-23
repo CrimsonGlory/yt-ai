@@ -19,6 +19,7 @@ class Porn3dxIE(InfoExtractor):
     _BUNNY_LIBRARY_ID = '21030'
     _TESTS = [{
         'url': 'https://porn3dx.com/post/90233/sexy-booty-dance-by-my-girl',
+        'skip': 'porn3dx.com is down for maintenance (Cloudflare worker 503, retry-after 3600)',
         'md5': 'f1470687a3aeaf6a6c941dd847ac22c8',
         'info_dict': {
             'id': '05473580-c8f8-46c5-a323-b80ed1945f23',

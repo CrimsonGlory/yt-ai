@@ -13,7 +13,7 @@ class NoodleMagazineIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www|adult\.)?noodlemagazine\.com/watch/(?P<id>[0-9-_]+)'
     _TESTS = [{
         'url': 'https://adult.noodlemagazine.com/watch/-67421364_456239604',
-        'md5': '10ffae19a5dbe6a35228b7025c596372',
+        'md5': '502a868ac314910bca19d24902932fb3',
         'info_dict': {
             'id': '-67421364_456239604',
             'ext': 'mp4',

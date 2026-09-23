@@ -19,7 +19,7 @@ class NZRPlusIE(ImgGamingBaseIE):
             'ext': 'mp4',
             'title': 'Tour de Rugby | Series Trailer',
             'description': 'Oscar winner Taika Waititi travels to the rugby mad capital of Europe; France! He has one goal in mind; to see the best of French culture, high fashion, world renowned champagne and of course all things rugby!',
-            'thumbnail': r're:https://dve-images\.imggaming\.com/.+',
+            'thumbnail': r're:https://(?:dve-images\.imggaming\.com|vod-images\.onvesper\.com)/.+',
             'duration': 69,
             'tags': ['DEfree', 'France', 'Rugby', 'Taika', 'Taika Waititi', 'Premium Originals', '1', 'New Zealand', 'Sizzle', 'trailersrow', 'lesbleusrow'],
         },

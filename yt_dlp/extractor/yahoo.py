@@ -106,6 +106,7 @@ class YahooIE(InfoExtractor):
             'title': 'Gwen Stefani reveals the pop hit she passed on, assigns it to her \'Voice\' contestant instead',
             'description': 'Gwen decided not to record this hit herself, but she decided it was the perfect fit for Kyndall Inskeep.',
         },
+        'skip': 'embedded Yahoo video removed; article now embeds YouTube',
         'playlist': [{
             'info_dict': {
                 'id': '966d4262-4fd1-3aaa-b45b-049ca6e38ba6',
@@ -218,6 +219,60 @@ class YahooIE(InfoExtractor):
             }),
         }
 
+    def _json_ld_video_uuids(self, webpage, display_id):
+        uuids = []
+        for ld in self._yield_json_ld(webpage, display_id, fatal=False):
+            nodes = ld.get('@graph') if isinstance(ld, dict) and isinstance(ld.get('@graph'), list) else [ld]
+            for node in nodes:
+                if not isinstance(node, dict):
+                    continue
+                types = node.get('@type')
+                if isinstance(types, str):
+                    types = [types]
+                if not types or 'VideoObject' not in types:
+                    continue
+                uuid = node.get('identifier') if isinstance(node.get('identifier'), str) else None
+                if not uuid:
+                    uuid = self._search_regex(
+                        r'([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})',
+                        ' '.join(str(node.get(key) or '') for key in ('contentUrl', 'embedUrl')),
+                        'video id', default=None)
+                if uuid:
+                    uuids.append(uuid)
+        return list(dict.fromkeys(uuids))
+
+    @staticmethod
+    def _strip_site_title(title):
+        if not title:
+            return title
+        marker = ' - Yahoo'
+        idx = title.rfind(marker)
+        return title[:idx] if idx > 0 else title
+
+    def _extract_from_webpage(self, url, display_id, country):
+        # Default UA is rate-limited (HTTP 429) on www.yahoo.com redirects.
+        webpage = self._download_webpage(url, display_id, impersonate=True)
+        video_ids = self._json_ld_video_uuids(webpage, display_id)
+        # Article pages are playlists (lead video and/or YouTube embeds).
+        # Video pages are a single Yahoo video even when JSON-LD also has a NewsArticle.
+        if video_ids and '/article/' not in urllib.parse.urlparse(url).path:
+            info = self._extract_yahoo_video(video_ids[0], country)
+            info['display_id'] = display_id
+            return info
+
+        entries = [self._extract_yahoo_video(video_id, country) for video_id in video_ids]
+        entries.extend(
+            self.url_result(yt_url) for yt_url in YoutubeIE._extract_embed_urls(url, webpage))
+        if not entries:
+            raise ExtractorError('No videos found', expected=True, video_id=display_id)
+
+        article_id = self._search_regex(
+            r'articleUuid=([0-9a-f-]{36})', webpage, 'article id', default=None) or display_id
+        title = self._strip_site_title(
+            self._og_search_title(webpage, default=None) or self._html_extract_title(webpage))
+        return self.playlist_result(
+            entries, article_id, title, self._og_search_description(webpage, default=None))
+
     def _real_extract(self, url):
         url, country, display_id = self._match_valid_url(url).groups()
         if not country:
@@ -225,11 +280,14 @@ class YahooIE(InfoExtractor):
         else:
             country = country.split('-')[0]
 
-        items = self._download_json(
+        article = self._download_json(
             f'https://{country}.yahoo.com/caas/content/article', display_id,
-            'Downloading content JSON metadata', query={
-                'url': url,
-            })['items'][0]
+            'Downloading content JSON metadata', query={'url': url},
+            fatal=False, errnote=False)
+        if not article:
+            return self._extract_from_webpage(url, display_id, country)
+
+        items = article['items'][0]
 
         item = items['data']['partnerData']
         if item.get('type') != 'video':

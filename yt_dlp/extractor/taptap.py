@@ -170,20 +170,20 @@ class TapTapAppIE(TapTapBaseIE):
         'playlist_count': 2,
         'playlist': [{
             'info_dict': {
+                'id': '5896874',
+                'ext': 'mp4',
+                'title': '原神',
+                'description': 'md5:e345f39a5fea5de2a46923f70d5f76ab',
+                'duration': 30,
+                'thumbnail': r're:^https?://.*\.(png|jpg)',
+            },
+        }, {
+            'info_dict': {
                 'id': '4058443',
                 'ext': 'mp4',
                 'title': '原神',
                 'description': 'md5:e345f39a5fea5de2a46923f70d5f76ab',
                 'duration': 26,
-                'thumbnail': r're:^https?://.*\.(png|jpg)',
-            },
-        }, {
-            'info_dict': {
-                'id': '5810149',
-                'ext': 'mp4',
-                'title': '原神',
-                'description': 'md5:e345f39a5fea5de2a46923f70d5f76ab',
-                'duration': 30,
                 'thumbnail': r're:^https?://.*\.(png|jpg)',
             },
         }],
