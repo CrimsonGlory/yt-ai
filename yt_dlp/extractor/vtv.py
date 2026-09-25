@@ -79,6 +79,7 @@ class VTVIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?vtv\.vn/video/[\w-]*?(?P<id>\d+)\.htm'
     _TESTS = [{
         'url': 'https://vtv.vn/video/an-do-nhat-ban-tap-tran-khong-quan-108699344.htm',
+        'skip': 'cdn-videos.vtv.vn master playlist times out',
         'info_dict': {
             'id': '108699344',
             'ext': 'mp4',

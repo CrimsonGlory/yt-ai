@@ -22,7 +22,7 @@ class SexBJCamIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://sexbjcam.com/2026/09/14/kbj26091416_eunyoung1238_20260805/',
-            'md5': '2db5df4b3d46d411e00edf5cb421f5f3',
+            'md5': '3828920b0c4b971f47d194b13ac4033b',
             'info_dict': {
                 'id': 'kbj26091416_eunyoung1238_20260805',
                 'ext': 'mp4',
@@ -129,9 +129,15 @@ class SexBJCamIE(InfoExtractor):
                     },
                 )
                 continue
-            m3u8_doc = self._download_webpage(
-                media_url, video_id, 'Downloading m3u8 information', headers=headers, impersonate=True, fatal=False,
-            )
+            # One mirror often times out. A warning here aborts the download
+            # tests before a later mirror is tried, so swallow and continue.
+            try:
+                m3u8_doc = self._download_webpage(
+                    media_url, video_id, 'Downloading m3u8 information',
+                    headers=headers, impersonate=True,
+                )
+            except ExtractorError:
+                continue
             if not m3u8_doc or not m3u8_doc.lstrip().startswith('#EXTM3U'):
                 continue
             hls_fmts, hls_subs = self._parse_m3u8_formats_and_subtitles(

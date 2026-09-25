@@ -63,8 +63,10 @@ class BanByeIE(BanByeBaseIE):
         },
         'playlist_mincount': 9,
     }, {
-        # ['src']['mp4']['levels'] direct mp4 urls only
+        # ['src']['mp4']['levels'] direct mp4 urls only.
+        # 480.mp4 is 404; 144.mp4 is the rendition that still exists.
         'url': 'https://banbye.com/watch/v_kb6_o1Kyq-CD',
+        'params': {'format': '144'},
         'info_dict': {
             'id': 'v_kb6_o1Kyq-CD',
             'ext': 'mp4',

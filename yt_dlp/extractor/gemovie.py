@@ -23,6 +23,7 @@ class GeMovieIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://ge.movie/movie/49574/superman',
+            'skip': 'Cloudflare HTTP 522 from the player host',
             'md5': 'acf34768a366cb4dad89cd4101dc9c48',
             'info_dict': {
                 'id': '49574',
@@ -239,7 +240,8 @@ class GeMovieIE(InfoExtractor):
             impersonate=True,
             fatal=False,
         )
-        if playlist is None:
+        # fatal=False returns False, not None, when the player host answers 522.
+        if not playlist:
             embed_page = self._download_webpage(
                 embed_url, video_id, 'Downloading embed page', headers={'Referer': url}, impersonate=True,
             )

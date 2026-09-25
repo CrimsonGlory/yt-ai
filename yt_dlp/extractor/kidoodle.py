@@ -29,7 +29,7 @@ class KidoodleIE(InfoExtractor):
             'display_id': 'Numberblocks2022',
             'title': 'Odds and Evens',
             'description': 'The Numberblocks play an exciting game of bounceball _ and it\'s the Even Tops versus the Odd Blocks. Learn about odd and even numbers with the Numberblocks.',
-            'thumbnail': 'https://d1o8tw6489vwho.cloudfront.net/Numberblocks2022/S02/keyart_e11_large.jpg',
+            'thumbnail': 'https://prod-be-kidoodle-legacy-image.gcdn.co/Numberblocks2022/S02/keyart_e11_large.jpg',
             'duration': 302.037333,
             'series': 'Numberblocks',
             'series_id': '2326',

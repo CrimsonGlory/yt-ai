@@ -39,6 +39,7 @@ class DoramasPrincessIE(InfoExtractor):
         'skip': 'timeout',
     }, {
         'url': 'https://doramasprincess.com/serie/the-one-2077-1-season-2-episode',
+        'skip': 'm3u8 host timed out',
         'info_dict': {
             'id': 'the-one-2077-1-season-2-episode',
             'ext': 'mp4',

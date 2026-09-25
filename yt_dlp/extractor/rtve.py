@@ -258,7 +258,7 @@ class RTVEAudioIE(RTVEBaseIE):
             'id': '17165641',
             'ext': 'mp3',
             'title': 'En la piel de los jóvenes, fibra óptica ultrarrápida y CibervoluntarIA',
-            'alt_title': 'md5:712229abbff7c86b782e5f44c3179dd1',
+            'alt_title': 'Cruce de cables - En la piel de los jóvenes, fibra óptica ultrarrápida y CibervoluntarIA',
             'description': 'md5:a4e0aa98b412dadca44635d9cf0804ae',
             'duration': 3210.423,
             'thumbnail': 'md5:763e1393bfb7e156a96fb77a2b703de6',

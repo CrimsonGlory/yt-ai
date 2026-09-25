@@ -1,3 +1,5 @@
+import urllib.parse
+
 from .common import InfoExtractor
 from ..utils import (
     ExtractorError,
@@ -14,8 +16,14 @@ class UdioIE(InfoExtractor):
     IE_NAME = 'udio'
     IE_DESC = 'Udio'
     _VALID_URL = r'https?://(?:www\.)?udio\.com/songs/(?P<id>[\w-]+)'
+    _STREAM_BASE = 'https://stream.udio.com'
+    _STREAM_HEADERS = {
+        'Referer': 'https://www.udio.com/',
+        'Origin': 'https://www.udio.com',
+    }
     _TESTS = [{
         'url': 'https://www.udio.com/songs/ehJuLz9DuCtVapQMVMcA7N',
+        'skip': 'DRM: stream.udio.com HLS is SAMPLE-AES; GCS song_path and video_path return AccessDenied',
         'md5': '7a29fc8921e82e8c17f5830a084a428e',
         'info_dict': {
             'id': 'ehJuLz9DuCtVapQMVMcA7N',
@@ -40,6 +48,21 @@ class UdioIE(InfoExtractor):
         'only_matching': True,
     }]
 
+    def _stream_manifest_is_drm(self, manifest, manifest_url, video_id):
+        if not manifest:
+            return False
+        if '#EXT-X-KEY' in manifest:
+            return True
+        media_path = next((
+            line.strip() for line in manifest.splitlines()
+            if line.strip() and not line.startswith('#')), None)
+        if not media_path or '.m3u8' not in media_path:
+            return False
+        media = self._download_webpage(
+            urllib.parse.urljoin(manifest_url, media_path), video_id,
+            'Downloading media playlist', fatal=False, headers=self._STREAM_HEADERS)
+        return bool(media and '#EXT-X-KEY' in media)
+
     def _real_extract(self, url):
         song_id = self._match_id(url)
         song = traverse_obj(
@@ -51,22 +74,40 @@ class UdioIE(InfoExtractor):
             raise ExtractorError('Song not found', expected=True)
 
         formats = []
-        audio_url = traverse_obj(song, ('song_path', {url_or_none}))
-        if audio_url:
-            formats.append({
-                'url': audio_url,
-                'format_id': 'http-mp3',
-                'ext': 'mp3',
-                'vcodec': 'none',
-                'acodec': 'mp3',
-            })
-        video_url = traverse_obj(song, ('video_path', {url_or_none}))
-        if video_url:
-            formats.append({
-                'url': video_url,
-                'format_id': 'http-mp4',
-                'ext': 'mp4',
-            })
+        api_id = traverse_obj(song, ('id', {str})) or song_id
+        transform = traverse_obj(song, ('transformation_hash', {str}))
+        stream_url = f'{self._STREAM_BASE}/stream/{api_id}'
+        if transform:
+            stream_url = f'{stream_url}/{transform}'
+        manifest = self._download_webpage(
+            stream_url, song_id, 'Downloading stream manifest', fatal=False,
+            headers=self._STREAM_HEADERS)
+        if manifest and manifest.lstrip().startswith('#EXTM3U'):
+            if self._stream_manifest_is_drm(manifest, stream_url, song_id):
+                self.report_drm(song_id)
+            formats.extend(self._extract_m3u8_formats(
+                stream_url, song_id, 'm4a', m3u8_id='hls', fatal=False,
+                headers=self._STREAM_HEADERS))
+
+        # Legacy public objects. The player no longer uses these; the bucket is
+        # anonymous-denied when a stream manifest exists.
+        if not formats:
+            audio_url = traverse_obj(song, ('song_path', {url_or_none}))
+            if audio_url:
+                formats.append({
+                    'url': audio_url,
+                    'format_id': 'http-mp3',
+                    'ext': 'mp3',
+                    'vcodec': 'none',
+                    'acodec': 'mp3',
+                })
+            video_url = traverse_obj(song, ('video_path', {url_or_none}))
+            if video_url:
+                formats.append({
+                    'url': video_url,
+                    'format_id': 'http-mp4',
+                    'ext': 'mp4',
+                })
         if not formats:
             self.raise_no_formats('No public media found', expected=True, video_id=song_id)
 

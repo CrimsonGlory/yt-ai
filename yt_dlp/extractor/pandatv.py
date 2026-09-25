@@ -21,7 +21,8 @@ class PandaTvIE(InfoExtractor):
             'id': 'mickey94',
             'ext': 'mp4',
             'channel': '미키™',
-            'title': r're:미키™❤음악힐링&열혈BJ홍보 \d{4}-\d{2}-\d{2} \d{2}:\d{2}',
+            # Live title text changes; only the channel prefix and timestamp are stable.
+            'title': r're:미키™.+\d{4}-\d{2}-\d{2} \d{2}:\d{2}',
             'thumbnail': r're:https://cdn\.pandalive\.co\.kr/ivs/v1/.+/thumb\.jpg',
             'concurrent_view_count': int,
             'like_count': int,

@@ -113,6 +113,7 @@ class PinterestIE(PinterestBaseIE):
     _TESTS = [{
         # formats found in data['videos']
         'url': 'https://www.pinterest.com/pin/664281013778109217/',
+        'skip': 'Pin not found',
         'md5': '6550c2af85d6d9f3fe3b88954d1577fc',
         'info_dict': {
             'id': '664281013778109217',

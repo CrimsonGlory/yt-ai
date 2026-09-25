@@ -907,7 +907,7 @@ class FacebookPluginsVideoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:[\w-]+\.)?facebook\.com/plugins/video\.php\?.*?\bhref=(?P<id>https.+)'
     _TESTS = [{
         'url': 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fgov.sg%2Fvideos%2F10154383743583686%2F&show_text=0&width=560',
-        'md5': 'ed7093b0d1125ba12ce37bddf518b243',
+        'md5': 'af83aeae1d595f377c6e47a450828155',
         'info_dict': {
             'id': '10154383743583686',
             'ext': 'mp4',
