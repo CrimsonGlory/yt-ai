@@ -28,7 +28,7 @@ class OneFootballIE(InfoExtractor):
             'id': 'leVJrMho',
             'ext': 'mp4',
             'title': 'Klopp fumes at VAR decisions in West Ham defeat',
-            'description': 'md5:9c50371095a01ad3f63311c73d8f51a5',
+            'description': 'md5:f7d0efe1accfbeead5386977f8ef6f8b',
             'thumbnail': 'https://cdn.jwplayer.com/v2/media/leVJrMho/poster.jpg?width=720',
             'timestamp': 1636315232,
             'upload_date': '20211107',

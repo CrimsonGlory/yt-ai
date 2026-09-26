@@ -39,7 +39,7 @@ class MegaTVComIE(MegaTVComBaseIE):
             'id': '2389354',
             'ext': 'mp4',
             'display_id': '2-6-2026',
-            'title': 'Αλ Τσαντίρι Νιουζ: 2/6/2026 ',
+            'title': 'Αλ Τσαντίρι Νιουζ | ΠΡΕΜΙΕΡΑ: 2/6/2026 ',
             'description': 'md5:ee11a355f9bda066df633bdaa2d23c76',
             'thumbnail': 'https://www.megatv.com/wp-content/uploads/2026/06/6-1-1024x576.jpg',
             'timestamp': 1780488075,

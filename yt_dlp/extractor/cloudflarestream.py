@@ -12,6 +12,8 @@ class CloudflareStreamIE(InfoExtractor):
     _EMBED_REGEX = [
         rf'<script[^>]+\bsrc=(["\'])(?P<url>(?:https?:)?//{_EMBED_RE}(?:{_ID_RE})(?:(?!\1).)*)\1',
         rf'<iframe[^>]+\bsrc=["\'](?P<url>https?://{_SUBDOMAIN_RE}{_DOMAIN_RE}/[\da-f]{{32}})',
+        # Video.js docs embed a custom element instead of an iframe.
+        rf'<cloudflare-video[^>]+\bsrc=["\'](?P<url>https?://{_SUBDOMAIN_RE}{_DOMAIN_RE}/(?:{_ID_RE}))',
     ]
     _TESTS = [{
         'url': 'https://embed.cloudflarestream.com/embed/we4g.fla9.latest.js?video=31c9291ab41fac05471db4e73aa11717',

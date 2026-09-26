@@ -79,6 +79,18 @@ class GenericIE(InfoExtractor):
         },
         'skip': 'Invalid URL',
     }, {
+        # Direct link: public webm while ftp.nluug.nl (below) does not answer
+        'url': 'https://filesamples.com/samples/video/webm/sample_640x360.webm',
+        'md5': '58c055a4a4eeaab89a8374446fb76b93',
+        'info_dict': {
+            'id': 'sample_640x360',
+            'ext': 'webm',
+            'title': 'sample_640x360',
+            'direct': True,
+            'timestamp': 1688581470,
+            'upload_date': '20230705',
+        },
+    }, {
         # Direct link: Incorrect MIME type
         # https://github.com/ytdl-org/youtube-dl/commit/c5fa81fe81ce05cd81c20ff4ea6dac3dccdcbf9d
         'url': 'https://ftp.nluug.nl/video/nluug/2014-11-20_nj14/zaal-2/5_Lennart_Poettering_-_Systemd.webm',
@@ -91,6 +103,7 @@ class GenericIE(InfoExtractor):
             'timestamp': 1416498816,
             'upload_date': '20141120',
         },
+        'skip': 'ftp.nluug.nl connection timed out',
     }, {
         # Direct link: Live HLS; https://castr.com/hlsplayer/
         # https://github.com/yt-dlp/yt-dlp/pull/6775

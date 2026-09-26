@@ -14,6 +14,7 @@ from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
     OnDemandPagedList,
+    base_url,
     determine_ext,
     float_or_none,
     int_or_none,
@@ -228,8 +229,14 @@ class CDAIE(InfoExtractor):
                 formats.extend(self._extract_m3u8_formats(
                     hls, video_id, 'mp4', m3u8_id='hls', fatal=False))
             if mpd := url_or_none(adaptive.get('manifest') or adaptive.get('manifest_h264')):
-                formats.extend(self._extract_mpd_formats(
-                    mpd, video_id, mpd_id='dash', fatal=False))
+                mpd_doc = self._download_xml(
+                    mpd, video_id, note='Downloading MPD manifest', fatal=False)
+                if mpd_doc is not None and mpd_doc is not False:
+                    formats.extend(self._parse_mpd_formats(
+                        mpd_doc, mpd_id='dash', mpd_base_url=base_url(mpd), mpd_url=mpd))
+                    # Byte-range HLS/DASH of these files starts with a tiny fMP4
+                    # init range. The same MP4s are directly downloadable.
+                    formats.extend(self._progressive_from_mpd(mpd_doc, mpd))
 
         if meta.get('premium') and not meta.get('premium_free') and not formats:
             raise ExtractorError(
@@ -247,6 +254,39 @@ class CDAIE(InfoExtractor):
             'age_limit': 18 if meta.get('for_adults') else 0,
             'view_count': meta.get('views'),
         }
+
+    def _progressive_from_mpd(self, mpd_doc, mpd_url):
+        formats = []
+        for adapt in mpd_doc.iter():
+            if not str(adapt.tag).endswith('AdaptationSet'):
+                continue
+            content_type = adapt.get('contentType')
+            height = int_or_none(adapt.get('height'))
+            width = int_or_none(adapt.get('width'))
+            for rep in adapt:
+                if not str(rep.tag).endswith('Representation'):
+                    continue
+                file_name = next((
+                    child.text.strip() for child in rep
+                    if str(child.tag).endswith('BaseURL') and child.text and child.text.strip()
+                ), None)
+                if not file_name:
+                    continue
+                mime = rep.get('mimeType') or ''
+                is_audio = content_type == 'audio' or mime.startswith('audio/')
+                formats.append({
+                    'url': urljoin(base_url(mpd_url), file_name),
+                    'format_id': f'http-{rep.get("id") or file_name}',
+                    'ext': 'm4a' if is_audio else 'mp4',
+                    'vcodec': 'none' if is_audio else rep.get('codecs'),
+                    'acodec': rep.get('codecs') if is_audio else 'none',
+                    'width': None if is_audio else width,
+                    'height': None if is_audio else height,
+                    'tbr': float_or_none(rep.get('bandwidth'), scale=1000),
+                    # Prefer the single file over byte-range HLS of the same bytes.
+                    'preference': 1,
+                })
+        return formats
 
     def _web_extract(self, video_id):
         self._set_cookie('cda.pl', 'cda.player', 'html5')

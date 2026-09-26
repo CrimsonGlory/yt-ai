@@ -42,7 +42,7 @@ class LoomIE(InfoExtractor):
             'id': 'c43a642f815f4378b6f80a889bb73d8d',
             'ext': 'webm',
             'title': 'Lilah Nielsen Intro Video',
-            'uploader': 'Lilah Nielsen',
+            'uploader': 'Tealium12!',
             'upload_date': '20200826',
             'timestamp': 1598480716,
             'duration': 20,

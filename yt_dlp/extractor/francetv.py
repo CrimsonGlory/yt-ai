@@ -330,6 +330,18 @@ class FranceTVSiteIE(FranceTVBaseInfoExtractor):
         'skip': 'geo-restricted',
     }, {
         # Journaux télévisés are available worldwide
+        'url': 'https://www.france.tv/france-2/journal-20h00/8829735-edition-du-jeudi-24-septembre-2026.html',
+        'info_dict': {
+            'id': 'a2247938-1d2b-4c08-8752-f2deb5551d60',
+            'ext': 'mp4',
+            'title': 'Journal 20h00 - Interview du président de la République Emmanuel Macron',
+            'duration': 3663,
+            'thumbnail': r're:https?://.+/.+\.jpg',
+            'timestamp': 1790272666,
+            'upload_date': '20260924',
+        },
+    }, {
+        # Page is still published, but the player API returns 422 code 2007 (live ended)
         'url': 'https://www.france.tv/france-2/journal-20h00/8738337-edition-du-mercredi-26-aout-2026.html',
         'info_dict': {
             'id': 'ca80fd03-c608-4f5b-96ca-5a22779dc190',
@@ -340,7 +352,7 @@ class FranceTVSiteIE(FranceTVBaseInfoExtractor):
             'timestamp': 1787767069,
             'upload_date': '20260826',
         },
-        'expected_warnings': [r'pycryptodomex'],
+        'skip': 'replay expired (live ended)',
     }, {
         # france3
         'url': 'https://www.france.tv/france-3/des-chiffres-et-des-lettres/139063-emission-du-mardi-9-mai-2017.html',
@@ -379,7 +391,13 @@ class FranceTVSiteIE(FranceTVBaseInfoExtractor):
         display_id = self._match_id(url)
         webpage = self._download_webpage(url, display_id)
         nextjs_data = self._search_nextjs_v13_data(webpage, display_id)
-        video_id = get_first(nextjs_data, ('options', 'id', {str}))
+        # Next.js flight data no longer exposes options.id. The player id is
+        # siId in the (often backslash-escaped) page JSON.
+        video_id = (
+            get_first(nextjs_data, ('options', 'id', {str}))
+            or self._search_regex(
+                r'siId\\?":\\?"([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})',
+                webpage, 'video id', default=None))
         if not video_id:
             raise ExtractorError('Unable to extract video ID')
 

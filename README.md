@@ -2576,7 +2576,9 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **bunnycdn**: Fall back to `playlist.m3u8` when JSON-LD is missing
     * **cam4**: Profile `/rest/v1.0/profile/{id}/streamInfo` HLS `cdnURL`/`edgeURL` (try each until one plays); empty 204 means the room is offline
     * **ccma**: Raise an expected error when the 3cat media API omits `media` (unpublished/expired)
+    * **cda**: When the API lists no progressive qualities, download the fMP4 files next to the DASH manifest instead of byte-range HLS
     * **cliprs**: Extract Ring Publishing embeds
+    * **cloudflarestream**: Also match Video.js `<cloudflare-video src>` embeds
     * **crowdbunker**: Read post and channel JSON from `api.crowdbunker.com` (`api.divulg.org` returns 403)
     * **cspan**: Fall back to JSON-LD / m3u8 when player JS is blocked
     * **cu.ntv.co.jp**: Raise geo-restriction when CloudFront / Streaks block playback outside Japan
@@ -2607,6 +2609,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **filmweb**: GraphQL clip query and YouTube embeds; broader article URLs
     * **flickr**: Impersonate the browser when fetching the API key
     * **fptplay**: Sign the v7.1 API
+    * **francetv**: Read `siId` from the page JSON when Next.js flight data has no `options.id`
     * **freespeech**: Zype embeds, live-tv URLs, and browser impersonation
     * **freetv**: Use the current playback API instead of WordPress admin-ajax
     * **funker530**: Follow BunnyCDN / current embeds instead of Rumble-only

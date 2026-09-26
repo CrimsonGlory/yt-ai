@@ -169,7 +169,7 @@ class OmnyfmPlaylistIE(OmnyfmPlaylistBaseIE):
         'info_dict': {
             'id': 'bayfm-program03',
         },
-        'playlist_count': 4,
+        'playlist_mincount': 5,
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.asahi.com/articles/ASP763WDKP4JDIFI002.html',

@@ -212,6 +212,7 @@ class KalturaIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.cns.nyu.edu/~eero/math-tools17/Videos/lecture-05sep2017.html',
+        'skip': 'HTTP Error 403: Forbidden',
         'info_dict': {
             'id': '1_9gzouybz',
             'ext': 'mp4',
