@@ -107,24 +107,48 @@ class BitChuteIE(InfoExtractor):
     _UPLOADER_URL_TMPL = 'https://www.bitchute.com/profile/%s/'
     _CHANNEL_URL_TMPL = 'https://www.bitchute.com/channel/%s/'
 
+    _CDN_HOSTS = (
+        'seed122', 'seed125', 'seed126', 'seed128',
+        'seed132', 'seed150', 'seed151', 'seed152', 'seed153',
+        'seed167', 'seed171', 'seed177', 'seed305', 'seed307',
+        'seedp29xb', 'zb10-7gsop1v78',
+    )
+    _MEDIA_HEADERS = {'Referer': 'https://www.bitchute.com/'}
+
+    def _media_urls(self, video_url):
+        # Current CDNs use hashed labels (zbbb..., seed1sjt3), not only seedNNN.
+        yield video_url
+        for host in self._CDN_HOSTS:
+            rewritten = re.sub(
+                r'^(https?://)[^./]+(?=\.bitchute\.com)', rf'\1{host}', video_url, count=1)
+            if rewritten != video_url:
+                yield rewritten
+
+    def _media_format(self, url, filesize=None):
+        # urllib GETs are reset with no response; curl-impersonate can read the file.
+        fmt = {
+            'url': url,
+            'impersonate': True,
+            'http_headers': self._MEDIA_HEADERS,
+        }
+        if filesize:
+            fmt['filesize'] = filesize
+        return fmt
+
     def _check_format(self, video_url, video_id):
-        urls = orderedSet(
-            re.sub(r'(^https?://)(seed\d+)(?=\.bitchute\.com)', fr'\g<1>{host}', video_url)
-            for host in (r'\g<2>', 'seed122', 'seed125', 'seed126', 'seed128',
-                         'seed132', 'seed150', 'seed151', 'seed152', 'seed153',
-                         'seed167', 'seed171', 'seed177', 'seed305', 'seed307',
-                         'seedp29xb', 'zb10-7gsop1v78'))
-        for url in urls:
+        for url in orderedSet(self._media_urls(video_url)):
             try:
                 response = self._request_webpage(
-                    HEADRequest(url), video_id=video_id, note=f'Checking {url}')
+                    HEADRequest(url), video_id=video_id, note=f'Checking {url}',
+                    impersonate=True, headers=self._MEDIA_HEADERS)
             except ExtractorError as e:
                 self.to_screen(f'{video_id}: URL is invalid, skipping: {e.cause}')
                 continue
-            return {
-                'url': url,
-                'filesize': int_or_none(response.headers.get('Content-Length')),
-            }
+            content_type = (response.headers.get('Content-Type') or '').lower()
+            if content_type.startswith('text/'):
+                self.to_screen(f'{video_id}: URL is not media ({content_type}), skipping')
+                continue
+            return self._media_format(url, int_or_none(response.headers.get('Content-Length')))
 
     def _call_api(self, endpoint, data, display_id, fatal=True):
         note = endpoint.rpartition('/')[2]
@@ -162,7 +186,7 @@ class BitChuteIE(InfoExtractor):
                 if fmt := self._check_format(media_url, video_id):
                     formats.append(fmt)
             else:
-                formats.append({'url': media_url})
+                formats.append(self._media_format(media_url))
 
         if not formats:
             self.raise_no_formats(

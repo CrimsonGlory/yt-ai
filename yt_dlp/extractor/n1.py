@@ -72,6 +72,7 @@ class N1InfoIIE(InfoExtractor):
             'live_status': 'not_live',
             'media_type': 'video',
         },
+        'params': {'remote_components': ['ejs:github']},
     }, {
         'url': 'https://n1info.si/novice/svet/v-srbiji-samo-ta-konec-tedna-vec-kot-200-pozarov/',
         'skip': 'stale test sample / site changed',

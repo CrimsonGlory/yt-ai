@@ -21,7 +21,26 @@ class SexBJCamIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?sexbjcam\.com/\d{4}/\d{2}/\d{2}/(?P<id>[^/?#]+)/?'
     _TESTS = [
         {
+            'url': 'https://sexbjcam.com/2026/09/26/kbj26092657_jubin777_20260816/',
+            'md5': 'c21227a17b45b1c2635ba6228af9957c',
+            'info_dict': {
+                'id': 'kbj26092657_jubin777_20260816',
+                'ext': 'mp4',
+                'title': 'kbj26092657_jubin777_20260816',
+                'description': 'kbj26092657_jubin777_20260816',
+                'thumbnail': r're:https?://sexbjcam\.com/wp-content/uploads/.+\.jpg',
+                'duration': 3840,
+                'timestamp': 1790389307,
+                'upload_date': '20260926',
+                'cast': ['jubin777'],
+                'categories': ['KOREAN BJ'],
+                'tags': ['PandaTV'],
+                'age_limit': 18,
+            },
+        },
+        {
             'url': 'https://sexbjcam.com/2026/09/14/kbj26091416_eunyoung1238_20260805/',
+            'skip': 'playrecord.biz vidhide CDNs send no bytes',
             'md5': '3828920b0c4b971f47d194b13ac4033b',
             'info_dict': {
                 'id': 'kbj26091416_eunyoung1238_20260805',

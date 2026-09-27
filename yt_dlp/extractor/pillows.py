@@ -20,6 +20,7 @@ class PillowsIE(InfoExtractor):
     _API_BASE = 'https://api.pillows.su'
     _TESTS = [{
         'url': 'https://pillows.su/f/b045c1a41737aa2e7ddabf0520266547',
+        'skip': 'api.pillows.su returns 503 Backend fetch failed',
         'md5': '606630a28ea8c7bdd5b02732327ddddd',
         'info_dict': {
             'id': 'b045c1a41737aa2e7ddabf0520266547',
@@ -36,6 +37,7 @@ class PillowsIE(InfoExtractor):
         },
     }, {
         'url': 'https://pillows.su/f/70abc523d7f87741e0875b11dabcdc55',
+        'skip': 'api.pillows.su returns 503 Backend fetch failed',
         'md5': '2f434d74951601c0850799a3eaad6146',
         'info_dict': {
             'id': '70abc523d7f87741e0875b11dabcdc55',

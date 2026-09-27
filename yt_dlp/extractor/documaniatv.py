@@ -31,7 +31,7 @@ class DocumaniaTVIE(InfoExtractor):
                 "like_count": int,
                 "dislike_count": int,
                 "filesize": 1071780842,
-                "categories": ["ciencia-y-tecnologia"],
+                "categories": ["ciencia y tecnologia"],
             },
         },
         {
