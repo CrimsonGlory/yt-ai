@@ -24,7 +24,8 @@ class MatchTVIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = 'matchtv-live'
-        webpage = self._download_webpage('https://video.matchtv.ru/iframe/channel/106', video_id)
+        webpage = self._download_webpage(
+            'https://video.matchtv.ru/iframe/channel/106', video_id, impersonate=True)
         video_url = self._html_search_regex(
             r'data-config="config=(https?://[^?"]+)[?"]', webpage, 'video URL').replace('/feed/', '/media/') + '.m3u8'
         return {

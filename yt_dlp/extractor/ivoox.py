@@ -11,45 +11,44 @@ class IvooxIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.ivoox.com/en/larguero-a-00-00-el-mercado-audios-mp3_rf_179951138_1.html',
-            'md5': 'd4869b2af9f855a13932bc784b251a43',
             'info_dict': {
-            'id': '179951138',
-            'ext': 'mp3',
-            'title': 'md5:24f266fdedafd74daeb7abdd2ccdd81e',
-            'description': 'md5:a0a11dcc92e664557a16f6ac84a05b16',
-            'uploader': 'Cadena SER',
-            'channel': 'El Larguero',
-            'duration': 2056,
-            'thumbnail': 'https://static-1.ivoox.com/audios/f/1/7/2/f17228674b972f3516a183528bbeca89_XXL.jpg',
-            'timestamp': 1788403532,
-            'upload_date': '20260903',
-            'episode': 'md5:24f266fdedafd74daeb7abdd2ccdd81e',
-        },
-        },{
-        'url': 'https://www.ivoox.com/dex-08x30-rostros-del-mal-los-asesinos-en-audios-mp3_rf_143594959_1.html',
-        'skip': 'stale test sample / site changed',
-        'md5': '993f712de5b7d552459fc66aa3726885',
-        'info_dict': {
-            'id': '143594959',
-            'ext': 'mp3',
-            'timestamp': 1742731200,
-            'channel': 'DIAS EXTRAÑOS con Santiago Camacho',
-            'title': 'DEx 08x30 Rostros del mal: Los asesinos en serie que aterrorizaron España',
-            'description': 'md5:eae8b4b9740d0216d3871390b056bb08',
-            'uploader': 'Santiago Camacho',
-            'thumbnail': 'https://static-1.ivoox.com/audios/c/d/5/2/cd52f46783fe735000c33a803dce2554_XXL.jpg',
-            'upload_date': '20250323',
-            'episode': 'DEx 08x30 Rostros del mal: Los asesinos en serie que aterrorizaron España',
-            'duration': 11837,
-            'tags': ['españa', 'asesinos en serie', 'arropiero', 'historia criminal', 'mataviejas'],
-        },
-    }, {
-        'url': 'https://go.ivoox.com/rf/143594959',
-        'only_matching': True,
-    }, {
-        'url': 'https://www.ivoox.com/en/campodelgas-28-03-2025-audios-mp3_rf_144036942_1.html',
-        'only_matching': True,
-    }]
+                'id': '179951138',
+                'ext': 'mp3',
+                'title': 'md5:24f266fdedafd74daeb7abdd2ccdd81e',
+                'description': 'md5:a0a11dcc92e664557a16f6ac84a05b16',
+                'uploader': 'Cadena SER',
+                'channel': 'El Larguero',
+                'duration': 2056,
+                'thumbnail': 'https://static-1.ivoox.com/audios/f/1/7/2/f17228674b972f3516a183528bbeca89_XXL.jpg',
+                'timestamp': 1788403532,
+                'upload_date': '20260903',
+                'episode': 'md5:24f266fdedafd74daeb7abdd2ccdd81e',
+            },
+        }, {
+            'url': 'https://www.ivoox.com/dex-08x30-rostros-del-mal-los-asesinos-en-audios-mp3_rf_143594959_1.html',
+            'skip': 'stale test sample / site changed',
+            'md5': '993f712de5b7d552459fc66aa3726885',
+            'info_dict': {
+                'id': '143594959',
+                'ext': 'mp3',
+                'timestamp': 1742731200,
+                'channel': 'DIAS EXTRAÑOS con Santiago Camacho',
+                'title': 'DEx 08x30 Rostros del mal: Los asesinos en serie que aterrorizaron España',
+                'description': 'md5:eae8b4b9740d0216d3871390b056bb08',
+                'uploader': 'Santiago Camacho',
+                'thumbnail': 'https://static-1.ivoox.com/audios/c/d/5/2/cd52f46783fe735000c33a803dce2554_XXL.jpg',
+                'upload_date': '20250323',
+                'episode': 'DEx 08x30 Rostros del mal: Los asesinos en serie que aterrorizaron España',
+                'duration': 11837,
+                'tags': ['españa', 'asesinos en serie', 'arropiero', 'historia criminal', 'mataviejas'],
+            },
+        }, {
+            'url': 'https://go.ivoox.com/rf/143594959',
+            'only_matching': True,
+        }, {
+            'url': 'https://www.ivoox.com/en/campodelgas-28-03-2025-audios-mp3_rf_144036942_1.html',
+            'only_matching': True,
+        }]
 
     def _real_extract(self, url):
         media_id = self._match_id(url)

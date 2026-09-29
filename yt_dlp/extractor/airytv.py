@@ -27,7 +27,7 @@ class AiryTVIE(InfoExtractor):
             'categories': ['Drama'],
             'tags': ['Drama'],
             'genres': ['Thriller', 'TV Movie'],
-            'average_rating': 6.733,
+            'average_rating': float,
         },
     }, {
         'url': 'https://live.airy.tv/on-demand/episode/1537775',

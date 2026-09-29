@@ -2348,7 +2348,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **DocumaniaTV** (`documaniatv.com`): PHP Melody `pm_video_data` and on-page JWPlayer `playerInstance.setup` MP4; `/json/{id}` when it still returns JSON. Request: [yt-dlp/yt-dlp#1595](https://github.com/yt-dlp/yt-dlp/issues/1595)
     * **DoramasPrincess** (`doramasprincess.com`): POST `/ajax/embed` for HTML5 sources and packed JWPlayer HLS from host iframes. Request: [yt-dlp/yt-dlp#16369](https://github.com/yt-dlp/yt-dlp/issues/16369)
     * **echo360** (`echo360.org.au` / `echo360.net.au`): Public media player bootstrap, session token, and CloudFront-signed HLS/fMP4 from player-properties. Request: [yt-dlp/yt-dlp#3966](https://github.com/yt-dlp/yt-dlp/issues/3966)
-    * **Emturbovid** (`emturbovid.com`): JWPlayer `urlPlay` HLS; skip PNG-wrapped Google Drive segments with `EXT-X-BYTERANGE`. Request: [yt-dlp/yt-dlp#6869](https://github.com/yt-dlp/yt-dlp/issues/6869)
+    * **Emturbovid** (`emturbovid.com`): Impersonate Cloudflare, then JWPlayer `urlPlay` HLS; skip PNG-wrapped Google Drive segments with `EXT-X-BYTERANGE`. Request: [yt-dlp/yt-dlp#6869](https://github.com/yt-dlp/yt-dlp/issues/6869)
     * **EpicDeveloperCommunity** (`dev.epicgames.com`): Impersonate Cloudflare, then learning `post.json` plus Electra/qstv DASH. Request: [yt-dlp/yt-dlp#9783](https://github.com/yt-dlp/yt-dlp/issues/9783)
     * **eplay** (`eplay.com`): Public `search-cf.eplay.com` post JSON (tokenized MP4/HLS) with Next.js fallback. Request: [yt-dlp/yt-dlp#16853](https://github.com/yt-dlp/yt-dlp/issues/16853)
     * **Epix** (`epix.com` / `mgmplus.com`): Anonymous `api.mgmplus.com` device session, then public trailer/extra HLS and MP4. Request: [yt-dlp/yt-dlp#3185](https://github.com/yt-dlp/yt-dlp/issues/3185)
@@ -2569,8 +2569,10 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **abcnews**: Read the current `story.story` JSON instead of everscroll
     * **abc:iview**: Use the v3 video API and raise geo/login when unplayable
     * **allocine**: Extract Dailymotion videos via `DailymotionIE`
+    * **americastestkitchen**: Read episode-level description, publishDate, and siteKey when nested `video` metadata is empty
     * **amazon**: Product-gallery `jQuery.parseJSON` videos; extract VSE HLS as MP4 formats; impersonate Chrome when the storefront serves a captcha interstitial
     * **beatport**: Next.js `track_name` / `track_length_ms` / release `image_url` fields
+    * **beeg**: Sign HLS from `store.externulls.com/video/play_url/{id}` when `hls_resources` is omitted
     * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate video, bangumi, and dynamic play pages; on 412 fall back to `wbi/view/detail` / `pgc/player/web/v2/playurl`; resolve opus/dynamic `bvid` when `jump_url` is missing
     * **bitchute**: Impersonate CDN downloads (urllib GETs are reset) and rewrite hashed media hosts onto seed CDNs
     * **bleacherreport**: Fall back to a YouTube embed URL when Next.js Article hydration omits video
@@ -2578,6 +2580,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **cam4**: Profile `/rest/v1.0/profile/{id}/streamInfo` HLS `cdnURL`/`edgeURL` (try each until one plays); empty 204 means the room is offline
     * **ccma**: Raise an expected error when the 3cat media API omits `media` (unpublished/expired)
     * **cda**: When the API lists no progressive qualities, download the fMP4 files next to the DASH manifest instead of byte-range HLS
+    * **cinetecamilano**: Strip `#t=` media fragments so HTML5 clips keep a real `mp4` extension
     * **cliprs**: Extract Ring Publishing embeds
     * **cloudflarestream**: Also match Video.js `<cloudflare-video src>` embeds
     * **crowdbunker**: Read post and channel JSON from `api.crowdbunker.com` (`api.divulg.org` returns 403)
@@ -2674,6 +2677,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **locipo**: Direct `video_file_name` when the Streaks API key is gone
     * **loco**: Use ivory v2 `/streams/playback/` for tokenized HLS; raise `UserNotLive` when the streamer is offline
     * **maoritv**: maoriplus.co.nz, live/movie URLs, and a dynamic Brightcove account
+    * **matchtv**: Impersonate the live iframe host
     * **mave**: `cdn.mave.digital` storage
     * **medaltv**: Public `/api/content/{id}` JSON for progressive MP4 and `socialMediaVideo`; HLS is optional (non-fatal)
     * **mediasite**: Prefer GetPlayerOptions HLS over Deliver progressive MP4
@@ -2717,6 +2721,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **npr**: Fall back to JSON-LD JWPlayer media when the query API is blocked
     * **ntv.ru**: Read the numeric video id from `ya:ovs:feed_url` / `/video/{id}` without requiring a fixed meta attribute order
     * **nubilesporn**: Impersonate the browser and prime a tour session; anonymous shorts currently stop on a Cloudflare Turnstile challenge
+    * **odnoklassniki**: Impersonate desktop video pages (urllib connections are reset)
     * **oftv**: Extract HLS from the current `api.of.tv` player instead of Zype
     * **ondemandchina**: Use US/CA X-Forwarded-For on the ODC playback API
     * **onet.pl**: Extract PulseEmbed JSON-LD and Ring Publishing MP4 instead of the old CKM API

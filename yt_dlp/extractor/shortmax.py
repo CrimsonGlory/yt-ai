@@ -28,11 +28,11 @@ class ShortMaxHlsFD(HlsFD):
             encrypted_length = int(data[0x14:0x18].decode('ascii'))
         except (UnicodeDecodeError, ValueError):
             return data
-        key = data[key_offset : key_offset + 16]
+        key = data[key_offset: key_offset + 16]
         enc_end = cls._HEADER_SIZE + encrypted_length
         if len(key) != 16 or len(data) < enc_end:
             return data
-        decrypted = unpad_pkcs7(aes_cbc_decrypt_bytes(data[cls._HEADER_SIZE : enc_end], key, cls._IV))
+        decrypted = unpad_pkcs7(aes_cbc_decrypt_bytes(data[cls._HEADER_SIZE: enc_end], key, cls._IV))
         return decrypted + data[enc_end:]
 
     def decrypter(self, info_dict):
@@ -59,7 +59,27 @@ class ShortMaxIE(InfoExtractor):
     )
     _TESTS = [
         {
+            'url': 'https://www.shorttv.live/episode/no-taste-for-blood-29131-1',
+            'md5': 'abdd93bbbd8abee9b24497caf42502b0',
+            'info_dict': {
+                'id': '29131-1',
+                'ext': 'mp4',
+                'title': 'No Taste for Blood - Episode 1',
+                'display_id': 'no-taste-for-blood',
+                'description': 'md5:66ff598d33a3e193e9c0cc7bf8d9468f',
+                'thumbnail': r're:https://akamai-static\.shorttv\.live/images/cover/.+\.jpg',
+                'view_count': int,
+                'episode_number': 1,
+                'episode': 'Episode 1',
+                'series': 'No Taste for Blood',
+                'series_id': '29131',
+                'categories': ['Fantasy', 'Vampire'],
+                'tags': ['Fantasy', 'Fictional Dynasty'],
+            },
+        },
+        {
             'url': 'https://www.shorttv.live/episode/dont-mess-with-the-beggar-17376-1',
+            'skip': 'video gone',
             'md5': 'ca97fabfdd8785f3b654ad4c9fff61ad',
             'info_dict': {
                 'id': '17376-1',

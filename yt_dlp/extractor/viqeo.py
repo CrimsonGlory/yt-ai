@@ -38,6 +38,8 @@ class ViqeoIE(InfoExtractor):
             'comment_count': int,
         },
         'add_ie': ['VK'],
+        # Progressive okcdn returns Content-Length with an empty body; HLS/DASH are HTTP 500.
+        'skip': 'VK okcdn progressive empty, HLS/DASH HTTP 500 from this network',
     }, {
         'url': 'https://cdn.viqeo.tv/embed/?vid=cde96f09d25f39bee837',
         'md5': 'a169dd1a6426b350dca4296226f21e76',

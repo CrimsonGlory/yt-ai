@@ -7,15 +7,21 @@ from ..utils import (
     ExtractorError,
     clean_html,
     int_or_none,
-    try_get,
+    str_or_none,
     unified_strdate,
     unified_timestamp,
     urljoin,
 )
+from ..utils.traversal import traverse_obj
 
 
 class AmericasTestKitchenIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?:americastestkitchen|cooks(?:country|illustrated))\.com/(?:cooks(?:country|illustrated)/)?(?P<resource_type>episode|videos)/(?P<id>\d+)'
+    _SITE_SERIES = {
+        'atk': "America's Test Kitchen",
+        'cookscountry': "Cook's Country",
+        'cooksillustrated': "Cook's Illustrated",
+    }
     _TESTS = [{
         'url': 'https://www.americastestkitchen.com/episode/582-weeknight-japanese-suppers',
         'skip': 'stale test sample / site changed',
@@ -54,9 +60,9 @@ class AmericasTestKitchenIE(InfoExtractor):
             'description': 'md5:eb68737cc2fd4c26ca7db30139d109e7',
             'duration': 1397,
             'thumbnail': 'md5:085f65d153db3423a5cef457b093f85e',
-            'timestamp': 1610737200,
-            'upload_date': '20210115',
-            'release_date': '20210115',
+            'timestamp': 1610755200,
+            'upload_date': '20210116',
+            'release_date': '20210116',
             'series': "America's Test Kitchen",
             'season': 'Season 21',
             'season_number': 21,
@@ -94,17 +100,21 @@ class AmericasTestKitchenIE(InfoExtractor):
             f'https://www.americastestkitchen.com/api/v6/{resource_type}/{video_id}', video_id)
         video = resource['video'] if is_episode else resource
         episode = resource if is_episode else resource.get('episode') or {}
+        publish_date = video.get('publishDate') or resource.get('publishDate')
+        zype_id = video.get('zypeId') or resource.get('zypeId')
 
         return {
             '_type': 'url_transparent',
-            'url': 'https://player.zype.com/embed/{}.js?api_key=jZ9GUhRmxcPvX7M3SlfejB6Hle9jyHTdk2jVxG7wOHPLODgncEKVdPYBhuz9iWXQ'.format(video['zypeId']),
+            'url': f'https://player.zype.com/embed/{zype_id}.js?api_key=jZ9GUhRmxcPvX7M3SlfejB6Hle9jyHTdk2jVxG7wOHPLODgncEKVdPYBhuz9iWXQ',
             'ie_key': 'Zype',
-            'description': clean_html(video.get('description')),
-            'timestamp': unified_timestamp(video.get('publishDate')),
-            'release_date': unified_strdate(video.get('publishDate')),
+            'description': clean_html(video.get('description')) or clean_html(resource.get('description')),
+            'timestamp': unified_timestamp(publish_date),
+            'release_date': unified_strdate(publish_date),
             'episode_number': int_or_none(episode.get('number')),
             'season_number': int_or_none(episode.get('season')),
-            'series': try_get(episode, lambda x: x['show']['title']),
+            'series': (
+                traverse_obj(episode, ('show', 'title', {str}))
+                or self._SITE_SERIES.get(str_or_none(resource.get('siteKey')))),
             'episode': episode.get('title'),
         }
 

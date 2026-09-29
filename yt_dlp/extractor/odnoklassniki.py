@@ -268,7 +268,8 @@ class OdnoklassnikiIE(InfoExtractor):
         webpage = self._download_webpage(
             f'https://ok.ru/{mode}/{video_id}', video_id,
             note='Downloading desktop webpage',
-            headers={'Referer': smuggled['referrer']} if smuggled.get('referrer') else {})
+            headers={'Referer': smuggled['referrer']} if smuggled.get('referrer') else {},
+            impersonate=True)
 
         error = traverse_obj(webpage, {find_element(cls='vp_video_stub_txt')})
         # Direct link from boosty

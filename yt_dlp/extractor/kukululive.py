@@ -19,7 +19,7 @@ class KukuluLiveIE(InfoExtractor):
     _VALID_URL = r'https?://live\.erinn\.biz/live\.php\?h(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://live.erinn.biz/live.php?h390454797',
-        'md5': '9466bd17538547e460698188dba43d2f',
+        'md5': '32b29d64f8bdd1e08a24f3d17e1f6f25',
         'info_dict': {
             'id': '390454797',
             'ext': 'mp4',

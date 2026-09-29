@@ -1,6 +1,7 @@
 from .common import InfoExtractor
 from ..utils import (
     ExtractorError,
+    determine_ext,
     remove_end,
     traverse_obj,
     url_basename,
@@ -10,7 +11,20 @@ from ..utils import (
 class CinetecaMilanoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?cinetecamilano\.it/(?:film/)?(?P<id>\d+|dona-il-tuo-5x1000-a-cineteca-milano|restauro-film)/?'
     _TESTS = [{
+        'url': 'https://www.cinetecamilano.it/restauro-film/',
+        'md5': 'b40958341e8795058c9469115f0403e2',
+        'info_dict': {
+            'id': 'Fratelli_Dinamite_H264',
+            'ext': 'mp4',
+            'title': 'Fratelli Dinamite H264',
+            'description': 'md5:2bf15162f9d5b01671d976e117ea9196',
+        },
+        'params': {
+            'playlist_items': '1',
+        },
+    }, {
         'url': 'https://www.cinetecamilano.it/dona-il-tuo-5x1000-a-cineteca-milano/',
+        'skip': 'page gone',
         'md5': '63a4e590e7a283272e4d3e8374ce861f',
         'info_dict': {
             'id': '5x1000',
@@ -59,8 +73,10 @@ class CinetecaMilanoIE(InfoExtractor):
             for fmt in entry.get('formats') or []:
                 if fmt.get('url'):
                     fmt['url'] = fmt['url'].split('#')[0]
+                    fmt['ext'] = determine_ext(fmt['url'])
             if entry.get('url'):
                 entry['url'] = entry['url'].split('#')[0]
+                entry['ext'] = determine_ext(entry['url'])
 
         title = remove_end(
             self._og_search_title(webpage, default=None)

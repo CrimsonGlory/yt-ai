@@ -65,7 +65,8 @@ class EmturbovidIE(InfoExtractor):
             segment_url = urljoin(playlist_url, stripped)
             urlh = self._request_webpage(
                 Request(segment_url, headers={'Range': 'bytes=0-2047'}),
-                video_id, 'Checking HLS segment wrapper', fatal=False)
+                video_id, 'Checking HLS segment wrapper',
+                fatal=False, errnote=False, impersonate=True)
             if not urlh:
                 break
             data = urlh.read()
@@ -84,7 +85,7 @@ class EmturbovidIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
+        webpage = self._download_webpage(url, video_id, impersonate=True)
 
         m3u8_url = url_or_none(self._search_regex(
             (r'\burlPlay\s*=\s*(["\'])(?P<url>https?://(?:(?!\1).)+)\1',
@@ -100,7 +101,8 @@ class EmturbovidIE(InfoExtractor):
             if not media_url:
                 continue
             playlist = self._download_webpage(
-                media_url, video_id, 'Downloading m3u8 playlist', fatal=False)
+                media_url, video_id, 'Downloading m3u8 playlist',
+                fatal=False, errnote=False, impersonate=True)
             if not playlist or not playlist.lstrip().startswith('#EXTM3U'):
                 continue
             fmt['hls_media_playlist_data'] = self._rewrite_png_wrapped_playlist(
@@ -108,7 +110,7 @@ class EmturbovidIE(InfoExtractor):
 
         title = self._html_extract_title(webpage, default=None) or video_id
         thumbnail = url_or_none(self._search_regex(
-            r'''['"](https?://[^'"]+/poster/[^'"]+)['"]''',
+            r'(https?://[^\'"\\]+/poster/[^\'"\\]+)',
             webpage, 'thumbnail', default=None))
 
         return {

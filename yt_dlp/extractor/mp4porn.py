@@ -22,7 +22,7 @@ class Mp4PornIE(InfoExtractor):
             'description': 'Cult actress Edwige Fenech - Nude scene compilation from various movies',
             'duration': 743,
             'age_limit': 18,
-            'categories': ['italian', 'celebrity', 'compilation', 'funny', 'it', 'lingerie', 'nude', 'vintage'],
+            'categories': ['italian', 'it', 'celebrity', 'compilation', 'funny', 'lingerie', 'nude', 'vintage'],
             'tags': 'count:27',
         },
         'expected_warnings': ['Failed to download m3u8 information'],

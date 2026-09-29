@@ -27,7 +27,7 @@ class BeegIE(InfoExtractor):
         },
     }, {
         'url': 'https://beeg.com/-0599050563103750?t=4-861',
-        'md5': '56f5edf40c6237b7cc41b28a7d447686',
+        'md5': '5b73a62c84061330feb7f4c3099d5148',
         'info_dict': {
             'id': '599050563103750',
             'ext': 'mp4',
@@ -75,11 +75,22 @@ class BeegIE(InfoExtractor):
                 r'fl_cdn_(\d+)', format_id, 'height', default=None))
             current_formats = self._extract_m3u8_formats(
                 urljoin('https://video.beeg.com/', video_uri), video_id, 'mp4',
-                m3u8_id=str(height) if height else 'hls')
+                m3u8_id=str(height) if height else 'hls', fatal=False)
             if height:
                 for f in current_formats:
                     f['height'] = height
             formats.extend(current_formats)
+
+        # Current player signs HLS via /video/play_url/{id}; hls_resources is often omitted.
+        if not formats:
+            play_path = self._download_webpage(
+                f'https://store.externulls.com/video/play_url/{video_id}',
+                video_id, 'Downloading play URL', fatal=False)
+            play_path = (play_path or '').strip()
+            if play_path and '.m3u8' in play_path:
+                formats.extend(self._extract_m3u8_formats(
+                    urljoin('https://video.beeg.com/', play_path),
+                    video_id, 'mp4', m3u8_id='hls'))
 
         return {
             'id': video_id,
