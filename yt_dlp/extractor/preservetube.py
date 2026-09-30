@@ -26,6 +26,7 @@ class PreserveTubeIE(InfoExtractor):
     }
     _TESTS = [{
         'url': 'https://preservetube.com/watch?v=NQlXDZnss1g',
+        'skip': 'archive.party CDN timed out from this network',
         'md5': 'f0a0160e00e09feae6b52212e55b85a4',
         'info_dict': {
             'id': 'NQlXDZnss1g',

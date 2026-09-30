@@ -17,6 +17,7 @@ class EmturbovidIE(InfoExtractor):
     ]
     _TESTS = [{
         'url': 'https://emturbovid.com/t/68b737d26c659',
+        'skip': 'emturbovid.com has been stopped',
         'md5': 'd9b4e52e2120afcd73d07c59c1598671',
         'info_dict': {
             'id': '68b737d26c659',

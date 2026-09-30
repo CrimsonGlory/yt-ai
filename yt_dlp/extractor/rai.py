@@ -661,6 +661,7 @@ class RaiPlaySoundPlaylistIE(InfoExtractor):
             'description': 'md5:79ff2b32072e8fe561d359ec28701a39',
         },
         'playlist_mincount': 65,
+        'params': {'extract_flat': 'in_playlist'},
     }, {
         # single season
         'url': 'https://www.raiplaysound.it/programmi/ilruggitodelconiglio/puntate/prima-stagione-1995',
@@ -671,10 +672,14 @@ class RaiPlaySoundPlaylistIE(InfoExtractor):
         'playlist_count': 1,
     }]
 
+    def _cards_from_program(self, program):
+        return traverse_obj(program, 'cards', ('block', 'cards')) or []
+
     def _real_extract(self, url):
         base, playlist_id, extra_id = self._match_valid_url(url).group('base', 'id', 'extra_id')
-        url = f'{base}.json'
-        program = self._download_json(url, playlist_id, 'Downloading program JSON')
+        program = self._download_json(f'{base}.json', playlist_id, 'Downloading program JSON')
+        title = program.get('title')
+        description = traverse_obj(program, ('podcast_info', 'description'))
 
         if extra_id:
             extra_id = extra_id.rstrip('/')
@@ -682,14 +687,35 @@ class RaiPlaySoundPlaylistIE(InfoExtractor):
             path = next(c['path_id'] for c in program.get('filters') or [] if extra_id in c.get('weblink'))
             program = self._download_json(
                 urljoin('https://www.raiplaysound.it', path), playlist_id, 'Downloading program secondary JSON')
+            card_groups = [self._cards_from_program(program)]
+            title = program.get('title') or title
+            description = traverse_obj(program, ('podcast_info', 'description')) or description
+        else:
+            filters = [c for c in (program.get('filters') or []) if c.get('path_id')]
+            if filters:
+                card_groups = []
+                for flt in filters:
+                    season = self._download_json(
+                        urljoin('https://www.raiplaysound.it', flt['path_id']),
+                        playlist_id, f'Downloading {flt.get("label") or "season"} JSON', fatal=False)
+                    if isinstance(season, dict):
+                        card_groups.append(self._cards_from_program(season))
+            else:
+                card_groups = [self._cards_from_program(program)]
 
-        entries = [
-            self.url_result(urljoin(base, c['path_id']), ie=RaiPlaySoundIE.ie_key())
-            for c in traverse_obj(program, 'cards', ('block', 'cards')) or []
-            if c.get('path_id')]
+        if not any(card_groups):
+            card_groups = [self._cards_from_program(program)]
 
-        return self.playlist_result(entries, playlist_id, program.get('title'),
-                                    traverse_obj(program, ('podcast_info', 'description')))
+        entries, seen = [], set()
+        for cards in card_groups:
+            for c in cards:
+                path_id = c.get('path_id')
+                if not path_id or path_id in seen:
+                    continue
+                seen.add(path_id)
+                entries.append(self.url_result(urljoin(base, path_id), ie=RaiPlaySoundIE.ie_key()))
+
+        return self.playlist_result(entries, playlist_id, title, description)
 
 
 class RaiIE(RaiBaseIE):

@@ -7,6 +7,7 @@ class GraspopIE(InfoExtractor):
     _VALID_URL = r'https?://vod\.graspop\.be/[a-z]{2}/(?P<id>\d+)/'
     _TESTS = [{
         'url': 'https://vod.graspop.be/fr/101556/thy-art-is-murder-concert/',
+        'skip': 'vod.graspop.be redirects to VRT MAX; Proximus stream API returns HTTP 502',
         'info_dict': {
             'id': '101556',
             'ext': 'mp4',

@@ -29,7 +29,7 @@ class JavSubbedIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://javsubbed.net/yuj-073-eng-sub-the-day-i-taught-my-sons-classmate-what-a-grown-up-date-is-like/',
-            'md5': 'd927a6ac73b76ab4182e81e40078045b',
+            'md5': '2882ebe0a4979786fc2065ddab8f8294',
             'info_dict': {
                 'id': 'yuj-073-eng-sub-the-day-i-taught-my-sons-classmate-what-a-grown-up-date-is-like',
                 'ext': 'mp4',
@@ -45,7 +45,7 @@ class JavSubbedIE(InfoExtractor):
                 'age_limit': 18,
             },
             'params': {
-                'format': 'best[format_id^=emturbovid]',
+                'format': 'best[format_id^=doodstream]',
                 'fixup': 'never',
             },
         },

@@ -32,6 +32,7 @@ class OlevodIE(InfoExtractor):
     _IMAGE_BASE = 'https://static.olelive.com/'
     _TESTS = [{
         'url': 'https://www.olevod.com/index.php/vod/play/id/54033/sid/1/nid/17.html',
+        'skip': 'HLS host bf.ledlandi.com does not resolve',
         'md5': '596a7f8f684e641be0a6c5501f8299c4',
         'info_dict': {
             'id': '54033-17',

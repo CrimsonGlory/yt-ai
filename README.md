@@ -2766,6 +2766,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **radiojavan**: Use the public play.radiojavan.com video API instead of the old `video_host` page scrape
     * **radiokapital**: Use the `api.radiokapital.pl` WordPress REST API
     * **radiozet**: Impersonate the player page and podcast API (plain urllib times out from this environment)
+    * **raiplaysound**: Collect every season ContentSet from the program `filters` list so show URLs return the full archive, not only the current season
     * **rbgtum**: Silent 404 on the old course API, then HTML fallback
     * **rds**: Read Jasper embed / Fusion Axis ids on current Arc video pages
     * **redbull**: Use GraphQL `v1:pageConfig` and `api-player.redbull.com` HLS instead of the dead crepo GraphQL / `v1:hero` schema

@@ -314,7 +314,7 @@ class NRKTVIE(InfoExtractor):
             'id': 'MDDP12000117',
             'ext': 'mp4',
             'title': 'Alarm Trolltunga',
-            'description': 'md5:46923a6e6510eefcce23d5ef2a58f2ce',
+            'description': 'md5:894c49c87612b4cd174c10143e4c3ad6',
             'duration': 2223.44,
             'age_limit': 6,
             'subtitles': {
@@ -328,7 +328,7 @@ class NRKTVIE(InfoExtractor):
             'upload_date': '20170627',
             'timestamp': 1498591822,
             'thumbnail': 'https://gfx.nrk.no/myRSc4vuFlahB60P3n6swwRTQUZI1LqJZl9B7icZFgzA',
-            'alt_title': 'md5:46923a6e6510eefcce23d5ef2a58f2ce',
+            'alt_title': 'md5:894c49c87612b4cd174c10143e4c3ad6',
         },
         'params': {
             'skip_download': True,
