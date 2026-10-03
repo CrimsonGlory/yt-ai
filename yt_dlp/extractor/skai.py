@@ -59,8 +59,16 @@ class SkaiIE(InfoExtractor):
         webpage = self._download_webpage(url, display_id)
         data = self._search_json(
             r'var type\s*=\s*[\'"]player-main[\'"]\s*;\s*var data\s*=', webpage, 'player data', display_id,
+            default=None,
         )
         episode = traverse_obj(data, 'episodemain', {dict})
+        if not episode:
+            episode = self._search_json(
+                r'"episodemain"\s*:\s*', webpage, 'episode data', display_id, default=None)
+        if not episode:
+            episode = traverse_obj(
+                self._search_json(r'var data\s*=', webpage, 'player data', display_id, default=None),
+                ('episode', 0, {dict}))
         if not episode:
             raise ExtractorError('No episode data found', expected=True)
 

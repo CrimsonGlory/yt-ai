@@ -29,7 +29,7 @@ class DrTalksIE(InfoExtractor):
             'id': '0c1c6e5a-f25c-4db5-b17d-757d9923a537',
             'ext': 'mp4',
             'title': 'The PCOS Puzzle: Mastering Metabolic Health with Marcelle Pick',
-            'description': 'md5:6d1459277d3ca3ce13bc9f11485f1275',
+            'description': 'md5:46253274c8169bb826d9d6c437e9e7f7',
             'thumbnail': 'https://account.drtalks.com/wp-content/uploads/2025/12/Episode-34-Marcelle-Pick-OBGYN-NP-DrTalks.jpg',
             'duration': 3515,
             'timestamp': 1732442420,

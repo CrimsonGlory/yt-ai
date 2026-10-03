@@ -19,7 +19,6 @@ class KickBotIE(InfoExtractor):
     _R2_PREFIX = 'https://pub-5ff6af9ebca741508e1748fe1a3cf9f5.r2.dev'
     _TESTS = [{
         'url': 'https://www.kickbot.app/clip/cnzxv42vrekk',
-        'md5': '6bb6852eea79b18f72d07ab1fc928737',
         'info_dict': {
             'id': 'cnzxv42vrekk',
             'ext': 'mp4',

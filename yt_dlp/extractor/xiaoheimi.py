@@ -22,7 +22,20 @@ class XiaoHeiMiIE(InfoExtractor):
         r'https?://(?:www\.)?xiaoheimi\.(?:net|cc)/index\.php/vod/detail/id/(?P<id>\d+)(?:\.html)?',
     ]
     _TESTS = [{
+        'url': 'https://xiaoheimi.net/index.php/vod/play/id/42755/sid/1/nid/1.html',
+        'info_dict': {
+            'id': '42755-1-1',
+            'ext': 'mp4',
+            'title': '炽道-第01集',
+            'description': 'md5:1eefb2dfab680ce47c8b0046dd1d8f93',
+            'series': '炽道',
+            'series_id': '42755',
+            'episode': '第01集',
+            'episode_number': 1,
+        },
+    }, {
         'url': 'https://xiaoheimi.net/index.php/vod/play/id/42755/sid/2/nid/1.html',
+        'skip': 'source gone',
         'md5': '43cf22b1cfccac9d71f8ed731e3445b2',
         'info_dict': {
             'id': '42755-2-1',
@@ -34,9 +47,6 @@ class XiaoHeiMiIE(InfoExtractor):
             'episode': '第01集',
             'episode_number': 1,
         },
-    }, {
-        'url': 'https://xiaoheimi.net/index.php/vod/play/id/42755/sid/1/nid/1.html',
-        'only_matching': True,
     }, {
         'url': 'https://xiaoheimi.cc/index.php/vod/play/id/42755/sid/2/nid/1.html',
         'only_matching': True,

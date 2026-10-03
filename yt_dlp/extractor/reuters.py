@@ -12,6 +12,7 @@ class ReutersIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?reuters\.com/(?:video/watch/id|(?:[^?#]+[?&]videoId=))(?P<id>[A-Za-z0-9]+)'
     _TESTS = [{
         'url': 'https://www.reuters.com/video/watch/idRW810726082026RP1/',
+        'skip': 'DataDome HTTP 401',
         'md5': '70283d2fec4584963460260e5110dc4f',
         'info_dict': {
             'id': 'RW810726082026RP1',

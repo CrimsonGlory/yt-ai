@@ -1,4 +1,6 @@
 import re
+import ssl
+import urllib.request
 
 from .common import InfoExtractor
 from ..utils import (
@@ -97,6 +99,32 @@ class HearThisAtIE(InfoExtractor):
         },
     }]
 
+    def _rewrite_stream_cdn(self, url):
+        # streamN.hearthis.at currently presents an expired Let's Encrypt cert;
+        # the same object is served over HTTP.
+        if url and re.match(r'https://stream\d+\.hearthis\.at/', url):
+            return 'http://' + url[8:]
+        return url
+
+    def _resolve_media_url(self, url, video_id, note):
+        if not url:
+            return None
+        # listen/download URLs on hearthis.app redirect to streamN.hearthis.at.
+        # That CDN cert is expired, so follow redirects without verifying TLS
+        # and then fetch the object over HTTP.
+        if note:
+            self.to_screen(f'{video_id}: {note}')
+        ctx = ssl._create_unverified_context()
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        for method in ('HEAD', 'GET'):
+            try:
+                req = urllib.request.Request(url, method=method, headers=headers)
+                with urllib.request.urlopen(req, context=ctx, timeout=20) as resp:
+                    return self._rewrite_stream_cdn(resp.url)
+            except OSError:
+                continue
+        return self._rewrite_stream_cdn(url)
+
     def _real_extract(self, url):
         m = self._match_valid_url(url)
         display_id = '{artist:s} - {title:s}'.format(**m.groupdict())
@@ -113,7 +141,7 @@ class HearThisAtIE(InfoExtractor):
         timestamp = data_json.get('release_timestamp')
 
         formats = []
-        mp3_url = data_json.get('stream_url')
+        mp3_url = self._resolve_media_url(data_json.get('stream_url'), track_id, 'Resolving stream URL')
 
         if mp3_url:
             formats.append({
@@ -125,7 +153,8 @@ class HearThisAtIE(InfoExtractor):
             })
 
         if data_json.get('download_url'):
-            download_url = data_json['download_url']
+            download_url = self._resolve_media_url(
+                data_json['download_url'], track_id, 'Resolving download URL')
             ext = determine_ext(data_json['download_filename'])
             if ext in KNOWN_EXTENSIONS:
                 formats.append({
@@ -136,6 +165,17 @@ class HearThisAtIE(InfoExtractor):
                     'acodec': ext,
                     'quality': 2,  # Usually better quality
                 })
+
+        preview_url = self._rewrite_stream_cdn(data_json.get('preview_url'))
+        if preview_url and preview_url not in {f.get('url') for f in formats}:
+            formats.append({
+                'format_id': 'preview',
+                'vcodec': 'none',
+                'acodec': 'mp3',
+                'url': preview_url,
+                'ext': 'mp3',
+                'quality': -10,
+            })
 
         return {
             'id': track_id,

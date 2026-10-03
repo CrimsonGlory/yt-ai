@@ -546,8 +546,14 @@ class FacebookIE(InfoExtractor):
                 info_dict['concurrent_view_count'] = 0
 
             info_json_ld = self._search_json_ld(webpage, video_id, default={})
-            info_json_ld['title'] = (re.sub(r'\s*\|\s*Facebook$', '', title or info_json_ld.get('title') or page_title or '')
-                                     or (description or '').replace('\n', ' ') or f'Facebook video #{video_id}')
+            page_title_text = (re.sub(r'\s*\|\s*Facebook$', '', title or info_json_ld.get('title') or page_title or '')
+                               or (description or '').replace('\n', ' ') or f'Facebook video #{video_id}')
+            # Reel og:title is "{views} · {reactions} | {message} | {page name}".
+            if re.search(r'\bviews\b', page_title_text) and '|' in page_title_text:
+                message = re.split(r'\s+\|\s+', page_title_text)
+                if len(message) >= 2:
+                    page_title_text = message[1].strip() or page_title_text
+            info_json_ld['title'] = page_title_text
             return merge_dicts(info_json_ld, info_dict)
 
         video_data = None
@@ -984,7 +990,7 @@ class FacebookReelIE(InfoExtractor):
         'info_dict': {
             'id': '1195289147628387',
             'ext': 'mp4',
-            'title': 'md5:b7634b0e0cb632655c13cf09824ddeaf',
+            'title': 'md5:24ea7ef062215d295bdde64e778f5474',
             'description': 'md5:24ea7ef062215d295bdde64e778f5474',
             'uploader': 'Beast Camp Training',
             'uploader_id': '100040874179269',

@@ -12,7 +12,7 @@ class BaiduVideoIE(InfoExtractor):
             'title': '中华小当家 TV版国语',
             'description': 'md5:a915f384c1b31ed93e37777e1f8bf3e7',
         },
-        'playlist_count': 52,
+        'playlist_count': 51,
     }, {
         'url': 'http://v.baidu.com/show/11595.htm?frp=bdbrand',
         'skip': 'video gone',

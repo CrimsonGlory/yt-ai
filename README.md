@@ -2498,7 +2498,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **ShortMax** (`shorttv.live`): Nuxt `__NUXT_DATA__` HLS with custom per-segment AES-CBC. Request: [yt-dlp/yt-dlp#17230](https://github.com/yt-dlp/yt-dlp/issues/17230)
     * **ShoutTV** (`watch.shout-tv.com`): Guest DICE/IMG Gaming token (`dce.shout`) and v4 VOD/live HLS. Request: [yt-dlp/yt-dlp#11371](https://github.com/yt-dlp/yt-dlp/issues/11371)
     * **Showcamrips** (`showcamrips.com`): HTML5 MP4 from `play.php` with a showcamrips Referer. Request: [yt-dlp/yt-dlp#16822](https://github.com/yt-dlp/yt-dlp/issues/16822)
-    * **Skai** (`skai.gr`): Player `var data` `episodemain` Wowza HLS (`videostream.skai.gr`). Request: [yt-dlp/yt-dlp#13456](https://github.com/yt-dlp/yt-dlp/issues/13456)
+    * **Skai** (`skai.gr`): Player `episodemain` JSON (also when `var data` is no longer adjacent to `var type='player-main'`) Wowza HLS (`videostream.skai.gr`). Request: [yt-dlp/yt-dlp#13456](https://github.com/yt-dlp/yt-dlp/issues/13456)
     * **Skland** (`skland.com`): Guest `zonai.skland.com` item API (Shumei device id + HMAC) for HLS. Request: [yt-dlp/yt-dlp#15545](https://github.com/yt-dlp/yt-dlp/issues/15545)
     * **Slavmir** (`slavmir.tv`): MelonPlayer `#video-player` `data-url` HLS from public `/video/detail/` pages. Request: [yt-dlp/yt-dlp#3052](https://github.com/yt-dlp/yt-dlp/issues/3052)
     * **Sleebi** (`sleebi.net`): Public `/v/API/{id}` metadata and PUT `/src` for hosted `videos.sleebi.eu` MP4s. Request: [yt-dlp/yt-dlp#15550](https://github.com/yt-dlp/yt-dlp/issues/15550)
@@ -2607,7 +2607,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **epicon**: Extract HLS from the page when `ajaxplayer` returns 405 or has no trailer cid
     * **erocast**: Impersonate the browser
     * **ettutv**: Match live/videos player URLs and extract current streams
-    * **facebook**: Impersonate Chrome for Ads Library pages; treat 403 bodies with `/__rd_verify` as a client challenge; read `deeplink_ad_archive` snapshot from nested ScheduledServerJS or inline JSON; when a reel page only has the `og:title` fallback, use the trailing page name and the leading view count
+    * **facebook**: Impersonate Chrome for Ads Library pages; treat 403 bodies with `/__rd_verify` as a client challenge; read `deeplink_ad_archive` snapshot from nested ScheduledServerJS or inline JSON; when a reel page only has the `og:title` fallback, use the trailing page name and the leading view count, and take the message segment as the title
     * **fancode**: Support current GraphQL / public video pages
     * **faz**: Follow YouTube embeds
     * **filmweb**: GraphQL clip query and YouTube embeds; broader article URLs
@@ -2632,6 +2632,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **gopro**: Fetch the download URL from the JWT `medium_id`
     * **gotostage**: New Goto contentservice API hosts
     * **hbo**: Current HBO.com video/embed JSON instead of the old XML player
+    * **hearthisat**: Resolve `streamN.hearthis.at` media over HTTP when the stream CDN presents an expired TLS certificate
     * **heise**: Targetvideo `<a-video>` embeds
     * **historicfilms**: OG video URL and `?reel=` search URLs
     * **hotnewhiphop**: YouTube embeds instead of the old `data-path` player
@@ -2737,6 +2738,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **peer.tv**: Read JSON-LD `contentUrl` MP4s and match `/video/` slug URLs
     * **performgroup**: Use the DAZN feeds VOD API instead of the dead Perform Feeds ep3 host
     * **photobucket**: Extract sharing-link videos via GraphQL instead of the old `Pb.Data.Shared` page JSON
+    * **phoenix.de**: Read `video-smubl` absätze (skip empty blocks) and play PTMD via `beitrags_details.php` `content` ids
     * **pinkbike**: Impersonate the browser and extract current Video.js sources
     * **playtvak**: Call the public `servix.idnes.cz` player API and match current iDNES.tv URLs
     * **playvids**: Read the numeric ID from `get_related_videos` when the player has no `data-id`

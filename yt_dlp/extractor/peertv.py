@@ -20,7 +20,7 @@ class PeerTVIE(InfoExtractor):
             'title': 'Die Geislergruppe aus der Luft',
             'description': 'md5:a8759dfa8f590d4c61a959b2e6d7a08f',
             'duration': 63,
-            'timestamp': 1565164627,
+            'timestamp': 1565171827,
             'upload_date': '20190807',
             'thumbnail': 'https://player.peer.tv/img/thumbs/903c7ec4d523fafec880db965296f766/hd-preview-n.jpg',
         },

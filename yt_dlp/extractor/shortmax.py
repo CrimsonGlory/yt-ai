@@ -59,7 +59,26 @@ class ShortMaxIE(InfoExtractor):
     )
     _TESTS = [
         {
+            'url': 'https://www.shorttv.live/episode/the-muggle-kingpin-15738-1',
+            'info_dict': {
+                'id': '15738-1',
+                'ext': 'mp4',
+                'title': 'The Muggle Kingpin - Episode 1',
+                'display_id': 'the-muggle-kingpin',
+                'description': 'md5:a4c7ee30c9b9a5fd087f8ec4e804f9ea',
+                'thumbnail': r're:https://akamai-static\.shorttv\.live/images/cover/.+\.jpg',
+                'view_count': int,
+                'episode_number': 1,
+                'episode': 'Episode 1',
+                'series': 'The Muggle Kingpin',
+                'series_id': '15738',
+                'categories': ['Sci-Fi', 'Apocalyptic Crisis'],
+                'tags': ['Modern', 'Mystery'],
+            },
+        },
+        {
             'url': 'https://www.shorttv.live/episode/no-taste-for-blood-29131-1',
+            'skip': 'video gone',
             'md5': 'abdd93bbbd8abee9b24497caf42502b0',
             'info_dict': {
                 'id': '29131-1',

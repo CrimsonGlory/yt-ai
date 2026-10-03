@@ -1,6 +1,7 @@
 from .youtube import YoutubeIE
 from .zdf import ZDFBaseIE
 from ..utils import (
+    ExtractorError,
     int_or_none,
     merge_dicts,
     try_get,
@@ -12,7 +13,23 @@ class PhoenixIE(ZDFBaseIE):
     IE_NAME = 'phoenix.de'
     _VALID_URL = r'https?://(?:www\.)?phoenix\.de/(?:[^/?#]+/)*[^/?#&]*-a-(?P<id>\d+)\.html'
     _TESTS = [{
+        'url': 'https://www.phoenix.de/sendungen/gespraeche/phoenix-tagesgespraech/mit-adis-ahmetovic-aussen-a-5237097.html',
+        'info_dict': {
+            'id': '261002_phx_tg_ahmetovic_logo',
+            'ext': 'mp4',
+            'title': 'Friedenspreis an NATO: "Bündnis steht für Sicherheit"',
+            'description': 'md5:ec1e40d38dc7464fa5c4bc31cc1d4139',
+            'duration': 506.0,
+            'timestamp': 1790927280,
+            'upload_date': '20261002',
+            'uploader': 'Phoenix',
+            'thumbnail': 'https://www.phoenix.de/sixcms/media.php/21/261002_tg_ahmetovic-001_02127.jpg',
+            'series': 'phoenix tagesgespräch',
+            'episode': 'Friedenspreis an NATO: "Bündnis steht für Sicherheit"',
+        },
+    }, {
         'url': 'https://www.phoenix.de/sendungen/dokumentationen/marokkos-verlorene-kinder-a-5223903.html',
+        'skip': 'video gone',
         'md5': '1e68ad7c98f1b178f764eb95783ce4b0',
         'info_dict': {
             'id': '260731_phx_marokkoskinder_logo',
@@ -64,8 +81,17 @@ class PhoenixIE(ZDFBaseIE):
             f'https://www.phoenix.de/response/id/{article_id}', article_id,
             'Downloading article JSON')
 
-        video = article['absaetze'][0]
-        title = video.get('titel') or article.get('subtitel')
+        video = None
+        for item in article.get('absaetze') or []:
+            if not isinstance(item, dict) or not item:
+                continue
+            if item.get('typ') in ('video', 'video-youtube', 'video-smubl') or item.get('basename') or item.get('content'):
+                video = item
+                break
+        if not video:
+            raise ExtractorError('No video in this article', expected=True)
+
+        title = video.get('titel') or article.get('subtitel') or article.get('titel')
 
         if video.get('typ') == 'video-youtube':
             video_id = video['id']

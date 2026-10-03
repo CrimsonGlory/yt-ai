@@ -668,6 +668,7 @@ class RaiPlaySoundPlaylistIE(InfoExtractor):
         'info_dict': {
             'id': 'ilruggitodelconiglio_puntate_prima-stagione-1995',
             'title': 'Prima Stagione 1995',
+            'description': 'md5:79ff2b32072e8fe561d359ec28701a39',
         },
         'playlist_count': 1,
     }]

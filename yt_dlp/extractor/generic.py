@@ -65,8 +65,8 @@ class GenericIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'Big_Buck_Bunny_360_10s_1MB',
             'direct': True,
-            'timestamp': 1553293243,
-            'upload_date': '20190322',
+            'timestamp': 1790862755,
+            'upload_date': '20261001',
         },
     }, {
         # Direct link: No HEAD support
