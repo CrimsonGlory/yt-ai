@@ -22,6 +22,7 @@ class StreamrubyIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://rubyvidhub.com/embed-hofsdrqkiqf3.html',
+            'skip': 'rubyvidhub.com HTTP 522 / origin timeout from this environment',
             'md5': '7c6c87f7d291330a330a0bf26a571a02',
             'info_dict': {
                 'id': 'hofsdrqkiqf3',

@@ -2610,6 +2610,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **facebook**: Impersonate Chrome for Ads Library pages; treat 403 bodies with `/__rd_verify` as a client challenge; read `deeplink_ad_archive` snapshot from nested ScheduledServerJS or inline JSON; when a reel page only has the `og:title` fallback, use the trailing page name and the leading view count, and take the message segment as the title
     * **fancode**: Support current GraphQL / public video pages
     * **faz**: Follow YouTube embeds
+    * **filmarchiv**: Fetch `www.filmarchiv.at` pages without TLS verification when the origin certificate is expired
     * **filmweb**: GraphQL clip query and YouTube embeds; broader article URLs
     * **flickr**: Impersonate the browser when fetching the API key
     * **fptplay**: Sign the v7.1 API
@@ -2906,7 +2907,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * Node as the JS runtime for download tests
     * Download tests expect YouTube's "No title found in player responses" fallback (bot checks empty the player response)
     * Skip dead / geo / login tests and refresh stale sample metadata
-    * Pytest ignores unclosed-SSL `ResourceWarning` / `PytestUnraisableExceptionWarning` at download-test teardown so `-Werror` does not fail skipped tests
+    * Pytest ignores unclosed-SSL `ResourceWarning` / `PytestUnraisableExceptionWarning` at download-test teardown (`test_download.py`, `test_subtitles.py`) so `-Werror` does not fail leftover SSL sockets
     * `make_changelog` attributes fork commits to the git author and `CrimsonGlory/yt-ai`
     * [Development Docker workflow](https://github.com/CrimsonGlory/yt-ai/commit/13d780d260672007c07b37e4b5060a06c27d5b15) (`docker/Dockerfile` + compose) to run yt-ai and the offline suite in a container
     * `release.sh` crontab helper: dispatch the GitHub `Release` workflow only when `master` has commits after the latest GitHub release (no nightly/stable channel)

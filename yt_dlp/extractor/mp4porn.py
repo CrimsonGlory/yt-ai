@@ -14,6 +14,7 @@ class Mp4PornIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?mp4-?porn\.(?:org|site|space|website)/video/(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://mp4porn.space/video/edwige+fenech+nude+scene+compilation+2693877',
+        'skip': 'mp4porn.space connection timed out from this environment',
         'md5': 'dd3e4e3f8a0626202cf3f8199347a890',
         'info_dict': {
             'id': 'edwige+fenech+nude+scene+compilation+2693877',

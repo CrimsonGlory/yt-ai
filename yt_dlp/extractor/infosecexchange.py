@@ -12,6 +12,7 @@ class InfosecExchangeIE(PeerTubeIE):  # XXX: Do not subclass from concrete IE
     _EMBED_REGEX = [rf'''(?x)<iframe[^>]+\bsrc=["'](?P<url>(?:https?:)?//video\.infosec\.exchange/videos/embed/{PeerTubeIE._UUID_RE})''']
     _TESTS = [{
         'url': 'https://video.infosec.exchange/w/e1ZoLkBBDcfZyj8hWALZLd',
+        'skip': 'video.infosec.exchange HTTP 502 Bad Gateway',
         'md5': 'c426e582de5b47427ef138816d269922',
         'info_dict': {
             'id': 'e1ZoLkBBDcfZyj8hWALZLd',
@@ -55,6 +56,7 @@ class InfosecExchangePlaylistIE(PeerTubePlaylistIE):  # XXX: Do not subclass fro
     '''
     _TESTS = [{
         'url': 'https://video.infosec.exchange/w/p/5044b454-2043-485c-8832-eee872a0251b',
+        'skip': 'video.infosec.exchange HTTP 502 Bad Gateway',
         'info_dict': {
             'id': '5044b454-2043-485c-8832-eee872a0251b',
             'title': 'Rust 101 - learn to code Rust!',

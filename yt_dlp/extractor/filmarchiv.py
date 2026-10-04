@@ -1,5 +1,8 @@
+import ssl
+import urllib.request
+
 from .common import InfoExtractor
-from ..utils import clean_html
+from ..utils import ExtractorError, clean_html
 from ..utils.traversal import (
     find_element,
     find_elements,
@@ -32,9 +35,23 @@ class FilmArchivIE(InfoExtractor):
         },
     }]
 
+    def _download_origin_webpage(self, url, media_id):
+        # www.filmarchiv.at currently presents an expired Let's Encrypt
+        # certificate (notAfter 2026-10-03); cdn.filmarchiv.at is unaffected.
+        self.to_screen(f'{media_id}: Downloading webpage')
+        ctx = ssl._create_unverified_context()
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        try:
+            with urllib.request.urlopen(req, context=ctx, timeout=30) as resp:
+                raw = resp.read()
+                charset = resp.headers.get_content_charset() or 'utf-8'
+                return raw.decode(charset, 'replace')
+        except OSError as e:
+            raise ExtractorError('Unable to download webpage', cause=e, video_id=media_id)
+
     def _real_extract(self, url):
         media_id = self._match_id(url)
-        webpage = self._download_webpage(url, media_id)
+        webpage = self._download_origin_webpage(url, media_id)
         path = '/'.join((media_id[:6], media_id[6:]))
         formats, subtitles = self._extract_m3u8_formats_and_subtitles(
             f'https://cdn.filmarchiv.at/{path}_v1_sv1/playlist.m3u8', media_id)

@@ -22,6 +22,7 @@ class PacktPubIE(PacktPubBaseIE):
 
     _TESTS = [{
         'url': 'https://subscription.packtpub.com/video/programming/9781837024155/p1/video1_1/intro-to-rust',
+        'skip': 'subscription.packtpub.com read timed out from this environment',
         'md5': '49582345e6225394d1d2deedb22cd3a5',
         'info_dict': {
             'id': 'video1_1',

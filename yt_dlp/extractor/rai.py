@@ -532,7 +532,27 @@ class RaiPlaySoundIE(RaiBaseIE):
     _VALID_URL = rf'(?P<base>https?://(?:www\.)?raiplaysound\.it/.+?-(?P<id>{RaiBaseIE._UUID_RE}))\.(?:html|json)'
     _TESTS = [
         {
+            'url': 'https://www.raiplaysound.it/audio/2026/03/Radio2-Caterpillar-del-10032026-6a89d518-d17c-49a9-98e1-e2b5205a186c.html',
+            'md5': '0fa1356010939e7ee89211ff5757c4e4',
+            'info_dict': {
+                'id': '6a89d518-d17c-49a9-98e1-e2b5205a186c',
+                'ext': 'mp3',
+                'title': 'Radio2 Caterpillar del 10/03/2026',
+                'alt_title': 'md5:7ee4b709dcb0b28ea37afdcf1d9798c5',
+                'description': 'md5:c4cf804d19cec6a3ab8fcc7f49ca6160',
+                'uploader': 'rai radio 2',
+                'duration': 2758,
+                'thumbnail': r're:https://www\.raiplaysound\.it/dl/img/.+\.jpg',
+                'timestamp': 1773176880,
+                'upload_date': '20260310',
+                'series': 'Radio2 Caterpillar',
+                'episode': 'Radio2 Caterpillar del 10/03/2026',
+                'creators': ['rai radio 2'],
+            },
+        },
+        {
             'url': 'https://www.raiplaysound.it/audio/2026/09/GR-Abruzzo-del-03092026-ore-1210-d7686c10-5bbe-4ad0-8c2b-c8960e46ef54.html',
+            'skip': 'video gone',
             'md5': '41e103d9a8bc113eaf45c24ac7e77e5b',
             'info_dict': {
             'id': 'd7686c10-5bbe-4ad0-8c2b-c8960e46ef54',

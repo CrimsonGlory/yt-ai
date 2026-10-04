@@ -8,6 +8,8 @@ import unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
+import pytest
+
 from test.helper import FakeYDL, is_download_test, md5
 from yt_dlp.extractor import (
     NPOIE,
@@ -25,6 +27,13 @@ from yt_dlp.extractor import (
     WallaIE,
     YoutubeIE,
 )
+
+# Command-line `pytest -Werror` turns leftover download SSL sockets into
+# errors; keep those as ignored teardown noise.
+pytestmark = [
+    pytest.mark.filterwarnings('ignore::ResourceWarning'),
+    pytest.mark.filterwarnings('ignore::pytest.PytestUnraisableExceptionWarning'),
+]
 
 
 @is_download_test
