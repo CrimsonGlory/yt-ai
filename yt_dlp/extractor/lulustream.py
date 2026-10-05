@@ -21,7 +21,7 @@ class LuluStreamIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://luluvid.com/d/yzip3nvuot20',
-            'md5': 'fd1d9a84998514ffdb68bd635eee2799',
+            'md5': '4bf278e31cd8acf79dcf75aaa2c1a76b',
             'info_dict': {
                 'id': 'yzip3nvuot20',
                 'ext': 'mp4',

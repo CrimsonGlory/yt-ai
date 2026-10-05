@@ -15,6 +15,7 @@ class TumblrIE(InfoExtractor):
     _OAUTH_URL = 'https://www.tumblr.com/api/v2/oauth2/token'
     _TESTS = [{
         'url': 'http://tatianamaslanydaily.tumblr.com/post/54196191430/orphan-black-dvd-extra-behind-the-scenes',
+        'skip': 'Site blocks automated access',
         'md5': '479bb068e5b16462f5176a6828829767',
         'info_dict': {
             'id': '54196191430',

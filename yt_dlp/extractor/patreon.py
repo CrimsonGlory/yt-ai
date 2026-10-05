@@ -137,6 +137,7 @@ class PatreonIE(PatreonBaseIE):
             'noplaylist': True,
             'skip_download': True,
         },
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'expected_warnings': [
             'Remote component challenge solver script',
             'No supported JavaScript runtime',

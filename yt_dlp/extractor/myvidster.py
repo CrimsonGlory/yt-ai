@@ -41,6 +41,7 @@ class MyVidsterIE(InfoExtractor):
         'params': {
             'format': 'bestvideo[protocol=https][ext=mp4]/best[protocol=https]',
         },
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'add_ie': ['Youtube'],
         'expected_warnings': [
             'Remote component challenge solver script',

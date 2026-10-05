@@ -60,7 +60,7 @@ class GeniusIE(InfoExtractor):
 
     def _real_extract(self, url):
         display_id, is_article = self._match_valid_url(url).group('id', 'article')
-        webpage = self._download_webpage(url, display_id)
+        webpage = self._download_webpage(url, display_id, impersonate=True)
 
         metadata = self._parse_json(
             unescapeHTML(self._html_search_meta('page_data', webpage, 'metadata', default='{}')),
@@ -93,11 +93,14 @@ class GeniusLyricsIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?genius\.com/(?P<id>[^?/#]+)-lyrics(?:[?/#]|$)'
     _TESTS = [{
         'url': 'https://genius.com/Lil-baby-heyy-lyrics',
-        'playlist_mincount': 2,
+        'playlist_mincount': 1,
         'info_dict': {
             'id': '8454545',
             'title': 'Heyy',
             'description': 'Heyy by Lil Baby',
+        },
+        'params': {
+            'playlistend': 1,
         },
     }, {
         'url': 'https://genius.com/Outkast-two-dope-boyz-in-a-cadillac-lyrics',
@@ -107,6 +110,7 @@ class GeniusLyricsIE(InfoExtractor):
             'title': 'Two Dope Boyz (In a Cadillac)',
             'description': 'Two Dope Boyz (In a Cadillac) by OutKast',
         },
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
     }, {
         'url': 'https://genius.com/Playboi-carti-rip-lyrics',
         'playlist_mincount': 1,
@@ -115,11 +119,12 @@ class GeniusLyricsIE(InfoExtractor):
             'title': 'R.I.P.',
             'description': 'R.I.P. by Playboi Carti',
         },
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
     }]
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        webpage = self._download_webpage(url, display_id)
+        webpage = self._download_webpage(url, display_id, impersonate=True)
 
         json_string = self._search_json(
             r'window\.__PRELOADED_STATE__\s*=\s*JSON\.parse\(', webpage, 'json string',

@@ -186,11 +186,21 @@ class PolskieRadioIE(PolskieRadioBaseIE):
     def _real_extract(self, url):
         playlist_id = self._match_id(url)
 
-        webpage = self._download_webpage(url, playlist_id)
+        webpage = self._download_webpage(url, playlist_id, fatal=False, impersonate=True)
 
-        article_data = traverse_obj(
-            self._search_nextjs_data(webpage, playlist_id), (
-                'props', 'pageProps', (('data', 'articleData'), 'post', 'data')), get_all=False)
+        article_data = None
+        if webpage:
+            article_data = traverse_obj(
+                self._search_nextjs_data(webpage, playlist_id, fatal=False), (
+                    'props', 'pageProps', (('data', 'articleData'), 'post', 'data')), get_all=False)
+        if not article_data:
+            # Current station fronts ship an empty Next.js fallback shell or
+            # error page; the public gateway used by the page JS has the article.
+            article_data = self._download_json(
+                'https://api-gateway.polskieradio.pl/v4/Article/Get', playlist_id,
+                'Downloading article JSON', query={'id': playlist_id},
+                headers={'x-api-key': '9bf6c5a2-a7d0-4980-9ed7-a3f7291f2a81'},
+            )['data']
 
         title = strip_or_none(article_data['title'])
 

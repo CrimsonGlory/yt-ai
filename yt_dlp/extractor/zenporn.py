@@ -84,20 +84,21 @@ class ZenPornIE(InfoExtractor):
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        webpage = self._download_webpage(url, display_id)
+        webpage = self._download_webpage(url, display_id, impersonate=True)
 
         ext_domain, video_id = self._search_regex(
             r'https://(?P<ext_domain>[\w.-]+\.\w{3})/embed/(?P<extr_id>\d+)/',
             webpage, 'embed info', group=('ext_domain', 'extr_id'))
 
         info_json = self._download_json(
-            self._gen_info_url(ext_domain, video_id), video_id, fatal=False)
+            self._gen_info_url(ext_domain, video_id), video_id, fatal=False, impersonate=True)
 
         video_json = self._download_json(
             f'https://{ext_domain}/api/videofile.php', video_id, query={
                 'video_id': video_id,
                 'lifetime': 8640000,
-            }, note='Downloading video file JSON', errnote='Failed to download video file JSON')
+            }, note='Downloading video file JSON', errnote='Failed to download video file JSON',
+            impersonate=True)
 
         decoded_url = self._decode_video_url(video_json[0]['video_url'])
         if not decoded_url:
@@ -108,6 +109,7 @@ class ZenPornIE(InfoExtractor):
             'display_id': display_id,
             'ext': traverse_obj(video_json, (0, 'format', {determine_ext})),
             'url': f'https://{ext_domain}{decoded_url}',
+            'impersonate': True,
             'age_limit': 18,
             **traverse_obj(info_json, ('video', {
                 'title': ('title', {str}),

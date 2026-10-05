@@ -2624,7 +2624,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **gamestar**: Dailymotion player config; impersonate Chrome, then Safari, then Firefox on HTTP 403
     * **gazeta**: Extract current article video embeds
     * **gedidigital**: Broader lastampa / repubblica video URLs
-    * **genius**: Parse Brightcove IDs from `itemprop=page_data` regardless of meta attribute order
+    * **genius**: Parse Brightcove IDs from `itemprop=page_data` regardless of meta attribute order; impersonate lyrics and video pages
     * **giantbomb**: JW Platform on current show/video slugs
     * **glide**: Nested share path IDs
     * **globalplayer:live**: Fetch the stream from the guacamole playables API
@@ -2747,6 +2747,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **podbayfm**: Impersonate the browser
     * **podomatic**: Use the public v2 episode API and enclosure MP3s instead of the dead embed_params JSON
     * **polsatgo**: Use the Polsat Box Go `pbg` portal after Polsat Go shutdown; raise login when playback is denied
+    * **polskieradio**: Fetch article JSON from `api-gateway.polskieradio.pl` when the Next.js page is an empty shell or errors
     * **polskieradio:category**: Match two-part `<title>` values on current legacy category pages
     * **popcorntimes**: Follow public trailer YouTube/Dailymotion embeds; raise geo-restriction for DACH-only feature films (X-Forwarded-For is ignored)
     * **popcorntv**: Match `/streaming/` and `/guarda/` URLs, fetch via `www` to avoid the apex's expired TLS cert, and follow YouTube trailer embeds
@@ -2889,6 +2890,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **youporn**: Upload date is optional
     * **youtube:tab**: Treat lockup `LOCKUP_CONTENT_TYPE_SHOW` as a playlist (same as playlists/podcasts)
     * **younow**: Raise an expected error that live playback is WebRTC (Props SFU) and that public HLS/moments are gone
+    * **zenporn**: Impersonate the browser
     * **zenyandex**: Treat a missing channel feed-page JSON as end of playlist
     * **zetland**: Extract `storyServer` audio from Next.js App Router flight data
     * **zingmp3**: Sign API requests with the current app `version` and only the documented params
