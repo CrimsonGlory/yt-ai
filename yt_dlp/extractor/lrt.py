@@ -1,5 +1,6 @@
 from .common import InfoExtractor
 from ..utils import (
+    ExtractorError,
     clean_html,
     unified_timestamp,
     url_or_none,
@@ -44,12 +45,22 @@ class LRTStreamIE(InfoExtractor):
         streams_data = self._download_json(get_stream_url, video_id)
 
         formats, subtitles = [], {}
+        last_err = None
         for stream_url in traverse_obj(streams_data, (
                 'response', 'data', lambda k, _: k.startswith('content'), {url_or_none})):
-            fmts, subs = self._extract_m3u8_formats_and_subtitles(
-                stream_url, video_id, 'mp4', m3u8_id='hls', live=True)
+            try:
+                fmts, subs = self._extract_m3u8_formats_and_subtitles(
+                    stream_url, video_id, 'mp4', m3u8_id='hls', live=True)
+            except ExtractorError as e:
+                last_err = e
+                continue
             formats.extend(fmts)
             subtitles = self._merge_subtitles(subtitles, subs)
+
+        if not formats:
+            if last_err:
+                raise last_err
+            self.raise_no_formats('No live streams available', expected=True, video_id=video_id)
 
         return {
             'id': video_id,

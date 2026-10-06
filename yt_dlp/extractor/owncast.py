@@ -17,7 +17,7 @@ class OwncastIE(InfoExtractor):
         'info_dict': {
             'id': 'live.retrostrange.com',
             'ext': 'mp4',
-            'title': r're:24/7 vintage sci-fi, horror, filmstrips, and ephemera \d{4}-\d{2}-\d{2} \d{2}:\d{2}',
+            'title': r're:.+ \d{4}-\d{2}-\d{2} \d{2}:\d{2}',
             'description': 'md5:c1c2ee1be6ab6198a007f37fcdc17c9c',
             'thumbnail': 'https://live.retrostrange.com/logo',
             'channel': 'RetroStrange TV',

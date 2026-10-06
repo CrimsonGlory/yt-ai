@@ -48,6 +48,7 @@ class FikFapIE(FikFapBaseIE):
             'id': '1429486',
             'ext': 'mp4',
             'title': '⬇️check my FREE VIP OF ⬇️',
+            'duration': 13,
             'age_limit': 18,
             'thumbnail': r're:https://vz-.+\.b-cdn\.net/.+',
             'timestamp': 1761007837,

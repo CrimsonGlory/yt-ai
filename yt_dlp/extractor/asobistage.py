@@ -1,7 +1,7 @@
 import functools
 
 from .common import InfoExtractor
-from ..utils import str_or_none, url_or_none
+from ..utils import ExtractorError, str_or_none, url_or_none
 from ..utils.traversal import traverse_obj
 
 
@@ -27,6 +27,7 @@ class AsobiStageIE(InfoExtractor):
         }],
     }, {
         'url': 'https://asobistage.asobistore.jp/event/idolmaster_idolworld2023_goods/archive/live',
+        'skip': 'ASOBI STAGE website is redirecting to a scheduled maintenance page',
         'info_dict': {
             'id': 'idolmaster_idolworld2023_goods/archive/live',
             'title': 'md5:378510b6e830129d505885908bd6c576',
@@ -103,8 +104,14 @@ class AsobiStageIE(InfoExtractor):
         self._HEADERS['Authorization'] = f'Bearer {token}'
 
     def _real_extract(self, url):
-        webpage, urlh = self._download_webpage_handle(url, self._match_id(url))
-        video_id, event, type_, slug = self._match_valid_url(urlh.url).group('id', 'event', 'type', 'slug')
+        display_id = self._match_id(url)
+        webpage, urlh = self._download_webpage_handle(url, display_id)
+        if 'mainte.asobistore.jp' in (urlh.url or '') or 'メンテナンス' in (webpage or ''):
+            raise ExtractorError('ASOBI STAGE is currently under maintenance', expected=True)
+        mobj = self._match_valid_url(urlh.url) or self._match_valid_url(url)
+        if not mobj:
+            raise ExtractorError('Unable to extract event URL')
+        video_id, event, type_, slug = mobj.group('id', 'event', 'type', 'slug')
         video_type = {'archive': 'archives', 'player': 'broadcasts'}[type_]
 
         event_data = traverse_obj(

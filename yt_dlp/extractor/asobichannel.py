@@ -148,9 +148,11 @@ class AsobiChannelTagURLIE(AsobiChannelBaseIE):
 
     def _real_extract(self, url):
         tag_id = self._match_id(url)
-        webpage = self._download_webpage(url, tag_id)
-        title = traverse_obj(self._search_nextjs_data(
-            webpage, tag_id, fatal=False), ('props', 'pageProps', 'data', 'name', {str}))
+        title = traverse_obj(
+            self._download_json(
+                f'https://channel.microcms.io/api/v1/tag/{tag_id}',
+                tag_id, headers=self._MICROCMS_HEADER),
+            ('name', {str}))
 
         media = self._download_json(
             f'https://channel.microcms.io/api/v1/media?limit=999&filters=(tag[contains]{tag_id})',

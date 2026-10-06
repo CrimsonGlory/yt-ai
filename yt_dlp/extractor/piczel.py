@@ -17,7 +17,29 @@ class PiczelIE(InfoExtractor):
     IE_DESC = 'Piczel.tv live streams and recordings'
     _VALID_URL = r'https?://(?:www\.)?piczel\.tv/watch/(?P<id>[^/?#]+)'
     _TESTS = [{
+        'url': 'https://piczel.tv/watch/JJJMEK?recording=516616',
+        'md5': '629fbe658b8116db1805aa3c88bca6b7',
+        'info_dict': {
+            'id': '516616',
+            'ext': 'mp4',
+            'display_id': 'JJJMEK',
+            'title': str,
+            'description': str,
+            'thumbnail': 'https://recordings-production.piczel.tv/129751/stream_dsCAvOeyxGDU1Qng.webp',
+            'channel': 'JJJMEK',
+            'channel_id': '129751',
+            'channel_url': 'https://piczel.tv/watch/JJJMEK',
+            'channel_follower_count': int,
+            'uploader': 'JJJMEK',
+            'uploader_id': '135573',
+            'uploader_url': 'https://piczel.tv/watch/JJJMEK',
+            'age_limit': 18,
+            'tags': ['furry', 'art', 'digital art', 'nsfw'],
+            'live_status': 'was_live',
+        },
+    }, {
         'url': 'https://piczel.tv/watch/JJJMEK?recording=514087',
+        'skip': 'video gone',
         'md5': 'b62a9e8a90f07a4c18fdee9e7283d162',
         'info_dict': {
             'id': '514087',

@@ -45,7 +45,23 @@ class CamFMShowIE(InfoExtractor):
 class CamFMEpisodeIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?camfm\.co\.uk/player/(?P<id>[^/]+)'
     _TESTS = [{
+        'url': 'https://camfm.co.uk/player/52755',
+        'md5': '6e75be7f1dddaef51b376c92748c7b77',
+        'info_dict': {
+            'id': '52755',
+            'title': 'Desi Beats - 18:00 Thu 01/10/2026',
+            'ext': 'mp3',
+            'upload_date': '20261001',
+            'description': 'md5:af3407103f1b092f35356ac94514dfba',
+            'timestamp': 1790877600,
+            'series': 'Desi Beats',
+            'thumbnail': 'https://camfm.co.uk/media/shows/sha1/b58363b599a725c33be5607fd4653b46329e7dd3.jpg',
+            'categories': ['World/Folk/Jazz'],
+            'was_live': True,
+        },
+    }, {
         'url': 'https://camfm.co.uk/player/52583',
+        'skip': 'video gone',
         'md5': 'e5dd6563f190a8f9ca5dd31f54802876',
         'info_dict': {
             'id': '52583',

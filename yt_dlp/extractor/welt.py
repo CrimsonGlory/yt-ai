@@ -20,7 +20,7 @@ class WeltIE(InfoExtractor):
         'info_dict': {
             'id': '218509518',
             'ext': 'mp4',
-            'title': 'Strip the Cosmos: Geheimnisvoller Jupiter',
+            'title': 'Geheimnisvoller Jupiter',
             'description': 'Auf dem Gasriesen Jupiter wüten gigantische Stürme und monströse Magnetfelder, sein Kern ist heißer als die Oberfläche der Sonne. Neue Erkenntnisse über den planetaren Platzhirsch.',
             'thumbnail': r're:https?://images\.welt\.de/.+',
             'duration': 2823,

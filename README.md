@@ -2544,7 +2544,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **USNewsOn** (`usnewson.com`): Video.js `pllrc` onestream API (`pro.usnlive.com/api/stream`) and direct HLS. Request: [yt-dlp/yt-dlp#6985](https://github.com/yt-dlp/yt-dlp/issues/6985)
     * **Veev** (`veev.to`): Decode the player `fc` token and `/dl?op=player_api` source URL. Request: [yt-dlp/yt-dlp#10092](https://github.com/yt-dlp/yt-dlp/issues/10092)
     * **Videas** (`videas.fr`): Player `data-embed` JSON and CDN HLS. Request: [yt-dlp/yt-dlp#7786](https://github.com/yt-dlp/yt-dlp/issues/7786)
-    * **VidMoly** (`vidmoly.to`): Canonical `vidmoly.biz` embed JWPlayer HLS (also `.me`/`.net`). Request: [yt-dlp/yt-dlp#9689](https://github.com/yt-dlp/yt-dlp/issues/9689)
+    * **VidMoly** (`vidmoly.to`): Canonical `vidmoly.biz` embed JWPlayer HLS (also `.me`/`.net`); stringify JWPlayer setup JS (ternary `preload`, `baseTracks`) so thumbnail and duration parse. Request: [yt-dlp/yt-dlp#9689](https://github.com/yt-dlp/yt-dlp/issues/9689)
     * **Viggle** (`viggle.ai`): Public `/api/share/video-task` JSON (impersonate) for signed `assets.viggle.ai` MP4. Request: [yt-dlp/yt-dlp#13657](https://github.com/yt-dlp/yt-dlp/issues/13657)
     * **VillageSexVideos** (`villagesexvideos.com`): Impersonate Cloudflare, then schema `contentURL` MP4 (Clean Tube player iframe fallback). Request: [yt-dlp/yt-dlp#7033](https://github.com/yt-dlp/yt-dlp/issues/7033)
     * **Vix** (`vix.com`): Next.js flight `videoToken` JWT delegated to Anvato/Lura HLS. Request: [yt-dlp/yt-dlp#3366](https://github.com/yt-dlp/yt-dlp/issues/3366)
@@ -2571,6 +2571,8 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **allocine**: Extract Dailymotion videos via `DailymotionIE`
     * **americastestkitchen**: Read episode-level description, publishDate, and siteKey when nested `video` metadata is empty
     * **amazon**: Product-gallery `jQuery.parseJSON` videos; extract VSE HLS as MP4 formats; impersonate Chrome when the storefront serves a captcha interstitial
+    * **asobichannel:tag**: Read tag title and playlist entries from the microCMS API instead of Next.js page data
+    * **asobistage**: Raise an expected error when CloudFront redirects to the ASOBI STORE maintenance page; otherwise parse the original event URL
     * **beatport**: Next.js `track_name` / `track_length_ms` / release `image_url` fields
     * **beeg**: Sign HLS from `store.externulls.com/video/play_url/{id}` when `hls_resources` is omitted
     * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate video, bangumi, and dynamic play pages; on 412 fall back to `wbi/view/detail` / `pgc/player/web/v2/playurl`; resolve opus/dynamic `bvid` when `jump_url` is missing
@@ -2678,6 +2680,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **loc**: `media.loc.gov` IDs and loc JSON media
     * **locipo**: Direct `video_file_name` when the Streaks API key is gone
     * **loco**: Use ivory v2 `/streams/playback/` for tokenized HLS; raise `UserNotLive` when the streamer is offline
+    * **lrt**: Try each live HLS URL and continue when one returns HTTP 403
     * **maoritv**: maoriplus.co.nz, live/movie URLs, and a dynamic Brightcove account
     * **matchtv**: Impersonate the live iframe host
     * **mave**: `cdn.mave.digital` storage
