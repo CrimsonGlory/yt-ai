@@ -118,7 +118,7 @@ class AmazonStoreIE(InfoExtractor):
 class AmazonReviewsIE(InfoExtractor):
     _VALID_URL = [
         r'https?://(?:www\.)?amazon\.(?:[a-z]{2,3})(?:\.[a-z]{2})?/gp/customer-reviews/(?P<id>[^/&#$?]+)',
-        r'https?://(?:www\.)?amazon\.(?:[a-z]{2,3})(?:\.[a-z]{2})?/vdp/(?P<id>[0-9a-f]+)',
+        r'https?://(?:www\.)?amazon\.(?:[a-z]{2,3})(?:\.[a-z]{2})?/(?:vdp|live/video)/(?P<id>[0-9a-f]+)',
     ]
     _TESTS = [{
         'url': 'https://www.amazon.com/vdp/0358f63b34b749239d7c7203ff1be30b',
@@ -194,11 +194,19 @@ class AmazonReviewsIE(InfoExtractor):
         return formats, subtitles
 
     def _extract_vdp(self, url, display_id):
-        webpage = self._download_webpage(url, display_id)
-        quoted = self._search_regex(
-            r'liveFlagshipStates\["amazonlive-react-vse-metadata"\]\s*=\s*JSON\.parse\((".*?")\)\s*;',
-            webpage, 'vse metadata')
-        data = self._parse_json(self._parse_json(quoted, display_id), display_id)
+        data = None
+        for retry in self.RetryManager():
+            try:
+                webpage = self._download_webpage(
+                    url, display_id, impersonate='chrome' if retry.attempt > 1 else None)
+                quoted = self._search_regex(
+                    r'liveFlagshipStates\["amazonlive-react-vse-metadata"\]\s*=\s*JSON\.parse\((".*?")\)\s*;',
+                    webpage, 'vse metadata')
+                data = self._parse_json(self._parse_json(quoted, display_id), display_id)
+            except ExtractorError as e:
+                retry.error = e
+        if not data:
+            raise ExtractorError('Unable to extract VSE metadata', video_id=display_id)
         aci = data.get('aciContentId') or ''
         video_id = aci.split('.')[-1] if aci.startswith('amzn1.productreview.') else (
             data.get('id') or display_id)
@@ -217,7 +225,7 @@ class AmazonReviewsIE(InfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url)
 
-        if '/vdp/' in url:
+        if re.search(r'/(?:vdp|live/video)/', url):
             return self._extract_vdp(url, video_id)
 
         for retry in self.RetryManager():

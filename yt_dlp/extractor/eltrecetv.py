@@ -7,7 +7,7 @@ class ElTreceTVIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.eltrecetv.com.ar/la-cocina-rebelde/capitulos/temporada-2026/programa-completo-del-020926-la-hermana-veronica-estuvo-angelada-y-preparo-sushi-casero-en-la-cocina-rebelde/',
-            'md5': '7469421b6208501e3ce37847ed7cdc02',
+            'md5': '7b9d4fc2931a6aa7345be1c541156812',
             'info_dict': {
             'id': 'programa-completo-del-020926-la-hermana-veronica-estuvo-angelada-y-preparo-sushi-casero-en-la-cocina-rebelde',
             'ext': 'mp4',
@@ -62,7 +62,9 @@ class ElTreceTVIE(InfoExtractor):
             'format_id': f['format_id'].replace('hls', 'http'),
             'width': f.get('width'),
             'height': f.get('height'),
-        } for f in formats if f['url'].endswith('/tracks-v1a1/index.m3u8') and f.get('height') != 1080])
+            # Prefer progressive MP4s: 1080 HLS fragment names currently 404.
+            'preference': 1,
+        } for f in formats if f['url'].endswith('/tracks-v1a1/index.m3u8')])
 
         return {
             'id': video_id,

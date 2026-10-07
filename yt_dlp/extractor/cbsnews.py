@@ -5,6 +5,7 @@ import zlib
 
 from .anvato import AnvatoIE
 from .common import InfoExtractor
+from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
     UserNotLive,
@@ -196,12 +197,23 @@ class CBSNewsIE(CBSNewsBaseIE):
         {
             # 48 hours
             'url': 'http://www.cbsnews.com/news/maria-ridulph-murder-will-the-nations-oldest-cold-case-to-go-to-trial-ever-get-solved/',
+            'skip': 'video gone',
             'info_dict': {
                 'id': 'maria-ridulph-murder-will-the-nations-oldest-cold-case-to-go-to-trial-ever-get-solved',
                 'title': 'Cold as Ice',
                 'description': 'Can a childhood memory solve the 1957 murder of 7-year-old Maria Ridulph?',
             },
             'playlist_mincount': 7,
+        },
+        {
+            # 48 hours
+            'url': 'https://www.cbsnews.com/news/makayla-meave-frank-byers-oklahoma-murder-48-hours/',
+            'info_dict': {
+                'id': 'makayla-meave-frank-byers-oklahoma-murder-48-hours',
+                'title': 'Real-life tracker says cruelty of Oklahoma woman\'s murder will "stay with me forever"',
+                'description': 'md5:69eb485184829e29d74925328237ea72',
+            },
+            'playlist_mincount': 1,
         },
         {
             'url': 'https://www.cbsnews.com/video/032823-cbs-evening-news/',
@@ -228,7 +240,12 @@ class CBSNewsIE(CBSNewsBaseIE):
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        webpage = self._download_webpage(url, display_id)
+        try:
+            webpage = self._download_webpage(url, display_id)
+        except ExtractorError as e:
+            if not (isinstance(e.cause, HTTPError) and e.cause.status in (403, 406)):
+                raise
+            webpage = self._download_webpage(url, display_id, impersonate='chrome')
 
         playlist = self._extract_playlist(webpage, display_id)
         if playlist:

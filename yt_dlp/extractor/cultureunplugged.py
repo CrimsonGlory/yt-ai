@@ -6,6 +6,7 @@ class CultureUnpluggedIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?cultureunplugged\.com/(?:documentary/watch-online/)?play/(?P<id>\d+)(?:/(?P<display_id>[^/#?]+))?'
     _TESTS = [{
         'url': 'http://www.cultureunplugged.com/documentary/watch-online/play/53662/The-Next--Best-West',
+        'skip': 'site unavailable',
         'md5': 'ac6c093b089f7d05e79934dcb3d228fc',
         'info_dict': {
             'id': '53662',
@@ -20,6 +21,7 @@ class CultureUnpluggedIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.cultureunplugged.com/play/2833/Koi-Sunta-Hai--Journeys-with-Kumar---Kabir--Someone-is-Listening-',
+        'skip': 'site unavailable',
         'md5': 'dc2014bc470dfccba389a1c934fa29fa',
         'info_dict': {
             'id': '2833',

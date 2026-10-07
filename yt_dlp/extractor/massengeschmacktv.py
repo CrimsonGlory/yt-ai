@@ -1,72 +1,76 @@
-import re
-
 from .common import InfoExtractor
 from ..utils import (
-    clean_html,
     determine_ext,
     int_or_none,
-    js_to_json,
-    mimetype2ext,
-    parse_filesize,
+    join_nonempty,
+    parse_resolution,
+    url_or_none,
 )
+from ..utils.traversal import traverse_obj
 
 
 class MassengeschmackTVIE(InfoExtractor):
     IE_NAME = 'massengeschmack.tv'
-    _VALID_URL = r'https?://(?:www\.)?massengeschmack\.tv/play/(?P<id>[^?&#]+)'
+    _VALID_URL = [
+        r'https?://(?:www\.)?massengeschmack\.tv/play/(?P<id>[^?&#]+)',
+        r'https?://(?:www\.)?orangeflix\.de/clip/(?P<id>[^?&#]+)',
+    ]
 
-    _TEST = {
+    _TESTS = [{
         'url': 'https://massengeschmack.tv/play/fktv202',
-        'md5': '9996f314994a49fefe5f39aa1b07ae21',
+        'md5': 'a9e054db9c2b5a08f0a0527cc201e8d3',
         'info_dict': {
             'id': 'fktv202',
             'ext': 'mp4',
-            'title': 'Fernsehkritik-TV #202',
+            'title': 'Folge 202 – Fernsehkritik-TV',
+            'description': 'md5:7e711f67d9e7157189adf9173d401db6',
             'thumbnail': 'https://cache.massengeschmack.tv/img/mag/fktv202.jpg',
+            'duration': 3683,
+            'timestamp': 1489838400,
+            'upload_date': '20170318',
         },
-    }
+    }, {
+        'url': 'https://orangeflix.de/clip/fktv202',
+        'only_matching': True,
+    }]
 
     def _real_extract(self, url):
         episode = self._match_id(url)
-
         webpage = self._download_webpage(url, episode)
-        sources = self._parse_json(self._search_regex(r'(?s)MEDIA\s*=\s*(\[.+?\]);', webpage, 'media'), episode, js_to_json)
+        clip = traverse_obj(
+            self._search_nextjs_v13_data(webpage, episode, fatal=False),
+            (..., {dict}, lambda k, v: k == 'clip' and isinstance(v, dict) and v.get('id') == episode),
+            get_all=False) or {}
+
+        if clip and clip.get('canAccess') is False and not clip.get('hasDownload'):
+            self.raise_login_required('This clip is only available for premium members')
 
         formats = []
-        for source in sources:
-            furl = source.get('src')
-            if not furl:
-                continue
-            furl = self._proto_relative_url(furl)
-            ext = determine_ext(furl) or mimetype2ext(source.get('type'))
-            if ext == 'm3u8':
-                formats.extend(self._extract_m3u8_formats(
-                    furl, episode, 'mp4', 'm3u8_native',
-                    m3u8_id='hls', fatal=False))
-            else:
-                formats.append({
-                    'url': furl,
-                    'format_id': determine_ext(furl),
-                })
-
-        for (durl, format_id, width, height, filesize) in re.findall(r'''(?x)
-                                   <a[^>]+?href="(?P<url>(?:https:)?//[^"]+)".*?
-                                   <strong>(?P<format_id>.+?)</strong>.*?
-                                   <small>(?:(?P<width>\d+)x(?P<height>\d+))?\s+?\((?P<filesize>[\d,]+\s*[GM]iB)\)</small>
-                                ''', webpage):
+        for download in traverse_obj(clip, ('downloads', lambda _, v: url_or_none(v['url']))):
+            media_url = download['url']
+            is_audio = download.get('t') == 'music'
             formats.append({
-                'url': durl,
-                'format_id': format_id,
-                'width': int_or_none(width),
-                'height': int_or_none(height),
-                'filesize': parse_filesize(filesize),
-                'vcodec': 'none' if format_id.startswith('Audio') else None,
+                'url': media_url,
+                'format_id': download.get('desc') or determine_ext(media_url),
+                'filesize': int_or_none(download.get('size')),
+                'vcodec': 'none' if is_audio else None,
+                **parse_resolution(download.get('dimensions')),
             })
+
+        if not formats:
+            self.raise_no_formats('No media downloads found', expected=True, video_id=episode)
 
         return {
             'id': episode,
-            'title': clean_html(self._html_search_regex(
-                r'<span[^>]+\bid=["\']clip-title["\'][^>]*>([^<]+)', webpage, 'title', fatal=False)),
             'formats': formats,
-            'thumbnail': self._search_regex(r'POSTER\s*=\s*"([^"]+)', webpage, 'thumbnail', fatal=False),
+            'title': (
+                join_nonempty(clip.get('title'), clip.get('projectTitle'), delim=' – ')
+                or self._og_search_title(webpage, default=None)),
+            'description': traverse_obj(clip, ('description', {str})),
+            'thumbnail': (
+                url_or_none(clip.get('image'))
+                or traverse_obj(clip, ('images', 'thumbnail', {url_or_none}))
+                or self._og_search_thumbnail(webpage, default=None)),
+            'duration': int_or_none(clip.get('durationSeconds')),
+            'timestamp': int_or_none(clip.get('time')),
         }

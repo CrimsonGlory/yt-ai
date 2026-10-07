@@ -5,6 +5,7 @@ class LoveHomePornIE(NuevoBaseIE):
     _VALID_URL = r'https?://(?:www\.)?lovehomeporn\.com/video/(?P<id>\d+)(?:/(?P<display_id>[^/?#&]+))?'
     _TESTS = [{
         'url': 'https://lovehomeporn.com/video/133980/fitness-instructor-comes-for-private-home-session-and-ends-up-riding-my-cock-hard',
+        'skip': 'requires premium account',
         'info_dict': {
             'id': '133980',
             'display_id': 'fitness-instructor-comes-for-private-home-session-and-ends-up-riding-my-cock-hard',
@@ -35,9 +36,15 @@ class LoveHomePornIE(NuevoBaseIE):
         video_id = mobj.group('id')
         display_id = mobj.group('display_id')
 
+        webpage = self._download_webpage(url, display_id or video_id)
         info = self._extract_nuevo(
-            f'http://lovehomeporn.com/media/nuevo/config.php?key={video_id}',
+            f'https://lovehomeporn.com/media/nuevo/config.php?key={video_id}',
             video_id)
+        if not info.get('formats'):
+            if 'Only for premium members' in webpage or 'limit_player' in webpage:
+                self.raise_login_required(
+                    'This video is only available for premium members', metadata_available=True)
+            self.raise_no_formats('No video formats found', expected=True, video_id=video_id)
         info.update({
             'display_id': display_id,
             'age_limit': 18,

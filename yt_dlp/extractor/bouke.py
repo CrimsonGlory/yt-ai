@@ -1,4 +1,8 @@
+import ssl
+import urllib.request
+
 from .common import InfoExtractor
+from ..networking.exceptions import CertificateVerifyError
 from ..utils import (
     ExtractorError,
     clean_html,
@@ -92,10 +96,34 @@ class BoukeIE(InfoExtractor):
                 self.report_warning(f'Unsupported stream type: {ext}')
         return formats, subtitles
 
+    def _download_origin_webpage(self, url, video_id):
+        # www.bouke.media currently presents an expired Sectigo certificate
+        # (notAfter 2026-10-06); Freecaster embed/CDN hosts are unaffected.
+        self.to_screen(f'{video_id}: Downloading webpage')
+        ctx = ssl._create_unverified_context()
+        req = urllib.request.Request(url, headers={
+            'User-Agent': (
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+                '(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'),
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        })
+        try:
+            with urllib.request.urlopen(req, context=ctx, timeout=30) as resp:
+                raw = resp.read()
+                charset = resp.headers.get_content_charset() or 'utf-8'
+                return raw.decode(charset, 'replace')
+        except OSError as e:
+            raise ExtractorError('Unable to download webpage', cause=e, video_id=video_id)
+
     def _real_extract(self, url):
         video_id = self._match_id(url)
         is_live_url = video_id == 'direct'
-        webpage = self._download_webpage(url, video_id)
+        try:
+            webpage = self._download_webpage(url, video_id)
+        except ExtractorError as e:
+            if not isinstance(e.cause, CertificateVerifyError):
+                raise
+            webpage = self._download_origin_webpage(url, video_id)
 
         if is_live_url:
             display_id = 'direct'

@@ -268,7 +268,7 @@ class BlueskyIE(InfoExtractor):
                 'description': r're:(?s)hearing people on twitter say that bluesky .{93}',
                 'tags': [],
                 'alt_title': 'md5:9b1ee1937fb3d1a81e932f9ec14d560e',
-                'uploader': 'T9',
+                'uploader': 'T9 🔜 MCM London',
                 'channel_id': 'did:plc:6ttyq36rhiyed7wu3ws7dmqj',
                 'thumbnail': r're:https://video.bsky.app/watch/.*\.jpg$',
                 'timestamp': 1729731642,

@@ -2315,7 +2315,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Boomstream** (`play.boomstream.com`): Player `window.boomstreamConfig` HLS; derive AES-128 key/IV from `#EXT-X-MEDIA-READY`. Request: [yt-dlp/yt-dlp#15376](https://github.com/yt-dlp/yt-dlp/issues/15376)
     * **BoundHub** (`boundhub.com`): Impersonate Cloudflare, then KVS `kt_player` `flashvars` and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#3940](https://github.com/yt-dlp/yt-dlp/issues/3940)
     * **BoyfriendTV** (`boyfriendtv.com`): Player `sources.hlsAuto` HLS from video pages. Request: [yt-dlp/yt-dlp#15509](https://github.com/yt-dlp/yt-dlp/issues/15509)
-    * **Bouke** (`bouke.media`): Drupal Freecaster `data-video-id` / `live_token` embed JSON (MP4, HLS, DASH). Request: [yt-dlp/yt-dlp#15403](https://github.com/yt-dlp/yt-dlp/issues/15403)
+    * **Bouke** (`bouke.media`): Drupal Freecaster `data-video-id` / `live_token` embed JSON (MP4, HLS, DASH); download origin pages without TLS verification when the site certificate is expired. Request: [yt-dlp/yt-dlp#15403](https://github.com/yt-dlp/yt-dlp/issues/15403)
     * **BrandNewTube** (`brandnewtube.com` / `onevsp.com`): HTML5/`<source>` MP4 and Livewire `video-player` URL, with Bunny Stream iframe fallback. Request: [yt-dlp/yt-dlp#2715](https://github.com/yt-dlp/yt-dlp/issues/2715)
     * **BrandXMusic** (`brandxmusic.net`): CadenzaBox `api.cadenzabox.com` track/release JSON and public GCS `webAudio` MP3. Request: [yt-dlp/yt-dlp#3304](https://github.com/yt-dlp/yt-dlp/issues/3304)
     * **Brighteon** (`brighteon.com`): Next.js `__NEXT_DATA__` HLS/DASH and `/api-v3/channels` listings. Request: [yt-dlp/yt-dlp#8214](https://github.com/yt-dlp/yt-dlp/issues/8214)
@@ -2570,7 +2570,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **abc:iview**: Use the v3 video API and raise geo/login when unplayable
     * **allocine**: Extract Dailymotion videos via `DailymotionIE`
     * **americastestkitchen**: Read episode-level description, publishDate, and siteKey when nested `video` metadata is empty
-    * **amazon**: Product-gallery `jQuery.parseJSON` videos; extract VSE HLS as MP4 formats; impersonate Chrome when the storefront serves a captcha interstitial
+    * **amazon**: Product-gallery `jQuery.parseJSON` videos; extract VSE HLS as MP4 formats from `/vdp/` and `/live/video/`; impersonate Chrome when the storefront serves a captcha interstitial or VSE metadata is missing
     * **asobichannel:tag**: Read tag title and playlist entries from the microCMS API instead of Next.js page data
     * **asobistage**: Raise an expected error when CloudFront redirects to the ASOBI STORE maintenance page; otherwise parse the original event URL
     * **beatport**: Next.js `track_name` / `track_length_ms` / release `image_url` fields
@@ -2582,6 +2582,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **cam4**: Profile `/rest/v1.0/profile/{id}/streamInfo` HLS `cdnURL`/`edgeURL` (try each until one plays); empty 204 means the room is offline
     * **ccma**: Raise an expected error when the 3cat media API omits `media` (unpublished/expired)
     * **cda**: When the API lists no progressive qualities, download the fMP4 files next to the DASH manifest instead of byte-range HLS
+    * **cbsnews**: Impersonate Chrome when a news/video page returns HTTP 406
     * **cinetecamilano**: Strip `#t=` media fragments so HTML5 clips keep a real `mp4` extension
     * **cliprs**: Extract Ring Publishing embeds
     * **cloudflarestream**: Also match Video.js `<cloudflare-video src>` embeds
@@ -2606,6 +2607,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **duoplay**: Register sessions on `sts.euddn.net`
     * **ebaumsworld**: Parse the current HTML/JSON player instead of the old XML API
     * **elpais**: Read nested NewsArticle `VideoObject` JSON-LD (`contentUrl`), then a YouTube embed, when `url_cache` is missing
+    * **eltrecetv**: Also expose progressive vodgc MP4s derived from HLS (1080 HLS segment names 404)
     * **epicon**: Extract HLS from the page when `ajaxplayer` returns 405 or has no trailer cid
     * **erocast**: Impersonate the browser
     * **ettutv**: Match live/videos player URLs and extract current streams
@@ -2680,8 +2682,10 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **loc**: `media.loc.gov` IDs and loc JSON media
     * **locipo**: Direct `video_file_name` when the Streaks API key is gone
     * **loco**: Use ivory v2 `/streams/playback/` for tokenized HLS; raise `UserNotLive` when the streamer is offline
+    * **lovehomeporn**: Use HTTPS Nuevo config and raise login required when the player is replaced by a premium gate
     * **lrt**: Try each live HLS URL and continue when one returns HTTP 403
     * **maoritv**: maoriplus.co.nz, live/movie URLs, and a dynamic Brightcove account
+    * **massengeschmack.tv**: Parse Orangeflix Next.js clip `downloads` (`massengeschmack.tv/play` redirects to `orangeflix.de/clip`)
     * **matchtv**: Impersonate the live iframe host
     * **mave**: `cdn.mave.digital` storage
     * **medaltv**: Public `/api/content/{id}` JSON for progressive MP4 and `socialMediaVideo`; HLS is optional (non-fatal)
