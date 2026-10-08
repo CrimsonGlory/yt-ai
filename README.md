@@ -2731,7 +2731,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **npr**: Fall back to JSON-LD JWPlayer media when the query API is blocked
     * **ntv.ru**: Read the numeric video id from `ya:ovs:feed_url` / `/video/{id}` without requiring a fixed meta attribute order
     * **nubilesporn**: Impersonate the browser and prime a tour session; anonymous shorts currently stop on a Cloudflare Turnstile challenge
-    * **odnoklassniki**: Impersonate desktop video pages (urllib connections are reset)
+    * **odnoklassniki**: Impersonate desktop video pages; parse player `metadata` as a dict or JSON string; match `m.ok.ru` / `mobile.ok.ru` URLs (the mobile site 301s to desktop)
     * **oftv**: Extract HLS from the current `api.of.tv` player instead of Zype
     * **ondemandchina**: Use US/CA X-Forwarded-For on the ODC playback API
     * **onet.pl**: Extract PulseEmbed JSON-LD and Ring Publishing MP4 instead of the old CKM API
