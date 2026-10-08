@@ -3,11 +3,11 @@ import urllib.parse
 
 from .common import InfoExtractor
 from ..utils import (
+    ExtractorError,
     InAdvancePagedList,
     determine_ext,
     format_field,
     int_or_none,
-    join_nonempty,
     traverse_obj,
     unified_timestamp,
     url_or_none,
@@ -15,8 +15,7 @@ from ..utils import (
 
 
 class BanByeBaseIE(InfoExtractor):
-    _API_BASE = 'https://api.banbye.com'
-    _CDN_BASE = 'https://cdn.banbye.com'
+    _API_BASE = 'https://banbye.com/api'
     _VIDEO_BASE = 'https://banbye.com/watch'
 
     @staticmethod
@@ -26,16 +25,20 @@ class BanByeBaseIE(InfoExtractor):
 
     def _extract_playlist(self, playlist_id):
         data = self._download_json(f'{self._API_BASE}/playlists/{playlist_id}', playlist_id)
+        video_ids = (
+            traverse_obj(data, ('items', ..., 'id', {str}))
+            or traverse_obj(data, ('videoIds', ..., {str}))
+            or [])
         return self.playlist_result([
             self.url_result(f'{self._VIDEO_BASE}/{video_id}', BanByeIE)
-            for video_id in data['videoIds']], playlist_id, data.get('name'))
+            for video_id in video_ids], playlist_id, data.get('name'))
 
 
 class BanByeIE(BanByeBaseIE):
     _VALID_URL = r'https?://(?:www\.)?banbye\.com/(?:en/)?watch/(?P<id>[\w-]+)'
     _TESTS = [{
-        # ['src']['mp4']['levels'] direct mp4 urls only
         'url': 'https://banbye.com/watch/v_ytfmvkVYLE8T',
+        'skip': 'playback unavailable',
         'md5': '2f4ea15c5ca259a73d909b2cfd558eb5',
         'info_dict': {
             'id': 'v_ytfmvkVYLE8T',
@@ -56,6 +59,26 @@ class BanByeIE(BanByeBaseIE):
             'comment_count': int,
         },
     }, {
+        'url': 'https://banbye.com/watch/v_zEgOnF0Ik4W7',
+        'info_dict': {
+            'id': 'v_zEgOnF0Ik4W7',
+            'ext': 'mp4',
+            'title': 'md5:d18345134d3d0d9f1b52c37fdc80c43c',
+            'description': 'md5:3881923463cbb6799d2df3f43bbf17c6',
+            'uploader': 'wRealu24',
+            'channel_id': 'ch_wrealu24',
+            'channel_url': 'https://banbye.com/channel/ch_wrealu24',
+            'timestamp': 1791181520,
+            'upload_date': '20261005',
+            'duration': 404,
+            'thumbnail': r're:https?://media\.banbye\.net/video/v_zEgOnF0Ik4W7/.+\.webp',
+            'tags': ['waldemar', 'krysiak', 'myslozbir', 'bloger', 'youtuber'],
+            'like_count': int,
+            'dislike_count': int,
+            'view_count': int,
+            'comment_count': int,
+        },
+    }, {
         'url': 'https://banbye.com/watch/v_2JjQtqjKUE_F?playlistId=p_Ld82N6gBw_OJ',
         'info_dict': {
             'title': 'Krzysztof Karoń',
@@ -63,9 +86,8 @@ class BanByeIE(BanByeBaseIE):
         },
         'playlist_mincount': 9,
     }, {
-        # ['src']['mp4']['levels'] direct mp4 urls only.
-        # 480.mp4 is 404; 144.mp4 is the rendition that still exists.
         'url': 'https://banbye.com/watch/v_kb6_o1Kyq-CD',
+        'skip': 'playback unavailable',
         'params': {'format': '144'},
         'info_dict': {
             'id': 'v_kb6_o1Kyq-CD',
@@ -86,8 +108,8 @@ class BanByeIE(BanByeBaseIE):
             'comment_count': int,
         },
     }, {
-        # ['src']['hls']['levels'] variant m3u8 urls only; master m3u8 is 404
         'url': 'https://banbye.com/watch/v_a_gPFuC9LoW5',
+        'skip': 'playback unavailable',
         'info_dict': {
             'id': 'v_a_gPFuC9LoW5',
             'ext': 'mp4',
@@ -107,8 +129,8 @@ class BanByeIE(BanByeBaseIE):
         },
         'expected_warnings': ['Failed to download m3u8'],
     }, {
-        # ['src']['hls']['masterPlaylist'] m3u8 only
         'url': 'https://banbye.com/watch/v_B0rsKWsr-aaa',
+        'skip': 'playback unavailable',
         'info_dict': {
             'id': 'v_B0rsKWsr-aaa',
             'ext': 'mp4',
@@ -129,6 +151,44 @@ class BanByeIE(BanByeBaseIE):
         },
     }]
 
+    def _extract_playback(self, video_id, playback):
+        playback = playback or {}
+        if not traverse_obj(playback, ('urls', ..., {url_or_none})) and not playback.get('blocker'):
+            session = self._download_json(
+                f'{self._API_BASE}/videos/{video_id}/playback', video_id,
+                'Downloading playback session', data=b'{}',
+                headers={'Content-Type': 'application/json'})
+            playback = traverse_obj(session, ('playback', {dict})) or playback
+
+        blocker = playback.get('blocker')
+        if blocker:
+            raise ExtractorError(f'Video is not playable ({blocker})', expected=True)
+
+        formats = []
+        fmt = playback.get('format')
+        for play_url in traverse_obj(playback, ('urls', ..., {url_or_none})):
+            if fmt == 'hls' or determine_ext(play_url) == 'm3u8':
+                formats.extend(self._extract_m3u8_formats(
+                    play_url, video_id, 'mp4', m3u8_id='hls', fatal=False))
+            else:
+                formats.append({
+                    'url': play_url,
+                    'ext': determine_ext(play_url, 'mp4'),
+                    'format_id': fmt,
+                })
+
+        for quality in traverse_obj(playback, ('qualities', ..., {dict})):
+            height = int_or_none(quality.get('shortSide') or quality.get('height') or quality.get('name'))
+            for qurl in traverse_obj(quality, ('urls', ..., {url_or_none})):
+                formats.append({
+                    'url': qurl,
+                    'format_id': str(quality.get('name') or height or 'mp4'),
+                    'height': height,
+                    'width': int_or_none(quality.get('width')),
+                })
+        self._remove_duplicate_formats(formats)
+        return formats
+
     def _real_extract(self, url):
         video_id = self._match_id(url)
         playlist_id = self._extract_playlist_id(url, 'playlistId')
@@ -137,38 +197,35 @@ class BanByeIE(BanByeBaseIE):
             return self._extract_playlist(playlist_id)
 
         data = self._download_json(f'{self._API_BASE}/videos/{video_id}', video_id)
-        thumbnails = [{
-            'id': f'{quality}p',
-            'url': f'{self._CDN_BASE}/video/{video_id}/{quality}.webp',
-        } for quality in [48, 96, 144, 240, 512, 1080]]
+        formats = self._extract_playback(video_id, traverse_obj(data, ('playback', {dict})))
+        if not formats:
+            self.raise_no_formats('No playback URL', expected=True, video_id=video_id)
 
-        formats = []
-        url_data = self._download_json(f'{self._API_BASE}/videos/{video_id}/url', video_id, data=b'')
-        if master_url := traverse_obj(url_data, ('src', 'hls', 'masterPlaylist', {url_or_none})):
-            formats = self._extract_m3u8_formats(master_url, video_id, 'mp4', m3u8_id='hls', fatal=False)
-
-        for format_id, format_url in traverse_obj(url_data, (
-                'src', ('mp4', 'hls'), 'levels', {dict.items}, lambda _, v: url_or_none(v[1]))):
-            ext = determine_ext(format_url)
-            is_hls = ext == 'm3u8'
-            formats.append({
-                'url': format_url,
-                'ext': 'mp4' if is_hls else ext,
-                'format_id': join_nonempty(is_hls and 'hls', format_id),
-                'protocol': 'm3u8_native' if is_hls else 'https',
-                'height': int_or_none(format_id),
+        thumbnails = []
+        for part in (traverse_obj(data, ('thumbnail', 'srcSet', {str})) or '').split(','):
+            part = part.strip()
+            if not part:
+                continue
+            thumb_url, _, width = part.partition(' ')
+            thumbnails.append({
+                'url': thumb_url,
+                'width': int_or_none((width or '').rstrip('w')),
             })
-        self._remove_duplicate_formats(formats)
+        if not thumbnails:
+            thumb_url = traverse_obj(data, ('thumbnail', 'src', {url_or_none}))
+            if thumb_url:
+                thumbnails.append({'url': thumb_url})
 
+        channel_id = traverse_obj(data, ('channel', 'id', {str})) or data.get('channelId')
         return {
             'id': video_id,
             'title': data.get('title'),
-            'description': data.get('desc'),
+            'description': data.get('description') or data.get('desc'),
             'uploader': traverse_obj(data, ('channel', 'name')),
-            'channel_id': data.get('channelId'),
-            'channel_url': format_field(data, 'channelId', 'https://banbye.com/channel/%s'),
+            'channel_id': channel_id,
+            'channel_url': format_field(channel_id, None, 'https://banbye.com/channel/%s'),
             'timestamp': unified_timestamp(data.get('publishedAt')),
-            'duration': data.get('duration'),
+            'duration': int_or_none(data.get('durationSeconds') or data.get('duration')),
             'tags': data.get('tags'),
             'formats': formats,
             'thumbnails': thumbnails,
@@ -180,7 +237,7 @@ class BanByeIE(BanByeBaseIE):
 
 
 class BanByeChannelIE(BanByeBaseIE):
-    _VALID_URL = r'https?://(?:www\.)?banbye\.com/(?:en/)?channel/(?P<id>\w+)'
+    _VALID_URL = r'https?://(?:www\.)?banbye\.com/(?:en/)?(?:channel|c)/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://banbye.com/channel/ch_wrealu24',
         'info_dict': {
@@ -197,7 +254,7 @@ class BanByeChannelIE(BanByeBaseIE):
         },
         'playlist_mincount': 9,
     }]
-    _PAGE_SIZE = 100
+    _PAGE_SIZE = 50
 
     def _real_extract(self, url):
         channel_id = self._match_id(url)
@@ -214,8 +271,8 @@ class BanByeChannelIE(BanByeBaseIE):
                 'offset': page_num * self._PAGE_SIZE,
             }, note=f'Downloading page {page_num + 1}')
             return [
-                self.url_result(f"{self._VIDEO_BASE}/{video['_id']}", BanByeIE)
-                for video in data['items']
+                self.url_result(f'{self._VIDEO_BASE}/{video_id}', BanByeIE)
+                for video_id in traverse_obj(data, ('items', ..., 'id', {str}))
             ]
 
         channel_data = self._download_json(f'{self._API_BASE}/channels/{channel_id}', channel_id)
@@ -225,4 +282,5 @@ class BanByeChannelIE(BanByeBaseIE):
             self._PAGE_SIZE)
 
         return self.playlist_result(
-            entries, channel_id, channel_data.get('name'), channel_data.get('description'))
+            entries, channel_data.get('id') or channel_id,
+            channel_data.get('name'), channel_data.get('description'))

@@ -17,61 +17,64 @@ class OlympicsReplayIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.olympics.com/en/video/seven-golds-and-seven-world-records-for-spitz',
+            'skip': 'HTTP 403/blocked',
             'info_dict': {
-            'id': '7bb7fca8-8bd5-447b-a4f4-99626e0c7465',
-            'ext': 'mp4',
-            'title': 'Seven golds and seven world records for Spitz',
-            'description': 'md5:955cf1e5436b327e3562cddf7357d8f5',
-            'duration': 59,
-            'thumbnail': 'https://img.olympics.com/images/image/private/t_1-1_1280/primary/yl1pv0klpiisgmwcmsgy',
-            'timestamp': 1528845165,
-            'upload_date': '20180612',
-        },
-        },{
-        'url': 'https://olympics.com/fr/video/men-s-109kg-group-a-weightlifting-tokyo-2020-replays',
-        'info_dict': {
-            'id': 'f6a0753c-8e6f-4b7d-a435-027054a4f8e9',
-            'ext': 'mp4',
-            'title': '+109kg (H) Groupe A - Haltérophilie | Replay de Tokyo 2020',
-            'upload_date': '20210801',
-            'timestamp': 1627797600,
-            'description': 'md5:c66af4a5bc7429dbcc43d15845ff03b3',
-            'thumbnail': 'https://img.olympics.com/images/image/private/t_1-1_1280/primary/nua4o7zwyaznoaejpbk2',
-            'duration': 7017.0,
-        },
-    }, {
-        'url': 'https://olympics.com/en/original-series/episode/b-boys-and-b-girls-take-the-spotlight-breaking-life-road-to-paris-2024',
-        'info_dict': {
-            'id': '32633650-c5ee-4280-8b94-fb6defb6a9b5',
-            'ext': 'mp4',
-            'title': 'B-girl Nicka - Breaking Life, Road to Paris 2024 | Episode 1',
-            'upload_date': '20240517',
-            'timestamp': 1715948200,
-            'description': 'md5:f63d728a41270ec628f6ac33ce471bb1',
-            'thumbnail': 'https://img.olympics.com/images/image/private/t_1-1_1280/primary/a3j96l7j6so3vyfijby1',
-            'duration': 1321.0,
-        },
-    }, {
-        'url': 'https://olympics.com/en/paris-2024/videos/men-s-preliminaries-gbr-esp-ned-rsa-hockey-olympic-games-paris-2024',
-        'info_dict': {
-            'id': '3d96db23-8eee-4b7c-8ef5-488a0361026c',
-            'ext': 'mp4',
-            'title': 'Men\'s Preliminaries GBR-ESP & NED-RSA | Hockey | Olympic Games Paris 2024',
-            'upload_date': '20240727',
-            'timestamp': 1722066600,
-        },
-        'skip': 'Geo-restricted to RU, BR, BT, NP, TM, BD, TL',
-    }, {
-        'url': 'https://olympics.com/en/paris-2024/videos/dnp-suni-lee-i-have-goals-and-i-have-expectations-for-myself-but-i-also-am-trying-to-give-myself-grace',
-        'skip': 'stale test sample / site changed',
-        'info_dict': {
-            'id': 'a42f37ab-8a74-41d0-a7d9-af27b7b02a90',
-            'ext': 'mp4',
-            'title': 'md5:b1c37e4e39b8908d4a075f823734eec3',
-            'upload_date': '20240729',
-            'timestamp': 1722288600,
-        },
-    }]
+                'id': '7bb7fca8-8bd5-447b-a4f4-99626e0c7465',
+                'ext': 'mp4',
+                'title': 'Seven golds and seven world records for Spitz',
+                'description': 'md5:955cf1e5436b327e3562cddf7357d8f5',
+                'duration': 59,
+                'thumbnail': 'https://img.olympics.com/images/image/private/t_1-1_1280/primary/yl1pv0klpiisgmwcmsgy',
+                'timestamp': 1528845165,
+                'upload_date': '20180612',
+            },
+        }, {
+            'url': 'https://olympics.com/fr/video/men-s-109kg-group-a-weightlifting-tokyo-2020-replays',
+            'skip': 'HTTP 403/blocked',
+            'info_dict': {
+                'id': 'f6a0753c-8e6f-4b7d-a435-027054a4f8e9',
+                'ext': 'mp4',
+                'title': '+109kg (H) Groupe A - Haltérophilie | Replay de Tokyo 2020',
+                'upload_date': '20210801',
+                'timestamp': 1627797600,
+                'description': 'md5:c66af4a5bc7429dbcc43d15845ff03b3',
+                'thumbnail': 'https://img.olympics.com/images/image/private/t_1-1_1280/primary/nua4o7zwyaznoaejpbk2',
+                'duration': 7017.0,
+            },
+        }, {
+            'url': 'https://olympics.com/en/original-series/episode/b-boys-and-b-girls-take-the-spotlight-breaking-life-road-to-paris-2024',
+            'skip': 'HTTP 403/blocked',
+            'info_dict': {
+                'id': '32633650-c5ee-4280-8b94-fb6defb6a9b5',
+                'ext': 'mp4',
+                'title': 'B-girl Nicka - Breaking Life, Road to Paris 2024 | Episode 1',
+                'upload_date': '20240517',
+                'timestamp': 1715948200,
+                'description': 'md5:f63d728a41270ec628f6ac33ce471bb1',
+                'thumbnail': 'https://img.olympics.com/images/image/private/t_1-1_1280/primary/a3j96l7j6so3vyfijby1',
+                'duration': 1321.0,
+            },
+        }, {
+            'url': 'https://olympics.com/en/paris-2024/videos/men-s-preliminaries-gbr-esp-ned-rsa-hockey-olympic-games-paris-2024',
+            'info_dict': {
+                'id': '3d96db23-8eee-4b7c-8ef5-488a0361026c',
+                'ext': 'mp4',
+                'title': 'Men\'s Preliminaries GBR-ESP & NED-RSA | Hockey | Olympic Games Paris 2024',
+                'upload_date': '20240727',
+                'timestamp': 1722066600,
+            },
+            'skip': 'Geo-restricted to RU, BR, BT, NP, TM, BD, TL',
+        }, {
+            'url': 'https://olympics.com/en/paris-2024/videos/dnp-suni-lee-i-have-goals-and-i-have-expectations-for-myself-but-i-also-am-trying-to-give-myself-grace',
+            'skip': 'stale test sample / site changed',
+            'info_dict': {
+                'id': 'a42f37ab-8a74-41d0-a7d9-af27b7b02a90',
+                'ext': 'mp4',
+                'title': 'md5:b1c37e4e39b8908d4a075f823734eec3',
+                'upload_date': '20240729',
+                'timestamp': 1722288600,
+            },
+        }]
     _GEO_BYPASS = False
 
     def _extract_from_nextjs_data(self, webpage, video_id):

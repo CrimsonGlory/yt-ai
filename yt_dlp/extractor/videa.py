@@ -32,7 +32,8 @@ class VideaIE(InfoExtractor):
     _EMBED_REGEX = [r'<iframe[^>]+src=(["\'])(?P<url>(?:https?:)?//videa\.hu/player\?.*?\b(?:v|f)=.+?)\1']
     _TESTS = [{
         'url': 'http://videa.hu/videok/allatok/az-orult-kigyasz-285-kigyot-kigyo-8YfIAjxwWGwT8HVQ',
-        'md5': '97a7af41faeaffd9f1fc864a7c7e7603',
+        'md5': '2d8ab3d9c2e9d98a823e10a77917a3f0',
+        'params': {'format': 'mp4'},
         'info_dict': {
             'id': '8YfIAjxwWGwT8HVQ',
             'ext': 'mp4',
@@ -54,7 +55,8 @@ class VideaIE(InfoExtractor):
         },
     }, {
         'url': 'http://videa.hu/player?v=8YfIAjxwWGwT8HVQ',
-        'md5': '97a7af41faeaffd9f1fc864a7c7e7603',
+        'md5': '2d8ab3d9c2e9d98a823e10a77917a3f0',
+        'params': {'format': 'mp4'},
         'info_dict': {
             'id': '8YfIAjxwWGwT8HVQ',
             'ext': 'mp4',

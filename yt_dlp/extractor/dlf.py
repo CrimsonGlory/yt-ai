@@ -66,15 +66,15 @@ class DLFIE(DLFBaseIE):
             'url': 'https://www.deutschlandfunk.de/russische-athleten-kehren-zurueck-auf-die-sportbuehne-ein-gefaehrlicher-tueroeffner-dlf-d9cc1856-100.html',
             'md5': 'a364090dd34b135a7377e25ffa4d50a1',
             'info_dict': {
-            'id': 'd9cc1856',
-            'ext': 'mp3',
-            'title': 'Russische Athleten kehren zurück auf die Sportbühne: Ein gefährlicher Türöffner',
-            'uploader': 'Deutschlandfunk',
-            'channel': 'deutschlandfunk',
-            'duration': 291,
-            'thumbnail': 'md5:a84889668745495e1ef76855b7020a85',
-            'series': 'Kommentare und Themen der Woche',
-        },
+                'id': 'd9cc1856',
+                'ext': 'mp3',
+                'title': 'Russische Athleten kehren zurück auf die Sportbühne: Ein gefährlicher Türöffner',
+                'uploader': 'Deutschlandfunk',
+                'channel': 'deutschlandfunk',
+                'duration': 291,
+                'thumbnail': 'md5:a84889668745495e1ef76855b7020a85',
+                'series': 'Kommentare und Themen der Woche',
+            },
         },
     ]
 
@@ -174,7 +174,7 @@ class DLFCorpusIE(DLFBaseIE):
             'info_dict': {
                 'id': 'kommentare-und-themen-der-woche-100',
                 'title': 'Meinung - Kommentare und Themen der Woche',
-                'description': 'md5:2901bbd65cd2d45e116d399a099ce5d5',
+                'description': 'md5:6da4a4717a7d3355bb34669b15ebf532',
             },
             'playlist_mincount': 10,
         },

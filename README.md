@@ -2573,6 +2573,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **amazon**: Product-gallery `jQuery.parseJSON` videos; extract VSE HLS as MP4 formats from `/vdp/` and `/live/video/`; impersonate Chrome when the storefront serves a captcha interstitial or VSE metadata is missing
     * **asobichannel:tag**: Read tag title and playlist entries from the microCMS API instead of Next.js page data
     * **asobistage**: Raise an expected error when CloudFront redirects to the ASOBI STORE maintenance page; otherwise parse the original event URL
+    * **banbye**: Use `banbye.com/api` video/channel/playlist JSON and HLS `playback.urls` (`api.banbye.com` 404s)
     * **beatport**: Next.js `track_name` / `track_length_ms` / release `image_url` fields
     * **beeg**: Sign HLS from `store.externulls.com/video/play_url/{id}` when `hls_resources` is omitted
     * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate video, bangumi, and dynamic play pages; on 412 fall back to `wbi/view/detail` / `pgc/player/web/v2/playurl`; resolve opus/dynamic `bvid` when `jump_url` is missing
@@ -2793,7 +2794,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **rtl.nl**: Use the RTL XL token and watch/play v2 APIs for current video UUIDs (FairPlay/Widevine DRM)
     * **rtp**: Fall back to webpage player URLs when the mobile guest token API 404s
     * **rtrfm**: Read restream episode metadata from the current show page instead of the removed `.playShow` JS
-    * **rule34video**: Rewrite `/videos/` URLs to HTTPS `/video/{id}/{slug}/` (avoid HTTP 301 that DDoS-Guard 502s)
+    * **rule34video**: Rewrite `/videos/` URLs to HTTPS `/video/{id}/{slug}/` (avoid HTTP 301 that DDoS-Guard 502s); parse download `get_file` links with SVG/sheet markup and comment counts from `Comments <small>`
     * **ruv.is:spila**: POST the GraphQL program query instead of GET
     * **rumble**: Impersonate the browser for embedJS, video pages, and media downloads
     * **Ruutu**: Use the public MCC media API instead of the retired gatling XML cache

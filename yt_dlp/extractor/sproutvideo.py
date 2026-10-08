@@ -45,6 +45,7 @@ class SproutVideoIE(InfoExtractor):
     }, {
         # http formats 'sd' and 'hd' are available
         'url': 'https://videos.sproutvideo.com/embed/119cd6bc1a18e6cd98/30751a1761ae5b90',
+        'skip': 'HTTP 403/blocked',
         'md5': 'f368c78df07e78a749508b221528672c',
         'info_dict': {
             'id': '119cd6bc1a18e6cd98',

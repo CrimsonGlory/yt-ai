@@ -20,6 +20,7 @@ class WedoTVIE(InfoExtractor):
         r'privacy|recently-watched|terms)(?:[/?#]|$))[\w-]+)')
     _TESTS = [{
         'url': 'https://www.wedotv.com/de-de/family-business#family-business',
+        'skip': 'HTTP 500',
         'md5': '2d6be5396aafb75f4ba8fe6878ed4072',
         'info_dict': {
             'id': '34181',

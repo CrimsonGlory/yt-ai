@@ -4,7 +4,6 @@ from .common import InfoExtractor
 from ..utils import (
     clean_html,
     extract_attributes,
-    get_element_by_attribute,
     get_element_by_class,
     get_element_html_by_class,
     get_elements_by_class,
@@ -63,12 +62,15 @@ class Rule34VideoIE(InfoExtractor):
 
         formats = []
 
-        for mobj in re.finditer(r'<a[^>]+href="(?P<video_url>[^"]+download=true[^"]+)".*>(?P<ext>[^\s]+) (?P<quality>[^<]+)p</a>', webpage):
-            url, ext, quality = mobj.groups()
+        for mobj in re.finditer(
+                r'<a[^>]+href="(?P<video_url>[^"]+download=true[^"]+)"[^>]*>'
+                r'(?:(?!</a>).)*?(?P<ext>MP4|WEBM|FLV)\s+(?P<quality>\d+)p',
+                webpage, re.I | re.S):
             formats.append({
-                'url': url,
-                'ext': ext.lower(),
-                'quality': int_or_none(quality),
+                'url': unescapeHTML(mobj.group('video_url')),
+                'ext': mobj.group('ext').lower(),
+                'height': int_or_none(mobj.group('quality')),
+                'format_id': f'{mobj.group("quality")}p',
             })
 
         categories, creators, uploader, uploader_url = [None] * 4
@@ -103,7 +105,10 @@ class Rule34VideoIE(InfoExtractor):
                 r'"icon-eye"></i>\s+<span>([ \d]+)', webpage, 'views', default='').replace(' ', '')),
             'like_count': parse_count(get_element_by_class('voters count', webpage)),
             'comment_count': int_or_none(self._search_regex(
-                r'[^(]+\((\d+)\)', get_element_by_attribute('href', '#tab_comments', webpage), 'comment count', fatal=False)),
+                (r'Comments\s*<small>([\d,]+)</small>',
+                 r'href="#tab_comments"[^>]*>[\s\S]*?vp-count"[^>]*>\s*([\d,]+)',
+                 r'[^(]+\((\d+)\)'),
+                webpage, 'comment count', default=None)),
             'age_limit': 18,
             'creators': creators,
             'uploader': uploader,

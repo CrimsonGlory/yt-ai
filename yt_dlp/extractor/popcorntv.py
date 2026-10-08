@@ -14,6 +14,7 @@ class PopcornTVIE(InfoExtractor):
     _VALID_URL = r'https?://(?:[^/]+\.)?popcorntv\.it/(?:guarda|streaming(?:/[^/?#]+)*)/(?P<display_id>[^/?#]+)/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.popcorntv.it/streaming/cinema/mank-2020/11418',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'md5': 'e980d3bf9f98144ea26cd234b325f469',
         'info_dict': {
             'id': 'RihzDA9rXn0',
