@@ -4,6 +4,7 @@ from .common import InfoExtractor
 from ..compat import compat_etree_fromstring
 from ..utils import (
     ExtractorError,
+    base_url,
     int_or_none,
     qualities,
     smuggle_url,
@@ -363,6 +364,7 @@ class OdnoklassnikiIE(InfoExtractor):
             info['title'] = title
 
         quality = qualities(('4', '0', '1', '2', '3', '5', '6', '7'))
+        ok_headers = {'Referer': 'https://ok.ru/'}
 
         formats = [{
             'url': f['url'],
@@ -372,16 +374,27 @@ class OdnoklassnikiIE(InfoExtractor):
 
         m3u8_url = traverse_obj(metadata, 'hlsManifestUrl', 'ondemandHls')
         if m3u8_url:
-            formats.extend(self._extract_m3u8_formats(
-                m3u8_url, video_id, 'mp4', 'm3u8_native',
-                m3u8_id='hls', fatal=False))
+            m3u8_doc = self._download_webpage(
+                m3u8_url, video_id, 'Downloading m3u8 information',
+                headers=ok_headers, impersonate=True, fatal=False, errnote=False)
+            if m3u8_doc:
+                fmts, hls_subs = self._parse_m3u8_formats_and_subtitles(
+                    m3u8_doc, m3u8_url, 'mp4', 'm3u8_native', m3u8_id='hls')
+                formats.extend(fmts)
+                self._merge_subtitles(hls_subs, target=subtitles)
             self._clear_cookies(m3u8_url)
 
         for mpd_id, mpd_key in [('dash', 'ondemandDash'), ('webm', 'metadataWebmUrl')]:
             mpd_url = metadata.get(mpd_key)
             if mpd_url:
-                formats.extend(self._extract_mpd_formats(
-                    mpd_url, video_id, mpd_id=mpd_id, fatal=False))
+                mpd_doc = self._download_xml(
+                    mpd_url, video_id, f'Downloading {mpd_id} MPD manifest',
+                    headers=ok_headers, impersonate=True, fatal=False, errnote=False)
+                if mpd_doc:
+                    fmts, mpd_subs = self._parse_mpd_formats_and_subtitles(
+                        mpd_doc, mpd_id, base_url(mpd_url), mpd_url)
+                    formats.extend(fmts)
+                    self._merge_subtitles(mpd_subs, target=subtitles)
                 self._clear_cookies(mpd_url)
 
         dash_manifest = metadata.get('metadataEmbedded')
@@ -390,6 +403,8 @@ class OdnoklassnikiIE(InfoExtractor):
                 compat_etree_fromstring(dash_manifest), 'mpd'))
 
         for fmt in formats:
+            fmt.setdefault('http_headers', {}).update(ok_headers)
+            fmt['impersonate'] = True
             fmt_type = self._search_regex(
                 r'\btype[/=](\d)', fmt['url'],
                 'format type', default=None)

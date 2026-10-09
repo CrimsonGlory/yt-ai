@@ -249,7 +249,7 @@ class YahooIE(InfoExtractor):
         idx = title.rfind(marker)
         return title[:idx] if idx > 0 else title
 
-    def _extract_from_webpage(self, url, display_id, country):
+    def _extract_from_article_webpage(self, url, display_id, country):
         # Default UA is rate-limited (HTTP 429) on www.yahoo.com redirects.
         webpage = self._download_webpage(url, display_id, impersonate=True)
         video_ids = self._json_ld_video_uuids(webpage, display_id)
@@ -285,7 +285,7 @@ class YahooIE(InfoExtractor):
             'Downloading content JSON metadata', query={'url': url},
             fatal=False, errnote=False)
         if not article:
-            return self._extract_from_webpage(url, display_id, country)
+            return self._extract_from_article_webpage(url, display_id, country)
 
         items = article['items'][0]
 

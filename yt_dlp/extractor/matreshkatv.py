@@ -1,5 +1,6 @@
 from .common import InfoExtractor
 from ..utils import (
+    ExtractorError,
     float_or_none,
     int_or_none,
     parse_iso8601,
@@ -21,6 +22,7 @@ class MatreshkaTVIE(InfoExtractor):
     }
     _TESTS = [{
         'url': 'https://matreshka.tv/video/HwKAY4Id5QA',
+        'skip': 'matreshka.tv serves a shutdown placeholder instead of the video API',
         'md5': '848c145cfa4893807eda63c67ef471f6',
         'info_dict': {
             'id': 'HwKAY4Id5QA',
@@ -84,9 +86,15 @@ class MatreshkaTVIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        video = traverse_obj(self._download_json(
+        raw = self._download_webpage(
             f'https://matreshka.tv/api/video-service/v1/video/{video_id}',
-            video_id), ('data', {dict}, {require('video data')}))
+            video_id, note='Downloading JSON metadata')
+        if not raw or raw.lstrip()[:1] not in '{[':
+            raise ExtractorError(
+                'matreshka.tv serves a shutdown placeholder instead of the video API',
+                expected=True, video_id=video_id)
+        video = traverse_obj(self._parse_json(raw, video_id), (
+            'data', {dict}, {require('video data')}))
 
         formats, subtitles = self._extract_formats_and_subtitles(video, video_id)
 

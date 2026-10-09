@@ -327,6 +327,7 @@ class YoutubeTabBaseInfoExtractor(YoutubeBaseInfoExtractor):
             'LOCKUP_CONTENT_TYPE_PLAYLIST',
             'LOCKUP_CONTENT_TYPE_PODCAST',
             'LOCKUP_CONTENT_TYPE_SHOW',
+            'LOCKUP_CONTENT_TYPE_COURSE',
         ):
             ie = YoutubeTabIE
             url = f'https://www.youtube.com/playlist?list={content_id}'

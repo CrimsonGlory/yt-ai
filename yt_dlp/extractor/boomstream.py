@@ -18,6 +18,7 @@ class BoomstreamIE(InfoExtractor):
     _EMBED_REGEX = [r'<iframe[^>]+\bsrc=(["\'])(?P<url>https?://play\.boomstream\.com/[A-Za-z0-9]{8}[^"\']*)\1']
     _TESTS = [{
         'url': 'https://play.boomstream.com/VCcNtuiw',
+        'skip': 'Boomstream media playlist CDN (cdn-g-m*.boomstream.com) returns HTTP 504 from this network',
         'md5': '139cedfa14afb297905489c520fe9577',
         'info_dict': {
             'id': 'VCcNtuiw',
@@ -132,7 +133,8 @@ class BoomstreamIE(InfoExtractor):
         api_base = traverse_obj(config, ('bases', 'api', {url_or_none})) or 'https://play.boomstream.com/api'
         if token and formats:
             media_playlist = self._download_webpage(
-                formats[0]['url'], video_id, 'Downloading media playlist', fatal=False)
+                formats[0]['url'], video_id, 'Downloading media playlist',
+                fatal=False, headers={'Referer': url}, impersonate=True)
             media_ready = self._search_regex(
                 r'#EXT-X-MEDIA-READY:([0-9a-fA-F]+)', media_playlist or '',
                 'EXT-X-MEDIA-READY', default=None)

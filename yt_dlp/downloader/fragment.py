@@ -70,7 +70,13 @@ class FragmentFD(FileDownloader):
 
     def _prepare_url(self, info_dict, url):
         headers = info_dict.get('http_headers')
-        return Request(url, None, headers) if headers else url
+        extensions = {}
+        impersonate_target = self._get_impersonate_target(info_dict)
+        if impersonate_target is not None:
+            extensions['impersonate'] = impersonate_target
+        if headers or extensions:
+            return Request(url, data=None, headers=headers, extensions=extensions)
+        return url
 
     def _prepare_and_start_frag_download(self, ctx, info_dict):
         self._prepare_frag_download(ctx)
@@ -116,6 +122,8 @@ class FragmentFD(FileDownloader):
             'request_data': request_data,
             'ctx_id': ctx.get('ctx_id'),
         }
+        if 'impersonate' in info_dict:
+            fragment_info_dict['impersonate'] = info_dict['impersonate']
         frag_resume_len = 0
         if ctx['dl'].params.get('continuedl', True):
             frag_resume_len = self.filesize_or_none(self.temp_name(fragment_filename))

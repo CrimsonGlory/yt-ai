@@ -48,8 +48,8 @@ class EuropaIE(InfoExtractor):
             'thumbnail': r're:https://vod\.prd\.commavservices\.eu/06/107786/THUMB_M_I107786INT1W\.jpg(\?.*)?',
             'timestamp': 1439528880,
             'upload_date': '20150814',
-            'modified_timestamp': 1731858776,
-            'modified_date': '20241117',
+            'modified_timestamp': 1791450573,
+            'modified_date': '20261008',
             'view_count': int,
         },
     }, {

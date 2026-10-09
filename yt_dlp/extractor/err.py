@@ -1,4 +1,5 @@
 from .common import InfoExtractor
+from ..networking import HEADRequest
 from ..utils import (
     clean_html,
     int_or_none,
@@ -200,10 +201,13 @@ class ERRJupiterIE(InfoExtractor):
             formats.extend(fmts)
             self._merge_subtitles(subs, target=subtitles)
         if format_url := traverse_obj(media_data, ('src', 'file', {url_or_none})):
-            formats.append({
-                'url': format_url,
-                'format_id': 'http',
-            })
+            if self._request_webpage(
+                    HEADRequest(format_url), video_id, 'Checking HTTP format',
+                    fatal=False, errnote=False):
+                formats.append({
+                    'url': format_url,
+                    'format_id': 'http',
+                })
 
         return {
             'id': video_id,

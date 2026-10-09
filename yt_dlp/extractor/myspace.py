@@ -169,6 +169,7 @@ class MySpaceAlbumIE(InfoExtractor):
         'skip': 'this album is only available in some countries',
     }, {
         'url': 'https://myspace.com/killsorrow/music/album/the-demo-18596029',
+        'skip': 'myspace.com/music/album pages return HTTP 500',
         'info_dict': {
             'title': 'The Demo',
             'id': '18596029',
