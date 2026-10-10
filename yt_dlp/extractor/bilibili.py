@@ -310,7 +310,7 @@ class BilibiliBaseIE(InfoExtractor):
             ),
         }
 
-    def _download_playinfo(self, bvid, cid, headers=None, query=None, fatal=True):
+    def _download_playinfo(self, bvid, cid, headers=None, query=None, fatal=True, silent=False):
         params = {
             "bvid": bvid,
             "cid": cid,
@@ -344,7 +344,7 @@ class BilibiliBaseIE(InfoExtractor):
                 msg += ", please wait and try later"
             if fatal:
                 raise ExtractorError(msg, expected=expected)
-            else:
+            if not silent:
                 self.report_warning(msg)
 
     def json2srt(self, json_data):
@@ -1087,10 +1087,18 @@ class BiliBiliIE(BilibiliBaseIE):
             ("data", {dict}),
         )
         if not self.is_logged_in or not play_info:
+            # Anonymous playurl often returns v_voucher / empty streams after rate-limit;
+            # keep webpage __playinfo__ when the API has no dash/durl.
             if dl_play_info := self._download_playinfo(
-                video_id, cid, headers=headers, query={"try_look": 1}, fatal=False
+                video_id,
+                cid,
+                headers=headers,
+                query={"try_look": 1},
+                fatal=False,
+                silent=bool(play_info),
             ):
-                play_info = dl_play_info
+                if not play_info or traverse_obj(dl_play_info, "dash") or traverse_obj(dl_play_info, "durl"):
+                    play_info = dl_play_info
         formats = self.extract_formats(play_info)
 
         if video_data.get("is_upower_exclusive"):
@@ -1107,12 +1115,16 @@ class BiliBiliIE(BilibiliBaseIE):
             # we only have legacy formats and need additional work
             has_qn = lambda x: x in traverse_obj(formats, (..., "quality"))
             for qn in traverse_obj(play_info, ("accept_quality", lambda _, v: not has_qn(v), {int})):
-                formats.extend(
-                    traverse_obj(
-                        self.extract_formats(self._download_playinfo(video_id, cid, headers=headers, query={"qn": qn})),
-                        lambda _, v: not has_qn(v["quality"]),
-                    )
+                extra_play_info = self._download_playinfo(
+                    video_id, cid, headers=headers, query={"qn": qn}, fatal=False
                 )
+                if extra_play_info:
+                    formats.extend(
+                        traverse_obj(
+                            self.extract_formats(extra_play_info),
+                            lambda _, v: not has_qn(v["quality"]),
+                        )
+                    )
             self._check_missing_formats(play_info, formats)
             flv_formats = traverse_obj(formats, lambda _, v: v["fragments"])
             if flv_formats and len(flv_formats) < len(formats):

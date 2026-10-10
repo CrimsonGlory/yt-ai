@@ -18,12 +18,25 @@ class CanliTVIE(InfoExtractor):
     '''
     _TESTS = [{
         'url': 'https://canlitv.com/tv8-izle-4',
+        'skip': 'TV8 HLS host (yayin2.canlitv.fun) times out',
         'info_dict': {
             'id': '10924',
             'ext': 'mp4',
             'display_id': 'tv8-izle-4',
             'title': r're:Tv8 Canlı izle \| Canlitv\.com',
             'description': 'Tv8 canlı izle, Tv8 kanalınının internet yayınını canlı olarak izleyebileceğiniz sayfa.',
+            'thumbnail': r're:https?://canlitv\.com/kanal/logo/\d+\.jpg',
+            'is_live': True,
+            'live_status': 'is_live',
+        },
+    }, {
+        'url': 'https://canlitv.com/atv-canli',
+        'info_dict': {
+            'id': '3',
+            'ext': 'mp4',
+            'display_id': 'atv-canli',
+            'title': r're:ATV Canlı izle \| Canlitv\.com',
+            'description': 'ATV canlı izle, ATV kanalınının internet yayınını canlı olarak izleyebileceğiniz sayfa.',
             'thumbnail': r're:https?://canlitv\.com/kanal/logo/\d+\.jpg',
             'is_live': True,
             'live_status': 'is_live',

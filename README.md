@@ -2576,7 +2576,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **banbye**: Use `banbye.com/api` video/channel/playlist JSON and HLS `playback.urls` (`api.banbye.com` 404s)
     * **beatport**: Next.js `track_name` / `track_length_ms` / release `image_url` fields
     * **beeg**: Sign HLS from `store.externulls.com/video/play_url/{id}` when `hls_resources` is omitted
-    * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate video, bangumi, and dynamic play pages; on 412 fall back to `wbi/view/detail` / `pgc/player/web/v2/playurl`; resolve opus/dynamic `bvid` when `jump_url` is missing
+    * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate video, bangumi, and dynamic play pages; on 412 fall back to `wbi/view/detail` / `pgc/player/web/v2/playurl`; keep webpage `__playinfo__` when anonymous `wbi/playurl` returns no dash/durl; resolve opus/dynamic `bvid` when `jump_url` is missing
     * **bitchute**: Impersonate CDN downloads (urllib GETs are reset) and rewrite hashed media hosts onto seed CDNs
     * **bleacherreport**: Fall back to a YouTube embed URL when Next.js Article hydration omits video
     * **bunnycdn**: Fall back to `playlist.m3u8` when JSON-LD is missing

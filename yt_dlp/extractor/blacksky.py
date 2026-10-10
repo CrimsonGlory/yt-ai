@@ -12,7 +12,7 @@ class BlackskyIE(BlueskyIE):
         'info_dict': {
             'id': '3mgjxbnwktk26',
             'ext': 'mp4',
-            'uploader': 'DJ US ARMY RECRUITMENT SUBATHON',
+            'uploader': 'DJ I NEED TO SWEEP THESE MINES',
             'uploader_id': 'enoch.kim',
             'uploader_url': 'https://blacksky.community/profile/enoch.kim',
             'channel_id': 'did:plc:tpv66pk3fqlpfudmh5zi3hzo',

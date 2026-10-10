@@ -1416,6 +1416,7 @@ class DouyinIE(TikTokBaseIE):
         },
     }, {
         'url': 'https://www.douyin.com/video/6982497745948921092',
+        'skip': 'HTTP 403/blocked',
         'md5': '15c5e660b7048af3707304e3cc02bbb5',
         'info_dict': {
             'id': '6982497745948921092',
