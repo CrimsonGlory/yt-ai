@@ -19,6 +19,7 @@ class SponsrIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?sponsr\.ru/(?P<project>[\w-]+)/(?P<id>\d+)(?:/(?P<slug>[^/?#]*))?'
     _TESTS = [{
         'url': 'https://sponsr.ru/vpered/114539/Rossiya_stroit_zavod_poluprovodnikov_vkosmose_Eksperiment_nachalsya/?autoplay=1',
+        'skip': 'site returns HTTP 502 from QRATOR',
         'md5': '5636f06fbada38b8d997cfa9b8c984d7',
         'info_dict': {
             'id': '114539',

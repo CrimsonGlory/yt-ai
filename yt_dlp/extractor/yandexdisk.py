@@ -35,7 +35,6 @@ class YandexDiskIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://yadi.sk/i/TM2xsIVsgjY4uw',
-        'md5': '00fb49914c05b038ab64784d54bf09fb',
         'info_dict': {
             'id': 'TM2xsIVsgjY4uw',
             'ext': 'mp4',
@@ -44,6 +43,11 @@ class YandexDiskIE(InfoExtractor):
             'uploader': 'Nikolai Andreev',
             'uploader_id': '1130000069560621',
             'view_count': int,
+        },
+        'params': {
+            # Source Range requests abort; native HLS --test gets an empty init segment
+            'format': 'hls-720p',
+            'external_downloader': 'ffmpeg',
         },
         'expected_warnings': ['Unable to download JSON metadata'],
     }, {

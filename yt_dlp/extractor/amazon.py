@@ -197,8 +197,9 @@ class AmazonReviewsIE(InfoExtractor):
         data = None
         for retry in self.RetryManager():
             try:
+                # amazon.com VDP/live pages 503 ordinary clients; Chrome impersonation works
                 webpage = self._download_webpage(
-                    url, display_id, impersonate='chrome' if retry.attempt > 1 else None)
+                    url, display_id, impersonate=True)
                 quoted = self._search_regex(
                     r'liveFlagshipStates\["amazonlive-react-vse-metadata"\]\s*=\s*JSON\.parse\((".*?")\)\s*;',
                     webpage, 'vse metadata')

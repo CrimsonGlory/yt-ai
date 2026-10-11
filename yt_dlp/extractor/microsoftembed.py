@@ -343,13 +343,31 @@ class MicrosoftLearnSessionIE(InfoExtractor):
 
 class MicrosoftBuildIE(InfoExtractor):
     _VALID_URL = [
-        r'https?://build\.microsoft\.com/[\w-]+/sessions/(?P<id>[\da-f-]+)',
+        r'https?://build\.microsoft\.com/[\w-]+/sessions/(?P<id>[\w-]+)',
         r'https?://build\.microsoft\.com/[\w-]+/(?P<id>sessions)/?(?:[?#]|$)',
     ]
 
     _TESTS = [{
+        'url': 'https://build.microsoft.com/en-US/sessions/1775599881893001JQFY',
+        'info_dict': {
+            'id': '9b6fd85d-e64f-46a4-b8b2-23811087192f',
+            'ext': 'mp4',
+            'title': 'Microsoft Build opening keynote',
+            'description': str,
+            'timestamp': 1780417800,
+            'upload_date': '20260602',
+            'thumbnail': r're:https?://.*',
+        },
+        'params': {'skip_download': 'm3u8'},
+    }, {
+        'url': 'https://build.microsoft.com/en-US/sessions',
+        'info_dict': {
+            'id': 'sessions',
+        },
+        'playlist_mincount': 100,
+    }, {
         'url': 'https://build.microsoft.com/en-US/sessions/b49feb31-afcd-4217-a538-d3ca1d171198?source=sessions',
-        'skip': 'extractor broken: Extractor MicrosoftBuild returned nothing',
+        'skip': 'session gone',
         'info_dict': {
             'id': 'aee55fb5-fcf9-4b38-b764-a3527cb57554',
             'ext': 'ismv',
@@ -359,29 +377,27 @@ class MicrosoftBuildIE(InfoExtractor):
             'upload_date': '20240521',
             'thumbnail': r're:https?://.*',
         },
-    }, {
-        'url': 'https://build.microsoft.com/en-US/sessions',
-        'info_dict': {
-            'id': 'sessions',
-        },
-        'playlist_mincount': 418,
     }]
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
 
-        entries = [
-            self.url_result(
-                video_info['onDemand'], ie=MicrosoftMediusIE, url_transparent=True, **traverse_obj(video_info, {
+        entries = []
+        for video_info in self._download_json(
+                'https://build.microsoft.com/api/session/all/en-US', video_id, 'Downloading video info'):
+            on_demand = url_or_none(video_info.get('onDemand'))
+            if not on_demand:
+                continue
+            entries.append(self.url_result(
+                on_demand, ie=MicrosoftMediusIE, url_transparent=True, **traverse_obj(video_info, {
                     'id': ('sessionId', {str}),
                     'title': ('title', {str}),
                     'description': ('description', {str}),
                     'timestamp': ('startDateTime', {parse_iso8601}),
-                }))
-            for video_info in self._download_json(
-                'https://api-v2.build.microsoft.com/api/session/all/en-US', video_id, 'Downloading video info')
-        ]
+                })))
         if video_id == 'sessions':
             return self.playlist_result(entries, video_id)
-        else:
-            return traverse_obj(entries, (lambda _, v: v['id'] == video_id), get_all=False)
+        entry = traverse_obj(entries, (lambda _, v: v['id'] == video_id), get_all=False)
+        if not entry:
+            raise ExtractorError('Unable to find session', expected=True)
+        return entry

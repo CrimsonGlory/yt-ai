@@ -2543,7 +2543,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **UpRide** (`upride.cc`): Impersonate Cloudflare, then JSON-LD `contentURL` original upload plus Cloudflare Stream iframe HLS/DASH. Request: [yt-dlp/yt-dlp#7858](https://github.com/yt-dlp/yt-dlp/issues/7858)
     * **USNewsOn** (`usnewson.com`): Video.js `pllrc` onestream API (`pro.usnlive.com/api/stream`) and direct HLS. Request: [yt-dlp/yt-dlp#6985](https://github.com/yt-dlp/yt-dlp/issues/6985)
     * **Veev** (`veev.to`): Decode the player `fc` token and `/dl?op=player_api` source URL. Request: [yt-dlp/yt-dlp#10092](https://github.com/yt-dlp/yt-dlp/issues/10092)
-    * **Videas** (`videas.fr`): Player `data-embed` JSON and CDN HLS. Request: [yt-dlp/yt-dlp#7786](https://github.com/yt-dlp/yt-dlp/issues/7786)
+    * **Videas** (`videas.fr`): Visitor `/api/visitor/embed` and `/playback/info` HLS, with player `data-embed` JSON fallback. Request: [yt-dlp/yt-dlp#7786](https://github.com/yt-dlp/yt-dlp/issues/7786)
     * **VidMoly** (`vidmoly.to`): Canonical `vidmoly.biz` embed JWPlayer HLS (also `.me`/`.net`); stringify JWPlayer setup JS (ternary `preload`, `baseTracks`) so thumbnail and duration parse. Request: [yt-dlp/yt-dlp#9689](https://github.com/yt-dlp/yt-dlp/issues/9689)
     * **Viggle** (`viggle.ai`): Public `/api/share/video-task` JSON (impersonate) for signed `assets.viggle.ai` MP4. Request: [yt-dlp/yt-dlp#13657](https://github.com/yt-dlp/yt-dlp/issues/13657)
     * **VillageSexVideos** (`villagesexvideos.com`): Impersonate Cloudflare, then schema `contentURL` MP4 (Clean Tube player iframe fallback). Request: [yt-dlp/yt-dlp#7033](https://github.com/yt-dlp/yt-dlp/issues/7033)
@@ -2570,7 +2570,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **abc:iview**: Use the v3 video API and raise geo/login when unplayable
     * **allocine**: Extract Dailymotion videos via `DailymotionIE`
     * **americastestkitchen**: Read episode-level description, publishDate, and siteKey when nested `video` metadata is empty
-    * **amazon**: Product-gallery `jQuery.parseJSON` videos; extract VSE HLS as MP4 formats from `/vdp/` and `/live/video/`; impersonate Chrome when the storefront serves a captcha interstitial or VSE metadata is missing
+    * **amazon**: Product-gallery `jQuery.parseJSON` videos; extract VSE HLS as MP4 formats from `/vdp/` and `/live/video/`; impersonate Chrome on VDP/live video pages and when the storefront serves a captcha interstitial
     * **asobichannel:tag**: Read tag title and playlist entries from the microCMS API instead of Next.js page data
     * **asobistage**: Raise an expected error when CloudFront redirects to the ASOBI STORE maintenance page; otherwise parse the original event URL
     * **banbye**: Use `banbye.com/api` video/channel/playlist JSON and HLS `playback.urls` (`api.banbye.com` 404s)
@@ -2696,6 +2696,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **mellowfan**: Fall back to the public movies API and `url_public` HLS when the authenticated detail API requires login
     * **meipai**: Signed media API instead of `encodeURIComponent` m3u8 on the page
     * **metacritic**: JW Platform on movie/game/tv pages
+    * **microsoft:build**: Read on-demand Medius URLs from `build.microsoft.com/api/session/all` (`api-v2.build.microsoft.com` returns 403)
     * **microsoft:medius**: Extract HLS from JSON `StreamUrl` / `master.m3u8` when Smooth Streaming is gone
     * **minds**: v2 entities API
     * **mirrorcouk**: JSON-LD media
