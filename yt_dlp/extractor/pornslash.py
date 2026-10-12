@@ -42,9 +42,9 @@ class PornSlashIE(InfoExtractor):
         'only_matching': True,
     }]
 
-    def _extract_hls(self, hls_url, video_id):
+    def _extract_hls(self, hls_url, video_id, errnote=False):
         return self._extract_m3u8_formats_and_subtitles(
-            hls_url, video_id, 'mp4', m3u8_id='hls', fatal=False,
+            hls_url, video_id, 'mp4', m3u8_id='hls', fatal=False, errnote=errnote,
             headers={'Referer': 'https://www.pornslash.com/'})
 
     def _real_extract(self, url):

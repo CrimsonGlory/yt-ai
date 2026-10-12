@@ -82,7 +82,16 @@ class GBNewsIE(InfoExtractor):
         elements = get_elements_html_by_class('simplestream', webpage)
         for html_tag in elements:
             attributes = extract_attributes(html_tag)
-            if 'sidebar' not in (attributes.get('class') or ''):
+            if not attributes.get('data-uvid'):
+                continue
+            cls = attributes.get('class') or ''
+            if 'sidebar' in cls:
+                continue
+            data_type = (attributes.get('data-type') or '').lower()
+            if data_type in ('vod', 'show'):
+                video_data = attributes
+                break
+            if video_data is None or data_type != 'live':
                 video_data = attributes
         if not video_data:
             raise ExtractorError('Could not find video element', expected=True)
@@ -102,13 +111,17 @@ class GBNewsIE(InfoExtractor):
         if traverse_obj(stream_data, 'drm'):
             self.report_drm(uvid)
 
+        formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+            traverse_obj(stream_data, ('response', 'stream', {url_or_none})),
+            uvid, 'mp4')
+
         return {
             'id': uvid,
             'display_id': display_id,
             'title': self._og_search_title(webpage, default=None),
             'description': self._og_search_description(webpage, default=None),
-            'formats': self._extract_m3u8_formats(traverse_obj(stream_data, (
-                'response', 'stream', {url_or_none})), uvid, 'mp4'),
+            'formats': formats,
+            'subtitles': subtitles,
             'thumbnail': self._og_search_thumbnail(webpage, default=None),
             'is_live': video_type == 'live',
         }

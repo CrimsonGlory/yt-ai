@@ -821,6 +821,7 @@ class AmHistoryChannelIE(DiscoveryPlusBaseIE):
     _VALID_URL = r'https?://(?:www\.)?ahctv\.com/video' + DPlayBaseIE._PATH_REGEX
     _TESTS = [{
         'url': 'https://www.ahctv.com/video/blood-and-fury-americas-civil-war-ahc/battle-of-bull-run',
+        'skip': 'ahctv.com no longer hosts public videos (Discovery+ courtesy page)',
         'info_dict': {
             'id': '2139199',
             'display_id': 'blood-and-fury-americas-civil-war-ahc/battle-of-bull-run',

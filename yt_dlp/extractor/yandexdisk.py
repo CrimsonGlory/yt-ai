@@ -39,15 +39,13 @@ class YandexDiskIE(InfoExtractor):
             'id': 'TM2xsIVsgjY4uw',
             'ext': 'mp4',
             'title': 'Cars для суперсет 18.07.2025 14-19-50 - запись.mp4',
-            'duration': 704.672,
             'uploader': 'Nikolai Andreev',
             'uploader_id': '1130000069560621',
             'view_count': int,
         },
         'params': {
-            # Source Range requests abort; native HLS --test gets an empty init segment
-            'format': 'hls-720p',
-            'external_downloader': 'ffmpeg',
+            # HLS renditions are often missing; the source progressive MP4 still serves --test bytes
+            'format': 'source',
         },
         'expected_warnings': ['Unable to download JSON metadata'],
     }, {

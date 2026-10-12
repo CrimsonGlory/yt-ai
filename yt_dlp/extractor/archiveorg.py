@@ -1098,12 +1098,14 @@ class YoutubeWebArchiveIE(InfoExtractor):
         return orderedSet(filter(None, capture_dates))
 
     def _parse_fmt(self, fmt, extra_info=None):
-        format_id = traverse_obj(fmt, ('url', {parse_qs}, 'itag', 0))
+        format_id = traverse_obj(fmt, ('url', {parse_qs}, 'itag', 0)) or str_or_none(fmt.get('itag'))
+        orig_url = url_or_none(fmt.get('url'))
+        timestamp = str_or_none(fmt.get('timestamp')) or '2'
         return {
             'format_id': format_id,
             **self._FORMATS.get(format_id, {}),
+            'url': f'https://web.archive.org/web/{timestamp}id_/{orig_url}',
             **traverse_obj(fmt, {
-                'url': ('url', {lambda x: f'https://web.archive.org/web/2id_/{x}'}),
                 'ext': ('ext', {str}),
                 'filesize': ('url', {parse_qs}, 'clen', 0, {int_or_none}),
             }),
