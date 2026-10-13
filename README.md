@@ -2459,7 +2459,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **PandaVideo** (`pandavideo.com`): Player-embed HLS from `b-{library}.tv.pandavideo.com.br/{id}/playlist.m3u8`. Request: [yt-dlp/yt-dlp#13109](https://github.com/yt-dlp/yt-dlp/issues/13109)
     * **PalestineFilmInstitute** (`palestinefilminstitute.org`): Tokened CDN `watch/{id}` HLS (`share/hls.m3u8`) plus `meta.json` poster/subs; Squarespace pages that iframe the player. Request: [yt-dlp/yt-dlp#11282](https://github.com/yt-dlp/yt-dlp/issues/11282)
     * **PBSLearningMedia** (`pbslearningmedia.org`): Public `/api/v2/resource/{id}/` JSON for HLS/MP4 and captions. Request: [yt-dlp/yt-dlp#5073](https://github.com/yt-dlp/yt-dlp/issues/5073)
-    * **Perverzija** (`tube.perverzija.com`): XtremeStream player `xs1.php` HLS from the iframe embed. Request: [yt-dlp/yt-dlp#4596](https://github.com/yt-dlp/yt-dlp/issues/4596)
+    * **Perverzija** (`tube.perverzija.com`): XtremeStream Fort Knox `proto_api.php` AES-128 HLS (`castmaster`), with `xs1.php` fallback. Request: [yt-dlp/yt-dlp#4596](https://github.com/yt-dlp/yt-dlp/issues/4596)
     * **Piczel** (`piczel.tv`): Public `api.piczel.tv/streams/{slug}` JSON for LL-HLS live (`playback.piczel.tv`) and recording MP4s. Request: [yt-dlp/yt-dlp#16032](https://github.com/yt-dlp/yt-dlp/issues/16032)
     * **Pillows** (`pillows.su`): SvelteKit `__data.json` (devalue) metadata and `api.pillows.su` original-file downloads. Request: [yt-dlp/yt-dlp#17426](https://github.com/yt-dlp/yt-dlp/issues/17426)
     * **PimpBunny** (`pimpbunny.com`): KVS `kt_player` config (randomized JS object) and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#15333](https://github.com/yt-dlp/yt-dlp/issues/15333)
@@ -2610,6 +2610,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **elpais**: Read nested NewsArticle `VideoObject` JSON-LD (`contentUrl`), then a YouTube embed, when `url_cache` is missing
     * **eltrecetv**: Also expose progressive vodgc MP4s derived from HLS (1080 HLS segment names 404)
     * **epicon**: Extract HLS from the page when `ajaxplayer` returns 405 or has no trailer cid
+    * **eporner**: Raise an expected error when the player is a deleted-file page
     * **erocast**: Impersonate the browser
     * **ERRJupiter**: Skip the progressive `src.file` media when a ranged GET shows it is gone, and keep HLS/DASH
     * **ettutv**: Match live/videos player URLs and extract current streams
@@ -2890,6 +2891,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **WorldStarHipHop**: Extract JSON-LD MP4s from current `/videos/{id}/{slug}` pages
     * **wppilot**: Load the guest channel list from the public API instead of the old Gatsby CDN page-data; raise geo-restriction when guest streams return `user_outside_eu` (X-Forwarded-For is ignored)
     * **wwe**: Read Drupal 10 `drupal-settings-json` instead of the old `Drupal.settings` JS
+    * **wyborcza:video**: Ignore `brak_api_gallery` placeholder thumbnails that are not URLs
     * **xanimu**: Impersonate the browser to bypass Cloudflare and read JSON-LD metadata
     * **xfileshare**: Match current Uqload TLDs (`uqload.vc` and related mirrors) after `uqload.com` started redirecting
     * **xiaohongshu**: Impersonate the browser and fall back to `og:title` when note JSON omits title

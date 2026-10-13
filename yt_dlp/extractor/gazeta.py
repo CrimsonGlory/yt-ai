@@ -14,6 +14,7 @@ class GazetaIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?gazeta\.ru/(?:[^/?#]+/)+(?P<id>[A-Za-z0-9-_.]+)\.s?html'
     _TESTS = [{
         'url': 'https://www.gazeta.ru/politics/2026/08/27/23457307.shtml',
+        'skip': 'gazeta.ru and Rambler eaglecdn HLS time out from this network',
         'md5': '9e09f306ad96fe86dbb49deb76afef6e',
         'info_dict': {
             'id': '2826938',

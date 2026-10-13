@@ -736,6 +736,7 @@ class InstagramStoryIE(InstagramBaseIE):
 
     _TESTS = [{
         'url': 'https://www.instagram.com/stories/highlights/18090946048123978/',
+        'skip': 'login required',
         'info_dict': {
             'id': '18090946048123978',
             'title': 'Rare',

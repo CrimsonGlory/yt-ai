@@ -150,7 +150,7 @@ class SkyNewsIE(SkyBaseIE):
     _TESTS = [
         {
             "url": "https://news.sky.com/video/huge-blaze-breaks-out-near-wembley-stadium-13578164",
-            "md5": "581de632f1fd9cf72f2ac16745ed6047",
+            "md5": "39a2d996dae16bab67737281f83a3860",
             "info_dict": {
                 "id": "ref:56b5e9e8-61c6-4b23-90db-4393ea01d81b",
                 "ext": "mp4",
@@ -159,9 +159,9 @@ class SkyNewsIE(SkyBaseIE):
                 "uploader_id": "6058004172001",
                 "timestamp": 1787928362,
                 "upload_date": "20260828",
-                "duration": 28.821,
+                "duration": 28.843,
                 "thumbnail": r"re:https://videos\.skynews\.com/.+",
-                "tags": ["/shape/9:16", "/uk"],
+                "tags": ["/shape/9:16", "/uk", "/archived/retranscoded"],
             },
             "add_ie": ["BrightcoveNew"],
         },

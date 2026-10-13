@@ -16,6 +16,7 @@ class EpornerIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?eporner\.com/(?:(?:hd-porn|embed)/|video-)(?P<id>\w+)(?:/(?P<display_id>[\w-]+))?'
     _TESTS = [{
         'url': 'https://www.eporner.com/hd-porn/F5dpHTIC91X/Cute-Big-Tits-Anime-Hentai/',
+        'skip': 'video gone',
         'md5': 'd8aa211803fbec074333ec0fe53b826a',
         'info_dict': {
             'id': 'F5dpHTIC91X',
@@ -26,6 +27,23 @@ class EpornerIE(InfoExtractor):
             'timestamp': 1533161313,
             'upload_date': '20180801',
             'duration': 1688,
+            'view_count': int,
+            'age_limit': 18,
+            'average_rating': float,
+            'thumbnail': r're:https?://.*\.jpg$',
+        },
+    }, {
+        'url': 'https://www.eporner.com/hd-porn/1xWwFYBgwkg/Hentai-Huge-Boobs-Teen-Fucking/',
+        'md5': '8adc86a760edc0f6dff1f6c20a261b09',
+        'info_dict': {
+            'id': '1xWwFYBgwkg',
+            'display_id': 'Hentai-Huge-Boobs-Teen-Fucking',
+            'ext': 'mp4',
+            'title': 'Hentai Huge Boobs Teen Fucking',
+            'description': 'asian, japanese, hentai, anime, cartoon, Hentai huge boobs teen fucking',
+            'timestamp': 1520505430,
+            'upload_date': '20180308',
+            'duration': 1010,
             'view_count': int,
             'age_limit': 18,
             'average_rating': float,
@@ -70,6 +88,9 @@ class EpornerIE(InfoExtractor):
         webpage, urlh = self._download_webpage_handle(url, display_id)
 
         video_id = self._match_id(urlh.url)
+
+        if 'id="deletedfile"' in webpage or "id='deletedfile'" in webpage or 'Video has been deleted' in webpage:
+            raise ExtractorError('Video has been deleted', expected=True)
 
         vid_hash = self._search_regex(
             r'hash\s*[:=]\s*["\']([\da-f]{32})', webpage, 'hash')

@@ -9,6 +9,7 @@ from ..utils import (
     month_by_name,
     parse_duration,
     try_call,
+    url_or_none,
 )
 
 
@@ -61,7 +62,7 @@ class WyborczaVideoIE(InfoExtractor):
             'title': meta.get('title'),
             'description': meta.get('lead'),
             'uploader': meta.get('signature'),
-            'thumbnail': meta.get('imageUrl'),
+            'thumbnail': url_or_none(meta.get('imageUrl')),
             'duration': meta.get('duration'),
         }
 

@@ -1,4 +1,5 @@
 import re
+import urllib.parse
 
 from .common import InfoExtractor
 from ..utils import (
@@ -27,7 +28,7 @@ class PerverzijaIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://tube.perverzija.com/fakehuboriginals-tru-kait-the-fertility-clinic/',
-            'md5': 'ef5385863d41e25186ad165da1cd6d42',
+            'md5': '5d226e4827c6963ba86c01afd3d934a2',
             'info_dict': {
                 'id': 'fakehuboriginals-tru-kait-the-fertility-clinic',
                 'ext': 'mp4',
@@ -51,6 +52,31 @@ class PerverzijaIE(InfoExtractor):
             'only_matching': True,
         },
     ]
+
+    def _extract_xtremestream_ftk(self, host, data, player, player_url, video_id):
+        vt = self._search_regex(
+            r'XSFTK\.boot\s*\(\s*["\'][0-9a-fA-F]+["\']\s*,\s*["\']([^"\']+)["\']',
+            player, 'xtremestream token', default=None)
+        if not vt:
+            return [], {}
+        api = f'https://{host}/player/proto_api.php'
+        headers = {
+            'Referer': player_url,
+            'Origin': f'https://{host}',
+            'X-XS-P': '1',
+        }
+        token = self._download_webpage(
+            api, video_id, 'Downloading XtremeStream cast token',
+            query={'data': data, 'op': 'castsign', 'vt': vt},
+            headers=headers, fatal=False)
+        if not token:
+            return [], {}
+        master = f'{api}?{urllib.parse.urlencode({"data": data, "vt": vt, "ct": token.strip(), "op": "castmaster"})}'
+        formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+            master, video_id, 'mp4', m3u8_id='hls', headers=headers, fatal=False)
+        for fmt in formats:
+            fmt.setdefault('http_headers', {}).update(headers)
+        return formats, subtitles
 
     def _extract_xtremestream(self, webpage, video_id, referer):
         matches = list(re.finditer(self._XTREME_RE, webpage))
@@ -77,6 +103,10 @@ class PerverzijaIE(InfoExtractor):
             )
             if not player:
                 continue
+            formats, subtitles = self._extract_xtremestream_ftk(
+                host, data, player, player_url, video_id)
+            if formats:
+                return formats, subtitles
             loader = self._search_regex(r'm3u8_loader_url\s*=\s*`([^`]+)`', player, 'm3u8 loader', default=None)
             xs_id = self._search_regex(r'var\s+video_id\s*=\s*`([^`]+)`', player, 'xtremestream id', default=data)
             hls_candidates = []

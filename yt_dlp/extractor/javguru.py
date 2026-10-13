@@ -28,7 +28,7 @@ class JavGuruIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://jav.guru/1046418/start-601-it-seems-that-rui-chan-from-miss-a-university-got-a-job-offer-as-a-female-announcer-through-her-pillow-talk/',
-            'md5': '3eee6c43911407324302898dcd33b373',
+            'md5': '357b8356f56ee5df15898186fd342f16',
             'info_dict': {
                 'id': '1046418',
                 'ext': 'mp4',
@@ -44,7 +44,7 @@ class JavGuruIE(InfoExtractor):
                 'tags': ['Beautiful Girl', 'Facials', 'Female College Student', 'Humiliation', 'Slender'],
                 'age_limit': 18,
             },
-            'params': {'format': 'playmogo'},
+            'params': {'format': 'javclan-899'},
         },
         {
             'url': 'https://jav.guru/224264/mond-237-longing-female-boss-mao-hamasaki/',

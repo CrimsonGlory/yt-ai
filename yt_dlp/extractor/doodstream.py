@@ -11,6 +11,7 @@ class DoodStreamIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?:dood(?:stream)?\.(?:com|to|watch|so|pm|wf|re|la|li|ws)|playmogo\.com)/[ed]/(?P<id>[a-z0-9]+)'
     _TESTS = [{
         'url': 'https://dood.to/e/zn9kojocfiey',
+        'skip': 'DoodStream hosts time out or return HTTP 503 from this network',
         'md5': '18e078b4ab135be470aeb688e87c830c',
         'info_dict': {
             'id': 'zn9kojocfiey',
