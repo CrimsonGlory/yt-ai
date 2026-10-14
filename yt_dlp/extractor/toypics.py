@@ -15,6 +15,7 @@ class ToypicsIE(InfoExtractor):
     _VALID_URL = r'https?://(?:videos\.)?toypics\.net/(?:view|(?:u/(?P<uploader>[^/?#&]+)))/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://toypics.net/u/Philly/3218',
+        'skip': 'Cloudflare HTTP 525 origin SSL handshake failed on toypics.net and videos.toypics.net',
         'md5': 'd2ba2ab8487137e85a04c6dbcc71dbd7',
         'info_dict': {
             'id': '3218',
@@ -78,6 +79,7 @@ class ToypicsUserIE(InfoExtractor):
     _VALID_URL = r'https?://(?:videos\.)?toypics\.net/u/(?P<id>[^/?#&]+)/?(?:$|[?#])'
     _TEST = {
         'url': 'https://toypics.net/u/Philly',
+        'skip': 'Cloudflare HTTP 525 origin SSL handshake failed on toypics.net and videos.toypics.net',
         'info_dict': {
             'id': 'Philly',
         },

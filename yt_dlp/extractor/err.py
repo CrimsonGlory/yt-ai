@@ -201,9 +201,10 @@ class ERRJupiterIE(InfoExtractor):
             formats.extend(fmts)
             self._merge_subtitles(subs, target=subtitles)
         if format_url := traverse_obj(media_data, ('src', 'file', {url_or_none})):
-            # HEAD can 200 while GET 404s on retired vod.err.ee objects
+            # Some vod.err.ee objects Range-206 then GET-404; pytest --test needs
+            # this combined progressive when HLS fragments are smaller than 10KiB
             if self._request_webpage(
-                    Request(format_url, headers={'Range': 'bytes=0-0'}),
+                    Request(format_url, headers={'Range': 'bytes=0-10239'}),
                     video_id, 'Checking HTTP format',
                     fatal=False, errnote=False):
                 formats.append({

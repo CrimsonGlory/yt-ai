@@ -2443,7 +2443,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **NewsdayTV** (`newsday.tv`): Next.js `__NEXT_DATA__` Brightcove IDs from `/watch/` pages. Request: [yt-dlp/yt-dlp#7418](https://github.com/yt-dlp/yt-dlp/issues/7418)
     * **NewsNation** (`newsnationnow.com`): Anvato/Lura HLS from `/video/{slug}/{id}/` URLs and WordPress `lead_media` on article pages. Request: [yt-dlp/yt-dlp#7285](https://github.com/yt-dlp/yt-dlp/issues/7285)
     * **NFSA** (`nfsa.gov.au`): Public Sanity GROQ for collection items, then Vimeo player URLs (site referer) or Sanity CDN files. Request: [yt-dlp/yt-dlp#9593](https://github.com/yt-dlp/yt-dlp/issues/9593)
-    * **NhacCuaTui** (`nhaccuatui.com`): Nuxt `__NUXT_DATA__` song/video `streamURL` MP3/MP4 (and FLAC when present). Request: [yt-dlp/yt-dlp#12329](https://github.com/yt-dlp/yt-dlp/issues/12329)
+    * **NhacCuaTui** (`nhaccuatui.com`): Nuxt `__NUXT_DATA__` song/video `streamURL` MP3/MP4 (and FLAC when present); drop `dateRelease` when it is `0`. Request: [yt-dlp/yt-dlp#12329](https://github.com/yt-dlp/yt-dlp/issues/12329)
     * **nobody.live** (`nobody.live`): Public `/stream` JSON for a random zero-viewer Twitch channel, then Twitch HLS. Request: [yt-dlp/yt-dlp#13696](https://github.com/yt-dlp/yt-dlp/issues/13696)
     * **Novinky** (`novinky.cz`): Public `api-web.novinky.cz` document JSON and Seznam SDN MP4/HLS. Request: [yt-dlp/yt-dlp#4869](https://github.com/yt-dlp/yt-dlp/issues/4869)
     * **NowTVTR** (`nowtv.com.tr`, formerly `fox.com.tr`): Player `video` JSON and `/ajax/stream` HLS. Request: [yt-dlp/yt-dlp#1856](https://github.com/yt-dlp/yt-dlp/issues/1856)
@@ -2576,7 +2576,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **banbye**: Use `banbye.com/api` video/channel/playlist JSON and HLS `playback.urls` (`api.banbye.com` 404s)
     * **beatport**: Next.js `track_name` / `track_length_ms` / release `image_url` fields
     * **beeg**: Sign HLS from `store.externulls.com/video/play_url/{id}` when `hls_resources` is omitted
-    * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate video, bangumi, and dynamic play pages; on 412 fall back to `wbi/view/detail` / `pgc/player/web/v2/playurl`; keep webpage `__playinfo__` when anonymous `wbi/playurl` returns no dash/durl; resolve opus/dynamic `bvid` when `jump_url` is missing
+    * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate video, bangumi, and dynamic play pages; on 412 fall back to `wbi/view/detail` / `pgc/player/web/v2/playurl`; keep webpage `__playinfo__` when anonymous `wbi/playurl` returns no dash/durl; honor `fatal=False` on `wbi/playurl`; resolve opus/dynamic `bvid` when `jump_url` is missing
     * **bitchute**: Impersonate CDN downloads (urllib GETs are reset) and rewrite hashed media hosts onto seed CDNs
     * **bleacherreport**: Fall back to a YouTube embed URL when Next.js Article hydration omits video
     * **bunnycdn**: Fall back to `playlist.m3u8` when JSON-LD is missing
@@ -2612,7 +2612,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **epicon**: Extract HLS from the page when `ajaxplayer` returns 405 or has no trailer cid
     * **eporner**: Raise an expected error when the player is a deleted-file page
     * **erocast**: Impersonate the browser
-    * **ERRJupiter**: Skip the progressive `src.file` media when a ranged GET shows it is gone, and keep HLS/DASH
+    * **ERRJupiter**: Keep HLS/DASH and add progressive `src.file` only after a 10KiB ranged GET succeeds (`vod.err.ee` can 404)
     * **ettutv**: Match live/videos player URLs and extract current streams
     * **facebook**: Impersonate Chrome for Ads Library pages; treat 403 bodies with `/__rd_verify` as a client challenge; read `deeplink_ad_archive` snapshot from nested ScheduledServerJS or inline JSON; when a reel page only has the `og:title` fallback, use the trailing page name and the leading view count, and take the message segment as the title
     * **fancode**: Support current GraphQL / public video pages
@@ -2753,6 +2753,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **photobucket**: Extract sharing-link videos via GraphQL instead of the old `Pb.Data.Shared` page JSON
     * **phoenix.de**: Read `video-smubl` absätze (skip empty blocks) and play PTMD via `beitrags_details.php` `content` ids
     * **pinkbike**: Impersonate the browser and extract current Video.js sources
+    * **pinterest**: Impersonate the resource API to avoid HTTP 429
     * **playtvak**: Call the public `servix.idnes.cz` player API and match current iDNES.tv URLs
     * **playvids**: Read the numeric ID from `get_related_videos` when the player has no `data-id`
     * **plutotv**: Match current `/movies/` and `/shows/` VOD URLs

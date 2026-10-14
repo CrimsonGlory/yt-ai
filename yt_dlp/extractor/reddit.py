@@ -20,6 +20,7 @@ class RedditIE(InfoExtractor):
     _VALID_URL = r'https?://(?:\w+\.)?reddit(?:media)?\.com/(?P<slug>(?:(?:r|user)/[^/]+/)?comments/(?P<id>[^/?#&]+))'
     _TESTS = [{
         'url': 'https://www.reddit.com/r/videos/comments/6rrwyj/that_small_heart_attack/',
+        'skip': 'Reddit JSON API returns empty/403 without account cookies from this network',
         'info_dict': {
             'id': 'zv89llsvexdz',
             'ext': 'mp4',
@@ -44,6 +45,7 @@ class RedditIE(InfoExtractor):
     }, {
         # 1080p fallback format
         'url': 'https://www.reddit.com/r/aww/comments/90bu6w/heat_index_was_110_degrees_so_we_offered_him_a/',
+        'skip': 'Reddit JSON API returns empty/403 without account cookies from this network',
         'md5': '8b5902cfda3006bf90faea7adf765a49',
         'info_dict': {
             'id': 'gyh95hiqc0b11',
@@ -66,6 +68,7 @@ class RedditIE(InfoExtractor):
     }, {
         # User post
         'url': 'https://www.reddit.com/user/creepyt0es/comments/nip71r/i_plan_to_make_more_stickers_and_prints_check/',
+        'skip': 'Reddit JSON API returns empty/403 without account cookies from this network',
         'info_dict': {
             'id': 'zasobba6wp071',
             'ext': 'mp4',
@@ -90,6 +93,7 @@ class RedditIE(InfoExtractor):
     }, {
         # videos embedded in reddit text post
         'url': 'https://www.reddit.com/r/KamenRider/comments/wzqkxp/finale_kamen_rider_revice_episode_50_family_to/',
+        'skip': 'Reddit JSON API returns empty/403 without account cookies from this network',
         'playlist_count': 2,
         'info_dict': {
             'id': 'wzqkxp',
@@ -108,6 +112,7 @@ class RedditIE(InfoExtractor):
     }, {
         # crossposted reddit-hosted media
         'url': 'https://www.reddit.com/r/dumbfuckers_club/comments/zjjw82/cringe/',
+        'skip': 'Reddit JSON API returns empty/403 without account cookies from this network',
         'md5': '746180895c7b75a9d6b05341f507699a',
         'info_dict': {
             'id': 'a1oneun6pa5a1',
@@ -129,6 +134,7 @@ class RedditIE(InfoExtractor):
     }, {
         # post link without subreddit
         'url': 'https://www.reddit.com/comments/124pp33',
+        'skip': 'Reddit JSON API returns empty/403 without account cookies from this network',
         'md5': '15eec9d828adcef4468b741a7e45a395',
         'info_dict': {
             'id': 'antsenjc2jqa1',
@@ -171,6 +177,7 @@ class RedditIE(InfoExtractor):
     }, {
         # subtitles in HLS manifest
         'url': 'https://www.reddit.com/r/Unexpected/comments/1cl9h0u/the_insurance_claim_will_be_interesting/',
+        'skip': 'Reddit JSON API returns empty/403 without account cookies from this network',
         'info_dict': {
             'id': 'a2mdj5d57qyc1',
             'ext': 'mp4',
@@ -219,6 +226,7 @@ class RedditIE(InfoExtractor):
     }, {
         # "gated" subreddit post
         'url': 'https://old.reddit.com/r/ketamine/comments/degtjo/when_the_k_hits/',
+        'skip': 'Reddit JSON API returns empty/403 without account cookies from this network',
         'info_dict': {
             'id': 'gqsbxts133r31',
             'ext': 'mp4',

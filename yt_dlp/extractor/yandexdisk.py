@@ -35,6 +35,7 @@ class YandexDiskIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://yadi.sk/i/TM2xsIVsgjY4uw',
+        'skip': 'Yandex Disk source CDN Range-206 with empty body / GET timeout or NXDOMAIN from this network; HLS videoStreams JSON is 410 Gone',
         'info_dict': {
             'id': 'TM2xsIVsgjY4uw',
             'ext': 'mp4',

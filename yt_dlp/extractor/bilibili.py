@@ -331,7 +331,10 @@ class BilibiliBaseIE(InfoExtractor):
             query=self._sign_wbi(params, bvid),
             headers=headers,
             note=note,
+            fatal=fatal,
         )
+        if not playurl_raw:
+            return
         code = traverse_obj(playurl_raw, ("code", {lambda x: x * -1}))
         if code == 0:
             return playurl_raw["data"]

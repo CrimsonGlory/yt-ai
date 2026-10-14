@@ -11,6 +11,7 @@ class BeatportIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.|pro\.)?beatport\.com/track/(?P<display_id>[^/?#]+)/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://beatport.com/track/synesthesia-original-mix/5379371',
+        'skip': 'Cloudflare managed challenge (Just a moment) from this network even with chrome/safari/firefox/edge impersonate',
         'md5': 'cfcc245aafcad52a837b2c5a60a472c9',
         'info_dict': {
             'id': '5379371',

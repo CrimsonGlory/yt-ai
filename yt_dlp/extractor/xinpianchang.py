@@ -13,7 +13,23 @@ class XinpianchangIE(InfoExtractor):
     IE_DESC = '新片场'
     _TESTS = [
         {
+            'url': 'https://www.xinpianchang.com/a13840537',
+            'md5': '78c91180f49bbb245606fa589a2d1cd5',
+            'info_dict': {
+                'id': 'a13840537',
+                'ext': 'mp4',
+                'title': '始祖鸟自然美学短片《蓝山》',
+                'description': 'md5:3783b8e4dfd686a4988699be522ddd65',
+                'uploader': '欧美广告',
+                'uploader_id': '10862801',
+                'duration': 186,
+                'thumbnail': 'https://oss-xpc0.xpccdn.com/uploadfile/article/2026/10/12/58bf2800e7877bacfd6b0827d54425df',
+                'categories': ['广告片', '体育/运动', '视觉探索', '视觉艺术'],
+                'tags': ['自然', '登山', '始祖鸟', '广告', '情绪', '视觉'],
+            },
+        }, {
             'url': 'https://www.xinpianchang.com/a13809870',
+            'skip': 'video gone',
             'md5': '3af9a08c9f08dfd58ba49050bed1990c',
             'info_dict': {
                 'id': 'a13809870',
