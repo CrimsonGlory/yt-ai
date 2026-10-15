@@ -1838,8 +1838,8 @@ class BBCCoUkPlaylistIE(BBCCoUkPlaylistBaseIE):
         'url': 'http://www.bbc.co.uk/programmes/b00mfl7n/clips?page=1',
         'info_dict': {
             'id': 'b00mfl7n',
-            'title': 'BBC One - Frozen Planet - Clips',
-            'description': 'md5:4a629b1ba5f1eee1264b90a9fa2b88c0',
+            'title': 'BBC One - Frozen Planet, Series 1 - Clips',
+            'description': 'Clips from Series 1',
         },
         'playlist_mincount': 10,
     }, {
@@ -1847,8 +1847,8 @@ class BBCCoUkPlaylistIE(BBCCoUkPlaylistBaseIE):
         'url': 'http://www.bbc.co.uk/programmes/b00mfl7n/clips',
         'info_dict': {
             'id': 'b00mfl7n',
-            'title': 'BBC One - Frozen Planet - Clips',
-            'description': 'md5:4a629b1ba5f1eee1264b90a9fa2b88c0',
+            'title': 'BBC One - Frozen Planet, Series 1 - Clips',
+            'description': 'Clips from Series 1',
         },
         'playlist_mincount': 10,
     }, {

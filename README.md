@@ -2302,7 +2302,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Avjb** (`avjb.com`): Player CSRF `/player/spped.php` HLS lines, with Playerjs preview MP4 fallback. Request: [yt-dlp/yt-dlp#14653](https://github.com/yt-dlp/yt-dlp/issues/14653)
     * **AzNude** (`aznude.com`): JWPlayer `playerInstance.setup` HLS/MP4 from `/azncdn/` and `/embed/` pages; celeb/movie listings as playlists. Request: [yt-dlp/yt-dlp#12060](https://github.com/yt-dlp/yt-dlp/issues/12060)
     * **B9Good** (`b9good.org`): JWPlayer `/embed/` iframe (yundevo.guru); signed `/ajax/getSources` AES-GCM HLS. Request: [yt-dlp/yt-dlp#9245](https://github.com/yt-dlp/yt-dlp/issues/9245)
-    * **BaiduBaike** (`baike.baidu.com`): Impersonate Baidu WAF, then 秒懂 `/api/wikisecond/lemmasecond` and `/api/second/video` MP4/HLS. Request: [yt-dlp/yt-dlp#7467](https://github.com/yt-dlp/yt-dlp/issues/7467)
+    * **BaiduBaike** (`baike.baidu.com`): Impersonate Baidu WAF, then 秒懂 `/api/wikisecond/lemmasecond` and `/api/second/video` MP4/HLS; resolve slug-only URLs via `BaikeLemmaCardApi` when the item page is blocked. Request: [yt-dlp/yt-dlp#7467](https://github.com/yt-dlp/yt-dlp/issues/7467)
     * **Balapan** (`balapan.tv`): Clappr HLS from the `player.rtrk.kz` live iframe. Request: [yt-dlp/yt-dlp#17241](https://github.com/yt-dlp/yt-dlp/issues/17241)
     * **BaoMoi** (`baomoi.com`): Public `w-api.baomoi.com` `/page/get/content-detail` JSON and signed `bmcdn.me` MP4, with `__NEXT_DATA__` fallback. Request: [yt-dlp/yt-dlp#7506](https://github.com/yt-dlp/yt-dlp/issues/7506)
     * **BeatStars** (`beatstars.com`): Public `main.v2.beatstars.com/track` JSON and tagged stream MP3. Request: [yt-dlp/yt-dlp#14675](https://github.com/yt-dlp/yt-dlp/issues/14675)
@@ -2506,7 +2506,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Smule** (`smule.com`): Impersonate Cloudflare, RC4-decode `e:` media URLs from public `/p/{id}/json`, and download CDN MP4/M4A. Request: [yt-dlp/yt-dlp#10875](https://github.com/yt-dlp/yt-dlp/issues/10875)
     * **SNB** (`snb.ch`): Swisscom CSR webcast token plus public `/webcast/{id}` HLS from Research TV and Web TV pages. Request: [yt-dlp/yt-dlp#14562](https://github.com/yt-dlp/yt-dlp/issues/14562)
     * **song.link** (`song.link`): Next.js `pageData` listen links, preferring YouTube/SoundCloud/Audius/Audiomack/Bandcamp. Request: [yt-dlp/yt-dlp#13754](https://github.com/yt-dlp/yt-dlp/issues/13754)
-    * **Sora** (`sora.com`): Public `backend/project_y/post` JSON (impersonate) for signed Azure MP4. Request: [yt-dlp/yt-dlp#14513](https://github.com/yt-dlp/yt-dlp/issues/14513)
+    * **Sora** (`sora.com`): Public `backend/project_y/post` JSON (impersonate) for signed Azure MP4; build profile URLs from username when permalink is absent. Request: [yt-dlp/yt-dlp#14513](https://github.com/yt-dlp/yt-dlp/issues/14513)
     * **Spinitron** (`spinitron.com`): Playlist-page Ark `data-ark-start` HLS from `ark3.spinitron.com/ark2`; show pages list archived episodes. Request: [yt-dlp/yt-dlp#11401](https://github.com/yt-dlp/yt-dlp/issues/11401)
     * **Sponsr** (`sponsr.ru`): Parse Next.js post JSON and extract Kinescope HLS/MP4. Request: [yt-dlp/yt-dlp#14399](https://github.com/yt-dlp/yt-dlp/issues/14399)
     * **Spooncast** (`spooncast.net`): Public `{country}-api.spooncast.net/casts/{id}` JSON and CDN m4a. Request: [yt-dlp/yt-dlp#9590](https://github.com/yt-dlp/yt-dlp/issues/9590)
@@ -2598,6 +2598,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **dfb**: Follow YouTube embeds and match `dfb.de` news video URLs
     * **dhm**: Support journal articles and JWPlayer/HLS when the XSPF playlist is gone
     * **digiview**: Send an `Origin` header on the player POST
+    * **disney**: Fall back to Matterhorn `__matterhorn-*__` page JSON (Kaltura flavors) when Grill.burger is gone
     * **doodstream**: Impersonate the browser and join relative `pass_md5` URLs
     * **douyu**: Sign streams with Node instead of PhantomJS
     * **dplay**: Use Disco playback v3

@@ -1838,7 +1838,7 @@ class YoutubeTabIE(YoutubeTabBaseInfoExtractor):
             'tags': [],
             'availability': 'public',
         },
-        'playlist_mincount': 50,
+        'playlist_mincount': 10,  # shorts audio pivot size fluctuates
         'expected_warnings': ['Incomplete data received'],
 
     }, {

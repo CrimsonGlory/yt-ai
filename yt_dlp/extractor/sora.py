@@ -137,6 +137,9 @@ class SoraIE(InfoExtractor):
         username = traverse_obj(data, ('profile', 'username', {str}))
         title = traverse_obj(post, ('text', {strip_or_none})) or (
             f'{username} on Sora' if username else video_id)
+        profile_url = traverse_obj(data, ('profile', 'permalink', {url_or_none}))
+        if not profile_url and username:
+            profile_url = f'{origin}/profile/{username}'
 
         return {
             'id': video_id,
@@ -160,9 +163,9 @@ class SoraIE(InfoExtractor):
             **traverse_obj(data, {
                 'uploader': ('profile', ('display_name', 'username'), {str}, any),
                 'uploader_id': ('profile', 'user_id', {str}),
-                'uploader_url': ('profile', 'permalink', {url_or_none}),
                 'channel': ('profile', ('display_name', 'username'), {str}, any),
                 'channel_id': ('profile', 'user_id', {str}),
-                'channel_url': ('profile', 'permalink', {url_or_none}),
             }),
+            'uploader_url': profile_url,
+            'channel_url': profile_url,
         }

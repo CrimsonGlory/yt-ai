@@ -5,6 +5,7 @@ from ..utils import (
     determine_ext,
     int_or_none,
     join_nonempty,
+    traverse_obj,
     unified_strdate,
     update_url_query,
 )
@@ -77,16 +78,43 @@ class DisneyIE(InfoExtractor):
         'only_matching': True,
     }]
 
+    def _extract_grill_video(self, webpage, display_id):
+        grill = self._search_regex(
+            r'Grill\.burger\s*=\s*({.+})\s*:', webpage, 'grill data', default=None)
+        if not grill:
+            return None, None
+        grill = re.sub(r'"\s*\+\s*"', '', grill)
+        try:
+            page_data = next(
+                s for s in self._parse_json(grill, display_id)['stack']
+                if s.get('type') == 'video')
+            return page_data, page_data['data'][0]
+        except (StopIteration, KeyError, IndexError, TypeError):
+            return None, None
+
+    def _extract_matterhorn_video(self, webpage, display_id):
+        matterhorn = self._search_json(
+            r'window\[[\'"]__matterhorn-[^\'"]+[\'"]\]\s*=',
+            webpage, 'matterhorn data', display_id, default=None)
+        video_data = traverse_obj(matterhorn, (
+            'page', 'content', ..., 'stack', ..., 'module_data', 'data',
+            lambda _, v: isinstance(v, dict) and v.get('flavors') and v.get('id'),
+            any,
+        ))
+        return ({}, video_data) if video_data else (None, None)
+
     def _real_extract(self, url):
         domain, video_id, display_id = self._match_valid_url(url).groups()
+        page_data, video_data = {}, None
         if not video_id:
             webpage = self._download_webpage(url, display_id)
-            grill = re.sub(r'"\s*\+\s*"', '', self._search_regex(
-                r'Grill\.burger\s*=\s*({.+})\s*:',
-                webpage, 'grill data'))
-            page_data = next(s for s in self._parse_json(grill, display_id)['stack'] if s.get('type') == 'video')
-            video_data = page_data['data'][0]
-        else:
+            page_data, video_data = self._extract_grill_video(webpage, display_id)
+            if not video_data:
+                page_data, video_data = self._extract_matterhorn_video(webpage, display_id)
+            if not video_data:
+                video_id = self._search_regex(
+                    r'"contentId"\s*:\s*"([a-f0-9]{24})"', webpage, 'content id')
+        if not video_data:
             webpage = self._download_webpage(
                 f'http://{domain}/embed/{video_id}', video_id)
             page_data = self._parse_json(self._search_regex(
@@ -136,7 +164,8 @@ class DisneyIE(InfoExtractor):
             })
         if not formats and video_data.get('expired'):
             self.raise_no_formats(
-                '{} said: {}'.format(self.IE_NAME, page_data['translations']['video_expired']),
+                '{} said: {}'.format(self.IE_NAME, traverse_obj(
+                    page_data, ('translations', 'video_expired', {str})) or 'This video has expired'),
                 expected=True)
 
         subtitles = {}
@@ -156,9 +185,16 @@ class DisneyIE(InfoExtractor):
             'id': video_id,
             'title': title,
             'description': video_data.get('description') or video_data.get('short_desc'),
-            'thumbnail': video_data.get('thumb') or video_data.get('thumb_secure'),
-            'duration': int_or_none(video_data.get('duration_sec')),
-            'upload_date': unified_strdate(video_data.get('publish_date')),
+            'thumbnail': (
+                video_data.get('thumb') or video_data.get('thumb_secure')
+                or video_data.get('asset_thumbnail_image') or video_data.get('secure_image_url')),
+            'duration': (
+                int_or_none(video_data.get('duration_sec'))
+                or int_or_none(video_data.get('duration'), scale=1000)),
+            'upload_date': unified_strdate(
+                video_data.get('publish_date')
+                or video_data.get('first_published_at')
+                or video_data.get('content_date')),
             'formats': formats,
             'subtitles': subtitles,
         }

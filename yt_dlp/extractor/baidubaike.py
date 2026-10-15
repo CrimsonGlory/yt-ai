@@ -228,22 +228,44 @@ class BaiduBaikeIE(InfoExtractor):
                 url,
                 display_id,
                 impersonate=True,
+                fatal=False,
                 headers={'Referer': 'https://baike.baidu.com/'},
-            )
-            page_data = self._search_json(r'window\.PAGE_DATA\s*=', webpage, 'page data', display_id, default={})
-            lemma_id = self._html_search_regex(
-                r'data-lemmaid=["\'](\d+)',
-                webpage,
-                'lemma id',
-                default=None,
-            ) or str_or_none(page_data.get('lemmaId'))
-            lemma_title = (
-                traverse_obj(page_data, 'lemmaTitle', {str})
-                or self._og_search_title(webpage, default=None)
-                or lemma_title
-            )
-            lemma_desc = self._og_search_description(webpage, default=None) or traverse_obj(
-                page_data, 'description', {str})
+            ) or ''
+            if webpage:
+                page_data = self._search_json(r'window\.PAGE_DATA\s*=', webpage, 'page data', display_id, default={})
+                lemma_id = self._html_search_regex(
+                    r'data-lemmaid=["\'](\d+)',
+                    webpage,
+                    'lemma id',
+                    default=None,
+                ) or str_or_none(page_data.get('lemmaId'))
+                lemma_title = (
+                    traverse_obj(page_data, 'lemmaTitle', {str})
+                    or self._og_search_title(webpage, default=None)
+                    or lemma_title
+                )
+                lemma_desc = self._og_search_description(webpage, default=None) or traverse_obj(
+                    page_data, 'description', {str})
+            if not lemma_id:
+                card = self._download_json(
+                    'https://baike.baidu.com/api/openapi/BaikeLemmaCardApi',
+                    display_id,
+                    'Downloading lemma card JSON',
+                    query={
+                        'scope': '103',
+                        'format': 'json',
+                        'appid': '379020',
+                        'bk_key': lemma_title,
+                        'bk_length': '600',
+                    },
+                    impersonate=True,
+                    fatal=False,
+                    headers=self._API_HEADERS,
+                ) or {}
+                lemma_id = str_or_none(card.get('newLemmaId') or card.get('id'))
+                lemma_title = traverse_obj(card, 'title', {str}) or lemma_title
+                lemma_desc = lemma_desc or traverse_obj(card, ('desc', {str})) or traverse_obj(
+                    card, ('abstract', {str}))
             if not lemma_id:
                 self.raise_no_formats('Unable to extract lemma id', expected=True, video_id=display_id)
             display_id = lemma_id
