@@ -21,7 +21,7 @@ class HKETIE(InfoExtractor):
             'ext': 'mp4',
             'title': '手足口病吃水果恐讓潰瘍更痛　醫生教「冰涼飲食法」舒緩痛感',
             'description': '手足口病腸病毒需要提升免疫力戰勝，但酸性水果千萬別吃！兒科專科蘇詠怡醫生教大家一招「冰涼飲食法」，減輕口腔潰瘍疼痛、精準補水。',
-            'thumbnail': 'https://static06.hket.com/res/v3/image/video/4180000/4181718/Reels2_1024.jpg',
+            'thumbnail': r're:https://static06\.hket\.com/res/v3/image/video/4180000/4181718/Reels2_\d+\.jpg',
             'duration': 41,
             'timestamp': 1788235500,
             'upload_date': '20260901',

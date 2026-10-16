@@ -18,6 +18,7 @@ class EPlayIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?eplay\.com/(?:embed/(?P<embed_user>[^/?#]+)|(?P<user>[^/?#]+)/post)/(?P<id>\d+)(?:/(?P<slug>[^/?#]+))?'
     _TESTS = [{
         'url': 'https://www.eplay.com/lewdneko/post/941547257059160064/harem-in-another-world-vod-part-4',
+        'skip': 'cdn-b.eplay.com BunnyCDN pull zone is suspended (*.b-cdn.net cert, Domain suspended or not configured)',
         'md5': '380981f46a3326f705717087c62f7e34',
         'info_dict': {
             'id': '941547257059160064',

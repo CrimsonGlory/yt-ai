@@ -413,6 +413,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
         }, {
             # Internal link
             'url': 'https://web.archive.org/web/2oe/http://wayback-fakeurl.archive.org/yt/97t7Xj_iBv0',
+            'skip': 'Wayback googlevideo capture 404 (videoinfo timestamp 20240813143111id_ and 2id_ fakeurl)',
             'info_dict': {
                 'id': '97t7Xj_iBv0',
                 'ext': 'mp4',

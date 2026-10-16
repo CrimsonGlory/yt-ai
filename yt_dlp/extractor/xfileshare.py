@@ -75,7 +75,7 @@ class XFileShareIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://uqload.com/0sy4vfle775h',
-        'md5': '145a9e2c76cc1b0a30e5662d300812d7',
+        'md5': '2e40fb10a14d5244e6e50e61dc419761',
         'info_dict': {
             'id': '0sy4vfle775h',
             'ext': 'mp4',

@@ -122,9 +122,13 @@ class SubstackIE(InfoExtractor):
         display_id = self._match_id(url)
         webpage = self._download_webpage(url, display_id)
 
-        webpage_info = self._parse_json(self._search_json(
-            r'window\._preloads\s*=\s*JSON\.parse\(', webpage, 'json string',
-            display_id, transform_source=js_to_json, contains_pattern=r'"{(?s:.+)}"'), display_id)
+        webpage_info = self._search_json(
+            r'<script[^>]+id=(["\'])preloads-json\1[^>]*>', webpage, 'preloads json',
+            display_id, end_pattern='</script>', default=None)
+        if not webpage_info:
+            webpage_info = self._parse_json(self._search_json(
+                r'window\._preloads\s*=\s*JSON\.parse\(', webpage, 'json string',
+                display_id, transform_source=js_to_json, contains_pattern=r'"{(?s:.+)}"'), display_id)
 
         canonical_url = url
         domain = traverse_obj(webpage_info, ('domainInfo', 'customDomain', {str}))

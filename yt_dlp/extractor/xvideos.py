@@ -36,6 +36,7 @@ class XVideosIE(InfoExtractor):
     }, {
         # Broken HLS formats
         'url': 'https://www.xvideos.com/video65982001/what_s_her_name',
+        'skip': 'video gone',
         'md5': '56742808292c8fa1418e4538c262c58b',
         'info_dict': {
             'id': '65982001',
@@ -176,6 +177,7 @@ class XVideosQuickiesIE(InfoExtractor):
     _VALID_URL = r'https?://(?P<domain>(?:[^/?#]+\.)?xvideos2?\.com)/(?:profiles/|amateur-channels/)?[^/?#]+#quickies/a/(?P<id>\w+)'
     _TESTS = [{
         'url': 'https://www.xvideos.com/lili_love#quickies/a/ipdtikh1a4c',
+        'skip': 'video gone',
         'md5': 'f9e4f518ff1de14b99a400bbd0fc5ee0',
         'info_dict': {
             'id': 'ipdtikh1a4c',
@@ -187,6 +189,7 @@ class XVideosQuickiesIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.xvideos.com/profiles/lili_love#quickies/a/ipphaob6fd1',
+        'skip': 'video gone',
         'md5': '5340938aac6b46e19ebdd1d84535862e',
         'info_dict': {
             'id': 'ipphaob6fd1',
@@ -198,6 +201,7 @@ class XVideosQuickiesIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.xvideos.com/amateur-channels/lili_love#quickies/a/hfmffmd7661',
+        'skip': 'video gone',
         'md5': '92428518bbabcb4c513e55922e022491',
         'info_dict': {
             'id': 'hfmffmd7661',
