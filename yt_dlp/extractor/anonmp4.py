@@ -18,6 +18,7 @@ class AnonMP4IE(InfoExtractor):
     _EMBED_REGEX = [r'<iframe[^>]+\bsrc=["\'](?P<url>https?://(?:www\.)?anonmp4\.(?:art|to)/embed/[A-Za-z0-9]+)']
     _TESTS = [{
         'url': 'https://anonmp4.art/v/gfFKPZb6t2HURbQ',
+        'skip': 'anonmp4.art and anonmp4.to return HTTP 522 (Cloudflare origin timeout)',
         'md5': '72c375f5cafcc8b7c3c4817b15ea0362',
         'info_dict': {
             'id': 'gfFKPZb6t2HURbQ',
@@ -28,6 +29,7 @@ class AnonMP4IE(InfoExtractor):
         },
     }, {
         'url': 'https://anonmp4.art/v/DJr7JD4DBZ3PQ3P',
+        'skip': 'anonmp4.art and anonmp4.to return HTTP 522 (Cloudflare origin timeout)',
         'info_dict': {
             'id': 'DJr7JD4DBZ3PQ3P',
             'ext': 'mp4',

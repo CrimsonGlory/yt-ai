@@ -10,6 +10,7 @@ class PerformGroupIE(InfoExtractor):
         'cms.downloadvod.daznservices.com',
         'daznplayervod.daznservices.com',
         'daznplayersp-vh.akamaihd.net',
+        'd3k6telwe4kjbz.cloudfront.net',
         'playersp-vh.akamaihd.net',
     }
     _TESTS = [{
@@ -26,8 +27,9 @@ class PerformGroupIE(InfoExtractor):
             'upload_date': '20171124',
         },
     }, {
-        # https://www.madeinmotorsport.com/ (eplayer.js embed); vid selects a still-hosted CloudFront MP4
+        # https://www.madeinmotorsport.com/ (eplayer.js embed); CloudFront progressive MP4 now 403s
         'url': 'https://player.performgroup.com/eplayer.js#2bd35a1885308c70f6edb804b9.13e9n12gjo4fb156b32gbffgtr$vid=1njd51qu0xzed19i50dxv052uu',
+        'skip': 'CloudFront progressive MP4 (d3k6telwe4kjbz.cloudfront.net) now HTTP 403',
         'md5': '4c354dbadc5c9fc093657d86869cc4a6',
         'info_dict': {
             'id': '1njd51qu0xzed19i50dxv052uu',

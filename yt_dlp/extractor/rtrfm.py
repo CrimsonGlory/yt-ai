@@ -28,6 +28,7 @@ class RTRFMIE(InfoExtractor):
         },
         {
             'url': 'https://rtrfm.com.au/shows/breakfast/?date=2026-09-18',
+            'skip': 'video gone',
             'md5': '14d543e7c76ff1faf826816ae8927d54',
             'info_dict': {
                 'id': 'breakfast-2026-09-18',
@@ -36,6 +37,19 @@ class RTRFMIE(InfoExtractor):
                 'title': 'Breakfast with Pam 2026-09-18',
                 'description': 'md5:82e0c923f8dddf279c471b73fd964cb1',
                 'release_date': '20260918',
+                'duration': 10800,
+            },
+        },
+        {
+            'url': 'https://rtrfm.com.au/shows/breakfast/?date=2026-10-16',
+            'md5': '33ccc4553c438c442ebfbbf0dcffe243',
+            'info_dict': {
+                'id': 'breakfast-2026-10-16',
+                'ext': 'mp3',
+                'series': 'Breakfast with Pam',
+                'title': 'Breakfast with Pam 2026-10-16',
+                'description': 'md5:82e0c923f8dddf279c471b73fd964cb1',
+                'release_date': '20261016',
                 'duration': 10800,
             },
         },

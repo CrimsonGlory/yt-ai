@@ -19,7 +19,7 @@ class KinoPoiskIE(InfoExtractor):
             'id': '81041',
             'ext': 'mp4',
             'title': 'Алеша Попович и Тугарин Змей',
-            'thumbnail': r're:https?://avatars\.mds\.yandex\.net/.*',
+            'thumbnail': r're:https?://(?:avatars\.mds\.yandex\.net|[^/]*cdn\.yandex\.net)/.*',
             'view_count': int,
             'release_year': 2004,
         },

@@ -115,5 +115,5 @@ class Rule34VideoIE(InfoExtractor):
             'uploader_url': uploader_url,
             'categories': categories,
             'tags': list(map(unescapeHTML, re.findall(
-                r'<a class="tag_item"[^>]+\bhref="https://rule34video\.com/tags/\d+/"[^>]*>(?P<tag>[^>]*)</a>', webpage))),
+                r'<a class="tag_item"[^>]+\bhref="https://rule34video\.com/tags/[^"]+"[^>]*>(?P<tag>[^>]*)</a>', webpage))),
         }

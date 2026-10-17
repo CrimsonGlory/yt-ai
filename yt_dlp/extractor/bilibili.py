@@ -1884,8 +1884,10 @@ class BilibiliSpaceListBaseIE(BilibiliSpaceBaseIE):
             yield self.url_result(f"https://www.bilibili.com/video/{bvid}", BiliBiliIE, bvid)
 
     def _get_uploader(self, uid, playlist_id):
-        webpage = self._download_webpage(f"https://space.bilibili.com/{uid}", playlist_id, fatal=False)
-        return self._search_regex(r"(?s)<title\b[^>]*>([^<]+)的个人空间-", webpage, "uploader", fatal=False)
+        webpage = self._download_webpage(
+            f"https://space.bilibili.com/{uid}", playlist_id, fatal=False, impersonate=True) or ""
+        return self._search_regex(
+            r"(?s)<title\b[^>]*>([^<]+)的个人空间-", webpage, "uploader", default=None)
 
     def _extract_playlist(self, fetch_page, get_metadata, get_entries):
         metadata, page_list = super()._extract_playlist(fetch_page, get_metadata, get_entries)

@@ -854,7 +854,7 @@ class NRKPlaylistIE(NRKPlaylistBaseIE):
             'title': 'Gjenopplev den historiske solformørkelsen',
             'description': 'md5:c2df8ea3bac5654a26fc2834a542feed',
         },
-        'playlist_count': 2,
+        'playlist_mincount': 2,
     }, {
         'url': 'http://www.nrk.no/kultur/bok/rivertonprisen-til-karin-fossum-1.12266449',
         'info_dict': {

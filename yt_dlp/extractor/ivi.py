@@ -20,7 +20,7 @@ class IviIE(InfoExtractor):
         # Free AVOD movie
         {
             'url': 'https://www.ivi.ru/watch/504638',
-            'md5': '0e19df3dc8fe57c3a17fdf1c0f15cacb',
+            'md5': '830cd07091dd94e8063597be17cacddd',
             'info_dict': {
                 'id': '504638',
                 'ext': 'mp4',

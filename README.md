@@ -2576,7 +2576,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **banbye**: Use `banbye.com/api` video/channel/playlist JSON and HLS `playback.urls` (`api.banbye.com` 404s)
     * **beatport**: Next.js `track_name` / `track_length_ms` / release `image_url` fields
     * **beeg**: Sign HLS from `store.externulls.com/video/play_url/{id}` when `hls_resources` is omitted
-    * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate video, bangumi, and dynamic play pages; on 412 fall back to `wbi/view/detail` / `pgc/player/web/v2/playurl`; keep webpage `__playinfo__` when anonymous `wbi/playurl` returns no dash/durl; honor `fatal=False` on `wbi/playurl`; resolve opus/dynamic `bvid` when `jump_url` is missing
+    * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate video, bangumi, dynamic, and space pages; on 412 fall back to `wbi/view/detail` / `pgc/player/web/v2/playurl`; keep webpage `__playinfo__` when anonymous `wbi/playurl` returns no dash/durl; honor `fatal=False` on `wbi/playurl`; resolve opus/dynamic `bvid` when `jump_url` is missing
     * **bitchute**: Impersonate CDN downloads (urllib GETs are reset) and rewrite hashed media hosts onto seed CDNs
     * **bleacherreport**: Fall back to a YouTube embed URL when Next.js Article hydration omits video
     * **bunnycdn**: Fall back to `playlist.m3u8` when JSON-LD is missing
@@ -2750,7 +2750,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **pbskids**: Extract Next.js `/videos/watch/` pages and PBS URS HLS/MP4
     * **peekvids**: Read the numeric ID from the thumbnail URL and fall back to the page HLS source
     * **peer.tv**: Read JSON-LD `contentUrl` MP4s and match `/video/` slug URLs
-    * **performgroup**: Use the DAZN feeds VOD API instead of the dead Perform Feeds ep3 host
+    * **performgroup**: Use the DAZN feeds VOD API instead of the dead Perform Feeds ep3 host; treat remaining CloudFront progressive MP4s as gone when they 403
     * **photobucket**: Extract sharing-link videos via GraphQL instead of the old `Pb.Data.Shared` page JSON
     * **phoenix.de**: Read `video-smubl` absätze (skip empty blocks) and play PTMD via `beitrags_details.php` `content` ids
     * **pinkbike**: Impersonate the browser and extract current Video.js sources
@@ -2800,7 +2800,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **rtl.nl**: Use the RTL XL token and watch/play v2 APIs for current video UUIDs (FairPlay/Widevine DRM)
     * **rtp**: Fall back to webpage player URLs when the mobile guest token API 404s
     * **rtrfm**: Read restream episode metadata from the current show page instead of the removed `.playShow` JS
-    * **rule34video**: Rewrite `/videos/` URLs to HTTPS `/video/{id}/{slug}/` (avoid HTTP 301 that DDoS-Guard 502s); parse download `get_file` links with SVG/sheet markup and comment counts from `Comments <small>`
+    * **rule34video**: Rewrite `/videos/` URLs to HTTPS `/video/{id}/{slug}/` (avoid HTTP 301 that DDoS-Guard 502s); parse download `get_file` links with SVG/sheet markup, comment counts from `Comments <small>`, and tags from slug `/tags/{slug}/` links
     * **ruv.is:spila**: POST the GraphQL program query instead of GET
     * **rumble**: Impersonate the browser for embedJS, video pages, and media downloads
     * **Ruutu**: Use the public MCC media API instead of the retired gatling XML cache

@@ -102,7 +102,7 @@ class VTVIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'Thời sự 20h VTV1 - 12/6/2024',
             'description': 'Thời sự 20h VTV1 - 12/6/2024 VIDEO CLIP',
-            'thumbnail': 'https://cdn-images.vtv.vn/zoom/600_315/66349b6076cb4dee98746cf1/2024/06/12/thumb/1206-ts-20h-02929741475480320806760.mp4/thumb0.jpg',
+            'thumbnail': r're:https://cdn-images\.vtv\.vn/zoom/\d+_\d+/66349b6076cb4dee98746cf1/2024/06/12/thumb/1206-ts-20h-02929741475480320806760\.mp4/thumb0\.jpg',
         },
     }, {
         'url': 'https://vtv.vn/video/zlife-1-khong-ngo-toi-phai-khong-vtv24-560248.htm',
@@ -111,7 +111,7 @@ class VTVIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'ZLife #1: Không ngờ tới phải không? | VTV24',
             'description': 'md5:cbf7c4aea80e1557f1f7a21b1e2fb62e',
-            'thumbnail': 'https://video-thumbs.mediacdn.vn/zoom/600_315//vtv/2022/5/13/t67s6btf3ji-16524555726231894427334.jpg',
+            'thumbnail': r're:https://video-thumbs\.mediacdn\.vn/zoom/\d+_\d+//vtv/2022/5/13/t67s6btf3ji-16524555726231894427334\.jpg',
         },
         'params': {'skip_download': True},
     }]
