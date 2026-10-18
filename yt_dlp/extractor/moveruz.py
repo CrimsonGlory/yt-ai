@@ -62,6 +62,7 @@ class MoverUzIE(InfoExtractor):
             candidates.append(re.sub(rf'//.{{{n}}}', '', payload))
         candidates.append(re.sub(r'//[A-Za-z0-9+/=._,-]{8,48}', '', payload))
         seen = set()
+        best = {}
         for candidate in candidates:
             if candidate in seen:
                 continue
@@ -69,10 +70,14 @@ class MoverUzIE(InfoExtractor):
             padded = re.sub(r'[^A-Za-z0-9+/=]', '', candidate)
             padded += '=' * (-len(padded) % 4)
             decoded = try_call(lambda p=padded: base64.b64decode(p).decode())
-            config = self._parse_json(decoded, video_id, fatal=False) if decoded else None
-            if isinstance(config, dict):
+            config = self._parse_json(
+                decoded, video_id, fatal=False, errnote=False) if decoded else None
+            if not isinstance(config, dict):
+                continue
+            if config.get('file'):
                 return config
-        return {}
+            best = best or config
+        return best
 
     def _real_extract(self, url):
         video_id = self._match_id(url)

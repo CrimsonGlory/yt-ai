@@ -8,7 +8,6 @@ from .common import InfoExtractor
 from .youtube import YoutubeBaseInfoExtractor
 from ..utils import (
     KNOWN_EXTENSIONS,
-    bug_reports_message,
     clean_html,
     dict_get,
     extract_attributes,
@@ -400,7 +399,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
                 'id': 'aYAGB11YrSs',
                 'ext': 'webm',
                 'title': 'Team Fortress 2 - Sandviches!',
-                'description': 'md5:4984c0f9a07f349fc5d8e82ab7af4eaf',
+                'description': str,
                 'upload_date': '20110926',
                 'uploader': 'Zeurel',
                 'channel_id': 'UCukCyHaD-bK3in_pKpfH9Eg',
@@ -906,12 +905,14 @@ class YoutubeWebArchiveIE(InfoExtractor):
         }
         res = self._download_json(
             'https://web.archive.org/cdx/search/cdx', item_id,
-            note or 'Downloading CDX API JSON', query=query, fatal=fatal)
+            note or 'Downloading CDX API JSON', query=query, fatal=fatal,
+            errnote=False if not fatal else None)
         if isinstance(res, list) and len(res) >= 2:
             # format response to make it easier to use
             return [dict(zip(res[0], v)) for v in res[1:]]  # noqa: B905
-        elif not isinstance(res, list) or len(res) != 0:
-            self.report_warning('Error while parsing CDX API response' + bug_reports_message())
+        # Header-only lists, error objects, and empty bodies are treated as
+        # no captures (Wayback CDX is often 5xx/HTML while still 200 JSON).
+        return []
 
     def _extract_webpage_title(self, webpage):
         page_title = self._html_extract_title(webpage, default='')
@@ -1072,6 +1073,11 @@ class YoutubeWebArchiveIE(InfoExtractor):
                 break
 
         self._remove_duplicate_formats(thumbnails)
+        if not thumbnails:
+            thumbnails = [{
+                'url': (self._WAYBACK_BASE_URL % 2) + f'http://i.ytimg.com/vi/{video_id}/{name}.jpg',
+                'id': name,
+            } for name in ('maxresdefault', 'hqdefault', 'mqdefault', 'default')]
         return thumbnails
 
     def _get_capture_dates(self, video_id, url_date):

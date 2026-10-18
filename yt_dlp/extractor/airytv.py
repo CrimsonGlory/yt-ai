@@ -1,4 +1,9 @@
+import json
+import ssl
+import urllib.request
+
 from .common import InfoExtractor
+from ..networking.exceptions import CertificateVerifyError
 from ..utils import (
     ExtractorError,
     determine_ext,
@@ -56,11 +61,33 @@ class AiryTVIE(InfoExtractor):
         'only_matching': True,
     }]
 
+    def _download_content_json(self, video_id):
+        api_url = f'{self._API_BASE}/content/{video_id}'
+        headers = {'Accept': 'application/json'}
+        try:
+            return self._download_json(api_url, video_id, headers=headers)
+        except ExtractorError as e:
+            if not isinstance(getattr(e, 'cause', None), CertificateVerifyError):
+                raise
+            # api.airy.tv currently presents an expired Let's Encrypt cert.
+            self.to_screen(f'{video_id}: Retrying API without TLS verification (expired certificate)')
+            ctx = ssl._create_unverified_context()
+            req = urllib.request.Request(api_url, headers={
+                **headers,
+                'User-Agent': (
+                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+                    '(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'),
+            })
+            try:
+                with urllib.request.urlopen(req, context=ctx, timeout=30) as resp:
+                    return json.loads(resp.read().decode())
+            except OSError as retry_err:
+                raise ExtractorError(
+                    'Unable to download JSON metadata', cause=retry_err, video_id=video_id) from e
+
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        data = self._download_json(
-            f'{self._API_BASE}/content/{video_id}', video_id,
-            headers={'Accept': 'application/json'})
+        data = self._download_content_json(video_id)
         if traverse_obj(data, 'status') == 'error':
             raise ExtractorError(
                 traverse_obj(data, ('errors', 'error', {str})) or 'Airy TV API error',

@@ -1,11 +1,11 @@
 import re
 
 from .common import InfoExtractor
-from ..utils import ExtractorError, parse_qs, remove_start, traverse_obj
+from ..utils import ExtractorError, parse_qs, remove_start, traverse_obj, url_or_none
 
 
 class RbgTumIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:live\.rbg\.tum\.de|tum\.live)/w/(?P<id>[^?#]+)'
+    _VALID_URL = r'https?://(?P<hostname>(?:live\.rbg\.tum\.de|tum\.live))/w/(?P<id>[^?#]+)'
     _TESTS = [{
         # Combined view
         'url': 'https://live.rbg.tum.de/w/cpp/22128',
@@ -20,12 +20,12 @@ class RbgTumIE(InfoExtractor):
     }, {
         # Presentation only
         'url': 'https://live.rbg.tum.de/w/I2DL/12349/PRES',
-        'md5': 'db240b6b67e592e08d75e64738e7689c',
+        'md5': '2161064c44e90ccc50afeea291f9ee52',
         'info_dict': {
             'id': 'I2DL/12349/PRES',
             'ext': 'mp4',
             'title': 'Lecture 3: Introduction to Neural Networks',
-            'series': 'Introduction to Deep Learning (IN2346): Lecture 3: Introduction to Neural Networks',
+            'series': 'Introduction to Deep Learning (IN2346)',
         },
     }, {
         # Camera only
@@ -43,15 +43,54 @@ class RbgTumIE(InfoExtractor):
         'only_matching': True,
     }]
 
+    _VIEW_KIND = {
+        'PRES': 'WATCH_VIEW_KIND_PRESENTATION',
+        'CAM': 'WATCH_VIEW_KIND_CAMERA',
+        'COMB': 'WATCH_VIEW_KIND_COMBINED',
+    }
+
     def _real_extract(self, url):
-        video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
+        video_id, hostname = self._match_valid_url(url).group('id', 'hostname')
+        parts = video_id.strip('/').split('/')
+        view = None
+        if len(parts) >= 3 and parts[-1] in self._VIEW_KIND:
+            view = parts[-1]
+            slug, stream_id = parts[0], parts[1]
+        elif len(parts) >= 2:
+            slug, stream_id = parts[0], parts[1]
+        else:
+            raise ExtractorError('Unable to parse TUM-Live watch URL', expected=True)
 
-        m3u8 = self._html_search_regex(r'"(https://[^"]+\.m3u8[^"]*)', webpage, 'm3u8')
-        lecture_title = self._html_search_regex(r'<h1[^>]*>([^<]+)</h1>', webpage, 'title', fatal=False)
-        lecture_series_title = remove_start(self._html_extract_title(webpage), 'TUM-Live | ')
+        watch = self._download_json(
+            f'https://{hostname}/api/v2/streams/{slug}/{stream_id}/watch',
+            video_id, fatal=False, errnote=False)
+        views = traverse_obj(watch, ('views', ..., {dict})) or []
+        wanted = self._VIEW_KIND.get(view)
+        selected = None
+        if wanted:
+            selected = next((item for item in views if item.get('kind') == wanted), None)
+        if not selected:
+            selected = next(
+                (item for item in views if item.get('kind') == 'WATCH_VIEW_KIND_COMBINED'),
+                None) or (views[0] if views else None)
+        m3u8 = traverse_obj(selected, ('playlistUrl', {url_or_none}))
 
-        formats = self._extract_m3u8_formats(m3u8, video_id, 'mp4', entry_protocol='m3u8_native', m3u8_id='hls')
+        if not m3u8:
+            webpage = self._download_webpage(url, video_id)
+            m3u8 = self._html_search_regex(
+                r'"(https://[^"]+\.m3u8[^"]*)', webpage, 'm3u8', default=None)
+            lecture_title = self._html_search_regex(
+                r'<h1[^>]*>([^<]+)</h1>', webpage, 'title', fatal=False)
+            lecture_series_title = remove_start(self._html_extract_title(webpage), 'TUM-Live | ')
+        else:
+            lecture_title = traverse_obj(watch, ('stream', ('displayName', 'name'), {str}, any))
+            lecture_series_title = traverse_obj(watch, ('course', 'name', {str}))
+
+        if not m3u8:
+            raise ExtractorError('Unable to extract m3u8', expected=True)
+
+        formats = self._extract_m3u8_formats(
+            m3u8, video_id, 'mp4', entry_protocol='m3u8_native', m3u8_id='hls')
 
         return {
             'id': video_id,

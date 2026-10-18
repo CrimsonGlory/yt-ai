@@ -26,7 +26,7 @@ class CinetimesIE(InfoExtractor):
             'id': 'UnChienAndalou_313',
             'ext': 'wmv',
             'display_id': 'un-chien-andalou',
-            'title': 'Un chien andalou',
+            'title': 'Un chien andalou (1929)',
             'description': 'This is the infamous 1927 surreal classic, with the jaw-dropping scene where Luis Bunuel slashes an eyeball.',
             'uploader': 'Geno_Cuddy@yahoo.com',
             'duration': 985.59,
@@ -63,6 +63,17 @@ class CinetimesIE(InfoExtractor):
             embed_url = self._proto_relative_url(embed_url)
             if 'cdn-cgi' in embed_url:
                 embed_url = None
+
+        if not embed_url:
+            watch_tag = self._search_regex(
+                r'(<a[^>]+class="[^"]*watch-videos__primary[^"]*"[^>]*>)',
+                webpage, 'watch link', default=None)
+            if watch_tag:
+                embed_url = url_or_none(unescapeHTML(extract_attributes(watch_tag).get('href')))
+        if not embed_url:
+            embed_url = url_or_none(self._html_search_regex(
+                r'href="(https?://(?:www\.)?(?:archive\.org|youtube\.com|youtu\.be|vimeo\.com)[^"]+)"',
+                webpage, 'external video', default=None))
 
         title = self._html_search_regex(
             r'<h1[^>]+id="video-title"[^>]*>([^<]+)', webpage, 'title', default=None)

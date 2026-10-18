@@ -53,6 +53,7 @@ class PopcorntimesIE(InfoExtractor):
             'params': {
                 'format': 'bestvideo[protocol=https][ext=mp4]/best[protocol=https]',
             },
+            'skip': 'YouTube bot check (Sign in to confirm you\'re not a bot)',
             'expected_warnings': [
                 'Remote component challenge solver script',
                 'No supported JavaScript runtime',

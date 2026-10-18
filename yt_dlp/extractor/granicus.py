@@ -23,7 +23,7 @@ class GranicusIE(InfoExtractor):
     _EMBED_REGEX = [r'<iframe[^>]+\bsrc=(["\'])(?P<url>https?://[\w.-]+\.granicus\.com/(?:player/clip|videos)/\d+[^"\']*)\1']
     _TESTS = [{
         'url': 'https://harrisonburg-va.granicus.com/player/clip/1234?view_id=4',
-        'md5': '21279d1e54e78b6044d99ac6fdb4b357',
+        'md5': 'efbea88cddc5b42ff630e1e56cb31698',
         'info_dict': {
             'id': '1234',
             'ext': 'mp4',

@@ -12,6 +12,20 @@ from ..utils import (
 from ..utils.traversal import traverse_obj
 
 
+def _sleebi_api_headers(ie, page_url, video_id):
+    webpage = ie._download_webpage(page_url, video_id)
+    token = ie._search_regex(
+        r'SLEEBI_API_TOKEN\s*=\s*"([^"]+)"', webpage, 'api token', default=None)
+    headers = {
+        'Origin': 'https://sleebi.net',
+        'Referer': page_url,
+        'X-Requested-With': 'fetch',
+    }
+    if token:
+        headers['X-CSRF-Token'] = token
+    return webpage, headers
+
+
 class SleebiIE(InfoExtractor):
     IE_NAME = 'sleebi'
     IE_DESC = 'Sleebi'
@@ -49,14 +63,16 @@ class SleebiIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
+        _, api_headers = _sleebi_api_headers(self, url, video_id)
         meta = self._download_json(
-            f'https://sleebi.net/v/API/{video_id}', video_id, expected_status=404)
+            f'https://sleebi.net/v/API/{video_id}', video_id,
+            headers=api_headers, expected_status=404)
         error = traverse_obj(meta, ('error', {str}))
         if error:
             raise ExtractorError(error, expected=True)
 
         src_info = self._download_json(
-            PUTRequest(f'https://sleebi.net/v/API/{video_id}/src'),
+            PUTRequest(f'https://sleebi.net/v/API/{video_id}/src', headers=api_headers),
             video_id, 'Downloading video source',
             query={'avc': '1', 'vp9': '1', 'av1': '1', 'hevc': '1'},
             expected_status=(403, 404))
@@ -119,12 +135,13 @@ class SleebiChannelIE(InfoExtractor):
         'only_matching': True,
     }]
 
-    def _entries(self, channel_id):
+    def _entries(self, channel_id, api_headers):
         page = 0
         while True:
             data = self._download_json(
                 'https://sleebi.net/q/API/all', channel_id,
                 note=f'Downloading channel page {page}',
+                headers=api_headers,
                 query={'channelId': channel_id, 'page': page})
             results = traverse_obj(data, ('results', ..., {dict})) or []
             for video in results:
@@ -139,8 +156,10 @@ class SleebiChannelIE(InfoExtractor):
 
     def _real_extract(self, url):
         channel_id = self._match_id(url)
+        _, api_headers = _sleebi_api_headers(self, url, channel_id)
         meta = self._download_json(
-            f'https://sleebi.net/c/API/{channel_id}', channel_id, fatal=False)
+            f'https://sleebi.net/c/API/{channel_id}', channel_id,
+            headers=api_headers, fatal=False)
         return self.playlist_result(
-            self._entries(channel_id), channel_id,
+            self._entries(channel_id, api_headers), channel_id,
             traverse_obj(meta, ('title', {str})))

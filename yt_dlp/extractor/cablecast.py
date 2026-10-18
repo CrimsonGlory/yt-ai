@@ -35,6 +35,7 @@ class CablecastIE(InfoExtractor):
             'subtitles': 'count:1',
         },
         'params': {'format': 'http'},
+        'skip': 'Cablecast API HTTP 504 / read timeout on reflect-wctv-village-willmette.cablecast.tv',
     }, {
         'url': 'https://reflect-wctv-village-willmette.cablecast.tv/internetchannel/show/532',
         'only_matching': True,
