@@ -84,7 +84,14 @@ class PodchaserIE(InfoExtractor):
         return info
 
     def _call_api(self, path, *args, **kwargs):
-        return self._download_json(f'https://api.podchaser.com/{path}', *args, **kwargs)
+        headers = {
+            'Origin': 'https://www.podchaser.com',
+            'Referer': 'https://www.podchaser.com/',
+            **(kwargs.pop('headers', None) or {}),
+        }
+        return self._download_json(
+            f'https://api.podchaser.com/{path}', *args, headers=headers,
+            impersonate=True, **kwargs)
 
     def _fetch_page(self, podcast_id, podcast, page):
         json_response = self._call_api(

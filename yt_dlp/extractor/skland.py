@@ -308,8 +308,12 @@ class SklandIE(InfoExtractor):
             **traverse_obj(data, {
                 'uploader': ('user', 'nickname', {str}),
                 'uploader_id': ('user', 'id', {str_or_none}),
-                'tags': ('tags', ..., 'name', {str}, all),
                 'like_count': ('itemRts', 'liked', {int_or_none}),
                 'comment_count': ('itemRts', 'commented', {int_or_none}),
             }),
+            'tags': (
+                traverse_obj(data, ('tags', ..., 'name', {str}))
+                or traverse_obj(data, ('tags', ..., {str}))
+                or traverse_obj(item, ('tags', ..., 'name', {str}))
+                or traverse_obj(item, ('tags', ..., {str}))),
         }

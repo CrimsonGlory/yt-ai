@@ -4,6 +4,7 @@ from ..utils import (
     determine_ext,
     get_elements_text_and_html_by_attribute,
     scale_thumbnails_to_max_format_width,
+    unified_timestamp,
     url_or_none,
 )
 
@@ -18,11 +19,15 @@ class TVOpenGrBaseIE(InfoExtractor):
         for endpoint in self._PLAYER_APIS:
             player = self._download_json(
                 endpoint, video_id, query={'cid': video_id},
-                fatal=False, errnote=False)
+                fatal=False, errnote=False, impersonate=True)
             if isinstance(player, dict) and (
                     url_or_none(player.get('stream')) or url_or_none(player.get('httpstream'))):
                 return player
         raise ExtractorError('Unable to download player JSON', expected=True)
+
+    def _download_open_webpage(self, url, video_id, note='Downloading webpage'):
+        return self._download_webpage(
+            url, video_id, note, fatal=False, errnote=False, impersonate=True) or ''
 
     def _extract_formats_and_subs(self, response, video_id):
         formats, subs = [], {}
@@ -55,13 +60,13 @@ class TVOpenGrBaseIE(InfoExtractor):
             webpage, video_id, expected_type='VideoObject', default={}) or {}
 
     def _extract_open_video(self, video_id, display_id, webpage):
+        webpage = webpage or ''
         info = self._webpage_video_info(webpage, video_id)
         if not info.get('title'):
             canonical_url = self._og_search_url(webpage, default=None)
             if canonical_url:
-                canon_page = self._download_webpage(
-                    canonical_url, video_id, 'Downloading canonical watch page',
-                    fatal=False, errnote=False)
+                canon_page = self._download_open_webpage(
+                    canonical_url, video_id, 'Downloading canonical watch page')
                 if canon_page:
                     webpage = canon_page
                     info = self._webpage_video_info(webpage, video_id)
@@ -69,6 +74,11 @@ class TVOpenGrBaseIE(InfoExtractor):
                         display_id = self._search_regex(
                             r'/watch/\d+/([^/?#]+)', canonical_url,
                             'display id', default=video_id)
+        if not webpage:
+            webpage = self._download_open_webpage(
+                f'https://cdn.ethnos.gr/embed/{video_id}', video_id, 'Downloading embed page')
+            if webpage and not info.get('title'):
+                info = self._webpage_video_info(webpage, video_id) or info
 
         player = self._download_player(video_id)
         info['formats'], info['subtitles'] = self._extract_formats_and_subs(player, video_id)
@@ -94,10 +104,15 @@ class TVOpenGrBaseIE(InfoExtractor):
         info['title'] = (
             info.get('title')
             or self._og_search_title(webpage, default=None)
-            or self._html_extract_title(webpage))
+            or self._html_extract_title(webpage, default=None)
+            or display_id or video_id)
         info.setdefault(
             'description',
-            self._og_search_description(webpage, default=None))
+            self._og_search_description(webpage, default=None)
+            or self._html_search_meta('description', webpage, default=None))
+        if not info.get('timestamp'):
+            info['timestamp'] = unified_timestamp(
+                self._html_search_meta('publish-date', webpage, default=None))
         if not info.get('thumbnails') and not info.get('thumbnail'):
             info['thumbnail'] = self._og_search_thumbnail(webpage, default=None)
         return info
@@ -140,7 +155,7 @@ class TVOpenGrWatchIE(TVOpenGrBaseIE):
 
     def _real_extract(self, url):
         video_id, display_id = self._match_valid_url(url).group('id', 'slug')
-        webpage = self._download_webpage(url, video_id)
+        webpage = self._download_open_webpage(url, video_id)
         return self._extract_open_video(video_id, display_id, webpage)
 
 
@@ -181,7 +196,7 @@ class TVOpenGrEmbedIE(TVOpenGrBaseIE):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
+        webpage = self._download_open_webpage(url, video_id)
         display_id = self._search_regex(
             r'/watch/\d+/([^/?#]+)',
             self._og_search_url(webpage, default=''),

@@ -22,7 +22,14 @@ class FunkwhaleBaseIE(InfoExtractor):
     _PAGE_SIZE = 50
 
     def _call_api(self, host, path, video_id, **kwargs):
-        return self._download_json(f"https://{host}/api/v1/{path.lstrip('/')}", video_id, **kwargs)
+        return self._download_json(f"https://{host}/api/v2/{path.lstrip('/')}", video_id, **kwargs)
+
+    def _credit_names(self, obj):
+        names = traverse_obj(obj, ('artist_credit', ..., 'credit', {str}, filter))
+        if names:
+            return names
+        name = traverse_obj(obj, ('artist', 'name', {str}))
+        return [name] if name else None
 
     def _api_pages(self, host, path, video_id, query=None):
         query = dict(query or {})
@@ -149,6 +156,8 @@ class FunkwhaleIE(FunkwhaleBaseIE):
         attributed = traverse_obj(track, ('attributed_to', {dict})) or {}
         channel_id = traverse_obj(artist, ('channel', 'actor', 'full_username', {str}))
         duration = traverse_obj(uploads, (..., 'duration', {int_or_none}, any))
+        artists = self._credit_names(track)
+        album_artists = self._credit_names(album)
 
         return {
             'id': str_or_none(track.get('id')) or track_id,
@@ -169,9 +178,9 @@ class FunkwhaleIE(FunkwhaleBaseIE):
                 },
             ),
             'album': traverse_obj(album, ('title', {str})),
-            'album_artists': traverse_obj(album, ('artist', 'name', {str}, filter, all, filter)),
+            'album_artists': album_artists,
             'release_date': unified_strdate(album.get('release_date')),
-            'artists': traverse_obj(artist, ('name', {str}, filter, all, filter)),
+            'artists': artists,
             'uploader': traverse_obj(attributed, (('name', 'preferred_username'), {str}, any)),
             'uploader_id': traverse_obj(attributed, ('full_username', {str})),
             'channel': traverse_obj(artist, ('name', {str})) if channel_id else None,
@@ -183,10 +192,20 @@ class FunkwhaleIE(FunkwhaleBaseIE):
 
 class FunkwhalePlaylistIE(FunkwhaleBaseIE):
     IE_NAME = 'funkwhale:playlist'
-    _VALID_URL = rf'https?://{_NETLOC_RE}/library/playlists/(?P<id>\d+)'
+    _VALID_URL = rf'https?://{_NETLOC_RE}/library/playlists/(?P<id>[\da-fA-F-]+)'
     _TESTS = [
         {
+            'url': 'https://funk.firobe.fr/library/playlists/0fd291f4-2114-4696-ad67-f6e4d0be4355',
+            'info_dict': {
+                'id': '0fd291f4-2114-4696-ad67-f6e4d0be4355',
+                'title': 'Jazz',
+            },
+            'playlist_mincount': 16,
+            'params': {'skip_download': True},
+        },
+        {
             'url': 'https://funk.firobe.fr/library/playlists/31',
+            'skip': 'numeric playlist ids were replaced by UUIDs in Funkwhale 2.0',
             'info_dict': {
                 'id': '31',
                 'title': 'Jazz',

@@ -2362,7 +2362,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Forendors** (`forendors.cz`): Public `api.forendors.cz` post JSON and signed `assets.forendors.cz` HLS. Request: [yt-dlp/yt-dlp#15173](https://github.com/yt-dlp/yt-dlp/issues/15173)
     * **FOX4KC** (`fox4kc.com`): Anvato/Lura HLS from `/video/{slug}/{id}/` URLs and WordPress `lead_media` on article pages. Request: [yt-dlp/yt-dlp#16582](https://github.com/yt-dlp/yt-dlp/issues/16582)
     * **FreeSex** (`freesex.cz`): POST the 18+ terms form and extract the Video.js HTML5 MP4. Request: [yt-dlp/yt-dlp#15930](https://github.com/yt-dlp/yt-dlp/issues/15930)
-    * **Funkwhale** (`funk.firobe.fr`): Public `/api/v1` track, playlist, album, and channel JSON plus `/api/v1/listen` audio. Request: [yt-dlp/yt-dlp#7627](https://github.com/yt-dlp/yt-dlp/issues/7627)
+    * **Funkwhale** (`funk.firobe.fr`): Public `/api/v2` track, playlist, album, and channel JSON plus `/api/v2/listen` audio (playlist IDs are UUIDs). Request: [yt-dlp/yt-dlp#7627](https://github.com/yt-dlp/yt-dlp/issues/7627)
     * **Fyptt** (`fyptt.to`): ARVE iframe to Video.js `fypttstr.php` / JWPlayer `fypttjwstr.php` and tokenized `stream.fyptt.to` MP4. Request: [yt-dlp/yt-dlp#7998](https://github.com/yt-dlp/yt-dlp/issues/7998)
     * **Gayhaus** (`gayhaus.com`): KVS `kt_player` config (randomized JS object) and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#12384](https://github.com/yt-dlp/yt-dlp/issues/12384)
     * **Gaystream** (`gaystream.pw`): Server-tab embed URLs; prefer **voe**, with Vidhide packed HLS fallback. Host-embed discovery is internal so Generic webpage extraction is not shadowed. Request: [yt-dlp/yt-dlp#3312](https://github.com/yt-dlp/yt-dlp/issues/3312)
@@ -2759,6 +2759,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **playvids**: Read the numeric ID from `get_related_videos` when the player has no `data-id`
     * **plutotv**: Match current `/movies/` and `/shows/` VOD URLs
     * **podbayfm**: Impersonate the browser
+    * **podchaser**: Impersonate the `list/episode` API and send a site Origin/Referer (CloudFront otherwise returns HTTP 403)
     * **podomatic**: Use the public v2 episode API and enclosure MP3s instead of the dead embed_params JSON
     * **polsatgo**: Use the Polsat Box Go `pbg` portal after Polsat Go shutdown; raise login when playback is denied
     * **polskieradio**: Fetch article JSON from `api-gateway.polskieradio.pl` when the Next.js page is an empty shell or errors
@@ -2812,6 +2813,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **scrolller**: Use the current `api.scrolller.com/admin` GraphQL `getPost` query
     * **sexu**: Use `/api/video-info` (HLS + MP4) and JSON-LD instead of the old JWPlayer setup
     * **showroom**: Use the public room API instead of Nuxt + login cookie
+    * **skland**: Read article tags from both the item payload and string tag lists
     * **sky.it**: Call `video.sky.it/api/v1` instead of the decommissioned `apid.sky.it/vdp/v1` host
     * **sky:news**: Impersonate the browser and extract Brightcove IDs from the video sitemap / iframe widget when Akamai returns 403 or a challenge page
     * **sky:sports**: Fetch a Condatis Brightcove JWT and match current `/{sport}/video/` clip URLs
@@ -2860,7 +2862,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **tvc**: Match https iframe embeds
     * **tvigle**: Resolve current `/video/` pages from Next.js data and the cloud play API
     * **tvn24**: Extract JSON-LD VideoObject MP4s on current `/...-vd` pages instead of the old data-quality player
-    * **tvopengr**: Player JSON from `cdn.ethnos.gr` when `tvopen.gr/templates/data/player` 500s; canonical watch JSON-LD and player thumbs when the current page has no VideoObject
+    * **tvopengr**: Impersonate Cloudflare on watch/embed pages; player JSON from `cdn.ethnos.gr` when `tvopen.gr/templates/data/player` 500s; canonical watch JSON-LD and player thumbs when the current page has no VideoObject; fall back to the cdn embed page when the watch page is unreachable
     * **tvp**: Fall back to the original TVPlayer object id when retired portals such as swipeto.pl 301 to the VOD homepage
     * **tvw**: Impersonate the browser
     * **tweakers**: Follow YouTube embeds from `YouTubePlayer.init` (impersonate, DPG privacy gate)
