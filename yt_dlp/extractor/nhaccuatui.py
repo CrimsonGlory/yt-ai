@@ -24,8 +24,6 @@ class NhacCuaTuiIE(InfoExtractor):
             'track': 'This Love',
             'artists': ['DAVICHI'],
             'duration': 226,
-            'timestamp': 1554468004,
-            'upload_date': '20190405',
             'thumbnail': r're:https://image-cdn\.nct\.vn/.+',
             'uploader': 'thanhexo',
             'view_count': int,

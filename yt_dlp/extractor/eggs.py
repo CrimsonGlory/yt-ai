@@ -72,7 +72,7 @@ class EggsIE(EggsBaseIE):
                 'title': '指先',
                 'uploader': "the奥歯's",
                 'uploader_id': '23808',
-                'thumbnail': 'md5:f5f2792698ef7138e0faf1bfdba92fa7',
+                'thumbnail': r're:https?://image-pro\.eggs\.mu/jacket/.+\.jpg(?:\?.*)?$',
                 'timestamp': 1770364800,
                 'upload_date': '20260206',
                 'view_count': int,

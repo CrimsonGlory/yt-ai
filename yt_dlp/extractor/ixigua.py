@@ -177,15 +177,18 @@ class IxiguaIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id, headers={
-            # ByteDance serves an interstitial JS VM challenge to ordinary browser
-            # clients; search-engine crawlers get SSR JSON with playable URLs
-            'User-Agent': self._GOOGLEBOT_USER_AGENT,
-        })
-
-        info = self._extract_from_ssr_data(webpage, video_id)
-        if info and info.get('formats'):
-            return info
+        webpage = None
+        info = None
+        # ByteDance sometimes serves an interstitial JS VM challenge even to
+        # Googlebot; retry once before requiring cookies for SSR_HYDRATED_DATA
+        for attempt in range(2):
+            webpage = self._download_webpage(
+                url, video_id,
+                'Downloading webpage' if attempt == 0 else 'Retrying webpage',
+                headers={'User-Agent': self._GOOGLEBOT_USER_AGENT})
+            info = self._extract_from_ssr_data(webpage, video_id)
+            if info and info.get('formats'):
+                return info
 
         json_data = self._get_json_data(webpage, video_id)['anyVideo']['gidInformation']['packerData']['video']
         formats = list(self._media_selector(json_data.get('videoResource')))

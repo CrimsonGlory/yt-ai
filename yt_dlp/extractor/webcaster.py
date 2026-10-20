@@ -13,7 +13,7 @@ class WebcasterIE(InfoExtractor):
     _TESTS = [{
         # https://otr.webcaster.pro/
         'url': 'https://bl.webcaster.pro/media/start/free_2689e8cc10e002cd5bd5df023700541e_hd/2_9028444105/dfbbc633edf34af7254dec8baccd7a59/4652352931?sr%3D197%26type_id%3D18',
-        'md5': '2e7bd94ab83426f26eec60a4101ef49f',
+        'md5': 'f9f378f426629e57c88dd1b1a812ab6a',
         'info_dict': {
             'id': '2689e8cc10e002cd5bd5df023700541e_hd',
             'ext': 'mp4',

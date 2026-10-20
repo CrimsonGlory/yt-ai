@@ -1,6 +1,7 @@
 import urllib.parse
 
 from .common import InfoExtractor
+from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
     clean_html,
@@ -22,7 +23,16 @@ class FunkwhaleBaseIE(InfoExtractor):
     _PAGE_SIZE = 50
 
     def _call_api(self, host, path, video_id, **kwargs):
-        return self._download_json(f"https://{host}/api/v2/{path.lstrip('/')}", video_id, **kwargs)
+        path = path.lstrip('/')
+        try:
+            return self._download_json(f'https://{host}/api/v2/{path}', video_id, **kwargs)
+        except ExtractorError as e:
+            if not isinstance(getattr(e, 'cause', None), HTTPError) or e.cause.status != 404:
+                raise
+        v1_kwargs = dict(kwargs)
+        note = v1_kwargs.get('note')
+        v1_kwargs['note'] = f'{note} (API v1)' if note else 'Downloading JSON metadata (API v1)'
+        return self._download_json(f'https://{host}/api/v1/{path}', video_id, **v1_kwargs)
 
     def _credit_names(self, obj):
         names = traverse_obj(obj, ('artist_credit', ..., 'credit', {str}, filter))
@@ -195,19 +205,19 @@ class FunkwhalePlaylistIE(FunkwhaleBaseIE):
     _VALID_URL = rf'https?://{_NETLOC_RE}/library/playlists/(?P<id>[\da-fA-F-]+)'
     _TESTS = [
         {
-            'url': 'https://funk.firobe.fr/library/playlists/0fd291f4-2114-4696-ad67-f6e4d0be4355',
+            'url': 'https://funk.firobe.fr/library/playlists/31',
             'info_dict': {
-                'id': '0fd291f4-2114-4696-ad67-f6e4d0be4355',
+                'id': '31',
                 'title': 'Jazz',
             },
             'playlist_mincount': 16,
             'params': {'skip_download': True},
         },
         {
-            'url': 'https://funk.firobe.fr/library/playlists/31',
-            'skip': 'numeric playlist ids were replaced by UUIDs in Funkwhale 2.0',
+            'url': 'https://funk.firobe.fr/library/playlists/0fd291f4-2114-4696-ad67-f6e4d0be4355',
+            'skip': 'playlist gone',
             'info_dict': {
-                'id': '31',
+                'id': '0fd291f4-2114-4696-ad67-f6e4d0be4355',
                 'title': 'Jazz',
             },
             'playlist_mincount': 16,

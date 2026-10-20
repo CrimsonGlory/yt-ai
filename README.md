@@ -2362,7 +2362,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Forendors** (`forendors.cz`): Public `api.forendors.cz` post JSON and signed `assets.forendors.cz` HLS. Request: [yt-dlp/yt-dlp#15173](https://github.com/yt-dlp/yt-dlp/issues/15173)
     * **FOX4KC** (`fox4kc.com`): Anvato/Lura HLS from `/video/{slug}/{id}/` URLs and WordPress `lead_media` on article pages. Request: [yt-dlp/yt-dlp#16582](https://github.com/yt-dlp/yt-dlp/issues/16582)
     * **FreeSex** (`freesex.cz`): POST the 18+ terms form and extract the Video.js HTML5 MP4. Request: [yt-dlp/yt-dlp#15930](https://github.com/yt-dlp/yt-dlp/issues/15930)
-    * **Funkwhale** (`funk.firobe.fr`): Public `/api/v2` track, playlist, album, and channel JSON plus `/api/v2/listen` audio (playlist IDs are UUIDs). Request: [yt-dlp/yt-dlp#7627](https://github.com/yt-dlp/yt-dlp/issues/7627)
+    * **Funkwhale** (`funk.firobe.fr`): Public `/api/v2` track, playlist, album, and channel JSON with `/api/v1` fallback, plus listen audio (numeric and UUID playlist IDs). Request: [yt-dlp/yt-dlp#7627](https://github.com/yt-dlp/yt-dlp/issues/7627)
     * **Fyptt** (`fyptt.to`): ARVE iframe to Video.js `fypttstr.php` / JWPlayer `fypttjwstr.php` and tokenized `stream.fyptt.to` MP4. Request: [yt-dlp/yt-dlp#7998](https://github.com/yt-dlp/yt-dlp/issues/7998)
     * **Gayhaus** (`gayhaus.com`): KVS `kt_player` config (randomized JS object) and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#12384](https://github.com/yt-dlp/yt-dlp/issues/12384)
     * **Gaystream** (`gaystream.pw`): Server-tab embed URLs; prefer **voe**, with Vidhide packed HLS fallback. Host-embed discovery is internal so Generic webpage extraction is not shadowed. Request: [yt-dlp/yt-dlp#3312](https://github.com/yt-dlp/yt-dlp/issues/3312)
@@ -2593,7 +2593,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **cybrary**: Call the catalog API without requiring a login token
     * **dailywire**: Use the GraphQL API instead of Next.js page data
     * **dangalplay**: Extract public Akamai HLS from `smart_url` without login
-    * **daum**: Extract the current Kakao/Daum VOD player instead of the dead tvpot embed; only advertise `peekViewUrl` when the clip actually has one
+    * **daum**: Extract the current Kakao/Daum VOD player instead of the dead tvpot embed; only advertise `peekViewUrl` when the clip actually has one; fall back to watch-page `clipData` / Open Graph when the clip API is empty
     * **daystar**: Read Lightcast `configUrl` from the player iframe (including `/live/` URLs)
     * **dfb**: Follow YouTube embeds and match `dfb.de` news video URLs
     * **dhm**: Support journal articles and JWPlayer/HLS when the XSPF playlist is gone
@@ -2656,7 +2656,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **indavideo**: Referer + JSONP callback on `playerHandler`
     * **iqiyi**: Current IQ/iQIYI playback (bid quality tags and signed play URLs)
     * **islamchannel**: VOD paths and a fallback stream URL
-    * **ixigua**: Decode play URLs and fetch with a Googlebot UA
+    * **ixigua**: Decode play URLs and fetch with a Googlebot UA; retry the watch page once when SSR JSON is missing
     * **jable**: Impersonate the browser
     * **jeuxvideo**: Dailymotion embeds (impersonate)
     * **jixie**: Kompas `jixie-stream` API

@@ -27,7 +27,7 @@ class StreamingCommunityzIE(InfoExtractor):
         (?P<id>\d+)
     '''
     _TESTS = [{
-        'url': 'https://streamingcommunityz.style/it/watch/60268',
+        'url': 'https://streamingcommunityz.build/it/watch/60268',
         'md5': '92df9feb222b1ab2b7c832066ca932e5',
         'info_dict': {
             'id': '60268',
@@ -41,16 +41,24 @@ class StreamingCommunityzIE(InfoExtractor):
             'view_count': int,
         },
     }, {
-        'url': 'https://streamingcommunityz.style/it/iframe/60268',
+        'url': 'https://streamingcommunityz.style/it/watch/60268',
+        'skip': 'domain gone',
+        'info_dict': {
+            'id': '60268',
+            'ext': 'mp4',
+            'title': 'Oceania',
+        },
+    }, {
+        'url': 'https://streamingcommunityz.build/it/iframe/60268',
         'only_matching': True,
     }, {
-        'url': 'https://streamingcommunityz.style/it/watch/8424?e=61161',
+        'url': 'https://streamingcommunityz.build/it/watch/8424?e=61161',
         'only_matching': True,
     }, {
-        'url': 'https://streamingcommunityz.style/it/titles/60268-oceania',
+        'url': 'https://streamingcommunityz.build/it/titles/60268-oceania',
         'only_matching': True,
     }, {
-        'url': 'https://streamingcommunityz.style/it/titles/8424-dark-matter/season-2',
+        'url': 'https://streamingcommunityz.build/it/titles/8424-dark-matter/season-2',
         'only_matching': True,
     }, {
         'url': 'https://streamingcommunityz.cz/it/watch/60268',

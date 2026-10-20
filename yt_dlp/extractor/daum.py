@@ -124,9 +124,10 @@ class DaumIE(DaumBaseIE):
         },
     }]
 
-    def _homi_contents(self, key, video_id, note, query):
+    def _homi_contents(self, key, video_id, note, query, fatal=True):
         data = self._download_json(
-            f'{self._HOMI_API}/{key}', video_id, note, query=query)
+            f'{self._HOMI_API}/{key}', video_id, note, query=query,
+            fatal=fatal, errnote=False if not fatal else None)
         return traverse_obj(data, ('frames', 0, 'contents')) or {}
 
     def _jwt_payload(self, token, video_id):
@@ -204,9 +205,24 @@ class DaumIE(DaumBaseIE):
             if clip_link_id:
                 clip_link = self._homi_contents(
                     'cliplink', video_id, 'Downloading clip metadata',
-                    {'clipLinkId': clip_link_id}).get('clipLink') or {}
+                    {'clipLinkId': clip_link_id}, fatal=False).get('clipLink') or {}
 
         clip = traverse_obj(clip_link, ('clip', {dict})) or {}
+        if not clip.get('title'):
+            webpage = self._download_webpage(
+                url, video_id, fatal=False, errnote=False) or ''
+            page_clip_link = self._search_json(
+                r'"clipData"\s*:\s*', webpage.replace('\\"', '"'),
+                'clip data', video_id, fatal=False)
+            if traverse_obj(page_clip_link, ('clip', 'title')):
+                clip_link = page_clip_link
+                clip = traverse_obj(clip_link, ('clip', {dict})) or {}
+            else:
+                clip['title'] = self._og_search_title(webpage, default=None)
+                clip.setdefault('thumbnailUrl', self._og_search_thumbnail(webpage))
+                clip.setdefault('duration', self._html_search_meta('video:duration', webpage))
+                clip.setdefault('createTime', self._html_search_meta('video:release_date', webpage))
+
         formats = []
         preview_url = url_or_none(clip.get('peekViewUrl'))
         if preview_url:
