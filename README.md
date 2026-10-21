@@ -2267,7 +2267,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 
 ### New features
 
-* Forked from [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and periodically merged with upstream (currently through [**yt-dlp@f59cd0ba0**](https://github.com/yt-dlp/yt-dlp/commit/f59cd0ba0))
+* Forked from [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and periodically merged with upstream (currently through [**yt-dlp@d94ef10e3**](https://github.com/yt-dlp/yt-dlp/commit/d94ef10e3))
 
 * **Independent branding**: Binaries, config, cache, and plugin paths use `yt-ai`, so yt-ai can be installed alongside yt-dlp. The Python import remains `yt_dlp`. See [CONFIGURATION](#configuration)
 
@@ -2955,7 +2955,7 @@ Relative to **yt-dlp**:
 CLI defaults (format selection, output template, Python version, and so on) otherwise match yt-dlp. The following differences from youtube-dl / youtube-dlc, and the `--compat-options` that revert them, are inherited from yt-dlp:
 
 * yt-ai supports only [Python 3.10+](## "Windows 8"), and will remove support for more versions as they [become EOL](https://devguide.python.org/versions/#python-release-cycle); while [youtube-dl still supports Python 2.6+ and 3.2+](https://github.com/ytdl-org/youtube-dl/issues/30568#issue-1118238743)
-* The options `--auto-number` (`-A`), `--title` (`-t`) and `--literal` (`-l`), no longer work. See [removed options](#Removed) for details
+* Some options no longer work. See [removed options](#removed) for details
 * `avconv` is not supported as an alternative to `ffmpeg`
 * yt-ai stores config files in slightly different locations to youtube-dl. See [CONFIGURATION](#configuration) for a list of correct locations
 * The default [output template](#output-template) is `%(title)s [%(id)s].%(ext)s`. There is no real reason for this change. This was changed before yt-ai was ever made public and now there are no plans to change it back to `%(title)s-%(id)s.%(ext)s`. Instead, you may use `--compat-options filename`
@@ -3117,10 +3117,7 @@ These options may no longer work as intended
     --no-include-ads                 Default
     --write-annotations              No supported site has annotations now
     --no-write-annotations           Default
-    --avconv-location                Removed alias for --ffmpeg-location
     --cn-verification-proxy URL      Removed alias for --geo-verification-proxy URL
-    --dump-headers                   Removed alias for --print-traffic
-    --dump-intermediate-pages        Removed alias for --dump-pages
     --youtube-skip-dash-manifest     Removed alias for --extractor-args "youtube:skip=dash" (Alias: --no-youtube-include-dash-manifest)
     --youtube-skip-hls-manifest      Removed alias for --extractor-args "youtube:skip=hls" (Alias: --no-youtube-include-hls-manifest)
     --youtube-include-dash-manifest  Default (Alias: --no-youtube-skip-dash-manifest)
@@ -3132,10 +3129,13 @@ These options may no longer work as intended
     --compat-options no-youtube-prefer-utc-upload-date  No longer supported
 
 #### Removed
-These options were deprecated since 2014 and have now been entirely removed
+These aliases have been removed and may be reused. Please update your scripts and configuration files accordingly
 
     -A, --auto-number                -o "%(autonumber)s-%(id)s.%(ext)s"
     -t, -l, --title, --literal       -o "%(title)s-%(id)s.%(ext)s"
+    --avconv-location                --ffmpeg-location
+    --dump-headers                   --print-traffic
+    --dump-intermediate-pages        --dump-pages
 
 
 # CONTRIBUTING
