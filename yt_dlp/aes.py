@@ -203,7 +203,7 @@ def aes_cbc_encrypt(data, key, iv, *, padding_mode='pkcs7'):
 
 def aes_gcm_decrypt_and_verify(data, key, tag, nonce):
     """
-    Decrypt with aes in GBM mode and checks authenticity using tag
+    Decrypt with AES in GCM mode and check authenticity using tag
 
     @param {int[]} data        cipher
     @param {int[]} key         16-Byte cipher key
@@ -233,9 +233,8 @@ def aes_gcm_decrypt_and_verify(data, key, tag, nonce):
     s_tag = ghash(
         hash_subkey,
         data
-        + [0] * pad_len                                  # pad
-        + list((0 * 8).to_bytes(8, 'big')                # length of associated data
-               + ((len(data) * 8).to_bytes(8, 'big'))),  # length of data
+        + [0] * (pad_len + 8)  # padding and length of associated data
+        + list((len(data) * 8).to_bytes(8, 'big')),  # length of data
     )
 
     if tag != aes_ctr_encrypt(s_tag, key, j0):

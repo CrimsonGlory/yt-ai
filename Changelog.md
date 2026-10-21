@@ -57,6 +57,7 @@
 #### Misc. changes
 - **build**
     - [Bypass cooldown for `deno`](https://github.com/yt-dlp/yt-dlp/commit/f82b268121fcb9313c5d78654f053606223d8483) ([#17880](https://github.com/yt-dlp/yt-dlp/issues/17880)) by [bashonly](https://github.com/bashonly)
+    - [Fix armv7l executable verification](https://github.com/yt-dlp/yt-dlp/commit/8cdf4fea48ecf4064387375301d7f294ebdb17c1) ([#17886](https://github.com/yt-dlp/yt-dlp/issues/17886)) by [bashonly](https://github.com/bashonly)
     - [Update 2 dependencies](https://github.com/yt-dlp/yt-dlp/commit/f59cd0ba0a3c666fa5d8793b073fa9f03cfecc22) ([#17882](https://github.com/yt-dlp/yt-dlp/issues/17882)) by [bashonly](https://github.com/bashonly), [dlp-bot](https://github.com/dlp-bot)
     - [Update 33 dependencies](https://github.com/yt-dlp/yt-dlp/commit/70279f2f0c576e23e1ec1406317d2cb85586af3f) ([#17581](https://github.com/yt-dlp/yt-dlp/issues/17581)) by [bashonly](https://github.com/bashonly), [dlp-bot](https://github.com/dlp-bot)
 - **ci**: [Update 3 actions in 3 workflows](https://github.com/yt-dlp/yt-dlp/commit/779f59966974dcec0370a5834f78d7747aafe43c) ([#17748](https://github.com/yt-dlp/yt-dlp/issues/17748)) by [bashonly](https://github.com/bashonly), [dlp-bot](https://github.com/dlp-bot)

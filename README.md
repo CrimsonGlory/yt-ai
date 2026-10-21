@@ -2267,9 +2267,11 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 
 ### New features
 
-* Forked from [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and periodically merged with upstream (currently through [**yt-dlp@d94ef10e3**](https://github.com/yt-dlp/yt-dlp/commit/d94ef10e3))
+* Forked from [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and periodically merged with upstream (currently through [**yt-dlp@3d28cf478**](https://github.com/yt-dlp/yt-dlp/commit/3d28cf478))
 
 * **Independent branding**: Binaries, config, cache, and plugin paths use `yt-ai`, so yt-ai can be installed alongside yt-dlp. The Python import remains `yt_dlp`. See [CONFIGURATION](#configuration)
+
+* **Python 3.10**: CPython 3.10 remains supported after yt-dlp dropped it in 2026.10.21 (`requires-python >=3.10`, compat shims, and the 3.10 test matrix)
 
 * **AI/LLM contributions required**: yt-dlp's NO AI / NO LLM contribution ban (`.NO_AI`, issue/PR checkboxes, and auto-close workflow) has been replaced with [`.NO_HUMAN`](.NO_HUMAN/README.md)
 
@@ -2935,7 +2937,6 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * `make_changelog` attributes fork commits to the git author and `CrimsonGlory/yt-ai`
     * [Development Docker workflow](https://github.com/CrimsonGlory/yt-ai/commit/13d780d260672007c07b37e4b5060a06c27d5b15) (`docker/Dockerfile` + compose) to run yt-ai and the offline suite in a container
     * `release.sh` crontab helper: dispatch the GitHub `Release` workflow only when `master` has commits after the latest GitHub release (no nightly/stable channel)
-    * Linux armv7l onedir verification drops EOL Debian 11 security mirrors (LTS ended 2026-08-31) so nightly releases are not blocked by expired `bullseye-security` metadata / 404s
 
 See [commits](https://github.com/CrimsonGlory/yt-ai/commits) for the full list of changes
 
