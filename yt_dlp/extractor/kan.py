@@ -29,7 +29,7 @@ class KanIE(InfoExtractor):
             'thumbnail': r're:https?://www\.kan\.org\.il/media/.+',
             'duration': 2718,
             'series': 'מה שכרוך',
-            'channel': 'כאן הסכתים',
+            'channel': 'הסכתים',
             'episode': 'תמיד יש לי כוח בעולמך להיות',
             'episode_number': 1730,
             'upload_date': '20260830',

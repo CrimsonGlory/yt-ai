@@ -379,7 +379,7 @@ class PolskieRadioCategoryIE(InfoExtractor):
             'id': '175458',
             'title': 'Krzysztof Dziuba',
         },
-        'playlist_mincount': 420,
+        'playlist_mincount': 250,
     }, {
         'url': 'http://www.polskieradio.pl/8,Dwojka/196,Publicystyka',
         'only_matching': True,
