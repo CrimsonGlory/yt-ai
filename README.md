@@ -2267,7 +2267,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 
 ### New features
 
-* Forked from [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and periodically merged with upstream (currently through [**yt-dlp@70279f2f0**](https://github.com/yt-dlp/yt-dlp/commit/70279f2f0c576e23e1ec1406317d2cb85586af3f))
+* Forked from [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and periodically merged with upstream (currently through [**yt-dlp@12ac9aca7**](https://github.com/yt-dlp/yt-dlp/commit/12ac9aca79671420724227aca37bc888c604a6f8))
 
 * **Independent branding**: Binaries, config, cache, and plugin paths use `yt-ai`, so yt-ai can be installed alongside yt-dlp. The Python import remains `yt_dlp`. See [CONFIGURATION](#configuration)
 
@@ -2665,6 +2665,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **kakao**: Raise an expected error that KakaoTV shut down on 2026-06-30
     * **kankanews**: Current page media JSON
     * **khanacademy**: Fetch `published-content-version` instead of a hardcoded hash
+    * **kick**: Fall back to VOD `thumbnail.src` when `srcSet` is empty; keep clip `creator` from the clip API
     * **kicker**: RSS media feeds (and optional `www`)
     * **kika**: Restrict playlist `_VALID_URL` so `/videos/` episode URLs stay on **kika**
     * **kickstarter**: Impersonate the browser to avoid 403s

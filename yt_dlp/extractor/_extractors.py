@@ -1061,7 +1061,9 @@ from .khinsider import (
 )
 from .kick import (
     KickClipIE,
+    KickClipsIE,
     KickIE,
+    KickVideosIE,
     KickVODIE,
 )
 from .kickbot import KickBotIE

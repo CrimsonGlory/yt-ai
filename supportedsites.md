@@ -783,8 +783,10 @@ The only reliable way to check if a site is supported is to try it.
  - **khanacademy:unit**
  - **khinsider**: KHInsider
  - **khinsider:album**: KHInsider albums
+ - **kick:clip**
  - **kick:clips**
  - **kick:live**
+ - **kick:videos**
  - **kick:vod**
  - **kickbot**: KickBot
  - **Kicker**
@@ -1821,6 +1823,7 @@ The only reliable way to check if a site is supported is to try it.
  - **UnitedNationsWebTv**
  - **Unity**
  - **uol.com.br**
+ - **uploadnow**: UploadNow
  - **uplynk**
  - **uplynk:preplay**
  - **upride**: UpRide.cc
