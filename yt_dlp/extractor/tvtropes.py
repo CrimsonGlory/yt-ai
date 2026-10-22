@@ -58,8 +58,18 @@ class TVTropesIE(InfoExtractor):
         def add_hls(hls_url, m3u8_id='hls'):
             if not hls_url:
                 return
-            hls_fmts, hls_subs = self._extract_m3u8_formats_and_subtitles(
-                hls_url, video_id, 'mp4', m3u8_id=m3u8_id, fatal=False, headers=self._HEADERS)
+            try:
+                m3u8_doc = self._download_webpage(
+                    hls_url, video_id, 'Downloading m3u8 information',
+                    headers=self._HEADERS, impersonate=True)
+            except ExtractorError:
+                return
+            hls_fmts, hls_subs = self._parse_m3u8_formats_and_subtitles(
+                m3u8_doc, hls_url, 'mp4', m3u8_id=m3u8_id,
+                headers=self._HEADERS, video_id=video_id)
+            for fmt in hls_fmts:
+                fmt.setdefault('http_headers', {}).update(self._HEADERS)
+                fmt['impersonate'] = True
             formats.extend(hls_fmts)
             self._merge_subtitles(hls_subs, target=subtitles)
 
@@ -87,6 +97,7 @@ class TVTropesIE(InfoExtractor):
                     'format_id': 'http',
                     'ext': 'mp4',
                     'http_headers': self._HEADERS,
+                    'impersonate': True,
                 })
 
         return formats, subtitles

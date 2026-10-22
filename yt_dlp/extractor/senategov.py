@@ -19,6 +19,7 @@ class SenateISVPIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'http://www.senate.gov/isvp/?comm=judiciary&type=live&stt=&filename=judiciary031715&auto_play=false&wmode=transparent&poster=http%3A%2F%2Fwww.judiciary.senate.gov%2Fthemes%2Fjudiciary%2Fimages%2Fvideo-poster-flash-fit.png',
+        'skip': 'HTTP Error 403 from this environment',
         'info_dict': {
             'id': 'judiciary031715',
             'ext': 'mp4',
@@ -39,6 +40,7 @@ class SenateISVPIE(InfoExtractor):
         'skip': 'This video is not available.',
     }, {
         'url': 'http://www.senate.gov/isvp/?type=arch&comm=intel&filename=intel090613&hc_location=ufi',
+        'skip': 'HTTP Error 403 from this environment',
         # checksum differs each time
         'info_dict': {
             'id': 'intel090613',
@@ -49,6 +51,7 @@ class SenateISVPIE(InfoExtractor):
         'expected_warnings': ['Failed to download m3u8 information'],
     }, {
         'url': 'https://www.senate.gov/isvp/?auto_play=false&comm=help&filename=help090920&poster=https://www.help.senate.gov/assets/images/video-poster.png&stt=950',
+        'skip': 'HTTP Error 403 from this environment',
         'info_dict': {
             'id': 'help090920',
             'ext': 'mp4',
@@ -151,6 +154,7 @@ class SenateGovIE(InfoExtractor):
     _VALID_URL = rf'https?://(?:www\.)?(?:{_SUBDOMAIN_RE})\.senate\.gov'
     _TESTS = [{
         'url': 'https://www.help.senate.gov/hearings/the-impact-of-ai-on-the-workforce',
+        'skip': 'HTTP Error 403 from this environment',
         'info_dict': {
             'id': 'help072926',
             'ext': 'mp4',

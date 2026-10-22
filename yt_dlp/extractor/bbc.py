@@ -870,6 +870,7 @@ class BBCIE(BBCCoUkIE):  # XXX: Do not subclass from concrete IE
         'skip': '404 Not Found',
     }, {
         'url': 'http://www.bbc.co.uk/learningenglish/chinese/features/lingohack/ep-181227',
+        'skip': 'BBC learningenglish lingohack pages return error.html (Service Temporarily Unavailable) from this environment',
         'info_dict': {
             'id': 'p06w9tws',
             'ext': 'mp4',
@@ -1827,6 +1828,7 @@ class BBCCoUkPlaylistIE(BBCCoUkPlaylistBaseIE):
     _VIDEO_ID_TEMPLATE = r'data-pid=["\'](%s)'
     _TESTS = [{
         'url': 'https://www.bbc.co.uk/programmes/b006t0bv/clips',
+        'skip': 'BBC programmes pages return error.html (Service Temporarily Unavailable) from this environment',
         'info_dict': {
             'id': 'b006t0bv',
             'title': 'BBC One - Countryfile - Clips',
@@ -1836,6 +1838,7 @@ class BBCCoUkPlaylistIE(BBCCoUkPlaylistBaseIE):
     }, {
         # multipage playlist, explicit page
         'url': 'http://www.bbc.co.uk/programmes/b00mfl7n/clips?page=1',
+        'skip': 'BBC programmes pages return error.html (Service Temporarily Unavailable) from this environment',
         'info_dict': {
             'id': 'b00mfl7n',
             'title': 'BBC One - Frozen Planet, Series 1 - Clips',
@@ -1845,6 +1848,7 @@ class BBCCoUkPlaylistIE(BBCCoUkPlaylistBaseIE):
     }, {
         # multipage playlist, all pages
         'url': 'http://www.bbc.co.uk/programmes/b00mfl7n/clips',
+        'skip': 'BBC programmes pages return error.html (Service Temporarily Unavailable) from this environment',
         'info_dict': {
             'id': 'b00mfl7n',
             'title': 'BBC One - Frozen Planet, Series 1 - Clips',

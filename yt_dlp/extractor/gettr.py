@@ -44,10 +44,10 @@ class GettrIE(GettrBaseIE):
         'url': 'https://gettr.com/post/p4iahp',
         'info_dict': {
             'id': 'p4iahp',
-            'title': 'md5:b03c07883db6fbc1aab88877a6c3b149',
+            'title': 'md5:813c2e5c54dcd4717693061f92598a18',
             'description': 'md5:741b7419d991c403196ed2ea7749a39d',
             'ext': 'mp4',
-            'uploader': 'Neues Forum Freiheit',
+            'uploader': 'Neues Forum Freiheit ⚫🔴🟡',
             'uploader_id': 'nf_freiheit',
             'upload_date': '20210718',
             'thumbnail': r're:^https?://.+/out\.jpg',

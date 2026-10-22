@@ -457,6 +457,7 @@ class GenericIE(InfoExtractor):
         # kt_player.js?v=6.3.2
         # https://github.com/yt-dlp/yt-dlp/commit/a318f59d14792d25b2206c3f50181e03e8716db7
         'url': 'https://www.kvs-demo.com/embed/105/',
+        'skip': 'kvs-demo.com is gone (HTTP 404)',
         'md5': 'a36ddb3f0a682f5e3f78b084f56d45ae',
         'info_dict': {
             'id': '105',

@@ -218,6 +218,7 @@ class ViMPPlaylistIE(InfoExtractor):
         'playlist_mincount': 9,
     }, {
         'url': 'https://www.hsbi.de/medienportal/album/view/aid/208',
+        'skip': 'hsbi.de/medienportal album is gone (HTTP 404)',
         'info_dict': {
             'id': 'album-208',
             'title': 'KG Praktikum ABT/MEC - Albums - HSBI-Medienportal',
@@ -238,6 +239,13 @@ class ViMPPlaylistIE(InfoExtractor):
             'title': 'advanced mobile and v2x communication - Tags - VCS',
         },
         'playlist_mincount': 6,
+    }, {
+        'url': 'https://vimp.oth-regensburg.de/album/view/aid/242',
+        'info_dict': {
+            'id': 'album-242',
+            'title': 'Kompetenzen. Perspektiven. Zukunft. – Der Future-Skills-Podcast der OTH Regensburg - Albums - ViMP OTH Regensburg',
+        },
+        'playlist_mincount': 5,
     }]
     _PAGE_SIZE = 10
 

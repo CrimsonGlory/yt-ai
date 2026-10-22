@@ -10,6 +10,7 @@ from ..utils import (
     orderedSet,
     unescapeHTML,
     url_or_none,
+    urlencode_postdata,
     urljoin,
 )
 from ..utils.traversal import traverse_obj
@@ -56,15 +57,9 @@ class JavtifulIE(InfoExtractor):
         'only_matching': True,
     }]
 
-    def _real_extract(self, url):
-        video_id, display_id = self._match_valid_url(url).group('id', 'display_id')
-        webpage = self._download_webpage(url, video_id)
-
+    def _extract_player_sources(self, sources, url, video_id):
         formats, subtitles = [], {}
-        for source in traverse_obj(self._search_json(
-            r'"playerSources"\s*:\s*', webpage, 'player sources', video_id,
-            contains_pattern=r'\[(?s:.+?)\]', default=[],
-        ), (..., {dict})):
+        for source in traverse_obj(sources, (..., {dict})):
             src = url_or_none(urljoin(url, source.get('src')))
             if not src:
                 continue
@@ -82,6 +77,51 @@ class JavtifulIE(InfoExtractor):
                 'height': height,
                 'format_id': str(height) if height else 'http',
             })
+        return formats, subtitles
+
+    def _extract_playback_sources(self, webpage, url, video_id):
+        config = self._search_json(
+            r'<script[^>]+id="watch-config"[^>]*>', webpage, 'watch config',
+            video_id, end_pattern=r'</script>', default={})
+        playback = traverse_obj(config, ('playback', {dict})) or {}
+        endpoint = urljoin(url, playback['endpoint']) if playback.get('endpoint') else None
+        ticket = traverse_obj(playback, ('ticket', {str}))
+        if not endpoint or not ticket:
+            return [], {}
+
+        csrf = traverse_obj(self._download_json(
+            urljoin(url, config.get('csrfUrl') or '/csrf-token'), video_id,
+            'Downloading CSRF token', fatal=False, headers={
+                'Accept': 'application/json',
+                'Referer': url,
+                'X-Requested-With': 'XMLHttpRequest',
+            }), ('token', {str}))
+        headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+            'Origin': 'https://javtiful.com',
+            'Referer': url,
+            'X-Requested-With': 'XMLHttpRequest',
+        }
+        postdata = {'ticket': ticket}
+        if csrf:
+            headers['X-CSRF-TOKEN'] = csrf
+            postdata['_token'] = csrf
+        playback_json = self._download_json(
+            endpoint, video_id, 'Downloading playback sources',
+            data=urlencode_postdata(postdata), headers=headers, fatal=False) or {}
+        return self._extract_player_sources(playback_json.get('sources'), url, video_id)
+
+    def _real_extract(self, url):
+        video_id, display_id = self._match_valid_url(url).group('id', 'display_id')
+        webpage = self._download_webpage(url, video_id)
+
+        formats, subtitles = self._extract_playback_sources(webpage, url, video_id)
+        if not formats:
+            formats, subtitles = self._extract_player_sources(self._search_json(
+                r'"playerSources"\s*:\s*', webpage, 'player sources', video_id,
+                contains_pattern=r'\[(?s:.+?)\]', default=[],
+            ), url, video_id)
 
         if not formats:
             for entry in self._parse_html5_media_entries(url, webpage, video_id) or []:

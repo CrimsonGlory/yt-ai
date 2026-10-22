@@ -17,6 +17,7 @@ class TVAsahiDougaIE(InfoExtractor):
     _GEO_COUNTRIES = ['JP']
     _TESTS = [{
         'url': 'https://douga.tv-asahi.co.jp/program/13510-13509/13698?auto=t',
+        'skip': 'HTTP Error 406 from this environment',
         'md5': '08e706e764a3e8b564f32a4af51c4db8',
         'info_dict': {
             'id': '6219296002001',

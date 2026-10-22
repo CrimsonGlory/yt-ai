@@ -19,6 +19,7 @@ class XMegaDriveIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?xmegadrive\.com/(?:videos|embed)/(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://www.xmegadrive.com/videos/ftvmilfs-jessica-canadian-curves-perfectly-natural-7/',
+        'skip': 'xmegadrive.com is gone (HTTP 404/403)',
         'md5': '0ba1ac30f6c091f9632acd4933a1fa2b',
         'info_dict': {
             'id': '115684',

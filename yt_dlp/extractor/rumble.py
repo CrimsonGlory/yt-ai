@@ -143,6 +143,7 @@ class RumbleEmbedIE(InfoExtractor):
         {
             'note': 'Rumble JS embed',
             'url': 'https://therightscoop.com/what-does-9-plus-1-plus-1-equal-listen-to-this-audio-of-attempted-kavanaugh-assassins-call-and-youll-get-it',
+            'skip': 'therightscoop.com Cloudflare HTTP 403 even with generic impersonate',
             'md5': '4701209ac99095592e73dbba21889690',
             'info_dict': {
                 'id': 'v15eqxl',

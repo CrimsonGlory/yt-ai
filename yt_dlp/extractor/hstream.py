@@ -20,6 +20,7 @@ class HstreamIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?hstream\.moe/hentai/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://hstream.moe/hentai/inaka-ni-wa-kore-kurai-shika-goraku-ga-nai-2',
+        'skip': 'hstream.moe is in temporary maintenance',
         'md5': 'dd7e2f724f410aceae906c8700c3b751',
         'info_dict': {
             'id': '2035',
