@@ -115,6 +115,7 @@ class OpencastIE(OpencastBaseIE):
     _TESTS = [
         {
             'url': 'https://oc-video1.ruhr-uni-bochum.de/paella/ui/watch.html?id=ed063cd5-72c8-46b5-a60a-569243edcea8',
+            'skip': 'oc-video1.ruhr-uni-bochum.de connection refused',
             'md5': '554c8e99a90f7be7e874619fcf2a3bc9',
             'info_dict': {
                 'id': 'ed063cd5-72c8-46b5-a60a-569243edcea8',

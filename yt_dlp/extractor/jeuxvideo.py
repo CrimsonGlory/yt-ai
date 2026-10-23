@@ -1,5 +1,6 @@
 from .common import InfoExtractor
 from .dailymotion import DailymotionIE
+from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
     urljoin,
@@ -38,9 +39,21 @@ class JeuxVideoIE(InfoExtractor):
         'only_matching': True,
     }]
 
+    def _download_with_impersonate(self, method, url, video_id, **kwargs):
+        last_err = None
+        for impersonate in ('chrome-133', 'chrome', 'safari', 'firefox'):
+            try:
+                return method(url, video_id, impersonate=impersonate, **kwargs)
+            except ExtractorError as e:
+                last_err = e
+                cause = getattr(e, 'cause', None)
+                if not isinstance(cause, HTTPError) or cause.status != 403:
+                    raise
+        raise last_err
+
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        webpage = self._download_webpage(url, display_id, impersonate=True)
+        webpage = self._download_with_impersonate(self._download_webpage, url, display_id)
 
         config_path = self._html_search_regex(
             r'data-src-video=(["\'])(?P<url>/contenu/medias/video(?:-config|\.php)\?.*?)\1',
@@ -52,8 +65,8 @@ class JeuxVideoIE(InfoExtractor):
         config_url = urljoin('https://www.jeuxvideo.com', config_path)
 
         video_id = self._search_regex(r'[?&]id=(\d+)', config_url, 'video ID')
-        config = self._download_json(
-            config_url, video_id, 'Downloading JSON config', impersonate=True)
+        config = self._download_with_impersonate(
+            self._download_json, config_url, video_id, note='Downloading JSON config')
 
         dm_id = (config.get('options') or {}).get('video') or (config.get('dataGa4') or {}).get('video_id')
         if config.get('isDailymotion') or dm_id:

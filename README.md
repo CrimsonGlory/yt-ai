@@ -2490,7 +2490,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Rahatupu** (`rahatupu.net`): Schema.org VideoObject `contentUrl` MP4 (Clean Tube player iframe fallback). Request: [yt-dlp/yt-dlp#12300](https://github.com/yt-dlp/yt-dlp/issues/12300)
     * **RedziDzirdiLatviju** (`redzidzirdilatviju.lv`): Solr `/index` JSON for movies (Nimble HLS on `filmas.arhivi.lv`) and sound samples (archive MP3). Request: [yt-dlp/yt-dlp#15886](https://github.com/yt-dlp/yt-dlp/issues/15886)
     * **Rezka** (`rezka.ag`): Anubis PoW plus `initCDN*Events` / `ajax/get_cdn_series` voidboost HLS and MP4. Request: [yt-dlp/yt-dlp#17096](https://github.com/yt-dlp/yt-dlp/issues/17096)
-    * **RidoMovies** (`ridomovies.tv`): Impersonate Cloudflare, follow Closeload JWPlayer embeds, and decode splice/split payload HLS (ops/seed pulled from the array, then rot/unshuffle/XOR). Request: [yt-dlp/yt-dlp#13566](https://github.com/yt-dlp/yt-dlp/issues/13566)
+    * **RidoMovies** (`ridomovies.tv`): Impersonate Cloudflare, follow Closeload JWPlayer embeds, and decode splice/split payload HLS (ops/seed pulled from the array, append the embed hostname to the seed, then rot/unshuffle/XOR). Request: [yt-dlp/yt-dlp#13566](https://github.com/yt-dlp/yt-dlp/issues/13566)
     * **RTHK** (`rthk.hk`): JWPlayer HLS from radio/TV episode pages and `/radio|/tv/catchUp` programme listings. Request: [yt-dlp/yt-dlp#4247](https://github.com/yt-dlp/yt-dlp/issues/4247)
     * **RuntimeTV** (`runtime.tv`): Ottera Drupal `cs_auth_token` plus `api-ott.runtime.tv` `embeddedVideoPlayer` HLS (Kaltura). Request: [yt-dlp/yt-dlp#5190](https://github.com/yt-dlp/yt-dlp/issues/5190)
     * **Sasflix** (`sasflix.ru`): Public `/api/web/topics/{id}` JSON plus HLS and progressive `/api/video` downloads. Request: [yt-dlp/yt-dlp#15373](https://github.com/yt-dlp/yt-dlp/issues/15373)
@@ -2660,7 +2660,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **islamchannel**: VOD paths and a fallback stream URL
     * **ixigua**: Decode play URLs and fetch with a Googlebot UA; retry the watch page once when SSR JSON is missing
     * **jable**: Impersonate the browser
-    * **jeuxvideo**: Dailymotion embeds (impersonate)
+    * **jeuxvideo**: Dailymotion embeds; impersonate Chrome 133, then Chrome, Safari, Firefox on HTTP 403
     * **jixie**: Kompas `jixie-stream` API
     * **joj**: `play.joj.sk` player/videos URLs
     * **jove**: Current video/HLS pages
@@ -2697,7 +2697,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **matchtv**: Impersonate the live iframe host
     * **mave**: `cdn.mave.digital` storage
     * **medaltv**: Public `/api/content/{id}` JSON for progressive MP4 and `socialMediaVideo`; HLS is optional (non-fatal)
-    * **mediasite**: Prefer GetPlayerOptions HLS over Deliver progressive MP4
+    * **mediasite**: Prefer GetPlayerOptions HLS over Deliver progressive MP4; retry without TLS verification when the host certificate cannot be verified, and keep progressive MP4 when HLS cannot be fetched
     * **mediastream**: Scan page JSON for mdstrm.com embed and live-stream URLs, not only iframe/JSON-LD
     * **mellowfan**: Fall back to the public movies API and `url_public` HLS when the authenticated detail API requires login
     * **meipai**: Signed media API instead of `encodeURIComponent` m3u8 on the page
@@ -2720,6 +2720,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **myvidster**: Follow YouTube (and other) embeds from current video pages
     * **n-joy**: JSON-LD / `data-config` ARD player media
     * **n-tv.de**: Extract Next.js player streams and current `-id` video URLs
+    * **naver**: Fall back from the dead now_web2 HMAC API to creatorhub `clipviewer/card` PLAY_API_3_0 progressive MP4 and HLS
     * **nba**: Extract public team-site WordPress MP4s from Next.js `videoAssets`
     * **nbcsports**: Extract ThePlatform JWPlayer links when the old vplayer embed is gone
     * **nbcolympics**: Mark VOD as US geo-restricted (ThePlatform; X-Forwarded-For is ignored)
@@ -2741,7 +2742,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **nubilesporn**: Impersonate the browser and prime a tour session; anonymous shorts currently stop on a Cloudflare Turnstile challenge
     * **odnoklassniki**: Impersonate desktop video pages, HLS/DASH manifests, and media CDN downloads; parse player `metadata` as a dict or JSON string; match `m.ok.ru` / `mobile.ok.ru` URLs (the mobile site 301s to desktop); send a site Referer on manifests and media CDN downloads
     * **oftv**: Extract HLS from the current `api.of.tv` player instead of Zype
-    * **ondemandchina**: Use US/CA X-Forwarded-For on the ODC playback API
+    * **ondemandchina**: GraphQL Episode `$kind`/`$part` variables and US/CA X-Forwarded-For on the ODC playback API
     * **onet.pl**: Extract PulseEmbed JSON-LD and Ring Publishing MP4 instead of the old CKM API
     * **onet.tv**: Map clip URLs onto the video.onet.pl successor and extract via OnetPl
     * **orf:on**: Raise geo-restriction when sources are empty

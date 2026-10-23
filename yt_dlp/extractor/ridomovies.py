@@ -1,5 +1,6 @@
 import base64
 import re
+import urllib.parse
 
 from .common import InfoExtractor
 from ..utils import (
@@ -74,16 +75,7 @@ class CloseLoadIE(InfoExtractor):
             raise ExtractorError('Unable to parse encoded HLS source')
         return [str(part) for part in parts]
 
-    def _decode_spliced_hls(self, parts):
-        # Closeload splice decoder: pull ops/seed out of the payload array, then
-        # rot13-family ops, Fisher-Yates unshuffle, and a multiplicative XOR.
-        payload = list(parts)
-        length = len(payload) - 2
-        seed_idx = length % 7
-        ops_idx = 8 + (length % 5)
-        ops = payload.pop(ops_idx)
-        seed = payload.pop(seed_idx)
-        value = ''.join(payload)
+    def _decode_spliced_payload(self, value, ops, seed):
         if len(ops) > 2048:
             value = value[::-1]
         svwsi = mmlg = 0
@@ -119,7 +111,34 @@ class CloseLoadIE(InfoExtractor):
             xor_state = (xor_state + byte) % 256
         return decoded
 
-    def _decode_hls_url(self, webpage, video_id):
+    def _decode_spliced_hls(self, parts, hostname=None):
+        # Closeload splice decoder: pull ops/seed out of the payload array, then
+        # rot13-family ops, Fisher-Yates unshuffle, and a multiplicative XOR.
+        # Current player JS appends document.location.hostname to the seed.
+        payload = list(parts)
+        length = len(payload) - 2
+        seed_idx = length % 7
+        ops_idx = 8 + (length % 5)
+        ops = payload.pop(ops_idx)
+        seed = payload.pop(seed_idx)
+        value = ''.join(payload)
+        seeds = []
+        if hostname:
+            seeds.append(seed + hostname)
+        seeds.append(seed)
+        last = None
+        for try_seed in seeds:
+            decoded = self._decode_spliced_payload(value, ops, try_seed)
+            last = decoded
+            try:
+                text = decoded.decode()
+            except UnicodeDecodeError:
+                continue
+            if url_or_none(text):
+                return decoded
+        return last
+
+    def _decode_hls_url(self, webpage, video_id, embed_url=None):
         source_var = self._search_regex(
             r'sources\s*:\s*\[\s*\{\s*file\s*:\s*(\w+)', webpage, 'jwplayer source variable',
         )
@@ -136,7 +155,8 @@ class CloseLoadIE(InfoExtractor):
             flags=re.DOTALL,
         )
         if 'splice' in func_body:
-            decoded = self._decode_spliced_hls(parts)
+            decoded = self._decode_spliced_hls(
+                parts, hostname=urllib.parse.urlparse(embed_url or '').hostname)
             try:
                 hls_url = decoded.decode()
             except UnicodeDecodeError:
@@ -219,7 +239,7 @@ class CloseLoadIE(InfoExtractor):
         )
 
         try:
-            hls_url = self._decode_hls_url(webpage, video_id)
+            hls_url = self._decode_hls_url(webpage, video_id, url)
         except ExtractorError:
             hls_url = None
         if not hls_url:
@@ -295,7 +315,22 @@ class RidoMoviesIE(InfoExtractor):
     )
     _TESTS = [
         {
+            'url': 'https://ridomovies.tv/movie/lego-star-wars-the-mandalorian-2026',
+            'info_dict': {
+                'id': 'lCvCuUUCfYV',
+                'ext': 'mp4',
+                'display_id': 'lego-star-wars-the-mandalorian-2026',
+                'title': 'LEGO Star Wars: The Mandalorian',
+                'description': str,
+                'thumbnail': r're:https?://rido(?:movies\.su|movie\.to)/uploads/movies/.+',
+                'duration': 3000,
+                'timestamp': int,
+                'upload_date': str,
+            },
+        },
+        {
             'url': 'https://ridomovies.tv/movie/boss-2025',
+            'skip': 'video gone',
             'md5': 'c6803aad1ae8865b2e507e7832d19577',
             'info_dict': {
                 'id': 'Am35Tr7zon1',

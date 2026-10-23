@@ -1,8 +1,11 @@
 import json
 import re
+import ssl
 import urllib.parse
+import urllib.request
 
 from .common import InfoExtractor
+from ..networking.exceptions import CertificateVerifyError
 from ..utils import (
     ExtractorError,
     float_or_none,
@@ -98,6 +101,9 @@ class MediasiteIE(InfoExtractor):
                 # Progressive MP4 GET 400s; HLS --test fragments are <10KiB
                 'skip_download': True,
             },
+            'expected_warnings': [
+                r'Failed to download m3u8 information',
+            ],
         },
         {
             'url': 'https://collegerama.tudelft.nl/Mediasite/Showcase/livebroadcast/Presentation/ada7020854f743c49fbb45c9ec7dbb351d',
@@ -178,34 +184,68 @@ class MediasiteIE(InfoExtractor):
             'fragment_base_url': slide_base_url,
         }
 
+    def _download_unverified(self, url, video_id, data=None, headers=None):
+        # Some Mediasite hosts (e.g. digitalops.sandia.gov) present a cert
+        # whose issuer is missing from the local CA store.
+        self.to_screen(f'{video_id}: Retrying without TLS verification (untrusted certificate)')
+        ctx = ssl._create_unverified_context()
+        req_headers = {
+            'User-Agent': (
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+                '(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'),
+            **(headers or {}),
+        }
+        req = urllib.request.Request(url, data=data, headers=req_headers)
+        try:
+            with urllib.request.urlopen(req, context=ctx, timeout=30) as resp:
+                raw = resp.read()
+                charset = resp.headers.get_content_charset() or 'utf-8'
+                return raw.decode(charset, 'replace'), resp.url
+        except OSError as e:
+            raise ExtractorError('Unable to download webpage', cause=e, video_id=video_id)
+
     def _real_extract(self, url):
         url, data = unsmuggle_url(url, {})
         mobj = self._match_valid_url(url)
         resource_id = mobj.group('id')
         query = mobj.group('query')
 
-        webpage, urlh = self._download_webpage_handle(url, resource_id)  # XXX: add UrlReferrer?
-        redirect_url = urlh.url
+        try:
+            webpage, urlh = self._download_webpage_handle(url, resource_id)  # XXX: add UrlReferrer?
+            redirect_url = urlh.url
+        except ExtractorError as e:
+            if not isinstance(e.cause, CertificateVerifyError):
+                raise
+            webpage, redirect_url = self._download_unverified(url, resource_id)
 
         # XXX: might have also extracted UrlReferrer and QueryString from the html
         service_path = urllib.parse.urljoin(redirect_url, self._html_search_regex(
             r'<div[^>]+\bid=["\']ServicePath[^>]+>(.+?)</div>', webpage, resource_id,
             default='/Mediasite/PlayerService/PlayerService.svc/json'))
 
-        player_options = self._download_json(
-            f'{service_path}/GetPlayerOptions', resource_id,
-            headers={
-                'Content-type': 'application/json; charset=utf-8',
-                'X-Requested-With': 'XMLHttpRequest',
+        player_headers = {
+            'Content-type': 'application/json; charset=utf-8',
+            'X-Requested-With': 'XMLHttpRequest',
+        }
+        player_body = json.dumps({
+            'getPlayerOptionsRequest': {
+                'ResourceId': resource_id,
+                'QueryString': query,
+                'UrlReferrer': data.get('UrlReferrer', ''),
+                'UseScreenReader': False,
             },
-            data=json.dumps({
-                'getPlayerOptionsRequest': {
-                    'ResourceId': resource_id,
-                    'QueryString': query,
-                    'UrlReferrer': data.get('UrlReferrer', ''),
-                    'UseScreenReader': False,
-                },
-            }).encode())['d']
+        }).encode()
+        try:
+            player_options = self._download_json(
+                f'{service_path}/GetPlayerOptions', resource_id,
+                headers=player_headers, data=player_body)['d']
+        except ExtractorError as e:
+            if not isinstance(e.cause, CertificateVerifyError):
+                raise
+            raw, _ = self._download_unverified(
+                f'{service_path}/GetPlayerOptions', resource_id,
+                data=player_body, headers=player_headers)
+            player_options = self._parse_json(raw, resource_id)['d']
 
         presentation = player_options['Presentation']
         title = presentation['Title']
@@ -234,6 +274,8 @@ class MediasiteIE(InfoExtractor):
                 mimetype2ext(v.get('MimeType')) in ('m3u', 'm3u8')
                 or 'm3u8' in (url_or_none(v.get('Location')) or '')
                 for v in video_urls if isinstance(v, dict))
+            hls_ok = False
+            pending_mp4 = []
             for unum, video in enumerate(video_urls):
                 video_url = url_or_none(video.get('Location'))
                 if not video_url:
@@ -253,19 +295,26 @@ class MediasiteIE(InfoExtractor):
                         mpd_id=f'{stream_id}-{snum}.{unum}',
                         fatal=False))
                 elif ext in ('m3u', 'm3u8'):
-                    stream_formats.extend(self._extract_m3u8_formats(
+                    hls_fmts = self._extract_m3u8_formats(
                         video_url, resource_id,
                         m3u8_id=f'{stream_id}-{snum}.{unum}',
-                        fatal=False))
+                        fatal=False)
+                    if hls_fmts:
+                        hls_ok = True
+                    stream_formats.extend(hls_fmts)
                 else:
-                    # Deliver progressive MP4 GET 400s when HLS is listed for the same stream
-                    if has_hls and ext == 'mp4':
-                        continue
-                    stream_formats.append({
+                    fmt = {
                         'format_id': f'{stream_id}-{snum}.{unum}',
                         'url': video_url,
                         'ext': ext,
-                    })
+                    }
+                    # Deliver progressive MP4 GET 400s when HLS is listed for the same stream
+                    if has_hls and ext == 'mp4':
+                        pending_mp4.append(fmt)
+                    else:
+                        stream_formats.append(fmt)
+            if pending_mp4 and not hls_ok:
+                stream_formats.extend(pending_mp4)
 
             images = traverse_obj(player_options, ('PlayerLayoutOptions', 'Images', {dict}))
             if stream.get('HasSlideContent') and images:

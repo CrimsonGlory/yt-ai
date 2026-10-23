@@ -24,6 +24,7 @@ class QosVideosIE(InfoExtractor):
     ]
     _TESTS = [{
         'url': 'https://qosvideos.com/bbc-white-boy-hypnosis/',
+        'skip': 'qosvideos.com DNS resolution failed from this environment',
         'md5': '58c4f5834c1eb412e9fe5044a62feca0',
         'info_dict': {
             'id': '4587',

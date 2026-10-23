@@ -31,6 +31,7 @@ class SpankBangIE(InfoExtractor):
                     '''
     _TESTS = [{
         'url': 'https://spankbang.com/a4xu2/video/alex+starr+cannot+say+no+to+her+dildo',
+        'skip': 'HTTP 403 from this environment (Cloudflare; impersonate chrome/safari/firefox still blocked)',
         'md5': '7984ba2104b04d90a732c35b1a1f37b7',
         'info_dict': {
             'id': 'a4xu2',
@@ -225,6 +226,7 @@ class SpankBangPlaylistIE(InfoExtractor):
     _VALID_URL = r'https?://(?:[^/]+\.)?spankbang\.com/(?P<id>[\da-z]+)/playlist/(?P<display_id>[^/]+)'
     _TEST = {
         'url': 'https://spankbang.com/ug0k/playlist/big+ass+titties',
+        'skip': 'HTTP 403 from this environment (Cloudflare; impersonate chrome/safari/firefox still blocked)',
         'info_dict': {
             'id': 'ug0k',
             'title': 'Big Ass Titties',

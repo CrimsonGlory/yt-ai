@@ -14,7 +14,18 @@ class OnDemandChinaEpisodeIE(InfoExtractor):
     _VALID_URL = r'https?://www\.ondemandchina\.com/\w+/watch/(?P<series>[\w-]+)/(?P<id>ep-(?P<ep>\d+))'
     _GEO_COUNTRIES = ['US', 'CA']
     _TESTS = [{
+        'url': 'https://www.ondemandchina.com/en/watch/a-happy-life-season-1/ep-1',
+        'info_dict': {
+            'id': '3506763',
+            'ext': 'mp4',
+            'duration': 861.0,
+            'title': 'EP 1',
+            'alt_title': '第1集',
+            'thumbnail': r're:https://hls-mh\.ondemandkorea\.com/.+',
+        },
+    }, {
         'url': 'https://www.ondemandchina.com/en/watch/qingchuans-veil-of-vengeance/ep-1',
+        'skip': 'video gone',
         'md5': '1136f7e2636d08fc845666f0e6e3ce2b',
         'info_dict': {
             'id': '3000372',
@@ -40,12 +51,12 @@ class OnDemandChinaEpisodeIE(InfoExtractor):
     }]
 
     _QUERY = '''
-        query Episode($programSlug: String!, $episodeNumber: Int!) {
+        query Episode($programSlug: String!, $episodeNumber: Int!, $kind: String!, $part: Int) {
             episode(
                 programSlug: $programSlug
                 episodeNumber: $episodeNumber
-                kind: "series"
-                part: null
+                kind: $kind
+                part: $part
             ) {
                 id
                 title
@@ -78,6 +89,8 @@ class OnDemandChinaEpisodeIE(InfoExtractor):
                 'variables': {
                     'programSlug': program_slug,
                     'episodeNumber': int(ep_number),
+                    'kind': 'series',
+                    'part': None,
                 },
             }).encode()), ('data', 'episode'))
         if not video_info:

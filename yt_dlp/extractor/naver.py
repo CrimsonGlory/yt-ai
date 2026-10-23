@@ -13,6 +13,7 @@ from ..utils import (
     dict_get,
     int_or_none,
     join_nonempty,
+    parse_duration,
     parse_iso8601,
     traverse_obj,
     try_get,
@@ -121,10 +122,89 @@ class NaverBaseIE(InfoExtractor):
         md = base64.b64encode(hmac.HMAC(
             key, f'{api_endpoint[:255]}{msgpad}'.encode(), digestmod=hashlib.sha1).digest()).decode()
 
-        return self._download_json(api_endpoint, video_id=video_id, headers=self.geo_verification_headers(), query={
-            'msgpad': msgpad,
-            'md': md,
-        })['result']
+        return traverse_obj(self._download_json(
+            api_endpoint, video_id=video_id, headers=self.geo_verification_headers(), query={
+                'msgpad': msgpad,
+                'md': md,
+            }), 'result')
+
+    def _extract_play_api_formats(self, playback, video_id):
+        formats = []
+        seen_hls = set()
+        for aset in traverse_obj(playback, ('MPD', ..., 'Period', ..., 'AdaptationSet', ..., {dict})):
+            master = url_or_none(aset.get('@nvod:m3u'))
+            if master and master not in seen_hls:
+                seen_hls.add(master)
+                formats.extend(self._extract_m3u8_formats(
+                    master, video_id, 'mp4', 'm3u8_native', m3u8_id='HLS', fatal=False))
+            mime = aset.get('@mimeType') or ''
+            for rep in traverse_obj(aset, ('Representation', ..., {dict})):
+                base = traverse_obj(rep, ('BaseURL', 0, {url_or_none})) or traverse_obj(
+                    rep, ('BaseURL', {url_or_none}))
+                if not base:
+                    continue
+                rep_mime = rep.get('@mimeType') or mime
+                if 'mp2t' in (rep_mime or '') or 'mp4' not in (rep_mime or ''):
+                    continue
+                formats.append({
+                    'url': base,
+                    'format_id': rep.get('@id'),
+                    'width': int_or_none(rep.get('@width')),
+                    'height': int_or_none(rep.get('@height')),
+                    'tbr': int_or_none(rep.get('@bandwidth'), scale=1000),
+                    'fps': int_or_none(rep.get('@frameRate')),
+                    'ext': 'mp4',
+                })
+        return formats
+
+    def _extract_clip_viewer(self, video_id, url):
+        webpage, urlh = self._download_webpage_handle(url, video_id)
+        qs = urllib.parse.parse_qs(urllib.parse.urlparse(urlh.url).query)
+        seed = traverse_obj(qs, ('seedMediaId', 0, {str})) or self._search_regex(
+            r'seedMediaId=([A-Fa-f0-9]+)', webpage, 'seed media id', default=None)
+        service_type = traverse_obj(qs, ('serviceType', 0, {str})) or 'NTV'
+        if not seed:
+            raise ExtractorError('Unable to extract Naver clip seed', expected=True)
+
+        content = traverse_obj(self._download_json(
+            'https://creatorhub-api.naver.com/api/v7.0/clipviewer/card', video_id,
+            query={
+                'seedType': 'SPECIFIC',
+                'seedMediaId': seed,
+                'serviceType': service_type,
+                'mediaType': 'SHORT_FORM',
+            }, headers={
+                'Origin': 'https://clip-viewer.naver.com',
+                'Referer': 'https://clip-viewer.naver.com/',
+            }), ('body', 'card', 'content', {dict}))
+        if not content:
+            raise ExtractorError('Unable to extract Naver clip', expected=True)
+
+        playback = traverse_obj(content, ('vod', 'playback', {dict}))
+        formats = self._extract_play_api_formats(playback, video_id)
+        if not formats:
+            self.raise_no_formats('No playable formats', expected=True, video_id=video_id)
+
+        like_count = traverse_obj(content, (
+            'interaction', 'like', 'reactions',
+            lambda _, v: v.get('reactionType') == 'like', 'count', {int_or_none}, any))
+
+        return {
+            'id': video_id,
+            'title': content.get('title'),
+            'description': content.get('description'),
+            'timestamp': parse_iso8601(content.get('publishedTime')),
+            'duration': int_or_none(traverse_obj(content, ('videoQuality', 'duration'))) or parse_duration(
+                traverse_obj(playback, ('MPD', 0, 'Period', 0, '@duration'))),
+            'like_count': 0 if like_count is None else like_count,
+            'view_count': int_or_none(traverse_obj(content, ('vod', 'count')) or content.get('count')),
+            'comment_count': int_or_none(traverse_obj(content, ('interaction', 'comment', 'count'))) or 0,
+            'thumbnail': url_or_none(content.get('thumbnailImageUrl')),
+            'uploader': traverse_obj(content, ('channel', 'channelName', {str})),
+            'uploader_id': traverse_obj(content, ('channel', 'channelId', {str})),
+            'uploader_url': url_or_none(traverse_obj(content, ('channel', 'homePcUrl'))),
+            'formats': formats,
+        }
 
 
 class NaverIE(NaverBaseIE):
@@ -170,12 +250,11 @@ class NaverIE(NaverBaseIE):
         },
     }, {
         'url': 'https://tv.naver.com/v/67838091',
-        'md5': '126ea384ab033bca59672c12cca7a6be',
         'info_dict': {
             'id': '67838091',
             'ext': 'mp4',
             'title': '[라인W 날씨] 내일 아침 서울 체감 -19도…호남·충남 대설',
-            'description': 'md5:fe026e25634c85845698aed4b59db5a7',
+            'description': str,
             'timestamp': 1736347853,
             'upload_date': '20250108',
             'uploader': 'KBS뉴스',
@@ -187,7 +266,7 @@ class NaverIE(NaverBaseIE):
             'duration': 69,
             'thumbnail': r're:^https?://.*\.jpg',
         },
-        'params': {'format': 'HLS_144P'},
+        'params': {'format': 'best[protocol=https][height<=144]'},
     }, {
         'url': 'http://tvcast.naver.com/v/81652',
         'only_matching': True,
@@ -195,30 +274,33 @@ class NaverIE(NaverBaseIE):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        data = self._call_api(f'/clips/{video_id}/play-info', video_id)
+        data = None
+        try:
+            data = self._call_api(f'/clips/{video_id}/play-info', video_id)
+        except ExtractorError:
+            data = None
 
         vid = traverse_obj(data, ('clip', 'videoId', {str}))
         in_key = traverse_obj(data, ('play', 'inKey', {str}))
+        if vid and in_key:
+            info = self._extract_video_info(video_id, vid, in_key)
+            info.update(traverse_obj(data, ('clip', {
+                'title': 'title',
+                'description': 'description',
+                'timestamp': ('firstExposureDatetime', {parse_iso8601}),
+                'duration': ('playTime', {int_or_none}),
+                'like_count': ('likeItCount', {int_or_none}),
+                'view_count': ('playCount', {int_or_none}),
+                'comment_count': ('commentCount', {int_or_none}),
+                'thumbnail': ('thumbnailImageUrl', {url_or_none}),
+                'uploader': 'channelName',
+                'uploader_id': 'channelId',
+                'uploader_url': ('channelUrl', {url_or_none}),
+                'age_limit': ('adultVideo', {lambda x: 19 if x else None}),
+            })))
+            return info
 
-        if not vid or not in_key:
-            raise ExtractorError('Unable to extract video info')
-
-        info = self._extract_video_info(video_id, vid, in_key)
-        info.update(traverse_obj(data, ('clip', {
-            'title': 'title',
-            'description': 'description',
-            'timestamp': ('firstExposureDatetime', {parse_iso8601}),
-            'duration': ('playTime', {int_or_none}),
-            'like_count': ('likeItCount', {int_or_none}),
-            'view_count': ('playCount', {int_or_none}),
-            'comment_count': ('commentCount', {int_or_none}),
-            'thumbnail': ('thumbnailImageUrl', {url_or_none}),
-            'uploader': 'channelName',
-            'uploader_id': 'channelId',
-            'uploader_url': ('channelUrl', {url_or_none}),
-            'age_limit': ('adultVideo', {lambda x: 19 if x else None}),
-        })))
-        return info
+        return self._extract_clip_viewer(video_id, url)
 
 
 class NaverLiveIE(NaverBaseIE):

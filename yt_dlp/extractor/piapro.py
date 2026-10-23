@@ -18,6 +18,7 @@ class PiaproIE(InfoExtractor):
     _VALID_URL = r'https?://piapro\.jp/(?:t|content)/(?P<id>[\w-]+)/?'
     _TESTS = [{
         'url': 'https://piapro.jp/t/NXYR',
+        'skip': 'HTTP 503 Service Temporarily Unavailable',
         'md5': 'f7c0f760913fb1d44a1c45a4af793909',
         'info_dict': {
             'id': 'NXYR',

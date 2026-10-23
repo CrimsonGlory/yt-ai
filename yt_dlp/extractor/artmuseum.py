@@ -28,6 +28,7 @@ class ArtMuseumIE(InfoExtractor):
     '''
     _TESTS = [{
         'url': 'https://artmuseum.pl/prace/msn-f-dep-470',
+        'skip': 'media1.artmuseum.pl connection refused from this environment',
         'md5': '35d17aa92b0b2baed155ac77f673f4e0',
         'info_dict': {
             'id': 'msn-f-dep-470',

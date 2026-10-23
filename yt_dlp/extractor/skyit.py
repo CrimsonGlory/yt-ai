@@ -245,7 +245,20 @@ class TV8ItIE(SkyItVideoIE):  # XXX: Do not subclass from concrete IE
         },
         'params': {'skip_download': 'm3u8'},
     }, {
+        'url': 'https://www.tv8.it/video/xf2026-veronica-bruganelli-canta-lamore-esiste-1132822',
+        'info_dict': {
+            'id': '1132822',
+            'ext': 'mp4',
+            'title': 'XF2026 - Veronica Bruganelli canta "L\'amore esiste"',
+            'description': str,
+            'duration': 35,
+            'thumbnail': r're:https://videoplatform\.sky\.it/.+',
+            'timestamp': int,
+            'upload_date': str,
+        },
+    }, {
         'url': 'https://www.tv8.it/video/964361',
+        'skip': 'video gone',
         'md5': '1e58e807154658a16edc29e45be38107',
         'info_dict': {
             'id': '964361',

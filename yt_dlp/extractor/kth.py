@@ -6,6 +6,7 @@ class KTHIE(InfoExtractor):
     _VALID_URL = r'https?://play\.kth\.se/(?:[^/]+/)+(?P<id>[a-z0-9_]+)'
     _TEST = {
         'url': 'https://play.kth.se/media/Lunch+breakA+De+nya+aff%C3%A4rerna+inom+Fordonsdalen/0_uoop6oz9',
+        'skip': 'play.kth.se and api.kaltura.nordu.net connection refused',
         'md5': 'fbb67b54056dff324eee9ffe675632dc',
         'info_dict': {
             'id': '0_uoop6oz9',
