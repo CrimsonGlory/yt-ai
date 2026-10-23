@@ -446,6 +446,7 @@ jobs:
         with:
           python-version: ${{ matrix.python_version }}
           architecture: ${{ matrix.arch }}
+          check-latest: true
 
       - name: Install Requirements
         env:
