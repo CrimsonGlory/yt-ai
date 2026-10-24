@@ -31,7 +31,7 @@ class JavtifulIE(InfoExtractor):
             'ext': 'mp4',
             'display_id': 'fsdss-979',
             'title': 'FSDSS-979 A completely positive mistress, a life of affairs where she pampers you to the fullest, Goddess Jun',
-            'description': 'md5:df884c82395c7c21d02f717948f1820b',
+            'description': 'md5:d298df0d964b7f7b1035f54b224e9173',
             'thumbnail': r're:https?://javtiful\.com/uploads/.+\.jpg',
             'duration': 7336,
             'timestamp': 1738675212,
@@ -43,7 +43,7 @@ class JavtifulIE(InfoExtractor):
             'channel_url': 'https://javtiful.com/channel/faleno',
             'cast': ['Megami Jun'],
             'categories': ['Affair', 'Big Tits'],
-            'tags': ['solowork', 'blowjob', 'cowgirl', 'tittyfuck'],
+            'tags': ['solowork', 'blowjob', 'cowgirl', 'tittyfuck', 'Megami Jun', 'FALENO', 'Censored'],
             'age_limit': 18,
         },
     }, {

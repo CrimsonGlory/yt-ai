@@ -10,6 +10,7 @@ class ZenPornIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?zenporn\.com/video/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://zenporn.com/video/15627016/desi-bhabi-ki-chudai',
+        'skip': 'zenporn.com PHP fatal error (mb_http_input)',
         'md5': '07bd576b5920714d74975c054ca28dee',
         'info_dict': {
             'id': '9563799',
@@ -24,6 +25,7 @@ class ZenPornIE(InfoExtractor):
         },
     }, {
         'url': 'https://zenporn.com/video/15570701',
+        'skip': 'zenporn.com PHP fatal error (mb_http_input)',
         'md5': 'acba0d080d692664fcc8c4e5502b1a67',
         'info_dict': {
             'id': '2297875',
@@ -53,6 +55,7 @@ class ZenPornIE(InfoExtractor):
         },
     }, {
         'url': 'https://zenporn.com/video/15872038/glad-you-came/',
+        'skip': 'zenporn.com PHP fatal error (mb_http_input)',
         'md5': '296ccab437f5bac6099433768449d8e1',
         'info_dict': {
             'id': '111585',

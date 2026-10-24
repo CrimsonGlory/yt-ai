@@ -288,6 +288,7 @@ class JCBASimulIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.jcbasimul.com/fmhana',
+            'skip': 'geo-restricted to Japan; select_stream returns HTTP 404 record not found from this country (region_check reports AR; X-Forwarded-For is ignored)',
             'info_dict': {
                 'id': 'fmhana',
                 'ext': 'ogg',

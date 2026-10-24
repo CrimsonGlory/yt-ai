@@ -1,3 +1,4 @@
+import json
 import re
 
 from .common import InfoExtractor
@@ -7,14 +8,45 @@ from ..utils import (
     float_or_none,
     int_or_none,
     remove_end,
+    unescapeHTML,
     url_or_none,
 )
+
+_VIDEO_ATTR_RE = re.compile(
+    r'<[^>]+(?:\bdata-vid-id|\bdata-video-id)=["\'][^"\']+["\'][^>]*>')
 
 
 def _media_url(value):
     if not value or value == 'undefined':
         return None
     return url_or_none(value)
+
+
+def _attr(attrs, *keys):
+    for key in keys:
+        value = attrs.get(key)
+        if value and value != 'undefined':
+            return unescapeHTML(value)
+    return None
+
+
+def _wiki_ids(raw):
+    if not raw:
+        return []
+    raw = unescapeHTML(raw)
+    try:
+        parsed = json.loads(raw)
+    except (TypeError, ValueError):
+        return [part for part in raw.split(',') if part]
+    ids = []
+    if not isinstance(parsed, list):
+        return ids
+    for item in parsed:
+        if isinstance(item, str) and item:
+            ids.append(item)
+        elif isinstance(item, (list, tuple)) and item:
+            ids.append(str(item[0]))
+    return ids
 
 
 class TVTropesIE(InfoExtractor):
@@ -46,11 +78,39 @@ class TVTropesIE(InfoExtractor):
     _HEADERS = {'Referer': 'https://tvtropes.org/'}
 
     def _extract_video_attrs(self, webpage, video_id):
-        for html in re.findall(r'<a\b[^>]+\bdata-video-id=["\'][^"\']+["\'][^>]*>', webpage):
+        for html in _VIDEO_ATTR_RE.findall(webpage):
             attrs = extract_attributes(html)
-            if attrs.get('data-video-id') == video_id:
-                return attrs
+            if _attr(attrs, 'data-vid-id', 'data-video-id') == video_id:
+                return self._normalize_video_attrs(attrs)
         raise ExtractorError('Unable to extract video data', expected=True)
+
+    def _normalize_video_attrs(self, attrs):
+        bunny = _attr(attrs, 'data-vid-bunny', 'data-bunny-video-id')
+        hls = _attr(attrs, 'data-hls-url')
+        mp4 = _attr(attrs, 'data-video-url', 'data-mp4-url')
+        if bunny:
+            if not hls:
+                hls = f'https://videos.tvtropes.org/{bunny}/playlist.m3u8'
+            if not mp4:
+                mp4 = f'https://videos.tvtropes.org/{bunny}/play_360p.mp4'
+        tags = _wiki_ids(_attr(attrs, 'data-vid-also')) + _wiki_ids(_attr(attrs, 'data-vid-sources'))
+        if not tags:
+            tags = [t for t in (_attr(attrs, 'data-video-media-sources') or '').split(',') if t]
+        return {
+            'data-bunny-video-id': bunny,
+            'data-hls-url': hls,
+            'data-mpd-url': _attr(attrs, 'data-mpd-url'),
+            'data-video-url': mp4,
+            'data-vimeo-id': _attr(attrs, 'data-vimeo-id', 'data-vid-vimeo'),
+            'data-video-title': _attr(attrs, 'data-vid-title', 'data-video-title'),
+            'data-video-descrip': _attr(attrs, 'data-vid-desc', 'data-video-descrip'),
+            'data-video-thumbnail': _attr(attrs, 'data-vid-thumb', 'data-video-thumbnail'),
+            'data-video-length': _attr(attrs, 'data-vid-len', 'data-video-length'),
+            'data-video-average-rating': _attr(attrs, 'data-vid-avg', 'data-video-average-rating'),
+            'data-video-comment-count': _attr(attrs, 'data-vid-count', 'data-video-comment-count'),
+            'data-video-tropename': _attr(attrs, 'data-vid-tropename', 'data-video-tropename'),
+            'tags': tags,
+        }
 
     def _extract_formats(self, attrs, video_id):
         formats, subtitles = [], {}
@@ -115,7 +175,7 @@ class TVTropesIE(InfoExtractor):
             self.raise_no_formats('No video formats found', video_id=video_id, expected=True)
 
         trope = (attrs.get('data-video-tropename') or '').strip() or None
-        tags = [t for t in (attrs.get('data-video-media-sources') or '').split(',') if t]
+        tags = attrs.get('tags') or None
 
         return {
             'id': video_id,
@@ -126,7 +186,7 @@ class TVTropesIE(InfoExtractor):
             'average_rating': float_or_none(attrs.get('data-video-average-rating')),
             'comment_count': int_or_none(attrs.get('data-video-comment-count')),
             'categories': [trope] if trope else None,
-            'tags': tags or None,
+            'tags': tags,
             'formats': formats,
             'subtitles': subtitles,
         }
@@ -158,15 +218,15 @@ class TVTropesPlaylistIE(InfoExtractor):
         webpage = self._download_webpage(url, playlist_id, impersonate=True)
 
         entries, seen = [], set()
-        for html in re.findall(r'<a\b[^>]+\bdata-video-id=["\'][^"\']+["\'][^>]*>', webpage):
+        for html in _VIDEO_ATTR_RE.findall(webpage):
             attrs = extract_attributes(html)
-            video_id = attrs.get('data-video-id')
+            video_id = _attr(attrs, 'data-vid-id', 'data-video-id')
             if not video_id or video_id in seen or video_id.startswith('tvtropes-videos-'):
                 continue
             seen.add(video_id)
             entries.append(self.url_result(
                 f'https://tvtropes.org/pmwiki/video_example.php?video_id={video_id}',
-                TVTropesIE, video_id, (attrs.get('data-video-title') or '').strip() or None))
+                TVTropesIE, video_id, _attr(attrs, 'data-vid-title', 'data-video-title')))
 
         if not entries:
             raise ExtractorError('No video examples found on this page', expected=True)

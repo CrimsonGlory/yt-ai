@@ -22,7 +22,7 @@ class SexBJCamIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://sexbjcam.com/2026/09/26/kbj26092657_jubin777_20260816/',
-            'md5': '0b84ea55348df0a8f27752a62b111ede',
+            'md5': 'c21227a17b45b1c2635ba6228af9957c',
             'info_dict': {
                 'id': 'kbj26092657_jubin777_20260816',
                 'ext': 'mp4',

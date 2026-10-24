@@ -22,7 +22,7 @@ class ThothubIE(InfoExtractor):
         'info_dict': {
             'id': '985503',
             'ext': 'mp4',
-            'title': 'Mira004 tiktok (1)',
+            'title': 'mira004 tiktok (1)',
             'description': 'Mira tiktok thighs',
             'thumbnail': r're:https?://thothub\.to/contents/videos_screenshots/.+\.jpg',
             'duration': 7,

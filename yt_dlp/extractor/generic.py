@@ -276,8 +276,19 @@ class GenericIE(InfoExtractor):
         },
     }, {
         # Multiple HTML5 videos
+        'url': 'https://www.w3schools.com/html/html5_video.asp',
+        'info_dict': {
+            'id': 'html5_video',
+            'title': 'HTML Video',
+            'description': 'The HTML <video> element is used to show a video on a web page.',
+            'thumbnail': r're:https?://(?:www\.)?w3schools\.com/.+',
+        },
+        'playlist_count': 2,
+    }, {
+        # Multiple HTML5 videos
         # https://github.com/ytdl-org/youtube-dl/pull/14107
         'url': 'https://www.dagbladet.no/nyheter/etter-ett-ars-planlegging-klaffet-endelig-alt---jeg-matte-ta-en-liten-dans/60413035',
+        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '60413035',
             'title': 'Etter ett års planlegging, klaffet endelig alt: - Jeg måtte ta en liten dans',
