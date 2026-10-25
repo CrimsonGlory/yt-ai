@@ -44,7 +44,7 @@ class KanIE(InfoExtractor):
             'description': 'md5:bf6674df79a679f407dce9a5c9ba6025',
             'thumbnail': r're:https?://www\.kan\.org\.il/media/.+',
             'duration': 1747,
-            'timestamp': 1717317045,
+            'timestamp': 1717320645,
             'upload_date': '20240602',
             'series': 'בואו לאכול איתי',
             'channel': 'כאן 11',

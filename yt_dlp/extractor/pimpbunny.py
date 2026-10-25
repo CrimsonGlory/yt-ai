@@ -30,7 +30,7 @@ class PimpBunnyIE(InfoExtractor):
             'like_count': int,
             'age_limit': 18,
             'categories': ['Outdoor', 'Big Boobs', 'Seduction', 'Big Ass'],
-            'tags': 'count:15',
+            'tags': 'count:16',
             'cast': ['Helayna Marie'],
         },
     }, {

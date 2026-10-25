@@ -632,6 +632,7 @@ class VimeoIE(VimeoBaseInfoExtractor):
         'expected_warnings': ['Failed to parse XML: not well-formed'],
     }, {
         'url': 'http://vimeo.com/channels/keypeele/75629013',
+        'skip': 'video gone',
         'md5': '2f86a05afe9d7abc0b9126d229bbe15d',
         'info_dict': {
             'id': '75629013',

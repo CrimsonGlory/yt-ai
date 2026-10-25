@@ -18,6 +18,7 @@ class CrtvgIE(InfoExtractor):
             '_old_archive_ids': ['crtvg 5839623'],
         },
         'params': {'skip_download': 'm3u8'},
+        'skip': 'HTTP 502 Bad Gateway',
     }, {
         'url': 'https://www.crtvg.es/tvg/a-carta/a-parabolica-love-story',
         'md5': '9a47b95a1749db7b7eb3214904624584',
@@ -29,6 +30,7 @@ class CrtvgIE(InfoExtractor):
             'thumbnail': r're:^https?://.*\.(?:jpg|png)',
         },
         'params': {'skip_download': 'm3u8'},
+        'skip': 'HTTP 502 Bad Gateway',
     }]
 
     def _real_extract(self, url):

@@ -6,7 +6,23 @@ class NovaPlayIE(InfoExtractor):
     _VALID_URL = r'https?://play\.nova\.bg/video/[^?#]+/(?P<id>\d+)'
     _TESTS = [
         {
+            'url': 'https://play.nova.bg/video/ochakvaite/season-0/ochakvaite-2026-10-24-spomeni-s-vkus-sat/668204',
+            'info_dict': {
+                'id': '668204',
+                'ext': 'mp4',
+                'title': 'Спомени с вкус | събота по NOVA | 31 окт. 2026',
+                'alt_title': 'ochakvaite/season-0/ochakvaite-2026-10-24-spomeni-s-vkus-sat',
+                'duration': 20,
+                'timestamp': 1792854600,
+                'upload_date': '20261024',
+                'thumbnail': 'https://nbg-img.fite.tv/img/668204_1200x675.jpg',
+                'description': '#Споменисвкус #Промо',
+                'view_count': int,
+            },
+        },
+        {
             'url': 'https://play.nova.bg/video/ochakvaite/season-0/ochakvaite-2026-08-18-dolinata-na-liubovta-np/665491',
+            'skip': 'video gone',
             'md5': '89db78d1346a56b4a9a527bc6d1adedd',
             'info_dict': {
                 'id': '665491',

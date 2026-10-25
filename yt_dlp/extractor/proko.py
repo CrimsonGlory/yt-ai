@@ -160,6 +160,7 @@ class ProkoIE(ProkoBaseIE):
         ],
     }, {
         'url': 'https://www.proko.com/course-lesson/how-to-draw-gesture',
+        'skip': 'vimeo video gone',
         'info_dict': {
             'id': '1055665300',
             'ext': 'mp4',

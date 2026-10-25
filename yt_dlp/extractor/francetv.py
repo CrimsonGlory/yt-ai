@@ -330,6 +330,18 @@ class FranceTVSiteIE(FranceTVBaseInfoExtractor):
         'skip': 'geo-restricted',
     }, {
         # Journaux télévisés are available worldwide
+        'url': 'https://www.france.tv/france-2/journal-20h00/8939235-edition-du-samedi-24-octobre-2026.html',
+        'info_dict': {
+            'id': '35985304-fff1-4e37-9e15-7b12b505d520',
+            'ext': 'mp4',
+            'title': 'Journal 20h00 - Édition du samedi 24 octobre 2026',
+            'duration': 2025,
+            'thumbnail': r're:https?://.+/.+\.jpg',
+            'timestamp': 1792864669,
+            'upload_date': '20261024',
+        },
+    }, {
+        # Page is still published, but the player API returns 422 code 2007 (live ended)
         'url': 'https://www.france.tv/france-2/journal-20h00/8829735-edition-du-jeudi-24-septembre-2026.html',
         'info_dict': {
             'id': 'a2247938-1d2b-4c08-8752-f2deb5551d60',
@@ -340,6 +352,7 @@ class FranceTVSiteIE(FranceTVBaseInfoExtractor):
             'timestamp': 1790272666,
             'upload_date': '20260924',
         },
+        'skip': 'replay expired (live ended)',
     }, {
         # Page is still published, but the player API returns 422 code 2007 (live ended)
         'url': 'https://www.france.tv/france-2/journal-20h00/8738337-edition-du-mercredi-26-aout-2026.html',
