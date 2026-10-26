@@ -30,8 +30,8 @@ class MSNIE(InfoExtractor):
             'upload_date': '20260309',
             'release_timestamp': 1773056959,
             'release_date': '20260309',
-            'modified_timestamp': 1787743537,
-            'modified_date': '20260826',
+            'modified_timestamp': 1792943493,
+            'modified_date': '20261025',
         },
     }, {
         'url': 'https://www.msn.com/en-gb/video/news/president-macron-interrupts-trump-over-ukraine-funding/vi-AA1zMcD7',

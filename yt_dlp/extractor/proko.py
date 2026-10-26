@@ -41,6 +41,7 @@ class ProkoIE(ProkoBaseIE):
     _VALID_URL = r'https?://(?:www\.)?proko\.com/(?:course-lesson|lesson)/(?P<id>[\w-]+)/?(?:[?#]|$)'
     _TESTS = [{
         'url': 'https://www.proko.com/course-lesson/how-to-draw-confident-lines-the-tapered-stroke',
+        'skip': "YouTube bot-check from this environment: Sign in to confirm you're not a bot (cookies required)",
         'md5': '9b31ae4daab6a15886bf96daa5d0d7dc',
         'info_dict': {
             'id': 'xZYpXKqY4iA',

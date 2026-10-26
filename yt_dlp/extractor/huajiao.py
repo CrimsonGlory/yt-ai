@@ -14,6 +14,7 @@ class HuajiaoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?huajiao\.com/l/(?P<id>[0-9]+)'
     _TESTS = [{
         'url': 'https://www.huajiao.com/l/350230246',
+        'skip': 'replay gone',
         'md5': 'e7d738e01df37b15218d9cc4c6a18d5c',
         'info_dict': {
             'id': '350230246',

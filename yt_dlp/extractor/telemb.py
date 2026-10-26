@@ -22,6 +22,7 @@ class TeleMBIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?telemb\.be(?:/replay)?/(?:actu|emission|sports)(?P<alt_id>(?:/[\w-]+)+)/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.telemb.be/actu/frameries-un-concours-pour-conducteurs-dengins-de-chantier/37879',
+        'skip': 'Freecaster tvlocales-player embed JSON returns HTTP 503',
         'info_dict': {
             'id': '37879',
             'ext': 'mp4',
@@ -37,6 +38,7 @@ class TeleMBIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.telemb.be/sports/karate-cinq-karatekas-du-bushikai-wasmuel-la-coupe-du-monde-tokyo/37849',
+        'skip': 'Freecaster tvlocales-player embed JSON returns HTTP 503',
         'info_dict': {
             'id': '37849',
             'ext': 'mp4',
@@ -52,6 +54,7 @@ class TeleMBIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.telemb.be/replay/emission/les-infos/les-infos-16052025/36502',
+        'skip': 'Freecaster tvlocales-player embed JSON returns HTTP 503',
         'info_dict': {
             'id': '36502',
             'ext': 'mp4',
@@ -66,6 +69,7 @@ class TeleMBIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.telemb.be/actu/linvite-des-infos/le-cma-de-jemappes-fetera-ses-20-ans-ce-week-end/36711',
+        'skip': 'Freecaster tvlocales-player embed JSON returns HTTP 503',
         'info_dict': {
             'id': '36711',
             'ext': 'mp4',

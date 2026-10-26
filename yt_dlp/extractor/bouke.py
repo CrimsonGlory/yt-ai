@@ -32,6 +32,7 @@ class BoukeIE(InfoExtractor):
     }
     _TESTS = [{
         'url': 'https://www.bouke.media/emission/xmas-melodies/19946',
+        'skip': 'Freecaster tvlocales-player embed JSON returns HTTP 503',
         'md5': 'dfa1572370dac6a0185b5ce8496d04f3',
         'info_dict': {
             'id': '19946',

@@ -1,8 +1,11 @@
 import re
+import time
 import uuid
 
 from .common import InfoExtractor
+from ..networking.exceptions import HTTPError
 from ..utils import (
+    ExtractorError,
     clean_html,
     int_or_none,
     join_nonempty,
@@ -14,6 +17,7 @@ from ..utils.traversal import traverse_obj
 
 class TapTapBaseIE(InfoExtractor):
     _X_UA = 'V=1&PN=WebApp&LANG=zh_CN&VN_CODE=102&LOC=CN&PLT=PC&DS=Android&UID={uuid}&OS=Windows&OSV=10&DT=PC'
+    _API_ORIGIN = 'https://www.taptap.cn'
     _VIDEO_API = 'https://www.taptap.cn/webapiv2/video-resource/v1/multi-get'
     _INFO_API = None
     _INFO_QUERY_KEY = 'id'
@@ -21,12 +25,37 @@ class TapTapBaseIE(InfoExtractor):
     _ID_PATH = None
     _META_PATH = None
 
-    def _get_api(self, url, video_id, query, **kwargs):
-        query = {**query, 'X-UA': self._X_UA.format(uuid=uuid.uuid4())}
-        return self._download_json(url, video_id, query=query, **kwargs)['data']
+    def _prime_waf(self, video_id, page_url=None):
+        self._download_webpage(
+            page_url or getattr(self, '_page_url', None) or f'{self._API_ORIGIN}/',
+            video_id, fatal=False, errnote=False)
 
-    def _extract_video(self, video_id):
-        video_data = self._get_api(self._VIDEO_API, video_id, query={'video_ids': video_id})['list'][0]
+    def _get_api(self, url, video_id, query, **kwargs):
+        headers = {
+            'Origin': self._API_ORIGIN,
+            'Referer': f'{self._API_ORIGIN}/',
+            **kwargs.pop('headers', {}),
+        }
+        last_err = None
+        for attempt in range(4):
+            api_query = {**query, 'X-UA': self._X_UA.format(uuid=uuid.uuid4())}
+            try:
+                return self._download_json(
+                    url, video_id, query=api_query, headers=headers, **kwargs)['data']
+            except ExtractorError as e:
+                last_err = e
+                if not isinstance(getattr(e, 'cause', None), HTTPError) or e.cause.status != 405:
+                    raise
+                if attempt == 3:
+                    break
+                self._prime_waf(video_id)
+                time.sleep(2 * (attempt + 1))
+        raise last_err
+
+    def _extract_video(self, video_id, video_data=None):
+        if not video_data:
+            video_data = self._get_api(
+                self._VIDEO_API, video_id, query={'video_ids': video_id})['list'][0]
 
         # h265 playlist contains both h265 and h264 formats
         video_url = traverse_obj(video_data, ('play_url', ('url_h265', 'url'), {url_or_none}, any))
@@ -46,16 +75,29 @@ class TapTapBaseIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
+        self._page_url = url
         query = {self._INFO_QUERY_KEY: video_id}
+        self._prime_waf(video_id, url)
 
         data = traverse_obj(
             self._get_api(self._INFO_API, video_id, query=query), self._DATA_PATH)
 
         metainfo = traverse_obj(data, self._META_PATH)
+        video_ids = list(dict.fromkeys(
+            str(i) for i in traverse_obj(data, self._ID_PATH) if i is not None))
+        videos = {}
+        if video_ids:
+            listing = traverse_obj(self._get_api(
+                self._VIDEO_API, video_ids[0],
+                query={'video_ids': ','.join(video_ids)}), ('list', ...)) or []
+            for item in listing:
+                vid = str_or_none(item.get('video_id'))
+                if vid:
+                    videos[vid] = item
         entries = [{
             **metainfo,
-            **self._extract_video(id_),
-        } for id_ in set(traverse_obj(data, self._ID_PATH))]
+            **self._extract_video(id_, videos.get(id_)),
+        } for id_ in video_ids]
 
         return self.playlist_result(entries, **metainfo, id=video_id)
 
@@ -193,6 +235,7 @@ class TapTapAppIE(TapTapBaseIE):
 
 class TapTapIntlBaseIE(TapTapBaseIE):
     _X_UA = 'V=1&PN=WebAppIntl2&LANG=zh_TW&VN_CODE=115&VN=0.1.0&LOC=CN&PLT=PC&DS=Android&UID={uuid}&CURR=&DT=PC&OS=Windows&OSV=NT%208.0.0'
+    _API_ORIGIN = 'https://www.taptap.io'
     _VIDEO_API = 'https://www.taptap.io/webapiv2/video-resource/v1/multi-get'
 
 

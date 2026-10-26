@@ -27,9 +27,14 @@ class PeekVidsBaseIE(InfoExtractor):
              r'/vid/\d+/(\d+)\.(?:jpe?g|png|webp)',
              r'/api/get_related_videos/(\d+)'),
             webpage, 'short video ID', default=None) or display_id
-        srcs = self._download_json(
+        # /v-alt/ often returns HTTP 429; keep going so the page HLS <source> can be used.
+        raw = self._download_webpage(
             f'https://www.{domain}/v-alt/{video_id}', video_id,
-            note='Downloading list of source files', fatal=False)
+            note='Downloading list of source files', fatal=False,
+            errnote=False, expected_status=429)
+        srcs = {}
+        if raw and raw.lstrip()[:1] in '{[':
+            srcs = self._parse_json(raw, video_id, fatal=False) or {}
 
         formats = []
         if isinstance(srcs, dict):
@@ -94,6 +99,7 @@ class PeekVidsIE(PeekVidsBaseIE):
     '''
     _TESTS = [{
         'url': 'https://peekvids.com/pc/dane-jones-cute-redhead-with-perfect-tits-with-mini-vamp/BSyLMbN0YCd',
+        'skip': 'HTTP 429 Rate Limit Exceeded from this environment',
         'md5': '2ff6a357a9717dc9dc9894b51307e9a2',
         'info_dict': {
             'id': '1262717',

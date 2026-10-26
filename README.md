@@ -2752,7 +2752,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **parler**: Use the public v4 posts API for app/play post URLs
     * **pbs**: Guard against missing `video_info` and title
     * **pbskids**: Extract Next.js `/videos/watch/` pages and PBS URS HLS/MP4
-    * **peekvids**: Read the numeric ID from the thumbnail URL and fall back to the page HLS source
+    * **peekvids**: Read the numeric ID from the thumbnail URL and fall back to the page HLS source; treat `/v-alt/` HTTP 429 as empty so that fallback can run
     * **peer.tv**: Read JSON-LD `contentUrl` MP4s and match `/video/` slug URLs
     * **performgroup**: Use the DAZN feeds VOD API instead of the dead Perform Feeds ep3 host; treat remaining CloudFront progressive MP4s as gone when they 403
     * **photobucket**: Extract sharing-link videos via GraphQL instead of the old `Pb.Data.Shared` page JSON
@@ -2837,6 +2837,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **sverigesradio**: Extract `playAudio` / episode audio from Next.js App Router data instead of the dead playerajax API
     * **sztvhu**: Follow YouTube embeds instead of the old media.sztv.hu VOD player
     * **t-online.de**: Extract Next.js / JSON-LD HLS (and CMAF HTTP) on current `/video/` URLs instead of the dead `tid_json_video` API
+    * **taptap**: Prime the Aliyun WAF cookie from the page, send site Origin/Referer on `webapiv2` JSON, retry HTTP 405, and batch `video-resource` multi-get
     * **tarangplus**: Use the catalog API and public preview HLS instead of the old SSR iframe
     * **tass**: Use the public TBP content API (impersonate) instead of JWPlayer sources
     * **tbs:newsdig**: Extract public Streaks HLS from NEWS DIG articles

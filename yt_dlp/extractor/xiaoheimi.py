@@ -26,8 +26,8 @@ class XiaoHeiMiIE(InfoExtractor):
         'info_dict': {
             'id': '42755-1-1',
             'ext': 'mp4',
-            'title': '炽道-第01集',
-            'description': 'md5:1eefb2dfab680ce47c8b0046dd1d8f93',
+            'title': '炽道 第01集',
+            'description': 'md5:2e5c1059d4976512a0decf03cf49e554',
             'series': '炽道',
             'series_id': '42755',
             'episode': '第01集',
@@ -40,8 +40,8 @@ class XiaoHeiMiIE(InfoExtractor):
         'info_dict': {
             'id': '42755-2-1',
             'ext': 'mp4',
-            'title': '炽道-第01集',
-            'description': 'md5:1eefb2dfab680ce47c8b0046dd1d8f93',
+            'title': '炽道 第01集',
+            'description': 'md5:2e5c1059d4976512a0decf03cf49e554',
             'series': '炽道',
             'series_id': '42755',
             'episode': '第01集',
