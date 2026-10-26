@@ -2267,11 +2267,11 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 
 ### New features
 
-* Forked from [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and periodically merged with upstream (currently through [**yt-dlp@7747073a2**](https://github.com/yt-dlp/yt-dlp/commit/7747073a2))
+* Forked from [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and periodically merged with upstream (currently through [**yt-dlp@f264a6cbd**](https://github.com/yt-dlp/yt-dlp/commit/f264a6cbd))
 
 * **Independent branding**: Binaries, config, cache, and plugin paths use `yt-ai`, so yt-ai can be installed alongside yt-dlp. The Python import remains `yt_dlp`. See [CONFIGURATION](#configuration)
 
-* **Python 3.10**: CPython 3.10 remains supported after yt-dlp dropped it in 2026.10.21 (`requires-python >=3.10`, compat shims, and the 3.10 test matrix). Official Windows x64/x86 binaries still target Win8+.
+* **Python 3.10**: CPython 3.10 remains supported after yt-dlp dropped it in 2026.10.26 (`requires-python >=3.10`, compat shims, and the 3.10 test matrix). Official Windows x64/x86 binaries still target Win8+.
 
 * **AI/LLM contributions required**: yt-dlp's NO AI / NO LLM contribution ban (`.NO_AI`, issue/PR checkboxes, and auto-close workflow) has been replaced with [`.NO_HUMAN`](.NO_HUMAN/README.md)
 
