@@ -754,14 +754,15 @@ class InfoExtractor:
                 self._downloader.write_debug(
                     f'Using fake IP {self._x_forwarded_for_ip} ({country.upper()}) as X-Forwarded-For')
 
-    def _extract_webpage_media(self, url):
+    def _extract_webpage_media(self, url, headers=None, impersonate=None):
         """Best-effort media extraction from HTML5 / JSON-LD / JWPlayer / og:video."""
         try:
             video_id = self._match_id(url)
         except Exception:
             video_id = self.get_temp_id(url) or 'video'
 
-        webpage = self._download_webpage(url, video_id)
+        webpage = self._download_webpage(
+            url, video_id, headers=headers, impersonate=impersonate)
         json_ld = self._search_json_ld(webpage, video_id, default={}) or {}
         if isinstance(json_ld, list):
             json_ld = json_ld[0] if json_ld else {}

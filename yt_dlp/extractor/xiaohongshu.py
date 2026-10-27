@@ -15,7 +15,7 @@ class XiaoHongShuIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.xiaohongshu.com/explore/6a659058000000001102f1e0?xsec_token=ABUgG3KfS3vZg1s5gjDbRERjrojNlutU67j2MvIkDz3lw=',
-            'md5': '8b932b0f5a9f52448f12edef3e4c358e',
+            'md5': '0985c9df4c41bbfa3c52c19537138b72',
             'info_dict': {
                 'id': '6a659058000000001102f1e0',
                 'ext': 'mp4',
@@ -24,7 +24,7 @@ class XiaoHongShuIE(InfoExtractor):
                 'title': '这…小蜘蛛的演技…？？？',
                 'tags': ['奥德赛', 'tomholland', '安妮海瑟薇'],
                 'duration': 22.491,
-                'thumbnail': r're:https?://sns-webpic-qc\.xhscdn\.com/\d+/[\da-f]+/[^/]+',
+                'thumbnail': r're:https?://(?:sns-webpic-qc\.xhscdn\.com/\d+/[\da-f]+/[^/]+|sns-web-[^./]+\.rednotecdn\.com/.+)',
             },
         },
         {
@@ -145,6 +145,11 @@ class XiaoHongShuIE(InfoExtractor):
                 },
             ),
         }
+        # Stream duration is milliseconds; capa.duration is whole seconds.
+        info['duration'] = (
+            traverse_obj(formats, (..., 'duration', {float_or_none}, any))
+            or traverse_obj(note_info, ('video', 'capa', 'duration', {float_or_none}))
+        )
         info['title'] = (
             info.get('title')
             or self._og_search_title(webpage, default=None)

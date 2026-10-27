@@ -2412,7 +2412,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Kissasian** (`kissasian.video`): Follow `hndrama.cc` embed servers and packed JWPlayer HLS (VidHide). Request: [yt-dlp/yt-dlp#7801](https://github.com/yt-dlp/yt-dlp/issues/7801)
     * **Kuaishou** (`kuaishou.com`): Mobile H5 `window.INIT_STATE` progressive MP4/HLS from share and short-video pages. Request: [yt-dlp/yt-dlp#14010](https://github.com/yt-dlp/yt-dlp/issues/14010)
     * **KVF** (`kvf.fo`): JWPlayer `media`/`mode` vars and `vod.kringvarp.fo` SMIL HLS. Request: [yt-dlp/yt-dlp#9620](https://github.com/yt-dlp/yt-dlp/issues/9620)
-    * **Kwai** (`s.kw.ai` / `kwai.com`): JSON-LD `VideoObject` `contentUrl` from the international PWA, with Nuxt `seoData` fallback. Request: [yt-dlp/yt-dlp#4502](https://github.com/yt-dlp/yt-dlp/issues/4502)
+    * **Kwai** (`s.kw.ai` / `kwai.com`): JSON-LD `VideoObject` `contentUrl` from the international PWA, with packed desktop Nuxt `main_mv_urls` fallback (mobile Next.js omits media). Request: [yt-dlp/yt-dlp#4502](https://github.com/yt-dlp/yt-dlp/issues/4502)
     * **LearnEnglishKids** (`learnenglishkids.britishcouncil.org`): Drupal `akamai-custom-embed` Plyr HLS from `data-video`, with YouTube iframe fallback. Request: [yt-dlp/yt-dlp#10146](https://github.com/yt-dlp/yt-dlp/issues/10146)
     * **LeCinemaClub** (`lecinemaclub.com`): Plyr Vimeo iframe / Watch-button `external` MPD of the weekly film (skip the HTML5 preview). Request: [yt-dlp/yt-dlp#4449](https://github.com/yt-dlp/yt-dlp/issues/4449)
     * **LookMovie2** (`lookmovie2.to`): Play-page `movie_storage`/`show_storage` hash plus `/api/v1/security/{movie,episode}-access` HLS. Request: [yt-dlp/yt-dlp#8951](https://github.com/yt-dlp/yt-dlp/issues/8951)
@@ -2773,6 +2773,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **pornbox**: Extract public trailer streams when the full scene requires login
     * **pornotube**: Use the site `/deliver` HLS endpoint instead of the dead AEBN clips API
     * **pornovoisines**: Extract Revma pack MP4s and JSON-LD trailers instead of the dead settings API
+    * **porntube**: Impersonate the browser with a Chrome 120 User-Agent on `/video/` pages (Cloudflare 403s urllib and modern-Chrome impersonation)
     * **pornoxo**: Impersonate the browser and extract HLS from `playerConfig`
     * **pr0gramm**: Request SFW-only API flags unless logged in
     * **premiershiprugby**: Follow YouTube highlight embeds from the article CMS; keep StreamAMG HLS for native full matches
@@ -2904,7 +2905,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **wyborcza:video**: Ignore `brak_api_gallery` placeholder thumbnails that are not URLs
     * **xanimu**: Impersonate the browser to bypass Cloudflare and read JSON-LD metadata
     * **xfileshare**: Match current Uqload TLDs (`uqload.vc` and related mirrors) after `uqload.com` started redirecting
-    * **xiaohongshu**: Impersonate the browser and fall back to `og:title` when note JSON omits title
+    * **xiaohongshu**: Impersonate the browser, fall back to `og:title` when note JSON omits title, and read duration from `video.capa` / stream metadata
     * **xinpianchang**: Read Next.js `_next/data` instead of WAF-blocked article HTML; send Referer on media CDN requests
     * **XMinus**: Reconstruct xmst.cc `/dl/minus` URLs from the current x-minus.pro player after x-minus.org expired
     * **yahoo**: Fall back to JSON-LD `VideoObject` UUIDs (impersonate; the default UA is HTTP 429) and the streams API when the caas article API returns HTTP 404 or 500. The webpage fallback is a private helper so it does not override generic embed scanning
@@ -2916,7 +2917,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **youtube:tab**: Treat lockup `LOCKUP_CONTENT_TYPE_SHOW` and `LOCKUP_CONTENT_TYPE_COURSE` as playlists (same as playlists/podcasts)
     * **younow**: Raise an expected error that live playback is WebRTC (Props SFU) and that public HLS/moments are gone
     * **zenporn**: Impersonate the browser
-    * **zenyandex**: Treat a missing channel feed-page JSON as end of playlist
+    * **zenyandex**: Impersonate the browser on video pages and okcdn HLS/MP4 (plain urllib hits SSO/503 or HTTP 400); treat a missing channel feed-page JSON as end of playlist
     * **zetland**: Extract `storyServer` audio from Next.js App Router flight data
     * **zingmp3**: Sign API requests with the current app `version` and only the documented params
 

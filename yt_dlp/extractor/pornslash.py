@@ -19,6 +19,7 @@ class PornSlashIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?pornslash\.com/(?:watch|embed)/(?P<id>[\w-]+)'
     _TESTS = [{
         'url': 'https://www.pornslash.com/watch/Q0mQbzEJbj2',
+        'skip': 'HLS player source is a placeholder (test.com); /media/report returns no alternate host',
         'md5': 'ec0514f747709f52203b588f592631e7',
         'info_dict': {
             'id': 'Q0mQbzEJbj2',

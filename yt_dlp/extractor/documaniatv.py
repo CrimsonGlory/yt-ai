@@ -16,6 +16,7 @@ class DocumaniaTVIE(InfoExtractor):
     _TESTS = [
         {
             "url": "https://www.documaniatv.com/ciencia-y-tecnologia/the-pirate-bay-video_22c12b753.html",
+            "skip": "site returns HTTP 500",
             "md5": "92e5da3570a5af703b896f42c0922872",
             "info_dict": {
                 "id": "22c12b753",

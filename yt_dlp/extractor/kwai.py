@@ -1,3 +1,5 @@
+import json
+
 from .common import InfoExtractor
 from ..utils import (
     int_or_none,
@@ -37,9 +39,6 @@ class KwaiIE(InfoExtractor):
                 'like_count': int,
                 'comment_count': int,
                 'repost_count': int,
-                'track': 'Áudio original criado por Massaki',
-                'artist': 'Massaki',
-                'artists': ['Massaki'],
                 'width': 720,
                 'height': 1280,
             },
@@ -66,35 +65,78 @@ class KwaiIE(InfoExtractor):
         for ld in self._yield_json_ld(webpage, video_id, default=[]):
             if traverse_obj(ld, '@type') == 'VideoObject' and url_or_none(ld.get('contentUrl')):
                 return ld
-        return (
-            traverse_obj(
-                self._search_nuxt_data(webpage, video_id, fatal=False),
-                (
-                    'seoData',
-                    lambda _, v: v.get('id') == 'VideoObject',
-                    'innerHTML',
-                    {dict},
-                    lambda _, v: url_or_none(v.get('contentUrl')),
-                    any,
-                ),
-            )
-            or {}
-        )
+        return {}
+
+    def _decode_js_string(self, value):
+        if not value:
+            return value
+        try:
+            return json.loads(f'"{value}"')
+        except json.JSONDecodeError:
+            return value
+
+    def _extract_nuxt_photo(self, webpage):
+        """Packed window.__NUXT__ IIFE on the desktop PWA (JSON-LD is often omitted)."""
+        video_url = self._decode_js_string(self._search_regex(
+            r'main_mv_urls:\s*\[\s*\{[^}]*?\burl:\s*"((?:\\.|[^"])+)"',
+            webpage, 'nuxt video URL', default=None))
+        thumbnail = self._decode_js_string(self._search_regex(
+            r'cover_thumbnail_urls:\s*\[\s*\{[^}]*?\burl:\s*"((?:\\.|[^"])+)"',
+            webpage, 'nuxt thumbnail', default=None))
+        caption = self._decode_js_string(self._search_regex(
+            r'\bcaption:"((?:\\.|[^"])*)"', webpage, 'caption', default=None))
+        duration_ms = self._search_regex(
+            r'adaptationSet:\[\{id:\w+,duration:(\d+)', webpage, 'duration', default=None)
+        timestamp_ms = self._search_regex(
+            r'\btimestamp:(\d{10,})', webpage, 'timestamp', default=None)
+        width, height = self._search_regex(
+            r'\}\((?:true|false),\d+,-?\d+,"[^"]*",(\d+),(\d+),',
+            webpage, 'dimensions', default=(None, None), group=(1, 2))
+        return {
+            'url': url_or_none(video_url),
+            'thumbnail': url_or_none(thumbnail),
+            'title': caption,
+            'description': caption,
+            'duration': int_or_none(duration_ms, scale=1000),
+            'timestamp': int_or_none(timestamp_ms, scale=1000),
+            'like_count': int_or_none(self._search_regex(
+                r'\blike_count:(\d+)', webpage, 'like count', default=None)),
+            'view_count': int_or_none(self._search_regex(
+                r'\bview_count:(\d+)', webpage, 'view count', default=None)),
+            'comment_count': int_or_none(self._search_regex(
+                r'\bcomment_count:(\d+)', webpage, 'comment count', default=None)),
+            'repost_count': int_or_none(self._search_regex(
+                r'\bforward_count:(\d+)', webpage, 'repost count', default=None)),
+            'uploader_id': self._search_regex(
+                r'user_id_str:"([^"]+)"', webpage, 'uploader id', default=None),
+            'width': int_or_none(width),
+            'height': int_or_none(height),
+        }
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        # s.kw.ai share links redirect to the app store on a mobile UA.
-        headers = None if 's.kw.ai' in url else self._MOBILE_HEADERS
-        webpage, urlh = self._download_webpage_handle(url, display_id, headers=headers)
+        # Mobile UA currently serves a Next.js shell with no media; desktop Nuxt
+        # still embeds main_mv_urls. s.kw.ai share links redirect to the app store
+        # on a mobile UA, so keep desktop first.
+        webpage, urlh = self._download_webpage_handle(
+            url, display_id, impersonate=True)
         video_ld = self._extract_video_ld(webpage, display_id)
+        nuxt = self._extract_nuxt_photo(webpage)
 
-        if not url_or_none(video_ld.get('contentUrl')):
+        if not url_or_none(video_ld.get('contentUrl')) and not nuxt.get('url'):
             webpage = self._download_webpage(
-                urlh.url, display_id, 'Downloading mobile webpage', headers=self._MOBILE_HEADERS,
+                urlh.url, display_id, 'Downloading mobile webpage',
+                headers=self._MOBILE_HEADERS, impersonate=True,
             )
             video_ld = self._extract_video_ld(webpage, display_id)
+            nuxt = self._extract_nuxt_photo(webpage)
 
-        video_url = url_or_none(video_ld.get('contentUrl'))
+        video_url = (
+            url_or_none(video_ld.get('contentUrl'))
+            or nuxt.get('url')
+            or url_or_none(self._search_regex(
+                r'"contentUrl"\s*:\s*"([^"]+)"', webpage, 'content URL', default=None))
+        )
         if not video_url:
             self.raise_no_formats(
                 'No public video found; it may be private, deleted, or app-only', expected=True, video_id=display_id,
@@ -112,14 +154,19 @@ class KwaiIE(InfoExtractor):
         )
 
         info = self._json_ld(video_ld, video_id, fatal=False, expected_type='VideoObject')
-        caption = traverse_obj(video_ld, ('description', {str}))
+        caption = traverse_obj(video_ld, ('description', {str})) or nuxt.get('title')
         if caption:
             info['title'] = caption
             info.setdefault('description', caption)
 
+        uploader = self._search_regex(
+            r'kwai\.com/@([^/?#]+)', urlh.url, 'uploader', default=None)
+        uploader_url = f'https://www.kwai.com/@{uploader}' if uploader else None
+
         return {
             'id': video_id,
             'ext': 'mp4',
+            **{k: v for k, v in nuxt.items() if k != 'url' and v is not None},
             **info,
             'url': video_url,
             **traverse_obj(
@@ -140,4 +187,8 @@ class KwaiIE(InfoExtractor):
                     ),
                 },
             ),
+            **{k: v for k, v in {
+                'uploader': uploader,
+                'uploader_url': uploader_url,
+            }.items() if v},
         }

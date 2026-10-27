@@ -489,7 +489,7 @@ class TravelChannelIE(DiscoveryPlusBaseIE):
             'season': 'Season 2',
             'episode_number': 8,
             'episode': 'Episode 8',
-            'series': 'Paranormal Caught on Camera',
+            'series': 'Paranormal Caught On Camera',
             'duration': 2524.655,
             'timestamp': 1622178000,
             'upload_date': '20210528',

@@ -205,12 +205,12 @@ class YandexVideoPreviewIE(InfoExtractor):
 
 class ZenYandexBaseIE(InfoExtractor):
     def _fetch_ssr_data(self, url, video_id):
-        webpage = self._download_webpage(url, video_id)
+        webpage = self._download_webpage(url, video_id, impersonate=True)
         redirect = self._search_json(
             r'(?:var|let|const)\s+it\s*=', webpage, 'redirect', video_id, default={}).get('retpath')
         if redirect:
             video_id = self._match_id(redirect)
-            webpage = self._download_webpage(redirect, video_id, note='Redirecting')
+            webpage = self._download_webpage(redirect, video_id, note='Redirecting', impersonate=True)
         return video_id, self._search_json(
             r'(?:var|let|const)\s+_params\s*=\s*\(', webpage, 'metadata', video_id,
             contains_pattern=r'{["\']ssrData.+}')['ssrData']
@@ -320,9 +320,17 @@ class ZenYandexIE(ZenYandexBaseIE):
             ext = determine_ext(s_url)
             content_type = traverse_obj(parse_qs(s_url), ('ct', 0))
             if ext == 'mpd' or content_type == '6':
-                fmts, subs = self._extract_mpd_formats_and_subtitles(s_url, video_id, mpd_id='dash', fatal=False)
+                fmts, subs = self._extract_mpd_formats_and_subtitles(
+                    s_url, video_id, mpd_id='dash', fatal=False, errnote=False)
             elif ext == 'm3u8' or content_type == '8':
-                fmts, subs = self._extract_m3u8_formats_and_subtitles(s_url, video_id, 'mp4', m3u8_id='hls', fatal=False)
+                # okcdn HLS 400s without the same TLS fingerprint as the SSR page.
+                m3u8_doc = self._download_webpage(
+                    s_url, video_id, 'Downloading m3u8 information',
+                    fatal=False, impersonate=True, errnote=False)
+                if not m3u8_doc or not str(m3u8_doc).lstrip().startswith('#EXTM3U'):
+                    continue
+                fmts, subs = self._parse_m3u8_formats_and_subtitles(
+                    m3u8_doc, s_url, 'mp4', m3u8_id='hls')
             elif content_type == '0':
                 format_type = traverse_obj(parse_qs(s_url), ('type', 0))
                 formats.append({
@@ -330,6 +338,8 @@ class ZenYandexIE(ZenYandexBaseIE):
                     'format_id': format_type,
                     'ext': 'mp4',
                     'quality': quality(format_type),
+                    # okcdn progressive MP4 400s without the same TLS fingerprint as the SSR page.
+                    'impersonate': True,
                 })
                 continue
             else:
@@ -342,6 +352,7 @@ class ZenYandexIE(ZenYandexBaseIE):
             'id': video_id,
             'formats': formats,
             'subtitles': subtitles,
+            'impersonate': True,
             **traverse_obj(video_data, {
                 'title': ('title', {str}),
                 'description': ('description', {str}),

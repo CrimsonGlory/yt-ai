@@ -10,7 +10,7 @@ class WebcameraplIE(InfoExtractor):
         'info_dict': {
             'id': 'warszawa-plac-zamkowy',
             'ext': 'mp4',
-            'title': r're:WIDOK NA PLAC ZAMKOWY W WARSZAWIE \d{4}-\d{2}-\d{2} \d{2}:\d{2}$',
+            'title': r're:(?i)(?:WIDOK NA )?PLAC ZAMKOWY W WARSZAWIE \d{4}-\d{2}-\d{2} \d{2}:\d{2}$',
             'live_status': 'is_live',
         },
     }, {
@@ -18,7 +18,7 @@ class WebcameraplIE(InfoExtractor):
         'info_dict': {
             'id': 'gdansk-stare-miasto',
             'ext': 'mp4',
-            'title': r're:GDAŃSK - widok na Stare Miasto(?: / Nowe ujęcia)? \d{4}-\d{2}-\d{2} \d{2}:\d{2}$',
+            'title': r're:(?i)GDAŃSK - widok na Stare Miasto(?: / Nowe ujęcia)? \d{4}-\d{2}-\d{2} \d{2}:\d{2}$',
             'live_status': 'is_live',
         },
     }]

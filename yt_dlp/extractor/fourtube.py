@@ -179,6 +179,10 @@ class PornTubeIE(FourTubeBaseIE):
     _URL_TEMPLATE = 'https://www.porntube.com/videos/video_%s'
     _TKN_HOST = 'tkn.porntube.com'
     _WEB_FALLBACK = True
+    # Cloudflare 403s the default Chrome 145+ urllib UA on /video/ pages.
+    _BROWSER_HEADERS = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    }
     _TESTS = [{
         'url': 'https://www.porntube.com/video/afoQEf5MRBujBwWF/alexa-chains-demands-a-massive-black-cock',
         'info_dict': {
@@ -190,6 +194,7 @@ class PornTubeIE(FourTubeBaseIE):
             'thumbnail': r're:https://i\.bang\.com/.+',
             'timestamp': 1787270400,
             'upload_date': '20260821',
+            'age_limit': 18,
         },
     }, {
         'url': 'https://www.porntube.com/videos/teen-couple-doing-anal_7089759',
@@ -242,8 +247,11 @@ class PornTubeIE(FourTubeBaseIE):
     def _real_extract(self, url):
         mobj = self._match_valid_url(url)
         if mobj.group('token'):
-            info = self._extract_webpage_media(url)
+            # Cloudflare 403s urllib and modern-Chrome impersonation; Chrome 120 + impersonate works.
+            info = self._extract_webpage_media(
+                url, headers=self._BROWSER_HEADERS, impersonate=True)
             info['id'] = mobj.group('slug') or mobj.group('token')
+            info.setdefault('age_limit', 18)
             return info
         video_id, display_id = mobj.group('id', 'display_id')
 

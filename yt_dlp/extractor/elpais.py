@@ -56,6 +56,19 @@ class ElPaisIE(InfoExtractor):
         'params': {
             'skip_download': True,
         },
+        'skip': 'HTTP 502',
+    }, {
+        'url': 'https://elpais.com/deportes/futbol/2026-10-26/lamine-yamal-no-se-lleva-el-balon-de-oro-2026.html',
+        'info_dict': {
+            'id': 'lamine-yamal-no-se-lleva-el-balon-de-oro-2026',
+            'ext': 'mp4',
+            'title': 'Lamine Yamal no lleva el Balón de Oro 2026',
+            'description': 'El jugador de Inglaterra, Harry Kane ha ganado su primer Balón de Oro y en la categoría femenina, Alexia Putellas ha ganado su tercer galardón ',
+            'upload_date': '20261026',
+            'timestamp': 1793055965,
+            'duration': 113,
+            'thumbnail': r're:https?://.*',
+        },
     }]
 
     def _real_extract(self, url):
