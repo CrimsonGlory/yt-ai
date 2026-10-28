@@ -111,7 +111,7 @@ class VTVIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'ZLife #1: Không ngờ tới phải không? | VTV24',
             'description': 'md5:cbf7c4aea80e1557f1f7a21b1e2fb62e',
-            'thumbnail': r're:https://video-thumbs\.mediacdn\.vn/zoom/\d+_\d+//vtv/2022/5/13/t67s6btf3ji-16524555726231894427334\.jpg',
+            'thumbnail': r're:https://video-thumbs\.mediacdn\.vn/zoom/\d+_\d+/+vtv/2022/5/13/t67s6btf3ji-16524555726231894427334\.jpg',
         },
         'params': {'skip_download': True},
     }]

@@ -8,6 +8,7 @@ from ..utils import (
     traverse_obj,
     unified_strdate,
     update_url_query,
+    url_or_none,
 )
 
 
@@ -92,28 +93,29 @@ class DisneyIE(InfoExtractor):
         except (StopIteration, KeyError, IndexError, TypeError):
             return None, None
 
-    def _extract_matterhorn_video(self, webpage, display_id):
+    def _extract_matterhorn_video(self, webpage, display_id, video_id=None):
         matterhorn = self._search_json(
             r'window\[[\'"]__matterhorn-[^\'"]+[\'"]\]\s*=',
             webpage, 'matterhorn data', display_id, default=None)
         video_data = traverse_obj(matterhorn, (
             'page', 'content', ..., 'stack', ..., 'module_data', 'data',
-            lambda _, v: isinstance(v, dict) and v.get('flavors') and v.get('id'),
+            lambda _, v: isinstance(v, dict) and v.get('flavors') and v.get('id') and (
+                not video_id or v.get('id') == video_id),
             any,
         ))
         return ({}, video_data) if video_data else (None, None)
 
     def _real_extract(self, url):
         domain, video_id, display_id = self._match_valid_url(url).groups()
-        page_data, video_data = {}, None
-        if not video_id:
-            webpage = self._download_webpage(url, display_id)
-            page_data, video_data = self._extract_grill_video(webpage, display_id)
-            if not video_data:
-                page_data, video_data = self._extract_matterhorn_video(webpage, display_id)
-            if not video_data:
-                video_id = self._search_regex(
-                    r'"contentId"\s*:\s*"([a-f0-9]{24})"', webpage, 'content id')
+        page_id = video_id or display_id
+        webpage = self._download_webpage(url, page_id)
+        page_data, video_data = self._extract_grill_video(webpage, page_id)
+        if not video_data:
+            page_data, video_data = self._extract_matterhorn_video(
+                webpage, page_id, video_id=video_id)
+        if not video_data and not video_id:
+            video_id = self._search_regex(
+                r'"contentId"\s*:\s*"([a-f0-9]{24})"', webpage, 'content id')
         if not video_data:
             webpage = self._download_webpage(
                 f'http://{domain}/embed/{video_id}', video_id)
@@ -187,7 +189,9 @@ class DisneyIE(InfoExtractor):
             'description': video_data.get('description') or video_data.get('short_desc'),
             'thumbnail': (
                 video_data.get('thumb') or video_data.get('thumb_secure')
-                or video_data.get('asset_thumbnail_image') or video_data.get('secure_image_url')),
+                or video_data.get('asset_thumbnail_image') or video_data.get('secure_image_url')
+                or video_data.get('primary_image_url')
+                or traverse_obj(video_data, ('image_asset', ('https_base_url', 'base_url'), {url_or_none}), get_all=False)),
             'duration': (
                 int_or_none(video_data.get('duration_sec'))
                 or int_or_none(video_data.get('duration'), scale=1000)),

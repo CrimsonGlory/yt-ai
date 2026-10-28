@@ -14,7 +14,22 @@ class XiaoHongShuIE(InfoExtractor):
     IE_DESC = '小红书'
     _TESTS = [
         {
+            'url': 'https://www.xiaohongshu.com/explore/6ab88861000000001801514e?xsec_token=ABDkte3IkodvO27CdPu5gtHV_0WUSGdZybgRKYeqJpIHc=',
+            'md5': '993a6c422dd804541649ab765a3b9cfc',
+            'info_dict': {
+                'id': '6ab88861000000001801514e',
+                'ext': 'mp4',
+                'uploader_id': '5f9996ff00000000010094da',
+                'description': '太近了每次哥哥一靠近又忍不住拉焦距，然后就会获得超美的怼脸哥哥#薛之谦[话题]# #薛之谦演唱会[话题]# #薛之谦万兽之王巡回演唱会[话题]#',
+                'title': '问世间哪有更完美',
+                'tags': ['薛之谦', '薛之谦演唱会', '薛之谦万兽之王巡回演唱会'],
+                'duration': 22.035,
+                'thumbnail': r're:https?://(?:sns-webpic-qc\.xhscdn\.com/\d+/[\da-f]+/[^/]+|sns-web-[^./]+\.rednotecdn\.com/.+)',
+            },
+        },
+        {
             'url': 'https://www.xiaohongshu.com/explore/6a659058000000001102f1e0?xsec_token=ABUgG3KfS3vZg1s5gjDbRERjrojNlutU67j2MvIkDz3lw=',
+            'skip': 'video gone',
             'md5': '0985c9df4c41bbfa3c52c19537138b72',
             'info_dict': {
                 'id': '6a659058000000001102f1e0',

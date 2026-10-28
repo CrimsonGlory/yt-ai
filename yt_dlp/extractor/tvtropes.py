@@ -61,7 +61,7 @@ class TVTropesIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'Meet the Engineer',
             'description': "The Engineer's introduction to the players",
-            'thumbnail': r're:https?://videos\.tvtropes\.org/.+/thumbnail\.jpg',
+            'thumbnail': r're:https?://(?:videos\.tvtropes\.org/.+|static\.tvtropes\.org/.+)',
             'duration': 86,
             'average_rating': float,
             'comment_count': int,

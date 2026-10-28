@@ -253,7 +253,7 @@ class TapTapAppIntlIE(TapTapIntlBaseIE):
         'info_dict': {
             'id': '233287',
             'title': '《虹彩六號 M》',
-            'description': 'md5:dfb81a33b1e866829f900643414f1025',
+            'description': 'md5:a60ad71cc654ad08085e730abfba2ae7',
         },
         'playlist_count': 1,
         'playlist': [{
@@ -261,7 +261,7 @@ class TapTapAppIntlIE(TapTapIntlBaseIE):
                 'id': '2149708997',
                 'ext': 'mp4',
                 'title': '《虹彩六號 M》',
-                'description': 'md5:dfb81a33b1e866829f900643414f1025',
+                'description': 'md5:a60ad71cc654ad08085e730abfba2ae7',
                 'duration': 78,
                 'thumbnail': r're:^https?://.*\.(png|jpg)',
             },

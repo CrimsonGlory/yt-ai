@@ -35,7 +35,7 @@ class CanliTVIE(InfoExtractor):
             'id': '3',
             'ext': 'mp4',
             'display_id': 'atv-canli',
-            'title': r're:ATV Canlı [İI]zle \| Canlitv\.com',
+            'title': r're:ATV Canlı [İIıi]zle \| Canlitv\.com',
             'description': r're:ATV canlı izle',
             'thumbnail': r're:https?://canlitv\.com/kanal/logo/\d+\.jpg',
             'is_live': True,

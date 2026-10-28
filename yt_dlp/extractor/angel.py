@@ -51,9 +51,17 @@ class AngelIE(InfoExtractor):
         # JSON-LD contentUrl is the webpage, not a media stream
         json_ld.pop('url', None)
 
-        m3u8_url = traverse_obj(self._search_nextjs_data(webpage, video_id), (
-            'props', 'pageProps', (('episode', 'source', 'url'), ('contentEpisode', 'url')), {url_or_none}),
-            get_all=False)
+        hls_path = (('episode', 'source', 'url'), ('contentEpisode', 'url'))
+        m3u8_url = traverse_obj(self._search_nextjs_data(webpage, video_id, default={}), (
+            'props', 'pageProps', hls_path, {url_or_none}), get_all=False)
+        if not m3u8_url:
+            m3u8_url = traverse_obj(self._search_nextjs_v13_data(webpage, video_id, fatal=False), (
+                ..., 'data', hls_path, {url_or_none}), get_all=False)
+        if not m3u8_url:
+            m3u8_url = url_or_none(self._search_regex(
+                rf'https?://api\.angelstudios\.com/streaming/{re.escape(video_id)}/master\.m3u8[^"\\]*',
+                webpage.replace('\\u0026', '&').replace('\\/', '/'),
+                'HLS URL', default=None))
         if not m3u8_url:
             raise ExtractorError('Unable to extract HLS URL', expected=True)
 

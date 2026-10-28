@@ -44,7 +44,7 @@ class MacaulayLibraryIE(InfoExtractor):
             'id': '100872',
             'ext': 'mp3',
             'title': 'ML100872 - Winter Wren - Macaulay Library',
-            'alt_title': 'Troglodytes hiemalis',
+            'alt_title': 'Nannus hiemalis',
             'description': 'Macaulay Library ML100872; © Wil Hershberger; Hamilton, New York, United States',
             'thumbnail': r're:https?://cdn\.download\.ams\.birds\.cornell\.edu/api/v2/asset/100872/',
             'uploader': 'Wil Hershberger',

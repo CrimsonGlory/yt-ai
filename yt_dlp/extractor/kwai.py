@@ -1,4 +1,5 @@
 import json
+import re
 
 from .common import InfoExtractor
 from ..utils import (
@@ -35,6 +36,8 @@ class KwaiIE(InfoExtractor):
                 'uploader': 'Massaki',
                 'uploader_id': '3xkkhmxm8thb3pa',
                 'uploader_url': 'https://www.kwai.com/@Massaki',
+                'track': 'Áudio original criado por Massaki',
+                'artists': ['Massaki'],
                 'view_count': int,
                 'like_count': int,
                 'comment_count': int,
@@ -66,6 +69,15 @@ class KwaiIE(InfoExtractor):
             if traverse_obj(ld, '@type') == 'VideoObject' and url_or_none(ld.get('contentUrl')):
                 return ld
         return {}
+
+    def _extract_nuxt_video_ld(self, webpage, video_id):
+        """Packed related-video fields share caption/user_id_str; seoData is the watch page."""
+        # IIFE argument lists can contain JS floats like `.0001`
+        patched = re.sub(r'([\[,])(\.\d+)', r'\g<1>0\2', webpage)
+        return traverse_obj(self._search_nuxt_data(patched, video_id, fatal=False), (
+            'seoData', lambda _, v: isinstance(v, dict) and v.get('id') == 'VideoObject',
+            'innerHTML', {dict}, any,
+        )) or {}
 
     def _decode_js_string(self, value):
         if not value:
@@ -120,7 +132,9 @@ class KwaiIE(InfoExtractor):
         # on a mobile UA, so keep desktop first.
         webpage, urlh = self._download_webpage_handle(
             url, display_id, impersonate=True)
-        video_ld = self._extract_video_ld(webpage, display_id)
+        video_ld = self._extract_nuxt_video_ld(webpage, display_id)
+        if not url_or_none(video_ld.get('contentUrl')):
+            video_ld = self._extract_video_ld(webpage, display_id)
         nuxt = self._extract_nuxt_photo(webpage)
 
         if not url_or_none(video_ld.get('contentUrl')) and not nuxt.get('url'):
@@ -128,7 +142,9 @@ class KwaiIE(InfoExtractor):
                 urlh.url, display_id, 'Downloading mobile webpage',
                 headers=self._MOBILE_HEADERS, impersonate=True,
             )
-            video_ld = self._extract_video_ld(webpage, display_id)
+            video_ld = self._extract_nuxt_video_ld(webpage, display_id)
+            if not url_or_none(video_ld.get('contentUrl')):
+                video_ld = self._extract_video_ld(webpage, display_id)
             nuxt = self._extract_nuxt_photo(webpage)
 
         video_url = (
@@ -154,7 +170,13 @@ class KwaiIE(InfoExtractor):
         )
 
         info = self._json_ld(video_ld, video_id, fatal=False, expected_type='VideoObject')
-        caption = traverse_obj(video_ld, ('description', {str})) or nuxt.get('title')
+        caption = (
+            traverse_obj(video_ld, ('description', {str}))
+            or nuxt.get('title')
+            or self._html_search_regex(
+                r'Kwai video from [^:]+:\s*(?:&quot;|")(.+?)(?:&quot;|")',
+                webpage, 'caption', default=None)
+        )
         if caption:
             info['title'] = caption
             info.setdefault('description', caption)
@@ -163,10 +185,15 @@ class KwaiIE(InfoExtractor):
             r'kwai\.com/@([^/?#]+)', urlh.url, 'uploader', default=None)
         uploader_url = f'https://www.kwai.com/@{uploader}' if uploader else None
 
+        # Packed caption/user_id_str/cover URLs also match related videos
+        extra_nuxt = {}
+        if not url_or_none(video_ld.get('contentUrl')):
+            extra_nuxt = {k: v for k, v in nuxt.items() if k != 'url' and v is not None}
+
         return {
             'id': video_id,
             'ext': 'mp4',
-            **{k: v for k, v in nuxt.items() if k != 'url' and v is not None},
+            **extra_nuxt,
             **info,
             'url': video_url,
             **traverse_obj(
@@ -176,6 +203,7 @@ class KwaiIE(InfoExtractor):
                     'uploader': ('creator', 'mainEntity', 'name', {str}),
                     'uploader_id': ('creator', 'mainEntity', 'identifier', {str_or_none}),
                     'uploader_url': ('creator', 'mainEntity', 'url', {url_or_none}),
+                    'thumbnail': ('thumbnailUrl', (None, 0, ...), {url_or_none}, any),
                     'track': ('audio', 'name', {str}),
                     'artist': ('audio', 'author', {str}),
                     'repost_count': (

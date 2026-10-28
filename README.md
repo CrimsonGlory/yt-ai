@@ -2412,7 +2412,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Kissasian** (`kissasian.video`): Follow `hndrama.cc` embed servers and packed JWPlayer HLS (VidHide). Request: [yt-dlp/yt-dlp#7801](https://github.com/yt-dlp/yt-dlp/issues/7801)
     * **Kuaishou** (`kuaishou.com`): Mobile H5 `window.INIT_STATE` progressive MP4/HLS from share and short-video pages. Request: [yt-dlp/yt-dlp#14010](https://github.com/yt-dlp/yt-dlp/issues/14010)
     * **KVF** (`kvf.fo`): JWPlayer `media`/`mode` vars and `vod.kringvarp.fo` SMIL HLS. Request: [yt-dlp/yt-dlp#9620](https://github.com/yt-dlp/yt-dlp/issues/9620)
-    * **Kwai** (`s.kw.ai` / `kwai.com`): JSON-LD `VideoObject` `contentUrl` from the international PWA, with packed desktop Nuxt `main_mv_urls` fallback (mobile Next.js omits media). Request: [yt-dlp/yt-dlp#4502](https://github.com/yt-dlp/yt-dlp/issues/4502)
+    * **Kwai** (`s.kw.ai` / `kwai.com`): Nuxt `__NUXT__` `seoData` VideoObject `contentUrl` (packed `main_mv_urls`/`caption` regexes match related videos). Request: [yt-dlp/yt-dlp#4502](https://github.com/yt-dlp/yt-dlp/issues/4502)
     * **LearnEnglishKids** (`learnenglishkids.britishcouncil.org`): Drupal `akamai-custom-embed` Plyr HLS from `data-video`, with YouTube iframe fallback. Request: [yt-dlp/yt-dlp#10146](https://github.com/yt-dlp/yt-dlp/issues/10146)
     * **LeCinemaClub** (`lecinemaclub.com`): Plyr Vimeo iframe / Watch-button `external` MPD of the weekly film (skip the HTML5 preview). Request: [yt-dlp/yt-dlp#4449](https://github.com/yt-dlp/yt-dlp/issues/4449)
     * **LookMovie2** (`lookmovie2.to`): Play-page `movie_storage`/`show_storage` hash plus `/api/v1/security/{movie,episode}-access` HLS. Request: [yt-dlp/yt-dlp#8951](https://github.com/yt-dlp/yt-dlp/issues/8951)
@@ -2573,6 +2573,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **allocine**: Extract Dailymotion videos via `DailymotionIE`
     * **americastestkitchen**: Read episode-level description, publishDate, and siteKey when nested `video` metadata is empty
     * **amazon**: Product-gallery `jQuery.parseJSON` videos; extract VSE HLS as MP4 formats from `/vdp/` and `/live/video/`; impersonate Chrome on VDP/live video pages and when the storefront serves a captcha interstitial
+    * **angel**: Read Next.js App Router flight data (`contentEpisode.url`) when `__NEXT_DATA__` is absent
     * **asobichannel:tag**: Read tag title and playlist entries from the microCMS API instead of Next.js page data
     * **asobistage**: Raise an expected error when CloudFront redirects to the ASOBI STORE maintenance page; otherwise parse the original event URL
     * **banbye**: Use `banbye.com/api` video/channel/playlist JSON and HLS `playback.urls` (`api.banbye.com` 404s)
@@ -2600,7 +2601,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **dfb**: Follow YouTube embeds and match `dfb.de` news video URLs
     * **dhm**: Support journal articles and JWPlayer/HLS when the XSPF playlist is gone
     * **digiview**: Send an `Origin` header on the player POST
-    * **disney**: Fall back to Matterhorn `__matterhorn-*__` page JSON (Kaltura flavors) when Grill.burger is gone
+    * **disney**: Prefer Matterhorn `__matterhorn-*__` watch-page JSON (Kaltura flavors) over the retired `/embed/` player
     * **doodstream**: Impersonate the browser and join relative `pass_md5` URLs
     * **douyu**: Sign streams with Node instead of PhantomJS
     * **dplay**: Use Disco playback v3
