@@ -15,6 +15,7 @@ class XboxIE(InfoExtractor):
     _VALID_URL = r'(?i)https?://(?:www\.)?xbox\.com/(?:(?P<locale>[a-z]{2}(?:-[a-z]{2})?)/)?games/store/[^/?#]+/(?P<id>[0-9a-z]{12})'
     _TESTS = [{
         'url': 'https://www.xbox.com/en-us/games/store/omori/9p8wmq1s4tf9',
+        'skip': 'Microsoft Scene7 CDN HLS/DASH HTTP 403',
         'md5': '8d725854bd0310284181b61f8a33abb5',
         'info_dict': {
             'id': 'ebaa9ba3-843d-1b12-dfa4-5f6c76e471cd',
@@ -38,6 +39,7 @@ class XboxIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.xbox.com/en-US/games/store/bloomtown-a-different-story/9pkvs1b3jztp',
+        'skip': 'Microsoft Scene7 CDN HLS/DASH HTTP 403',
         'info_dict': {
             'id': '9PKVS1B3JZTP',
             'title': 'Bloomtown: A Different Story',

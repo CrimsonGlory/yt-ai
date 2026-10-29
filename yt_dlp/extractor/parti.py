@@ -17,6 +17,7 @@ class PartiVideoIE(PartiBaseIE):
     _VALID_URL = r'https?://(?:www\.)?parti\.com/video/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://parti.com/video/66284',
+        'skip': 'media.parti.com HLS HTTP 403',
         'info_dict': {
             'id': '66284',
             'ext': 'mp4',

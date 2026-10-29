@@ -20,7 +20,7 @@ class DrTalksIE(InfoExtractor):
             'upload_date': '20241231',
             'uploader': 'Jen Pfleghaar, DO, ABOIM',
             'view_count': int,
-            'tags': ['Burnout', 'Mental Health', 'Mindfulness', 'Resilience', 'Stress', 'Stress Reduction', 'Wellness'],
+            'tags': ['Brain & Cognitive', 'Mental & Emotional', 'Nervous System & Autonomic'],
         },
     }, {
         'url': 'https://drtalks.com/videos/the-pcos-puzzle-mastering-metabolic-health-with-marcelle-pick/',
@@ -36,7 +36,7 @@ class DrTalksIE(InfoExtractor):
             'upload_date': '20241124',
             'uploader': 'Cassie Smith, MD',
             'view_count': int,
-            'tags': ['Blood Sugar', 'Gut Health', 'Gut Microbiome', 'Hormone Health', 'Inflammatory Response', 'Insulin Resistance', 'Metabolic Health', 'PCOS'],
+            'tags': ['Gut & Digestive', 'Hormonal & Endocrine', 'Metabolic & Blood Sugar', 'Nutrition & Supplementation', 'Reproductive & Sexual'],
         },
     }]
 

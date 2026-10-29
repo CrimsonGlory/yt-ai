@@ -2,7 +2,14 @@ import re
 
 from .common import InfoExtractor
 from ..networking import HEADRequest
-from ..utils import float_or_none, int_or_none, parse_duration, unified_strdate
+from ..utils import (
+    ExtractorError,
+    float_or_none,
+    int_or_none,
+    parse_duration,
+    unified_strdate,
+    url_or_none,
+)
 
 
 class LA7IE(InfoExtractor):
@@ -15,16 +22,17 @@ class LA7IE(InfoExtractor):
     _TESTS = [
         {
             'url': 'http://www.la7.it/in-onda/video/carovita-schlein-benzina-sopra-i-due-euro-bollette-care-tassino-subito-gli-extraprofitti-delle-02-09-2026-655938',
-            'md5': '0ed6fd45b4ca42608823f341909840e7',
             'info_dict': {
-            'id': 'carovita-schlein-benzina-sopra-i-due-euro-bollette-care-tassino-subito-gli-extraprofitti-delle-02-09-2026-655938',
-            'ext': 'mp4',
-            'title': 'md5:256d063e9442a3a0b070220d1329ca80',
-            'description': 'md5:16d3a17bcea3aedfcdd734e1454d45f2',
-            'thumbnail': 'https://www.la7.it/sites/default/files/fb/0_wvpcdk97.jpg',
-            'upload_date': '20260902',
-        },
-        },{
+                'id': 'carovita-schlein-benzina-sopra-i-due-euro-bollette-care-tassino-subito-gli-extraprofitti-delle-02-09-2026-655938',
+                'ext': 'mp4',
+                'title': 'md5:fae53e9a9e9a6d9648ce83debd5e9caa',
+                'description': 'md5:16d3a17bcea3aedfcdd734e1454d45f2',
+                'thumbnail': r're:https://images\.la7play\.it/.+',
+                'upload_date': '20260901',
+                'timestamp': 1788289200,
+                'duration': 111,
+            },
+        }, {
         # single quality video
         'url': 'http://www.la7.it/crozza/video/inccool8-02-10-2015-163722',
         'skip': 'stale test sample / site changed',
@@ -78,6 +86,32 @@ class LA7IE(InfoExtractor):
                     return http_f
                 return None
 
+    def _progressive_mp4_formats(self, webpage):
+        # Next.js embeds player JSON as a JS string, so quotes are escaped
+        html = webpage.replace('\\"', '"')
+        cdn = self._search_regex(
+            r'"hostnameCdn"\s*:\s*"([^"]+)"', html, 'cdn host',
+            default=self._HOST).rstrip('/')
+        remote = self._search_regex(
+            r'"cf_remote_url"\s*:\s*"([^"]+)"', html, 'cf_remote_url',
+            default=None)
+        if not remote:
+            return [], cdn
+        formats = []
+        for i, raw in enumerate(remote.split(',')):
+            path = raw.strip()
+            if not path:
+                continue
+            # Values may start with //content/... (CDN path, not a URL)
+            path = '/' + path.lstrip('/')
+            formats.append({
+                'url': f'{cdn}{path}',
+                'ext': 'mp4',
+                'format_id': f'https-{i}',
+                'quality': i,
+            })
+        return formats, cdn
+
     def _real_extract(self, url):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
@@ -85,29 +119,48 @@ class LA7IE(InfoExtractor):
         if re.search(r'(?i)(drmsupport\s*:\s*true)\s*', webpage):
             self.report_drm(video_id)
 
+        formats, cdn = self._progressive_mp4_formats(webpage)
         video_path = self._search_regex(
-            r'(/content/[\w/,]+?)\.mp4(?:\.csmil)?/master\.m3u8', webpage, 'video_path')
+            r'(/content/[\w/,]+?)\.mp4(?:\.csmil)?/master\.m3u8',
+            webpage, 'video_path', default=None)
+        # Prefer progressive MP4s: the HLS/DASH manifests often 502
+        if not formats and video_path:
+            formats.extend(self._extract_mpd_formats(
+                f'{cdn}/local/dash/,{video_path}.mp4.urlset/manifest.mpd',
+                video_id, mpd_id='dash', fatal=False))
+            m3u8_formats = self._extract_m3u8_formats(
+                f'{cdn}/local/hls/,{video_path}.mp4.urlset/master.m3u8',
+                video_id, 'mp4', m3u8_id='hls', fatal=False)
+            formats.extend(m3u8_formats)
+            for q in filter(None, video_path.split(',')):
+                http_f = self._generate_mp4_url(q, m3u8_formats)
+                if http_f:
+                    formats.append(http_f)
 
-        formats = self._extract_mpd_formats(
-            f'{self._HOST}/local/dash/,{video_path}.mp4.urlset/manifest.mpd',
-            video_id, mpd_id='dash', fatal=False)
-        m3u8_formats = self._extract_m3u8_formats(
-            f'{self._HOST}/local/hls/,{video_path}.mp4.urlset/master.m3u8',
-            video_id, 'mp4', m3u8_id='hls', fatal=False)
-        formats.extend(m3u8_formats)
+        if not formats:
+            raise ExtractorError('Unable to extract video URL', expected=True)
 
-        for q in filter(None, video_path.split(',')):
-            http_f = self._generate_mp4_url(q, m3u8_formats)
-            if http_f:
-                formats.append(http_f)
+        json_ld = self._search_json_ld(webpage, video_id, default={})
+        json_ld.pop('url', None)
+        json_ld.pop('ext', None)
+        duration = int_or_none(self._search_regex(
+            r'"cf_duration"\s*:\s*"(\d+)"', webpage.replace('\\"', '"'),
+            'duration', default=None))
 
         return {
+            **json_ld,
             'id': video_id,
-            'title': self._og_search_title(webpage, default=None),
-            'description': self._og_search_description(webpage, default=None),
-            'thumbnail': self._og_search_thumbnail(webpage, default=None),
+            'title': self._og_search_title(webpage, default=None) or json_ld.get('title'),
+            'description': (
+                self._og_search_description(webpage, default=None)
+                or json_ld.get('description')),
+            'thumbnail': (
+                self._og_search_thumbnail(webpage, default=None)
+                or json_ld.get('thumbnail')),
             'formats': formats,
-            'upload_date': unified_strdate(self._search_regex(r'datetime="(.+?)"', webpage, 'upload_date', fatal=False)),
+            'duration': duration or json_ld.get('duration'),
+            'upload_date': unified_strdate(self._search_regex(
+                r'datetime="(.+?)"', webpage, 'upload_date', default=None)) or json_ld.get('upload_date'),
         }
 
 
@@ -117,6 +170,7 @@ class LA7PodcastEpisodeIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://www.la7.it/voicetown/podcast/la-carezza-delle-memoria-di-carlo-verdone-23-03-2021-371497',
+        'skip': 'native MP3 gone; page redirects to la7play.it (Spotify/Apple/Amazon only)',
         'md5': '7737d4d79b3c1a34b3de3e16297119ed',
         'params': {'skip_download': True},
         'info_dict': {
@@ -147,10 +201,14 @@ class LA7PodcastEpisodeIE(InfoExtractor):
                 r'data-nid=([\'"])(?P<vid>\d+)\1',
                 webpage, 'video_id', group='vid')
 
-        media_url = self._search_regex(
+        media_url = url_or_none(self._search_regex(
             (r'src\s*:\s*([\'"])(?P<url>\S+?mp3.+?)\1',
              r'data-podcast\s*=\s*([\'"])(?P<url>\S+?mp3.+?)\1'),
-            webpage, 'media_url', group='url')
+            webpage, 'media_url', group='url', default=None))
+        if not media_url:
+            raise ExtractorError(
+                'Native MP3 is gone; this podcast is only on Spotify/Apple/Amazon',
+                expected=True)
         formats = [{
             'url': media_url,
             'format_id': 'http-mp3',

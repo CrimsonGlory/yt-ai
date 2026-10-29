@@ -2676,7 +2676,8 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **ku6**: `video/detail?id=` pages
     * **kukululive**: `live.player.php` `getStreamAddr` API
     * **kuwo**: HTTPS antiserver + current song pages
-    * **la7.it:pod:episode**: Send the episode page as `Referer` for `limone.iltrovatore.it` MP3s
+    * **la7.it**: Parse Next.js `cf_remote_url` progressive MP4s on `awsvodpkg.iltrovatore.it` (HLS master path is gone)
+    * **la7.it:pod:episode**: Raise an expected error when native `limone.iltrovatore.it` MP3s are gone (pages redirect to la7play.it)
     * **laracasts**: Inertia `data-page` JSON
     * **lastfm**: Impersonate playlist pages and retry on HTTP 600
     * **leeco**: Guard missing `playstatus`
@@ -2706,7 +2707,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **microsoft:build**: Read on-demand Medius URLs from `build.microsoft.com/api/session/all` (`api-v2.build.microsoft.com` returns 403)
     * **microsoft:medius**: Extract HLS from JSON `StreamUrl` / `master.m3u8` when Smooth Streaming is gone
     * **minds**: v2 entities API
-    * **mirrorcouk**: JSON-LD media
+    * **mirrorcouk**: JSON-LD VideoObject / Primis HLS; fetch article pages with a Googlebot UA to pass AWS WAF
     * **mit**: YouTube embeds on current OCW course URLs
     * **mocha**: Current mocha.com.vn API
     * **moviepilot**: Impersonate Cloudflare on trailer pages, then follow the Dailymotion `remoteId`
@@ -2737,7 +2738,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **nosnl**: Read Next.js `pageProps.article` content (`VideoElement` / `AudioElement` HLS and MP3); treat nested `/video/` article URLs as videos
     * **nova**: Fall back to a Wayback Machine snapshot and OTT preview MP4s when the live page is blocked
     * **noz**: Follow 3Q SDN embeds on current `/video/` article pages
-    * **npo**: Use the NPO Start `player-token` and `npoplayer` stream-link APIs
+    * **npo**: Use the NPO Start `player-token` and `npoplayer` stream-link APIs; take `creators` from program `broadcasters` or stream `omroep`
     * **npr**: Fall back to JSON-LD JWPlayer media when the query API is blocked
     * **ntv.ru**: Read the numeric video id from `ya:ovs:feed_url` / `/video/{id}` without requiring a fixed meta attribute order
     * **nubilesporn**: Impersonate the browser and prime a tour session; anonymous shorts currently stop on a Cloudflare Turnstile challenge

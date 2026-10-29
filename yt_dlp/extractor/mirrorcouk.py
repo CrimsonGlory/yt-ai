@@ -1,9 +1,10 @@
 from .common import InfoExtractor
-from ..utils import determine_ext, unescapeHTML, url_or_none
+from ..utils import ExtractorError, determine_ext, unescapeHTML, url_or_none
 
 
 class MirrorCoUKIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?mirror\.co\.uk/[/+[\w-]+-(?P<id>\d+)'
+    _GOOGLEBOT_USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
     _TESTS = [{
         'url': 'https://www.mirror.co.uk/tv/tv-news/love-island-fans-baffled-after-27163139',
         'md5': 'ebf4aabe18044e80d7a05eae8441aac2',
@@ -92,7 +93,9 @@ class MirrorCoUKIE(InfoExtractor):
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        webpage = self._download_webpage(url, display_id)
+        webpage = self._download_webpage(url, display_id, headers={
+            'User-Agent': self._GOOGLEBOT_USER_AGENT,
+        })
 
         json_ld = self._search_json_ld(webpage, display_id, default={})
         json_ld.pop('ext', None)
@@ -112,11 +115,15 @@ class MirrorCoUKIE(InfoExtractor):
 
         data = self._search_json(
             r'div\s+class="json-placeholder"\s+data-json="',
-            webpage, 'data', display_id, transform_source=unescapeHTML)['videoData']
+            webpage, 'data', display_id, transform_source=unescapeHTML, default=None)
+        video_data = (data or {}).get('videoData') if isinstance(data, dict) else None
+        if video_data and video_data.get('videoId'):
+            return {
+                '_type': 'url_transparent',
+                'url': f'jwplatform:{video_data["videoId"]}',
+                'ie_key': 'JWPlatform',
+                'display_id': display_id,
+            }
 
-        return {
-            '_type': 'url_transparent',
-            'url': f'jwplatform:{data["videoId"]}',
-            'ie_key': 'JWPlatform',
-            'display_id': display_id,
-        }
+        raise ExtractorError(
+            'Unable to extract video (AWS WAF challenge or no media)', expected=True)

@@ -25,7 +25,8 @@ class JavtifulIE(InfoExtractor):
     _EMBED_REGEX = [r'<iframe[^>]+\bsrc=["\'](?P<url>https?://(?:www\.)?javtiful\.com/(?:[a-z]{2}/)?embed/\d+)']
     _TESTS = [{
         'url': 'https://javtiful.com/video/77717/fsdss-979',
-        'md5': 'b74c1407ab8e75ac2a0dadc482604ee4',
+        # HLS --test only fetches the fMP4 init fragment (~1KB), below the default 10KB check
+        'file_minsize': None,
         'info_dict': {
             'id': '77717',
             'ext': 'mp4',

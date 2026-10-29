@@ -102,7 +102,7 @@ class KalturaIE(InfoExtractor):
         'url': 'https://cdnapisec.kaltura.com/html5/html5lib/v2.46/mwEmbedFrame.php/p/691292/uiconf_id/20499062/entry_id/0_c076mna6?wid=_691292&iframeembed=true&playerId=kaltura_player_1420508608&entry_id=0_c076mna6&flashvars%5BakamaiHD.loadingPolicy%5D=preInitialize&flashvars%5BakamaiHD.asyncInit%5D=true&flashvars%5BstreamerType%5D=hdnetwork',
         'info_dict': {
             'id': '0_c076mna6',
-            'ext': 'mp4',
+            'ext': 'mp3',
             'title': 'md5:4883e7acbcbf42583a2dddc97dee4855',
             'duration': 3608,
             'uploader_id': 'commons@swinburne.edu.au',

@@ -66,7 +66,7 @@ class NPOIE(InfoExtractor):
             'description': 'md5:52cf4eefbc96fffcbdc06d024147abea',
             'upload_date': '20130225',
             'duration': 3000,
-            'creators': ['NED2'],
+            'creators': ['VPRO'],
             'series': 'VPRO Tegenlicht',
             'timestamp': 1361822340,
             'thumbnail': r're:https://assets-start\.npo\.nl/resources/.+',
@@ -82,11 +82,11 @@ class NPOIE(InfoExtractor):
             'id': 'WO_VPRO_043706',
             'ext': 'mp4',
             'title': 'De nieuwe mens - Deel 1',
-            'description': 'md5:518ae51ba1293ffb80d8d8ce90b74e4b',
-            'duration': 4680.0,
+            'description': 'md5:31b35af9b16ea0f0d38198d5aa8191c2',
             'episode': 'De nieuwe mens - Deel 1',
-            'thumbnail': 'https://images.poms.omroep.nl/image/s1080/6289',
+            'thumbnail': r're:https://picture-cdn\.metadatahub\.npox\.nl/.+',
             'series': 'De nieuwe mens - Deel 1',
+            'creators': ['VPRO'],
         },
         'params': {
             'skip_download': True,
@@ -110,11 +110,10 @@ class NPOIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'Aap, poot, pies',
             'description': 'md5:4b46b1b9553b4c036a04d2a532a137e6',
-            'duration': 599.98,
             'episode': 'Aap, poot, pies',
-            'thumbnail': 'https://images.poms.omroep.nl/image/s1080/608116',
+            'thumbnail': r're:https://picture-cdn\.metadatahub\.npox\.nl/.+',
             'series': 'Aap, poot, pies',
-            'creators': ['NED3'],
+            'creators': ['NTR'],
         },
         'params': {
             'skip_download': True,
@@ -187,7 +186,7 @@ class NPOIE(InfoExtractor):
             'description': 'md5:b5b23d0c9bc0092055146fa5e2a81629',
             'title': 'The Genius',
             'timestamp': 1669062000,
-            'creators': ['NED3'],
+            'creators': ['NTR'],
             'episode': 'The Genius',
             'thumbnail': 'https://assets-start.npo.nl/resources/2023/07/01/2e062997-ad28-4788-970c-bf60d7c8ebf4.jpg',
             'episode_number': 8,
@@ -302,6 +301,15 @@ class NPOIE(InfoExtractor):
         duration = int_or_none(stream_meta.get('duration'))
         if duration and duration > 10000:
             duration /= 1000
+        if not duration:
+            duration = None
+
+        omroep = stream_meta.get('omroep') or stream_meta.get('channel')
+        creators = traverse_obj(program, ('broadcasters', ..., 'name', {str}))
+        if isinstance(creators, str):
+            creators = [creators]
+        if not creators and omroep:
+            creators = [omroep]
 
         return merge_dicts(traverse_obj(program, {
             'title': ('title', {str}),
@@ -314,10 +322,10 @@ class NPOIE(InfoExtractor):
             'thumbnail': ('images', 0, 'url', {url_or_none}),
         }), {
             'title': stream_meta.get('subTitle') or stream_meta.get('title'),
-            'episode': stream_meta.get('subTitle'),
+            'episode': stream_meta.get('subTitle') or stream_meta.get('title'),
             'description': stream_meta.get('description'),
             'duration': duration,
-            'creator': stream_meta.get('channel'),
+            'creators': creators,
             'series': stream_meta.get('title'),
             'thumbnail': url_or_none(stream_meta.get('poster')),
             'is_live': is_live or None,

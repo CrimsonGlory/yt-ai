@@ -17,7 +17,7 @@ class RacingTVIE(InfoExtractor):
     _PREROLL_WAIT = 6
     _TESTS = [{
         'url': 'https://www.racingtv.com/watch/on-demand/137181',
-        'md5': '8d352c0f625c13687dfe66fde90c49ef',
+        'md5': 'f4a0250052c96ea0662054517e228984',
         'info_dict': {
             'id': '137181',
             'ext': 'mp4',

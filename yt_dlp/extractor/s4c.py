@@ -12,6 +12,8 @@ class S4CIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.s4c.cymru/clic/programme/850147113',
+            # HLS --test only fetches the CMAF init fragment (~743B), below the default 10KB check
+            'file_minsize': None,
             'info_dict': {
                 'id': '850147113',
                 'ext': 'mp4',
@@ -42,6 +44,8 @@ class S4CIE(InfoExtractor):
             },
         }, {
             'url': 'https://www.s4c.cymru/clic/programme/893068169',
+            # HLS --test only fetches the CMAF init fragment (~743B), below the default 10KB check
+            'file_minsize': None,
             'info_dict': {
                 'id': '893068169',
                 'ext': 'mp4',
