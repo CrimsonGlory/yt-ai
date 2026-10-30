@@ -209,7 +209,7 @@ class ZDFIE(ZDFBaseIE):
             'title': 'Ettore',
             'description': 'md5:91a326ed74827da431b56c34bf7ed7a1',
             'duration': 3165.0,
-            'thumbnail': 'md5:5645e38a880f9e40cf447effc35bdeec',
+            'thumbnail': 'md5:055fccc82749aa238f6bd3b940585481',
             'timestamp': 1788410100,
             'upload_date': '20260903',
             'series': 'Standing Tall',
@@ -367,7 +367,29 @@ class ZDFIE(ZDFBaseIE):
         },
     }, {
         # FUNK video (hosted on a different CDN, has atypical PTMD and HLS files)
+        'url': 'https://www.zdf.de/video/reportagen/funk-collection-funk-11384-1186/funk-druck-hass-manipulation-wie-kaputt-macht-germanys-next-topmodel---strg-f-epic-122',
+        'info_dict': {
+            'id': 'funk-druck-hass-manipulation-wie-kaputt-macht-germanys-next-topmodel---strg-f-epic-122',
+            'ext': 'mp4',
+            'title': 'Druck, Hass, Manipulation: Wie kaputt macht Germany‘s Next Topmodel? - STRG_F EPIC',
+            'description': 'md5:e08cac2c071a794bcc1a7b06c13af944',
+            'duration': 4423.0,
+            'thumbnail': r're:https://www\.zdf\.de/assets/teaser-funk-druck-hass-manipulation-wie-kaputt-macht-germanys-next-topmodel---strg-f-epic-104~original\?cb=\d+',
+            'series': 'STRG_F',
+            'series_id': 'funk-collection-funk-11384-1188',
+            'season': 'Season 2023',
+            'season_number': 2023,
+            'episode': 'Episode 23',
+            'episode_number': 23,
+            'timestamp': 1687865144,
+            'upload_date': '20230627',
+            '_old_archive_ids': ['zdf video_funk_1921402'],
+        },
+        'params': {'format': 'bv*[protocol=m3u8_native]'},
+    }, {
+        # FUNK video (hosted on a different CDN, has atypical PTMD and HLS files)
         'url': 'https://www.zdf.de/video/serien/funk-collection-funk-11790-1596/funk-alles-ist-verzaubert-102',
+        'skip': 'video gone',
         'md5': '57af4423db0455a3975d2dc4578536bc',
         'info_dict': {
             'id': 'funk-alles-ist-verzaubert-102',

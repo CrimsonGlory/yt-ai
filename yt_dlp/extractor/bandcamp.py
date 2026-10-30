@@ -479,6 +479,13 @@ class BandcampWeeklyIE(BandcampBaseIE):
 
         series_title = show_data.get('subtitle')
         release_timestamp = unified_timestamp(show_data.get('date'))
+        description = show_data.get('description')
+        if not description:
+            radio_url = urljoin('https://bandcamp.com/', show_data.get('itemUrl') or url)
+            webpage = self._download_webpage(
+                radio_url, show_id, 'Downloading radio show webpage',
+                fatal=False, errnote=False)
+            description = self._og_search_description(webpage or '')
 
         return {
             'id': show_id,
@@ -487,7 +494,7 @@ class BandcampWeeklyIE(BandcampBaseIE):
             'title': join_nonempty(series_title, strftime_or_none(release_timestamp, '%Y-%m-%d'), delim=', '),
             'series': series_title,
             'thumbnail': format_field(show_data, 'imageId', 'https://f4.bcbits.com/img/%s_0.jpg', default=None),
-            'description': show_data.get('description'),
+            'description': description,
             'duration': float_or_none(audio_data.get('duration')),
             'release_timestamp': release_timestamp,
             'formats': [{

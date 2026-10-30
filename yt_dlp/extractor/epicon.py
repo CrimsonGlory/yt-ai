@@ -16,7 +16,17 @@ class EpiconIE(InfoExtractor):
             'thumbnail': r're:^https?://.*\.jpg$',
         },
     }, {
+        'url': 'https://www.epicon.in/movies/adi-shankaracharya',
+        'info_dict': {
+            'id': 'adi-shankaracharya',
+            'ext': 'mp4',
+            'title': 'Adi Shankaracharya',
+            'description': 'md5:befd6ba680de7d5b1e377bf50d2dec1a',
+            'thumbnail': r're:^https?://.*\.jpg$',
+        },
+    }, {
         'url': 'https://www.epicon.in/movies/krit',
+        'skip': 'video gone',
         'info_dict': {
             'id': 'krit',
             'ext': 'mp4',

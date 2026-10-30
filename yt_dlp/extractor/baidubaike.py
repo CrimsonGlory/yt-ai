@@ -229,6 +229,7 @@ class BaiduBaikeIE(InfoExtractor):
                 display_id,
                 impersonate=True,
                 fatal=False,
+                errnote=False,
                 headers={'Referer': 'https://baike.baidu.com/'},
             ) or ''
             if webpage:

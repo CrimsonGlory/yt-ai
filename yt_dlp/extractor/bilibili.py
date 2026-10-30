@@ -783,6 +783,7 @@ class BiliBiliIE(BilibiliBaseIE):
         {
             "note": "interactive/split-path video",
             "url": "https://www.bilibili.com/video/BV1af4y1H7ga/",
+            "skip": "interactive graph API timed out (stein/edgeinfo_v2)",
             "info_dict": {
                 "id": "BV1af4y1H7ga",
                 "title": "【互动游戏】花了大半年时间做的自我介绍~请查收！！",

@@ -33,7 +33,15 @@ class WebcameraplIE(InfoExtractor):
             self.raise_no_formats('No video/audio found at the provided url', expected=True)
 
         m3u8_url = codecs.decode(rot13_m3u8_url, 'rot-13')
-        formats, subtitles = self._extract_m3u8_formats_and_subtitles(m3u8_url, video_id, live=True)
+        headers = {'Referer': url}
+        formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+            m3u8_url, video_id, live=True, headers=headers, fatal=False, errnote=False)
+        if not formats:
+            alt_url = m3u8_url.replace('/playlist.m3u8', '/chunks.m3u8')
+            if alt_url == m3u8_url:
+                self.raise_no_formats('Failed to download m3u8 information', expected=True)
+            formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+                alt_url, video_id, live=True, headers=headers)
 
         return {
             'id': video_id,

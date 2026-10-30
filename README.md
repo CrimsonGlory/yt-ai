@@ -2304,7 +2304,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Avjb** (`avjb.com`): Player CSRF `/player/spped.php` HLS lines, with Playerjs preview MP4 fallback. Request: [yt-dlp/yt-dlp#14653](https://github.com/yt-dlp/yt-dlp/issues/14653)
     * **AzNude** (`aznude.com`): JWPlayer `playerInstance.setup` HLS/MP4 from `/azncdn/` and `/embed/` pages; celeb/movie listings as playlists. Request: [yt-dlp/yt-dlp#12060](https://github.com/yt-dlp/yt-dlp/issues/12060)
     * **B9Good** (`b9good.org`): JWPlayer `/embed/` iframe (yundevo.guru); signed `/ajax/getSources` AES-GCM HLS. Request: [yt-dlp/yt-dlp#9245](https://github.com/yt-dlp/yt-dlp/issues/9245)
-    * **BaiduBaike** (`baike.baidu.com`): Impersonate Baidu WAF, then 秒懂 `/api/wikisecond/lemmasecond` and `/api/second/video` MP4/HLS; resolve slug-only URLs via `BaikeLemmaCardApi` when the item page is blocked. Request: [yt-dlp/yt-dlp#7467](https://github.com/yt-dlp/yt-dlp/issues/7467)
+    * **BaiduBaike** (`baike.baidu.com`): Impersonate Baidu WAF, then 秒懂 `/api/wikisecond/lemmasecond` and `/api/second/video` MP4/HLS; treat a blocked item page as non-fatal and resolve slug-only URLs via `BaikeLemmaCardApi`. Request: [yt-dlp/yt-dlp#7467](https://github.com/yt-dlp/yt-dlp/issues/7467)
     * **Balapan** (`balapan.tv`): Clappr HLS from the `player.rtrk.kz` live iframe. Request: [yt-dlp/yt-dlp#17241](https://github.com/yt-dlp/yt-dlp/issues/17241)
     * **BaoMoi** (`baomoi.com`): Public `w-api.baomoi.com` `/page/get/content-detail` JSON and signed `bmcdn.me` MP4, with `__NEXT_DATA__` fallback. Request: [yt-dlp/yt-dlp#7506](https://github.com/yt-dlp/yt-dlp/issues/7506)
     * **BeatStars** (`beatstars.com`): Public `main.v2.beatstars.com/track` JSON and tagged stream MP3. Request: [yt-dlp/yt-dlp#14675](https://github.com/yt-dlp/yt-dlp/issues/14675)
@@ -2577,6 +2577,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **asobichannel:tag**: Read tag title and playlist entries from the microCMS API instead of Next.js page data
     * **asobistage**: Raise an expected error when CloudFront redirects to the ASOBI STORE maintenance page; otherwise parse the original event URL
     * **banbye**: Use `banbye.com/api` video/channel/playlist JSON and HLS `playback.urls` (`api.banbye.com` 404s)
+    * **bandcamp:weekly**: Fall back to the radio page `og:description` when player_data omits `description`
     * **beatport**: Next.js `track_name` / `track_length_ms` / release `image_url` fields
     * **beeg**: Sign HLS from `store.externulls.com/video/play_url/{id}` when `hls_resources` is omitted
     * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate video, bangumi, dynamic, and space pages; on 412 fall back to `wbi/view/detail` / `pgc/player/web/v2/playurl`; keep webpage `__playinfo__` when anonymous `wbi/playurl` returns no dash/durl; honor `fatal=False` on `wbi/playurl`; resolve opus/dynamic `bvid` when `jump_url` is missing
@@ -2897,6 +2898,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **vtm**: Pass the DPG privacy gate and impersonate the browser to extract public mychannels clips
     * **vtv**: Extract HLS from classic `data-vid` and shorts `data-file` CDN paths
     * **web.archive:youtube**: Pin Wayback captures with `__wb/videoinfo` `timestamp` so `2id_` does not follow expired googlevideo redirects; treat optional CDX lookup failures as non-fatal and silent
+    * **webcamerapl**: Send a camera-page Referer and fall back to Nimble `chunks.m3u8` when `playlist.m3u8` 404s
     * **weiqitv**: Extract `/v/` Clappr MP4 and `/l/` NetEase live HLS; raise login when `_vu` is withheld
     * **wetv:episode**: Prefer Next.js `videoInfo.title` over the OG "Watch Free with Eng Sub | WeTV" page title
     * **wevidi**: Raise an expected error when Cloudflare 302s the entire domain to YouTube; fall back to a YouTube embed when WVPlayer is missing
