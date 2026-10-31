@@ -2900,7 +2900,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **web.archive:youtube**: Pin Wayback captures with `__wb/videoinfo` `timestamp` so `2id_` does not follow expired googlevideo redirects; treat optional CDX lookup failures as non-fatal and silent
     * **webcamerapl**: Send a camera-page Referer and fall back to Nimble `chunks.m3u8` when `playlist.m3u8` 404s
     * **weiqitv**: Extract `/v/` Clappr MP4 and `/l/` NetEase live HLS; raise login when `_vu` is withheld
-    * **wetv:episode**: Prefer Next.js `videoInfo.title` over the OG "Watch Free with Eng Sub | WeTV" page title
+    * **wetv:episode**: Prefer Next.js `videoInfo.title` over the OG "Watch Free with Eng Sub | WeTV" page title; retry HD `getvinfo` and skip higher-quality responses that return `server err` so HD HLS still downloads
     * **wevidi**: Raise an expected error when Cloudflare 302s the entire domain to YouTube; fall back to a YouTube embed when WVPlayer is missing
     * **wimbledon**: Extract current `/video/{slug}` pages via GraphQL and Adobe Scene7 HLS; keep Brightcove for legacy `/video/media/` IDs
     * **WorldStarHipHop**: Extract JSON-LD MP4s from current `/videos/{id}/{slug}` pages

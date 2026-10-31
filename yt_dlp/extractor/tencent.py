@@ -128,14 +128,24 @@ class TencentBaseIE(InfoExtractor):
         return subtitles
 
     def _extract_all_video_formats_and_subtitles(self, url, video_id, series_id):
-        api_responses = [self._get_video_api_response(url, video_id, series_id, 'srt', 'hls', 'hd')]
+        api_response = None
+        for _ in range(3):
+            api_response = self._get_video_api_response(
+                url, video_id, series_id, 'srt', 'hls', 'hd')
+            if api_response.get('msg') != 'server err':
+                break
+        api_responses = [api_response]
         self._check_api_response(api_responses[0])
         qualities = traverse_obj(api_responses, (0, 'fl', 'fi', ..., 'name')) or ('shd', 'fhd')
         for q in qualities:
             if q not in ('ld', 'sd', 'hd'):
-                api_responses.append(self._get_video_api_response(
-                    url, video_id, series_id, 'vtt', 'hls', q))
-                self._check_api_response(api_responses[-1])
+                api_response = self._get_video_api_response(
+                    url, video_id, series_id, 'vtt', 'hls', q)
+                # Higher-quality getvinfo calls often return a generic
+                # "server err" while HD playback still works.
+                if api_response.get('code') != '0.0' and api_response.get('msg') is not None:
+                    continue
+                api_responses.append(api_response)
 
         formats, subtitles = [], {}
         for api_response in api_responses:

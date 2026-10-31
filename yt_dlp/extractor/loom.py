@@ -50,7 +50,7 @@ class LoomIE(InfoExtractor):
     }, {
         # m3u8 raw-url, mp4 transcoded-url, cdn url == raw-url, vtt sub and json subs
         'url': 'https://www.loom.com/share/9458bcbf79784162aa62ffb8dd66201b',
-        'md5': '855c9b53aef7e0a8fc101e88bc7d8a2e',
+        'md5': '7e755f4a4740b2663237f46bc83fb346',
         'info_dict': {
             'id': '9458bcbf79784162aa62ffb8dd66201b',
             'ext': 'mp4',

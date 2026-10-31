@@ -38,7 +38,7 @@ class RezkaIE(InfoExtractor):
             'alt_title': 'Carolina Caroline (2025)',
             'description': 'md5:bc5a4f54fe01865bdcdcf13e76a55f92',
             'thumbnail': r're:https?://.+\.(?:jpg|jpeg|png)',
-            'duration': 6300,
+            'duration': 6420,
             'subtitles': {
                 'ru': 'count:1',
                 'en': 'count:1',
