@@ -1,3 +1,5 @@
+import urllib.parse
+
 from .common import InfoExtractor
 from ..utils import (
     clean_html,
@@ -51,7 +53,18 @@ class PeriscopeBaseIE(InfoExtractor):
             if not f.get(key):
                 f[key] = val
 
+    @staticmethod
+    def _rewrite_replay_cdn(url):
+        # Regional video.periscope.tv Fastly hosts return HTTP 400; the pscp.tv anycast host still serves replays.
+        if not url:
+            return url
+        parsed = urllib.parse.urlparse(url)
+        if (parsed.hostname or '').endswith('.video.periscope.tv'):
+            return urllib.parse.urlunparse(parsed._replace(netloc='prod-fastly-a.video.pscp.tv'))
+        return url
+
     def _extract_pscp_m3u8_formats(self, m3u8_url, video_id, format_id, state, width, height, fatal=True):
+        m3u8_url = self._rewrite_replay_cdn(m3u8_url)
         m3u8_formats = self._extract_m3u8_formats(
             m3u8_url, video_id, 'mp4',
             entry_protocol='m3u8_native'

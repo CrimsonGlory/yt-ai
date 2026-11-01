@@ -21,7 +21,7 @@ class AiryTVIE(InfoExtractor):
     _API_BASE = 'https://api.airy.tv/api/v2.1.7'
     _TESTS = [{
         'url': 'https://airy.tv/on-demand/movie/1539125',
-        'md5': 'a2d5aa66bf27d80ba84c3eabc01cb3ea',
+        'md5': '8a3cb02360c50165be2c2cda9691dab9',
         'info_dict': {
             'id': '1539125',
             'ext': 'mp4',
