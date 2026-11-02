@@ -224,6 +224,7 @@ class ZDFIE(ZDFBaseIE):
             'params': {'format': 'bv*[protocol=m3u8_native]'},
         }, {
             'url': 'https://www.zdf.de/video/serien/standing-tall-116/zwei-fragen-100',
+            'skip': 'video gone',
             'info_dict': {
                 'id': 'zwei-fragen-100',
                 'ext': 'mp4',
@@ -240,6 +241,22 @@ class ZDFIE(ZDFBaseIE):
                 'episode': 'Episode 2',
                 'episode_number': 2,
                 '_old_archive_ids': ['zdf 260902_2235_sendung_spf'],
+            },
+            'params': {'format': 'bv*[protocol=m3u8_native]'},
+        }, {
+            'url': 'https://www.zdf.de/video/serien/standing-tall-116/trailer-standing-tall-100',
+            'info_dict': {
+                'id': 'trailer-standing-tall-100',
+                'ext': 'mp4',
+                'title': 'Trailer: Standing Tall',
+                'description': 'md5:a1ee185044c0575a4f4edf4b1c3b7c3f',
+                'duration': 67.0,
+                'thumbnail': r're:https://www\.zdf\.de/assets/hero-standing-tall-100~original\?cb=\d+',
+                'timestamp': 1787731200,
+                'upload_date': '20260826',
+                'series': 'Standing Tall',
+                'series_id': 'standing-tall-116',
+                '_old_archive_ids': ['zdf 260903_trailer_stt'],
             },
             # Progressive HTTP on nrodlzdf-a.akamaihd.net returns HTTP 403 from this
             # environment; HLS on zdfvod-rwrtr.akamaized.net still serves public media.

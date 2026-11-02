@@ -399,6 +399,7 @@ class ORFONIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://on.orf.at/video/14333940/isabell-pannagl-neues-aus-dem-dachgeschoss',
+            'skip': 'geo-restricted to AT; API returns empty sources (X-Forwarded-For is ignored)',
             'info_dict': {
             'id': '14333940',
             'ext': 'mp4',

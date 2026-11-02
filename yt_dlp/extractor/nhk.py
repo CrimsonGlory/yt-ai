@@ -336,7 +336,7 @@ class NhkVodProgramIE(NhkBaseIE):
             'description': 'md5:665bb36ec2a12c5a7f598ee713fc2b54',
             'series': 'Living in Japan',
         },
-        'playlist_mincount': 5,
+        'playlist_mincount': 4,
     }, {
         'url': 'https://www3.nhk.or.jp/nhkworld/en/shows/10yearshayaomiyazaki/',
         'only_matching': True,

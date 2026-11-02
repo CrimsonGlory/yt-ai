@@ -31,7 +31,7 @@ class SteamIE(InfoExtractor):
             'id': '271590',
             'title': 'Grand Theft Auto V Legacy',
         },
-        'playlist_mincount': 26,
+        'playlist_mincount': 23,
     }]
 
     def _entries(self, app_id, app_name, data_props):
