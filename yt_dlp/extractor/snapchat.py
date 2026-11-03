@@ -1,5 +1,11 @@
 from .common import InfoExtractor
-from ..utils import float_or_none, int_or_none, url_or_none
+from ..utils import (
+    ExtractorError,
+    float_or_none,
+    format_field,
+    int_or_none,
+    url_or_none,
+)
 from ..utils.traversal import traverse_obj
 
 
@@ -13,14 +19,17 @@ class SnapchatSpotlightIE(InfoExtractor):
             'id': 'W7_EDlXWTBiXAEEniNoMPwAAYYWtidGhudGZpAX1TKn0JAX1TKnXJAAAAAA',
             'ext': 'mp4',
             'title': 'Views 💕',
-            'description': '',
+            'description': 'Views 💕',
             'uploader': 'shreypatel57',
             'uploader_url': 'https://www.snapchat.com/@shreypatel57',
-            'duration': 4.665,
-            'thumbnail': 'md5:0a6187f5e1d92ba6dc400a8ec8bd47e0',
+            'duration': 5,
+            'thumbnail': r're:https://cf-st\.sc-cdn\.net/.+',
             'timestamp': 1637777831.369,
             'upload_date': '20211124',
             'repost_count': int,
+            'like_count': int,
+            'width': 540,
+            'height': 960,
         },
     }, {
         'url': 'https://www.snapchat.com/spotlight/W7_EDlXWTBiXAEEniNoMPwAAYcnVjYWdwcGV1AZEaIYn5AZEaIYnrAAAAAQ',
@@ -43,17 +52,8 @@ class SnapchatSpotlightIE(InfoExtractor):
         },
     }]
 
-    def _real_extract(self, url):
-        video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
-        page_props = self._search_nextjs_data(webpage, video_id)['props']['pageProps']
-        video_data = traverse_obj(page_props, (
-            'spotlightFeed', 'spotlightStories',
-            lambda _, v: v['story']['storyId']['value'] == video_id, 'metadata', any), None)
-
+    def _legacy_page_info(self, video_data):
         return {
-            'id': video_id,
-            'ext': 'mp4',
             **traverse_obj(video_data, ('videoMetadata', {
                 'title': ('name', {str}),
                 'description': ('description', {str}),
@@ -75,3 +75,46 @@ class SnapchatSpotlightIE(InfoExtractor):
                 'repost_count': ('engagementStats', 'shareCount', {int_or_none}),
             }),
         }
+
+    def _real_extract(self, url):
+        video_id = self._match_id(url)
+        webpage = self._download_webpage(url, video_id)
+        page_props = traverse_obj(
+            self._search_nextjs_data(webpage, video_id, default={}),
+            ('props', 'pageProps', {dict})) or {}
+        video_data = traverse_obj(page_props, (
+            'spotlightFeed', 'spotlightStories',
+            lambda _, v: v['story']['storyId']['value'] == video_id, 'metadata', any))
+        if video_data:
+            return {
+                'id': video_id,
+                'ext': 'mp4',
+                **self._legacy_page_info(video_data),
+            }
+
+        video = traverse_obj(
+            self._search_nextjs_v13_data(webpage, video_id, fatal=False), (
+                ..., {dict}, 'video', {dict}, {
+                    lambda v: v if (v.get('rawSnapId') or v.get('id')) == video_id else None,
+                }, any))
+        json_ld = self._search_json_ld(
+            webpage, video_id, expected_type='VideoObject', default={})
+        info = {
+            **json_ld,
+            **traverse_obj(video, {
+                'url': ('videoUrl', {url_or_none}),
+                'thumbnail': ('posterUrl', {url_or_none}),
+                'timestamp': ('uploadTimestampMs', {float_or_none(scale=1000)}),
+                'uploader': ('postingUsername', {str}),
+                'view_count': ('viewCount', {int_or_none}, {lambda x: None if x in (-1, 0) else x}),
+                'repost_count': ('shareCount', {int_or_none}),
+            }),
+            'id': video_id,
+            'ext': 'mp4',
+            'uploader_url': format_field(
+                traverse_obj(video, ('postingUsername', {str})), None,
+                'https://www.snapchat.com/@%s'),
+        }
+        if not info.get('url'):
+            raise ExtractorError('Unable to extract Snapchat Spotlight video', expected=True)
+        return info

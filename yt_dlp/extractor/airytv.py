@@ -28,7 +28,7 @@ class AiryTVIE(InfoExtractor):
             'title': 'Billionaire Boys Club',
             'description': 'md5:4c591c0da31b2676034137fce11c2de6',
             'thumbnail': 'https://storage.googleapis.com/showfer_thumbnail/psYeL7oCLAwP-VtXz0dky.jpg',
-            'duration': 11067,
+            'duration': 11068,
             'categories': ['Drama'],
             'tags': ['Drama'],
             'genres': ['Thriller', 'TV Movie'],

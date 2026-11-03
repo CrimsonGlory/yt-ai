@@ -1,6 +1,7 @@
 import time
 
 from .common import InfoExtractor
+from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
     int_or_none,
@@ -65,9 +66,14 @@ class FreeTvMoviesIE(FreeTvBaseIE):
             |shows/[^/?#]+/season/\d+/episode/(?P<episode>\d+)
         )
     '''
+    _GEO_COUNTRIES = [
+        'US', 'PR', 'MX', 'AR', 'BO', 'CL', 'CO', 'CR', 'DO', 'EC',
+        'GT', 'HN', 'NI', 'PA', 'PE', 'PY', 'SV', 'UY', 'VE',
+    ]
     _TESTS = [
         {
             'url': 'https://www.freetv.com/es/linear/freetv-familia-0',
+            'skip': 'geo-restricted to US/LATAM; HTTP 403 Acceso denegado (X-Forwarded-For is ignored)',
             'info_dict': {
                 'id': '19355',
                 'ext': 'mp4',
@@ -114,7 +120,13 @@ class FreeTvMoviesIE(FreeTvBaseIE):
     def _real_extract(self, url):
         url_m = self._match_valid_url(url)
         display_id = url_m.group('id') or url_m.group('episode')
-        webpage = self._download_webpage(url, display_id)
+        try:
+            webpage = self._download_webpage(url, display_id)
+        except ExtractorError as e:
+            cause = getattr(e, 'cause', None)
+            if isinstance(cause, HTTPError) and cause.status == 403:
+                self.raise_geo_restricted(countries=self._GEO_COUNTRIES)
+            raise
         settings = self._parse_site_settings(webpage, display_id)
         video_id, cs_auth, language = self._extract_nid_and_auth(webpage, settings)
 

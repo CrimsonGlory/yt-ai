@@ -35,10 +35,11 @@ class DRTVIE(InfoExtractor):
             'id': '00951930010',
             'ext': 'mp4',
             'title': 'Frank & Kastaniegaarden',
-            'description': 'md5:5fd3b0562a5988f5ac2e36f1ef1d17f3',
-            'duration': 2576,
+            'alt_title': 'Frank & Kastaniegaarden',
+            'description': 'md5:0ed2980c81e51895107a54a014256f4b',
+            'duration': 2577,
             'season': 'Frank & Kastaniegaarden',
-            'season_id': '67125',
+            'season_id': 'b03456ee-73fe-472b-affb-41c5e6d1e05f',
             'release_year': 2019,
             'season_number': 2019,
             'series': 'Frank & Kastaniegaarden',
@@ -100,10 +101,10 @@ class DRTVIE(InfoExtractor):
             'episode_number': 1,
             'title': 'Spise med Price: Pasta Selv',
             'alt_title': '1. Pasta Selv',
-            'description': 'md5:d019f58a959dc4cdb5e74718b0e3fe28',
-            'duration': 1750,
+            'description': 'md5:970cd36c43b3c738c5e4ff49f84896d4',
+            'duration': 1751,
             'season': 'Spise med Price',
-            'season_id': '397440',
+            'season_id': 'be0f994a-da7c-4a6e-9746-901739ef7d58',
             'episode': 'Spise med Price: Pasta Selv',
             'thumbnail': r're:https?://.+',
             'season_number': 15,
@@ -164,10 +165,12 @@ class DRTVIE(InfoExtractor):
             r'window\.__data\s*=', webpage, 'data', url_slug, fatal=False) or {}
         item = traverse_obj(
             json_data, ('cache', 'page', ..., (None, ('entries', 0)), 'item', {dict}), get_all=False)
+        # Page item id is now a UUID; the /videos API still needs the numeric catalog id.
+        catalog_id = url_slug.rsplit('_', 1)[-1]
         if item:
-            item_id = item.get('id')
+            item_id = catalog_id if catalog_id.isdigit() else item.get('id')
         else:
-            item_id = url_slug.rsplit('_', 1)[-1]
+            item_id = catalog_id
             item = self._download_json(
                 f'https://production-cdn.dr-massive.com/api/items/{item_id}', item_id,
                 note='Attempting to download backup item data', query={

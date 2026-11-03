@@ -2608,6 +2608,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **dplay**: Use Disco playback v3
     * **drtalks**: Follow BunnyCDN embeds from Next.js v13 instead of Brightcove
     * **drtuber**: Use HTTPS `player_config_json` and tolerate missing files
+    * **drtv**: Use the numeric catalog id from the URL slug for `/videos` when the page item id is a UUID
     * **dtube**: Support `/watch/` URLs and current IPFS/media hosts
     * **dumpert**: Use the HTTPS API and impersonate the browser
     * **duoplay**: Register sessions on `sts.euddn.net`
@@ -2628,7 +2629,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **fptplay**: Sign the v7.1 API
     * **francetv**: Read `siId` from the page JSON when Next.js flight data has no `options.id`
     * **freespeech**: Zype embeds, live-tv URLs, and browser impersonation
-    * **freetv**: Use the current playback API instead of WordPress admin-ajax
+    * **freetv**: Use the current playback API instead of WordPress admin-ajax; raise geo-restriction on HTTP 403 Acceso denegado (US/LATAM; X-Forwarded-For is ignored)
     * **funker530**: Follow BunnyCDN / current embeds instead of Rumble-only
     * **gamedevtv**: Extract public course preview media via sales-data / BunnyCDN without login
     * **gamejolt**: Skip incomplete search posts without `action_resource_model`
@@ -2828,6 +2829,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **sky:sports**: Fetch a Condatis Brightcove JWT and match current `/{sport}/video/` clip URLs
     * **slideshare**: Extract public slide images from the GraphQL API after the Next.js rebrand; keep slideshow HTML parsing internal so Generic webpage extraction is not shadowed
     * **slutload**: Impersonate the browser and extract HLS from CamSoda `/porn/video/` preloaded JSON
+    * **snapchat:spotlight**: Fall back to Next.js App Router flight data and JSON-LD VideoObject when `__NEXT_DATA__` is absent
     * **spankbang**: Parse `stream_data` and current `data-testid` video-page metadata
     * **sport5**: Extract Akamai HLS from current article player embeds
     * **sporteurope**: Use the public asset and web-player APIs for signed Mux HLS
