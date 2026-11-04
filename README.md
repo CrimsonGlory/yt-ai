@@ -2921,6 +2921,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **yapfiles**: Parse the current yaplayer load URL and `file`/`file_hd` from the API instead of the old `player.init` playlist
     * **youjizz**: Read duration and uploader from current Runtime/Submitted By HTML
     * **youporn**: Upload date is optional
+    * **youku**: Request UPS metadata with web client `ccode` `0591`
     * **youtube:tab**: Treat lockup `LOCKUP_CONTENT_TYPE_SHOW` and `LOCKUP_CONTENT_TYPE_COURSE` as playlists (same as playlists/podcasts)
     * **younow**: Raise an expected error that live playback is WebRTC (Props SFU) and that public HLS/moments are gone
     * **zenporn**: Impersonate the browser

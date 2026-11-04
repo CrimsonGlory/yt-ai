@@ -15,7 +15,7 @@ class XiaoHongShuIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://www.xiaohongshu.com/explore/6ab88861000000001801514e?xsec_token=ABDkte3IkodvO27CdPu5gtHV_0WUSGdZybgRKYeqJpIHc=',
-            'md5': '993a6c422dd804541649ab765a3b9cfc',
+            'md5': '7004d65dbbdc9f6b4cb15a2933222fce',
             'info_dict': {
                 'id': '6ab88861000000001801514e',
                 'ext': 'mp4',

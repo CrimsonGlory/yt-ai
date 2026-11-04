@@ -134,10 +134,10 @@ class YoukuIE(InfoExtractor):
         # The etag header is '"foobar"'; let's remove the double quotes
         cna = urlh.headers['etag'][1:-1]
 
-        # request basic data
+        # ccode identifies the client platform; 0564 now returns -6004 risk-control
         basic_data_params = {
             'vid': video_id,
-            'ccode': '0564',
+            'ccode': '0591',
             'client_ip': '192.168.1.1',
             'utid': cna,
             'client_ts': time.time() / 1000,

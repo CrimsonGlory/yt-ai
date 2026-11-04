@@ -212,7 +212,7 @@ class TapTapAppIE(TapTapBaseIE):
         'playlist_count': 2,
         'playlist': [{
             'info_dict': {
-                'id': '5896874',
+                'id': '6024700',
                 'ext': 'mp4',
                 'title': '原神',
                 'description': 'md5:e345f39a5fea5de2a46923f70d5f76ab',
