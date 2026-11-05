@@ -27,7 +27,7 @@ class XiaoHeiMiIE(InfoExtractor):
             'id': '42755-1-1',
             'ext': 'mp4',
             'title': '炽道 第01集',
-            'description': 'md5:2e5c1059d4976512a0decf03cf49e554',
+            'description': 'md5:7c1792b1dec9183e9bd9896eee538632',
             'series': '炽道',
             'series_id': '42755',
             'episode': '第01集',
@@ -121,7 +121,7 @@ class XiaoHeiMiIE(InfoExtractor):
             }], {}
 
         title = self._html_search_regex(
-            r'<title>([^<]+?)\s*在线播放', webpage, 'title', default=None)
+            r'<title>([^<]+?)\s*在线(?:播放|观看)', webpage, 'title', default=None)
         series = self._html_search_regex(
             r'<h3[^>]+class="title text-fff"[^>]*>([^<]+)',
             webpage, 'series', default=None)

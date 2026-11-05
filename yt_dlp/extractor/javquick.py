@@ -22,6 +22,7 @@ class JavQuickIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://javquick.com/movie/POUUCrXo/jufe-163-old-man-s-gonzo-document-soggy-thickly-fluid-body-fluid-sweaty-sexual-intercourse-sakiyo-kiyone',
+            'skip': 'site unavailable (HTTP 502)',
             'md5': 'fc749f47a09c7979b64a182c4c9fb96e',
             'info_dict': {
                 'id': 'POUUCrXo',

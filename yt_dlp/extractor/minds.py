@@ -35,7 +35,45 @@ class MindsIE(MindsBaseIE):
     IE_NAME = 'minds'
     _VALID_URL = MindsBaseIE._VALID_URL_BASE + r'(?:media|newsfeed|archive/view)/(?P<id>[0-9]+)'
     _TESTS = [{
+        'url': 'https://www.minds.com/media/1822030968257515520',
+        'md5': '1440c1a78dc3e97b859082220c0f11bb',
+        'info_dict': {
+            'id': '1822030968257515520',
+            'ext': 'mp4',
+            'title': '1822030968257515520',
+            'thumbnail': r're:https?://.+',
+            'uploader_id': 'ottman',
+            'upload_date': '20251006',
+            'timestamp': 1759782035,
+            'uploader': 'Bill Ottman',
+            'view_count': int,
+            'like_count': int,
+            'dislike_count': int,
+            'comment_count': int,
+            'uploader_url': 'https://www.minds.com/ottman',
+        },
+    }, {
+        # entity.type == 'activity' and empty title
+        'url': 'https://www.minds.com/newsfeed/1822031379869736960',
+        'md5': '1440c1a78dc3e97b859082220c0f11bb',
+        'info_dict': {
+            'id': '1822030968257515520',
+            'ext': 'mp4',
+            'title': '1822030968257515520',
+            'uploader': 'Bill Ottman',
+            'upload_date': '20251006',
+            'timestamp': 1759782035,
+            'uploader_id': 'ottman',
+            'uploader_url': 'https://www.minds.com/ottman',
+            'comment_count': int,
+            'view_count': int,
+            'like_count': int,
+            'dislike_count': int,
+            'thumbnail': r're:https?://.+',
+        },
+    }, {
         'url': 'https://www.minds.com/media/100000000000086822',
+        'skip': 'video gone',
         'md5': '564fde8f0b5c4ed3596ea7e026748648',
         'info_dict': {
             'id': '100000000000086822',
@@ -57,6 +95,7 @@ class MindsIE(MindsBaseIE):
     }, {
         # entity.type == 'activity' and empty title
         'url': 'https://www.minds.com/newsfeed/798025111988506624',
+        'skip': 'video gone',
         'md5': '35b6ed189d60a96cf8c067d15114a9ea',
         'info_dict': {
             'id': '798022190320226304',

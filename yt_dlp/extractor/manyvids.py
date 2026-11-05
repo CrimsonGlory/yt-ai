@@ -1,5 +1,7 @@
 from .common import InfoExtractor
+from ..networking.exceptions import HTTPError
 from ..utils import (
+    ExtractorError,
     clean_html,
     determine_ext,
     int_or_none,
@@ -33,7 +35,10 @@ class ManyVidsIE(InfoExtractor):
             'release_date': '20260808',
             'duration': 743,
         },
-        'expected_warnings': ['Only extracting preview'],
+        'expected_warnings': [
+            'Only extracting preview',
+            'Store API unavailable',
+        ],
     }, {
         # preview video
         'url': 'https://www.manyvids.com/Video/530341/mv-tips-tricks',
@@ -76,11 +81,8 @@ class ManyVidsIE(InfoExtractor):
     }]
     _API_BASE = 'https://www.manyvids.com/bff/store/video'
 
-    def _real_extract(self, url):
-        video_id = self._match_id(url)
-        video_data = self._download_json(f'{self._API_BASE}/{video_id}/private', video_id)['data']
+    def _formats_from_video_data(self, video_data, video_id):
         formats, preview_only = [], True
-
         for format_id, path in [
             ('preview', ['teaser', 'filepath']),
             ('transcoded', ['transcodedFilepath']),
@@ -102,10 +104,60 @@ class ManyVidsIE(InfoExtractor):
                 })
             if format_id != 'preview':
                 preview_only = False
+        return formats, preview_only
 
-        metadata = traverse_obj(
-            self._download_json(f'{self._API_BASE}/{video_id}', video_id, fatal=False), 'data')
-        title = traverse_obj(metadata, ('title', {clean_html}))
+    def _real_extract(self, url):
+        video_id = self._match_id(url)
+        video_data = None
+        try:
+            video_data = self._download_json(f'{self._API_BASE}/{video_id}/private', video_id)['data']
+        except ExtractorError as e:
+            if not (isinstance(e.cause, HTTPError) and e.cause.status in (500, 502, 503)):
+                raise
+            self.report_warning('Store API unavailable; falling back to webpage JSON-LD')
+
+        if video_data:
+            formats, preview_only = self._formats_from_video_data(video_data, video_id)
+            metadata = traverse_obj(
+                self._download_json(f'{self._API_BASE}/{video_id}', video_id, fatal=False), 'data')
+            title = traverse_obj(metadata, ('title', {clean_html}))
+            extra = traverse_obj(metadata, {
+                'description': ('description', {clean_html}),
+                'uploader': ('model', 'displayName', {clean_html}),
+                'thumbnail': (('screenshot', 'thumbnail'), {url_or_none}, any),
+                'view_count': ('views', {parse_count}),
+                'like_count': ('likes', {parse_count}),
+                'release_timestamp': ('launchDate', {parse_iso8601}),
+                'duration': ('videoDuration', {parse_duration}),
+                'tags': ('tagList', ..., 'label', {str}, filter, all, filter),
+            })
+        else:
+            webpage = self._download_webpage(url, video_id)
+            json_ld = self._search_json_ld(webpage, video_id, expected_type='VideoObject', default={})
+            preview_url = url_or_none(json_ld.get('url'))
+            if not preview_url:
+                raise ExtractorError('Unable to extract video', expected=True)
+            formats = [{
+                'url': preview_url,
+                'format_id': 'preview',
+                'preference': -10,
+                'height': int_or_none(
+                    self._search_regex(r'_(\d{2,3}[02468])_', preview_url, 'height', default=None)),
+            }]
+            preview_only = True
+            title = json_ld.get('title')
+            extra = {
+                'description': json_ld.get('description'),
+                'uploader': json_ld.get('uploader') or self._html_search_meta('author', webpage),
+                'thumbnail': (
+                    traverse_obj(json_ld, ('thumbnails', 0, 'url', {url_or_none}))
+                    or self._og_search_thumbnail(webpage)),
+                'view_count': json_ld.get('view_count'),
+                'like_count': json_ld.get('like_count'),
+                'release_timestamp': json_ld.get('timestamp'),
+                'duration': json_ld.get('duration'),
+                'tags': [t.strip() for t in (self._html_search_meta('keywords', webpage) or '').split(',') if t.strip()],
+            }
 
         if preview_only:
             title = join_nonempty(title, '(Preview)', delim=' ')
@@ -117,14 +169,5 @@ class ManyVidsIE(InfoExtractor):
             'id': video_id,
             'title': title,
             'formats': formats,
-            **traverse_obj(metadata, {
-                'description': ('description', {clean_html}),
-                'uploader': ('model', 'displayName', {clean_html}),
-                'thumbnail': (('screenshot', 'thumbnail'), {url_or_none}, any),
-                'view_count': ('views', {parse_count}),
-                'like_count': ('likes', {parse_count}),
-                'release_timestamp': ('launchDate', {parse_iso8601}),
-                'duration': ('videoDuration', {parse_duration}),
-                'tags': ('tagList', ..., 'label', {str}, filter, all, filter),
-            }),
+            **extra,
         }

@@ -2446,7 +2446,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **NewsNation** (`newsnationnow.com`): Anvato/Lura HLS from `/video/{slug}/{id}/` URLs and WordPress `lead_media` on article pages. Request: [yt-dlp/yt-dlp#7285](https://github.com/yt-dlp/yt-dlp/issues/7285)
     * **NFSA** (`nfsa.gov.au`): Public Sanity GROQ for collection items, then Vimeo player URLs (site referer) or Sanity CDN files. Request: [yt-dlp/yt-dlp#9593](https://github.com/yt-dlp/yt-dlp/issues/9593)
     * **NhacCuaTui** (`nhaccuatui.com`): Nuxt `__NUXT_DATA__` song/video `streamURL` MP3/MP4 (and FLAC when present); drop `dateRelease` when it is `0`. Request: [yt-dlp/yt-dlp#12329](https://github.com/yt-dlp/yt-dlp/issues/12329)
-    * **nobody.live** (`nobody.live`): Public `/stream` JSON for a random zero-viewer Twitch channel, then Twitch HLS. Request: [yt-dlp/yt-dlp#13696](https://github.com/yt-dlp/yt-dlp/issues/13696)
+    * **nobody.live** (`nobody.live`): Public `/stream` JSON for zero-viewer Twitch channels, then Twitch HLS; try the next candidate when Twitch reports the channel is not live. Request: [yt-dlp/yt-dlp#13696](https://github.com/yt-dlp/yt-dlp/issues/13696)
     * **Novinky** (`novinky.cz`): Public `api-web.novinky.cz` document JSON and Seznam SDN MP4/HLS. Request: [yt-dlp/yt-dlp#4869](https://github.com/yt-dlp/yt-dlp/issues/4869)
     * **NowTVTR** (`nowtv.com.tr`, formerly `fox.com.tr`): Player `video` JSON and `/ajax/stream` HLS. Request: [yt-dlp/yt-dlp#1856](https://github.com/yt-dlp/yt-dlp/issues/1856)
     * **Nutson** (`nutson.us`): Guest `api.nutson.us` v3 session, then v2 `media/{id}` MP4s (`media_urls`). Request: [yt-dlp/yt-dlp#6947](https://github.com/yt-dlp/yt-dlp/issues/6947)
@@ -2559,7 +2559,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Xbox** (`xbox.com`): Microsoft displaycatalog `CMSVideos` HLS/DASH store trailers. Request: [yt-dlp/yt-dlp#13591](https://github.com/yt-dlp/yt-dlp/issues/13591)
     * **Xcadr** (`xcadr.tv`): KVS `kt_player` `flashvars` and license-decoded `get_file` MP4s; celeb/movie listings as playlists. Request: [yt-dlp/yt-dlp#6362](https://github.com/yt-dlp/yt-dlp/issues/6362)
     * **XFetishTube** (`x-fetish.tube`): KVS `kt_player` config (randomized JS object) and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#16623](https://github.com/yt-dlp/yt-dlp/issues/16623)
-    * **XiaoHeiMi** (`xiaoheimi.net`): Impersonate Cloudflare and extract MacCMS `player_aaaa` HLS. Request: [yt-dlp/yt-dlp#5625](https://github.com/yt-dlp/yt-dlp/issues/5625)
+    * **XiaoHeiMi** (`xiaoheimi.net`): Impersonate Cloudflare, extract MacCMS `player_aaaa` HLS, and read the play-page title from `在线观看` as well as `在线播放`. Request: [yt-dlp/yt-dlp#5625](https://github.com/yt-dlp/yt-dlp/issues/5625)
     * **XMegaDrive** (`xmegadrive.com`): KVS `kt_player` `flashvars` and license-decoded `get_file` MP4s. Request: [yt-dlp/yt-dlp#4145](https://github.com/yt-dlp/yt-dlp/issues/4145)
     * **XPicVid** (`xpicvid.com`): Impersonate Cloudflare and extract DPlayer quality MP4s. Request: [yt-dlp/yt-dlp#15279](https://github.com/yt-dlp/yt-dlp/issues/15279)
     * **Xumo** (`play.xumo.com`): Public `valencia-app-mds.xumo.com` asset JSON for HLS/DASH VOD and series playlists. Request: [yt-dlp/yt-dlp#15643](https://github.com/yt-dlp/yt-dlp/issues/15643)
@@ -2697,6 +2697,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **lovehomeporn**: Use HTTPS Nuevo config and raise login required when the player is replaced by a premium gate
     * **lrt**: Try each live HLS URL and continue when one returns HTTP 403
     * **maoritv**: maoriplus.co.nz, live/movie URLs, and a dynamic Brightcove account
+    * **manyvids**: Fall back to page JSON-LD preview MP4 when the BFF store API returns HTTP 5xx
     * **massengeschmack.tv**: Parse Orangeflix Next.js clip `downloads` (`massengeschmack.tv/play` redirects to `orangeflix.de/clip`)
     * **matchtv**: Impersonate the live iframe host
     * **mave**: `cdn.mave.digital` storage

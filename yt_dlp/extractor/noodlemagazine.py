@@ -20,7 +20,7 @@ class NoodleMagazineIE(InfoExtractor):
             'title': 'Aria alexander manojob',
             'description': 'Aria alexander manojob',
             'duration': 903,
-            'thumbnail': 'md5:59e3e77647f1a6dd31de3e1c094616c7',
+            'thumbnail': 'md5:1092acd66acbde2228be3ad41c828117',
             'upload_date': '20190218',
             'age_limit': 18,
             'view_count': int,

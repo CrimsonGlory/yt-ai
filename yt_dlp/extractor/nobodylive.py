@@ -44,35 +44,52 @@ class NobodyLiveIE(InfoExtractor):
     }]
 
     def _real_extract(self, url):
-        stream = self._resolve_stream(url)
-        login = traverse_obj(stream, (('user_login', 'user_name'), {str}), get_all=False)
-        if not login:
-            raise ExtractorError('Unable to determine Twitch channel', expected=True)
+        last_err = None
+        twitch_ie = TwitchStreamIE()
+        twitch_ie.set_downloader(self._downloader)
+        for stream in self._iter_streams(url):
+            login = traverse_obj(stream, (('user_login', 'user_name'), {str}), get_all=False)
+            if not login:
+                continue
+            try:
+                info = twitch_ie.extract(f'https://www.twitch.tv/{login}')
+            except ExtractorError as e:
+                if not e.expected:
+                    raise
+                self.to_screen(f'{login} is not available; trying next nobody.live stream')
+                last_err = e
+                continue
+            info['age_limit'] = 18 if stream.get('is_mature') else info.get('age_limit') or 0
+            return info
 
-        return self.url_result(
-            f'https://www.twitch.tv/{login}', ie=TwitchStreamIE, url_transparent=True,
-            age_limit=18 if stream.get('is_mature') else 0)
+        if last_err:
+            raise last_err
+        raise ExtractorError('No zero-viewer streams available', expected=True)
 
-    def _resolve_stream(self, url):
+    def _iter_streams(self, url):
         qs = parse_qs(url)
         force = traverse_obj(qs, ('force', -1, {str}))
         if force:
-            return {'user_login': force}
+            yield {'user_login': force}
+            return
 
         raw_stream = traverse_obj(qs, ('stream', -1, {str}))
         if raw_stream:
             parsed = self._parse_json(raw_stream, 'stream', fatal=False)
             if isinstance(parsed, dict):
-                return parsed
+                yield parsed
+                return
 
         streams = self._download_json(
             'https://nobody.live/stream', 'stream', query={
-                'count': 1,
+                'count': 8,
                 'max_viewers': 0,
                 'min_age': 0,
                 'search_operator': 'all',
             })
-        stream = traverse_obj(streams, (0, {dict}))
-        if not stream:
+        yielded = False
+        for stream in traverse_obj(streams, (..., {dict})) or ():
+            yielded = True
+            yield stream
+        if not yielded:
             raise ExtractorError('No zero-viewer streams available', expected=True)
-        return stream
