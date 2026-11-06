@@ -222,6 +222,22 @@ class ZenYandexIE(ZenYandexBaseIE):
     _VALID_URL = r'https?://(zen\.yandex|dzen)\.ru(?:/video)?/(media|watch)/(?:(?:id/[^/]+/|[^/]+/)(?:[a-z0-9-]+)-)?(?P<id>[a-z0-9-]+)'
     _TESTS = [
         {
+            'url': 'https://dzen.ru/video/watch/6002240ff8b1af50bb2da5e3',
+            'md5': 'd640dbd1f3d1e936884b67e65bd7585c',
+            'info_dict': {
+                'id': '6002240ff8b1af50bb2da5e3',
+                'ext': 'mp4',
+                'title': 'Извержение вулкана из спичек: зрелищный опыт',
+                'description': 'md5:053ad3c61b5596d510c9a199dc8ee633',
+                'thumbnail': r're:^https://avatars\.dzeninfra\.ru/',
+                'uploader': 'TechInsider',
+                'timestamp': 1611378221,
+                'upload_date': '20210123',
+                'view_count': int,
+                'duration': 243,
+                'tags': ['опыт', 'эксперимент', 'огонь'],
+            },
+        }, {
             'url': 'https://zen.yandex.ru/media/id/606fd806cc13cb3c58c05cf5/vot-eto-focus-dedy-morozy-na-gidrociklah-60c7c443da18892ebfe85ed7',
             'md5': '1f9c5ecce64d4f2d7e014686b17bc71b',
             'info_dict': {
@@ -236,6 +252,7 @@ class ZenYandexIE(ZenYandexBaseIE):
                 'upload_date': '20191111',
                 'view_count': int,
             },
+            'skip': 'video gone',
         }, {
             'url': 'https://zen.yandex.ru/media/id/606fd806cc13cb3c58c05cf5/vot-eto-focus-dedy-morozy-na-gidrociklah-60c7c443da18892ebfe85ed7',
             'info_dict': {

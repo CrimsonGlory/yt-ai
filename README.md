@@ -2568,6 +2568,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 
 * **Extractor fixes** (verified on live sites where possible):
     * **20min**: Extract videos from the Unity API instead of the old podcast URLs
+    * **247sports**: Fall back to the CBS Sports watch page by video slug when 247sports.com serves a Fastly client challenge
     * **abcnews**: Read the current `story.story` JSON instead of everscroll
     * **abc:iview**: Use the v3 video API and raise geo/login when unplayable
     * **allocine**: Extract Dailymotion videos via `DailymotionIE`

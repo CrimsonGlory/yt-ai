@@ -19,7 +19,7 @@ class DreiSatIE(ZDFBaseIE):
                 'title': 'Gefährlich nah – Wenn Bären töten',
                 'description': 'md5:0949d2e9fdc9756e68c411be9a665bbc',
                 'duration': 5635.0,
-                'thumbnail': 'md5:0f493070bd61cbb9ce9f0555dba92a98',
+                'thumbnail': 'md5:e47ebeef44ec53056dc75acb499be655',
                 'timestamp': 1785348900,
                 'upload_date': '20260729',
                 'episode': 'Gefährlich nah – Wenn Bären töten',

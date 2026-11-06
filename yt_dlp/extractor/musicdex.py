@@ -53,6 +53,7 @@ class MusicdexSongIE(MusicdexBaseIE):
             'release_year': 2020,
         },
         'params': {'skip_download': True},
+        'skip': 'DNS sinkholed to localhost (domain TXT expired)',
     }]
 
     def _real_extract(self, url):
@@ -77,6 +78,7 @@ class MusicdexAlbumIE(MusicdexBaseIE):
             'release_year': 2008,
             'thumbnail': 'https://www.musicdex.org/storage/album/2rSHkyYBYfB7sbvElpEyTMcUn6toY7AohOgJuDlE.jpg',
         },
+        'skip': 'DNS sinkholed to localhost (domain TXT expired)',
     }]
 
     def _real_extract(self, url):
@@ -122,6 +124,7 @@ class MusicdexArtistIE(MusicdexPageIE):
             'title': 'fripSide',
             'thumbnail': 'https://www.musicdex.org/storage/artist/ZmOz0lN2vsweegB660em3xWffCjLPmTQHqJls5Xx.jpg',
         },
+        'skip': 'DNS sinkholed to localhost (domain TXT expired)',
     }]
 
     def _real_extract(self, url):
@@ -155,6 +158,7 @@ class MusicdexPlaylistIE(MusicdexPageIE):
             'thumbnail': 'https://www.musicdex.org/storage/album/jXATI79f0IbQ2sgsKYOYRCW3zRwF3XsfHhzITCuJ.jpg',
             'description': 'Test 123 123 21312 32121321321321312',
         },
+        'skip': 'DNS sinkholed to localhost (domain TXT expired)',
     }]
 
     def _real_extract(self, url):

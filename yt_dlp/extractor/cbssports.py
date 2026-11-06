@@ -143,7 +143,7 @@ class CBSSportsIE(CBSSportsBaseIE):
 class TwentyFourSevenSportsIE(CBSSportsBaseIE):
     _WEB_FALLBACK = True
     IE_NAME = '247sports'
-    _VALID_URL = r'https?://(?:www\.)?247sports\.com/[Vv]ideo/(?:[^/?#&]+-)?(?P<id>\d+)'
+    _VALID_URL = r'https?://(?:www\.)?247sports\.com/[Vv]ideo/(?:(?P<slug>[^/?#&]+)-)?(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://247sports.com/video/2026-oklahoma-position-preview-safeties-14292392/',
         'md5': '4df8bae47803b42466872e5a38bda35e',
@@ -172,8 +172,42 @@ class TwentyFourSevenSportsIE(CBSSportsBaseIE):
         'skip': 'This video is no longer available',
     }]
 
+    def _extract_from_cbs_slug(self, slug, display_id):
+        # 247sports.com HTML is often a Fastly client challenge; CBS Sports still
+        # publishes the same video at /watch/<sport>/video/<slug>.
+        webpage = self._download_webpage(
+            f'https://www.cbssports.com/watch/college-football/video/{slug}',
+            display_id, impersonate=True)
+        video = traverse_obj(
+            self._search_nextjs_data(webpage, display_id, default={}),
+            ('props', 'pageProps', 'videoItem', {dict}))
+        if not video:
+            return None
+        video_id = video['id']
+        formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+            video['url'], video_id, 'mp4', m3u8_id='hls')
+        return {
+            'id': video_id,
+            'display_id': display_id,
+            'formats': formats,
+            'subtitles': subtitles,
+            **traverse_obj(video, {
+                'title': ('title', {str}),
+                'description': ('description', {str}),
+                'thumbnail': ('thumbnail', {url_or_none}),
+                'timestamp': ('publishedOn', {int_or_none}),
+                'duration': ('duration', {int_or_none}),
+            }),
+        }
+
     def _real_extract(self, url):
-        display_id = self._match_id(url)
+        mobj = self._match_valid_url(url)
+        display_id, slug = mobj.group('id'), mobj.group('slug')
+        if slug:
+            info = self._extract_from_cbs_slug(slug, display_id)
+            if info:
+                return info
+
         webpage = self._download_webpage(url, display_id, impersonate=True)
         video = self._search_json(
             r'"main"\s*:\s*\{\s*"video"\s*:', webpage, 'video', display_id, default=None)
