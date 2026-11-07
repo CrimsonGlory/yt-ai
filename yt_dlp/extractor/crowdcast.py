@@ -84,6 +84,7 @@ class CrowdcastIE(CrowdcastBaseIE):
     _TESTS = [
         {
             'url': 'https://www.crowdcast.io/c/bdb-livereveal',
+            'skip': 'gql.crowdcast.io HTTP 520 from this environment',
             'md5': '4e01dc14b1729fb3b2d0a2eaeca00035',
             'info_dict': {
                 'id': '2766203',
@@ -243,6 +244,7 @@ class CrowdcastClipIE(CrowdcastBaseIE):
     _TESTS = [
         {
             'url': 'https://www.crowdcast.io/clips/e1812057-dfdd-416b-81ba-6a16c2d17b31',
+            'skip': 'gql.crowdcast.io HTTP 520 from this environment',
             'md5': '55829c4ff718ba45248e71d03611d5ff',
             'info_dict': {
                 'id': '3286',

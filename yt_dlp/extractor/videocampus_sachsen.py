@@ -241,6 +241,7 @@ class ViMPPlaylistIE(InfoExtractor):
         'playlist_mincount': 6,
     }, {
         'url': 'https://vimp.oth-regensburg.de/album/view/aid/242',
+        'skip': 'vimp.oth-regensburg.de unreachable from this environment (IPv4 timeout, IPv6 ENETUNREACH)',
         'info_dict': {
             'id': 'album-242',
             'title': 'Kompetenzen. Perspektiven. Zukunft. – Der Future-Skills-Podcast der OTH Regensburg - Albums - ViMP OTH Regensburg',

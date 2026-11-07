@@ -431,7 +431,7 @@ class NebulaChannelIE(NebulaBaseIE):
         'info_dict': {
             'id': 'trussissuespodcast',
             'title': 'Starmergeddon',
-            'description': 'md5:e66698f9e99054129c1696d28cc1dc7f',
+            'description': 'md5:2e96c4ef9a093228f71d151d535f3a0b',
         },
         'playlist_mincount': 80,
     }]

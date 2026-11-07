@@ -2578,7 +2578,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **asobichannel:tag**: Read tag title and playlist entries from the microCMS API instead of Next.js page data
     * **asobistage**: Raise an expected error when CloudFront redirects to the ASOBI STORE maintenance page; otherwise parse the original event URL
     * **banbye**: Use `banbye.com/api` video/channel/playlist JSON and HLS `playback.urls` (`api.banbye.com` 404s)
-    * **bandcamp:weekly**: Fall back to the radio page `og:description` when player_data omits `description`
+    * **bandcamp:weekly**: Impersonate `player_data_web` JSON and the `stream_redirect` MP3 (Cloudflare otherwise returns a challenge page); fall back to the radio page `og:description` when player_data omits `description`
     * **beatport**: Next.js `track_name` / `track_length_ms` / release `image_url` fields
     * **beeg**: Sign HLS from `store.externulls.com/video/play_url/{id}` when `hls_resources` is omitted
     * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate video, bangumi, dynamic, and space pages; on 412 fall back to `wbi/view/detail` / `pgc/player/web/v2/playurl`; keep webpage `__playinfo__` when anonymous `wbi/playurl` returns no dash/durl; honor `fatal=False` on `wbi/playurl`; resolve opus/dynamic `bvid` when `jump_url` is missing
@@ -2674,7 +2674,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **kick**: Fall back to VOD `thumbnail.src` when `srcSet` is empty; keep clip `creator` from the clip API
     * **kicker**: RSS media feeds (and optional `www`)
     * **kika**: Restrict playlist `_VALID_URL` so `/videos/` episode URLs stay on **kika**
-    * **kickstarter**: Impersonate the browser to avoid 403s
+    * **kickstarter**: Impersonate the browser and extract native HTML5 `v2.kickstarter.com` sources when `data-video-url` is absent
     * **kinopoisk**: Discovery widget JSON instead of `ott-widget`
     * **ku6**: `video/detail?id=` pages
     * **kukululive**: `live.player.php` `getStreamAddr` API
@@ -2683,6 +2683,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **la7.it:pod:episode**: Raise an expected error when native `limone.iltrovatore.it` MP3s are gone (pages redirect to la7play.it)
     * **laracasts**: Inertia `data-page` JSON
     * **lastfm**: Impersonate playlist pages and retry on HTTP 600
+    * **lbry**: Fall back to `api.na-backend.odysee.com` when `api.lbry.tv` returns an internal SDK getter error
     * **leeco**: Guard missing `playstatus`
     * **lefigaro**: JW Platform on non-embed video URLs
     * **lemonde**: Dailymotion / YouTube / Digiteka provider map

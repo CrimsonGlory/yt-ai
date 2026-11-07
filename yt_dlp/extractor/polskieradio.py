@@ -186,7 +186,8 @@ class PolskieRadioIE(PolskieRadioBaseIE):
     def _real_extract(self, url):
         playlist_id = self._match_id(url)
 
-        webpage = self._download_webpage(url, playlist_id, fatal=False, impersonate=True)
+        webpage = self._download_webpage(
+            url, playlist_id, fatal=False, impersonate=True, errnote=False)
 
         article_data = None
         if webpage:

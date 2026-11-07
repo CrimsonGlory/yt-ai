@@ -20,6 +20,7 @@ class Rule34VideoIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://rule34video.com/video/3065157/shot-it-mmd-hmv/',
+            'skip': 'rule34video.com HTTP 503 from this environment',
             'md5': 'ffccac2c23799dabbd192621ae4d04f3',
             'info_dict': {
                 'id': '3065157',

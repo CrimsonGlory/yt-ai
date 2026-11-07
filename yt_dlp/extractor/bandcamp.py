@@ -470,7 +470,8 @@ class BandcampWeeklyIE(BandcampBaseIE):
             'https://bandcamp.com/api/player/2/player_data_web',
             show_id, 'Downloading radio show JSON',
             data=json.dumps({'item_id': int(show_id), 'item_type': 'radio'}).encode(),
-            headers={'Content-Type': 'application/json'})['tracklist']
+            headers={'Content-Type': 'application/json'},
+            impersonate=True)['tracklist']
         audio_data = show_data['compiledTrack']
 
         stream_url = audio_data['streamUrl']
@@ -497,6 +498,7 @@ class BandcampWeeklyIE(BandcampBaseIE):
             'description': description,
             'duration': float_or_none(audio_data.get('duration')),
             'release_timestamp': release_timestamp,
+            'impersonate': True,
             'formats': [{
                 'url': stream_url,
                 'format_id': format_id,

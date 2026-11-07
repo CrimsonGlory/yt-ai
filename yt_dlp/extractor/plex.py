@@ -32,7 +32,7 @@ class PlexIE(InfoExtractor):
         'info_dict': {
             'id': '5d7768278718ba001e311d5d',
             'ext': 'mp4',
-            'display_id': 'nosferatu',
+            'display_id': 'nosferatu-1922',
             'title': 'Nosferatu',
             'alt_title': 'Nosferatu, eine Symphonie des Grauens',
             'description': 'md5:34eb8b8605b0580ac7e795a5b5ca06c7',

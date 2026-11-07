@@ -28,25 +28,44 @@ class LBRYBaseIE(InfoExtractor):
     _SUPPORTED_STREAM_TYPES = ['video', 'audio']
     _UNSUPPORTED_STREAM_TYPES = ['binary']
     _PAGE_SIZE = 50
+    _API_URLS = (
+        'https://api.lbry.tv/api/v1/proxy',
+        'https://api.na-backend.odysee.com/api/v1/proxy',
+    )
 
     def _call_api_proxy(self, method, display_id, params, resource):
         headers = {'Content-Type': 'application/json-rpc'}
         token = try_get(self._get_cookies('https://odysee.com'), lambda x: x['auth_token'].value)
         if token:
             headers['x-lbry-auth-token'] = token
-        response = self._download_json(
-            'https://api.lbry.tv/api/v1/proxy',
-            display_id, f'Downloading {resource} JSON metadata',
-            headers=headers,
-            data=json.dumps({
-                'method': method,
-                'params': params,
-            }).encode())
-        err = response.get('error')
-        if err:
+        payload = json.dumps({
+            'method': method,
+            'params': params,
+        }).encode()
+        last_err = None
+        for i, api_url in enumerate(self._API_URLS):
+            note = f'Downloading {resource} JSON metadata'
+            if i:
+                note += ' (fallback)'
+            response = self._download_json(
+                api_url, display_id, note, headers=headers, data=payload,
+                fatal=i == len(self._API_URLS) - 1,
+                errnote=False if i < len(self._API_URLS) - 1 else None)
+            if not response:
+                continue
+            err = response.get('error')
+            if not err:
+                return response['result']
+            last_err = err
+            msg = err.get('message') or ''
+            if any(s in msg for s in ('no such host', 'error calling getter', 'dial tcp')):
+                continue
             raise ExtractorError(
-                f'{self.IE_NAME} said: {err.get("code")} - {err.get("message")}', expected=True)
-        return response['result']
+                f'{self.IE_NAME} said: {err.get("code")} - {msg}', expected=True)
+        if last_err:
+            raise ExtractorError(
+                f'{self.IE_NAME} said: {last_err.get("code")} - {last_err.get("message")}', expected=True)
+        raise ExtractorError(f'Unable to download {resource} JSON metadata', expected=True)
 
     def _resolve_url(self, url, display_id, resource):
         return self._call_api_proxy(
