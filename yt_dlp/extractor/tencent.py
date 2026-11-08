@@ -436,7 +436,7 @@ class WeTvEpisodeIE(WeTvBaseIE):
             'title': 'EP1: You Are My Glory',
             'description': 'md5:831363a4c3b4d7615e1f3854be3a123b',
             'duration': 2454,
-            'thumbnail': 'https://vcover-hz-pic.wetvinfo.com/vcover_hz_pic/0/u37kgfnfzs73kiu1730711719014_kr96oK1i/0',
+            'thumbnail': r're:^https?://[^?#]+u37kgfnfzs73kiu',
             'series': 'You Are My Glory',
             'episode': 'Episode 1',
             'episode_number': 1,
