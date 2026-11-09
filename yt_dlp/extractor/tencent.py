@@ -79,20 +79,28 @@ class TencentBaseIE(InfoExtractor):
 
     def _extract_video_formats_and_subtitles(self, api_response, video_id):
         video_response = api_response['vl']['vi'][0]
+        http_headers = {'Referer': f'https://{self._REFERER}/'}
 
         formats, subtitles = [], {}
         for video_format in video_response['ul']['ui']:
-            if video_format.get('hls') or determine_ext(video_format['url']) == 'm3u8':
+            media_url = video_format.get('url') or ''
+            if video_format.get('hls') or determine_ext(media_url) == 'm3u8':
                 fmts, subs = self._extract_m3u8_formats_and_subtitles(
-                    video_format['url'] + traverse_obj(video_format, ('hls', 'pt'), default=''),
-                    video_id, 'mp4', fatal=False)
-
+                    media_url + traverse_obj(video_format, ('hls', 'pt'), default=''),
+                    video_id, 'mp4', fatal=False, errnote=False,
+                    impersonate=True, headers=http_headers)
+                for f in fmts:
+                    f['impersonate'] = True
+                    f['http_headers'] = http_headers
                 formats.extend(fmts)
                 self._merge_subtitles(subs, target=subtitles)
-            else:
+            # video.dispatch.tc.qq.com returns HTTP 418 even with impersonation.
+            elif 'video.dispatch.tc.qq.com' not in media_url:
                 formats.append({
-                    'url': f'{video_format["url"]}{video_response["fn"]}?vkey={video_response["fvkey"]}',
+                    'url': f'{media_url}{video_response["fn"]}?vkey={video_response["fvkey"]}',
                     'ext': 'mp4',
+                    'impersonate': True,
+                    'http_headers': http_headers,
                 })
 
         identifier = video_response.get('br')
@@ -214,71 +222,71 @@ class VQQVideoIE(VQQBaseIE):
         {
             'url': 'https://v.qq.com/x/cover/mzc002003kpyd2m/c4102ul7mn9.html',
             'info_dict': {
-            'id': 'c4102ul7mn9',
-            'ext': 'mp4',
-            'title': '第5期中（下）：柏涵思念星星失声痛哭',
-            'description': str,
-            'thumbnail': 'http://puui.qpic.cn/vpic_cover/c4102ul7mn9/c4102ul7mn9_hz.jpg/160',
-            'series': str,
-        },
+                'id': 'c4102ul7mn9',
+                'ext': 'mp4',
+                'title': '第5期中（下）：柏涵思念星星失声痛哭',
+                'description': str,
+                'thumbnail': 'http://puui.qpic.cn/vpic_cover/c4102ul7mn9/c4102ul7mn9_hz.jpg/160',
+                'series': str,
+            },
             'params': {'skip_download': 'm3u8'},
             'expected_warnings': ['Failed to download m3u8 information'],
-        },{
-        'url': 'https://v.qq.com/x/page/q326831cny0.html',
-        'md5': 'b11c9cb781df710d686b950376676e2a',
-        'info_dict': {
-            'id': 'q326831cny0',
-            'ext': 'mp4',
-            'title': '我是选手：雷霆裂阵，终极时刻',
-            'description': 'md5:e7ed70be89244017dac2a835a10aeb1e',
-            'thumbnail': r're:^https?://[^?#]+q326831cny0',
-            'format_id': r're:^shd',
-            'series': str,
-        },
-    }, {
-        'url': 'https://v.qq.com/x/page/o3013za7cse.html',
-        'md5': 'a1bcf42c6d28c189bd2fe2d468abb287',
-        'info_dict': {
-            'id': 'o3013za7cse',
-            'ext': 'mp4',
-            'title': '欧阳娜娜VLOG',
-            'thumbnail': r're:^https?://[^?#]+o3013za7cse',
-            'format_id': r're:^shd',
-            'description': str,
-            'series': str,
-        },
-    }, {
-        'url': 'https://v.qq.com/x/cover/7ce5noezvafma27/a00269ix3l8.html',
-        'md5': '87968df6238a65d2478f19c25adf850b',
-        'info_dict': {
-            'id': 'a00269ix3l8',
-            'ext': 'mp4',
-            'title': '鸡毛飞上天 第01集',
-            'description': 'md5:8cae3534327315b3872fbef5e51b5c5b',
-            'thumbnail': r're:^https?://[^?#]+7ce5noezvafma27',
-            'series': '鸡毛飞上天',
-            'format_id': r're:^shd',
-        },
-        'skip': '404',
-    }, {
-        'url': 'https://v.qq.com/x/cover/mzc00200p29k31e/s0043cwsgj0.html',
-        'md5': 'fadd10bf88aec3420f06f19ee1d24c5b',
-        'info_dict': {
-            'id': 's0043cwsgj0',
-            'ext': 'mp4',
-            'title': '第1集：如何快乐吃糖？',
-            'description': 'md5:1d8c3a0b8729ae3827fa5b2d3ebd5213',
-            'thumbnail': r're:^https?://[^?#]+s0043cwsgj0',
-            'series': '青年理工工作者生活研究所',
-            'format_id': r're:^shd',
-        },
-        'params': {'skip_download': 'm3u8'},
-        'expected_warnings': ['Failed to download m3u8 information'],
-    }, {
-        # Geo-restricted to China
-        'url': 'https://v.qq.com/x/cover/mcv8hkc8zk8lnov/x0036x5qqsr.html',
-        'only_matching': True,
-    }]
+        }, {
+            'url': 'https://v.qq.com/x/page/q326831cny0.html',
+            'md5': 'b11c9cb781df710d686b950376676e2a',
+            'info_dict': {
+                'id': 'q326831cny0',
+                'ext': 'mp4',
+                'title': '我是选手：雷霆裂阵，终极时刻',
+                'description': 'md5:e7ed70be89244017dac2a835a10aeb1e',
+                'thumbnail': r're:^https?://[^?#]+q326831cny0',
+                'format_id': r're:^shd',
+                'series': str,
+            },
+        }, {
+            'url': 'https://v.qq.com/x/page/o3013za7cse.html',
+            'md5': 'a1bcf42c6d28c189bd2fe2d468abb287',
+            'info_dict': {
+                'id': 'o3013za7cse',
+                'ext': 'mp4',
+                'title': '欧阳娜娜VLOG',
+                'thumbnail': r're:^https?://[^?#]+o3013za7cse',
+                'format_id': r're:^shd',
+                'description': str,
+                'series': str,
+            },
+        }, {
+            'url': 'https://v.qq.com/x/cover/7ce5noezvafma27/a00269ix3l8.html',
+            'md5': '87968df6238a65d2478f19c25adf850b',
+            'info_dict': {
+                'id': 'a00269ix3l8',
+                'ext': 'mp4',
+                'title': '鸡毛飞上天 第01集',
+                'description': 'md5:8cae3534327315b3872fbef5e51b5c5b',
+                'thumbnail': r're:^https?://[^?#]+7ce5noezvafma27',
+                'series': '鸡毛飞上天',
+                'format_id': r're:^shd',
+            },
+            'skip': '404',
+        }, {
+            'url': 'https://v.qq.com/x/cover/mzc00200p29k31e/s0043cwsgj0.html',
+            'md5': 'fadd10bf88aec3420f06f19ee1d24c5b',
+            'info_dict': {
+                'id': 's0043cwsgj0',
+                'ext': 'mp4',
+                'title': '第1集：如何快乐吃糖？',
+                'description': 'md5:1d8c3a0b8729ae3827fa5b2d3ebd5213',
+                'thumbnail': r're:^https?://[^?#]+s0043cwsgj0',
+                'series': '青年理工工作者生活研究所',
+                'format_id': r're:^shd',
+            },
+            'params': {'skip_download': 'm3u8'},
+            'expected_warnings': ['Failed to download m3u8 information'],
+        }, {
+            # Geo-restricted to China
+            'url': 'https://v.qq.com/x/cover/mcv8hkc8zk8lnov/x0036x5qqsr.html',
+            'only_matching': True,
+        }]
 
     def _real_extract(self, url):
         video_id, series_id = self._match_valid_url(url).group('id', 'series_id')

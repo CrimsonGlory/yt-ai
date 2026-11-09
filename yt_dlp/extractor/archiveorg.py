@@ -1112,6 +1112,8 @@ class YoutubeWebArchiveIE(InfoExtractor):
             'format_id': format_id,
             **self._FORMATS.get(format_id, {}),
             'url': f'https://web.archive.org/web/{timestamp}id_/{orig_url}',
+            # urllib gets HTTP 404 on archived googlevideo; curl_cffi succeeds.
+            'impersonate': True,
             **traverse_obj(fmt, {
                 'ext': ('ext', {str}),
                 'filesize': ('url', {parse_qs}, 'clen', 0, {int_or_none}),

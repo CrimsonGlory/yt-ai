@@ -2258,7 +2258,7 @@ class InfoExtractor:
             self, m3u8_url, video_id, ext=None, entry_protocol='m3u8_native',
             preference=None, quality=None, m3u8_id=None, note=None,
             errnote=None, fatal=True, live=False, data=None, headers={},
-            query={}):
+            query={}, impersonate=None):
 
         if self.get_param('ignore_no_formats_error'):
             fatal = False
@@ -2276,7 +2276,8 @@ class InfoExtractor:
             errnote = 'Failed to download m3u8 information'
         response = self._request_webpage(
             m3u8_url, video_id, note=note, errnote=errnote,
-            fatal=fatal, data=data, headers=headers, query=query)
+            fatal=fatal, data=data, headers=headers, query=query,
+            impersonate=impersonate)
         if response is False:
             return [], {}
 

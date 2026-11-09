@@ -18,7 +18,7 @@ class PopsIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?pops\.vn/video/(?:[^/?#]*-)?(?P<id>[0-9a-f]{24})'
     _TESTS = [{
         'url': 'https://pops.vn/video/truc-nhan-hua-kim-tuyen-cham-gan-them-thuong-official-mv-645dee634507cb005fbe2328',
-        'md5': '641c895b3e9a54e0903f5722bab90b78',
+        'md5': '9a60bb011ffa360554a7b0c78f928cf9',
         'info_dict': {
             'id': '-i20u77xp1E',
             'ext': 'mp4',

@@ -2662,6 +2662,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **indavideo**: Referer + JSONP callback on `playerHandler`
     * **iqiyi**: Current IQ/iQIYI playback (bid quality tags and signed play URLs)
     * **islamchannel**: VOD paths and a fallback stream URL
+    * **ivoox**: Impersonate Safari on episode pages, the download-url API, and MP3s (Chrome and urllib get HTTP 502)
     * **ixigua**: Decode play URLs and fetch with a Googlebot UA; retry the watch page once when SSR JSON is missing
     * **jable**: Impersonate the browser
     * **jeuxvideo**: Dailymotion embeds; impersonate Chrome 133, then Chrome, Safari, Firefox on HTTP 403
@@ -2889,7 +2890,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **usatoday**: Extract Gannett CDN HLS from `data-c-vpd` instead of Brightcove
     * **ustream**: Fetch IBM Video Streaming HLS over HTTPS UMS long-poll when `media_urls` is empty
     * **ustudio:embed**: Fetch embed `config.json` over HTTPS and read `image_url` posters
-    * **vqq:video**: Fall back to the union / float_vinfo2 APIs when pinia/OG metadata is gone; empty description/series when cover JSON is missing
+    * **vqq:video**: Fall back to the union / float_vinfo2 APIs when pinia/OG metadata is gone; impersonate progressive CDN URLs with a v.qq.com Referer and skip the `video.dispatch.tc.qq.com` host that returns HTTP 418
     * **videa**: Support player URLs with an `f=` parameter
     * **viddler**: Use the current public `/api/videos/` JSON and Mux HLS instead of the retired v2 playback API
     * **viewsb**: Raise an expected error that viewsb.com is a ParkLogic parking page and StreamSB no longer hosts videos
@@ -2903,10 +2904,10 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **vrtmax**: Query EpisodePage player/JSON-LD GraphQL after the `episode` field was removed
     * **vtm**: Pass the DPG privacy gate and impersonate the browser to extract public mychannels clips
     * **vtv**: Extract HLS from classic `data-vid` and shorts `data-file` CDN paths
-    * **web.archive:youtube**: Pin Wayback captures with `__wb/videoinfo` `timestamp` so `2id_` does not follow expired googlevideo redirects; treat optional CDX lookup failures as non-fatal and silent
+    * **web.archive:youtube**: Pin Wayback captures with `__wb/videoinfo` `timestamp` so `2id_` does not follow expired googlevideo redirects; impersonate archived googlevideo captures (urllib gets HTTP 404); treat optional CDX lookup failures as non-fatal and silent
     * **webcamerapl**: Send a camera-page Referer and fall back to Nimble `chunks.m3u8` when `playlist.m3u8` 404s
     * **weiqitv**: Extract `/v/` Clappr MP4 and `/l/` NetEase live HLS; raise login when `_vu` is withheld
-    * **wetv:episode**: Prefer Next.js `videoInfo.title` over the OG "Watch Free with Eng Sub | WeTV" page title; retry HD `getvinfo` and skip higher-quality responses that return `server err` so HD HLS still downloads
+    * **wetv:episode**: Prefer Next.js `videoInfo.title` over the OG "Watch Free with Eng Sub | WeTV" page title; retry HD `getvinfo` and skip `server err` qualities; impersonate HLS playlists and treat unused-CDN HTTP 418 as non-fatal
     * **wevidi**: Raise an expected error when Cloudflare 302s the entire domain to YouTube; fall back to a YouTube embed when WVPlayer is missing
     * **wimbledon**: Extract current `/video/{slug}` pages via GraphQL and Adobe Scene7 HLS; keep Brightcove for legacy `/video/media/` IDs
     * **WorldStarHipHop**: Extract JSON-LD MP4s from current `/videos/{id}/{slug}` pages

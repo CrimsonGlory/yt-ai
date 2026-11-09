@@ -52,14 +52,17 @@ class IvooxIE(InfoExtractor):
 
     def _real_extract(self, url):
         media_id = self._match_id(url)
-        webpage = self._download_webpage(url, media_id, fatal=False)
+        # Chrome (and urllib) get HTTP 502 on episode pages from some networks.
+        webpage = self._download_webpage(
+            url, media_id, fatal=False, impersonate='safari') or ''
 
         data = self._search_nuxt_data(
             webpage, media_id, fatal=False, traverse=('data', 0, 'data', 'audio'))
 
         direct_download = self._download_json(
             f'https://vcore-web.ivoox.com/v1/public/audios/{media_id}/download-url', media_id, fatal=False,
-            note='Fetching direct download link', headers={'Referer': url})
+            note='Fetching direct download link', headers={'Referer': url},
+            impersonate='safari')
 
         download_paths = {
             *traverse_obj(direct_download, ('data', 'downloadUrl', {str}, filter, all)),
@@ -71,6 +74,7 @@ class IvooxIE(InfoExtractor):
             formats.append({
                 'url': urljoin('https://ivoox.com', path),
                 'http_headers': {'Referer': url},
+                'impersonate': 'safari',
             })
 
         return {
