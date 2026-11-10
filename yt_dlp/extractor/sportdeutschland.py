@@ -96,7 +96,26 @@ class SportDeutschlandIE(InfoExtractor):
         'skip': '404 Not Found',
     }, {
         # Public VOD (former livestream)
+        'url': 'https://sporteurope.tv/deutsche-billard-union/deutsche-billard-meisterschaften-2026-viertelfinale-9-ball-wu22',
+        'info_dict': {
+            'id': 'a32ddcfc-f6db-4a54-a7d8-86173603bc53',
+            'ext': 'mp4',
+            'title': 'Deutsche Billard-Meisterschaften 2026 | Viertelfinale 9-Ball wU22',
+            'display_id': 'deutsche-billard-union/deutsche-billard-meisterschaften-2026-viertelfinale-9-ball-wu22',
+            'channel_id': '936ed04d-b2f6-45f9-b0d9-07dc942b6661',
+            'channel': 'Deutsche Billard-Union e. V.',
+            'channel_url': 'https://sporteurope.tv/deutsche-billard-union',
+            'description': 'md5:c792eef724d49e0e77bfeb53ab2ab5bb',
+            'live_status': 'was_live',
+            'duration': 2529.0,
+            'timestamp': 1794209731,
+            'upload_date': '20261109',
+            'thumbnail': r're:https://img-cdn\.do\.sporteurope\.tv/.+',
+        },
+    }, {
+        # Public VOD (former livestream)
         'url': 'https://sporteurope.tv/dtb/gymnastik-international-tag-1',
+        'skip': 'video gone',
         'md5': 'f99c9f5f1f327c0c750e3e9501f52d4c',
         'info_dict': {
             'id': '986bb51d-a251-45a9-8b85-1f6a6c902a81',

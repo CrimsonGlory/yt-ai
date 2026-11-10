@@ -54,10 +54,17 @@ class IvooxIE(InfoExtractor):
         media_id = self._match_id(url)
         # Chrome (and urllib) get HTTP 502 on episode pages from some networks.
         webpage = self._download_webpage(
-            url, media_id, fatal=False, impersonate='safari') or ''
+            url, media_id, fatal=False, expected_status=(500, 502, 503),
+            impersonate='safari') or ''
 
         data = self._search_nuxt_data(
             webpage, media_id, fatal=False, traverse=('data', 0, 'data', 'audio'))
+
+        audio = self._download_json(
+            f'https://vcore-web.ivoox.com/v1/public/audios/{media_id}', media_id,
+            note='Downloading audio JSON', headers={'Referer': url},
+            impersonate='safari')
+        audio_data = traverse_obj(audio, ('data', {dict})) or {}
 
         direct_download = self._download_json(
             f'https://vcore-web.ivoox.com/v1/public/audios/{media_id}/download-url', media_id, fatal=False,
@@ -66,6 +73,7 @@ class IvooxIE(InfoExtractor):
 
         download_paths = {
             *traverse_obj(direct_download, ('data', 'downloadUrl', {str}, filter, all)),
+            *traverse_obj(audio_data, (('downloadUrl', 'mediaUrl'), {str}, filter)),
             *traverse_obj(data, (('downloadUrl', 'mediaUrl'), {str}, filter)),
         }
 
@@ -94,6 +102,17 @@ class IvooxIE(InfoExtractor):
                 'thumbnail': ('image', {url_or_none}),
                 'timestamp': ('uploadDate', {parse_iso8601(delimiter=' ')}),
                 'duration': ('duration', {int_or_none}),
+                'tags': ('tags', ..., 'name', {str}),
+            }),
+            **traverse_obj(audio_data, {
+                'title': ('title', {str}),
+                'episode': ('title', {str}),
+                'description': ('description', {str}),
+                'thumbnail': ('image', {url_or_none}),
+                'timestamp': ('uploadDate', {parse_iso8601(delimiter=' ')}),
+                'duration': ('duration', {int_or_none}),
+                'uploader': ('user', 'name', {str}),
+                'channel': ('program', 'name', {str}),
                 'tags': ('tags', ..., 'name', {str}),
             }),
         }

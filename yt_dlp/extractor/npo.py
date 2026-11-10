@@ -118,6 +118,7 @@ class NPOIE(InfoExtractor):
         'params': {
             'skip_download': True,
         },
+        'expected_warnings': ['Failed to download ISM manifest'],
     }, {
         'url': 'http://www.omroepwnl.nl/video/fragment/vandaag-de-dag-verkiezingen__POMS_WNL_853698',
         'info_dict': {

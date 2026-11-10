@@ -27,7 +27,7 @@ class XiaoHeiMiIE(InfoExtractor):
             'id': '42755-1-1',
             'ext': 'mp4',
             'title': '炽道 第01集',
-            'description': 'md5:7c1792b1dec9183e9bd9896eee538632',
+            'description': 'md5:7af4f1610efb5ab476b722455b40ca83',
             'series': '炽道',
             'series_id': '42755',
             'episode': '第01集',

@@ -2662,7 +2662,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **indavideo**: Referer + JSONP callback on `playerHandler`
     * **iqiyi**: Current IQ/iQIYI playback (bid quality tags and signed play URLs)
     * **islamchannel**: VOD paths and a fallback stream URL
-    * **ivoox**: Impersonate Safari on episode pages, the download-url API, and MP3s (Chrome and urllib get HTTP 502)
+    * **ivoox**: Use the public vcore-web audio JSON for metadata and MP3 URLs; impersonate Safari on episode pages and API requests
     * **ixigua**: Decode play URLs and fetch with a Googlebot UA; retry the watch page once when SSR JSON is missing
     * **jable**: Impersonate the browser
     * **jeuxvideo**: Dailymotion embeds; impersonate Chrome 133, then Chrome, Safari, Firefox on HTTP 403

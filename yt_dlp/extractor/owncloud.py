@@ -24,6 +24,7 @@ class OwnCloudIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://uni-bonn.sciebo.de/s/6WRsKd2itCDyIAw?path=/AdditionalVideos&files=LeafletMapTradeFlows.mkv',
+            'skip': 'video gone',
             'md5': 'b27565ffc81f932cf36619207cad6d0d',
             'info_dict': {
                 'id': '6WRsKd2itCDyIAw',

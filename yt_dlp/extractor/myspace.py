@@ -20,6 +20,7 @@ class MySpaceIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://myspace.com/fiveminutestothestage/video/little-big-town/109594919',
+        'skip': 'Site timed out then returned HTTP 502',
         'md5': '9c1483c106f4a695c47d2911feed50a7',
         'info_dict': {
             'id': '109594919',
