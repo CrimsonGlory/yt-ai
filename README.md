@@ -2301,7 +2301,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **AsianPinay** (`asianpinay.cc`): XtremeStream player `xs1.php` HLS from the iframe embed, with Magixz CDN MP4 fallback. Request: [yt-dlp/yt-dlp#7132](https://github.com/yt-dlp/yt-dlp/issues/7132)
     * **AstalaVR** (`astalavr.com`): Impersonate Cloudflare and extract Delight VR (`dl8-video`) tokened MP4 sources. Request: [yt-dlp/yt-dlp#13332](https://github.com/yt-dlp/yt-dlp/issues/13332)
     * **ATPTour** (`atptour.com`): Impersonate Cloudflare, then Brightcove IDs from `/videos/getcurrentrelatedvideos` and news-page `video-js`/iframe embeds. Request: [yt-dlp/yt-dlp#10816](https://github.com/yt-dlp/yt-dlp/issues/10816)
-    * **Avjb** (`avjb.com`): Player CSRF `/player/spped.php` HLS lines, with Playerjs preview MP4 fallback. Request: [yt-dlp/yt-dlp#14653](https://github.com/yt-dlp/yt-dlp/issues/14653)
+    * **Avjb** (`avjb.com`): Player CSRF `/player/spped.php` HLS lines, with Playerjs preview MP4 fallback; duration/timestamp/like_count from Open Graph and JSON-LD fields when VideoObject JSON-LD is malformed. Request: [yt-dlp/yt-dlp#14653](https://github.com/yt-dlp/yt-dlp/issues/14653)
     * **AzNude** (`aznude.com`): JWPlayer `playerInstance.setup` HLS/MP4 from `/azncdn/` and `/embed/` pages; celeb/movie listings as playlists. Request: [yt-dlp/yt-dlp#12060](https://github.com/yt-dlp/yt-dlp/issues/12060)
     * **B9Good** (`b9good.org`): JWPlayer `/embed/` iframe (yundevo.guru); signed `/ajax/getSources` AES-GCM HLS. Request: [yt-dlp/yt-dlp#9245](https://github.com/yt-dlp/yt-dlp/issues/9245)
     * **BaiduBaike** (`baike.baidu.com`): Impersonate Baidu WAF, then 秒懂 `/api/wikisecond/lemmasecond` and `/api/second/video` MP4/HLS; treat a blocked item page as non-fatal and resolve slug-only URLs via `BaikeLemmaCardApi`. Request: [yt-dlp/yt-dlp#7467](https://github.com/yt-dlp/yt-dlp/issues/7467)
@@ -2594,6 +2594,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **cloudflarestream**: Also match Video.js `<cloudflare-video src>` embeds
     * **crowdbunker**: Read post and channel JSON from `api.crowdbunker.com` (`api.divulg.org` returns 403)
     * **cspan**: Fall back to JSON-LD / m3u8 when player JS is blocked
+    * **cspan:congress**: Raise an expected error when AWS WAF challenge.js blocks the congress player page
     * **cu.ntv.co.jp**: Raise geo-restriction when CloudFront / Streaks block playback outside Japan
     * **cybrary**: Call the catalog API without requiring a login token
     * **dailywire**: Use the GraphQL API instead of Next.js page data
@@ -2683,7 +2684,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **la7.it**: Parse Next.js `cf_remote_url` progressive MP4s on `awsvodpkg.iltrovatore.it` (HLS master path is gone)
     * **la7.it:pod:episode**: Raise an expected error when native `limone.iltrovatore.it` MP3s are gone (pages redirect to la7play.it)
     * **laracasts**: Inertia `data-page` JSON
-    * **lastfm**: Impersonate playlist pages and retry on HTTP 600
+    * **lastfm**: Impersonate playlist pages as Safari (Chrome impersonation returns HTTP 600) and retry on HTTP 600
     * **lbry**: Fall back to `api.na-backend.odysee.com` when `api.lbry.tv` returns an internal SDK getter error
     * **leeco**: Guard missing `playstatus`
     * **lefigaro**: JW Platform on non-embed video URLs
@@ -2884,6 +2885,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **tweakers**: Follow YouTube embeds from `YouTubePlayer.init` (impersonate, DPG privacy gate)
     * **twitcasting**: Treat `data-status="live"` as live
     * **twitter:amplify**: Extract current `video.twimg.com` Amplify VMAP instead of the decommissioned `amp.twimg.com` player
+    * **txxx**: Impersonate the videofile API and media CDN (urllib is closed without a response)
     * **unistra**: Extract HTML5 `vod-stream.di.unistra.fr` MP4s instead of the dead Flash `vod-flash.u-strasbg.fr` host
     * **unity**: Follow YouTube embeds on current Unity Learn tutorial pages (including `learn.unity.com`)
     * **urort**: Extract S3 `data-trackurl` from current `/track/` pages

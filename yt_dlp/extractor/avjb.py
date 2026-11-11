@@ -7,7 +7,9 @@ from ..utils import (
     int_or_none,
     merge_dicts,
     orderedSet,
+    parse_duration,
     unified_strdate,
+    unified_timestamp,
     url_or_none,
     urljoin,
 )
@@ -123,8 +125,16 @@ class AvjbIE(InfoExtractor):
                 or self._og_search_title(webpage, default=None)),
             'description': self._og_search_description(webpage, default=None),
             'thumbnail': self._og_search_thumbnail(webpage, default=None),
-            'duration': int_or_none(self._html_search_meta(
-                'duration', webpage, default=None)),
+            # VideoObject JSON-LD is often missing a comma before "url"
+            'duration': (
+                int_or_none(self._html_search_meta(
+                    ('video:duration', 'duration'), webpage, default=None))
+                or parse_duration(self._search_regex(
+                    r'"duration"\s*:\s*"(PT[^"]+)"', webpage, 'duration', default=None))),
+            'timestamp': unified_timestamp(
+                self._search_regex(
+                    r'"uploadDate"\s*:\s*"([^"]+)"', webpage, 'timestamp', default=None)
+                or self._html_search_meta('ya:ovs:upload_date', webpage, default=None)),
             'upload_date': unified_strdate(self._og_search_property(
                 'video:release_date', webpage, default=None)),
             'uploader': self._html_search_regex(
@@ -134,6 +144,9 @@ class AvjbIE(InfoExtractor):
                 r'/members/(\d+)/', webpage, 'uploader id', default=None),
             'view_count': int_or_none(self._search_regex(
                 r'views_total"\s+content="(\d+)"', webpage, 'view count', default=None)),
+            'like_count': int_or_none(self._search_regex(
+                r'"interactionType"\s*:\s*\{"@type"\s*:\s*"LikeAction"\}\s*,\s*"userInteractionCount"\s*:\s*"(\d+)"',
+                webpage, 'like count', default=None)),
             'tags': orderedSet(re.findall(r'/tags/([^/?#]+)/', webpage)) or None,
             'age_limit': 18,
             'formats': formats,

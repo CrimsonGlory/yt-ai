@@ -10,16 +10,18 @@ class LastFMPlaylistBaseIE(InfoExtractor):
     def _entries(self, url, playlist_id):
         single_page = traverse_obj(parse_qs(url), ('page', -1, {int_or_none}))
         for page in itertools.count(single_page or 1):
-            try:
-                webpage = self._download_webpage(
-                    url, playlist_id, f'Downloading page {page}', query={'page': page},
-                    impersonate=True)
-            except ExtractorError as e:
-                if not (isinstance(e.cause, HTTPError) and e.cause.status in (500, 502, 503, 600)):
-                    raise
-                webpage = self._download_webpage(
-                    url, playlist_id, f'Retrying page {page}', query={'page': page},
-                    impersonate=True)
+            webpage = None
+            for attempt in range(3):
+                try:
+                    webpage = self._download_webpage(
+                        url, playlist_id,
+                        f'Downloading page {page}' if attempt == 0 else f'Retrying page {page}',
+                        query={'page': page}, impersonate='safari')
+                    break
+                except ExtractorError as e:
+                    if attempt == 2 or not (
+                            isinstance(e.cause, HTTPError) and e.cause.status in (500, 502, 503, 600)):
+                        raise
             videos = re.findall(r'data-youtube-url="([^"]+)"', webpage)
             yield from videos
             if single_page or not videos:

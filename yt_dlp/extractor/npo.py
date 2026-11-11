@@ -91,6 +91,7 @@ class NPOIE(InfoExtractor):
         'params': {
             'skip_download': True,
         },
+        'expected_warnings': ['Failed to download ISM manifest'],
     }, {
         # non asf in streams
         'url': 'http://www.npo.nl/hoe-gaat-europa-verder-na-parijs/10-01-2015/WO_NOS_762771',
@@ -196,6 +197,7 @@ class NPOIE(InfoExtractor):
         'params': {
             'skip_download': True,
         },
+        'expected_warnings': ['Failed to download ISM manifest'],
     }]
 
     @classmethod

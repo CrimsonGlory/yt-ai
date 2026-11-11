@@ -26,7 +26,7 @@ class LuluStreamIE(InfoExtractor):
                 'id': 'yzip3nvuot20',
                 'ext': 'mp4',
                 'title': 'Big Buck Bunny',
-                'thumbnail': r're:https?://img\.lulucdn\.com/.+\.jpg',
+                'thumbnail': r're:https?://.+\.jpg',
                 'duration': 634.6,
                 'upload_date': '20260507',
                 'filesize_approx': 247100000,

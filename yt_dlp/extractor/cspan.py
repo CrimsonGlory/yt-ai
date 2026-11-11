@@ -309,6 +309,7 @@ class CSpanCongressIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?c-span\.org/congress/'
     _TESTS = [{
         'url': 'https://www.c-span.org/congress/?chamber=house&date=2017-12-13&t=1513208380',
+        'skip': 'AWS WAF challenge blocks automated access',
         'info_dict': {
             'id': 'house_2017-12-13',
             'ext': 'mp4',
@@ -327,6 +328,8 @@ class CSpanCongressIE(InfoExtractor):
         video_date = query.get('date', [None])[0]
         video_id = join_nonempty(query.get('chamber', ['senate'])[0], video_date, delim='_')
         webpage = self._download_webpage(url, video_id)
+        if re.search(r'awsWafCookieDomainList|token\.awswaf\.com/.+/challenge\.js', webpage):
+            raise ExtractorError('AWS WAF challenge blocks automated access', expected=True)
         if not video_date:
             jwp_date = re.search(r'jwsetup.clipprogdate = \'(?P<date>\d{4}-\d{2}-\d{2})\';', webpage)
             if jwp_date:

@@ -45,7 +45,23 @@ class CamFMShowIE(InfoExtractor):
 class CamFMEpisodeIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?camfm\.co\.uk/player/(?P<id>[^/]+)'
     _TESTS = [{
+        'url': 'https://camfm.co.uk/player/53361',
+        'md5': '3be6344f87f26277e8dc6e8a6d0d67cd',
+        'info_dict': {
+            'id': '53361',
+            'title': 'The Zander Hour - 09:00 Wed 04/11/2026',
+            'ext': 'mp3',
+            'upload_date': '20261104',
+            'description': 'The Zander Hour',
+            'timestamp': 1793782800,
+            'series': 'The Zander Hour',
+            'thumbnail': 'https://camfm.co.uk/media/images/default_thumb.png',
+            'categories': ['Arts'],
+            'was_live': True,
+        },
+    }, {
         'url': 'https://camfm.co.uk/player/52755',
+        'skip': 'video gone',
         'md5': '6e75be7f1dddaef51b376c92748c7b77',
         'info_dict': {
             'id': '52755',

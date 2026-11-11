@@ -42,6 +42,7 @@ def get_formats(host, video_file):
         'url': urljoin(f'https://{host}', decode_base64(video['video_url'])),
         'format_id': try_call(lambda: variadic(video['format'])[0].lstrip('_')),
         'quality': index,
+        'impersonate': True,
     } for index, video in enumerate(video_file) if video.get('video_url')]
 
 
@@ -344,6 +345,7 @@ class TxxxIE(InfoExtractor):
     }]
 
     def _call_api(self, url, video_id, fatal=False, **kwargs):
+        kwargs.setdefault('impersonate', True)
         content = self._download_json(url, video_id, fatal=fatal, **kwargs)
         if traverse_obj(content, 'error'):
             raise self._error_or_warning(ExtractorError(

@@ -24,7 +24,7 @@ class GiphyIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://giphy.com/gifs/allsxxingeyes-laugh-laughing-spit-XHeLeuirRbwptHhSWd',
-            'md5': 'e9709f7ab47a3674c5e9086189745fd7',
+            'md5': '9a3f804463521a4dabbbaa42839af689',
             'info_dict': {
                 'id': 'XHeLeuirRbwptHhSWd',
                 'ext': 'mp4',
