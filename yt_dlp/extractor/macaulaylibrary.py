@@ -104,7 +104,7 @@ class MacaulayLibraryIE(InfoExtractor):
                 r'<script[^>]+id=["\']anubis_challenge["\'][^>]*>',
                 webpage, 'anubis challenge', asset_id, default=None):
             raise ExtractorError('Anubis challenge was not accepted', expected=True)
-        if 'window.__NUXT__' not in webpage:
+        if 'id="__NUXT_DATA__"' not in webpage and 'window.__NUXT__' not in webpage:
             webpage = self._download_webpage(
                 url, asset_id, 'Downloading webpage after Anubis')
         return webpage
@@ -117,18 +117,29 @@ class MacaulayLibraryIE(InfoExtractor):
         asset_id = self._match_id(url)
         webpage = self._download_macaulay_webpage(url, asset_id)
 
-        media_type = self._search_regex(
+        asset = traverse_obj(
+            self._search_nuxt_json(webpage, asset_id, fatal=False),
+            ('data', f'specimen-{asset_id}', 'asset', {dict})) or {}
+        taxonomy = traverse_obj(asset, ('taxonomy', {dict})) or {}
+        location = traverse_obj(asset, ('location', {dict})) or {}
+
+        media_type = asset.get('mediaType') or self._search_regex(
             r'\bmediaType:"([avp])"', webpage, 'media type', default=None)
-        if media_type == 'p':
+        mime_type = asset.get('mimeType') or ''
+        if media_type == 'p' or mime_type.startswith('image/'):
             self.raise_no_formats('This Macaulay Library asset is a photo', expected=True)
 
+        is_video = media_type == 'v' or mime_type.startswith('video/')
         formats = []
-        thumbnail = self._og_search_thumbnail(webpage, default=None)
+        thumbnail = (
+            f'{self._CDN_BASE}{asset_id}/1200'
+            if is_video else self._og_search_thumbnail(webpage, default=None))
         video_attrs = extract_attributes(self._search_regex(
             r'(<video[^>]+>)', webpage, 'video tag', default='') or '')
         video_url = video_attrs.get('src')
-        if not video_url and media_type == 'v':
-            video_url = f'{self._CDN_BASE}{asset_id}/mp4/1280'
+        if not video_url and is_video:
+            height = int_or_none(asset.get('height')) or 1280
+            video_url = f'{self._CDN_BASE}{asset_id}/mp4/{height}'
         if video_url:
             height = int_or_none(self._search_regex(
                 r'/mp4/(\d+)', video_url, 'height', default=None))
@@ -139,7 +150,7 @@ class MacaulayLibraryIE(InfoExtractor):
                 'height': height,
             })
             thumbnail = video_attrs.get('poster') or thumbnail
-        elif media_type != 'v':
+        elif not is_video:
             formats.append({
                 'url': f'{self._CDN_BASE}{asset_id}/mp3',
                 'ext': 'mp3',
@@ -150,28 +161,28 @@ class MacaulayLibraryIE(InfoExtractor):
         if not formats:
             self.raise_no_formats('No video or audio URL found', expected=True)
 
-        tags = re.findall(
+        tags = asset.get('tags') or re.findall(
             r'"([^"]+)"',
             self._search_regex(r'\btags:\[([^\]]*)\]', webpage, 'tags', default='') or '')
 
         return {
             'id': asset_id,
             'title': self._og_search_title(webpage),
-            'alt_title': self._search_asset_str(webpage, 'sciName'),
+            'alt_title': taxonomy.get('sciName') or self._search_asset_str(webpage, 'sciName'),
             'description': self._og_search_description(webpage, default=None),
             'thumbnail': thumbnail,
-            'uploader': self._search_asset_str(webpage, 'userDisplayName'),
-            'uploader_id': self._search_asset_str(webpage, 'userId', r'USER\d+'),
+            'uploader': asset.get('userDisplayName') or self._search_asset_str(webpage, 'userDisplayName'),
+            'uploader_id': asset.get('userId') or self._search_asset_str(webpage, 'userId', r'USER\d+'),
             'location': join_nonempty(
-                self._search_asset_str(webpage, 'locality'),
-                self._search_asset_str(webpage, 'subnational1Name'),
-                self._search_asset_str(webpage, 'countryName'),
+                location.get('locality') or self._search_asset_str(webpage, 'locality'),
+                location.get('subnational1Name') or self._search_asset_str(webpage, 'subnational1Name'),
+                location.get('countryName') or self._search_asset_str(webpage, 'countryName'),
                 delim=', ') or None,
-            'timestamp': parse_iso8601(self._search_regex(
+            'timestamp': parse_iso8601(asset.get('createDt') or self._search_regex(
                 r'assetState:[^,]*,mediaType:"[avp]".*?createDt:"([^"]+)"',
                 webpage, 'upload date', default=None, flags=re.S)),
-            'release_date': unified_strdate(self._search_asset_str(
-                webpage, 'obsDt', r'\d{4}-\d{2}-\d{2}[^"]*')),
+            'release_date': unified_strdate(
+                asset.get('obsDt') or self._search_asset_str(webpage, 'obsDt', r'\d{4}-\d{2}-\d{2}[^"]*')),
             'tags': tags or None,
             'formats': formats,
         }

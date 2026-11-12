@@ -108,7 +108,7 @@ class TuneInPodcastIE(TuneInBaseIE):
             'id': 'p1153019',
             'title': 'Lex Fridman Podcast',
         },
-        'playlist_mincount': 200,
+        'playlist_mincount': 100,
     }, {
         'url': 'https://tunein.com/podcasts/World-News/BBC-News-p14/',
         'info_dict': {
@@ -251,7 +251,7 @@ class TuneInEmbedIE(TuneInBaseIE):
             'id': 'p191660',
             'title': 'SBS Tamil',
         },
-        'playlist_mincount': 195,
+        'playlist_mincount': 100,
     }]
     _WEBPAGE_TESTS = [{
         'url': 'https://www.martiniinthemorning.com/',

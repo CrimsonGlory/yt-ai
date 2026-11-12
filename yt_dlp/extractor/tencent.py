@@ -373,9 +373,12 @@ class WeTvBaseIE(TencentBaseIE):
     _REFERER = 'wetv.vip'
 
     def _get_webpage_metadata(self, webpage, video_id):
-        return self._parse_json(
-            traverse_obj(self._search_nextjs_data(webpage, video_id), ('props', 'pageProps', 'data')),
-            video_id, fatal=False)
+        data = traverse_obj(
+            self._search_nextjs_data(webpage, video_id, default={}),
+            ('props', 'pageProps', 'data'))
+        if isinstance(data, str):
+            data = self._parse_json(data, video_id, fatal=False)
+        return data if isinstance(data, dict) else {}
 
     def _extract_episode(self, url):
         video_id, series_id = self._match_valid_url(url).group('id', 'series_id')
@@ -404,8 +407,11 @@ class WeTvBaseIE(TencentBaseIE):
         webpage = self._download_webpage(url, series_id)
         webpage_metadata = self._get_webpage_metadata(webpage, series_id)
 
-        episode_paths = ([f'/play/{series_id}/{episode["vid"]}' for episode in webpage_metadata.get('videoList')]
-                         or re.findall(r'<a[^>]+class="play-video__link"[^>]+href="(?P<path>[^"]+)', webpage))
+        episode_paths = (
+            [f'/play/{series_id}/{episode["vid"]}'
+             for episode in webpage_metadata.get('videoList') or [] if episode.get('vid')]
+            or [f'/play/{series_id}/{vid}' for vid in webpage_metadata.get('videoIdList') or []]
+            or re.findall(r'<a[^>]+class="play-video__link"[^>]+href="(?P<path>[^"]+)', webpage))
 
         return self.playlist_from_matches(
             episode_paths, series_id, ie=ie, getter=urljoin(url),

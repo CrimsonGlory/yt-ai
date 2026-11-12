@@ -3,9 +3,10 @@ import re
 from .common import InfoExtractor
 from ..utils import (
     ExtractorError,
+    determine_ext,
+    orderedSet,
     parse_duration,
     unified_strdate,
-    url_or_none,
     urljoin,
 )
 
@@ -15,7 +16,24 @@ class ShowcamripsIE(InfoExtractor):
     IE_DESC = 'showcamrips.com'
     _VALID_URL = r'https?://(?:www\.)?showcamrips\.com/show-cam-sex-movies/(?P<id>\d+)(?:-[^/?#]+)?(?:\.html)?'
     _TESTS = [{
+        'url': 'https://www.showcamrips.com/show-cam-sex-movies/2235904-rooxxyy-chaturbate-webcam-rip-20261112-040533.html',
+        'md5': '7d2a8dfc5af406aae13672d2b3620edc',
+        'info_dict': {
+            'id': '2235904',
+            'ext': 'mp4',
+            'title': 'Rooxxyy_ Couple Chaturbate: Webcam Show web cam Showcamrips 2026.11.12 -> 00:35:36',
+            'thumbnail': 'https://www.showpicmoi.com/img/2235904.jpg',
+            'uploader': 'rooxxyy_',
+            'uploader_url': 'https://www.showcamrips.com/model/en/rooxxyy_/',
+            'upload_date': '20261112',
+            'duration': 2136,
+            'age_limit': 18,
+            'categories': ['Couple'],
+            'tags': ['Chaturbate'],
+        },
+    }, {
         'url': 'https://www.showcamrips.com/show-cam-sex-movies/633200-leilatinytraveler-stripchat-webcam-rip-20240327-090824.html',
+        'skip': 'video gone',
         'md5': '674ec03168fdff98f1255128e4d81764',
         'info_dict': {
             'id': '633200',
@@ -50,11 +68,16 @@ class ShowcamripsIE(InfoExtractor):
         formats = []
         for entry in self._parse_html5_media_entries(url, player, video_id) or []:
             formats.extend(entry.get('formats') or [])
-        if not formats:
-            video_url = url_or_none(self._search_regex(
-                r'<video[^>]+\bsrc=["\']([^"\']+)', player, 'video url', default=None))
-            if video_url:
-                formats.append({'url': video_url, 'ext': 'mp4'})
+        for video_url in orderedSet(re.findall(
+                r'''(?x)(?:video\.src\s*=\s*|<video[^>]+\bsrc=)["'](https?://[^"']+)''', player)):
+            ext = determine_ext(video_url, default_ext='')
+            if ext in ('php', 'js', 'html', 'mp6') or 'ads-click' in video_url or 'livecamstreamrip.com' in video_url:
+                continue
+            formats.append({
+                'url': video_url,
+                'ext': ext if ext in ('mp4', 'webm', 'm3u8') else 'mp4',
+                'quality': 1 if ext == 'mp4' else -2,
+            })
         if not formats:
             raise ExtractorError('No video source found', expected=True)
         for f in formats:

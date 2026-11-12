@@ -151,11 +151,14 @@ class XimalayaIE(XimalayaBaseIE):
             fmt['abr'] = try_call(lambda: fmt['filesize'] * 8 / fmt['duration'] / 1024)
             formats.append(fmt)
 
+        http_headers = {'Referer': f'{scheme}://www.ximalaya.com/'}
         formats.extend([{
             'format_id': f'{bps}k',
             'url': audio_info[k],
             'abr': bps,
             'vcodec': 'none',
+            'http_headers': http_headers,
+            'impersonate': True,
         } for bps, k in ((24, 'play_path_32'), (64, 'play_path_64')) if audio_info.get(k)])
 
         thumbnails = []

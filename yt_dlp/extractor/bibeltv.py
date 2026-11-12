@@ -117,6 +117,7 @@ class BibelTVVideoIE(BibelTVBaseIE):
 
     _TESTS = [{
         'url': 'https://www.bibeltv.de/mediathek/videos/344436-alte-wege',
+        'skip': 'video API HTTP 500 and Next-Action 400 outside AT/CH/DE',
         'md5': '6e64b14b7d31b469068fbde05bb65828',
         'info_dict': {
             'id': '344436',

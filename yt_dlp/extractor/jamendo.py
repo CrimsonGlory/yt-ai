@@ -76,16 +76,17 @@ class JamendoIE(InfoExtractor):
         artist = self._call_api('artist', track.get('artistId'), fatal=False)
         album = self._call_api('album', track.get('albumId'), fatal=False)
 
+        # Legacy hosts (mp3l/mp3d/ogg/flac.jamendo.com) present expired TLS certs.
         formats = [{
-            'url': f'https://{sub_domain}.jamendo.com/?trackid={track_id}&format={format_id}&from=app-97dab294',
+            'url': f'https://prod-1.storage.jamendo.com/?trackid={track_id}&format={format_id}&from=app-97dab294',
             'format_id': format_id,
             'ext': ext,
             'quality': quality,
-        } for quality, (format_id, sub_domain, ext) in enumerate((
-            ('mp31', 'mp3l', 'mp3'),
-            ('mp32', 'mp3d', 'mp3'),
-            ('ogg1', 'ogg', 'ogg'),
-            ('flac', 'flac', 'flac'),
+        } for quality, (format_id, ext) in enumerate((
+            ('mp31', 'mp3'),
+            ('mp32', 'mp3'),
+            ('ogg1', 'ogg'),
+            ('flac', 'flac'),
         ))]
 
         urls = []

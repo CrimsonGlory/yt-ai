@@ -12,6 +12,10 @@ from ..utils import (
 
 
 class IFunnyBaseIE(InfoExtractor):
+    def _prepare_ifunny(self):
+        # Anonymous HTML is a cookie gate; the site sets sound=off then reloads.
+        self._set_cookie('ifunny.co', 'sound', 'off')
+
     def _call_api(self, path, video_id, **kwargs):
         csrf = try_call(lambda: self._get_cookies('https://ifunny.co/')['x-csrf-token'].value)
         headers = {
@@ -60,6 +64,7 @@ class IFunnyIE(IFunnyBaseIE):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
+        self._prepare_ifunny()
         webpage = self._download_webpage(url, video_id)
 
         video_url = url_or_none(self._og_search_video_url(webpage, default=None))
@@ -187,4 +192,5 @@ class IFunnyUserIE(IFunnyBaseIE):
 
     def _real_extract(self, url):
         user_id, start_token = self._match_valid_url(url).group('id', 'next')
+        self._prepare_ifunny()
         return self.playlist_result(self._entries(user_id, start_token), user_id, user_id)

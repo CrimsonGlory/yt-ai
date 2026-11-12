@@ -58,7 +58,10 @@ class NPOIE(InfoExtractor):
     }, {
         'url': 'https://npo.nl/start/afspelen/zwart-geld-de-toekomst-komt-uit-afrika',
         'md5': 'f8154960f8a7a135b8b8b7f9a8d13ce9',
-        'expected_warnings': ['Failed to download MPD manifest'],
+        'expected_warnings': [
+            'Failed to download MPD manifest',
+            'Failed to download ISM manifest',
+        ],
         'info_dict': {
             'id': 'VPWON_1169289',
             'ext': 'mp4',

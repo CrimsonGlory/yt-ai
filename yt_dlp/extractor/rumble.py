@@ -257,7 +257,6 @@ class RumbleEmbedIE(InfoExtractor):
             'duration': duration,
             'uploader': author.get('name'),
             'live_status': live_status,
-            'impersonate': True,
         }
 
 
