@@ -2567,6 +2567,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **youku:tv** (`youku.tv`): Impersonate Chrome, then mtop UPS `appinfo.get` (ccode 0597) HLS. Request: [yt-dlp/yt-dlp#8058](https://github.com/yt-dlp/yt-dlp/issues/8058)
 
 * **Extractor fixes** (verified on live sites where possible):
+    * **1tv**: Read the Next.js App Router item uid and `video_materials.json?video_id=` when `data-playlist-url` is absent
     * **20min**: Extract videos from the Unity API instead of the old podcast URLs
     * **247sports**: Fall back to the CBS Sports watch page by video slug when 247sports.com serves a Fastly client challenge
     * **abcnews**: Read the current `story.story` JSON instead of everscroll
@@ -2575,6 +2576,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **americastestkitchen**: Read episode-level description, publishDate, and siteKey when nested `video` metadata is empty
     * **amazon**: Product-gallery `jQuery.parseJSON` videos; extract VSE HLS as MP4 formats from `/vdp/` and `/live/video/`; impersonate Chrome on VDP/live video pages and when the storefront serves a captcha interstitial
     * **angel**: Read Next.js App Router flight data (`contentEpisode.url`) when `__NEXT_DATA__` is absent
+    * **apple:music:connect** / **apple:podcasts**: Match mixed-case Vite `/assets/index~*.js` hashes when minting the AMP JWT
     * **asobichannel:tag**: Read tag title and playlist entries from the microCMS API instead of Next.js page data
     * **asobistage**: Raise an expected error when CloudFront redirects to the ASOBI STORE maintenance page; otherwise parse the original event URL
     * **banbye**: Use `banbye.com/api` video/channel/playlist JSON and HLS `playback.urls` (`api.banbye.com` 404s)
@@ -2709,7 +2711,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **medaltv**: Public `/api/content/{id}` JSON for progressive MP4 and `socialMediaVideo`; HLS is optional (non-fatal)
     * **mediasite**: Prefer GetPlayerOptions HLS over Deliver progressive MP4; retry without TLS verification when the host certificate cannot be verified, and keep progressive MP4 when HLS cannot be fetched
     * **mediastream**: Scan page JSON for mdstrm.com embed and live-stream URLs, not only iframe/JSON-LD
-    * **mellowfan**: Fall back to the public movies API and `url_public` HLS when the authenticated detail API requires login
+    * **mellowfan**: Fall back to the public movies API and `url_public` HLS when the authenticated detail API requires login; read public playlists from `/playlists/{id}` instead of the login-only `users/me` API
     * **meipai**: Signed media API instead of `encodeURIComponent` m3u8 on the page
     * **metacritic**: JW Platform on movie/game/tv pages
     * **microsoft:build**: Read on-demand Medius URLs from `build.microsoft.com/api/session/all` (`api-v2.build.microsoft.com` returns 403)
@@ -2931,7 +2933,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **youjizz**: Read duration and uploader from current Runtime/Submitted By HTML
     * **youporn**: Upload date is optional
     * **youku**: Request UPS metadata with web client `ccode` `0591`
-    * **youtube:tab**: Treat lockup `LOCKUP_CONTENT_TYPE_SHOW` and `LOCKUP_CONTENT_TYPE_COURSE` as playlists (same as playlists/podcasts)
+    * **youtube:tab**: Treat lockup `LOCKUP_CONTENT_TYPE_SHOW` and `LOCKUP_CONTENT_TYPE_COURSE` as playlists (same as playlists/podcasts) and `LOCKUP_CONTENT_TYPE_CHANNEL` as channel tabs
     * **younow**: Raise an expected error that live playback is WebRTC (Props SFU) and that public HLS/moments are gone
     * **zenporn**: Impersonate the browser
     * **zenyandex**: Impersonate the browser on video pages and okcdn HLS/MP4 (plain urllib hits SSO/503 or HTTP 400); treat a missing channel feed-page JSON as end of playlist

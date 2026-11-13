@@ -63,8 +63,8 @@ class EuropaIE(InfoExtractor):
             'thumbnail': 'https://vod.prd.commavservices.eu/15/109295/THUMB_M_I109295INT1W_03.jpg?latest=0003410993',
             'timestamp': 1443762600,
             'upload_date': '20151002',
-            'modified_timestamp': 1770284225,
-            'modified_date': '20260205',
+            'modified_timestamp': 1794501060,
+            'modified_date': '20261112',
             'view_count': int,
         },
     }, {

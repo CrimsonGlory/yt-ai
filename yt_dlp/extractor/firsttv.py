@@ -126,9 +126,15 @@ class FirstTVIE(InfoExtractor):
         display_id = self._match_id(url)
 
         webpage = self._download_webpage(url, display_id)
-        playlist_url = urllib.parse.urljoin(url, self._html_search_regex(
+        playlist_path = self._html_search_regex(
             r'data-playlist-url=(["\'])(?P<url>(?:(?!\1).)+)\1',
-            webpage, 'playlist url', group='url'))
+            webpage, 'playlist url', group='url', default=None)
+        if not playlist_path:
+            video_uid = self._search_regex(
+                r'\\?"item\\?"\s*:\s*\{\s*\\?"uid\\?"\s*:\s*(\d+)',
+                webpage, 'item uid')
+            playlist_path = f'/video_materials.json?video_id={video_uid}'
+        playlist_url = urllib.parse.urljoin(url, playlist_path)
 
         item_ids = traverse_obj(parse_qs(playlist_url), 'video_id', 'videos_ids[]', 'news_ids[]')
         items = traverse_obj(

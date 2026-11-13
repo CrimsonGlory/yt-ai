@@ -100,7 +100,7 @@ class SportDeutschlandIE(InfoExtractor):
         'info_dict': {
             'id': 'a32ddcfc-f6db-4a54-a7d8-86173603bc53',
             'ext': 'mp4',
-            'title': 'Deutsche Billard-Meisterschaften 2026 | Viertelfinale 9-Ball wU22',
+            'title': 'Viertelfinale 9-Ball wU22 | Deutsche Billard-Meisterschaften 2026',
             'display_id': 'deutsche-billard-union/deutsche-billard-meisterschaften-2026-viertelfinale-9-ball-wu22',
             'channel_id': '936ed04d-b2f6-45f9-b0d9-07dc942b6661',
             'channel': 'Deutsche Billard-Union e. V.',

@@ -31,7 +31,7 @@ class AppleBaseIE(InfoExtractor):
             return self._jwt_cache[self._BASE_URL]
 
         js_path = self._search_regex(
-            r'<script [^>]*\bsrc="(/assets/index~[0-9a-f]+\.js)">', webpage, 'JS asset path')
+            r'<script [^>]*\bsrc="(/assets/index~[\w-]+\.js)">', webpage, 'JS asset path')
         js_code = self._download_webpage(
             urljoin(self._BASE_URL, js_path), episode_id,
             'Downloading JS asset', 'Unable to download JS asset')

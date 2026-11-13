@@ -313,6 +313,55 @@ class YoutubeTabBaseInfoExtractor(YoutubeBaseInfoExtractor):
                 continue
             yield self._extract_video(renderer)
 
+    def _extract_channel_lockup(self, view_model, content_id):
+        lockup_mdvm = traverse_obj(view_model, ('metadata', 'lockupMetadataViewModel', {dict})) or {}
+        browse = traverse_obj(view_model, (
+            (
+                ('rendererContext', 'commandContext', 'onTap', 'innertubeCommand', 'browseEndpoint'),
+                ('metadata', 'lockupMetadataViewModel', 'rendererContext', 'commandContext', 'onTap', 'innertubeCommand', 'browseEndpoint'),
+                ('metadata', 'lockupMetadataViewModel', 'title', 'commandRuns', 0, 'onTap', 'innertubeCommand', 'browseEndpoint'),
+            ), {dict}, any)) or {}
+        channel_id = self.ucid_or_none(content_id) or self.ucid_or_none(browse.get('browseId'))
+        title = traverse_obj(lockup_mdvm, ('title', 'content', {str}))
+        texts = traverse_obj(lockup_mdvm, (
+            'metadata', 'contentMetadataViewModel', 'metadataRows', ...,
+            'metadataParts', ..., 'text', 'content', {str})) or []
+        handle = (
+            self.handle_from_url(browse.get('canonicalBaseUrl'))
+            or next(filter(None, (self.handle_or_none(t) for t in texts)), None))
+        subscriber_text = next((t for t in texts if t and re.search(r'subscriber', t, re.I)), None)
+        description = next((
+            t for t in texts
+            if t and t != subscriber_text and not self.handle_or_none(t)
+        ), None)
+        renderer = {
+            'channelId': channel_id,
+            'title': {'simpleText': title},
+            'navigationEndpoint': {
+                'commandMetadata': {'webCommandMetadata': {
+                    'url': browse.get('canonicalBaseUrl') or format_field(handle, None, '/%s', default=None),
+                }},
+                'browseEndpoint': {
+                    'browseId': browse.get('browseId') or channel_id,
+                    'canonicalBaseUrl': browse.get('canonicalBaseUrl') or format_field(
+                        handle, None, '/%s', default=None),
+                },
+            },
+            'subscriberCountText': {'simpleText': handle or subscriber_text},
+            'videoCountText': {'simpleText': subscriber_text} if handle else None,
+            'descriptionSnippet': {'simpleText': description} if description else None,
+            'thumbnail': {'thumbnails': traverse_obj(view_model, *(
+                ('contentImage', 'decoratedAvatarViewModel', 'avatar', 'avatarViewModel', 'image', 'sources', ...),
+                ('contentImage', 'avatarViewModel', 'image', 'sources', ...),
+                ('contentImage', 'thumbnailViewModel', 'image', 'sources', ...),
+                ('metadata', 'lockupMetadataViewModel', 'image', 'decoratedAvatarViewModel', 'avatar', 'avatarViewModel', 'image', 'sources', ...),
+            )) or []},
+            'ownerBadges': traverse_obj(lockup_mdvm, ('badges', ...)) or [],
+        }
+        if not renderer['channelId']:
+            return
+        return self._extract_channel_renderer(renderer)
+
     def _extract_lockup_view_model(self, view_model):
         content_id = view_model.get('contentId')
         if not content_id:
@@ -332,6 +381,8 @@ class YoutubeTabBaseInfoExtractor(YoutubeBaseInfoExtractor):
             ie = YoutubeTabIE
             url = f'https://www.youtube.com/playlist?list={content_id}'
             thumb_keys = ('collectionThumbnailViewModel', 'primaryThumbnail')
+        elif content_type == 'LOCKUP_CONTENT_TYPE_CHANNEL':
+            return self._extract_channel_lockup(view_model, content_id)
         else:
             self.report_warning(
                 f'Unsupported lockup view model content type "{content_type}"{bug_reports_message()}',

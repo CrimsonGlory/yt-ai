@@ -602,30 +602,35 @@ class OpenRecPlaylistIE(OpenRecBaseIE):
 
     def _entries(self, items):
         for movie in traverse_obj(items, (
-            'playlist_movies', ..., 'movie', 'id', {str_or_none},
+            'playlist_movies', ..., {dict},
         )):
+            movie_id = traverse_obj(movie, ('movie', 'id', {str_or_none}))
+            if not movie_id:
+                continue
             is_live = traverse_obj(movie, ('movie', 'is_live', {bool}))
             path, ie = ('live', OpenRecIE) if is_live else ('movie', OpenRecMovieIE)
-            movie_id = movie['movie']['id']
-
             yield self.url_result(f'{self._BASE_URL}/{path}/{movie_id}', ie)
 
-        for capture in traverse_obj(items, (
+        for capture_id in traverse_obj(items, (
             'playlist_captures', ...,
             'capture_relation', 'capture', 'id', {str_or_none},
         )):
-            capture_id = capture['capture_relation']['capture']['id']
-
             yield self.url_result(
                 f'{self._BASE_URL}/capture/{capture_id}', OpenRecCaptureIE)
 
     def _real_extract(self, url):
         playlist_id = self._match_id(url)
-        me = self._call_api(f'users/me/playlists/{playlist_id}', playlist_id)
+        me = self._call_api(f'users/me/playlists/{playlist_id}', playlist_id) if self._api_headers else {}
 
-        if items := traverse_obj(me, (
+        items = traverse_obj(me, (
             'data', 'items', ..., {dict}, any,
-        )):
+        ))
+        if not items:
+            items = self._download_json(
+                f'{self._PUBLIC_API_BASE}/playlists/{playlist_id}', playlist_id,
+                'Downloading public playlist metadata')
+
+        if items := traverse_obj(items, {dict}):
             return self.playlist_result(
                 self._entries(items), playlist_id,
                 traverse_obj(items, ('title', {clean_html}, filter)))

@@ -15,10 +15,10 @@ class NineGagIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'https://9gag.com/gag/ae5Ag7B',
-        'md5': '64a050a494566e889a907725a748bb63',
+        'md5': '69d9b15293a8a3e23701fb806ab3df87',
         'info_dict': {
             'id': 'ae5Ag7B',
-            'ext': 'webm',
+            'ext': 'mp4',
             'title': 'Capybara Agility Training',
             'duration': 44,
             'thumbnail': 'https://img-9gag-fun.9cache.com/photo/ae5Ag7B_460s.jpg',
