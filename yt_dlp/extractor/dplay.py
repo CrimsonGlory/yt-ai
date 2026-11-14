@@ -2,7 +2,7 @@ import json
 import uuid
 
 from .common import InfoExtractor
-from ..networking.exceptions import HTTPError
+from ..networking.exceptions import HTTPError, RequestError
 from ..utils import (
     ExtractorError,
     determine_ext,
@@ -112,15 +112,24 @@ class DPlayBaseIE(InfoExtractor):
             format_id = format_dict.get('type')
             ext = determine_ext(format_url)
             if format_id == 'dash' or ext == 'mpd':
-                dash_fmts, dash_subs = self._extract_mpd_formats_and_subtitles(
-                    format_url, display_id, mpd_id='dash', fatal=False)
+                try:
+                    dash_fmts, dash_subs = self._extract_mpd_formats_and_subtitles(
+                        format_url, display_id, mpd_id='dash', fatal=False,
+                        headers={'Referer': domain or url})
+                except RequestError as e:
+                    self.report_warning(f'Failed to download MPD manifest: {e}')
+                    dash_fmts, dash_subs = [], {}
                 formats.extend(dash_fmts)
                 subtitles = self._merge_subtitles(subtitles, dash_subs)
             elif format_id == 'hls' or ext == 'm3u8':
-                m3u8_fmts, m3u8_subs = self._extract_m3u8_formats_and_subtitles(
-                    format_url, display_id, 'mp4',
-                    entry_protocol='m3u8_native', m3u8_id='hls',
-                    fatal=False)
+                try:
+                    m3u8_fmts, m3u8_subs = self._extract_m3u8_formats_and_subtitles(
+                        format_url, display_id, 'mp4',
+                        entry_protocol='m3u8_native', m3u8_id='hls',
+                        fatal=False, headers={'Referer': domain or url})
+                except RequestError as e:
+                    self.report_warning(f'Failed to download m3u8 information: {e}')
+                    m3u8_fmts, m3u8_subs = [], {}
                 formats.extend(m3u8_fmts)
                 subtitles = self._merge_subtitles(subtitles, m3u8_subs)
             else:
@@ -1159,6 +1168,7 @@ class DiscoveryPlusIndiaIE(DiscoveryPlusBaseIE):
     _VALID_URL = r'https?://(?:www\.)?discoveryplus\.in/videos?' + DPlayBaseIE._PATH_REGEX
     _TESTS = [{
         'url': 'https://www.discoveryplus.in/videos/how-do-they-do-it/fugu-and-more?seasonId=8&type=EPISODE',
+        'skip': 'playback CDN dplusindia.media-edge.prod-vod.h264.io TLS handshake failure from this environment',
         'info_dict': {
             'id': '27104',
             'ext': 'mp4',

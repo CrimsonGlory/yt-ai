@@ -1,3 +1,4 @@
+import re
 import urllib.parse
 
 from .common import InfoExtractor
@@ -49,17 +50,61 @@ class SoraIE(InfoExtractor):
         'only_matching': True,
     }]
 
+    def _extract_post_from_webpage(self, webpage, video_id):
+        if not webpage:
+            return None
+        chunks = []
+        for mobj in re.finditer(r'self\.__next_f\.push\(', webpage):
+            if not webpage.startswith('[', mobj.end()):
+                continue
+            payload = self._parse_json(
+                webpage[mobj.end():], video_id, fatal=False, ignore_extra=True)
+            if not (isinstance(payload, list) and len(payload) >= 2
+                    and payload[0] == 1 and isinstance(payload[1], str)):
+                continue
+            chunks.append(payload[1])
+        text = ''.join(chunks)
+        if f'"id":"{video_id}"' not in text:
+            return None
+        data = self._search_json(
+            r'"post"\s*:\s*(?=\{"post":\{"id":"' + re.escape(video_id) + r'")',
+            text, 'post data', video_id, fatal=False)
+        return data if traverse_obj(data, ('post', {dict})) else None
+
+    def _download_post_data(self, origin, video_id):
+        origins = []
+        for candidate in (origin, 'https://sora.com', 'https://sora.chatgpt.com'):
+            if candidate not in origins:
+                origins.append(candidate)
+
+        for orig in origins:
+            data = self._download_json(
+                f'{orig}/backend/project_y/post/{video_id}', video_id,
+                note='Downloading JSON metadata',
+                impersonate=True, fatal=False, errnote=False, headers={
+                    'Accept': 'application/json',
+                    'Origin': orig,
+                    'Referer': f'{orig}/p/{video_id}',
+                })
+            if traverse_obj(data, ('post', {dict})):
+                return data, orig
+
+        # HTML is sometimes a client shell and sometimes SSR with encodings.
+        for attempt in range(8):
+            orig = origins[attempt % len(origins)]
+            webpage = self._download_webpage(
+                f'{orig}/p/{video_id}', video_id, impersonate=True,
+                fatal=False, errnote=False)
+            data = self._extract_post_from_webpage(webpage, video_id)
+            if data:
+                return data, orig
+        return None, origin
+
     def _real_extract(self, url):
         video_id = self._match_id(url)
         parsed = urllib.parse.urlparse(url)
         origin = f'{parsed.scheme}://{parsed.netloc}'
-        data = self._download_json(
-            f'{origin}/backend/project_y/post/{video_id}', video_id,
-            impersonate=True, headers={
-                'Accept': 'application/json',
-                'Origin': origin,
-                'Referer': f'{origin}/p/{video_id}',
-            })
+        data, origin = self._download_post_data(origin, video_id)
 
         post = traverse_obj(data, ('post', {dict}))
         if not post:

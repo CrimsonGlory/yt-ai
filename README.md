@@ -2508,7 +2508,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **Smule** (`smule.com`): Impersonate Cloudflare, RC4-decode `e:` media URLs from public `/p/{id}/json`, and download CDN MP4/M4A. Request: [yt-dlp/yt-dlp#10875](https://github.com/yt-dlp/yt-dlp/issues/10875)
     * **SNB** (`snb.ch`): Swisscom CSR webcast token plus public `/webcast/{id}` HLS from Research TV and Web TV pages. Request: [yt-dlp/yt-dlp#14562](https://github.com/yt-dlp/yt-dlp/issues/14562)
     * **song.link** (`song.link`): Next.js `pageData` listen links, preferring YouTube/SoundCloud/Audius/Audiomack/Bandcamp. Request: [yt-dlp/yt-dlp#13754](https://github.com/yt-dlp/yt-dlp/issues/13754)
-    * **Sora** (`sora.com`): Public `backend/project_y/post` JSON (impersonate) for signed Azure MP4; build profile URLs from username when permalink is absent. Request: [yt-dlp/yt-dlp#14513](https://github.com/yt-dlp/yt-dlp/issues/14513)
+    * **Sora** (`sora.com`): Public `backend/project_y/post` JSON (impersonate) for signed Azure MP4, with Next.js flight-data fallback on the post page when that API returns 5xx; build profile URLs from username when permalink is absent. Request: [yt-dlp/yt-dlp#14513](https://github.com/yt-dlp/yt-dlp/issues/14513)
     * **Spinitron** (`spinitron.com`): Playlist-page Ark `data-ark-start` HLS from `ark3.spinitron.com/ark2`; show pages list archived episodes. Request: [yt-dlp/yt-dlp#11401](https://github.com/yt-dlp/yt-dlp/issues/11401)
     * **Sponsr** (`sponsr.ru`): Parse Next.js post JSON and extract Kinescope HLS/MP4. Request: [yt-dlp/yt-dlp#14399](https://github.com/yt-dlp/yt-dlp/issues/14399)
     * **Spooncast** (`spooncast.net`): Public `{country}-api.spooncast.net/casts/{id}` JSON and CDN m4a. Request: [yt-dlp/yt-dlp#9590](https://github.com/yt-dlp/yt-dlp/issues/9590)
@@ -2609,7 +2609,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **disney**: Prefer Matterhorn `__matterhorn-*__` watch-page JSON (Kaltura flavors) over the retired `/embed/` player
     * **doodstream**: Impersonate the browser and join relative `pass_md5` URLs
     * **douyu**: Sign streams with Node instead of PhantomJS
-    * **dplay**: Use Disco playback v3
+    * **dplay**: Use Disco playback v3; treat TLS handshake failures on DASH/HLS manifests as missing so the other playback URL can be tried
     * **drtalks**: Follow BunnyCDN embeds from Next.js v13 instead of Brightcove
     * **drtuber**: Use HTTPS `player_config_json` and tolerate missing files
     * **drtv**: Use the numeric catalog id from the URL slug for `/videos` when the page item id is a UUID
@@ -2789,6 +2789,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **porntube**: Impersonate the browser with a Chrome 120 User-Agent on `/video/` pages (Cloudflare 403s urllib and modern-Chrome impersonation)
     * **pornoxo**: Impersonate the browser and extract HLS from `playerConfig`
     * **pr0gramm**: Request SFW-only API flags unless logged in
+    * **prankcast**: Rewrite private S3 hosts onto `media2.dialtribe.com`, matching the player `srcSafe()` CDN
     * **premiershiprugby**: Follow YouTube highlight embeds from the article CMS; keep StreamAMG HLS for native full matches
     * **presstv**: Extract JWPlayer HLS and preview MP4 from current article pages; match presstv.co.uk
     * **projectveritas**: Extract Mux playback from Next.js App Router instead of Gatsby page-data

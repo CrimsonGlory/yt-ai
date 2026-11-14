@@ -316,6 +316,7 @@ class RidoMoviesIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://ridomovies.tv/movie/lego-star-wars-the-mandalorian-2026',
+            'skip': 'closeload.top /video/embed/ returns HTTP 403 from this environment',
             'info_dict': {
                 'id': 'lCvCuUUCfYV',
                 'ext': 'mp4',

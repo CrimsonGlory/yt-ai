@@ -4,6 +4,25 @@ from .common import InfoExtractor
 from ..utils import float_or_none, parse_iso8601, str_or_none, try_call, url_or_none
 from ..utils.traversal import traverse_obj, value
 
+# Site player srcSafe(): private S3 hosts are rewritten onto the public CDN.
+_PRANKCAST_CDN = 'media2.dialtribe.com'
+_PRANKCAST_S3_HOSTS = (
+    's3.amazonaws.com/dt-prankcastlive',
+    'dt-prankcastlive.s3.amazonaws.com',
+    'prankcastlive.s3.us-east-1.amazonaws.com',
+    'prankcastlive.s3.amazonaws.com',
+    's3.us-east-1.amazonaws.com/prankcastlive',
+    's3.amazonaws.com/prankcastlive',
+)
+
+
+def _cdn_url(url):
+    if not url:
+        return url
+    for host in _PRANKCAST_S3_HOSTS:
+        url = url.replace(host, _PRANKCAST_CDN)
+    return url
+
 
 class PrankCastIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?prankcast\.com/[^/?#]+/showreel/(?P<id>\d+)-(?P<display_id>[^/?#]+)'
@@ -57,7 +76,7 @@ class PrankCastIE(InfoExtractor):
             'id': video_id,
             'title': json_info.get('broadcast_title') or self._og_search_title(webpage),
             'display_id': display_id,
-            'url': f'{json_info["broadcast_url"]}{json_info["recording_hash"]}.mp3',
+            'url': _cdn_url(f'{json_info["broadcast_url"]}{json_info["recording_hash"]}.mp3'),
             'timestamp': start_date,
             'uploader': uploader,
             'channel_id': str_or_none(json_info.get('user_id')),
@@ -153,7 +172,7 @@ class PrankCastPostIE(InfoExtractor):
                 'uploader': ('user_name', {str}),
             }),
             **traverse_obj(content, {
-                'url': (('secure_url', 'url'), {url_or_none}, any),
+                'url': (('secure_url', 'url'), {url_or_none}, {_cdn_url}, any),
                 'timestamp': ((
                     (('start_date', 'crdate'), {parse_iso8601(delimiter=' ')}),
                     ('created_at', {parse_iso8601}),

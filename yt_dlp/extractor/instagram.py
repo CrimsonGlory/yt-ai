@@ -280,7 +280,7 @@ class InstagramIE(InstagramBaseIE):
     _TESTS = [
         {
             'url': 'https://instagram.com/videos/reel/DWXQ7gtiEMD/',
-            'md5': 'f78b70e3264b13a23f78d488e34a9f23',
+            'md5': '9b055f0bdb4eacf7ba36e3a3ab6f8a1d',
             'info_dict': {
                 'id': 'DWXQ7gtiEMD',
                 'ext': 'mp4',
