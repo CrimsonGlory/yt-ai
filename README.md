@@ -2961,6 +2961,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * `make_changelog` attributes fork commits to the git author and `CrimsonGlory/yt-ai`
     * [Development Docker workflow](https://github.com/CrimsonGlory/yt-ai/commit/13d780d260672007c07b37e4b5060a06c27d5b15) (`docker/Dockerfile` + compose) to run yt-ai and the offline suite in a container
     * `release.sh` crontab helper: dispatch the GitHub `Release` workflow only when `master` has commits after the latest GitHub release (no nightly/stable channel)
+    * `daily_test.sh` crontab helper: run `make test`, Grok-fix failures, and commit each extractor/unit-test fix separately
 
 See [commits](https://github.com/CrimsonGlory/yt-ai/commits) for the full list of changes
 
