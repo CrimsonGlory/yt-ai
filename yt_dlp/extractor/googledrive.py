@@ -39,7 +39,7 @@ class GoogleDriveIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'Big Buck Bunny.mp4',
             'duration': 45.069,
-            'thumbnail': r're:https://lh3\.googleusercontent\.com/drive-storage/',
+            'thumbnail': r're:https://(?:lh3\.googleusercontent\.com/drive-storage/|drive\.google\.com/thumbnail)',
         },
     }, {
         # has itag 50 which is not in YoutubeIE._formats (royalty Free music from 1922)
@@ -140,12 +140,58 @@ class GoogleDriveIE(InfoExtractor):
             } for sub_fmt in subtitle_formats])
         return subtitles
 
+    @staticmethod
+    def _mp4_duration(data):
+        def boxes(buf, start=0, end=None):
+            end = len(buf) if end is None else min(end, len(buf))
+            offset = start
+            while offset + 8 <= end:
+                size = int.from_bytes(buf[offset:offset + 4], 'big')
+                box_type = buf[offset + 4:offset + 8]
+                header = 8
+                if size == 1:
+                    if offset + 16 > end:
+                        break
+                    size = int.from_bytes(buf[offset + 8:offset + 16], 'big')
+                    header = 16
+                elif not size:
+                    size = end - offset
+                if size < header:
+                    break
+                box_end = offset + size
+                yield box_type, offset + header, min(box_end, end)
+                if box_end <= offset:
+                    break
+                offset = box_end
+
+        for box_type, start, end in boxes(data):
+            if box_type != b'moov':
+                continue
+            for inner_type, inner_start, inner_end in boxes(data, start, end):
+                if inner_type != b'mvhd' or inner_end - inner_start < 20:
+                    continue
+                if data[inner_start] == 1:
+                    if inner_end - inner_start < 32:
+                        return None
+                    timescale = int.from_bytes(data[inner_start + 20:inner_start + 24], 'big')
+                    duration = int.from_bytes(data[inner_start + 24:inner_start + 32], 'big')
+                else:
+                    timescale = int.from_bytes(data[inner_start + 12:inner_start + 16], 'big')
+                    duration = int.from_bytes(data[inner_start + 16:inner_start + 20], 'big')
+                if timescale:
+                    return (duration * 1000 // timescale) / 1000
+        return None
+
     def _real_extract(self, url):
         video_id = self._match_id(url)
+        # HTTP 403/429 is anonymous playback quota; the source file can still download.
         video_info = self._download_json(
             f'https://content-workspacevideo-pa.googleapis.com/v1/drive/media/{video_id}/playback',
             video_id, 'Downloading video webpage', query={'key': 'AIzaSyDVQw45DwoYh632gvsP5vPDqEKvb-Ywnb8'},
-            headers={'Referer': 'https://drive.google.com/'})
+            headers={'Referer': 'https://drive.google.com/'}, expected_status=(403, 429)) or {}
+        api_error = traverse_obj(video_info, ('error', {dict}))
+        if api_error:
+            video_info = {}
 
         formats = []
         for fmt in traverse_obj(video_info, (
@@ -171,6 +217,7 @@ class GoogleDriveIE(InfoExtractor):
             })
 
         title = traverse_obj(video_info, ('mediaMetadata', 'title', {str}))
+        duration = traverse_obj(video_info, ('mediaMetadata', 'duration', {parse_duration}))
 
         source_url = update_url_query(
             'https://drive.usercontent.google.com/download', {
@@ -183,23 +230,27 @@ class GoogleDriveIE(InfoExtractor):
             return self._request_webpage(
                 source_url, video_id, note=f'Requesting {kind} file',
                 errnote=f'Unable to request {kind} file', fatal=False, data=data)
+
+        def add_source_format(urlh):
+            nonlocal title, duration
+            if not title:
+                title = disposition_filename(urlh.headers) or None
+            if duration is None:
+                duration = self._mp4_duration(urlh.read(65536) or b'')
+            formats.append({
+                # Use redirect URLs as download URLs in order to calculate
+                # correct cookies in _calc_cookies.
+                # Using original URLs may result in redirect loop due to
+                # google.com's cookies mistakenly used for googleusercontent.com
+                # redirect URLs (see #23919).
+                'url': urlh.url,
+                'ext': determine_ext(title, 'mp4').lower(),
+                'format_id': 'source',
+                'quality': 1,
+            })
+
         urlh = request_source_file(source_url, 'source')
         if urlh:
-            def add_source_format(urlh):
-                nonlocal title
-                if not title:
-                    title = disposition_filename(urlh.headers) or None
-                formats.append({
-                    # Use redirect URLs as download URLs in order to calculate
-                    # correct cookies in _calc_cookies.
-                    # Using original URLs may result in redirect loop due to
-                    # google.com's cookies mistakenly used for googleusercontent.com
-                    # redirect URLs (see #23919).
-                    'url': urlh.url,
-                    'ext': determine_ext(title, 'mp4').lower(),
-                    'format_id': 'source',
-                    'quality': 1,
-                })
             if urlh.headers.get_content_disposition():
                 add_source_format(urlh)
             else:
@@ -219,18 +270,28 @@ class GoogleDriveIE(InfoExtractor):
                             or get_element_by_class('uc-error-caption', confirmation_webpage)
                             or 'unable to extract confirmation code')
 
+        if not formats:
+            self.raise_no_formats(
+                traverse_obj(api_error, (
+                    ('details', ..., 'message', {str}),
+                    ('message', {str}),
+                ), get_all=False) or 'Requested format is not available',
+                expected=True, video_id=video_id)
+
+        thumbnails = traverse_obj(video_info, ('thumbnails', lambda _, v: url_or_none(v['url']), {
+            'url': 'url',
+            'ext': ('mimeType', {mimetype2ext}),
+            'width': ('width', {int}),
+            'height': ('height', {int}),
+        }))
+        if not thumbnails:
+            thumbnails = [{'url': f'https://drive.google.com/thumbnail?id={video_id}'}]
+
         return {
             'id': video_id,
             'title': title,
-            **traverse_obj(video_info, {
-                'duration': ('mediaMetadata', 'duration', {parse_duration}),
-                'thumbnails': ('thumbnails', lambda _, v: url_or_none(v['url']), {
-                    'url': 'url',
-                    'ext': ('mimeType', {mimetype2ext}),
-                    'width': ('width', {int}),
-                    'height': ('height', {int}),
-                }),
-            }),
+            'duration': duration,
+            'thumbnails': thumbnails,
             'formats': formats,
             'subtitles': self.extract_subtitles(video_id, video_info),
         }
