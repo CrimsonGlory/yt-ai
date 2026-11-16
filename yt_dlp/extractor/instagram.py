@@ -280,7 +280,7 @@ class InstagramIE(InstagramBaseIE):
     _TESTS = [
         {
             'url': 'https://instagram.com/videos/reel/DWXQ7gtiEMD/',
-            'md5': '9b055f0bdb4eacf7ba36e3a3ab6f8a1d',
+            'md5': '7f888e3ff73456c1a94c3f523b8ecf48',
             'info_dict': {
                 'id': 'DWXQ7gtiEMD',
                 'ext': 'mp4',
@@ -296,142 +296,142 @@ class InstagramIE(InstagramBaseIE):
                 'comment_count': int,
             },
         }, {
-        'url': 'https://instagram.com/p/aye83DjauH/?foo=bar#abc',
-        'skip': 'stale test sample / site changed',
-        'md5': '0d2da106a9d2631273e192b372806516',
-        'info_dict': {
-            'id': 'aye83DjauH',
-            'ext': 'mp4',
-            'title': 'Video by naomipq',
-            'description': 'md5:1f17f0ab29bd6fe2bfad705f58de3cb8',
-            'thumbnail': r're:^https?://.*\.jpg',
-            'duration': 8.747,
-            'timestamp': 1371748545,
-            'upload_date': '20130620',
-            'uploader_id': '2815873',
-            'uploader': 'B E A U T Y  F O R  A S H E S',
-            'channel': 'naomipq',
-            'like_count': int,
-            'comment_count': int,
-            'comments': list,
-        },
-        'expected_warnings': [
-            'General metadata extraction failed',
-            'Main webpage is locked behind the login page',
-        ],
-    }, {
-        # reel
-        'url': 'https://www.instagram.com/reel/Chunk8-jurw/',
-        'skip': 'stale test sample / site changed',
-        'md5': 'f6d8277f74515fa3ff9f5791426e42b1',
-        'info_dict': {
-            'id': 'Chunk8-jurw',
-            'ext': 'mp4',
-            'title': 'Video by instagram',
-            'description': 'md5:c9cde483606ed6f80fbe9283a6a2b290',
-            'thumbnail': r're:^https?://.*\.jpg',
-            'duration': 5.016,
-            'timestamp': 1661529231,
-            'upload_date': '20220826',
-            'uploader_id': '25025320',
-            'uploader': 'Instagram',
-            'channel': 'instagram',
-            'like_count': int,
-            'comment_count': int,
-            'comments': list,
-        },
-        'expected_warnings': [
-            'General metadata extraction failed',
-            'Main webpage is locked behind the login page',
-        ],
-    }, {
-        # multi video post
-        'url': 'https://www.instagram.com/p/BQ0eAlwhDrw/',
-        'skip': 'stale test sample / site changed',
-        'playlist': [{
+            'url': 'https://instagram.com/p/aye83DjauH/?foo=bar#abc',
+            'skip': 'stale test sample / site changed',
+            'md5': '0d2da106a9d2631273e192b372806516',
             'info_dict': {
-                'id': 'BQ0dSaohpPW',
+                'id': 'aye83DjauH',
                 'ext': 'mp4',
-                'title': 'Video 1',
+                'title': 'Video by naomipq',
+                'description': 'md5:1f17f0ab29bd6fe2bfad705f58de3cb8',
                 'thumbnail': r're:^https?://.*\.jpg',
-                'view_count': int,
-                'channel': str,
-                'comment_count': int,
+                'duration': 8.747,
+                'timestamp': 1371748545,
+                'upload_date': '20130620',
+                'uploader_id': '2815873',
+                'uploader': 'B E A U T Y  F O R  A S H E S',
+                'channel': 'naomipq',
                 'like_count': int,
-                'timestamp': int,
-                'upload_date': str,
-                'uploader': str,
-                'uploader_id': str,
+                'comment_count': int,
+                'comments': list,
             },
+            'expected_warnings': [
+                'General metadata extraction failed',
+                'Main webpage is locked behind the login page',
+            ],
         }, {
+            # reel
+            'url': 'https://www.instagram.com/reel/Chunk8-jurw/',
+            'skip': 'stale test sample / site changed',
+            'md5': 'f6d8277f74515fa3ff9f5791426e42b1',
             'info_dict': {
-                'id': 'BQ0dTpOhuHT',
+                'id': 'Chunk8-jurw',
                 'ext': 'mp4',
-                'title': 'Video 2',
+                'title': 'Video by instagram',
+                'description': 'md5:c9cde483606ed6f80fbe9283a6a2b290',
                 'thumbnail': r're:^https?://.*\.jpg',
-                'view_count': int,
+                'duration': 5.016,
+                'timestamp': 1661529231,
+                'upload_date': '20220826',
+                'uploader_id': '25025320',
+                'uploader': 'Instagram',
+                'channel': 'instagram',
+                'like_count': int,
+                'comment_count': int,
+                'comments': list,
             },
+            'expected_warnings': [
+                'General metadata extraction failed',
+                'Main webpage is locked behind the login page',
+            ],
         }, {
+            # multi video post
+            'url': 'https://www.instagram.com/p/BQ0eAlwhDrw/',
+            'skip': 'stale test sample / site changed',
+            'playlist': [{
+                'info_dict': {
+                    'id': 'BQ0dSaohpPW',
+                    'ext': 'mp4',
+                    'title': 'Video 1',
+                    'thumbnail': r're:^https?://.*\.jpg',
+                    'view_count': int,
+                    'channel': str,
+                    'comment_count': int,
+                    'like_count': int,
+                    'timestamp': int,
+                    'upload_date': str,
+                    'uploader': str,
+                    'uploader_id': str,
+                },
+            }, {
+                'info_dict': {
+                    'id': 'BQ0dTpOhuHT',
+                    'ext': 'mp4',
+                    'title': 'Video 2',
+                    'thumbnail': r're:^https?://.*\.jpg',
+                    'view_count': int,
+                },
+            }, {
+                'info_dict': {
+                    'id': 'BQ0dT7RBFeF',
+                    'ext': 'mp4',
+                    'title': 'Video 3',
+                    'thumbnail': r're:^https?://.*\.jpg',
+                    'view_count': int,
+                },
+            }],
             'info_dict': {
-                'id': 'BQ0dT7RBFeF',
-                'ext': 'mp4',
-                'title': 'Video 3',
-                'thumbnail': r're:^https?://.*\.jpg',
-                'view_count': int,
+                'id': 'BQ0eAlwhDrw',
+                'title': 'Post by instagram',
+                'description': 'md5:0f9203fc6a2ce4d228da5754bcf54957',
             },
-        }],
-        'info_dict': {
-            'id': 'BQ0eAlwhDrw',
-            'title': 'Post by instagram',
-            'description': 'md5:0f9203fc6a2ce4d228da5754bcf54957',
-        },
-        'expected_warnings': [
-            'General metadata extraction failed',
-            'Main webpage is locked behind the login page',
-        ],
-    }, {
-        # IGTV
-        'url': 'https://www.instagram.com/tv/BkfuX9UB-eK/',
-        'skip': 'extractor broken: [Instagram] BkfuX9UB-eK: Instagram API is not granting access',
-        'info_dict': {
-            'id': 'BkfuX9UB-eK',
-            'ext': 'mp4',
-            'title': 'Fingerboarding Tricks with @cass.fb',
-            'thumbnail': r're:^https?://.*\.jpg',
-            'duration': 53.83,
-            'timestamp': 1530032919,
-            'upload_date': '20180626',
-            'uploader_id': '25025320',
-            'uploader': 'Instagram',
-            'channel': 'instagram',
-            'like_count': int,
-            'comment_count': int,
-            'comments': list,
-            'description': 'Meet Cass Hirst (@cass.fb), a fingerboarding pro who can perform tiny ollies and kickflips while blindfolded.',
-        },
-        'expected_warnings': [
-            'General metadata extraction failed',
-            'Main webpage is locked behind the login page',
-        ],
-    }, {
-        'url': 'https://instagram.com/p/-Cmh1cukG2/',
-        'only_matching': True,
-    }, {
-        'url': 'http://instagram.com/p/9o6LshA7zy/embed/',
-        'only_matching': True,
-    }, {
-        'url': 'https://www.instagram.com/tv/aye83DjauH/',
-        'only_matching': True,
-    }, {
-        'url': 'https://www.instagram.com/reel/CDUMkliABpa/',
-        'only_matching': True,
-    }, {
-        'url': 'https://www.instagram.com/marvelskies.fc/reel/CWqAgUZgCku/',
-        'only_matching': True,
-    }, {
-        'url': 'https://www.instagram.com/reels/Cop84x6u7CP/',
-        'only_matching': True,
-    }]
+            'expected_warnings': [
+                'General metadata extraction failed',
+                'Main webpage is locked behind the login page',
+            ],
+        }, {
+            # IGTV
+            'url': 'https://www.instagram.com/tv/BkfuX9UB-eK/',
+            'skip': 'extractor broken: [Instagram] BkfuX9UB-eK: Instagram API is not granting access',
+            'info_dict': {
+                'id': 'BkfuX9UB-eK',
+                'ext': 'mp4',
+                'title': 'Fingerboarding Tricks with @cass.fb',
+                'thumbnail': r're:^https?://.*\.jpg',
+                'duration': 53.83,
+                'timestamp': 1530032919,
+                'upload_date': '20180626',
+                'uploader_id': '25025320',
+                'uploader': 'Instagram',
+                'channel': 'instagram',
+                'like_count': int,
+                'comment_count': int,
+                'comments': list,
+                'description': 'Meet Cass Hirst (@cass.fb), a fingerboarding pro who can perform tiny ollies and kickflips while blindfolded.',
+            },
+            'expected_warnings': [
+                'General metadata extraction failed',
+                'Main webpage is locked behind the login page',
+            ],
+        }, {
+            'url': 'https://instagram.com/p/-Cmh1cukG2/',
+            'only_matching': True,
+        }, {
+            'url': 'http://instagram.com/p/9o6LshA7zy/embed/',
+            'only_matching': True,
+        }, {
+            'url': 'https://www.instagram.com/tv/aye83DjauH/',
+            'only_matching': True,
+        }, {
+            'url': 'https://www.instagram.com/reel/CDUMkliABpa/',
+            'only_matching': True,
+        }, {
+            'url': 'https://www.instagram.com/marvelskies.fc/reel/CWqAgUZgCku/',
+            'only_matching': True,
+        }, {
+            'url': 'https://www.instagram.com/reels/Cop84x6u7CP/',
+            'only_matching': True,
+        }]
 
     _SJS_RE = re.compile(r'<script\b[^>]+\bdata-sjs>(\{.+?\})</script>')
 
