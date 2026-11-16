@@ -77,11 +77,11 @@ pin = [
     "mutagen==1.48.1",
     "pycparser==3.11 ; implementation_name != 'PyPy' and implementation_name != 'cpython' and python_full_version < '3.11'",
     "pycparser==3.12 ; implementation_name != 'PyPy' and implementation_name != 'cpython' and python_full_version >= '3.11'",
-    "pycryptodomex==3.24.1",
+    "pycryptodomex==3.24.2",
     "requests==2.34.2",
     "urllib3==2.8.0",
     "websockets==16.1.1 ; python_full_version < '3.11'",
-    "websockets==17.3 ; python_full_version >= '3.11'",
+    "websockets==17.4 ; python_full_version >= '3.11'",
     "yt-dlp-ejs==0.8.0",
 ]
 pin-curl-cffi = [
