@@ -42,7 +42,7 @@ class CastboxIE(InfoExtractor):
             'duration': 780,
             'timestamp': 1780153200,
             'upload_date': '20260530',
-            'filesize': 9208487,
+            'filesize': 9208174,
             'series': 'HealthyGamerGG',
             'series_id': '5598686',
             'channel': 'HealthyGamerGG',
