@@ -11,6 +11,7 @@ from ..utils import (
     float_or_none,
     int_or_none,
     js_to_json,
+    parse_duration,
     traverse_obj,
     url_or_none,
     urljoin,
@@ -378,7 +379,36 @@ class WeTvBaseIE(TencentBaseIE):
             ('props', 'pageProps', 'data'))
         if isinstance(data, str):
             data = self._parse_json(data, video_id, fatal=False)
-        return data if isinstance(data, dict) else {}
+        if isinstance(data, dict) and (data.get('videoInfo') or data.get('coverInfo')):
+            return data
+
+        # App-router play pages no longer ship __NEXT_DATA__; JSON-LD still has
+        # VideoObject / TVEpisode / TVSeries title, duration and description.
+        video_info, cover_info = {}, {}
+        for item in self._yield_json_ld(webpage, video_id, fatal=False):
+            entities = item.get('@graph') if isinstance(item.get('@graph'), list) else [item]
+            for entity in entities:
+                if not isinstance(entity, dict):
+                    continue
+                types = entity.get('@type')
+                types = types if isinstance(types, list) else [types]
+                if 'VideoObject' in types:
+                    video_info.setdefault('title', entity.get('name'))
+                    duration = parse_duration(entity.get('duration'))
+                    if duration is not None:
+                        video_info.setdefault('duration', int(duration))
+                    if entity.get('description'):
+                        cover_info.setdefault('description', entity.get('description'))
+                if 'TVEpisode' in types:
+                    video_info.setdefault('title', entity.get('name'))
+                    episode = int_or_none(entity.get('episodeNumber'))
+                    if episode is not None:
+                        video_info.setdefault('episode', episode)
+                if 'TVSeries' in types:
+                    cover_info.setdefault('title', entity.get('name'))
+                    if entity.get('description'):
+                        cover_info.setdefault('description', entity.get('description'))
+        return {'videoInfo': video_info, 'coverInfo': cover_info} if video_info or cover_info else {}
 
     def _extract_episode(self, url):
         video_id, series_id = self._match_valid_url(url).group('id', 'series_id')
