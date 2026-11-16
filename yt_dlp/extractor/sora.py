@@ -19,6 +19,7 @@ class SoraIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?(?:sora\.chatgpt\.com|sora\.com)/p/(?P<id>s_[0-9a-fA-F]+)'
     _TESTS = [{
         'url': 'https://sora.chatgpt.com/p/s_68dc4b85a408819185372cd68c5a5cfc',
+        'skip': 'Sora web/app discontinued April 26 2026; public post JSON returns HTTP 500 and the page is a client shell without post data',
         'md5': 'd9274869e5ffa566c0343800e0e9baa4',
         'info_dict': {
             'id': 's_68dc4b85a408819185372cd68c5a5cfc',
@@ -108,7 +109,9 @@ class SoraIE(InfoExtractor):
 
         post = traverse_obj(data, ('post', {dict}))
         if not post:
-            raise ExtractorError('Unable to extract post data', expected=True)
+            raise ExtractorError(
+                'Sora is no longer publicly available (OpenAI discontinued the Sora web and app on April 26, 2026)',
+                expected=True)
         if post.get('tombstoned_at'):
             raise ExtractorError('This post has been deleted', expected=True)
         if traverse_obj(post, ('permissions', 'can_read')) is False:
