@@ -112,15 +112,13 @@ class XinpianchangIE(InfoExtractor):
     }]
 
     def _extract_video_data(self, url, video_id):
-        # Article HTML is gated by a Wangsu JS challenge; Next.js data is public.
-        homepage = self._download_webpage(
-            'https://www.xinpianchang.com/', video_id, note='Downloading homepage')
-        build_id = self._search_nextjs_data(homepage, video_id)['buildId']
+        # www HTML and `_next/data` are behind a Volcengine WAF captcha; the app
+        # article JSON is public and still returns vid/appKey.
         article = self._download_json(
-            f'https://www.xinpianchang.com/_next/data/{build_id}/{video_id}.json',
+            f'https://app.xinpianchang.com/article/{video_id[1:]}',
             video_id, note='Downloading article data',
-            headers={'Referer': url, 'X-Nextjs-Data': '1'})
-        video_data = traverse_obj(article, ('pageProps', 'detail', 'video', {dict}))
+            headers={'Referer': url})
+        video_data = traverse_obj(article, ('data', 'video', {dict}))
         if not traverse_obj(video_data, 'vid'):
             raise ExtractorError('Unable to extract video data', expected=True)
         return video_data

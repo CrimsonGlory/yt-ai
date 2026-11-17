@@ -2928,7 +2928,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **xfileshare**: Match current Uqload TLDs (`uqload.vc` and related mirrors) after `uqload.com` started redirecting
     * **xiaohongshu**: Impersonate the browser, fall back to `og:title` when note JSON omits title, and read duration from `video.capa` / stream metadata
     * **ximalaya**: Impersonate xmcdn audio URLs (Chrome 146 UA is HTTP 403)
-    * **xinpianchang**: Read Next.js `_next/data` instead of WAF-blocked article HTML; send Referer on media CDN requests
+    * **xinpianchang**: Load article `vid`/`appKey` from `app.xinpianchang.com/article` JSON when www Next.js/`_next/data` is WAF-blocked; send Referer on media CDN requests
     * **XMinus**: Reconstruct xmst.cc `/dl/minus` URLs from the current x-minus.pro player after x-minus.org expired
     * **yahoo**: Fall back to JSON-LD `VideoObject` UUIDs (impersonate; the default UA is HTTP 429) and the streams API when the caas article API returns HTTP 404 or 500. The webpage fallback is a private helper so it does not override generic embed scanning
     * **yandexdisk**: Support password-protected public files (`--video-password`)
