@@ -30,27 +30,30 @@ class KhanAcademyBaseIE(InfoExtractor):
             }, get_all=False),
         }
 
-    def _real_extract(self, url):
-        display_id = self._match_id(url)
-        pcv = traverse_obj(self._download_json(
-            'https://www.khanacademy.org/_fastly/published-content-version/en',
-            display_id, 'Downloading published content version', fatal=False),
-            ('publishedContentVersion', {str}))
+    def _call_graphql(self, display_id, variables):
+        if not hasattr(self, '_pcv'):
+            self._pcv = traverse_obj(self._download_json(
+                'https://www.khanacademy.org/_fastly/published-content-version/en',
+                display_id, 'Downloading published content version', fatal=False),
+                ('publishedContentVersion', {str}))
         query = {
             'fastly_cacheable': 'persist_until_publish',
             'hash': self._GRAPHQL_HASH,
-            'variables': json.dumps({
-                'path': display_id,
-                'countryCode': 'US',
-            }),
+            'variables': json.dumps(variables),
             'lang': 'en',
         }
-        if pcv:
-            query['pcv'] = pcv
-        content = traverse_obj(self._download_json(
+        if self._pcv:
+            query['pcv'] = self._pcv
+        return self._download_json(
             f'https://www.khanacademy.org/api/internal/graphql/{self._GRAPHQL_OPERATION}',
-            display_id, query=query),
-            ('data', 'contentRoute', ('listedPathData', 'unlistedPathData'), any))
+            display_id, query=query)
+
+    def _real_extract(self, url):
+        display_id = self._match_id(url)
+        content = traverse_obj(self._call_graphql(display_id, {
+            'path': display_id,
+            'countryCode': 'US',
+        }), ('data', 'contentRoute', ('listedPathData', 'unlistedPathData'), any))
         return self._parse_component_props(content, display_id)
 
 
@@ -113,8 +116,8 @@ class KhanAcademyIE(KhanAcademyBaseIE):
 class KhanAcademyUnitIE(KhanAcademyBaseIE):
     IE_NAME = 'khanacademy:unit'
     _VALID_URL = (KhanAcademyBaseIE._VALID_URL_TEMPL % ('1,2', '')) + '/?(?:[?#&]|$)'
-    _GRAPHQL_OPERATION = 'ContentRouteCourseData'
-    _GRAPHQL_HASH = '1718276862'
+    _GRAPHQL_OPERATION = 'FetchContentData'
+    _GRAPHQL_HASH = '416280634'
     _TESTS = [{
         'url': 'https://www.khanacademy.org/computing/computer-science/cryptography',
         'info_dict': {
@@ -137,26 +140,43 @@ class KhanAcademyUnitIE(KhanAcademyBaseIE):
         'playlist_mincount': 50,
     }]
 
-    def _parse_component_props(self, component_props, display_id):
-        course = component_props['course']
-        selected_unit = traverse_obj(course, (
-            'unitChildren', lambda _, v: v['relativeUrl'] == f'/{display_id}', any)) or course
+    def _fetch_curation(self, path, display_id):
+        content_json = traverse_obj(self._call_graphql(display_id, {
+            'path': path.lstrip('/'),
+            'queryParams': '',
+            'countryCode': 'US',
+        }), ('data', 'contentJson', {str}))
+        if not content_json:
+            return {}
+        return traverse_obj(json.loads(content_json), ('componentProps', 'curation', {dict})) or {}
 
-        def build_entry(entry):
-            return self.url_result(urljoin(
-                'https://www.khanacademy.org', entry['canonicalUrl']),
-                KhanAcademyIE, title=entry.get('translatedTitle'))
+    def _video_entries(self, curation):
+        for item in traverse_obj(curation, (
+            'tabs', ..., 'modules', ..., 'tutorials', ..., 'contentItems',
+            lambda _, v: v.get('kind') == 'Video' and v.get('nodeUrl'),
+        )):
+            yield self.url_result(
+                urljoin('https://www.khanacademy.org', item['nodeUrl']),
+                KhanAcademyIE, title=item.get('title'))
 
-        entries = traverse_obj(selected_unit, (
-            (('unitChildren', ...), None), 'allOrderedChildren', ..., 'curatedChildren',
-            lambda _, v: v['contentKind'] == 'Video' and v['canonicalUrl'], {build_entry}))
+    def _real_extract(self, url):
+        display_id = self._match_id(url)
+        curation = self._fetch_curation(display_id, display_id)
+        entries = list(self._video_entries(curation))
+        for path in traverse_obj(curation, (
+            'tabs', ..., 'modules', ..., 'modules',
+            lambda _, v: v.get('kind') == 'SubjectPageTopicCard',
+            'url', {str},
+        )):
+            entries.extend(self._video_entries(
+                self._fetch_curation(path, display_id)))
 
+        slug = display_id.rsplit('/', 1)[-1]
         return self.playlist_result(
             entries,
             display_id=display_id,
-            **traverse_obj(selected_unit, {
-                'id': ('id', {str}),
-                'title': ('translatedTitle', {str}),
-                'description': ('translatedDescription', {str}),
-                '_old_archive_ids': ('slug', {str}, {lambda x: [make_archive_id(self, x)] if x else None}),
-            }))
+            id=curation.get('unitId') or curation.get('courseId'),
+            title=curation.get('title'),
+            description=curation.get('description'),
+            _old_archive_ids=[make_archive_id(self, slug)] if slug else None,
+        )
