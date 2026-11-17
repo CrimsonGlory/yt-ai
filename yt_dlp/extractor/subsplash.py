@@ -8,11 +8,40 @@ from ..utils import (
     parse_iso8601,
     try_call,
     url_or_none,
+    urlencode_postdata,
 )
 from ..utils.traversal import traverse_obj
 
 
 class SubsplashBaseIE(InfoExtractor):
+    _GUEST_CLIENT_ID = '01f874a5-ac2e-4be9-a67b-32f4881f8d83'
+    _GUEST_CLIENT_SECRET = 'e00d19d3f154ed876198f62e48c5af64db8536da9805ce4f6ebeac7873b6b5cc'
+
+    def _mint_guest_token(self, webpage, display_id):
+        token = getattr(self, '_guest_token', None)
+        if token:
+            return token
+        js_url = self._search_regex(
+            r'<script[^>]+\bsrc=["\'](https://assets[^"\']+/web-shell/[^"\']+/js/main\.[^"\']+\.js)',
+            webpage, 'web shell JS', default=None)
+        js = (self._download_webpage(js_url, display_id, 'Downloading web shell JS', fatal=False) or '') if js_url else ''
+        client_id = self._search_regex(
+            r'GUEST_TOKENS_SERVICE_CLIENT_ID_PROD["\']?\s*:\s*["\']([^"\']+)',
+            js, 'client id', default=self._GUEST_CLIENT_ID)
+        client_secret = self._search_regex(
+            r'GUEST_TOKENS_SERVICE_CLIENT_SECRET_PROD["\']?\s*:\s*["\']([^"\']+)',
+            js, 'client secret', default=self._GUEST_CLIENT_SECRET)
+        token = traverse_obj(self._download_json(
+            'https://core.subsplash.com/tokens/v1/token', display_id, 'Downloading guest token',
+            data=urlencode_postdata({
+                'grant_type': 'client_credentials',
+                'client_id': client_id,
+                'client_secret': client_secret,
+            }), headers={'Content-Type': 'application/x-www-form-urlencoded'},
+            fatal=False), ('access_token', {str}))
+        self._guest_token = token
+        return token
+
     def _get_headers(self, url, display_id):
         token = try_call(lambda: self._get_cookies(url)['ss-token-guest'].value)
         if not token:
@@ -23,7 +52,8 @@ class SubsplashBaseIE(InfoExtractor):
                 or self._search_json(
                     r'<script[^>]+\bid="shoebox-tokens"[^>]*>', webpage, 'shoebox tokens',
                     display_id, default={}).get('apiToken')
-                or self._search_regex(r'\\"tokens\\":{\\"guest\\":\\"([A-Za-z0-9._-]+)\\"', webpage, 'token', default=None))
+                or self._search_regex(r'\\"tokens\\":{\\"guest\\":\\"([A-Za-z0-9._-]+)\\"', webpage, 'token', default=None)
+                or self._mint_guest_token(webpage, display_id))
 
         if not token:
             self.report_warning('Unable to extract auth token')
