@@ -10,7 +10,7 @@ class InaIE(InfoExtractor):
         'info_dict': {
             'id': 'I12055569',
             'ext': 'mp4',
-            'title': 'François Hollande "Je crois que c\'est clair"',
+            'title': 'Plateau invité : François Hollande concernant le débauchage au PS par N. Sarkozy',
             'description': 'md5:19f61e2b4844ed4bb2e3df9ab9f527ff',
             'upload_date': '20070712',
             'thumbnail': 'https://cdn-hub.ina.fr/notice/690x517/3c4/I12055569.jpeg',
