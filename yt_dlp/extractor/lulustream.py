@@ -1,5 +1,3 @@
-import urllib.parse
-
 from .common import InfoExtractor
 from ..utils import (
     ExtractorError,
@@ -20,7 +18,7 @@ class LuluStreamIE(InfoExtractor):
     _EMBED_REGEX = [rf'<iframe[^>]+\bsrc=(["\'])(?P<url>https?://{_DOMAINS}/e/[0-9a-z]+)\1']
     _TESTS = [
         {
-            'url': 'https://luluvid.com/d/yzip3nvuot20',
+            'url': 'https://lulustream.com/d/yzip3nvuot20',
             'md5': '4bf278e31cd8acf79dcf75aaa2c1a76b',
             'info_dict': {
                 'id': 'yzip3nvuot20',
@@ -46,7 +44,7 @@ class LuluStreamIE(InfoExtractor):
             'only_matching': True,
         },
         {
-            'url': 'https://lulustream.com/d/yzip3nvuot20',
+            'url': 'https://luluvid.com/d/yzip3nvuot20',
             'only_matching': True,
         },
         {
@@ -61,7 +59,8 @@ class LuluStreamIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-        host = urllib.parse.urlparse(url).hostname or 'luluvdo.com'
+        # luluvid.com / luluvdo.com / luluvdoo.com no longer resolve; keep matching them.
+        host = 'lulustream.com'
         webpage = self._download_webpage(f'https://{host}/e/{video_id}', video_id)
 
         if 'File is no longer available' in webpage:
