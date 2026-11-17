@@ -475,7 +475,7 @@ class KickClipsIE(KickBaseIE):
             'id': 'xqc',
             'title': 'xQc - Clips sorted by Date (Last Day)',
         },
-        'playlist_mincount': 10,
+        'playlist_mincount': 1,
     }]
 
     def _entries(self, creator_id, channel_slug, sort_param, range_param):
