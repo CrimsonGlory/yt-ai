@@ -266,7 +266,7 @@ class RaiPlayIE(RaiBaseIE):
                 'thumbnail': 'https://www.raiplay.it/dl/img/2026/09/07/1788777274828_IMG_8375.JPG.jpeg',
                 'timestamp': 1788355380,
                 'upload_date': '20260902',
-                'series': 'Un giorno in pretura',
+                'series': 'Un giorno in Pretura',
                 'season': '2026/27',
                 'episode': 'Prigioniera in Via Carcere',
                 'release_year': 2026,
