@@ -9,6 +9,7 @@ from ..utils import (
     str_or_none,
     update_url_query,
     url_basename,
+    url_or_none,
     urlencode_postdata,
     urljoin,
 )
@@ -55,7 +56,10 @@ class ZoomIE(InfoExtractor):
             'id': 'VjE-5kW3xmgbEYqR5KzRgZ1OFZvtMtiXk5HyRJo5kK4m5PYE6RF4rF_oiiO_9qaM.UTAg1MI7JSnF3ZjX',
             'ext': 'mp4',
             'title': 'February 2022 Detroit Revenue Estimating Conference',
+            'uploader': 'Janice Butler',
             'duration': 7299,
+            'timestamp': 1645199227,
+            'upload_date': '20220218',
             'formats': 'mincount:3',
         },
     }]
@@ -63,6 +67,63 @@ class ZoomIE(InfoExtractor):
     def _get_page_data(self, webpage, video_id):
         return self._search_json(
             r'window\.__data__\s*=', webpage, 'data', video_id, transform_source=js_to_json)
+
+    def _extract_unified_player(self, play_info_url, base_url, video_id):
+        data = self._download_json(play_info_url, video_id, note='Downloading play info JSON')
+        if not traverse_obj(data, 'status'):
+            raise ExtractorError(
+                traverse_obj(data, ('errorMessage', {str})) or 'unexpected JSON error', expected=True)
+
+        media_info = traverse_obj(data, ('result', 'mediaInfo', {dict})) or {}
+        formats, subtitles, seen_urls = [], {}, set()
+
+        def add_format(play_url, format_id, format_note, preference):
+            play_url = url_or_none(play_url)
+            if not play_url or play_url in seen_urls:
+                return
+            seen_urls.add(play_url)
+            formats.append({
+                'url': play_url,
+                'format_id': format_id,
+                'format_note': format_note,
+                'ext': 'mp4',
+                'preference': preference,
+                **parse_resolution(self._search_regex(
+                    r'_(\d+x\d+)\.mp4', url_basename(play_url), 'resolution', default=None)),
+            })
+
+        add_format(media_info.get('playUrl'), 'view_with_share', 'Screen share with camera', 1)
+        for key, format_id, format_note, preference in (
+            ('speaker', 'view', 'Camera stream', 0),
+            ('share', 'share', 'Screen share stream', -1),
+            ('gallery', 'gallery', 'Gallery stream', -2),
+            ('speakerWithShare', 'speaker_with_share', 'Speaker with screen share', -3),
+            ('galleryWithShare', 'gallery_with_share', 'Gallery with screen share', -4),
+        ):
+            source = traverse_obj(media_info, ('multipleSourceInfo', key, {dict})) or {}
+            add_format(source.get('playUrl'), format_id, format_note, preference)
+            vtt_url = source.get('vttUrl')
+            if vtt_url:
+                subtitles.setdefault('chapter', []).append({
+                    'url': urljoin(base_url, vtt_url),
+                    'ext': 'vtt',
+                })
+
+        if not formats:
+            self.raise_no_formats('No playable sources found', expected=True, video_id=video_id)
+
+        return {
+            'id': video_id,
+            'title': traverse_obj(media_info, ('mediaTopic', {str})),
+            'uploader': traverse_obj(media_info, ('ownerName', {str})),
+            'duration': int_or_none(media_info.get('mediaDuration')),
+            'timestamp': int_or_none(media_info.get('createdTime'), scale=1000),
+            'formats': formats,
+            'subtitles': subtitles,
+            'http_headers': {
+                'Referer': base_url,
+            },
+        }
 
     def _get_real_webpage(self, url, base_url, video_id, url_type):
         webpage = self._download_webpage(url, video_id, note=f'Downloading {url_type} webpage')
@@ -92,8 +153,14 @@ class ZoomIE(InfoExtractor):
         query = {}
         start_params = traverse_obj(url, {'startTime': ({parse_qs}, 'startTime', -1)})
 
+        webpage = self._get_real_webpage(url, base_url, video_id, url_type)
+        play_info_api = traverse_obj(self._search_json(
+            r'window\.__zm_unified_player__\s*=', webpage, 'unified player', video_id,
+            default=None, transform_source=js_to_json), ('playInfoApi', {str}))
+        if play_info_api:
+            return self._extract_unified_player(urljoin(base_url, play_info_api), base_url, video_id)
+
         if url_type == 'share':
-            webpage = self._get_real_webpage(url, base_url, video_id, 'share')
             meeting_id = self._get_page_data(webpage, video_id)['meetingId']
             redirect_path = self._download_json(
                 f'{base_url}nws/recording/1.0/play/share-info/{meeting_id}',
