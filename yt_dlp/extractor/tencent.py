@@ -437,10 +437,14 @@ class WeTvBaseIE(TencentBaseIE):
         webpage = self._download_webpage(url, series_id)
         webpage_metadata = self._get_webpage_metadata(webpage, series_id)
 
+        episode_ids = (
+            traverse_obj(webpage_metadata, ('videoList', ..., 'vid', {str}))
+            or traverse_obj(webpage_metadata, ('videoIdList', ..., {str}))
+            or [vid for vid in (self._search_regex(
+                r'video_ids_country\\?"\s*:\s*\\?"([^"\\]+)',
+                webpage, 'episode ids', default='') or '').split(',') if vid])
         episode_paths = (
-            [f'/play/{series_id}/{episode["vid"]}'
-             for episode in webpage_metadata.get('videoList') or [] if episode.get('vid')]
-            or [f'/play/{series_id}/{vid}' for vid in webpage_metadata.get('videoIdList') or []]
+            [f'/play/{series_id}/{vid}' for vid in episode_ids]
             or re.findall(r'<a[^>]+class="play-video__link"[^>]+href="(?P<path>[^"]+)', webpage))
 
         return self.playlist_from_matches(

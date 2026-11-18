@@ -2917,7 +2917,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **webcamerapl**: Send a camera-page Referer and fall back to Nimble `chunks.m3u8` when `playlist.m3u8` 404s
     * **weiqitv**: Extract `/v/` Clappr MP4 and `/l/` NetEase live HLS; raise login when `_vu` is withheld
     * **wetv:episode**: Prefer Next.js `videoInfo.title` over the OG "Watch Free with Eng Sub | WeTV" page title; fall back to JSON-LD VideoObject / TVEpisode / TVSeries when app-router pages omit `__NEXT_DATA__`; retry HD `getvinfo` and skip `server err` qualities; impersonate HLS playlists and treat unused-CDN HTTP 418 as non-fatal
-    * **wetv:series**: Parse `pageProps.data` when it is a JSON string and collect episodes from `videoList` or `videoIdList`
+    * **wetv:series**: Parse `pageProps.data` when it is a JSON string and collect episodes from `videoList` / `videoIdList`, with app-router `video_ids_country` fallback
     * **wevidi**: Raise an expected error when Cloudflare 302s the entire domain to YouTube; fall back to a YouTube embed when WVPlayer is missing
     * **wimbledon**: Extract current `/video/{slug}` pages via GraphQL and Adobe Scene7 HLS; keep Brightcove for legacy `/video/media/` IDs
     * **WorldStarHipHop**: Extract JSON-LD MP4s from current `/videos/{id}/{slug}` pages
