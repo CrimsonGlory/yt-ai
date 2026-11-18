@@ -2895,7 +2895,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **unistra**: Extract HTML5 `vod-stream.di.unistra.fr` MP4s instead of the dead Flash `vod-flash.u-strasbg.fr` host
     * **unity**: Follow YouTube embeds on current Unity Learn tutorial pages (including `learn.unity.com`)
     * **urort**: Extract S3 `data-trackurl` from current `/track/` pages
-    * **usatoday**: Extract Gannett CDN HLS from `data-c-vpd` instead of Brightcove
+    * **usatoday**: Impersonate the browser (Gannett returns HTTP 402 to the default UA) and extract CDN HLS from `data-c-vpd` instead of Brightcove
     * **ustream**: Fetch IBM Video Streaming HLS over HTTPS UMS long-poll when `media_urls` is empty
     * **ustudio:embed**: Fetch embed `config.json` over HTTPS and read `image_url` posters
     * **vqq:video**: Fall back to the union / float_vinfo2 APIs when pinia/OG metadata is gone; impersonate progressive CDN URLs with a v.qq.com Referer and skip the `video.dispatch.tc.qq.com` host that returns HTTP 418

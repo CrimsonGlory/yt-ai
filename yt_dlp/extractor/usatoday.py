@@ -55,7 +55,7 @@ class USATodayIE(InfoExtractor):
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
-        webpage = self._download_webpage(url, display_id)
+        webpage = self._download_webpage(url, display_id, impersonate=True)
 
         video_data = self._search_json(
             r'\bdata-c-vpd=(["\'])', webpage, 'video data', display_id,
