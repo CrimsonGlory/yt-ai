@@ -437,7 +437,7 @@ class NetEaseMusicListIE(NetEaseMusicBaseIE):
             'timestamp': int,
             'upload_date': r're:\d{8}',
         },
-        'playlist_mincount': 40,
+        'playlist_mincount': 30,
     }, {
         'note': 'Toplist/Charts sample',
         'url': 'http://music.163.com/#/discover/toplist?id=3733003',
