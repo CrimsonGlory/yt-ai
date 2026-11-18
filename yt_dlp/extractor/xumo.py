@@ -43,7 +43,7 @@ class XumoIE(InfoExtractor):
             'episode': 'Smoke Screen',
             'episode_number': 1,
             'genres': ['Cooking'],
-            'tags': ['barbecue', 'grilling', 'cooking instruction', 'smoking', 'hot-smoking'],
+            'tags': ['barbecue', 'grilling', 'smoking', 'cooking instruction', 'hot-smoking'],
         },
     }, {
         'url': 'https://play.xumo.com/tv-shows/primal-grill-with-steven-raichlen/XM098RB18OIA8N',
