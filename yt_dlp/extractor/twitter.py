@@ -1697,6 +1697,7 @@ class TwitterSpacesIE(TwitterBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://x.com/i/spaces/1ybQVJRXmjnKWb',
+        'skip': 'Twitter Space ended and replay is disabled',
         'info_dict': {
             'id': '1ybQVJRXmjnKWb',
             'ext': 'mp4',
@@ -1709,6 +1710,23 @@ class TwitterSpacesIE(TwitterBaseIE):
             'upload_date': '20261117',
             'release_timestamp': 1794880391,
             'release_date': '20261117',
+            'live_status': 'is_live',
+        },
+        'params': {'skip_download': 'm3u8'},
+    }, {
+        'url': 'https://x.com/i/spaces/1pedyBybzBRVlr',
+        'info_dict': {
+            'id': '1pedyBybzBRVlr',
+            'ext': 'm4a',
+            'title': r're:5000\+.+Gain Active Mutuals',
+            'description': r're:Twitter Space participated by .+',
+            'uploader': 'Sikha Patel 💗',
+            'uploader_id': 'Sikha__Patel',
+            'thumbnail': r're:https?://pbs\.twimg\.com/profile_images/.+',
+            'timestamp': 1794962003,
+            'upload_date': '20261118',
+            'release_timestamp': 1794962008,
+            'release_date': '20261118',
             'live_status': 'is_live',
         },
         'params': {'skip_download': 'm3u8'},
