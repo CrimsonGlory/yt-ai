@@ -16,6 +16,11 @@ _GRAPHQL_HEADERS = {
     'Origin': 'https://www.imdb.com',
     'Referer': 'https://www.imdb.com/',
 }
+# Browser UAs hit AWS WAF; GraphQL is CloudFront 403. Crawler UA still gets __NEXT_DATA__.
+_PAGE_HEADERS = {
+    'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+}
 
 
 class ImdbIE(InfoExtractor):
@@ -81,16 +86,27 @@ class ImdbIE(InfoExtractor):
         'only_matching': True,
     }]
 
-    def _real_extract(self, url):
-        video_id = self._match_id(url)
-        video_info = traverse_obj(self._download_json(
+    def _download_video_info(self, video_id):
+        webpage = self._download_webpage(
+            f'https://www.imdb.com/video/vi{video_id}/', video_id,
+            headers=_PAGE_HEADERS, fatal=False) or ''
+        video_info = traverse_obj(
+            self._search_nextjs_data(webpage, video_id, default={}),
+            ('props', 'pageProps', 'videoPlaybackData', 'video', {dict}))
+        if traverse_obj(video_info, 'playbackURLs'):
+            return video_info
+        return traverse_obj(self._download_json(
             _GRAPHQL_API, video_id, 'Downloading GraphQL JSON',
             data=json.dumps({
                 'query': self._GRAPHQL_QUERY,
                 'operationName': 'VideoPlayback',
                 'variables': {'id': f'vi{video_id}'},
             }).encode(),
-            headers=_GRAPHQL_HEADERS), ('data', 'video')) or {}
+            headers=_GRAPHQL_HEADERS, fatal=False), ('data', 'video', {dict})) or {}
+
+    def _real_extract(self, url):
+        video_id = self._match_id(url)
+        video_info = self._download_video_info(video_id)
         title = (traverse_obj(video_info, ('name', 'value'), ('primaryTitle', 'titleText', 'text'))
                  or f'vi{video_id}')
         data = video_info.get('playbackURLs') or []
@@ -154,20 +170,31 @@ class ImdbListIE(InfoExtractor):
         'playlist_count': 8,
     }
 
-    def _real_extract(self, url):
-        list_id = self._match_id(url)
-        list_info = traverse_obj(self._download_json(
+    def _download_list_info(self, list_id):
+        webpage = self._download_webpage(
+            f'https://www.imdb.com/list/ls{list_id}/', list_id,
+            headers=_PAGE_HEADERS, fatal=False) or ''
+        list_info = traverse_obj(
+            self._search_nextjs_data(webpage, list_id, default={}),
+            ('props', 'pageProps', 'mainColumnData', 'list', {dict}))
+        if list_info:
+            return list_info
+        return traverse_obj(self._download_json(
             _GRAPHQL_API, list_id, 'Downloading GraphQL JSON',
             data=json.dumps({
                 'query': self._GRAPHQL_QUERY,
                 'operationName': 'VideoList',
                 'variables': {'id': f'ls{list_id}'},
             }).encode(),
-            headers=_GRAPHQL_HEADERS), ('data', 'list')) or {}
+            headers=_GRAPHQL_HEADERS, fatal=False), ('data', 'list', {dict})) or {}
+
+    def _real_extract(self, url):
+        list_id = self._match_id(url)
+        list_info = self._download_list_info(list_id)
         entries = [
             self.url_result(f'https://www.imdb.com/video/{video_id}', 'Imdb', video_id[2:])
             for video_id in traverse_obj(list_info, (
-                'items', 'edges', ..., 'node', 'item', 'id', {str}))
+                ('videoItems', 'items'), 'edges', ..., 'node', ('listItem', 'item'), 'id', {str}))
             if video_id.startswith('vi')]
         return self.playlist_result(
             entries, list_id,

@@ -2661,7 +2661,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **icareus**: `/video/details/` and `/event/details/` URLs
     * **ign**: Tolerate missing `videoId` and extra m3u8 paths
     * **ilpost**: Next.js episode data and podcast path URLs
-    * **imdb**: GraphQL `VideoPlayback` API
+    * **imdb**: Prefer `__NEXT_DATA__` `videoPlaybackData` from the video page (facebookexternalhit UA); GraphQL `VideoPlayback` as fallback
     * **imagentv**: Follow meta-refresh to `/programas/` and extract Dailymotion/YouTube from JSON-LD
     * **indavideo**: Referer + JSONP callback on `playerHandler`
     * **iqiyi**: Current IQ/iQIYI playback (bid quality tags and signed play URLs)
