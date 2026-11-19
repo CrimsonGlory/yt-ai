@@ -216,6 +216,7 @@ class KickVODIE(KickBaseIE):
         'skip': 'video gone',
     }, {
         'url': 'https://kick.com/xqc/videos/01a155bc-4fd8-7821-8da8-9ef12d86f54b',
+        'skip': 'video gone',
         'info_dict': {
             'id': '01a155bc-4fd8-7821-8da8-9ef12d86f54b',
             'ext': 'mp4',
@@ -228,6 +229,26 @@ class KickVODIE(KickBaseIE):
             'thumbnail': r're:https?://.+',
             'timestamp': 1792439767,
             'upload_date': '20261019',
+            'uploader': 'xQc',
+            'uploader_id': 'xqc',
+            'view_count': int,
+        },
+        'params': {'skip_download': 'm3u8'},
+    }, {
+        'url': 'https://kick.com/xqc/videos/01a1dc39-53f8-7a6d-9a47-80b450da6c52',
+        'info_dict': {
+            'id': '01a1dc39-53f8-7a6d-9a47-80b450da6c52',
+            'ext': 'mp4',
+            'title': 'md5:ada3cb18281221315b9bd3b51a841f64',
+            'age_limit': 18,
+            'availability': 'public',
+            'categories': ['Just Chatting'],
+            'channel': 'xQc',
+            'channel_id': '668',
+            'duration': 34646,
+            'thumbnail': r're:https?://.+',
+            'timestamp': 1794696107,
+            'upload_date': '20261114',
             'uploader': 'xQc',
             'uploader_id': 'xqc',
             'view_count': int,
@@ -307,10 +328,13 @@ class KickVODIE(KickBaseIE):
                 self.raise_login_required(
                     'This video requires a channel subscription', metadata_available=True)
 
+        formats, subtitles = self._extract_m3u8_formats_and_subtitles(
+            m3u8_url, video_id, 'mp4')
         return {
             'id': video_id,
             'channel_id': creator_id,
-            'formats': self._extract_m3u8_formats(m3u8_url, video_id, 'mp4'),
+            'formats': formats,
+            'subtitles': subtitles,
             **metadata,
         }
 

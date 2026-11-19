@@ -2677,7 +2677,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **kakao**: Raise an expected error that KakaoTV shut down on 2026-06-30
     * **kankanews**: Current page media JSON
     * **khanacademy**: Fetch `published-content-version`; load unit/course playlists from `FetchContentData` (`curatedContentLibraryJson`) when `ContentRouteCourseData` is missing from the GraphQL safelist
-    * **kick**: Fall back to VOD `thumbnail.src` when `srcSet` is empty; keep clip `creator` from the clip API
+    * **kick**: Fall back to VOD `thumbnail.src` when `srcSet` is empty; keep clip `creator` from the clip API; extract HLS subtitle tracks on VODs
     * **kicker**: RSS media feeds (and optional `www`)
     * **kika**: Restrict playlist `_VALID_URL` so `/videos/` episode URLs stay on **kika**
     * **kickstarter**: Impersonate the browser and extract native HTML5 `v2.kickstarter.com` sources when `data-video-url` is absent
