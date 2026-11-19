@@ -829,9 +829,17 @@ class TwitchVideosClipsIE(TwitchPlaylistBaseIE):
     _TESTS = [{
         # Clips
         'url': 'https://www.twitch.tv/vanillatv/clips?filter=clips&range=all',
+        'skip': 'channel has no public clips',
         'info_dict': {
             'id': 'vanillatv',
             'title': 'vanillatv - Clips Top All',
+        },
+        'playlist_mincount': 1,
+    }, {
+        'url': 'https://www.twitch.tv/xqc/clips?filter=clips&range=all',
+        'info_dict': {
+            'id': 'xqc',
+            'title': 'xqc - Clips Top All',
         },
         'playlist_mincount': 1,
     }, {
