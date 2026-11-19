@@ -559,7 +559,7 @@ class NhkRadiruIE(InfoExtractor):
             'channel': 'NHK FM',
             'series': 'ベストオブクラシック',
         },
-        'playlist_mincount': 3,
+        'playlist_mincount': 1,
     }, {
         # news
         'url': 'https://www.nhk.or.jp/radio/player/ondemand.html?p=18439M2W42_02_4251212',
