@@ -354,8 +354,6 @@ class TVPEmbedIE(InfoExtractor):
 
     _TESTS = [{
         'url': 'tvp:194536',
-        'md5': 'eaf39d61956721d193b9441e8d26c688',
-        'skip': 'stale test sample / site changed',
         'info_dict': {
             'id': '194536',
             'ext': 'mp4',
@@ -370,6 +368,7 @@ class TVPEmbedIE(InfoExtractor):
         },
     }, {
         'url': 'https://www.tvp.pl/sess/tvplayer.php?object_id=51247504&amp;autoplay=false',
+        'skip': 'video gone',
         'info_dict': {
             'id': '51247504',
             'ext': 'mp4',
