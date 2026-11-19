@@ -37,6 +37,7 @@ class AllocineIE(InfoExtractor):
         'add_ie': ['Dailymotion'],
     }, {
         'url': 'http://www.allocine.fr/video/player_gen_cmedia=19540403&cfilm=222257.html',
+        'skip': 'dailymotion HLS 404',
         'info_dict': {
             'id': '19540403',
             'display_id': '19540403',
@@ -57,6 +58,7 @@ class AllocineIE(InfoExtractor):
         'add_ie': ['Dailymotion'],
     }, {
         'url': 'http://www.allocine.fr/video/player_gen_cmedia=19544709&cfilm=181290.html',
+        'skip': 'dailymotion HLS 404',
         'info_dict': {
             'id': '19544709',
             'display_id': '19544709',
