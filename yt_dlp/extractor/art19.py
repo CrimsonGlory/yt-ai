@@ -83,6 +83,7 @@ class Art19IE(InfoExtractor):
     }, {
         # Live wishtv.com article 403s yt-dlp; Wayback snapshot still has the Art19 embed
         'url': 'https://web.archive.org/web/20240223123349/https://www.wishtv.com/podcast-episode/larry-bucshon-announces-retirement-from-congress/',
+        'params': {'extractor_args': {'generic': {'impersonate': ['chrome']}}},
         'info_dict': {
             'id': '8da368bd-08d1-46d0-afaa-c134a4af7dc0',
             'ext': 'mp3',
