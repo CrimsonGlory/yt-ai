@@ -395,6 +395,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
     _TESTS = [
         {
             'url': 'https://web.archive.org/web/20150415002341/https://www.youtube.com/watch?v=aYAGB11YrSs',
+            'skip': 'Wayback HTTP 429 on archived googlevideo capture',
             'info_dict': {
                 'id': 'aYAGB11YrSs',
                 'ext': 'webm',
@@ -906,7 +907,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
         res = self._download_json(
             'https://web.archive.org/cdx/search/cdx', item_id,
             note or 'Downloading CDX API JSON', query=query, fatal=fatal,
-            errnote=False if not fatal else None)
+            errnote=False if not fatal else None, impersonate=True)
         if isinstance(res, list) and len(res) >= 2:
             # format response to make it easier to use
             return [dict(zip(res[0], v)) for v in res[1:]]  # noqa: B905
@@ -1127,7 +1128,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
 
         video_info = self._download_json(
             'https://web.archive.org/__wb/videoinfo', video_id,
-            query={'vtype': 'youtube', 'vid': video_id})
+            query={'vtype': 'youtube', 'vid': video_id}, impersonate=True)
 
         if not traverse_obj(video_info, 'formats'):
             self.raise_no_formats(
@@ -1140,7 +1141,7 @@ class YoutubeWebArchiveIE(InfoExtractor):
             webpage = self._download_webpage(
                 (self._WAYBACK_BASE_URL + 'http://www.youtube.com/watch?v=%s') % (capture, video_id),
                 video_id=video_id, fatal=False, errnote='unable to download capture webpage (it may not be archived)',
-                note='Downloading capture webpage')
+                note='Downloading capture webpage', impersonate=True)
             current_info = self._extract_metadata(video_id, webpage or '')
             # Try avoid getting deleted video metadata
             if current_info.get('title'):

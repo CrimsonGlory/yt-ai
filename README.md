@@ -2913,7 +2913,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **vrtmax**: Query EpisodePage player/JSON-LD GraphQL after the `episode` field was removed
     * **vtm**: Pass the DPG privacy gate and impersonate the browser to extract public mychannels clips
     * **vtv**: Extract HLS from classic `data-vid` and shorts `data-file` CDN paths
-    * **web.archive:youtube**: Pin Wayback captures with `__wb/videoinfo` `timestamp` so `2id_` does not follow expired googlevideo redirects; impersonate archived googlevideo captures (urllib gets HTTP 404); treat optional CDX lookup failures as non-fatal and silent
+    * **web.archive:youtube**: Pin Wayback captures with `__wb/videoinfo` `timestamp` so `2id_` does not follow expired googlevideo redirects; impersonate `__wb/videoinfo`, CDX, capture webpages, and archived googlevideo (urllib gets HTTP 498/404); treat optional CDX lookup failures as non-fatal and silent
     * **webcamerapl**: Send a camera-page Referer and fall back to Nimble `chunks.m3u8` when `playlist.m3u8` 404s
     * **weiqitv**: Extract `/v/` Clappr MP4 and `/l/` NetEase live HLS; raise login when `_vu` is withheld
     * **wetv:episode**: Prefer Next.js `videoInfo.title` over the OG "Watch Free with Eng Sub | WeTV" page title; fall back to JSON-LD VideoObject / TVEpisode / TVSeries when app-router pages omit `__NEXT_DATA__`; retry HD `getvinfo` and skip `server err` qualities; impersonate HLS playlists and treat unused-CDN HTTP 418 as non-fatal
