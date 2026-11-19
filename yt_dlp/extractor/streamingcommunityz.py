@@ -28,7 +28,7 @@ class StreamingCommunityzIE(InfoExtractor):
     '''
     _TESTS = [{
         'url': 'https://streamingcommunityz.build/it/watch/60268',
-        'md5': '92df9feb222b1ab2b7c832066ca932e5',
+        'md5': '6ac3604806fa5d4c58e5ebf703030e7c',
         'info_dict': {
             'id': '60268',
             'ext': 'mp4',
