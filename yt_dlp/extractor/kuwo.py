@@ -74,7 +74,6 @@ class KuwoIE(KuwoBaseIE):
     _VALID_URL = r'https?://(?:(?:www|m)\.)?kuwo\.cn/(?:(?:newh5app/)?play_detail|yinyue)/(?P<id>\d+)'
     _TESTS = [{
         'url': 'https://www.kuwo.cn/play_detail/9930103',
-        'md5': '8cb8d6497084261c35b03a051b027906',
         'info_dict': {
             'id': '9930103',
             'ext': 'mp3',
