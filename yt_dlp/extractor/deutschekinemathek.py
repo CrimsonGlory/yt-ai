@@ -23,6 +23,7 @@ class DeutscheKinemathekIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?deutsche-kinemathek\.de/[a-z]{2}/online/streaming/(?P<id>[^/?#]+)/?(?:$|[?#])'
     _TESTS = [{
         'url': 'https://www.deutsche-kinemathek.de/de/online/streaming/zaertlichkeiten',
+        'skip': 'film left streaming program',
         'md5': '57e9c471ac575494ea958ff8985ca0f1',
         'info_dict': {
             'id': 'zaertlichkeiten',
@@ -36,6 +37,18 @@ class DeutscheKinemathekIE(InfoExtractor):
             'upload_date': '20260515',
             'creators': ['Maria Lang'],
             'cast': ['Verena Rudolph', 'Renate Kretschmar'],
+        },
+    }, {
+        'url': 'https://www.deutsche-kinemathek.de/de/online/streaming/ariane',
+        'info_dict': {
+            'id': 'ariane',
+            'ext': 'mp4',
+            'title': 'Ariane',
+            'description': 'md5:82a100c8834b7b6b0a1210705d61ab31',
+            'thumbnail': r're:https://player\.syecontentdelivery\.de/content/.+\.jpg',
+            'duration': 5100,
+            'creators': ['Paul Czinner'],
+            'cast': ['Elisabeth Bergner', 'Rudolf Forster'],
         },
     }, {
         'url': 'https://www.deutsche-kinemathek.de/en/online/streaming/tendernesses',
@@ -52,7 +65,11 @@ class DeutscheKinemathekIE(InfoExtractor):
             prop = attrs.get('itemprop')
             if not prop:
                 continue
-            value = unescapeHTML(attrs.get('content') or '') or None
+            raw = unescapeHTML(attrs.get('content') or '')
+            if re.search(r'https?://', raw):
+                value = re.sub(r'[\r\n]+', '', raw).strip() or None
+            else:
+                value = ' '.join(raw.split()) or None
             props.setdefault(prop, []).append(value)
         return props
 
