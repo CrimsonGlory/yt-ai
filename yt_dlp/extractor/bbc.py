@@ -1682,7 +1682,7 @@ class BBCCoUkIPlayerEpisodesIE(BBCCoUkIPlayerPlaylistBaseIE):
         'info_dict': {
             'id': 'b094m5t9',
             'title': 'Doctor Foster',
-            'description': 'md5:5aa9195fad900e8e14b52acd765a9fd6',
+            'description': 'md5:a138c15f3344a1a9fa5b9b3907c65901',
         },
         'playlist_mincount': 10,
     }, {
@@ -1692,7 +1692,7 @@ class BBCCoUkIPlayerEpisodesIE(BBCCoUkIPlayerPlaylistBaseIE):
         'info_dict': {
             'id': 'b094m5t9',
             'title': 'Doctor Foster',
-            'description': 'md5:5aa9195fad900e8e14b52acd765a9fd6',
+            'description': 'md5:a138c15f3344a1a9fa5b9b3907c65901',
         },
         'playlist_mincount': 5,
     }, {
