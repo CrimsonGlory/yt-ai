@@ -24,7 +24,7 @@ class MediaKlikkIE(InfoExtractor):
             'display_id': 'mediaklikk-mobil-szemelyes-profil',
             'ext': 'mp4',
             'upload_date': '20250913',
-            'thumbnail': 'https://cdn.cms.mtv.hu/wp-content/uploads/sites/4/2025/09/vlcsnap-2025-09-13-13h32m14s877.jpg',
+            'thumbnail': r're:https://(?:cdn\.cms\.mtv\.hu|mediaklikk\.hu)/wp-content/uploads/.+\.jpg',
         },
     }, {
         # mediaklikk - date in html
