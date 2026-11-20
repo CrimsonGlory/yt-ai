@@ -2755,6 +2755,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **npr**: Fall back to JSON-LD JWPlayer media when the query API is blocked
     * **ntv.ru**: Read the numeric video id from `ya:ovs:feed_url` / `/video/{id}` without requiring a fixed meta attribute order
     * **nubilesporn**: Impersonate the browser and prime a tour session; anonymous shorts currently stop on a Cloudflare Turnstile challenge
+    * **nzz**: Read JW Player media IDs from JSON-LD / `cdn.jwplayer.com` URLs when the old `jw-video` script is absent
     * **odnoklassniki**: Impersonate desktop video pages, HLS/DASH manifests, and media CDN downloads; parse player `metadata` as a dict or JSON string; match `m.ok.ru` / `mobile.ok.ru` URLs (the mobile site 301s to desktop); send a site Referer on manifests and media CDN downloads
     * **oftv**: Extract HLS from the current `api.of.tv` player instead of Zype
     * **ondemandchina**: GraphQL Episode `$kind`/`$part` variables and US/CA X-Forwarded-For on the ODC playback API

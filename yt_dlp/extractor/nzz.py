@@ -1,6 +1,7 @@
 import re
 
 from .common import InfoExtractor
+from ..utils import orderedSet
 
 
 class NZZIE(InfoExtractor):
@@ -20,6 +21,13 @@ class NZZIE(InfoExtractor):
     }]
 
     def _entries(self, webpage, page_id):
+        media_ids = orderedSet(re.findall(
+            r'cdn\.jwplayer\.com/(?:videos|manifests|v2/media)/([A-Za-z0-9]{8})', webpage))
+        for media_id in media_ids:
+            yield self.url_result(
+                f'https://cdn.jwplayer.com/v2/media/{media_id}', 'JWPlatform', media_id)
+        if media_ids:
+            return
         for script in re.findall(r'(?s)<script[^>]* data-hid="jw-video-jw[^>]+>(.+?)</script>', webpage):
             settings = self._search_json(r'var\s+settings\s*=[^{]*', script, 'settings', page_id, fatal=False)
             if entry := self._parse_jwplayer_data(settings, page_id):
