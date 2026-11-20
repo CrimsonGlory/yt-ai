@@ -1733,6 +1733,7 @@ class TwitterSpacesIE(TwitterBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://x.com/i/spaces/1dKOpERazNJnNB',
+        'skip': 'Twitter Space ended and replay is disabled',
         'info_dict': {
             'id': '1dKOpERazNJnNB',
             'ext': 'm4a',
@@ -1745,6 +1746,23 @@ class TwitterSpacesIE(TwitterBaseIE):
             'upload_date': '20261119',
             'release_timestamp': 1795053488,
             'release_date': '20261119',
+            'live_status': 'is_live',
+        },
+        'params': {'skip_download': 'm3u8'},
+    }, {
+        'url': 'https://x.com/i/spaces/1OdWldqbOopjVZ',
+        'info_dict': {
+            'id': '1OdWldqbOopjVZ',
+            'ext': 'm4a',
+            'title': r're:Abducted By Aliens',
+            'description': r're:Twitter Space participated by .+',
+            'uploader': 'IanMalcolm84',
+            'uploader_id': 'IanMalcolm84',
+            'thumbnail': r're:https?://pbs\.twimg\.com/profile_images/.+',
+            'timestamp': 1794786248,
+            'upload_date': '20261115',
+            'release_timestamp': 1795140284,
+            'release_date': '20261120',
             'live_status': 'is_live',
         },
         'params': {'skip_download': 'm3u8'},
