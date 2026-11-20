@@ -2,6 +2,7 @@ import re
 
 from .brightcove import BrightcoveNewIE
 from .common import InfoExtractor
+from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
     smuggle_url,
@@ -80,7 +81,19 @@ class ThreeMIE(InfoExtractor):
 
     def _real_extract(self, url):
         product_id = self._match_id(url)
-        webpage = self._download_webpage(url, product_id)
+        webpage, last_err = None, None
+        # 3m.com serves a Cloudflare JS challenge to Chrome; Safari impersonation works.
+        for impersonate in ('safari', 'chrome', 'firefox'):
+            try:
+                webpage = self._download_webpage(url, product_id, impersonate=impersonate)
+                break
+            except ExtractorError as e:
+                last_err = e
+                cause = getattr(e, 'cause', None)
+                if not isinstance(cause, HTTPError) or cause.status != 403:
+                    raise
+        if webpage is None:
+            raise last_err
         data = self._search_json(
             r'window\.__INITIAL_DATA\s*=', webpage, 'initial data', product_id,
             end_pattern=r';')
