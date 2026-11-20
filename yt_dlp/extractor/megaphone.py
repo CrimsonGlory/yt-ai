@@ -15,7 +15,7 @@ class MegaphoneIE(InfoExtractor):
             'ext': 'mp3',
             'title': '#97 What Kind Of Idiot Gets Phished?',
             'duration': 1818.36,
-            'thumbnail': 'md5:06bee541a03a939784f0d63a7b0670c2',
+            'thumbnail': r're:https?://.+\.(?:png|jpe?g)',
             'creators': ['Reply All'],
         },
     }
