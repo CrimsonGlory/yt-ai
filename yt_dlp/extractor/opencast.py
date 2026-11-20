@@ -172,11 +172,20 @@ class OpencastPlaylistIE(OpencastBaseIE):
         },
         {
             'url': 'https://electures.uni-muenster.de/engage/ui/index.html?e=1&p=1&epFrom=39391d10-a711-4d23-b21d-afd2ed7d758c',
+            'skip': 'electures.uni-muenster.de returns HTTP 404 (instance gone)',
             'info_dict': {
                 'id': '39391d10-a711-4d23-b21d-afd2ed7d758c',
                 'title': '021670 Theologische Themen bei Hans Blumenberg WiSe 2017/18',
             },
             'playlist_mincount': 13,
+        },
+        {
+            'url': 'https://vid.igb.illinois.edu/engage/ui/index.html?epFrom=8aeddd04-17e3-48f1-8faf-0a12de44d235',
+            'info_dict': {
+                'id': '8aeddd04-17e3-48f1-8faf-0a12de44d235',
+                'title': 'PSCB Fall 26 & Spring 27',
+            },
+            'playlist_mincount': 5,
         },
     ]
 
