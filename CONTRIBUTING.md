@@ -1,5 +1,6 @@
 # CONTRIBUTING TO YT-AI
 
+- [NEW SITE SUPPORT POLICY](#new-site-support-policy)
 - [OPENING AN ISSUE](#opening-an-issue)
     - [Is the description of the issue itself sufficient?](#is-the-description-of-the-issue-itself-sufficient)
     - [Are you using the latest version?](#are-you-using-the-latest-version)
@@ -29,9 +30,18 @@
 - [EMBEDDING YT-AI](README.md#embedding-yt-ai)
 
 
+# NEW SITE SUPPORT POLICY
+
+yt-dlp now accepts new site support requests only from [established contributors](https://github.com/yt-dlp/yt-dlp/blob/master/CONTRIBUTING.md#new-site-support-policy). **yt-ai still accepts public new-site requests and new-extractor pull requests.**
+
+Open a [site support request](https://github.com/CrimsonGlory/yt-ai/issues/new?template=2_site_support_request.yml) with a playable example URL, or submit a pull request that adds the extractor. Pull requests that resolve an open `site-request` issue (here or on [yt-dlp](https://github.com/yt-dlp/yt-dlp/issues?q=is%3Aissue+state%3Aopen+label%3Asite-request)) are especially welcome.
+
+(yt-dlp's policy took effect on November 19, 2026. yt-ai does not enforce it.)
+
+
 # OPENING AN ISSUE
 
-Bugs and suggestions should be reported at: [CrimsonGlory/yt-ai/issues](https://github.com/CrimsonGlory/yt-ai/issues). Unless you were prompted to or there is another pertinent reason (e.g. GitHub fails to accept the bug report), please do not send bug reports via personal email. For discussions, join us in our [discord server](https://discord.gg/H5MNcFW63r).
+Bugs and suggestions should be reported at: [CrimsonGlory/yt-ai/issues](https://github.com/CrimsonGlory/yt-ai/issues). Unless you were prompted to or there is another pertinent reason (e.g. GitHub fails to accept the bug report), please do NOT send bug reports via email. For discussions, join us in our [discord server](https://discord.gg/H5MNcFW63r).
 
 **Please include the full output of yt-ai when run with `-vU`**, i.e. **add** `-vU` flag to **your command line**, copy the **whole** output and post it in the issue body wrapped in \`\`\` for better formatting. It should look similar to this:
 ```
@@ -68,7 +78,7 @@ So please elaborate on what feature you are requesting, or what bug you want to 
 - How it could be fixed
 - How your proposed solution would look like
 
-If your report is shorter than two lines, it is almost certainly missing some of these, which makes it hard for us to respond to it. We're often too polite to close the issue outright, but the missing info makes misinterpretation likely. We often get frustrated by these issues, since the only possible way for us to move forward on them is to ask for clarification over and over.
+If your report is shorter than two lines, it is almost certainly missing some of these, which makes it hard for us to respond to it. We often get frustrated by these issues, since the missing info makes misinterpretation likely and the only possible way for us to move forward on them is to ask for clarification over and over. If little-to-no effort was put into writing your report, you can expect little-to-no effort to be put into triaging your report, and your issue will probably be closed instead.
 
 For bug reports, this means that your report should contain the **complete** output of yt-ai when called with the `-vU` flag. The error message you get for (most) bugs even says so, but you would not believe how many of our bug reports do not contain this information.
 
