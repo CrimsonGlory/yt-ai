@@ -9,6 +9,7 @@ class FczenitIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?fc-zenit\.ru/video/(?P<id>[0-9]+)'
     _TEST = {
         'url': 'http://fc-zenit.ru/video/60878/',
+        'skip': 'fc-zenit.ru returns HTTP 403 for datacenter/VPN IPs ("disconnect VPN and try again")',
         'md5': '26b6978fc503c7a84647810d514c5f9a',
         'info_dict': {
             'id': '60878',
