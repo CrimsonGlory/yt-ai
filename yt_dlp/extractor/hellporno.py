@@ -11,6 +11,7 @@ class HellPornoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?hellporno\.(?:com/videos|net/v)/(?P<id>[^/]+)'
     _TESTS = [{
         'url': 'http://hellporno.com/videos/dixie-is-posing-with-naked-ass-very-erotic/',
+        'skip': 'Cloudflare JS challenge on hellporno.com ("Just a moment...")',
         'md5': 'f0a46ebc0bed0c72ae8fe4629f7de5f3',
         'info_dict': {
             'id': '149116',
