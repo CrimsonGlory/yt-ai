@@ -34,7 +34,7 @@ class MegaTVComIE(MegaTVComBaseIE):
     _TESTS = [
         {
             'url': 'https://www.megatv.com/gtvshows/2389354/2-6-2026/',
-            'md5': '6f35ef7d713047071fcfdc8002cf984e',
+            'md5': '21507283634c34095c38b5311bac1fc3',
             'info_dict': {
             'id': '2389354',
             'ext': 'mp4',
