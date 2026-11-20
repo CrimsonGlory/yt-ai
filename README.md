@@ -2810,6 +2810,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **radiozet**: Impersonate the player page and podcast API (plain urllib times out from this environment)
     * **raiplaysound**: Collect every season ContentSet from the program `filters` list so show URLs return the full archive, not only the current season
     * **rbgtum**: Use `/api/v2/streams/{slug}/{id}/watch` JWT HLS, with HTML m3u8 fallback; silent 404 on the old course API
+    * **rctiplus**: Raise geo-restriction when the live API rejects the viewer location, without attaching the JSON body as `ExtractorError.cause`
     * **rds**: Read Jasper embed / Fusion Axis ids on current Arc video pages
     * **redbull**: Use GraphQL `v1:pageConfig` and `api-player.redbull.com` HLS instead of the dead crepo GraphQL / `v1:hero` schema
     * **redbulltv**: Play `api.redbull.tv` products via rrn content IDs and `dms.redbull.tv` HLS

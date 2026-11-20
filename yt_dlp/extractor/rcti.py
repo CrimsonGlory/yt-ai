@@ -23,8 +23,12 @@ class RCTIPlusBaseIE(InfoExtractor):
     def _call_api(self, url, video_id, note=None):
         json = self._download_json(
             url, video_id, note=note, headers={'Authorization': self._AUTH_KEY})
-        if json.get('status', {}).get('code', 0) != 0:
-            raise ExtractorError(f'{self.IE_NAME} said: {json["status"]["message_client"]}', cause=json)
+        status = json.get('status') or {}
+        if status.get('code', 0) != 0:
+            msg = status.get('message_client') or status.get('message_server') or 'Unknown error'
+            if 'location' in msg.lower():
+                self.raise_geo_restricted(msg, countries=['ID'])
+            raise ExtractorError(f'{self.IE_NAME} said: {msg}', expected=True)
         return json.get('data'), json.get('meta')
 
 
@@ -138,6 +142,7 @@ class RCTIPlusIE(RCTIPlusBaseIE):
         'params': {
             'skip_download': True,
         },
+        'skip': 'geo-restricted live stream; RCTIPlus said location does not support live stream',
     }]
     _CONVIVA_JSON_TEMPLATE = {
         't': 'CwsSessionHb',
