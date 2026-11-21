@@ -56,9 +56,8 @@ class ZoomIE(InfoExtractor):
             'id': 'VjE-5kW3xmgbEYqR5KzRgZ1OFZvtMtiXk5HyRJo5kK4m5PYE6RF4rF_oiiO_9qaM.UTAg1MI7JSnF3ZjX',
             'ext': 'mp4',
             'title': 'February 2022 Detroit Revenue Estimating Conference',
-            'uploader': 'Janice Butler',
             'duration': 7299,
-            'timestamp': 1645199227,
+            'timestamp': 1645200510,
             'upload_date': '20220218',
             'formats': 'mincount:3',
         },
@@ -228,6 +227,7 @@ class ZoomIE(InfoExtractor):
             'id': video_id,
             'title': str_or_none(traverse_obj(data, ('meet', 'topic'))),
             'duration': int_or_none(data.get('duration')),
+            'timestamp': int_or_none(data.get('fileStartTime') or data.get('clipStartTime'), scale=1000),
             'subtitles': subtitles,
             'formats': formats,
             'http_headers': {

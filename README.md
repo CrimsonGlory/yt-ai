@@ -2947,7 +2947,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **zenyandex**: Impersonate the browser on video pages and okcdn HLS/MP4 (plain urllib hits SSO/503 or HTTP 400); treat a missing channel feed-page JSON as end of playlist
     * **zetland**: Extract `storyServer` audio from Next.js App Router flight data
     * **zingmp3**: Sign API requests with the current app `version` and only the documented params
-    * **zoom**: Read the unified player `nws/recording/2.0/share` play-info JSON when `window.__data__` is absent
+    * **zoom**: Read the unified player `nws/recording/2.0/share` play-info JSON when `window.__zm_unified_player__` is present; otherwise the 1.0 play-info path, including `fileStartTime` as timestamp
 
 * **Ported live-verified upstream PRs** that had not been merged yet: TED `videoPlayerData`, HearThisAt API host, VGTV HTTPS API, RTVE Play clan URLs, and xHamster sources/pagination
 
