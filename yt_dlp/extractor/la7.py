@@ -1,172 +1,304 @@
+import base64
+import json
 import re
 
-from .common import InfoExtractor
-from ..networking import HEADRequest
-from ..utils import (
+from .common import (
     ExtractorError,
+    InfoExtractor,
+)
+from ..utils import (
     float_or_none,
     int_or_none,
+    join_nonempty,
     parse_duration,
+    parse_qs,
     unified_strdate,
     url_or_none,
 )
+from ..utils.traversal import traverse_obj
 
 
 class LA7IE(InfoExtractor):
-    IE_NAME = 'la7.it'
-    _VALID_URL = r'''(?x)https?://(?:
-        (?:www\.)?la7\.it/([^/]+)/(?:rivedila7|video|news)/|
-        tg\.la7\.it/repliche-tgla7\?id=
-    )(?P<id>.+)'''
+    IE_NAME = 'la7play.it'
+    _VALID_URL = (
+        r'https?://(?:www\.)?(?:la7play\.it|la7\.it)(?P<path>/(?:[^/?#]+/)*(?P<id>[^/?#]+))',
+        r'https?://tg\.la7\.it/repliche-tgla7\?(?:[^#]*&)?id=(?P<id>[^&#]+)',
+    )
+    _EMBED_REGEX = [r'<iframe[^>]+src=(["\'])(?P<url>https?://(?:www\.)?la7(?:play)?\.it/embedded/la7\?[^"\']+)\1']
 
-    _TESTS = [
-        {
-            'url': 'http://www.la7.it/in-onda/video/carovita-schlein-benzina-sopra-i-due-euro-bollette-care-tassino-subito-gli-extraprofitti-delle-02-09-2026-655938',
-            'info_dict': {
-                'id': 'carovita-schlein-benzina-sopra-i-due-euro-bollette-care-tassino-subito-gli-extraprofitti-delle-02-09-2026-655938',
-                'ext': 'mp4',
-                'title': 'md5:fae53e9a9e9a6d9648ce83debd5e9caa',
-                'description': 'md5:16d3a17bcea3aedfcdd734e1454d45f2',
-                'thumbnail': r're:https://images\.la7play\.it/.+',
-                'upload_date': '20260901',
-                'timestamp': 1788289200,
-                'duration': 111,
-            },
-        }, {
-        # single quality video
-        'url': 'http://www.la7.it/crozza/video/inccool8-02-10-2015-163722',
-        'skip': 'stale test sample / site changed',
-        'md5': '8b613ffc0c4bf9b9e377169fc19c214c',
+    _TESTS = [{
+        # Full episode, "rivedila7" path segment (entity type NodeReplica)
+        'url': 'https://www.la7play.it/bellidentrobellifuori/rivedila7/belli-dentro-belli-fuori-puntata-del-932024-09-03-2024-530432',
+        'md5': 'f01608c9e2507cd637c399ae2c476ffb',
         'info_dict': {
-            'id': 'inccool8-02-10-2015-163722',
+            'id': 'belli-dentro-belli-fuori-puntata-del-932024-09-03-2024-530432',
             'ext': 'mp4',
-            'title': 'Inc.Cool8',
-            'description': 'Benvenuti nell\'incredibile mondo della INC. COOL. 8. dove “INC.” sta per “Incorporated” “COOL” sta per “fashion” ed Eight sta per il gesto atletico',
-            'thumbnail': 're:^https?://.*',
-            'upload_date': '20151002',
-            'formats': 'count:4',
+            'title': 'Belli dentro belli fuori - Puntata del  9/3/2024',
+            'duration': 1796,
+            'thumbnail': 'https://images.la7play.it/video/111/0_po1fdrop/belli-dentro-belli-fuori-puntata-del-9-3-2024/scena-854x480.webp',
+            'timestamp': 1709981573,
+            'upload_date': '20240309',
+            'modified_timestamp': 1710144374,
+            'modified_date': '20240311',
         },
     }, {
-        # multiple quality video
-        'url': 'https://www.la7.it/laria-che-tira/video/corrado-augias-a-difesa-di-sigfrido-ranucci-vittima-di-una-serie-di-circostanze-e-stato-anche-un-po-21-08-2026-655053',
-        'skip': 'stale test sample / site changed',
-        'md5': 'd2370e78f75e8d1238cb3a0db9a2eda3',
+        # Full episode, "episodi" path segment (entity type NodeReplica)
+        'url': 'https://www.la7play.it/mercanti-dellanima-lai-e-il-nostro-futuro/episodi/st-1-episodio-2-395896',
+        'md5': 'bbb51a9313f8bdaa1ee777edfedb1207',
         'info_dict': {
-            'id': 'corrado-augias-a-difesa-di-sigfrido-ranucci-vittima-di-una-serie-di-circostanze-e-stato-anche-un-po-21-08-2026-655053',
+            'id': 'st-1-episodio-2-395896',
             'ext': 'mp4',
-            'title': 'Il gol di Lindsey Thomas | Fiorentina vs Milan | Serie A Calcio Femminile',
-            'description': 'Il gol di Lindsey Thomas | Fiorentina vs Milan | Serie A Calcio Femminile',
-            'thumbnail': 're:^https?://.*',
-            'upload_date': '20221126',
-            'formats': 'count:8',
+            'title': 'St. 1 Episodio 2',
+            'description': 'md5:196f0586d0bc174addda6af1d3d1e574',
+            'duration': 3946,
+            'thumbnail': 'https://images.la7play.it/video/0/400/0_0usrx8nr_0_wwaki72o_2/st-1-episodio-2/scena-854x480.webp',
+            'season': 'Season 1',
+            'season_number': 1,
+            'episode': 'Episode 2',
+            'episode_number': 2,
+            'timestamp': 1791845946,
+            'upload_date': '20261012',
+            'modified_timestamp': 1792070405,
+            'modified_date': '20261015',
+        },
+    }, {
+        # Full episode, "puntate" path segment (entity type NodeReplica)
+        'url': 'https://www.la7play.it/in-onda/puntate/puntata-del-1-11-2026-398431',
+        'md5': 'd67876ec61b92393fdf09e2dc2575982',
+        'info_dict': {
+            'id': 'puntata-del-1-11-2026-398431',
+            'ext': 'mp4',
+            'title': 'D\'Alema, un ex comunista tra il \'68 e Meloni - Puntata del 1/11/2026',
+            'description': 'md5:cd6bf6963b1de91d4c7ac62b26dc1c31',
+            'duration': 4406,
+            'thumbnail': 'https://images.la7play.it/video/0/406/0_h6jds5l2_0_fh960gys_2/d-alema-un-ex-comunista-tra-il-68-e-meloni-puntata-del-1-11/scena-854x480.webp',
+            'season': 'Season 29',
+            'season_number': 29,
+            'episode': 'Episode 7',
+            'episode_number': 7,
+            'timestamp': 1793570167,
+            'upload_date': '20261101',
+            'modified_timestamp': 1793604614,
+            'modified_date': '20261102',
+        },
+    }, {
+        # Clip/video (entity type NodeVideo)
+        'url': 'https://www.la7play.it/in-onda/video/crisi-in-venezuela-lintervista-a-luciana-castellina-05-01-2026-626950',
+        'md5': '00de82356f72c66112a77d3718bba21e',
+        'info_dict': {
+            'id': 'crisi-in-venezuela-lintervista-a-luciana-castellina-05-01-2026-626950',
+            'ext': 'mp4',
+            'title': 'Crisi in Venezuela, l\'intervista a Luciana Castellina',
+            'duration': 102,
+            'description': 'md5:e5b7a733dffc04a24249afd0278b769f',
+            'thumbnail': 'https://images.la7play.it/video/111/0_2544fg79/crisi-in-venezuela-l-intervista-a-luciana-castellina/scena-854x480.webp',
+            'timestamp': 1767647390,
+            'upload_date': '20260105',
+            'modified_timestamp': 1767647725,
+            'modified_date': '20260105',
+        },
+    }, {
+        # Single path segment, also: video with only one resolution
+        'url': 'https://www.la7play.it/dream-bike-20-09-2026-393369',
+        'md5': '29a2adcda6d8b5b626b9aef19421996e',
+        'info_dict': {
+            'id': 'dream-bike-20-09-2026-393369',
+            'ext': 'mp4',
+            'title': 'Puntata del 23/9/2026',
+            'duration': 1782,
+            'thumbnail': 'https://images.la7play.it/video/0/397/0_c4lgs673_0_zzscdbmp_2/puntata-del-23-9-2026/scena-854x480.webp',
+            'season': 'Season 1',
+            'season_number': 1,
+            'episode': 'Episode 1',
+            'episode_number': 1,
+            'timestamp': 1789858785,
+            'upload_date': '20260919',
+            'modified_timestamp': 1793618784,
+            'modified_date': '20261102',
+        },
+    }, {
+        # Video with reconstructed direct HTTPS URL
+        'url': 'https://www.la7play.it/otto-e-mezzo/rivedila7/otto-e-mezzo-26-06-2026-650566',
+        'md5': '1b3fbd1be2a867730cb644d976e8af4a',
+        'info_dict': {
+            'id': 'otto-e-mezzo-26-06-2026-650566',
+            'ext': 'mp4',
+            'title': 'La regola del caos - Otto e Mezzo - Puntata del 26/6/2026',
+            'duration': 2197,
+            'thumbnail': 'https://images.la7play.it/video/111/0_bbomr2tk/la-regola-del-caos-otto-e-mezzo-puntata-del-26-6-2026/scena-854x480.webp',
+            'timestamp': 1782503632,
+            'upload_date': '20260626',
+            'modified_timestamp': 1782540689,
+            'modified_date': '20260627',
+        },
+        'params': {
+            'format': 'b[protocol=https]',
+        },
+    }, {
+        # Video with subtitiles
+        'url': 'https://www.la7play.it/piazzapulita/video/dal-dibattito/bortone-aboliamo-la-parola-maranza-e-classista-e-razzista-30-10-2026-398286',
+        'md5': '5b3a510d617e77b0ec890fbb31378136',
+        'info_dict': {
+            'id': 'bortone-aboliamo-la-parola-maranza-e-classista-e-razzista-30-10-2026-398286',
+            'ext': 'mp4',
+            'title': 'Bortone: "Aboliamo la parola maranza, è classista e razzista"',
+            'description': 'md5:f626210b971efed522d6baf348704209',
+            'duration': 82,
+            'thumbnail': 'https://images.la7play.it/video/111/0_r2k05j89/bortone-aboliamo-la-parola-maranza-e-classista-e-razzista/scena-854x480.webp',
+            'timestamp': 1793348588,
+            'upload_date': '20261030',
+            'modified_timestamp': 1793348708,
+            'modified_date': '20261030',
+            'subtitles': 'count:2',
+        },
+    }, {
+        # la7.it still redirects here; same GraphQL path
+        'url': 'http://www.la7.it/in-onda/video/carovita-schlein-benzina-sopra-i-due-euro-bollette-care-tassino-subito-gli-extraprofitti-delle-02-09-2026-655938',
+        'info_dict': {
+            'id': 'carovita-schlein-benzina-sopra-i-due-euro-bollette-care-tassino-subito-gli-extraprofitti-delle-02-09-2026-655938',
+            'ext': 'mp4',
+            'title': 'md5:fae53e9a9e9a6d9648ce83debd5e9caa',
+            'description': 'md5:f32d760ca229e4cbd2881a078ec2f4ba',
+            'thumbnail': r're:https://images\.la7play\.it/.+',
+            'upload_date': '20260902',
+            'timestamp': 1788339901,
+            'modified_date': '20260902',
+            'modified_timestamp': 1788339960,
+            'duration': 111,
         },
     }, {
         'url': 'http://www.la7.it/omnibus/rivedila7/omnibus-news-02-07-2016-189077',
         'only_matching': True,
+    }, {
+        'url': 'https://www.la7play.it/embedded/la7?content=400066',
+        'only_matching': True,
+    }, {
+        'url': 'https://www.la7.it/embedded/la7?tid=player&content=400066',
+        'only_matching': True,
+    }, {
+        'url': 'https://tg.la7.it/repliche-tgla7?id=400066',
+        'only_matching': True,
     }]
     _HOST = 'https://awsvodpkg.iltrovatore.it'
 
+    @classmethod
+    def suitable(cls, url):
+        return False if any(ie.suitable(url) for ie in (LA7PodcastEpisodeIE, LA7PodcastIE)) else super().suitable(url)
+
+    # Endpoints IDs are hardcoded in the JS bundle,
+    # but may never be called because of Next.js hydration.
+    # Actual call parameters can be extracted via the mobile app:
+    # https://play.google.com/store/apps/details?id=it.la7.it
+    def _call_api(self, video_id, endpoint_desc, endpoint_id, payload):
+        serialized = base64.urlsafe_b64encode(json.dumps(payload).encode()).decode()
+        return self._download_json(
+            f'https://www.la7play.it/api/gql/{endpoint_id}/{serialized}', video_id,
+            note=f'Downloading {endpoint_desc}',
+            errnote=f'Failed to download {endpoint_desc}')['data']['route']
+
     def _generate_mp4_url(self, quality, m3u8_formats):
         for f in m3u8_formats:
-            if f['vcodec'] != 'none' and quality in f['url']:
-                http_url = f'{self._HOST}{quality}.mp4'
-
-                urlh = self._request_webpage(
-                    HEADRequest(http_url), quality,
-                    note='Check filesize', fatal=False)
-                if urlh:
-                    http_f = f.copy()
-                    del http_f['manifest_url']
-                    http_f.update({
-                        'format_id': http_f['format_id'].replace('hls-', 'https-'),
-                        'url': http_url,
-                        'protocol': 'https',
-                        'filesize_approx': int_or_none(urlh.headers.get('Content-Length', None)),
-                    })
-                    return http_f
-                return None
-
-    def _progressive_mp4_formats(self, webpage):
-        # Next.js embeds player JSON as a JS string, so quotes are escaped
-        html = webpage.replace('\\"', '"')
-        cdn = self._search_regex(
-            r'"hostnameCdn"\s*:\s*"([^"]+)"', html, 'cdn host',
-            default=self._HOST).rstrip('/')
-        remote = self._search_regex(
-            r'"cf_remote_url"\s*:\s*"([^"]+)"', html, 'cf_remote_url',
-            default=None)
-        if not remote:
-            return [], cdn
-        formats = []
-        for i, raw in enumerate(remote.split(',')):
-            path = raw.strip()
-            if not path:
+            if quality.startswith('//'):
+                quality = quality[1:]
+            if f['vcodec'] == 'none' or quality not in f['url']:
                 continue
-            # Values may start with //content/... (CDN path, not a URL)
-            path = '/' + path.lstrip('/')
-            formats.append({
-                'url': f'{cdn}{path}',
-                'ext': 'mp4',
-                'format_id': f'https-{i}',
-                'quality': i,
+
+            http_f = f.copy()
+            del http_f['manifest_url']
+            http_f.update({
+                'format_id': join_nonempty('https', http_f['format_id'].removeprefix('hls-')),
+                'url': f'{self._HOST}{quality}.mp4',
+                'protocol': 'https',
             })
-        return formats, cdn
+            yield http_f
+
+    def _canonical_play_url(self, content_id):
+        webpage = self._download_webpage(
+            f'https://www.la7play.it/embedded/la7?content={content_id}', content_id)
+        return self._search_regex(
+            (r'<link\s+rel="canonical"\s*href="(https?://[^"]+)"',
+             r'<link\s+href="(https?://[^"]+)"\s*rel="canonical"'),
+            webpage, 'canonical URL')
 
     def _real_extract(self, url):
-        video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
+        groups = self._match_valid_url(url).groupdict()
+        video_id, path = groups['id'], groups.get('path')
+        content_id = traverse_obj(url, ({parse_qs}, 'content', 0))
+        if not path or path.rstrip('/') == '/embedded/la7':
+            canonical = self._canonical_play_url(content_id or video_id)
+            if canonical != url:
+                return self.url_result(canonical, ie=self.ie_key())
+            raise ExtractorError('Unable to resolve video URL', expected=True)
 
-        if re.search(r'(?i)(drmsupport\s*:\s*true)\s*', webpage):
-            self.report_drm(video_id)
+        type_info = self._call_api(
+            video_id, 'entity type info', 'cf87a75d078158e9', {'path': path})
 
-        formats, cdn = self._progressive_mp4_formats(webpage)
-        video_path = self._search_regex(
-            r'(/content/[\w/,]+?)\.mp4(?:\.csmil)?/master\.m3u8',
-            webpage, 'video_path', default=None)
-        # Prefer progressive MP4s: the HLS/DASH manifests often 502
-        if not formats and video_path:
-            formats.extend(self._extract_mpd_formats(
-                f'{cdn}/local/dash/,{video_path}.mp4.urlset/manifest.mpd',
-                video_id, mpd_id='dash', fatal=False))
-            m3u8_formats = self._extract_m3u8_formats(
-                f'{cdn}/local/hls/,{video_path}.mp4.urlset/master.m3u8',
-                video_id, 'mp4', m3u8_id='hls', fatal=False)
-            formats.extend(m3u8_formats)
+        type_name = traverse_obj(type_info, ('entity', '__typename', {str}))
+        self.write_debug(f'Entity type: {type_name}')
+        match type_name:
+            case 'NodeVideo':
+                endpoint_id = '9e6877beb0b950cb'
+            case 'NodeReplica':
+                endpoint_id = 'a9448166e3cd0b3d'
+            case 'NodeEventoSingolo':
+                endpoint_id = '150c651a74b13c6d'
+            case 'NodeLiveStreaming':
+                self.report_drm(video_id)
+            case 'NodePaginaHub' | 'NodeGuidaTv' | 'NodeAggregatoreTassonomie' | None:
+                raise ExtractorError('There is no video for this URL', expected=True)
+            case _:
+                raise ExtractorError(f'Unsupported entity type "{type_name}"')
+
+        data = self._call_api(video_id, 'video data', endpoint_id, {
+            'path': traverse_obj(type_info, ('entity', 'path', {str})) or path,
+        })['entity']
+
+        # Example remote URLs:
+        # //content/entry/data/0/608/0_wsbps6kq_0_edzqb9id_1.mp4,/content/entry/data/0/608/0_wsbps6kq_0_bvd3ckkf_1.mp4
+        # /nk/content/entry/data/0/400/0_0usrx8nr_0_djtnz3hm_2.mp4,/nk/content/entry/data/0/400/0_0usrx8nr_0_4lup3o64_2.mp4
+        # /nk/content/entry/data/0/397/0_c4lgs673_0_ualutund_2.mp4
+        video_path = data['uploadVideo']['cf_remote_url'].replace('.mp4', '')
+
+        formats = self._extract_mpd_formats(
+            f'{self._HOST}/local/dash/,{video_path},.mp4.urlset/manifest.mpd',
+            video_id, mpd_id='dash', fatal=False)
+        m3u8_formats = self._extract_m3u8_formats(
+            f'{self._HOST}/local/hls/,{video_path},.mp4.urlset/master.m3u8',
+            # _generate_mp4_url depends on the m3u8_id value being 'hls'
+            video_id, 'mp4', m3u8_id='hls', fatal=False)
+        formats.extend(m3u8_formats)
+
+        # Only older videos have direct HTTP links
+        if traverse_obj(data, ('uploadVideo', 'cf_old_entry_id', {str})):
             for q in filter(None, video_path.split(',')):
-                http_f = self._generate_mp4_url(q, m3u8_formats)
-                if http_f:
-                    formats.append(http_f)
+                formats.extend(self._generate_mp4_url(q, m3u8_formats))
 
-        if not formats:
-            raise ExtractorError('Unable to extract video URL', expected=True)
-
-        json_ld = self._search_json_ld(webpage, video_id, default={})
-        json_ld.pop('url', None)
-        json_ld.pop('ext', None)
-        duration = int_or_none(self._search_regex(
-            r'"cf_duration"\s*:\s*"(\d+)"', webpage.replace('\\"', '"'),
-            'duration', default=None))
+        subtitles = {}
+        for sub in traverse_obj(data, (
+            'uploadVideo', 'subtitles', lambda _, v: v['lang'] and url_or_none(v['url']),
+        )):
+            subtitles.setdefault(sub['lang'], []).append({'url': sub['url']})
 
         return {
-            **json_ld,
             'id': video_id,
-            'title': self._og_search_title(webpage, default=None) or json_ld.get('title'),
-            'description': (
-                self._og_search_description(webpage, default=None)
-                or json_ld.get('description')),
-            'thumbnail': (
-                self._og_search_thumbnail(webpage, default=None)
-                or json_ld.get('thumbnail')),
             'formats': formats,
-            'duration': duration or json_ld.get('duration'),
-            'upload_date': unified_strdate(self._search_regex(
-                r'datetime="(.+?)"', webpage, 'upload_date', default=None)) or json_ld.get('upload_date'),
+            'subtitles': subtitles,
+            **traverse_obj(data, {
+                'title': ('title', {str}),
+                'description': ('body', 'plainValue', {str}),
+                'duration': ('uploadVideo', 'cf_duration', {int_or_none}),
+                'season_number': ('uploadVideo', 'stagione', {int_or_none}),
+                'episode_number': ('uploadVideo', 'episodio', {int_or_none}),
+                'timestamp': ('created', 'timestamp', {int_or_none}),
+                'modified_timestamp': ('changed', 'timestamp', {int_or_none}),
+                'thumbnail': ('uploadVideo', 'cf_thumbnail_url', {url_or_none}),
+            }),
         }
 
 
 class LA7PodcastEpisodeIE(InfoExtractor):
     IE_NAME = 'la7.it:pod:episode'
-    _VALID_URL = r'https?://(?:www\.)?la7\.it/[^/]+/podcast/([^/]+-)?(?P<id>\d+)'
+    _VALID_URL = r'https?://(?:www\.)?la7(?:play)?\.it/[^/]+/podcast/([^/]+-)?(?P<id>\d+)'
 
     _TESTS = [{
         'url': 'https://www.la7.it/voicetown/podcast/la-carezza-delle-memoria-di-carlo-verdone-23-03-2021-371497',
@@ -192,6 +324,9 @@ class LA7PodcastEpisodeIE(InfoExtractor):
     }, {
         # title same as show_title
         'url': 'https://www.la7.it/otto-e-mezzo/podcast/otto-e-mezzo-26-03-2021-372340',
+        'only_matching': True,
+    }, {
+        'url': 'https://www.la7play.it/voicetown/podcast/la-carezza-delle-memoria-di-carlo-verdone-23-03-2021-371497',
         'only_matching': True,
     }]
 
@@ -276,7 +411,7 @@ class LA7PodcastEpisodeIE(InfoExtractor):
 
 class LA7PodcastIE(LA7PodcastEpisodeIE):  # XXX: Do not subclass from concrete IE
     IE_NAME = 'la7.it:podcast'
-    _VALID_URL = r'https?://(?:www\.)?la7\.it/(?P<id>[^/]+)/podcast/?(?:$|[#?])'
+    _VALID_URL = r'https?://(?:www\.)?la7(?:play)?\.it/(?P<id>[^/]+)/podcast/?(?:$|[#?])'
 
     _TESTS = [{
         'url': 'https://www.la7.it/propagandalive/podcast',
@@ -286,6 +421,9 @@ class LA7PodcastIE(LA7PodcastEpisodeIE):  # XXX: Do not subclass from concrete I
             'title': 'Propaganda Live',
         },
         'playlist_mincount': 10,
+    }, {
+        'url': 'https://www.la7play.it/propagandalive/podcast',
+        'only_matching': True,
     }]
 
     def _real_extract(self, url):

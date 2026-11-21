@@ -2687,8 +2687,8 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **ku6**: `video/detail?id=` pages
     * **kukululive**: `live.player.php` `getStreamAddr` API
     * **kuwo**: HTTPS antiserver + current song pages
-    * **la7.it**: Parse Next.js `cf_remote_url` progressive MP4s on `awsvodpkg.iltrovatore.it` (HLS master path is gone)
     * **la7.it:pod:episode**: Raise an expected error when native `limone.iltrovatore.it` MP3s are gone (pages redirect to la7play.it)
+    * **la7play.it**: Also match `la7.it` video URLs, `tg.la7.it/repliche-tgla7` editions, and `/embedded/la7` player iframes
     * **laracasts**: Inertia `data-page` JSON
     * **lastfm**: Impersonate playlist pages as Safari (Chrome impersonation returns HTTP 600) and retry on HTTP 600
     * **lbry**: Fall back to `api.na-backend.odysee.com` when `api.lbry.tv` returns an internal SDK getter error

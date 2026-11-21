@@ -812,9 +812,9 @@ The only reliable way to check if a site is supported is to try it.
  - **kuwo:song**: 酷我音乐
  - **KVF**: Kringvarp Føroya
  - **Kwai**: Kwai
- - **la7.it**
  - **la7.it:​pod:episode**
  - **la7.it:podcast**
+ - **la7play.it**
  - **laracasts**
  - **laracasts:series**
  - **LastFM**
