@@ -68,7 +68,7 @@ class LoomIE(InfoExtractor):
         'url': 'https://www.loom.com/share/24351eb8b317420289b158e4b7e96ff2',
         'info_dict': {
             'id': '24351eb8b317420289b158e4b7e96ff2',
-            'ext': 'webm',
+            'ext': 'mp4',
             'title': 'OMFG clown',
             'description': 'md5:285c5ee9d62aa087b7e3271b08796815',
             'uploader': 'Brailey Bragg',
