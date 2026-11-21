@@ -21,8 +21,13 @@ class NZZIE(InfoExtractor):
     }]
 
     def _entries(self, webpage, page_id):
+        # Prefer v2/media IDs from JSON-LD / the article player. Teasers often
+        # embed cdn.jwplayer.com/videos/*.mp4 for unrelated clips.
         media_ids = orderedSet(re.findall(
-            r'cdn\.jwplayer\.com/(?:videos|manifests|v2/media)/([A-Za-z0-9]{8})', webpage))
+            r'cdn\.jwplayer\.com/v2/media/([A-Za-z0-9]{8})', webpage))
+        if not media_ids:
+            media_ids = orderedSet(re.findall(
+                r'cdn\.jwplayer\.com/(?:videos|manifests)/([A-Za-z0-9]{8})', webpage))
         for media_id in media_ids:
             yield self.url_result(
                 f'https://cdn.jwplayer.com/v2/media/{media_id}', 'JWPlatform', media_id)
