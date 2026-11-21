@@ -32,7 +32,18 @@ class GoogleDriveIE(InfoExtractor):
                             (?P<id>[a-zA-Z0-9_-]{28,})
                     '''
     _TESTS = [{
+        'url': 'https://drive.google.com/file/d/1hY70Tj01iz9Sa0iHHm49dbUeLFiKoDS-/view',
+        'md5': 'def89bd14e823876d525d242b3c78360',
+        'info_dict': {
+            'id': '1hY70Tj01iz9Sa0iHHm49dbUeLFiKoDS-',
+            'ext': 'mp4',
+            'title': 'RBES Bunny Flop - April 16, 2021.mp4',
+            'duration': 202.28,
+            'thumbnail': r're:https://(?:lh3\.googleusercontent\.com/drive-storage/|drive\.google\.com/thumbnail)',
+        },
+    }, {
         'url': 'https://drive.google.com/file/d/0ByeS4oOUV-49Zzh4R1J6R09zazQ/edit?pli=1',
+        'skip': 'anonymous download quota exceeded',
         'md5': '5c602afbbf2c1db91831f5d82f678554',
         'info_dict': {
             'id': '0ByeS4oOUV-49Zzh4R1J6R09zazQ',
