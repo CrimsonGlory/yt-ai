@@ -31,6 +31,7 @@ Fixes #
 -->
 
 ### Before submitting a *pull request* you must attest to the following:
+- [ ] This PR is not part of a student project or coursework obligation ([see our policy](https://github.com/CrimsonGlory/yt-ai/blob/master/CONTRIBUTING.md#student-project-policy))
 - [ ] I have skimmed through [contributing guidelines](https://github.com/CrimsonGlory/yt-ai/blob/master/CONTRIBUTING.md#developer-instructions) including [yt-ai coding conventions](https://github.com/CrimsonGlory/yt-ai/blob/master/CONTRIBUTING.md#yt-ai-coding-conventions)
 - [ ] I have [searched](https://github.com/CrimsonGlory/yt-ai/search?q=is%3Apr&type=Issues) the tracker for similar pull requests
 

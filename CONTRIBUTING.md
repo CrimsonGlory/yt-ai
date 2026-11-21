@@ -1,6 +1,7 @@
 # CONTRIBUTING TO YT-AI
 
 - [NEW SITE SUPPORT POLICY](#new-site-support-policy)
+- [STUDENT PROJECT POLICY](#student-project-policy)
 - [OPENING AN ISSUE](#opening-an-issue)
     - [Is the description of the issue itself sufficient?](#is-the-description-of-the-issue-itself-sufficient)
     - [Are you using the latest version?](#are-you-using-the-latest-version)
@@ -37,6 +38,15 @@ yt-dlp now accepts new site support requests only from [established contributors
 Open a [site support request](https://github.com/CrimsonGlory/yt-ai/issues/new?template=2_site_support_request.yml) with a playable example URL, or submit a pull request that adds the extractor. Pull requests that resolve an open `site-request` issue (here or on [yt-dlp](https://github.com/yt-dlp/yt-dlp/issues?q=is%3Aissue+state%3Aopen+label%3Asite-request)) are especially welcome.
 
 (yt-dlp's policy took effect on November 19, 2026. yt-ai does not enforce it.)
+
+
+# STUDENT PROJECT POLICY
+
+We do not accept pull requests that are made as part of a university/college student project or homework assignment.
+
+These types of contributions put unfair pressure on the maintainers, since the PR author's course grades usually depend on their PR getting reviewed (or even merged) within a specific timeframe. The yt-ai maintainers are unpaid volunteers, while your professor/teacher/instructor is presumably being paid by the school. Please tell them to do their own job and to stop using open source software maintainers as free labor.
+
+With that said, if you're a student who wishes to contribute in your own free time and **not** as part of any coursework obligation, you are very welcome to do so!
 
 
 # OPENING AN ISSUE
