@@ -549,6 +549,7 @@ class NhkRadiruIE(InfoExtractor):
     }, {
         # playlist, airs every weekday so it should _hopefully_ be okay forever
         'url': 'https://www.nhk.or.jp/radio/ondemand/detail.html?p=Z9L1V2M24L_01',
+        'skip': 'no current on-demand episodes',
         'info_dict': {
             'id': 'Z9L1V2M24L_01',
             'title': 'ベストオブクラシック',
@@ -558,6 +559,20 @@ class NhkRadiruIE(InfoExtractor):
             'uploader': 'NHK FM',
             'channel': 'NHK FM',
             'series': 'ベストオブクラシック',
+        },
+        'playlist_mincount': 1,
+    }, {
+        # playlist, currently lists public catch-up episodes
+        'url': 'https://www.nhk.or.jp/radio/ondemand/detail.html?p=LG96ZW5KZ4_01',
+        'info_dict': {
+            'id': 'LG96ZW5KZ4_01',
+            'title': 'クラシックの庭',
+            'description': 'md5:bd08a296a94f601a0014ee35f3610c14',
+            'thumbnail': r're:https://(?:img|www)\.nhk\.jp/.+LG96ZW5KZ4-eyecatch_.+\.jpg',
+            'series_id': 'LG96ZW5KZ4_01',
+            'uploader': 'NHK FM',
+            'channel': 'NHK FM',
+            'series': 'クラシックの庭',
         },
         'playlist_mincount': 1,
     }, {
