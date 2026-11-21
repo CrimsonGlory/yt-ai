@@ -16,6 +16,7 @@ class TreffDarcIE(InfoExtractor):
     _TESTS = [{
         'url': 'https://treff.darc.de/playback/presentation/2.3/87e34c7a1b375e3c8cc94e9d0ae2ac54d41af2de-1756309263581',
         'md5': '6f86a1da4168ee02a71ef32b7ac79708',
+        'skip': 'recordings currently disabled after BBB upgrade (privacy)',
         'info_dict': {
             'id': '87e34c7a1b375e3c8cc94e9d0ae2ac54d41af2de-1756309263581',
             'ext': 'webm',
