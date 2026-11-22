@@ -20,6 +20,7 @@ class RbgTumIE(InfoExtractor):
     }, {
         # Presentation only
         'url': 'https://live.rbg.tum.de/w/I2DL/12349/PRES',
+        'skip': 'edge.live.rbg.tum.de HLS timed out',
         'md5': '2161064c44e90ccc50afeea291f9ee52',
         'info_dict': {
             'id': 'I2DL/12349/PRES',
