@@ -1,4 +1,5 @@
 import json
+import re
 import uuid
 
 from .common import InfoExtractor
@@ -11,7 +12,7 @@ from ..utils import (
     update_url_query,
     url_or_none,
 )
-from ..utils.traversal import traverse_obj
+from ..utils.traversal import require, traverse_obj
 
 SERIES_API = 'https://production-cdn.dr-massive.com/api/page?device=web_browser&item_detail_expand=all&lang=da&max_list_prefetch=3&path=%s'
 
@@ -37,9 +38,11 @@ class DRTVIE(InfoExtractor):
             'title': 'Frank & Kastaniegaarden',
             'alt_title': 'Frank & Kastaniegaarden',
             'description': 'md5:0ed2980c81e51895107a54a014256f4b',
+            'timestamp': 1546542034,
+            'upload_date': '20190103',
             'duration': 2577,
             'season': 'Frank & Kastaniegaarden',
-            'season_id': 'b03456ee-73fe-472b-affb-41c5e6d1e05f',
+            'season_id': '67125',
             'release_year': 2019,
             'season_number': 2019,
             'series': 'Frank & Kastaniegaarden',
@@ -101,10 +104,12 @@ class DRTVIE(InfoExtractor):
             'episode_number': 1,
             'title': 'Spise med Price: Pasta Selv',
             'alt_title': '1. Pasta Selv',
+            'upload_date': '20230807',
             'description': 'md5:970cd36c43b3c738c5e4ff49f84896d4',
             'duration': 1751,
             'season': 'Spise med Price',
-            'season_id': 'be0f994a-da7c-4a6e-9746-901739ef7d58',
+            'timestamp': 1691380800,
+            'season_id': '397440',
             'episode': 'Spise med Price: Pasta Selv',
             'thumbnail': r're:https?://.+',
             'season_number': 15,
@@ -125,6 +130,8 @@ class DRTVIE(InfoExtractor):
         'url': 'https://www.dr.dk/drtv/program/jagten_220924',
         'only_matching': True,
     }]
+
+    _ID_RE = re.compile(r'_(\d+)$')
 
     SUBTITLE_LANGS = {
         'DanishLanguageSubtitles': 'da',
@@ -168,7 +175,9 @@ class DRTVIE(InfoExtractor):
         # Page item id is now a UUID; the /videos API still needs the numeric catalog id.
         catalog_id = url_slug.rsplit('_', 1)[-1]
         if item:
-            item_id = catalog_id if catalog_id.isdigit() else item.get('id')
+            item_id = traverse_obj(item, ('path', {self._ID_RE.search}, 1)) or (
+                catalog_id if catalog_id.isdigit() else None)
+            item_id = require('item ID')(item_id)
         else:
             item_id = catalog_id
             item = self._download_json(
@@ -236,12 +245,12 @@ class DRTVIE(InfoExtractor):
                 'alt_title': 'contextualTitle',
                 'description': 'description',
                 'thumbnail': ('images', 'wallpaper'),
-                'release_timestamp': ('customFields', 'BroadcastTimeDK', {parse_iso8601}),
+                'timestamp': ('customFields', 'AvailableFrom', {parse_iso8601}),
                 'duration': ('duration', {int_or_none}),
                 'series': ('season', 'show', 'title'),
                 'season': ('season', 'title'),
                 'season_number': ('season', 'seasonNumber', {int_or_none}),
-                'season_id': 'seasonId',
+                'season_id': ((('season', 'path', {self._ID_RE.search}, 1), ('seasonId', {str})), any),
                 'episode': 'episodeName',
                 'episode_number': ('episodeNumber', {int_or_none}),
                 'release_year': ('releaseYear', {int_or_none}),

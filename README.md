@@ -2267,7 +2267,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 
 ### New features
 
-* Forked from [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and periodically merged with upstream (currently through [**yt-dlp@38a5fb16d**](https://github.com/yt-dlp/yt-dlp/commit/38a5fb16d))
+* Forked from [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and periodically merged with upstream (currently through [**yt-dlp@a38fc9a11**](https://github.com/yt-dlp/yt-dlp/commit/a38fc9a11))
 
 * **Independent branding**: Binaries, config, cache, and plugin paths use `yt-ai`, so yt-ai can be installed alongside yt-dlp. The Python import remains `yt_dlp`. See [CONFIGURATION](#configuration)
 
@@ -2614,7 +2614,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **dplay**: Use Disco playback v3; treat TLS handshake failures on DASH/HLS manifests as missing so the other playback URL can be tried
     * **drtalks**: Follow BunnyCDN embeds from Next.js v13 instead of Brightcove
     * **drtuber**: Use HTTPS `player_config_json` and tolerate missing files
-    * **drtv**: Use the numeric catalog id from the URL slug for `/videos` when the page item id is a UUID
+    * **drtv**: Prefer the numeric catalog id from the item path for `/videos` when the page item id is a UUID, falling back to the URL slug
     * **dtube**: Support `/watch/` URLs and current IPFS/media hosts
     * **dumpert**: Use the HTTPS API and impersonate the browser
     * **duoplay**: Register sessions on `sts.euddn.net`
