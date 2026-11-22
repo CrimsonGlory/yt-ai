@@ -1769,6 +1769,7 @@ class TwitterSpacesIE(TwitterBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://x.com/i/spaces/1NgQaWJangdPbm',
+        'skip': 'Twitter Space ended and replay is disabled',
         'info_dict': {
             'id': '1NgQaWJangdPbm',
             'ext': 'm4a',
@@ -1781,6 +1782,23 @@ class TwitterSpacesIE(TwitterBaseIE):
             'upload_date': '20261121',
             'release_timestamp': 1795229638,
             'release_date': '20261121',
+            'live_status': 'is_live',
+        },
+        'params': {'skip_download': 'm3u8'},
+    }, {
+        'url': 'https://x.com/i/spaces/1rJYOeeVyEgpkn',
+        'info_dict': {
+            'id': '1rJYOeeVyEgpkn',
+            'ext': 'm4a',
+            'title': r're:私の作業監視用スペース',
+            'description': r're:Twitter Space participated by .+',
+            'uploader': 'ハーブティー@無色透名祭4参加してます',
+            'uploader_id': 'masren_01',
+            'thumbnail': r're:https?://pbs\.twimg\.com/profile_images/.+',
+            'timestamp': 1795318508,
+            'upload_date': '20261122',
+            'release_timestamp': 1795318511,
+            'release_date': '20261122',
             'live_status': 'is_live',
         },
         'params': {'skip_download': 'm3u8'},
