@@ -50,6 +50,7 @@ class TokyoMotionIE(InfoExtractor):
         },
         {
             'url': 'https://tokyomotion.net/video/6887876/amateur-threesome-at-a-wild-party',
+            'skip': 'HTTP 503 Service Unavailable',
             'md5': 'e0a5d3764d97b1b2fe877f5cbe4f6fd1',
             'info_dict': {
                 'id': '6887876',
