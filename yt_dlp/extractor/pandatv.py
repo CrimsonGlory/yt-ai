@@ -16,6 +16,21 @@ class PandaTvIE(InfoExtractor):
     IE_DESC = 'pandalive.co.kr (팬더티비)'
     _VALID_URL = r'https?://(?:www\.|m\.)?pandalive\.co\.kr/play/(?P<id>\w+)'
     _TESTS = [{
+        'url': 'https://www.pandalive.co.kr/play/mickey94',
+        'info_dict': {
+            'id': 'mickey94',
+            'ext': 'mp4',
+            'channel': '미키™',
+            # Live title text changes; only the channel prefix and timestamp are stable.
+            'title': r're:미키™.+\d{4}-\d{2}-\d{2} \d{2}:\d{2}',
+            'thumbnail': r're:https://cdn\.pandalive\.co\.kr/ivs/v1/.+/thumb\.jpg',
+            'concurrent_view_count': int,
+            'like_count': int,
+            'live_status': 'is_live',
+            'release_date': str,
+            'release_timestamp': int,
+        },
+    }, {
         'url': 'https://www.pandalive.co.kr/play/maskismask',
         'info_dict': {
             'id': 'maskismask',
@@ -30,6 +45,7 @@ class PandaTvIE(InfoExtractor):
             'release_date': str,
             'release_timestamp': int,
         },
+        'skip': 'The channel is not currently live',
     }, {
         'url': 'https://www.pandalive.co.kr/play/seoul2025',
         'info_dict': {
@@ -46,22 +62,6 @@ class PandaTvIE(InfoExtractor):
             'release_timestamp': int,
         },
         'skip': 'Adult verification is required for this stream',
-    }, {
-        'url': 'https://www.pandalive.co.kr/play/mickey94',
-        'info_dict': {
-            'id': 'mickey94',
-            'ext': 'mp4',
-            'channel': '미키™',
-            # Live title text changes; only the channel prefix and timestamp are stable.
-            'title': r're:미키™.+\d{4}-\d{2}-\d{2} \d{2}:\d{2}',
-            'thumbnail': r're:https://cdn\.pandalive\.co\.kr/ivs/v1/.+/thumb\.jpg',
-            'concurrent_view_count': int,
-            'like_count': int,
-            'live_status': 'is_live',
-            'release_date': str,
-            'release_timestamp': int,
-        },
-        'skip': 'The channel is not currently live',
     }, {
         'url': 'https://www.pandalive.co.kr/play/bebenim',
         'info_dict': {
