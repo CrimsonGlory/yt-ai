@@ -2629,7 +2629,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **facebook**: Impersonate Chrome for Ads Library pages; treat 403 bodies with `/__rd_verify` as a client challenge; read `deeplink_ad_archive` snapshot from nested ScheduledServerJS or inline JSON; when a reel page only has the `og:title` fallback, use the trailing page name and the leading view count, and take the message segment as the title
     * **fancode**: Support current GraphQL / public video pages
     * **faz**: Follow YouTube embeds
-    * **filmarchiv**: Fetch `www.filmarchiv.at` pages without TLS verification when the origin certificate is expired
+    * **filmarchiv**: Fetch HLS from `cdn.filmarchiv.at` over HTTP; Fastly HTTPS presents a default SNI certificate that does not match the hostname
     * **filmweb**: GraphQL clip query and YouTube embeds; broader article URLs
     * **flickr**: Impersonate the browser when fetching the API key
     * **fptplay**: Sign the v7.1 API
