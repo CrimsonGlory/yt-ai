@@ -1804,6 +1804,7 @@ The only reliable way to check if a site is supported is to try it.
  - **twitter:amplify**
  - **twitter:broadcast**
  - **twitter:card**
+ - **twitter:event**
  - **twitter:shortener**
  - **twitter:spaces**
  - **Txxx**

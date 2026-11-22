@@ -2491,6 +2491,7 @@ from .twitter import (
     TwitterAmplifyIE,
     TwitterBroadcastIE,
     TwitterCardIE,
+    TwitterEventIE,
     TwitterIE,
     TwitterShortenerIE,
     TwitterSpacesIE,

@@ -2771,7 +2771,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **peekvids**: Read the numeric ID from the thumbnail URL and fall back to the page HLS source; treat `/v-alt/` HTTP 429 as empty so that fallback can run
     * **peer.tv**: Read JSON-LD `contentUrl` MP4s and match `/video/` slug URLs
     * **performgroup**: Use the DAZN feeds VOD API instead of the dead Perform Feeds ep3 host; treat remaining CloudFront progressive MP4s as gone when they 403
-    * **periscope**: Rewrite regional `video.periscope.tv` Fastly replay hosts to `prod-fastly-a.video.pscp.tv` (the old hosts return HTTP 400)
+    * **periscope**: Keep `periscope.tv` / `pscp.tv` extraction via the public `accessVideoPublic` API; rewrite regional `video.periscope.tv` Fastly replay hosts to `prod-fastly-a.video.pscp.tv` (the old hosts return HTTP 400)
     * **photobucket**: Extract sharing-link videos via GraphQL instead of the old `Pb.Data.Shared` page JSON
     * **phoenix.de**: Read `video-smubl` absätze (skip empty blocks) and play PTMD via `beitrags_details.php` `content` ids
     * **pinkbike**: Impersonate the browser and extract current Video.js sources
@@ -2895,6 +2895,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **tweakers**: Follow YouTube embeds from `YouTubePlayer.init` (impersonate, DPG privacy gate)
     * **twitcasting**: Treat `data-status="live"` as live
     * **twitter:amplify**: Extract current `video.twimg.com` Amplify VMAP instead of the decommissioned `amp.twimg.com` player
+    * **twitter:broadcast**: Rewrite regional `video.periscope.tv` Fastly replay hosts to `prod-fastly-a.video.pscp.tv` after GraphQL `BroadcastQuery` (stream URLs still use the old hosts)
     * **txxx**: Impersonate the videofile API and media CDN (urllib is closed without a response)
     * **unistra**: Extract HTML5 `vod-stream.di.unistra.fr` MP4s instead of the dead Flash `vod-flash.u-strasbg.fr` host
     * **unity**: Follow YouTube embeds on current Unity Learn tutorial pages (including `learn.unity.com`)
