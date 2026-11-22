@@ -1402,6 +1402,7 @@ class VimeoOndemandIE(VimeoIE):  # XXX: Do not subclass from concrete IE
     _TESTS = [{
         # ondemand video not available via https://vimeo.com/id
         'url': 'https://vimeo.com/ondemand/thetalent',
+        'skip': 'Vimeo On Demand shut down on 2026-11-20',
         'info_dict': {
             'id': '1106412691',
             'ext': 'mp4',
@@ -1423,6 +1424,7 @@ class VimeoOndemandIE(VimeoIE):  # XXX: Do not subclass from concrete IE
     }, {
         # requires Referer to be passed along with og:video:url
         'url': 'https://vimeo.com/ondemand/36938/126682985',
+        'skip': 'Vimeo On Demand shut down on 2026-11-20',
         'info_dict': {
             'id': '126584684',
             'ext': 'mp4',
@@ -1452,6 +1454,14 @@ class VimeoOndemandIE(VimeoIE):  # XXX: Do not subclass from concrete IE
         'url': 'https://vimeo.com/ondemand/thelastcolony/150274832',
         'only_matching': True,
     }]
+
+    def _real_extract(self, url):
+        video_id = self._match_id(url)
+        webpage, urlh = self._download_webpage_handle(url, video_id, impersonate=True)
+        if '/ondemand/ended' in urlh.url or 'Vimeo On Demand is no longer available' in webpage:
+            raise ExtractorError(
+                'Vimeo On Demand has been permanently shut down', expected=True)
+        return super()._real_extract(url)
 
 
 class VimeoChannelIE(VimeoBaseInfoExtractor):

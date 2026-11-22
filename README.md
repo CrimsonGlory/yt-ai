@@ -2911,6 +2911,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **veo**: Impersonate Chrome on `/api/app/matches` JSON (plain urllib is HTTP 403)
     * **vevo**: Use the GraphQL TV API instead of the dead apiv2 REST API
     * **vice**: Extract article videos from the WordPress REST API (HTML5, YouTube, Vimeo)
+    * **vimeo:ondemand**: Raise an expected error; Vimeo On Demand shut down on 2026-11-20
     * **vodplatform**: Impersonate the browser on current KWIKmotion embed pages
     * **voxmedia**: Follow Volume embeds from JSON-LD / `volume.vox-cdn.com`, then YouTube
     * **vrt**: Parse `mediaReference` from Next.js / JSON-LD when `vrtvideo` is gone
