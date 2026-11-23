@@ -2779,7 +2779,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **playtvak**: Call the public `servix.idnes.cz` player API and match current iDNES.tv URLs
     * **playvids**: Read the numeric ID from `get_related_videos` when the player has no `data-id`
     * **plutotv**: Match current `/movies/` and `/shows/` VOD URLs
-    * **podbayfm**: Impersonate the browser
+    * **podbayfm**: Impersonate the podcast page; list channel episodes from Next.js or the podcast RSS after `/api/podcast` went HTTP 410
     * **podchaser**: Impersonate the `list/episode` API and send a site Origin/Referer (CloudFront otherwise returns HTTP 403)
     * **podomatic**: Use the public v2 episode API and enclosure MP3s instead of the dead embed_params JSON
     * **polsatgo**: Use the Polsat Box Go `pbg` portal after Polsat Go shutdown; raise login when playback is denied

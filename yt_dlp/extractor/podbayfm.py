@@ -1,9 +1,10 @@
 from .common import InfoExtractor
 from ..utils import (
-    OnDemandPagedList,
     clean_html,
     int_or_none,
     jwt_decode_hs256,
+    parse_duration,
+    unified_timestamp,
     url_or_none,
 )
 from ..utils.traversal import traverse_obj
@@ -60,13 +61,7 @@ class PodbayFMChannelIE(InfoExtractor):
         },
         'playlist_mincount': 21,
     }]
-    _PAGE_SIZE = 10
-
-    def _fetch_page(self, channel_id, pagenum):
-        return self._download_json(
-            f'https://podbay.fm/api/podcast?reverse=true&page={pagenum}&slug={channel_id}',
-            f'Downloading channel JSON page {pagenum + 1}', channel_id,
-            impersonate=True)['podcast']
+    _ITUNES_NS = {'itunes': 'http://www.itunes.com/dtds/podcast-1.0.dtd'}
 
     @staticmethod
     def _results_from_page(channel_id, page):
@@ -78,13 +73,47 @@ class PodbayFMChannelIE(InfoExtractor):
             'webpage_url': f'https://podbay.fm/p/{channel_id}/e/{e["timestamp"]}',
         } for e in page['episodes']]
 
+    def _entries_from_rss(self, channel_id, rss):
+        for item in rss.findall('./channel/item'):
+            enclosure = item.find('enclosure')
+            media_url = url_or_none(None if enclosure is None else enclosure.get('url'))
+            if not media_url:
+                continue
+            timestamp = unified_timestamp(item.findtext('pubDate'))
+            episode_id = (item.findtext('guid') or '').strip() or str(timestamp or '')
+            if not episode_id:
+                continue
+            duration_raw = item.findtext('itunes:duration', namespaces=self._ITUNES_NS)
+            image = item.find('itunes:image', self._ITUNES_NS)
+            yield {
+                'id': episode_id,
+                'title': item.findtext('title'),
+                'url': media_url,
+                'description': clean_html(item.findtext('description')),
+                'thumbnail': url_or_none(None if image is None else image.get('href')),
+                'timestamp': timestamp,
+                'duration': int_or_none(duration_raw) or parse_duration(duration_raw),
+                'ext': 'mp3',
+                'vcodec': 'none',
+                'extractor': PodbayFMIE.IE_NAME,
+                'extractor_key': PodbayFMIE.ie_key(),
+                'webpage_url': (
+                    f'https://podbay.fm/p/{channel_id}/e/{timestamp}' if timestamp else None),
+            }
+
     def _real_extract(self, url):
         channel_id = self._match_id(url)
+        webpage = self._download_webpage(url, channel_id, impersonate=True)
+        podcast = traverse_obj(
+            self._search_nextjs_data(webpage, channel_id),
+            ('props', 'pageProps', 'podcast', {dict})) or {}
 
-        first_page = self._fetch_page(channel_id, 0)
-        entries = OnDemandPagedList(
-            lambda pagenum: self._results_from_page(
-                channel_id, self._fetch_page(channel_id, pagenum) if pagenum else first_page),
-            self._PAGE_SIZE)
+        # /api/podcast is HTTP 410 and tRPC podcast.getBySlug times out.
+        feed_url = url_or_none(podcast.get('feed_url'))
+        rss = self._download_xml(
+            feed_url, channel_id, 'Downloading podcast RSS', fatal=False) if feed_url else None
+        entries = list(self._entries_from_rss(channel_id, rss)) if rss is not None else []
+        if not entries:
+            entries = self._results_from_page(channel_id, podcast)
 
-        return self.playlist_result(entries, channel_id, first_page.get('title'))
+        return self.playlist_result(entries, channel_id, podcast.get('title'))
