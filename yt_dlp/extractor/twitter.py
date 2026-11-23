@@ -1840,6 +1840,7 @@ class TwitterSpacesIE(TwitterBaseIE):
         'params': {'skip_download': 'm3u8'},
     }, {
         'url': 'https://x.com/i/spaces/1rJYOeeVyEgpkn',
+        'skip': 'Twitter Space ended and replay is disabled',
         'info_dict': {
             'id': '1rJYOeeVyEgpkn',
             'ext': 'm4a',
@@ -1853,6 +1854,23 @@ class TwitterSpacesIE(TwitterBaseIE):
             'release_timestamp': 1795318511,
             'release_date': '20261122',
             'live_status': 'is_live',
+        },
+        'params': {'skip_download': 'm3u8'},
+    }, {
+        'url': 'https://x.com/i/spaces/1POBAEogNbdjkj',
+        'info_dict': {
+            'id': '1POBAEogNbdjkj',
+            'ext': 'm4a',
+            'title': '2026/11/22 生存記録/散歩',
+            'description': 'Twitter Space participated by nobody yet',
+            'uploader': '✦ 愛治_ｱｲｼﾞ✦',
+            'uploader_id': 'AI2_3aka7_02',
+            'thumbnail': r're:https?://pbs\.twimg\.com/profile_images/.+',
+            'timestamp': 1795335583,
+            'upload_date': '20261122',
+            'release_timestamp': 1795335587,
+            'release_date': '20261122',
+            'live_status': 'was_live',
         },
         'params': {'skip_download': 'm3u8'},
     }]
