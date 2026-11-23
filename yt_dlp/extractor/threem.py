@@ -82,18 +82,28 @@ class ThreeMIE(InfoExtractor):
     def _real_extract(self, url):
         product_id = self._match_id(url)
         webpage, last_err = None, None
-        # 3m.com serves a Cloudflare JS challenge to Chrome; Safari impersonation works.
-        for impersonate in ('safari', 'chrome', 'firefox'):
+        # Latest Chrome/Safari impersonation gets a Cloudflare JS challenge; Chrome 146/145/136/133 pass.
+        for impersonate in (
+            'chrome-146', 'chrome-145', 'chrome-136', 'chrome-133', 'safari', 'chrome', 'firefox',
+        ):
+            target, _ = self._downloader._parse_impersonate_targets(impersonate)
+            if not target:
+                continue
             try:
                 webpage = self._download_webpage(url, product_id, impersonate=impersonate)
-                break
             except ExtractorError as e:
                 last_err = e
                 cause = getattr(e, 'cause', None)
                 if not isinstance(cause, HTTPError) or cause.status != 403:
                     raise
+                continue
+            if 'Just a moment' in webpage or '__INITIAL_DATA' not in webpage:
+                last_err = ExtractorError('3M served a Cloudflare challenge')
+                webpage = None
+                continue
+            break
         if webpage is None:
-            raise last_err
+            raise last_err or ExtractorError('Unable to download webpage', video_id=product_id)
         data = self._search_json(
             r'window\.__INITIAL_DATA\s*=', webpage, 'initial data', product_id,
             end_pattern=r';')
