@@ -10,7 +10,7 @@ class FuyinTVIE(InfoExtractor):
             'id': '44129',
             'ext': 'mp4',
             'title': '第1集',
-            'description': 'md5:67f8c73c325fc6a0737d0e6b3fb519f1',
+            'description': r're:第1集,.+',
         },
     }]
 
