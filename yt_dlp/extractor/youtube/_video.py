@@ -2188,7 +2188,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
     }]
 
     _DEFAULT_PLAYER_JS_VERSION = 'actual'
-    _DEFAULT_PLAYER_JS_VARIANT = 'main'
+    _DEFAULT_PLAYER_JS_VARIANT = 'tv'
     _PLAYER_JS_VARIANT_MAP = {
         'main': 'player_ias.vflset/en_US/base.js',
         'tcc': 'player_ias_tcc.vflset/en_US/base.js',
@@ -2548,7 +2548,12 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
 
         sts = traverse_obj(ytcfg, ('STS', {int_or_none}))
         if sts:
-            return sts
+            # TODO: Revert to `return sts` immediately when reworking STS/variant handling!
+            # XXX: If any supported (i.e. non-`tcl`) variants start using >5 digit STS,
+            #      then the line of code below is dead wrong and actively harmful!
+            # XXX: If clients other than tv_downgraded start seeing "the page needs to be reloaded"
+            #      errors, this STS truncation is the likely culprit! Revert it!
+            return int(str(sts)[:5])
 
         if not player_url:
             error_msg = 'Cannot extract signature timestamp without player url'
