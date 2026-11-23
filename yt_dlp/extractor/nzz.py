@@ -20,11 +20,26 @@ class NZZIE(InfoExtractor):
         'playlist_count': 1,
     }]
 
+    def _jwplayer_media_id(self, url):
+        return self._search_regex(
+            r'cdn\.jwplayer\.com/(?:videos|manifests|v2/media)/([A-Za-z0-9]{8})',
+            url or '', 'jwplayer id', default=None)
+
     def _entries(self, webpage, page_id):
-        # Prefer v2/media IDs from JSON-LD / the article player. Teasers often
-        # embed cdn.jwplayer.com/videos/*.mp4 for unrelated clips.
-        media_ids = orderedSet(re.findall(
-            r'cdn\.jwplayer\.com/v2/media/([A-Za-z0-9]{8})', webpage))
+        # JSON-LD VideoObject contentUrls are this article's clips. Related
+        # teasers also embed v2/media IDs in the page payload.
+        media_ids = []
+        for json_ld in self._yield_json_ld(webpage, page_id, default=[]):
+            ld_type = json_ld.get('@type')
+            if ld_type != 'VideoObject' and 'VideoObject' not in (ld_type or []):
+                continue
+            media_id = self._jwplayer_media_id(json_ld.get('contentUrl'))
+            if media_id:
+                media_ids.append(media_id)
+        media_ids = orderedSet(media_ids)
+        if not media_ids:
+            media_ids = orderedSet(re.findall(
+                r'cdn\.jwplayer\.com/v2/media/([A-Za-z0-9]{8})', webpage))
         if not media_ids:
             media_ids = orderedSet(re.findall(
                 r'cdn\.jwplayer\.com/(?:videos|manifests)/([A-Za-z0-9]{8})', webpage))
