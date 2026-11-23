@@ -66,17 +66,22 @@ class AmazonStoreIE(InfoExtractor):
     def _real_extract(self, url):
         playlist_id = self._match_id(url)
 
-        for retry in self.RetryManager():
-            # amazon.com (and sometimes other storefronts) serve a captcha
-            # interstitial to non-browser clients; Chrome impersonation bypasses it.
-            webpage = self._download_webpage(
-                url, playlist_id, impersonate='chrome' if retry.attempt > 1 else None)
+        # Generic Chrome impersonation still gets Amazon's captcha interstitial.
+        data_json, last_err = None, None
+        for impersonate in ('chrome:windows-10', 'safari', 'chrome:macos', 'edge'):
+            webpage = self._download_webpage(url, playlist_id, impersonate=impersonate)
+            if 'validateCaptcha' in webpage:
+                last_err = ExtractorError('Amazon served a captcha interstitial')
+                continue
             try:
                 data_json = self._search_json(
                     r'var\s?obj\s?=\s?jQuery\.parseJSON\(\'', webpage, 'data', playlist_id,
                     transform_source=js_to_json)
+                break
             except ExtractorError as e:
-                retry.error = e
+                last_err = e
+        if data_json is None:
+            raise last_err or ExtractorError('Unable to extract data', video_id=playlist_id)
 
         entries = []
         for video in data_json.get('videos') or []:

@@ -2576,7 +2576,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **abc:iview**: Use the v3 video API and raise geo/login when unplayable
     * **allocine**: Extract Dailymotion videos via `DailymotionIE`
     * **americastestkitchen**: Read episode-level description, publishDate, and siteKey when nested `video` metadata is empty
-    * **amazon**: Product-gallery `jQuery.parseJSON` videos; extract VSE HLS as MP4 formats from `/vdp/` and `/live/video/`; impersonate Chrome on VDP/live video pages and when the storefront serves a captcha interstitial
+    * **amazon**: Product-gallery `jQuery.parseJSON` videos; extract VSE HLS as MP4 formats from `/vdp/` and `/live/video/`; impersonate Chrome Windows 10, then Safari, Chrome macOS, then Edge on product pages (generic Chrome still gets a captcha interstitial); impersonate Chrome on VDP/live video pages
     * **angel**: Read Next.js App Router flight data (`contentEpisode.url`) when `__NEXT_DATA__` is absent
     * **apple:music:connect** / **apple:podcasts**: Match mixed-case Vite `/assets/index~*.js` hashes when minting the AMP JWT
     * **asobichannel:tag**: Read tag title and playlist entries from the microCMS API instead of Next.js page data
