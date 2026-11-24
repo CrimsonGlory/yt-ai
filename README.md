@@ -2267,7 +2267,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
 
 ### New features
 
-* Forked from [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and periodically merged with upstream (currently through [**yt-dlp@6859de80b**](https://github.com/yt-dlp/yt-dlp/commit/6859de80b))
+* Forked from [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and periodically merged with upstream (currently through [**yt-dlp@6f73a8d16**](https://github.com/yt-dlp/yt-dlp/commit/6f73a8d16))
 
 * **Independent branding**: Binaries, config, cache, and plugin paths use `yt-ai`, so yt-ai can be installed alongside yt-dlp. The Python import remains `yt_dlp`. See [CONFIGURATION](#configuration)
 
@@ -2617,7 +2617,6 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **drtv**: Prefer the numeric catalog id from the item path for `/videos` when the page item id is a UUID, falling back to the URL slug
     * **dtube**: Support `/watch/` URLs and current IPFS/media hosts
     * **dumpert**: Use the HTTPS API and impersonate the browser
-    * **duoplay**: Register sessions on `sts.euddn.net`
     * **ebaumsworld**: Parse the current HTML/JSON player instead of the old XML API
     * **elpais**: Read nested NewsArticle `VideoObject` JSON-LD (`contentUrl`), then a YouTube embed, when `url_cache` is missing
     * **eltrecetv**: Also expose progressive vodgc MP4s derived from HLS (1080 HLS segment names 404)

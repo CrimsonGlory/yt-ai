@@ -37,6 +37,8 @@ yt-dlp now accepts new site support requests only from [established contributors
 
 Open a [site support request](https://github.com/CrimsonGlory/yt-ai/issues/new?template=2_site_support_request.yml) with a playable example URL, or submit a pull request that adds the extractor. Pull requests that resolve an open `site-request` issue (here or on [yt-dlp](https://github.com/yt-dlp/yt-dlp/issues?q=is%3Aissue+state%3Aopen+label%3Asite-request)) are especially welcome.
 
+[Plugins](README.md#plugins) can add support for a new site without changing this codebase.
+
 (yt-dlp's policy took effect on November 19, 2026. yt-ai does not enforce it.)
 
 

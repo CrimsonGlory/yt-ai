@@ -37,6 +37,82 @@ class DuoplayIE(InfoExtractor):
             'episode_id': '0',
         },
     }, {
+        # episode
+        'url': 'https://duoplay.ee/10162/morvad-mannikulas?ep=8',
+        'info_dict': {
+            'id': '10162_8',
+            'ext': 'mp4',
+            'title': 'Timukas, teine osa',
+            'thumbnail': r're:^https?://.*\.(?:png|jpg)',
+            'description': 'md5:bc34b242439c04267660a93014b0a880',
+            'upload_date': '20250125',
+            'timestamp': 1737837000,
+            'episode': 'Timukas, teine osa',
+            'episode_id': '8',
+            'episode_number': 8,
+            'series': 'Mõrvad Männikülas',
+            'series_id': '10162',
+            'cast': ['Alfred Molina', 'Rossif Sutherland', 'Elle-Máijá Tailfeathers'],
+            'release_year': 2022,
+        },
+    }, {
+        # episode - no name
+        'url': 'https://duoplay.ee/10162/?ep=8',
+        'info_dict': {
+            'id': '10162_8',
+            'ext': 'mp4',
+            'title': 'Timukas, teine osa',
+            'thumbnail': r're:^https?://.*\.(?:png|jpg)',
+            'description': 'md5:bc34b242439c04267660a93014b0a880',
+            'upload_date': '20250125',
+            'timestamp': 1737837000,
+            'episode': 'Timukas, teine osa',
+            'episode_id': '8',
+            'episode_number': 8,
+            'series': 'Mõrvad Männikülas',
+            'series_id': '10162',
+            'cast': ['Alfred Molina', 'Rossif Sutherland', 'Elle-Máijá Tailfeathers'],
+            'release_year': 2022,
+        },
+    }, {
+        # movie
+        'url': 'https://duoplay.ee/7573/estonia-27-aastat-vastamata-kusimusi',
+        'info_dict': {
+            'id': '7573',
+            'ext': 'mp4',
+            'title': 'Estonia - 27 aastat vastamata küsimusi',
+            'thumbnail': r're:^https?://.*\.(?:png|jpg)',
+            'description': 'md5:dbdeec1771f597cdede995347d55fd35',
+            'upload_date': '20250928',
+            'timestamp': 1759094400,
+            'release_year': 2021,
+            'series': 'Estonia - 27 aastat vastamata küsimusi',
+            'series_id': '7573',
+            'season': 'Season 0',
+            'season_number': 0,
+            'episode': 'Episode 0',
+            'episode_number': 0,
+            'episode_id': '0',
+        },
+    }, {
+        # movie - multiple languages
+        'url': 'https://duoplay.ee/12155/lego-sobrad.-heartlake-i-muusikal',
+        'info_dict': {
+            'id': '12155',
+            'ext': 'mp4',
+            'title': 'Lego sõbrad. Heartlake\'i muusikal',
+            'thumbnail': r're:^https?://.*\.(?:png|jpg)',
+            'description': 'md5:05ed3934d86222becb2c2e1a11ea2a8b',
+            'upload_date': '20261213',
+            'timestamp': 1797179400,
+            'release_year': 2026,
+            'series': 'Lego sõbrad. Heartlake\'i muusikal',
+            'series_id': '12155',
+            'episode': 'Episode 0',
+            'episode_number': 0,
+            'episode_id': '0',
+        },
+    }, {
         'note': 'Siberi võmm S02E12',
         'url': 'https://duoplay.ee/4312/siberi-vomm?ep=24',
         'md5': '1ff59d535310ac9c5cf5f287d8f91b2d',
@@ -138,9 +214,18 @@ class DuoplayIE(InfoExtractor):
 
         episode_attr = self._parse_json(video_player.get(':episode') or '', video_id, fatal=False) or {}
 
+        formats = self._extract_m3u8_formats(manifest_url, video_id, 'mp4', query={'s': session_token})
+        for f in formats:
+            # Audio quality key undefined workaround
+            if f.get('vcodec') == 'none':
+                f['quality'] = int(f['format_id'].split('-')[0])
+            # We need to manually flag video-only formats as such
+            elif '_vo.m3u8' in f['url'] and not f.get('acodec'):
+                f['acodec'] = 'none'
+
         return {
             'id': video_id,
-            'formats': self._extract_m3u8_formats(manifest_url, video_id, 'mp4', query={'s': session_token}),
+            'formats': formats,
             **traverse_obj(episode_attr, {
                 'title': ('title', {str}),
                 'description': ('synopsis', {str}),
