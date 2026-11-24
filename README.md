@@ -2867,7 +2867,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **tele5**: Play VOD via the Aurora sonic API (`public.aurora.enhanced.live`, realm `de`) instead of disco-api dmaxde
     * **telequebec**: Extract Brightcove `ref:` media IDs from current `/regarder/` pages
     * **tfo**: Extract JWPlayer HLS from the episode API / watch-page player (geo-restricted to Canada; X-Forwarded-For is ignored)
-    * **theguardian:podcast**: Extract audio URL and author from JSON-LD
+    * **theguardian:podcast**: Impersonate article pages (urllib gets HTTP 403); extract audio URL and author from JSON-LD
     * **TheIntercept**: Follow YouTube/Vimeo embeds and native HTML5 video on current article pages
     * **theplatform**: Treat `link.theplatform.com` `/guid/` release URLs as SMIL instead of scraping a player page that now 302s to media
     * **thisamericanlife**: Parse playlist JSON for MP3/HLS instead of the old hardcoded stream path
