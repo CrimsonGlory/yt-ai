@@ -261,10 +261,19 @@ class OdnoklassnikiIE(InfoExtractor):
         video_id, is_embed = self._match_valid_url(url).group('id', 'embed')
         mode = 'videoembed' if is_embed else 'video'
 
+        headers = {'Referer': smuggled['referrer']} if smuggled.get('referrer') else {}
         webpage = self._download_webpage(
             f'https://ok.ru/{mode}/{video_id}', video_id,
-            headers={'Referer': smuggled['referrer']} if smuggled.get('referrer') else {},
-            impersonate=True)
+            headers=headers, impersonate=True)
+        # Chrome 150 impersonation can redirect embed pages to a VK ID autologin
+        # form with no player JSON; urllib still serves data-options.
+        if 'data-options' not in webpage:
+            self.cookiejar.clear(domain='.ok.ru')
+            self.cookiejar.clear(domain='ok.ru')
+            webpage = self._download_webpage(
+                f'https://ok.ru/{mode}/{video_id}', video_id,
+                headers=headers, impersonate=False,
+                note='Downloading webpage without impersonation')
 
         error = traverse_obj(webpage, {find_element(cls='vp_video_stub_txt')})
         # Direct link from boosty
