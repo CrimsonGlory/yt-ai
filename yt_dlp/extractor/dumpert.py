@@ -1,9 +1,12 @@
 from .common import InfoExtractor
+from ..networking.exceptions import HTTPError
 from ..utils import (
+    ExtractorError,
     determine_ext,
     int_or_none,
     qualities,
 )
+from ..utils.traversal import traverse_obj
 
 
 class DumpertIE(InfoExtractor):
@@ -61,11 +64,32 @@ class DumpertIE(InfoExtractor):
         'only_matching': True,
     }]
 
+    def _extract_item_from_webpage(self, video_id):
+        item_id = video_id.replace('/', '_')
+        webpage = self._download_webpage(
+            f'https://www.dumpert.nl/item/{item_id}', video_id, impersonate=True)
+        raw = self._search_regex(
+            r'window\.__DUMPERT_CONTEXT__\s*=\s*JSON\.parse\(\s*("(?:\\.|[^"\\])*")',
+            webpage, 'dumpert context')
+        context = self._parse_json(self._parse_json(raw, video_id), video_id)
+        return traverse_obj(context, (
+            'state', f'getItemDetails-itemId={item_id}',
+            'data', 'result', 'data', 'items', 0, {dict}))
+
     def _real_extract(self, url):
         video_id = self._match_id(url).replace('_', '/')
-        item = self._download_json(
-            'https://api-live.dumpert.nl/mobile_api/json/info/' + video_id.replace('/', '_'),
-            video_id, impersonate=True)['items'][0]
+        item = None
+        try:
+            item = traverse_obj(self._download_json(
+                'https://api-live.dumpert.nl/mobile_api/json/info/' + video_id.replace('/', '_'),
+                video_id, impersonate=True), ('items', 0, {dict}))
+        except ExtractorError as e:
+            if not isinstance(getattr(e, 'cause', None), HTTPError):
+                raise
+        if not item:
+            item = self._extract_item_from_webpage(video_id)
+        if not item:
+            raise ExtractorError('Unable to extract video metadata', video_id=video_id)
         title = item['title']
         media = next(m for m in item['media'] if m.get('mediatype') == 'VIDEO')
 

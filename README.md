@@ -2616,7 +2616,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **drtuber**: Use HTTPS `player_config_json` and tolerate missing files
     * **drtv**: Prefer the numeric catalog id from the item path for `/videos` when the page item id is a UUID, falling back to the URL slug
     * **dtube**: Support `/watch/` URLs and current IPFS/media hosts
-    * **dumpert**: Use the HTTPS API and impersonate the browser
+    * **dumpert**: Impersonate the browser; fall back to page `__DUMPERT_CONTEXT__` when the mobile API returns HTTP 403/503
     * **ebaumsworld**: Parse the current HTML/JSON player instead of the old XML API
     * **elpais**: Read nested NewsArticle `VideoObject` JSON-LD (`contentUrl`), then a YouTube embed, when `url_cache` is missing
     * **eltrecetv**: Also expose progressive vodgc MP4s derived from HLS (1080 HLS segment names 404)
