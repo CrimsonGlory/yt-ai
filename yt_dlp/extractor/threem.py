@@ -6,6 +6,7 @@ from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
     smuggle_url,
+    url_or_none,
 )
 from ..utils.traversal import traverse_obj
 
@@ -79,12 +80,16 @@ class ThreeMIE(InfoExtractor):
             return player
         raise ExtractorError(f'Unable to map 3M video player id {catalog_id} to a Brightcove player')
 
-    def _real_extract(self, url):
-        product_id = self._match_id(url)
+    def _is_product_page(self, webpage):
+        return bool(webpage) and '__INITIAL_DATA' in webpage and 'Just a moment' not in webpage
+
+    def _download_product_page(self, url, product_id):
         webpage, last_err = None, None
-        # Latest Chrome/Safari impersonation gets a Cloudflare JS challenge; Chrome 146/145/136/133 pass.
+        # Default Chrome/Safari/Firefox impersonation gets a Cloudflare JS challenge (HTTP 403).
+        # Safari 26.0 has passed; Chrome 146/145/142/136/133 have also passed at times.
         for impersonate in (
-            'chrome-146', 'chrome-145', 'chrome-136', 'chrome-133', 'safari', 'chrome', 'firefox',
+            'safari-26.0', 'safari-18.4', 'chrome-146', 'chrome-145', 'chrome-142',
+            'chrome-136', 'chrome-133', 'safari', 'chrome', 'firefox',
         ):
             target, _ = self._downloader._parse_impersonate_targets(impersonate)
             if not target:
@@ -97,13 +102,32 @@ class ThreeMIE(InfoExtractor):
                 if not isinstance(cause, HTTPError) or cause.status != 403:
                     raise
                 continue
-            if 'Just a moment' in webpage or '__INITIAL_DATA' not in webpage:
-                last_err = ExtractorError('3M served a Cloudflare challenge')
-                webpage = None
-                continue
-            break
-        if webpage is None:
-            raise last_err or ExtractorError('Unable to download webpage', video_id=product_id)
+            if self._is_product_page(webpage):
+                return webpage
+            last_err = ExtractorError('3M served a Cloudflare challenge')
+            webpage = None
+
+        snapshot = self._download_json(
+            'https://archive.org/wayback/available', product_id,
+            'Resolving Wayback Machine snapshot',
+            query={'url': url.split('#')[0]})
+        snapshot_url = traverse_obj(
+            snapshot, ('archived_snapshots', 'closest', 'url', {url_or_none}))
+        if snapshot_url and traverse_obj(
+                snapshot, ('archived_snapshots', 'closest', 'status')) == '200':
+            snapshot_url = re.sub(
+                r'(?i)^https?://web\.archive\.org/web/(\d+)/',
+                r'https://web.archive.org/web/\1id_/', snapshot_url)
+            webpage = self._download_webpage(
+                snapshot_url, product_id, 'Downloading webpage from Wayback Machine')
+            if self._is_product_page(webpage):
+                return webpage
+
+        raise last_err or ExtractorError('Unable to download webpage', video_id=product_id)
+
+    def _real_extract(self, url):
+        product_id = self._match_id(url)
+        webpage = self._download_product_page(url, product_id)
         data = self._search_json(
             r'window\.__INITIAL_DATA\s*=', webpage, 'initial data', product_id,
             end_pattern=r';')
