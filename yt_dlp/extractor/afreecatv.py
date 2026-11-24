@@ -461,10 +461,13 @@ class AfreecaTVUserIE(AfreecaTVBaseIE):
 
     def _fetch_page(self, user_id, user_type, page):
         page += 1
-        info = self._download_json(f'https://chapi.sooplive.com/api/{user_id}/vods/{user_type}', user_id,
+        # `/vods/all` now returns an empty page; the untyped `/vods` list is the
+        # station's combined VOD feed (review/clip/normal/catch/story).
+        vods_path = 'vods' if user_type == 'all' else f'vods/{user_type}'
+        info = self._download_json(f'https://chapi.sooplive.com/api/{user_id}/{vods_path}', user_id,
                                    query={'page': page, 'per_page': self._PER_PAGE, 'orderby': 'reg_date'},
                                    note=f'Downloading {user_type} video page {page}')
-        for item in info['data']:
+        for item in info.get('data') or []:
             yield self.url_result(
                 f'https://vod.sooplive.com/player/{item["title_no"]}/',
                 AfreecaTVIE, str_or_none(item['title_no']), item.get('title_name'))
