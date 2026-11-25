@@ -335,7 +335,7 @@ class FranceTVSiteIE(FranceTVBaseInfoExtractor):
             'id': '49eeb731-299b-4813-a3db-db32aaeedd70',
             'ext': 'mp4',
             'title': 'Journal 20h00 - Édition du lundi 23 novembre 2026',
-            'duration': 3571,
+            'duration': 3569,
             'thumbnail': r're:https?://.+/.+\.jpg',
             'timestamp': 1795460270,
             'upload_date': '20261123',
