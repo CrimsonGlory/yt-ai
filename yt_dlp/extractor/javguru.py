@@ -34,7 +34,7 @@ class JavGuruIE(InfoExtractor):
                 'ext': 'mp4',
                 'display_id': 'start-601-it-seems-that-rui-chan-from-miss-a-university-got-a-job-offer-as-a-female-announcer-through-her-pillow-talk',
                 'title': '[START-601] It seems that Rui-chan from Miss A University got a job offer as a female announcer through her pillow talk.',
-                'thumbnail': r're:https://cdn\.javmiku\.com/wp-content/uploads/.+\.jpg',
+                'thumbnail': r're:https://cdn\.jav(?:miku|taku)\.com/wp-content/uploads/.+\.jpg',
                 'duration': 8165.21,
                 'timestamp': 1788210448,
                 'upload_date': '20260831',
