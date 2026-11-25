@@ -66,6 +66,7 @@ class ArchiveOrgIE(InfoExtractor):
             'duration': 1091.96,
             'track': 'Cops-v2',
         },
+        'skip': 'dn600302.us.archive.org Cops-v2.mp4 timed out from this network',
     }, {
         'url': 'http://archive.org/embed/XD300-23_68HighlightsAResearchCntAugHumanIntellect',
         'only_matching': True,
