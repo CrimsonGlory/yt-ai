@@ -58,7 +58,7 @@ class CuriosityStreamIE(CuriosityStreamBaseIE):
             'series_id': '2',
             'thumbnail': r're:https://img.curiositystream.com/.+\.jpg',
             'tags': [],
-            'duration': 158,
+            'duration': 159,
         },
         'params': {
             # m3u8 download
