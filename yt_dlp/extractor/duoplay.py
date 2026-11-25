@@ -1,4 +1,5 @@
 from .common import InfoExtractor
+from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
     extract_attributes,
@@ -37,7 +38,7 @@ class DuoplayIE(InfoExtractor):
             'episode_id': '0',
         },
     }, {
-        # episode
+        # licensed foreign series; CDN session register returns 403 geoBlock
         'url': 'https://duoplay.ee/10162/morvad-mannikulas?ep=8',
         'info_dict': {
             'id': '10162_8',
@@ -55,8 +56,8 @@ class DuoplayIE(InfoExtractor):
             'cast': ['Alfred Molina', 'Rossif Sutherland', 'Elle-Máijá Tailfeathers'],
             'release_year': 2022,
         },
+        'skip': 'geo-restricted (sts.euddn.net 403 geoBlock; X-Forwarded-For is ignored)',
     }, {
-        # episode - no name
         'url': 'https://duoplay.ee/10162/?ep=8',
         'info_dict': {
             'id': '10162_8',
@@ -73,6 +74,47 @@ class DuoplayIE(InfoExtractor):
             'series_id': '10162',
             'cast': ['Alfred Molina', 'Rossif Sutherland', 'Elle-Máijá Tailfeathers'],
             'release_year': 2022,
+        },
+        'skip': 'geo-restricted (sts.euddn.net 403 geoBlock; X-Forwarded-For is ignored)',
+    }, {
+        # episode
+        'url': 'https://duoplay.ee/2557/naabriplika?ep=131',
+        'info_dict': {
+            'id': '2557_131',
+            'ext': 'mp4',
+            'title': 'Euroopa kultuuriküla',
+            'thumbnail': r're:https?://.+\.jpg',
+            'description': 'md5:6a6eea02ecbbf7710633e662c6f30530',
+            'upload_date': '20190606',
+            'timestamp': 1559847600,
+            'episode': 'Euroopa kultuuriküla',
+            'episode_id': '131',
+            'episode_number': 4,
+            'series': 'Naabriplika',
+            'series_id': '2557',
+            'season': 'Season 11',
+            'season_number': 11,
+            'release_year': 2019,
+        },
+    }, {
+        # episode - no name
+        'url': 'https://duoplay.ee/2557/?ep=131',
+        'info_dict': {
+            'id': '2557_131',
+            'ext': 'mp4',
+            'title': 'Euroopa kultuuriküla',
+            'thumbnail': r're:https?://.+\.jpg',
+            'description': 'md5:6a6eea02ecbbf7710633e662c6f30530',
+            'upload_date': '20190606',
+            'timestamp': 1559847600,
+            'episode': 'Euroopa kultuuriküla',
+            'episode_id': '131',
+            'episode_number': 4,
+            'series': 'Naabriplika',
+            'series_id': '2557',
+            'season': 'Season 11',
+            'season_number': 11,
+            'release_year': 2019,
         },
     }, {
         # movie
@@ -112,6 +154,7 @@ class DuoplayIE(InfoExtractor):
             'episode_number': 0,
             'episode_id': '0',
         },
+        'skip': 'geo-restricted (sts.euddn.net 403 geoBlock; X-Forwarded-For is ignored)',
     }, {
         'note': 'Siberi võmm S02E12',
         'url': 'https://duoplay.ee/4312/siberi-vomm?ep=24',
@@ -205,12 +248,17 @@ class DuoplayIE(InfoExtractor):
             raise ExtractorError('No video found', expected=True)
 
         manifest_url = video_player['manifest-url']
-        session_token = self._download_json(
-            'https://sts.euddn.net/session/register', video_id, 'Registering session',
-            'Unable to register session', headers={
-                'Accept': 'application/json',
-                'X-Original-URI': manifest_url,
-            })['session']
+        try:
+            session_token = self._download_json(
+                'https://sts.euddn.net/session/register', video_id, 'Registering session',
+                'Unable to register session', headers={
+                    'Accept': 'application/json',
+                    'X-Original-URI': manifest_url,
+                })['session']
+        except ExtractorError as e:
+            if isinstance(e.cause, HTTPError) and e.cause.status == 403:
+                self.raise_geo_restricted(countries=['EE'])
+            raise
 
         episode_attr = self._parse_json(video_player.get(':episode') or '', video_id, fatal=False) or {}
 
