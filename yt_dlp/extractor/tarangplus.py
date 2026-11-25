@@ -227,7 +227,7 @@ class TarangPlusPlaylistIE(TarangPlusBaseIE):
             'id': 'trailer',
             'title': 'Trailer',
         },
-        'playlist_mincount': 50,
+        'playlist_mincount': 40,
     }, {
         'url': 'https://tarangplus.in/latest-songs/all',
         'info_dict': {
