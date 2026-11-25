@@ -165,6 +165,7 @@ class TubeTuGrazIE(TubeTuGrazBaseIE):
                 'ext': 'mp4',
             },
             'expected_warnings': ['Extractor failed to obtain "title"'],
+            'skip': 'tube.tugraz.at connection timed out from this network',
         }, {
             # Portal URL format
             'url': 'https://tube.tugraz.at/portal/watch/ab28ec60-8cbe-4f1a-9b96-a95add56c612',
