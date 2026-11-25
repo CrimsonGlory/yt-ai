@@ -19,7 +19,7 @@ class QuartierRougeIE(InfoExtractor):
         r'adresses|adressen|sexe-virtuel|virtuele-seks)(?:/[^/?#]+)*/(?P<ad_id>[^/?#]+)\.html)')
     _TESTS = [{
         'url': 'https://www.quartier-rouge.be/prive/femmes/gabriela-352661387189.html',
-        'md5': 'fd4e46a5b99ecd1a22259671eb852df5',
+        'md5': '719bd054bbc4687e5bc597a4e1461ddb',
         'info_dict': {
             'id': 'gabriela-gfe-20240228193516',
             'ext': 'mp4',
@@ -71,20 +71,21 @@ class QuartierRougeIE(InfoExtractor):
         headers = {'Referer': url}
 
         entries = []
-        for video_el in re.finditer(r'<video-js([^>]*)>(.*?)</video-js>', webpage, re.DOTALL):
-            attrs = extract_attributes(f'<video-js{video_el.group(1)}>')
-            src = url_or_none(self._search_regex(
-                r'<source[^>]+\bsrc=["\']([^"\']+)', video_el.group(2), 'source', default=None))
-            if not src:
-                continue
-            video_id = remove_start(attrs.get('id'), 'vid-') or self._search_regex(
+        seen_src = set()
+
+        def add_entry(src, video_id, thumbnail):
+            src = url_or_none(src)
+            if not src or src in seen_src:
+                return
+            video_id = video_id or self._search_regex(
                 r'/([^/]+)\.m3u8', src, 'video id', default=None)
             if not video_id:
-                continue
+                return
+            seen_src.add(src)
             formats, subtitles = self._extract_m3u8_formats_and_subtitles(
                 src, video_id, 'mp4', m3u8_id='hls', headers=headers, fatal=False)
             if not formats:
-                continue
+                return
             timestamp = unified_timestamp(self._search_regex(
                 r'(\d{14})$', video_id, 'timestamp', default=None))
             entries.append({
@@ -92,13 +93,31 @@ class QuartierRougeIE(InfoExtractor):
                 'display_id': display_id,
                 'title': title,
                 'description': description,
-                'thumbnail': url_or_none(attrs.get('data-poster')),
+                'thumbnail': url_or_none(thumbnail),
                 'formats': formats,
                 'subtitles': subtitles,
                 'age_limit': 18,
                 'timestamp': timestamp,
                 'http_headers': headers,
             })
+
+        for video_el in re.finditer(r'<video-js([^>]*)>(.*?)</video-js>', webpage, re.DOTALL):
+            attrs = extract_attributes(f'<video-js{video_el.group(1)}>')
+            src = self._search_regex(
+                r'<source[^>]+\bsrc=["\']([^"\']+)', video_el.group(2), 'source', default=None)
+            add_entry(
+                src,
+                remove_start(attrs.get('id'), 'vid-'),
+                attrs.get('data-poster'))
+
+        for tag in re.finditer(r'<[^>]+data-video-src=[^>]+>', webpage):
+            attrs = extract_attributes(tag.group(0))
+            add_entry(
+                attrs.get('data-video-src') or attrs.get('href'),
+                None,
+                attrs.get('data-video-poster-fallback')
+                or attrs.get('data-video-poster')
+                or attrs.get('data-thumb'))
 
         if not entries:
             raise ExtractorError('No videos found', expected=True)
