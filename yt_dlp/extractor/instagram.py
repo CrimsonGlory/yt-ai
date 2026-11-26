@@ -295,6 +295,9 @@ class InstagramIE(InstagramBaseIE):
                 'like_count': int,
                 'comment_count': int,
             },
+            'expected_warnings': [
+                'Instagram API is not granting access',
+            ],
         }, {
             'url': 'https://instagram.com/p/aye83DjauH/?foo=bar#abc',
             'skip': 'stale test sample / site changed',
