@@ -26,7 +26,7 @@ class FawesomeIE(InfoExtractor):
             'title': 'Calla Lily',
             'description': 'md5:7a26a1754e8e81373d22b320582cc5dc',
             'duration': 4945,
-            'thumbnail': r're:https://ftmain\.cachefly\.net/files/.+\.jpg',
+            'thumbnail': r're:https://(?:ftmain\.cachefly\.net|d8mvsutu6vcns\.cloudfront\.net)/files/.+\.jpg',
             'creators': ['FilmHub'],
             'cast': ['Cynthia Stone', 'Rudolph Mendy'],
             'categories': ['Drama', 'Romance'],
