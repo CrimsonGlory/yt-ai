@@ -32,7 +32,7 @@ class MissAVIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'SW-950 邀請大胸勃起和臀前內褲拍攝的男士美容院。我受不了那種滿身油污、禁忌的私密按摩，就偷偷地塞進了她的體內。',
             'description': 'md5:16bb75baa83585da162ffb2290ad14d4',
-            'thumbnail': r're:https?://fourhoi\.com/sw-950/.+',
+            'thumbnail': r're:https?://(?:fourhoi\.com|d\.surrit\.com)/sw-950/.+',
             'duration': 12293,
             'timestamp': 1715220000,
             'upload_date': '20240509',
