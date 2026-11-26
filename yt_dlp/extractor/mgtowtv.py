@@ -38,38 +38,48 @@ class MGTOWTVIE(InfoExtractor):
                 'categories': ['People & Blogs'],
             },
         }, {
-        'url': 'https://www.mgtow.tv/watch/inA4r3ODfbwlaZl',
-        'skip': 'stale test sample / site changed',
-        'md5': '2a0d0f4ee13e5a3cb5d5feb943849cb4',
-        'info_dict': {
-            'id': 'inA4r3ODfbwlaZl',
-            'ext': 'mp4',
-            'title': 'Women Using Barbie to Filter Themselves out of the Dating Pool!',
-            'description': 'md5:d3c65b157356728c49b309bbf558a5eb',
-            'thumbnail': r're:https?://cdn\.mgtow\.tv/.+\.jpeg',
-            'duration': 604,
-            'upload_date': '20230802',
-            'view_count': int,
-            'like_count': int,
-            'dislike_count': int,
-            'uploader': 'Raging Golden Eagle',
-            'uploader_id': 'ManospherePodcast',
-            'uploader_url': 'https://www.mgtow.tv/@ManospherePodcast',
-            'channel': 'Raging Golden Eagle',
-            'channel_id': 'ManospherePodcast',
-            'channel_url': 'https://www.mgtow.tv/@ManospherePodcast',
-            'categories': ['Film & Animation'],
-        },
-    }, {
-        'url': 'https://www.mgtow.tv/watch/women-using-barbie-to-filter-themselves-out-of-the-dating-pool_inA4r3ODfbwlaZl.html',
-        'only_matching': True,
-    }, {
-        'url': 'https://www.mgtow.tv/embed/inA4r3ODfbwlaZl',
-        'only_matching': True,
-    }, {
-        'url': 'https://www.mgtow.tv/v/Gi9WnS',
-        'only_matching': True,
-    }]
+            'url': 'https://www.mgtow.tv/watch/inA4r3ODfbwlaZl',
+            'skip': 'stale test sample / site changed',
+            'md5': '2a0d0f4ee13e5a3cb5d5feb943849cb4',
+            'info_dict': {
+                'id': 'inA4r3ODfbwlaZl',
+                'ext': 'mp4',
+                'title': 'Women Using Barbie to Filter Themselves out of the Dating Pool!',
+                'description': 'md5:d3c65b157356728c49b309bbf558a5eb',
+                'thumbnail': r're:https?://cdn\.mgtow\.tv/.+\.jpeg',
+                'duration': 604,
+                'upload_date': '20230802',
+                'view_count': int,
+                'like_count': int,
+                'dislike_count': int,
+                'uploader': 'Raging Golden Eagle',
+                'uploader_id': 'ManospherePodcast',
+                'uploader_url': 'https://www.mgtow.tv/@ManospherePodcast',
+                'channel': 'Raging Golden Eagle',
+                'channel_id': 'ManospherePodcast',
+                'channel_url': 'https://www.mgtow.tv/@ManospherePodcast',
+                'categories': ['Film & Animation'],
+            },
+        }, {
+            'url': 'https://www.mgtow.tv/watch/women-using-barbie-to-filter-themselves-out-of-the-dating-pool_inA4r3ODfbwlaZl.html',
+            'only_matching': True,
+        }, {
+            'url': 'https://www.mgtow.tv/embed/inA4r3ODfbwlaZl',
+            'only_matching': True,
+        }, {
+            'url': 'https://www.mgtow.tv/v/Gi9WnS',
+            'only_matching': True,
+        }]
+
+    def _parse_duration(self, webpage):
+        raw = self._search_regex(
+            r'"duration"\s*:\s*"([^"]+)"', webpage, 'duration', default=None)
+        if not raw:
+            return None
+        if 'T' in raw:
+            # PlayTube JSON-LD often prefixes garbage years/days before T
+            return parse_duration('PT' + raw.split('T', 1)[-1])
+        return parse_duration(raw)
 
     def _real_extract(self, url):
         display_id = self._match_id(url)
@@ -105,11 +115,12 @@ class MGTOWTVIE(InfoExtractor):
                 clean_html(get_element_html_by_class('watch-video-description', webpage) or '')
                 or self._og_search_description(webpage, default=None)),
             'thumbnail': self._og_search_thumbnail(webpage) or info.get('thumbnail'),
-            'duration': parse_duration(self._search_regex(
-                r'"duration"\s*:\s*"([\d:]+)"', webpage, 'duration', default=None)),
+            'duration': self._parse_duration(webpage),
             'upload_date': unified_strdate(self._search_regex(
-                r'Published on\s+(\d{1,2}\s+[A-Za-z]+\s+\d{4})',
-                webpage, 'upload date', default=None)),
+                r'"uploadDate"\s*:\s*"([^"]+)"', webpage, 'upload date', default=None)) or unified_strdate(
+                self._search_regex(
+                    r'Published on\s+(\d{1,2}/\d{1,2}/\d{2,4}|\d{1,2}\s+[A-Za-z]+\s+\d{4})',
+                    webpage, 'upload date', default=None), day_first=False),
             'view_count': parse_count(get_element_by_id('video-views-count', webpage)),
             'like_count': parse_count(get_element_by_id('likes', webpage)),
             'dislike_count': parse_count(get_element_by_id('dislikes', webpage)),
