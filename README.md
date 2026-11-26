@@ -2289,7 +2289,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **acmi** (`acmi.net.au`): Public XOS `/xos/works/{id}/` JSON and signed S3 `web_resource`/`resource` MP4s. Request: [yt-dlp/yt-dlp#5974](https://github.com/yt-dlp/yt-dlp/issues/5974)
     * **AdobeMax** (`adobe.com`): MAX `/sessions/` pages load `/www-fragments/max/{year}/marquees/{code}/ondemand.live.html` and delegate the `video.tv.adobe.com` iframe to **adobetv**. Request: [yt-dlp/yt-dlp#7992](https://github.com/yt-dlp/yt-dlp/issues/7992)
     * **AdultEmpire** (`adultempire.com`): Age-gate cookie, then `/gw/player` JSON-LD `contentUrl` trailer MP4. Request: [yt-dlp/yt-dlp#9583](https://github.com/yt-dlp/yt-dlp/issues/9583)
-    * **afl** (`afl.com.au`): Brightcove `video-js` player IDs from public `/video/` pages. Request: [yt-dlp/yt-dlp#10909](https://github.com/yt-dlp/yt-dlp/issues/10909)
+    * **afl** (`afl.com.au`): Brightcove `data-brightcove-video-id` / `video-js` player IDs from public `/video/` pages. Request: [yt-dlp/yt-dlp#10909](https://github.com/yt-dlp/yt-dlp/issues/10909)
     * **AiryTV** (`live.airy.tv`): Public `api.airy.tv` `/content/{id}` JSON for unencrypted VOD HLS; retry the API without TLS verification when the site certificate is expired. Request: [yt-dlp/yt-dlp#14937](https://github.com/yt-dlp/yt-dlp/issues/14937)
     * **AllDaf** (`alldaf.org`): Nuxt `__NUXT_DATA__` post `s3Url`/HLS plus JWPlayer media JSON. Request: [yt-dlp/yt-dlp#15289](https://github.com/yt-dlp/yt-dlp/issues/15289)
     * **AlphaTV** (`alphatv.gr`): Kwik player `data-video-url` MP4/HLS with JSON-LD `embedUrl` fallback. Request: [yt-dlp/yt-dlp#14945](https://github.com/yt-dlp/yt-dlp/issues/14945)

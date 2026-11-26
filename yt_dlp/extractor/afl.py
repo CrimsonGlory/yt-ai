@@ -40,14 +40,27 @@ class AFLIE(InfoExtractor):
         display_id = self._match_id(url)
         webpage = self._download_webpage(url, display_id)
 
-        video_tag = self._search_regex(
-            r'(<video(?:-js)?\b[^>]*\bdata-video-id=["\']?\d+[^>]*>)',
+        player_tag = self._search_regex(
+            r'(<(?:video(?:-js)?|section)\b[^>]*(?:data-video-id|data-brightcove-video-id)=["\']?\d+[^>]*>)',
             webpage, 'brightcove player', default=None)
-        attrs = extract_attributes(video_tag) if video_tag else {}
-        video_id = attrs.get('data-video-id')
+        attrs = extract_attributes(player_tag) if player_tag else {}
+        video_id = attrs.get('data-video-id') or attrs.get('data-brightcove-video-id')
+        if not video_id:
+            video_id = self._search_regex(
+                r'data-brightcove-video-id=["\'](\d+)', webpage, 'brightcove video id', default=None)
         if video_id:
-            account_id = attrs.get('data-account') or self._ACCOUNT_ID
-            player_id = attrs.get('data-player') or self._PLAYER_ID
+            account_id = (
+                attrs.get('data-account')
+                or attrs.get('data-brightcove-account')
+                or self._search_regex(
+                    r'data-brightcove-account=["\'](\d+)', webpage, 'account id', default=None)
+                or self._ACCOUNT_ID)
+            player_id = (
+                attrs.get('data-player')
+                or attrs.get('data-brightcove-player-id')
+                or self._search_regex(
+                    r'data-brightcove-player-id=["\']([^"\']+)', webpage, 'player id', default=None)
+                or self._PLAYER_ID)
             embed = attrs.get('data-embed') or 'default'
             bc_url = f'https://players.brightcove.net/{account_id}/{player_id}_{embed}/index.html?videoId={video_id}'
         else:
