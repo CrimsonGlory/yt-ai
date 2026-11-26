@@ -20,6 +20,7 @@ class DigitalerLesesaalIE(InfoExtractor):
     _PLAYER_BASE = 'https://digitaler-lesesaal.bundesarchiv.de/lixe'
     _TESTS = [{
         'url': 'https://digitaler-lesesaal.bundesarchiv.de/en/video/7490/658446',
+        'skip': 'archive video API returns HTTP 500 (backend maintenance 503)',
         'md5': '15a1d4db904191236cd67c733686db05',
         'info_dict': {
             'id': '9482ea42-6295-4e9c-8754-d690cb76ac32',
@@ -45,7 +46,13 @@ class DigitalerLesesaalIE(InfoExtractor):
         'only_matching': True,
     }, {
         'url': 'https://digitaler-lesesaal.bundesarchiv.de/lixe/view/9482ea42-6295-4e9c-8754-d690cb76ac32',
-        'only_matching': True,
+        'md5': '15a1d4db904191236cd67c733686db05',
+        'info_dict': {
+            'id': '9482ea42-6295-4e9c-8754-d690cb76ac32',
+            'ext': 'mp4',
+            'title': '81959_1_Die_Stadt',
+            'thumbnail': 'https://digitaler-lesesaal.bundesarchiv.de/lixe/files/94/82/9482ea42-6295-4e9c-8754-d690cb76ac32/81959_1_1_Die_Stadt.jpg',
+        },
     }]
 
     def _extract_lixe_player(self, uuid, video_id):
