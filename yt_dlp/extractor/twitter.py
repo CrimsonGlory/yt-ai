@@ -1863,7 +1863,7 @@ class TwitterSpacesIE(TwitterBaseIE):
             'ext': 'm4a',
             'title': '2026/11/22 生存記録/散歩',
             'description': 'Twitter Space participated by nobody yet',
-            'uploader': '☾ロゼル愛治-02✦',
+            'uploader': '☾ロゼオ愛治-02✦',
             'uploader_id': 'AI2_3aka7_02',
             'thumbnail': r're:https?://pbs\.twimg\.com/profile_images/.+',
             'timestamp': 1795335583,
