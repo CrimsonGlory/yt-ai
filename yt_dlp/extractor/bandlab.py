@@ -44,9 +44,12 @@ class BandlabBaseIE(InfoExtractor):
                 'uploader_id': ('creator', 'username', {str}),
                 'timestamp': ('createdOn', {parse_iso8601}),
                 'duration': ('mixdown', 'duration', {float_or_none}),
-                'view_count': ('counters', 'plays', {int_or_none}),
-                'like_count': ('counters', 'likes', {int_or_none}),
-                'comment_count': ('counters', 'comments', {int_or_none}),
+                'view_count': ((('counters', 'plays'), ('post', 'counters', 'plays'),
+                                ('song', 'counters', 'plays')), {int_or_none}, any),
+                'like_count': ((('counters', 'likes'), ('post', 'counters', 'likes'),
+                                ('song', 'counters', 'likes')), {int_or_none}, any),
+                'comment_count': ((('counters', 'comments'), ('post', 'counters', 'comments'),
+                                   ('song', 'counters', 'comments')), {int_or_none}, any),
                 'genres': ('genres', ..., 'name', {str}),
             }),
         }
@@ -310,6 +313,20 @@ class BandlabIE(BandlabBaseIE):
         if not revision_data:
             revision_data = self._call_api(
                 'revisions', revision_id, note='Downloading revision data', query={'edit': 'false'})
+
+        # The revisions endpoint now only returns counters.forks; plays/likes/comments
+        # live on the related post's nested revision.
+        if not traverse_obj(revision_data, ('counters', 'plays')):
+            post_id = traverse_obj(revision_data, (('postId', ('post', 'id')), {str}, any))
+            if post_id:
+                post_data = self._call_api(
+                    'posts', post_id, note='Downloading post data', fatal=False)
+                post_counters = traverse_obj(post_data, ('revision', 'counters', {dict}))
+                if post_counters:
+                    revision_data['counters'] = {
+                        **(revision_data.get('counters') or {}),
+                        **post_counters,
+                    }
 
         return self._parse_revision(revision_data, url=url)
 

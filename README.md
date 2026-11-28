@@ -2583,6 +2583,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **asobistage**: Raise an expected error when CloudFront redirects to the ASOBI STORE maintenance page; otherwise parse the original event URL
     * **banbye**: Use `banbye.com/api` video/channel/playlist JSON and HLS `playback.urls` (`api.banbye.com` 404s)
     * **bandcamp:weekly**: Impersonate `player_data_web` JSON and the `stream_redirect` MP3 (Cloudflare otherwise returns a challenge page); fall back to the radio page `og:description` when player_data omits `description`
+    * **bandlab**: When the revisions API omits plays/likes/comments, read counters from the nested post and fetch the related post JSON
     * **beatport**: Next.js `track_name` / `track_length_ms` / release `image_url` fields
     * **beeg**: Sign HLS from `store.externulls.com/video/play_url/{id}` when `hls_resources` is omitted
     * **bilibili**: Bangumi seasons from `pgc/view/web/season`; impersonate video, bangumi, dynamic, and space pages; on 412 fall back to `wbi/view/detail` / `pgc/player/web/v2/playurl`; keep webpage `__playinfo__` when anonymous `wbi/playurl` returns no dash/durl; honor `fatal=False` on `wbi/playurl`; resolve opus/dynamic `bvid` when `jump_url` is missing
