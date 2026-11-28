@@ -10,6 +10,7 @@ from ..utils import (
 
 class PearVideoIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?pearvideo\.com/video_(?P<id>\d+)'
+    _GEO_COUNTRIES = ['CN']
     _TESTS = [{
         'url': 'https://www.pearvideo.com/video_1807118',
         'md5': '7c5530255a1d280a251a50ee3d6fdff5',
@@ -34,6 +35,8 @@ class PearVideoIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
+        # www.pearvideo.com is NXDOMAIN; Tencent EdgeOne also requires a CN X-Forwarded-For.
+        url = f'https://pearvideo.com/video_{video_id}'
 
         webpage = self._download_webpage(url, video_id)
 
@@ -49,7 +52,7 @@ class PearVideoIE(InfoExtractor):
             webpage)]
         if not formats:
             info = self._download_json(
-                'https://www.pearvideo.com/videoStatus.jsp', video_id=video_id,
+                'https://pearvideo.com/videoStatus.jsp', video_id=video_id,
                 query={'contId': video_id}, headers={'Referer': url})
             formats = [{
                 'format_id': k,

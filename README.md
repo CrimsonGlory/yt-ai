@@ -2769,6 +2769,7 @@ yt-ai is a fork of [yt-dlp](https://github.com/yt-dlp/yt-dlp). Download defaults
     * **parler**: Use the public v4 posts API for app/play post URLs
     * **pbs**: Guard against missing `video_info` and title
     * **pbskids**: Extract Next.js `/videos/watch/` pages and PBS URS HLS/MP4
+    * **pearvideo**: Fetch `pearvideo.com` (www is NXDOMAIN) with a Chinese X-Forwarded-For so Tencent EdgeOne allows the page
     * **peekvids**: Read the numeric ID from the thumbnail URL and fall back to the page HLS source; treat `/v-alt/` HTTP 429 as empty so that fallback can run
     * **peer.tv**: Read JSON-LD `contentUrl` MP4s and match `/video/` slug URLs
     * **performgroup**: Use the DAZN feeds VOD API instead of the dead Perform Feeds ep3 host; treat remaining CloudFront progressive MP4s as gone when they 403
